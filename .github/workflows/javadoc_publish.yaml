@@ -1,0 +1,32 @@
+name: Publish Javadoc to web
+
+on: 
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:    
+      # Push events on main branch
+      - main
+
+jobs:
+  build_and_publish_jdoc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 # Checkout repo to remote machine
+      - name: Set up OpenJDK17 
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+
+      - name: Build Javadoc
+        run: |
+          cd $GRADLE_DIR
+          chmod +x ./gradlew
+          ./gradlew javadoc
+        env:
+          GRADLE_DIR: 'source' # Modify this to wherever './gradlew' is 
+
+      - name: Deploy docs to GH Pages
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: source/core/build/docs/javadoc/ # The folder the action should deploy.

@@ -1,0 +1,32 @@
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets.main.java.srcDirs = [ "src/main/" ]
+sourceSets.test.java.srcDirs = [ "src/test/" ]
+
+eclipse.project.name = appName + "-core"
+
+test {
+    useJUnitPlatform()
+    workingDir = new File("../core/assets")
+    finalizedBy jacocoTestReport
+
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+    }
+}
+
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+		html.outputLocation = layout.buildDirectory.dir('reports/jacoco/test/html')
+    }
+}
+
+javadoc {
+    options {
+        links 'https://javadoc.io/doc/com.badlogicgames.gdx/gdx/latest/com/badlogic/gdx/package-summary.html'
+        tags = ['require', 'requires', 'ensure', 'ensures']
+    }
+}

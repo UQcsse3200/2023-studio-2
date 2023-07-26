@@ -1,0 +1,123 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        google()
+    }
+    dependencies {}
+}
+
+plugins {
+    id "org.sonarqube" version "4.2.1.3168"
+    id "jacoco"
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "UQcsse3200_2023-studio-2"
+        property "sonar.organization", "uqcsse3200"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
+
+allprojects {
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+    apply plugin: 'jacoco'
+
+    version = '1.0'
+    ext {
+        appName = "csse3200-game"
+        gdxVersion = '1.11.0'
+        roboVMVersion = '2.3.16'
+        box2DLightsVersion = '1.5'
+        ashleyVersion = '1.7.4'
+        aiVersion = '1.8.2'
+        gdxControllersVersion = '2.2.2'
+        junit5Version = '5.9.0'
+        mockitoVersion = '4.6.1'
+        gdxUtilsVersion = '0.13.4'
+        slf4jVersion = '1.7.36'
+    }
+
+    repositories {
+        mavenCentral()
+        google()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+}
+
+project(":desktop") {
+    apply plugin: "java-library"
+
+    // Enforce use of JDK 17. Will download if it isn't in default OS location.
+	// Check why it isn't downloading JDK.
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    }
+
+    dependencies {
+        implementation project(":core")
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        api "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
+    }
+}
+
+project(":core") {
+    apply plugin: "java-library"
+
+    // Enforce use of JDK 17. Will download if it isn't in default OS location.
+	// Check why it isn't downloading JDK.
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    }
+
+    dependencies {
+        // libGDX
+        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
+        api "net.dermetfan.libgdx-utils:libgdx-utils:$gdxUtilsVersion"
+        api "net.dermetfan.libgdx-utils:libgdx-utils-box2d:$gdxUtilsVersion"
+
+        // Logging
+        api "org.slf4j:slf4j-api:$slf4jVersion"
+        api "org.slf4j:slf4j-jdk14:$slf4jVersion"
+
+        // Unit Testing
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5Version"
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:$junit5Version'
+        testImplementation("org.junit.vintage:junit-vintage-engine:$junit5Version") {
+            because 'Allows JUnit 3 and JUnit 4 tests to run'
+        }
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
+            because 'Allows tests to run from IDEs that bundle older version of launcher'
+        }
+
+        testImplementation "org.mockito:mockito-junit-jupiter:$mockitoVersion"
+        testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+
+        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testImplementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+    }
+
+    test {
+        useJUnitPlatform {}
+
+        testLogging {
+            events 'passed', 'skipped', 'failed'
+        }
+
+        finalizedBy(jacocoTestReport)
+    }
+}

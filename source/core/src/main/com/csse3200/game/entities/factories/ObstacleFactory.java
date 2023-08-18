@@ -3,11 +3,18 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.buildables.Wall;
+import com.csse3200.game.entities.buildables.WallType;
+import com.csse3200.game.entities.configs.NPCConfigs;
+import com.csse3200.game.entities.configs.WallConfig;
+import com.csse3200.game.entities.configs.WallConfigs;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+
+import java.nio.file.attribute.BasicFileAttributes;
 
 /**
  * Factory to create obstacle entities.
@@ -15,6 +22,8 @@ import com.csse3200.game.rendering.TextureRenderComponent;
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
 public class ObstacleFactory {
+  private static final WallConfigs configs =
+          FileLoader.readClass(WallConfigs.class, "configs/walls.json");
 
   /**
    * Creates a tree entity.
@@ -48,8 +57,8 @@ public class ObstacleFactory {
     return wall;
   }
 
-  public static Entity createCustomWall(float x, float y) {
-    return new Wall(x, y);
+  public static Entity createCustomWall(WallType type) {
+    return new Wall(configs.GetWallConfig(type));
   }
 
   private ObstacleFactory() {

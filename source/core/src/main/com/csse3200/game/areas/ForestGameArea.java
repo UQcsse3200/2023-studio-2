@@ -27,6 +27,7 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestTextures = {
     "images/box_boy_leaf.png",
     "images/tree.png",
+    "images/wall.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
@@ -72,8 +73,14 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
+    spawnWalls();
 
     playMusic();
+  }
+
+  private void spawnWalls() {
+    Entity wall = ObstacleFactory.createCustomWall(10,10);
+    spawnEntity(wall);
   }
 
   private void displayUI() {

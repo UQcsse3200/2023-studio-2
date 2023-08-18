@@ -83,7 +83,7 @@ public class ServiceLocator {
   }
 
   public static void registerGameStateService(GameState source) {
-    logger.debug("Registering resource service {}", source);
+    logger.debug("Registering game state service {}", source);
     gameStateService = source;
   }
 

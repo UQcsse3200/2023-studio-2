@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
@@ -28,6 +29,7 @@ public class ForestGameArea extends GameArea {
     "images/box_boy_leaf.png",
     "images/tree.png",
     "images/wall.png",
+    "images/wall2.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
@@ -79,8 +81,10 @@ public class ForestGameArea extends GameArea {
   }
 
   private void spawnWalls() {
-    Entity wall = ObstacleFactory.createCustomWall(10,10);
-    spawnEntity(wall);
+    Entity wall = ObstacleFactory.createCustomWall(WallType.basic);
+    Entity intermediateWall = ObstacleFactory.createCustomWall(WallType.intermediate);
+    spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
+    spawnEntityAt(intermediateWall, new GridPoint2(15, 15), false, false);
   }
 
   private void displayUI() {

@@ -3,7 +3,6 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 
@@ -17,7 +16,33 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private int flagA = 0;
   private int flagS = 0;
   private int flagD = 0;
+  private int flagMul = 0;
 
+  private int movFlagSum(){
+    return flagW + flagA + flagS + flagD;
+  }
+  
+  private void diagonal(){
+    int movFlagSum = movFlagSum();
+    if (movFlagSum == 2) {
+      flagMul = 1;
+      walkDirection.scl(new Vector2(0.707f,0.707f));
+    }else if (movFlagSum == 1){
+      if (flagW == 1){
+        walkDirection.set(Vector2Utils.UP);
+      }else if (flagA == 1){
+        walkDirection.set(Vector2Utils.LEFT);
+      }else if (flagS == 1){
+        walkDirection.set(Vector2Utils.DOWN);
+      }else if (flagD == 1){
+        walkDirection.set(Vector2Utils.RIGHT);
+      }
+      triggerWalkEvent();
+    }else if (movFlagSum == 0){
+      flagMul = 0;
+      walkDirection.scl(0);
+    }
+  }
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -31,25 +56,50 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
+    diagonal();
     switch (keycode) {
       case Keys.W:
-        flagW = 1;
-        walkDirection.add(Vector2Utils.UP);
+        flagW = 1;        
+        if (movFlagSum() == 1) {
+          walkDirection.scl(0);
+          walkDirection.add(Vector2Utils.UP);
+        }else{
+          walkDirection.add(Vector2Utils.UP);
+          diagonal();
+        }
         triggerWalkEvent();
         return true;
       case Keys.A:
-        flagA = 1;
-        walkDirection.add(Vector2Utils.LEFT);
+        flagA = 1;                
+        if (movFlagSum() == 1) {
+          walkDirection.scl(0);
+          walkDirection.add(Vector2Utils.LEFT);
+        }else{
+          walkDirection.add(Vector2Utils.LEFT);
+          diagonal();
+        }
         triggerWalkEvent();
         return true;
       case Keys.S:
-        flagS = 1;
-        walkDirection.add(Vector2Utils.DOWN);
+        flagS = 1;        
+        if (movFlagSum() == 1) {
+          walkDirection.scl(0);
+          walkDirection.add(Vector2Utils.DOWN);
+        }else{
+          walkDirection.add(Vector2Utils.DOWN);
+          diagonal();
+        }
         triggerWalkEvent();
         return true;
       case Keys.D:
-        flagD = 1;
-        walkDirection.add(Vector2Utils.RIGHT);
+        flagD = 1;        
+        if (movFlagSum() == 1) {
+          walkDirection.scl(0);
+          walkDirection.add(Vector2Utils.RIGHT);
+        }else{
+          walkDirection.add(Vector2Utils.RIGHT);
+          diagonal();
+        }
         triggerWalkEvent();
         return true;
       case Keys.SPACE:
@@ -57,8 +107,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         System.out.println("Attack");
         if (flagW == 1) {
           System.out.println("Multiple");
-      }
-        
+      }        
         return true;
       default:
         return false;
@@ -76,22 +125,46 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     switch (keycode) {
       case Keys.W:
           flagW = 0;
-          walkDirection.sub(Vector2Utils.UP);
-          triggerWalkEvent();          
+          diagonal();
+          if (movFlagSum() == 2) {
+            diagonal();
+          }
+          if (movFlagSum() == 0) {
+            walkDirection.scl(0);
+          }
+          triggerWalkEvent();
           return true;
       case Keys.A:
         flagA = 0;
-        walkDirection.sub(Vector2Utils.LEFT);
+        diagonal();
+        if (movFlagSum() == 2) {
+          diagonal();
+        }
+        if (movFlagSum() == 0) {
+          walkDirection.scl(0);
+        }
         triggerWalkEvent();
         return true;
       case Keys.S:
         flagS = 0;
-        walkDirection.sub(Vector2Utils.DOWN);
+        diagonal();
+        if (movFlagSum() == 2) {
+          diagonal();
+        }
+        if (movFlagSum() == 0) {
+          walkDirection.scl(0);
+        }
         triggerWalkEvent();
         return true;
       case Keys.D:
         flagD = 0;
-        walkDirection.sub(Vector2Utils.RIGHT);
+        diagonal();
+        if (movFlagSum() == 2) {
+          diagonal();
+        }
+        if (movFlagSum() == 0) {
+          walkDirection.scl(0);
+        }
         triggerWalkEvent();
         return true;
       default:

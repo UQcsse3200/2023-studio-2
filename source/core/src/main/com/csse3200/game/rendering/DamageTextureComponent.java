@@ -1,13 +1,9 @@
 package com.csse3200.game.rendering;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.HashMap;
@@ -17,8 +13,8 @@ import java.util.Map;
  * A Rendering component used to switch between different textures based on the current entity's health.
  */
 public class DamageTextureComponent extends RenderComponent {
-    Map<Integer, Texture> thresholds = new HashMap<>();
-    Texture texture = null;
+    private Map<Integer, Texture> thresholds;
+    private Texture texture = null;
 
     /**
      * Creates a DamageTextureComponent with the given texture
@@ -33,6 +29,7 @@ public class DamageTextureComponent extends RenderComponent {
      * @param texture Texture object to be displayed
      */
     public DamageTextureComponent(Texture texture) {
+        thresholds = new HashMap<>();
         thresholds.put(Integer.MAX_VALUE, texture);
     }
 
@@ -59,6 +56,7 @@ public class DamageTextureComponent extends RenderComponent {
         return this;
     }
 
+    //Helper method to get Texture resource from file path
     private static Texture GetTexture(String texturePath) {
         return ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
     }
@@ -67,15 +65,16 @@ public class DamageTextureComponent extends RenderComponent {
     protected void draw(SpriteBatch batch) {
         Vector2 position = entity.getPosition();
         Vector2 scale = entity.getScale();
-        texture = getHealthTexture();
+        texture = getCurrentHealthTexture();
         batch.draw(texture, position.x, position.y, scale.x, scale.y);
     }
 
     /**
      * Calculates the correct texture to display based on the thresholds and current health
-     * @return Texture to be displayed for entity
+     * @return Texture to be displayed for entity - undefined behaviour if multiple textures
+     * exist with the same threshold.
      */
-    private Texture getHealthTexture() {
+    private Texture getCurrentHealthTexture() {
         CombatStatsComponent healthStats = entity.getComponent(CombatStatsComponent.class);
         Texture texture = null;
         int prevThreshold = Integer.MAX_VALUE;

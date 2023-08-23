@@ -18,19 +18,20 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
  * Factory to create structure entities - such as extractors or ships.
  *
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
+ * @param health the max and initial health of the extractor
+ * @param producedResource the resource type produced by the extractor
+ * @param tickRate the frequency at which the extractor ticks (produces resources)
+ * @param tickSize the amount of the resource produced at each tick
  */
 public class StructureFactory {
-    public static Entity createExtractor() {
-        //TODO: Add config file
-        int health = 30;
-
+    public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         Entity extractor = new Entity()
                 .addComponent(new DamageTextureComponent("images/elixir_collector.png")
                         .addTexture(20, "images/broken_elixir_collector.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new CombatStatsComponent(health, 0))
-                .addComponent(new ProductionComponent(Resource.Unobtanium, (long) 1.0, 1));
+                .addComponent(new ProductionComponent(producedResource, tickRate, tickSize));
         extractor.setScale(1.8f, 2f);
         PhysicsUtils.setScaledCollider(extractor, 1f, 0.6f);
 

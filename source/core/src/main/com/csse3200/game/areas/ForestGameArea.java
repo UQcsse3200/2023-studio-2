@@ -8,10 +8,10 @@ import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.EnemyFactory;
-import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StructureFactory;
+import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -87,11 +88,18 @@ public class ForestGameArea extends GameArea {
     playMusic();
   }
 
-  private void spawnWalls() {
+  private List<Entity> spawnWalls() {
+    List<Entity> walls = new ArrayList<Entity>();
+
     Entity wall = ObstacleFactory.createCustomWall(WallType.basic);
     Entity intermediateWall = ObstacleFactory.createCustomWall(WallType.intermediate);
     spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
-    spawnEntityAt(intermediateWall, new GridPoint2(20, 15), false, false);
+    spawnEntityAt(intermediateWall, new GridPoint2(15, 15), false, false);
+
+    walls.add(wall);
+    walls.add(intermediateWall);
+
+    return walls;
   }
 
 
@@ -176,9 +184,11 @@ public class ForestGameArea extends GameArea {
   }
 
   private void playMusic() {
+    UserSettings.Settings settings = UserSettings.get();
+
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.3f);
+    music.setVolume(settings.musicVolume);
     music.play();
   }
 

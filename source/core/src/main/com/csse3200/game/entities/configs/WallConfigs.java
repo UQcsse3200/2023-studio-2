@@ -8,13 +8,9 @@ public class WallConfigs {
     public WallConfig intermediate = new WallConfig();
 
     public WallConfig GetWallConfig(WallType type) {
-        switch (type) {
-            case basic:
-                return basic;
-            case intermediate:
-                return intermediate;
-        }
-
-        throw new IllegalStateException("Invalid wall type provided");
+        return switch (type) {
+            case basic -> basic;
+            case intermediate -> intermediate;
+        };
     }
 }

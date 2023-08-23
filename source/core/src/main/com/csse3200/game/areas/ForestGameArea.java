@@ -10,6 +10,7 @@ import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -26,6 +27,8 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+    "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+    "images/broken_elixir_collector.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
     "images/wall.png",
@@ -72,6 +75,7 @@ public class ForestGameArea extends GameArea {
 
     spawnTerrain();
     spawnTrees();
+    spawnExtractors();
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
@@ -85,6 +89,12 @@ public class ForestGameArea extends GameArea {
     Entity intermediateWall = ObstacleFactory.createCustomWall(WallType.intermediate);
     spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
     spawnEntityAt(intermediateWall, new GridPoint2(15, 15), false, false);
+  }
+  
+  private void spawnExtractors() {
+    GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
+    Entity extractor = StructureFactory.createExtractor();
+    spawnEntityAt(extractor, pos, true, false);
   }
 
   private void displayUI() {

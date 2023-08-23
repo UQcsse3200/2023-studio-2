@@ -34,9 +34,20 @@ public class ProductionComponent extends Component {
         super.update();
         while (this.timer.getTimeSince(this.lastTime) >= this.tickRate) {
             this.getEntity().getEvents().trigger("produceResource", this.produces, this.tickSize);
-            Map<String, Object> gameStateData = ServiceLocator.getGameStateService().getStateData();
-            int newAmount = (int) gameStateData.getOrDefault("resource/" + this.produces.toString(), 0.0) + this.tickSize;
-            gameStateData.put("resource/" + this.produces.toString(), newAmount);
+            // Extract the current state from the ServiceLocator
+            GameState state = ServiceLocator.getGameStateService();
+            if (state == null) {
+                return;
+            }
+            Map<String, Object> currentState = state.getStateData();
+            HashMap<String, Object> newState = new HashMap<>(currentState);
+
+            // Update the quantity of this resource
+            int newAmount = (int) newState.getOrDefault("resource/" + this.produces.toString(), 0.0) + this.tickSize;
+            newState.put("resource/" + this.produces.toString(), newAmount);
+
+            // Send the updated value back
+            state.setStateData(newState);
             this.lastTime += this.tickRate;
         }
     }

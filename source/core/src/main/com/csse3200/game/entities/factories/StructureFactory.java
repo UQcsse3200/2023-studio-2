@@ -1,6 +1,8 @@
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.resources.ProductionComponent;
+import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -27,7 +29,8 @@ public class StructureFactory {
                         .addTexture(20, "images/broken_elixir_collector.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new CombatStatsComponent(health, 0));
+                .addComponent(new CombatStatsComponent(health, 0))
+                .addComponent(new ProductionComponent(Resource.Unobtanium, (long) 1.0, 1));
         extractor.setScale(1.8f, 2f);
         PhysicsUtils.setScaledCollider(extractor, 1f, 0.6f);
 

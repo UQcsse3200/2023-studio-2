@@ -10,6 +10,7 @@ import java.security.Provider;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class ProductionComponent extends Component {
     // Timer used to track time since last tick
     GameTime timer;
@@ -48,6 +49,21 @@ public class ProductionComponent extends Component {
     }
 
     /**
+     * getProductionModifier returns a value between 0 and 1 for how efficient the extractor is.
+     * For example a fully functioning extractor would have an efficiency of 1.0, and a broken one 0.0.
+     *
+     * @return long between 0 and 1.
+     */
+    public long getProductionModifier() {
+        CombatStatsComponent combatStats = this.getEntity().getComponent(CombatStatsComponent.class);
+        if (combatStats != null && combatStats.getHealth() <= 0) {
+            return 0;
+        }
+        // All good, return the full amount
+        return (long) 1.0;
+    }
+
+    /**
      * Produce resources and send them to GameState (and produceResource event).
      * Resources produced are based on how many ticks have occurred since the last update, and production quantity.
      */
@@ -63,7 +79,8 @@ public class ProductionComponent extends Component {
             HashMap<String, Object> newState = new HashMap<>(currentState);
 
             // Update the quantity of this resource
-            int newAmount = (int) newState.getOrDefault("resource/" + this.produces.toString(), 0.0) + this.tickSize;
+            int produced = (int) ((long) this.tickSize * this.getProductionModifier());
+            int newAmount = (int) newState.getOrDefault("resource/" + this.produces.toString(), 0.0) + produced;
             newState.put("resource/" + this.produces.toString(), newAmount);
 
             // Send the updated value back

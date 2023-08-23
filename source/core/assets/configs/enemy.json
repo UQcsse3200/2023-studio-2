@@ -1,0 +1,13 @@
+{
+  "enemy": {
+    "health": 40,
+    "baseAttack": 10,
+    "speed": 5
+  },
+  "boss": {
+    "health": 100,
+    "baseAttack": 25,
+    "speed": 8,
+    "specialAttack": 40
+  }
+}

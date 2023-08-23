@@ -80,9 +80,9 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     spawnExtractors();
     spawnPlayer();
+    spawnWalls();
     spawnEnemies();
     spawnBoss();
-    spawnWalls();
 
     playMusic();
   }
@@ -92,6 +92,8 @@ public class ForestGameArea extends GameArea {
     Entity intermediateWall = ObstacleFactory.createCustomWall(WallType.intermediate);
     spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
     spawnEntityAt(intermediateWall, new GridPoint2(20, 15), false, false);
+    targetables.add(wall);
+    targetables.add(intermediateWall);
   }
 
 

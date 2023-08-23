@@ -1,6 +1,8 @@
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.resources.ProductionComponent;
+import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -15,19 +17,17 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 /**
  * Factory to create structure entities - such as extractors or ships.
  *
- * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
+ * @return entity
  */
 public class StructureFactory {
-    public static Entity createExtractor() {
-        //TODO: Add config file
-        int health = 30;
-
+    public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         Entity extractor = new Entity()
                 .addComponent(new DamageTextureComponent("images/elixir_collector.png")
                         .addTexture(20, "images/broken_elixir_collector.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new CombatStatsComponent(health, 0));
+                .addComponent(new CombatStatsComponent(health, 0))
+                .addComponent(new ProductionComponent(producedResource, tickRate, tickSize));
         extractor.setScale(1.8f, 2f);
         PhysicsUtils.setScaledCollider(extractor, 1f, 0.6f);
 

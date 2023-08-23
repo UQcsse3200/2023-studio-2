@@ -61,10 +61,12 @@ loadScripts(document, 'script');</script>
 <li><a href="com/csse3200/game/components/mainmenu/package-tree.html">com.csse3200.game.components.mainmenu</a>, </li>
 <li><a href="com/csse3200/game/components/npc/package-tree.html">com.csse3200.game.components.npc</a>, </li>
 <li><a href="com/csse3200/game/components/player/package-tree.html">com.csse3200.game.components.player</a>, </li>
+<li><a href="com/csse3200/game/components/resources/package-tree.html">com.csse3200.game.components.resources</a>, </li>
 <li><a href="com/csse3200/game/components/settingsmenu/package-tree.html">com.csse3200.game.components.settingsmenu</a>, </li>
 <li><a href="com/csse3200/game/components/tasks/package-tree.html">com.csse3200.game.components.tasks</a>, </li>
 <li><a href="com/csse3200/game/concurrency/package-tree.html">com.csse3200.game.concurrency</a>, </li>
 <li><a href="com/csse3200/game/entities/package-tree.html">com.csse3200.game.entities</a>, </li>
+<li><a href="com/csse3200/game/entities/buildables/package-tree.html">com.csse3200.game.entities.buildables</a>, </li>
 <li><a href="com/csse3200/game/entities/configs/package-tree.html">com.csse3200.game.entities.configs</a>, </li>
 <li><a href="com/csse3200/game/entities/factories/package-tree.html">com.csse3200.game.entities.factories</a>, </li>
 <li><a href="com/csse3200/game/events/package-tree.html">com.csse3200.game.events</a>, </li>
@@ -123,9 +125,11 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsComponent.html" class="type-name-link" title="class in com.csse3200.game.physics.components">PhysicsComponent</a></li>
 <li class="circle">com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsMovementComponent.html" class="type-name-link" title="class in com.csse3200.game.physics.components">PhysicsMovementComponent</a> (implements com.csse3200.game.ai.movement.<a href="com/csse3200/game/ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a>)</li>
 <li class="circle">com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerActions.html" class="type-name-link" title="class in com.csse3200.game.components.player">PlayerActions</a></li>
+<li class="circle">com.csse3200.game.components.resources.<a href="com/csse3200/game/components/resources/ProductionComponent.html" class="type-name-link" title="class in com.csse3200.game.components.resources">ProductionComponent</a></li>
 <li class="circle">com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderComponent.html" class="type-name-link" title="class in com.csse3200.game.rendering">RenderComponent</a> (implements com.badlogic.gdx.utils.Disposable, com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a>)
 <ul>
 <li class="circle">com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/AnimationRenderComponent.html" class="type-name-link" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a></li>
+<li class="circle">com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/DamageTextureComponent.html" class="type-name-link" title="class in com.csse3200.game.rendering">DamageTextureComponent</a></li>
 <li class="circle">com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></li>
 <li class="circle">com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/TextureRenderComponent.html" class="type-name-link" title="class in com.csse3200.game.rendering">TextureRenderComponent</a></li>
 <li class="circle">com.csse3200.game.ui.<a href="com/csse3200/game/ui/UIComponent.html" class="type-name-link" title="class in com.csse3200.game.ui">UIComponent</a> (implements com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a>)
@@ -137,6 +141,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/PlayerStatsDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.player">PlayerStatsDisplay</a></li>
 <li class="circle">com.csse3200.game.components.settingsmenu.<a href="com/csse3200/game/components/settingsmenu/SettingsMenuDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.settingsmenu">SettingsMenuDisplay</a></li>
 <li class="circle">com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/TerminalDisplay.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal">TerminalDisplay</a></li>
+<li class="circle">com.csse3200.game.entities.buildables.<a href="com/csse3200/game/entities/buildables/WallStatsDisplay.html" class="type-name-link" title="class in com.csse3200.game.entities.buildables">WallStatsDisplay</a></li>
 </ul>
 </li>
 </ul>
@@ -156,7 +161,11 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/WanderTask.html" class="type-name-link" title="class in com.csse3200.game.components.tasks">WanderTask</a> (implements com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/PriorityTask.html" title="interface in com.csse3200.game.ai.tasks">PriorityTask</a>)</li>
 </ul>
 </li>
-<li class="circle">com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" class="type-name-link" title="class in com.csse3200.game.entities">Entity</a></li>
+<li class="circle">com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" class="type-name-link" title="class in com.csse3200.game.entities">Entity</a>
+<ul>
+<li class="circle">com.csse3200.game.entities.buildables.<a href="com/csse3200/game/entities/buildables/Wall.html" class="type-name-link" title="class in com.csse3200.game.entities.buildables">Wall</a></li>
+</ul>
+</li>
 <li class="circle">com.csse3200.game.entities.<a href="com/csse3200/game/entities/EntityService.html" class="type-name-link" title="class in com.csse3200.game.entities">EntityService</a></li>
 <li class="circle">com.csse3200.game.events.<a href="com/csse3200/game/events/EventHandler.html" class="type-name-link" title="class in com.csse3200.game.events">EventHandler</a></li>
 <li class="circle">com.csse3200.game.files.<a href="com/csse3200/game/files/FileLoader.html" class="type-name-link" title="class in com.csse3200.game.files">FileLoader</a></li>
@@ -207,12 +216,15 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.physics.raycast.<a href="com/csse3200/game/physics/raycast/SingleHitCallback.html" class="type-name-link" title="class in com.csse3200.game.physics.raycast">SingleHitCallback</a> (implements com.badlogic.gdx.physics.box2d.RayCastCallback)</li>
 <li class="circle">com.csse3200.game.utils.<a href="com/csse3200/game/utils/SortedIntMap.html" class="type-name-link" title="class in com.csse3200.game.utils">SortedIntMap</a>&lt;V&gt; (implements java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;T&gt;)</li>
 <li class="circle">com.csse3200.game.utils.<a href="com/csse3200/game/utils/StringDecorator.html" class="type-name-link" title="class in com.csse3200.game.utils">StringDecorator</a>&lt;T&gt;</li>
+<li class="circle">com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/StructureFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">StructureFactory</a></li>
 <li class="circle">com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a></li>
 <li class="circle">com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" class="type-name-link" title="class in com.csse3200.game.areas.terrain">TerrainTile</a> (implements com.badlogic.gdx.maps.tiled.TiledMapTile)</li>
 <li class="circle">com.csse3200.game.files.<a href="com/csse3200/game/files/UserSettings.html" class="type-name-link" title="class in com.csse3200.game.files">UserSettings</a></li>
 <li class="circle">com.csse3200.game.files.<a href="com/csse3200/game/files/UserSettings.DisplaySettings.html" class="type-name-link" title="class in com.csse3200.game.files">UserSettings.DisplaySettings</a></li>
 <li class="circle">com.csse3200.game.files.<a href="com/csse3200/game/files/UserSettings.Settings.html" class="type-name-link" title="class in com.csse3200.game.files">UserSettings.Settings</a></li>
 <li class="circle">com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/Vector2Utils.html" class="type-name-link" title="class in com.csse3200.game.utils.math">Vector2Utils</a></li>
+<li class="circle">com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/WallConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">WallConfig</a></li>
+<li class="circle">com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/WallConfigs.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">WallConfigs</a></li>
 </ul>
 </li>
 </ul>
@@ -256,9 +268,11 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.input.<a href="com/csse3200/game/input/InputFactory.InputType.html" class="type-name-link" title="enum class in com.csse3200.game.input">InputFactory.InputType</a></li>
 <li class="circle">com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsComponent.AlignX.html" class="type-name-link" title="enum class in com.csse3200.game.physics.components">PhysicsComponent.AlignX</a></li>
 <li class="circle">com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsComponent.AlignY.html" class="type-name-link" title="enum class in com.csse3200.game.physics.components">PhysicsComponent.AlignY</a></li>
+<li class="circle">com.csse3200.game.components.resources.<a href="com/csse3200/game/components/resources/Resource.html" class="type-name-link" title="enum class in com.csse3200.game.components.resources">Resource</a></li>
 <li class="circle">com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/Task.Status.html" class="type-name-link" title="enum class in com.csse3200.game.ai.tasks">Task.Status</a></li>
 <li class="circle">com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.TerrainOrientation.html" class="type-name-link" title="enum class in com.csse3200.game.areas.terrain">TerrainComponent.TerrainOrientation</a></li>
 <li class="circle">com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.TerrainType.html" class="type-name-link" title="enum class in com.csse3200.game.areas.terrain">TerrainFactory.TerrainType</a></li>
+<li class="circle">com.csse3200.game.entities.buildables.<a href="com/csse3200/game/entities/buildables/WallType.html" class="type-name-link" title="enum class in com.csse3200.game.entities.buildables">WallType</a></li>
 </ul>
 </li>
 </ul>

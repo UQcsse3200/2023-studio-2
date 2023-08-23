@@ -20,6 +20,8 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
@@ -54,8 +56,7 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
-
-  private Entity player;
+  private final ArrayList<Entity> targetables;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -65,6 +66,7 @@ public class ForestGameArea extends GameArea {
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
+    this.targetables = new ArrayList<>();
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -77,7 +79,7 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     spawnExtractors();
-    player = spawnPlayer();
+    spawnPlayer();
     spawnEnemies();
     spawnBoss();
     spawnWalls();
@@ -92,11 +94,13 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(intermediateWall, new GridPoint2(20, 15), false, false);
   }
 
+
   private void spawnExtractors() {
     GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
     Entity extractor = StructureFactory.createExtractor();
     spawnEntityAt(extractor, pos, true, false);
   }
+
 
   private void displayUI() {
     Entity ui = new Entity();
@@ -145,10 +149,10 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private Entity spawnPlayer() {
+  private void spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-    return newPlayer;
+    targetables.add(newPlayer);
   }
 
   private void spawnEnemies() {
@@ -157,7 +161,7 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < NUM_ENEMIES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = EnemyFactory.createMeleeEnemy(player);
+      Entity ghost = EnemyFactory.createMeleeEnemy(targetables);
       spawnEntityAt(ghost, randomPos, true, true);
     }
   }
@@ -167,7 +171,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity boss = EnemyFactory.createBoss(player);
+    Entity boss = EnemyFactory.createBoss(targetables);
     spawnEntityAt(boss, randomPos, true, true);
   }
 

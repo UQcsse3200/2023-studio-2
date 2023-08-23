@@ -26,7 +26,7 @@ public class StructureFactory {
                 .addComponent(new DamageTextureComponent("images/elixir_collector.png")
                         .addTexture(20, "images/broken_elixir_collector.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new CombatStatsComponent(health, 0));
         extractor.setScale(1.8f, 2f);
         PhysicsUtils.setScaledCollider(extractor, 1f, 0.6f);

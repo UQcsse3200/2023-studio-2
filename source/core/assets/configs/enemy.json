@@ -1,13 +1,31 @@
 {
-  "enemy": {
+  "meleeEnemy": {
     "health": 40,
     "baseAttack": 10,
-    "speed": 5
+    "speed": 5,
+    "atlas": "images/ghost.atlas"
   },
-  "boss": {
+
+  "rangeEnemy": {
+    "health": 40,
+    "baseAttack": 10,
+    "speed": 5,
+    "atlas": "images/ghost.atlas"
+  },
+
+  "meleeBoss": {
     "health": 100,
     "baseAttack": 25,
     "speed": 8,
-    "specialAttack": 40
+    "specialAttack": 40,
+    "atlas": "images/ghostKing.atlas"
+  },
+
+  "rangeBoss": {
+    "health": 100,
+    "baseAttack": 25,
+    "speed": 8,
+    "specialAttack": 40,
+    "atlas": "images/ghostKing.atlas"
   }
 }

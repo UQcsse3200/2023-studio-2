@@ -10,7 +10,6 @@ import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.BaseEntityConfig;
 import com.csse3200.game.entities.configs.BossConfig;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
@@ -23,6 +22,8 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
 
 /**
  * Factory to create non-playable enemies entities with predefined components.
@@ -41,12 +42,12 @@ public class EnemyFactory {
   /**
    * Creates a melee enemy entity.
    *
-   * @param target entity to chase
+   * @param targets entity to chase
    * @return entity
    */
-  public static Entity createMeleeEnemy(Entity target) {
-    Entity enemy = createBaseEnemy(target);
-    BaseEntityConfig config = configs.enemy;
+  public static Entity createMeleeEnemy(ArrayList<Entity> targets) {
+    Entity enemy = createBaseEnemy(targets);
+    EnemyConfig config = configs.enemy;
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
@@ -67,11 +68,11 @@ public class EnemyFactory {
   /**
    * Creates a boss entity.
    *
-   * @param target entity to chase
+   * @param targets entities to chase
    * @return entity
    */
-  public static Entity createBoss(Entity target) {
-    Entity boss = createBaseEnemy(target);
+  public static Entity createBoss(ArrayList<Entity> targets) {
+    Entity boss = createBaseEnemy(targets);
     BossConfig config = configs.boss;
 
     AnimationRenderComponent animator =
@@ -95,12 +96,17 @@ public class EnemyFactory {
    *
    * @return entity
    */
-  private static Entity createBaseEnemy(Entity target) {
+  private static Entity createBaseEnemy(ArrayList<Entity> targets) {
     AITaskComponent aiComponent =
-        new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 3f, 4f));
-    Entity npc =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+
+    // Add all the targets
+    for (Entity i : targets) {
+      aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+    }
+
+    Entity enemy =
         new Entity()
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
@@ -109,8 +115,8 @@ public class EnemyFactory {
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
             .addComponent(aiComponent);
 
-    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-    return npc;
+    PhysicsUtils.setScaledCollider(enemy, 0.9f, 0.4f);
+    return enemy;
   }
 
   private EnemyFactory() {

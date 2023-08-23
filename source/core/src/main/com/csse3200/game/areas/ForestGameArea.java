@@ -19,6 +19,9 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
@@ -84,11 +87,18 @@ public class ForestGameArea extends GameArea {
     playMusic();
   }
 
-  private void spawnWalls() {
+  private List<Entity> spawnWalls() {
+    List<Entity> walls = new ArrayList<Entity>();
+
     Entity wall = ObstacleFactory.createCustomWall(WallType.basic);
     Entity intermediateWall = ObstacleFactory.createCustomWall(WallType.intermediate);
     spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
     spawnEntityAt(intermediateWall, new GridPoint2(15, 15), false, false);
+
+    walls.add(wall);
+    walls.add(intermediateWall);
+
+    return walls;
   }
   
   private void spawnExtractors() {

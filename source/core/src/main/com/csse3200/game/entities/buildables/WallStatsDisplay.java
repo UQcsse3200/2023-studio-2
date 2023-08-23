@@ -2,15 +2,19 @@ package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
-public class WallStatsDisplay extends UIComponent {
+import java.awt.*;
 
+public class WallStatsDisplay extends UIComponent {
+    private static final float SCALE_REDUCTION = 1000;
     Table table;
     private Image heartImage;
     private Label healthLabel;
@@ -24,6 +28,11 @@ public class WallStatsDisplay extends UIComponent {
         addActors();
 
         entity.getEvents().addListener("updateHealth", this::updateWallHealthUI);
+        entity.getEvents().addListener("setPosition", this::updateUIPosition);
+    }
+
+    private void updateUIPosition() {
+        table.setPosition(entity.getCenterPosition().x, entity.getCenterPosition().y);
     }
 
     /**
@@ -32,27 +41,41 @@ public class WallStatsDisplay extends UIComponent {
      */
     private void addActors() {
         table = new Table();
-        table.top().bottom();
-        table.setFillParent(true);
-        table.padTop(20f).padLeft(5f);
+        table.setPosition(entity.getCenterPosition().x, entity.getCenterPosition().y);
 
         // Heart image
-        float heartSideLength = 30f;
+        float heartSideLength = 20f;
         heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
 
         // Health text
         int health = entity.getComponent(CombatStatsComponent.class).getHealth();
         CharSequence healthText = String.format("Health: %d", health);
-        healthLabel = new Label(healthText, skin, "large");
+        healthLabel = new Label(healthText, skin);
 
-        table.add(heartImage).size(heartSideLength).pad(5);
+        table.add(heartImage).size(heartSideLength).padRight(5f);
         table.add(healthLabel);
-        stage.addActor(table);
     }
 
     @Override
     public void draw(SpriteBatch batch)  {
-        // draw is handled by the stage
+        Matrix4 originalMatrix = batch.getProjectionMatrix().cpy(); // cpy() needed to properly set afterwards because calling set() seems to modify kept matrix, not replaces it
+        batch.setProjectionMatrix(originalMatrix.cpy().scale(getWidthUnitsInPixel(), getHeightUnitsInPixel(), 1));
+        var old_x = table.getX();
+        var old_y = table.getY();
+
+        // scale the positions to match the new projection matrix
+        table.setPosition(old_x * SCALE_REDUCTION / 20f, old_y * SCALE_REDUCTION / 20f);
+        table.draw(batch, 1.0f);
+        table.setPosition(old_x, old_y);
+        batch.setProjectionMatrix(originalMatrix); //revert projection
+    }
+
+    public float getHeightUnitsInPixel() {
+        return 20f / SCALE_REDUCTION;
+    }
+
+    public float getWidthUnitsInPixel() {
+        return 20f / SCALE_REDUCTION;
     }
 
     /**

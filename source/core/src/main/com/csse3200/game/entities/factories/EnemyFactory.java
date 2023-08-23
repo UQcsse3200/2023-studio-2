@@ -13,6 +13,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.BossConfig;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
+import com.csse3200.game.entities.enemies.BossType;
+import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -43,15 +45,16 @@ public class EnemyFactory {
    * Creates a melee enemy entity.
    *
    * @param targets entity to chase
+   * @param type type of enemy - melee or ranged
    * @return entity
    */
-  public static Entity createMeleeEnemy(ArrayList<Entity> targets) {
+  public static Entity createEnemy(ArrayList<Entity> targets, EnemyType type) {
     Entity enemy = createBaseEnemy(targets);
-    EnemyConfig config = configs.enemy;
+    EnemyConfig config = configs.GetEnemyConfig(type);
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
+            ServiceLocator.getResourceService().getAsset(config.atlas, TextureAtlas.class));
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
@@ -69,11 +72,12 @@ public class EnemyFactory {
    * Creates a boss entity.
    *
    * @param targets entities to chase
+   * @param type type of enemy - melee or ranged
    * @return entity
    */
-  public static Entity createBoss(ArrayList<Entity> targets) {
+  public static Entity createBoss(ArrayList<Entity> targets, BossType type) {
     Entity boss = createBaseEnemy(targets);
-    BossConfig config = configs.boss;
+    BossConfig config = configs.GetBossConfig(type);
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
@@ -96,7 +100,7 @@ public class EnemyFactory {
    *
    * @return entity
    */
-  private static Entity createBaseEnemy(ArrayList<Entity> targets) {
+  public static Entity createBaseEnemy(ArrayList<Entity> targets) {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f));

@@ -8,6 +8,7 @@ import com.csse3200.game.entities.configs.WallConfig;
 //import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 //import com.csse3200.game.services.ServiceLocator;
@@ -17,7 +18,8 @@ public class Wall extends Entity {
         super();
         addComponent(new TextureRenderComponent(config.texture));
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
-        addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
+        addComponent(new HitboxComponent().setLayer(PhysicsLayer.WALL));
         addComponent(new CombatStatsComponent(config.health, 0));
         addComponent(new WallStatsDisplay());
 

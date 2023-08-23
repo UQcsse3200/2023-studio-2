@@ -88,7 +88,7 @@ public class ForestGameArea extends GameArea {
     Entity wall = ObstacleFactory.createCustomWall(WallType.basic);
     Entity intermediateWall = ObstacleFactory.createCustomWall(WallType.intermediate);
     spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
-    spawnEntityAt(intermediateWall, new GridPoint2(15, 15), false, false);
+    spawnEntityAt(intermediateWall, new GridPoint2(20, 15), false, false);
   }
   
   private void spawnExtractors() {

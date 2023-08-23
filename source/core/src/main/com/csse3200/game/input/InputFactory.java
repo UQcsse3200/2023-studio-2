@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public abstract class InputFactory {
   private static final Logger logger = LoggerFactory.getLogger(InputFactory.class);
 
-  /** Input device types */
+    /** Input device types */
   public enum InputType {
     KEYBOARD, // keyboard and touch
     TOUCH // alternate keyboard and touch

@@ -39,13 +39,13 @@ public class EnemyFactory {
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
 
   /**
-   * Creates a ghost entity.
+   * Creates a melee enemy entity.
    *
    * @param target entity to chase
    * @return entity
    */
-  public static Entity createEnemy(Entity target) {
-    Entity enemy = createBaseNPC(target);
+  public static Entity createMeleeEnemy(Entity target) {
+    Entity enemy = createBaseEnemy(target);
     BaseEntityConfig config = configs.enemy;
 
     AnimationRenderComponent animator =
@@ -65,13 +65,13 @@ public class EnemyFactory {
   }
 
   /**
-   * Creates a ghost king entity.
+   * Creates a boss entity.
    *
    * @param target entity to chase
    * @return entity
    */
   public static Entity createBoss(Entity target) {
-    Entity boss = createBaseNPC(target);
+    Entity boss = createBaseEnemy(target);
     BossConfig config = configs.boss;
 
     AnimationRenderComponent animator =
@@ -95,7 +95,7 @@ public class EnemyFactory {
    *
    * @return entity
    */
-  private static Entity createBaseNPC(Entity target) {
+  private static Entity createBaseEnemy(Entity target) {
     AITaskComponent aiComponent =
         new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f))

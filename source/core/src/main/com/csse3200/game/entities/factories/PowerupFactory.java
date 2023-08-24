@@ -19,11 +19,11 @@ public class PowerupFactory {
      * REF: https://cdn.apexminecrafthosting.com/img/uploads/2020/11/27214702/splash-potion-large.png
      */
     public static Entity createBasePowerup() {
-        Entity potion = new Entity()
+        Entity powerup = new Entity()
                 .addComponent(new TextureRenderComponent("images/healthpowerup.png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
-        return potion;
+        return powerup;
     }
 
     /**
@@ -34,6 +34,7 @@ public class PowerupFactory {
      * @return Entity representing the speed boost powerup.
      */
     public static Entity createSpeedBoostPowerup() {
+        // Just returns the base Powerup for now...
         return createBasePowerup();
     }
 }

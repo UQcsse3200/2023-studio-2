@@ -25,7 +25,7 @@ public class PowerupFactory {
         Entity powerup = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                .addComponent(new PowerupComponent(type, modifier)); // temporary
+                .addComponent(new PowerupComponent(type, (short) modifier)); // temporary
 
         // todo: Add switch cases for texture render component for various textures between powerups
 

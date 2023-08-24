@@ -17,11 +17,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private int flagS = 0;
   private int flagD = 0;
   private int flagMul = 0;
-
   private int movFlagSum(){
     return flagW + flagA + flagS + flagD;
   }
-  
+  private boolean dodge_available = true;
+  private boolean dodged_up = false;
+  private boolean dodged_left = false;
+  private boolean dodged_down = false;
+  private boolean dodged_right = false;
   private void diagonal(){
     int movFlagSum = movFlagSum();
     if (movFlagSum == 2) {
@@ -102,13 +105,30 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         triggerWalkEvent();
         return true;
-      case Keys.SPACE:
+      case Keys.P:
         entity.getEvents().trigger("attack");
         System.out.println("Attack");
         if (flagW == 1) {
           System.out.println("Multiple");
-      }        
+      }
         return true;
+      case Keys.SPACE:
+        if (dodge_available) {
+          if (flagW == 1) {
+            walkDirection.add(Vector2Utils.DODGE_UP);
+            dodged_up = true;
+          } else if (flagA == 1) {
+            walkDirection.add(Vector2Utils.DODGE_LEFT);
+            dodged_left = true;
+          } else if (flagS == 1) {
+            walkDirection.add(Vector2Utils.DODGE_DOWN);
+            dodged_down = true;
+          } else {
+            walkDirection.add(Vector2Utils.DODGE_RIGHT);
+            dodged_right = true;
+          }
+          triggerDodgeEvent();
+        }
       default:
         return false;
     }
@@ -167,6 +187,24 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         triggerWalkEvent();
         return true;
+      case Keys.SPACE:
+        if (dodge_available) {
+          if (dodged_up) {
+            walkDirection.sub(Vector2Utils.DODGE_UP);
+            dodged_up = false;
+          } else if (dodged_left) {
+            walkDirection.sub(Vector2Utils.DODGE_LEFT);
+            dodged_left = false;
+          } else if (dodged_down) {
+            walkDirection.sub(Vector2Utils.DODGE_DOWN);
+            dodged_down = false;
+          } else if (dodged_right) {
+            walkDirection.sub(Vector2Utils.DODGE_RIGHT);
+            dodged_right = false;
+          }
+          triggerWalkEvent();
+          dodge();
+        }
       default:
         return false;
     }
@@ -178,5 +216,26 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     } else {
       entity.getEvents().trigger("walk", walkDirection);
     }
+  }
+  private void triggerDodgeEvent() {
+    entity.getEvents().trigger("walk", walkDirection);
+    java.util.TimerTask stopDodge = new java.util.TimerTask() {
+      @Override
+      public void run() {
+        entity.getEvents().trigger("walkStop");
+      }
+    };
+    new java.util.Timer().schedule(stopDodge, 100);
+  }
+  private void dodge() {
+    dodge_available = false;
+    java.util.TimerTask makeDodgeAvailable = new java.util.TimerTask() {
+      @Override
+      public void run() {
+        entity.getEvents().trigger("dodge");
+        dodge_available = true;
+      }
+    };
+    new java.util.Timer().schedule(makeDodgeAvailable, 3000);
   }
 }

@@ -1,4 +1,4 @@
-package com.csse3200.game.entities.buildables;
+package com.csse3200.game.components.buildables;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

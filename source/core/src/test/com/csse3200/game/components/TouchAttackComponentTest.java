@@ -69,7 +69,7 @@ class TouchAttackComponentTest {
     Entity entity =
         new Entity()
             .addComponent(new TouchAttackComponent(targetLayer))
-            .addComponent(new CombatStatsComponent(0, 10))
+            .addComponent(new CombatStatsComponent(0, 10, 1, false))
             .addComponent(new PhysicsComponent())
             .addComponent(new HitboxComponent());
     entity.create();
@@ -79,7 +79,7 @@ class TouchAttackComponentTest {
   Entity createTarget(short layer) {
     Entity target =
         new Entity()
-            .addComponent(new CombatStatsComponent(10, 0))
+            .addComponent(new CombatStatsComponent(10, 0, 1, false))
             .addComponent(new PhysicsComponent())
             .addComponent(new HitboxComponent().setLayer(layer));
     target.create();

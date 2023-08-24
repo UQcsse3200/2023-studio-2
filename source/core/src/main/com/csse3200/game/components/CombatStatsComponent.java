@@ -13,10 +13,14 @@ public class CombatStatsComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
   private int health;
   private int baseAttack;
+  private int attackMultiplier;
+  private Boolean isImmune;
 
-  public CombatStatsComponent(int health, int baseAttack) {
+  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune) {
     setHealth(health);
     setBaseAttack(baseAttack);
+    setAttackMultiplier(attackMultiplier);
+    setImmunity(isImmune);
   }
 
   /**
@@ -84,8 +88,35 @@ public class CombatStatsComponent extends Component {
     }
   }
 
+  public int getAttackMultiplier() {
+    return attackMultiplier;
+  }
+
+  public void setAttackMultiplier(int attackMultiplier) {
+    this.attackMultiplier = attackMultiplier;
+  }
+
+  public Boolean getImmunity() {
+    return isImmune;
+  }
+
+  public void setImmunity(boolean isImmune) {
+    this.isImmune = isImmune;
+  }
+
+  public void changeImmunityStatus() {
+    this.isImmune = !this.getImmunity();
+  }
+
+  public int getAttack() {
+    return getBaseAttack() * getAttackMultiplier();
+  }
+
   public void hit(CombatStatsComponent attacker) {
-    int newHealth = getHealth() - attacker.getBaseAttack();
+    if (getImmunity()) {
+      return;
+    }
+    int newHealth = getHealth() - attacker.getAttack();
     setHealth(newHealth);
   }
 }

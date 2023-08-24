@@ -1,6 +1,7 @@
 package com.csse3200.game.components;
 
-import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.Entity;
+
 
 /**
  * Represents a power-up component within the game. This will be extended
@@ -9,26 +10,31 @@ import com.csse3200.game.entities.factories.PlayerFactory;
 public class PowerupComponent extends Component {
 
     private PowerupType type;
-    private float modifier;
+    private double modifier;
 
     /**
      * Constructor for the PowerupComponent.
      */
-    public PowerupComponent(PowerupType type, float modifier) {
+    public PowerupComponent(PowerupType type, double modifier) {
         this.type = type;
         this.modifier = modifier;
     }
 
-    // TBD - playerstats required
-    // public void applyEffect(Player player) {
-    //      System.out.println("Applying effect");
-    // }
+    // applies type effect
+    public void applyEffect(Entity target) {
+        CombatStatsComponent playerStats = target.getComponent(CombatStatsComponent.class);
+        switch (type) {
+            case HEALTH_BOOST:
+                playerStats.addHealth((int) modifier);
+                break;
+        }
+    }
     
     public PowerupType getType() {
         return type;
     }
     
-    public float getModifier() {
+    public double getModifier() {
         return modifier;
     }
     
@@ -36,7 +42,7 @@ public class PowerupComponent extends Component {
         this.type = type;
     }
     
-    public void setModifier(float modifier) {
+    public void setModifier(double modifier) {
         this.modifier = modifier;
     }
 }

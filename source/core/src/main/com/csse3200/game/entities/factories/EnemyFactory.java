@@ -49,7 +49,22 @@ public class EnemyFactory {
    * @return entity
    */
   public static Entity createEnemy(ArrayList<Entity> targets, EnemyType type) {
-    Entity enemy = createBaseEnemy(targets);
+
+    Entity enemy = createBaseEnemy();
+
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+
+    if (type == EnemyType.Melee) {
+      for (Entity i : targets) {
+        aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+      }
+    } else {
+      for (Entity i : targets) {
+        aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+      }
+    }
     EnemyConfig config = configs.GetEnemyConfig(type);
 
     AnimationRenderComponent animator =
@@ -61,7 +76,8 @@ public class EnemyFactory {
     enemy
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
         .addComponent(animator)
-        .addComponent(new GhostAnimationController());
+        .addComponent(new GhostAnimationController())
+        .addComponent(aiComponent);    // adds tasks depending on enemy type
 
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 
@@ -76,7 +92,22 @@ public class EnemyFactory {
    * @return entity
    */
   public static Entity createBoss(ArrayList<Entity> targets, BossType type) {
-    Entity boss = createBaseEnemy(targets);
+    Entity boss = createBaseEnemy();
+
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+
+    if (type == BossType.Melee) {
+      for (Entity i : targets) {
+        aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+      }
+    } else {
+      for (Entity i : targets) {
+        aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+      }
+    }
+
     BossConfig config = configs.GetBossConfig(type);
 
     AnimationRenderComponent animator =
@@ -89,7 +120,8 @@ public class EnemyFactory {
     boss
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
         .addComponent(animator)
-        .addComponent(new GhostAnimationController());
+        .addComponent(new GhostAnimationController())
+        .addComponent(aiComponent);
 
     boss.getComponent(AnimationRenderComponent.class).scaleEntity();
     return boss;
@@ -100,15 +132,7 @@ public class EnemyFactory {
    *
    * @return entity
    */
-  public static Entity createBaseEnemy(ArrayList<Entity> targets) {
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
-
-    // Add all the targets
-    for (Entity i : targets) {
-      aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
-    }
+  public static Entity createBaseEnemy() {
 
     Entity enemy =
         new Entity()
@@ -120,8 +144,8 @@ public class EnemyFactory {
                     PhysicsLayer.PLAYER |
                     PhysicsLayer.WALL |
                     PhysicsLayer.STRUCTURE),
-                    1.5f))
-            .addComponent(aiComponent);
+                    1.5f));
+
 
     PhysicsUtils.setScaledCollider(enemy, 0.9f, 0.4f);
     return enemy;

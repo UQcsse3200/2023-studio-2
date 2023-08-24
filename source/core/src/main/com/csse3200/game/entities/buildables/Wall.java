@@ -3,6 +3,7 @@ package com.csse3200.game.entities.buildables;
 //import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.buildables.WallStatsDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WallConfig;
 //import com.csse3200.game.input.InputComponent;

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 class CombatStatsComponentTest {
   @Test
   void shouldSetGetHealth() {
-    CombatStatsComponent combat = new CombatStatsComponent(100, 20);
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 1, false);
     assertEquals(100, combat.getHealth());
 
     combat.setHealth(150);
@@ -23,7 +23,7 @@ class CombatStatsComponentTest {
 
   @Test
   void shouldCheckIsDead() {
-    CombatStatsComponent combat = new CombatStatsComponent(100, 20);
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 1, false);
     assertFalse(combat.isDead());
 
     combat.setHealth(0);
@@ -32,7 +32,7 @@ class CombatStatsComponentTest {
 
   @Test
   void shouldAddHealth() {
-    CombatStatsComponent combat = new CombatStatsComponent(100, 20);
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 1, false);
     combat.addHealth(-500);
     assertEquals(0, combat.getHealth());
 
@@ -43,7 +43,7 @@ class CombatStatsComponentTest {
 
   @Test
   void shouldSetGetBaseAttack() {
-    CombatStatsComponent combat = new CombatStatsComponent(100, 20);
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 1, false);
     assertEquals(20, combat.getBaseAttack());
 
     combat.setBaseAttack(150);

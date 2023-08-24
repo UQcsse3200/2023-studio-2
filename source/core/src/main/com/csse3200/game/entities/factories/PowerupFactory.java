@@ -1,6 +1,8 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.PowerupComponent;
+import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -11,30 +13,28 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 public class PowerupFactory {
 
     /**
-     * Creates a base powerup entity with a texture render component (image of health powerup),
-     * a physics component, and a hitbox component set to PLAYER layer.
+     * Creates a powerup entity based on the specified type. The entity will have a texture render component
+     * representing the image of the powerup, a physics component, and a hitbox component set to PLAYER layer.
      *
-     * @return Entity representing the base powerup.
-     *
-     * REF: https://cdn.apexminecrafthosting.com/img/uploads/2020/11/27214702/splash-potion-large.png
+     * @param type The type of powerup to create.
+     * @return Entity representing the powerup.
+     * 
+     * 
      */
-    public static Entity createBasePowerup() {
+    public static Entity createPowerup(PowerupType type, double modifier) {
         Entity powerup = new Entity()
-                .addComponent(new TextureRenderComponent("images/healthpowerup.png"))
-                .addComponent(new PhysicsComponent())
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
+                .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+                .addComponent(new PowerupComponent(type, modifier)); // temporary
+
+        // todo: Add switch cases for texture render component for various textures between powerups
+
         return powerup;
     }
 
-    /**
-     * Creates a speed boost powerup entity. Currently, it returns the same entity
-     * as the base powerup. This may be changed in future to include additional
-     * components or properties specific to the speed boost.
-     *
-     * @return Entity representing the speed boost powerup.
-     */
-    public static Entity createSpeedBoostPowerup() {
-        // Just returns the base Powerup for now...
-        return createBasePowerup();
+    public static Entity createHealthPowerup() {
+        Entity healthPowerup = createPowerup(PowerupType.HEALTH_BOOST, 100)
+                .addComponent(new TextureRenderComponent("images/healthpowerup.png"));
+        return healthPowerup;
     }
 }

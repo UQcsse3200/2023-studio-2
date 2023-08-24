@@ -32,6 +32,7 @@ public class SettingsMenuDisplay extends UIComponent {
   private CheckBox fullScreenCheck;
   private CheckBox vsyncCheck;
   private Slider uiScaleSlider;
+  private Slider musicVolumeSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
 
   public SettingsMenuDisplay(GdxGame game) {
@@ -85,6 +86,11 @@ public class SettingsMenuDisplay extends UIComponent {
     uiScaleSlider.setValue(settings.uiScale);
     Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin);
 
+    Label musicVolumeLabel = new Label("Music Volume:", skin);
+    musicVolumeSlider = new Slider(0f, 1f, 0.05f, false, skin);
+    musicVolumeSlider.setValue(settings.musicVolume);
+    Label musicVolumeValue = new Label(String.format("%.0f%%", settings.musicVolume), skin);
+
     Label displayModeLabel = new Label("Resolution:", skin);
     displayModeSelect = new SelectBox<>(skin);
     Monitor selectedMonitor = Gdx.graphics.getMonitor();
@@ -114,6 +120,14 @@ public class SettingsMenuDisplay extends UIComponent {
     table.add(uiScaleTable).left();
 
     table.row().padTop(10f);
+    Table musicVolumeTable = new Table();
+    musicVolumeTable.add(musicVolumeSlider).width(100).left();
+    musicVolumeTable.add(musicVolumeValue).left().padLeft(5f).expandX();
+
+    table.add(musicVolumeLabel).right().padRight(15f);
+    table.add(musicVolumeTable).left();
+
+    table.row().padTop(10f);
     table.add(displayModeLabel).right().padRight(15f);
     table.add(displayModeSelect).left();
 
@@ -124,6 +138,13 @@ public class SettingsMenuDisplay extends UIComponent {
           uiScaleValue.setText(String.format("%.2fx", value));
           return true;
         });
+
+    musicVolumeSlider.addListener(
+            (Event event) -> {
+              float value = musicVolumeSlider.getValue();
+              musicVolumeValue.setText(String.format("%.0f%%", value * 100));
+              return true;
+            });
 
     return table;
   }
@@ -196,6 +217,7 @@ public class SettingsMenuDisplay extends UIComponent {
     settings.uiScale = uiScaleSlider.getValue();
     settings.displayMode = new DisplaySettings(displayModeSelect.getSelected().object);
     settings.vsync = vsyncCheck.isChecked();
+    settings.musicVolume = musicVolumeSlider.getValue();
 
     UserSettings.set(settings, true);
   }

@@ -8,11 +8,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
 import java.awt.*;
 
+/**
+ * A ui component for displaying a walls health on top of its location on the map.
+ */
 public class WallStatsDisplay extends UIComponent {
     private static final float SCALE_REDUCTION = 1000;
     Table table;
@@ -20,7 +24,7 @@ public class WallStatsDisplay extends UIComponent {
     private Label healthLabel;
 
     /**
-     * Creates reusable ui styles and adds actors to the stage.
+     * Creates reusable ui styles and adds actors to map
      */
     @Override
     public void create() {
@@ -36,12 +40,12 @@ public class WallStatsDisplay extends UIComponent {
     }
 
     /**
-     * Creates actors and positions them on the stage using a table.
+     * Creates actors and positions them on the map using a table.
      * @see Table for positioning options
      */
     private void addActors() {
         table = new Table();
-        table.setPosition(entity.getCenterPosition().x, entity.getCenterPosition().y);
+        updateUIPosition();
 
         // Heart image
         float heartSideLength = 20f;
@@ -56,6 +60,14 @@ public class WallStatsDisplay extends UIComponent {
         table.add(healthLabel);
     }
 
+    /**
+     * Override the draw method in order to make text display smaller on the map.
+     * Does this by making the projectionMatrix a smaller scale when drawing the
+     * UI components, before reverting to the original projectionMatrix after.
+     *
+     * @param batch the SpriteBatch being used to render the table.
+     * @see RenderComponent for default implementation
+     */
     @Override
     public void draw(SpriteBatch batch)  {
         Matrix4 originalMatrix = batch.getProjectionMatrix().cpy(); // cpy() needed to properly set afterwards because calling set() seems to modify kept matrix, not replaces it
@@ -70,10 +82,20 @@ public class WallStatsDisplay extends UIComponent {
         batch.setProjectionMatrix(originalMatrix); //revert projection
     }
 
+    /**
+     * Returns the scale the projection matrix should now use for the height.
+     *
+     * @return the height scale to use when drawing the health info.
+     */
     public float getHeightUnitsInPixel() {
         return 20f / SCALE_REDUCTION;
     }
 
+    /**
+     * Returns the scale the projection matrix should now use for the width.
+     *
+     * @return the width scale to use when drawing the health info.
+     */
     public float getWidthUnitsInPixel() {
         return 20f / SCALE_REDUCTION;
     }

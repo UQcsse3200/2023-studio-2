@@ -12,6 +12,7 @@ import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -92,11 +93,12 @@ public class ForestGameArea extends GameArea {
 
   private List<Entity> spawnWalls() {
     List<Entity> walls = new ArrayList<Entity>();
+    StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
 
     Entity wall = ObstacleFactory.createCustomWall(WallType.basic);
     Entity intermediateWall = ObstacleFactory.createCustomWall(WallType.intermediate);
-    spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
-    spawnEntityAt(intermediateWall, new GridPoint2(15, 15), false, false);
+    structurePlacementService.PlaceStructureAt(wall, new GridPoint2(10, 10), false, false);
+    structurePlacementService.PlaceStructureAt(intermediateWall, new GridPoint2(20, 15), false, false);
 
     walls.add(wall);
     walls.add(intermediateWall);

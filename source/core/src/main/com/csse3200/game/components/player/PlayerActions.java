@@ -13,7 +13,7 @@ import com.csse3200.game.components.CombatStatsComponent;
  * and when triggered should call methods within this class.
  */
 public class PlayerActions extends Component {
-  private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
+  private static Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
@@ -76,5 +76,24 @@ public class PlayerActions extends Component {
    */
   void dodged() {
     entity.getComponent(CombatStatsComponent.class).changeImmunityStatus();
+  }
+
+  /**
+   * Sets the maximum speed of the entity given x and y.
+   *
+   * @param x The horizontal speed
+   * @param y The vertical speed
+   */
+  public void setSpeed(float x, float y) {
+    MAX_SPEED = new Vector2(x, y);
+  }
+
+  /**
+   * Retrieves the players current maximum speed.
+   *
+   * @return The maximum speed in Vector2 format.
+   */
+  public Vector2 getSpeed() {
+    return MAX_SPEED;
   }
 }

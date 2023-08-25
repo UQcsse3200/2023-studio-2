@@ -27,5 +27,12 @@
     "speed": 8,
     "specialAttack": 40,
     "atlas": "images/ghostKing.atlas"
+  },
+
+  "bullet": {
+    "health": 100,
+    "baseAttack": 10,
+    "speed" : 12,
+    "atlas": "images/bullet.atlas"
   }
 }

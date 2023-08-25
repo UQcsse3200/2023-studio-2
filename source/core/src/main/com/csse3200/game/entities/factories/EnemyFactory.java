@@ -104,6 +104,7 @@ public class EnemyFactory {
       }
     } else {
       for (Entity i : targets) {
+
         aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
       }
     }

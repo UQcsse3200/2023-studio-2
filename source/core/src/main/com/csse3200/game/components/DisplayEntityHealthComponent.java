@@ -14,7 +14,6 @@ import com.csse3200.game.ui.UIComponent;
  */
 public class DisplayEntityHealthComponent extends UIComponent {
     private static final float SCALE_REDUCTION = 70;
-    private static final float PADDING = 5;
     private final boolean center;
     private final float offsetX;
     private final float offsetY;
@@ -41,7 +40,7 @@ public class DisplayEntityHealthComponent extends UIComponent {
         healthBar = new ProgressBar(0, getCombatStatsComponent().getMaxHealth(), 1, false, skin);
         updateWallHealthUI(getCombatStatsComponent().getHealth());
         healthBar.setColor(new Color(0, 1, 0, 1));
-        healthBar.setWidth(SCALE_REDUCTION - (PADDING * 2));
+        healthBar.setWidth(SCALE_REDUCTION - (10));
         updateUIPosition();
 
         entity.getEvents().addListener("updateHealth", this::updateWallHealthUI);
@@ -68,10 +67,10 @@ public class DisplayEntityHealthComponent extends UIComponent {
             yPos += entity.getPosition().y;
         }
 
-        var position = new Vector3(entity.getPosition().x + offsetX, yPos, 0);
+        var position = new Vector3(entity.getCenterPosition().x + offsetX, yPos, 0);
         position.scl(SCALE_REDUCTION);
         updateWallHealthUI(100);
-        healthBar.setPosition(position.x + PADDING, position.y - centerOffset);
+        healthBar.setPosition(position.x - healthBar.getWidth()/2, position.y - centerOffset);
     }
 
     /**

@@ -3,7 +3,7 @@ package com.csse3200.game.entities.buildables;
 //import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.buildables.WallStatsDisplay;
+import com.csse3200.game.components.DisplayEntityHealthComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WallConfig;
 //import com.csse3200.game.input.InputComponent;
@@ -39,7 +39,7 @@ public class Wall extends Entity {
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         addComponent(new CombatStatsComponent(config.health, 0));
-        addComponent(new WallStatsDisplay());
+        addComponent(new DisplayEntityHealthComponent());
 
         setScale(1f, 1f);
         getComponent(TextureRenderComponent.class).scaleEntity();

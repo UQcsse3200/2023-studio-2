@@ -35,7 +35,7 @@ public class DamageTextureComponent extends RenderComponent {
 
     /**
      * Add a texture with a given threshold such that if
-     * health <= threshold then the texture will show.
+     * health &lt;= threshold then the texture will show.
      * @param threshold Threshold to show texture at
      * @param texturePath Path to texture to be displayed
      * @return current DamageTextureComponent to allow for chaining
@@ -46,7 +46,7 @@ public class DamageTextureComponent extends RenderComponent {
 
     /**
      * Add a texture with a given threshold such that if
-     * health <= threshold then the texture will show.
+     * health &lt;= threshold then the texture will show.
      * @param threshold Threshold to show texture at
      * @param texture Texture to be displayed
      * @return current DamageTextureComponent to allow for chaining

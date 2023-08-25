@@ -774,13 +774,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/GameState.html" class="type-name-link" title="class in com.csse3200.game.services">GameState</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
 <dd>
-<div class="block">Represents the current state of the game and facilitates state transitions
- while ensuring thread safety.</div>
+<div class="block">Represents the current state of the game whilst ensuring thread safety.</div>
 </dd>
 <dt><a href="com/csse3200/game/services/GameState.html#%3Cinit%3E()" class="member-name-link">GameState()</a> - Constructor for class com.csse3200.game.services.<a href="com/csse3200/game/services/GameState.html" title="class in com.csse3200.game.services">GameState</a></dt>
-<dd>
-<div class="block">Initializes a new GameState instance.</div>
-</dd>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/GameState.StateChangeListener.html" class="type-name-link" title="interface in com.csse3200.game.services">GameState.StateChangeListener</a> - Interface in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
 <dd>
 <div class="block">Callback interface to be implemented by classes interested in
@@ -807,6 +804,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/utils/SortedIntMap.html#get(int)" class="member-name-link">get(int)</a> - Method in class com.csse3200.game.utils.<a href="com/csse3200/game/utils/SortedIntMap.html" title="class in com.csse3200.game.utils">SortedIntMap</a></dt>
 <dd>
 <div class="block">Get value from map</div>
+</dd>
+<dt><a href="com/csse3200/game/services/GameState.html#get(java.lang.String)" class="member-name-link">get(String)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameState.html" title="class in com.csse3200.game.services">GameState</a></dt>
+<dd>
+<div class="block">Retrieves the value corresponding to the input key from the current state data.</div>
 </dd>
 <dt><a href="com/csse3200/game/rendering/DebugRenderer.html#getActive()" class="member-name-link">getActive()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/DebugRenderer.html" title="class in com.csse3200.game.rendering">DebugRenderer</a></dt>
 <dd>&nbsp;</dd>
@@ -960,10 +961,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/RenderService.html#getStage()" class="member-name-link">getStage()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/services/GameState.html#getStateData()" class="member-name-link">getStateData()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameState.html" title="class in com.csse3200.game.services">GameState</a></dt>
-<dd>
-<div class="block">Retrieves a safe, immutable copy of the current state data.</div>
-</dd>
 <dt><a href="com/csse3200/game/ai/tasks/DefaultTask.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/tasks/Task.html#getStatus()" class="member-name-link">getStatus()</a> - Method in interface com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></dt>
@@ -1388,7 +1385,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/utils/math/Vector2Utils.html#ONE" class="member-name-link">ONE</a> - Static variable in class com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/Vector2Utils.html" title="class in com.csse3200.game.utils.math">Vector2Utils</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/services/GameState.StateChangeListener.html#onStateChange(java.util.Map)" class="member-name-link">onStateChange(Map&lt;String, Object&gt;)</a> - Method in interface com.csse3200.game.services.<a href="com/csse3200/game/services/GameState.StateChangeListener.html" title="interface in com.csse3200.game.services">GameState.StateChangeListener</a></dt>
+<dt><a href="com/csse3200/game/services/GameState.StateChangeListener.html#onStateChange(java.util.concurrent.ConcurrentHashMap)" class="member-name-link">onStateChange(ConcurrentHashMap&lt;String, Object&gt;)</a> - Method in interface com.csse3200.game.services.<a href="com/csse3200/game/services/GameState.StateChangeListener.html" title="interface in com.csse3200.game.services">GameState.StateChangeListener</a></dt>
 <dd>
 <div class="block">Callback method triggered when the state changes.</div>
 </dd>
@@ -1542,6 +1539,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/utils/SortedIntMap.html#put(int,V)" class="member-name-link">put(int, V)</a> - Method in class com.csse3200.game.utils.<a href="com/csse3200/game/utils/SortedIntMap.html" title="class in com.csse3200.game.utils">SortedIntMap</a></dt>
 <dd>
 <div class="block">Put key, value pair in map</div>
+</dd>
+<dt><a href="com/csse3200/game/services/GameState.html#put(java.lang.String,java.lang.Object)" class="member-name-link">put(String, Object)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameState.html" title="class in com.csse3200.game.services">GameState</a></dt>
+<dd>
+<div class="block">Add or update the state data and trigger the state change callbacks.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:R">R</h2>
@@ -1879,10 +1880,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/rendering/RenderService.html#setStage(com.badlogic.gdx.scenes.scene2d.Stage)" class="member-name-link">setStage(Stage)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/services/GameState.html#setStateData(java.util.Map)" class="member-name-link">setStateData(Map&lt;String, Object&gt;)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameState.html" title="class in com.csse3200.game.services">GameState</a></dt>
-<dd>
-<div class="block">Sets the new state data and triggers the state change callbacks.</div>
-</dd>
 <dt><a href="com/csse3200/game/ai/movement/MovementController.html#setTarget(com.badlogic.gdx.math.Vector2)" class="member-name-link">setTarget(Vector2)</a> - Method in interface com.csse3200.game.ai.movement.<a href="com/csse3200/game/ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/MovementTask.html#setTarget(com.badlogic.gdx.math.Vector2)" class="member-name-link">setTarget(Vector2)</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/MovementTask.html" title="class in com.csse3200.game.components.tasks">MovementTask</a></dt>

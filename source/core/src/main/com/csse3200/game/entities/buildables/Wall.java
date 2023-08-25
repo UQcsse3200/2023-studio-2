@@ -39,7 +39,7 @@ public class Wall extends Entity {
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         addComponent(new CombatStatsComponent(config.health, 0));
-        addComponent(new DisplayEntityHealthComponent());
+        addComponent(new DisplayEntityHealthComponent(true, 0,0));
 
         setScale(1f, 1f);
         getComponent(TextureRenderComponent.class).scaleEntity();

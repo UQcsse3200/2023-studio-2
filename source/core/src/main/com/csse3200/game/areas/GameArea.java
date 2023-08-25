@@ -44,6 +44,11 @@ public abstract class GameArea implements Disposable {
     structurePlacementService = new StructurePlacementService(handler);
     ServiceLocator.registerStructurePlacementService(structurePlacementService);
     handler.addListener("spawnExtractor", this::spawnExtractor);
+    handler.addListener("placeStructure", this::spawnEntity);
+    handler.addListener("placeStructureAt",
+            (StructurePlacementService.PlaceStructureAtArgs args) ->
+                    spawnEntityAt(args.entity, args.tilePos, args.centerX, args.centerY)
+    );
   }
 
   /**

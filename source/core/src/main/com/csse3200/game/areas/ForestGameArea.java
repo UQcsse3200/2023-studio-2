@@ -9,6 +9,7 @@ import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.enemies.BossType;
+import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
@@ -174,13 +175,13 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < NUM_MELEE_ENEMIES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee);
+      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTB);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
     for (int i = 0; i < NUM_RANGE_ENEMIES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged);
+      Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTB);
       spawnEntityAt(ranged, randomPos, true, true);
     }
   }

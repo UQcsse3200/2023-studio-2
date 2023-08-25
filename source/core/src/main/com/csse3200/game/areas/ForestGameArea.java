@@ -74,7 +74,7 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
-    // spawnPowerup();  // uncomment to spawn powerups
+    spawnPowerup();  // uncomment to spawn powerups
 
     playMusic();
   }

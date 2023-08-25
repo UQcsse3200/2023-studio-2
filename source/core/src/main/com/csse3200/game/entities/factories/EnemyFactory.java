@@ -13,6 +13,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.BossConfig;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
+import com.csse3200.game.entities.enemies.BossBehaviour;
 import com.csse3200.game.entities.enemies.BossType;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
@@ -115,25 +116,36 @@ public class EnemyFactory {
    * @param type type of enemy - melee or ranged
    * @return entity
    */
-  public static Entity createBoss(ArrayList<Entity> targets, BossType type) {
+  public static Entity createBoss(ArrayList<Entity> targets, BossType type, BossBehaviour behaviour) {
     Entity boss = createBaseEnemy();
 
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
-    if (type == BossType.Melee) {
+    if (type == BossType.Ranged) {
       for (Entity i : targets) {
-        aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
-
-
+        if(i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER){
+          aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+        } else {
+          aiComponent.addTask(new ChaseTask(i, 0, 3f, 4f));
+        }
       }
     } else {
       for (Entity i : targets) {
-
-        aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
-
-
+        if (behaviour == BossBehaviour.PTB) {
+          if (i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
+            aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+          } else {
+            aiComponent.addTask(new ChaseTask(i, 5, 3f, 4f));
+          }
+        } else {
+          if ( i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+            aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+          } else {
+            aiComponent.addTask(new ChaseTask(i, 5, 3f, 4f));
+          }
+        }
       }
     }
 

@@ -8,6 +8,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.buildables.WallType;
+import com.csse3200.game.entities.enemies.BossBehaviour;
 import com.csse3200.game.entities.enemies.BossType;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
@@ -191,7 +192,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity boss = EnemyFactory.createBoss(targetables, BossType.Melee);
+    Entity boss = EnemyFactory.createBoss(targetables, BossType.Melee, BossBehaviour.PTB);
     spawnEntityAt(boss, randomPos, true, true);
   }
 

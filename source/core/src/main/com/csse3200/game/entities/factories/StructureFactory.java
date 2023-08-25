@@ -7,6 +7,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
@@ -26,6 +27,7 @@ public class StructureFactory {
                         .addTexture(20, "images/broken_elixir_collector.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new CombatStatsComponent(health, 0))
                 .addComponent(new ProductionComponent(producedResource, tickRate, tickSize));
         extractor.setScale(1.8f, 2f);

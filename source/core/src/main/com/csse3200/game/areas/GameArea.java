@@ -34,6 +34,11 @@ public abstract class GameArea implements Disposable {
     }
   }
 
+  /** Register an event handler for structure placement related operations */
+  protected void registerStructureHandlers() {
+
+  }
+
   /**
    * Spawn entity at its current position
    *

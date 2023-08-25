@@ -234,30 +234,32 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   /**
-   * Triggers dodge event
+   * Triggers dodge event.
+   * Immunity is applied for 200 milliseconds whilst player moves.
    */
   private void triggerDodgeEvent() {
     entity.getEvents().trigger("walk", walkDirection);
+    entity.getEvents().trigger("dodged");
     java.util.TimerTask stopDodge = new java.util.TimerTask() {
       @Override
       public void run() {
         entity.getEvents().trigger("walkStop");
+        entity.getEvents().trigger("dodged");
       }
     };
-    new java.util.Timer().schedule(stopDodge, 100);
+    new java.util.Timer().schedule(stopDodge, 200);
   }
 
   /**
    * Responsible for dodge action
-   * Triggers when the spacebar is clicked
-   * Cooldown of 3s
+   * Triggers when the spacebar is clicked.
+   * Cooldown of 3s.
    */
   private void dodge() {
     dodge_available = false;
     java.util.TimerTask makeDodgeAvailable = new java.util.TimerTask() {
       @Override
       public void run() {
-        entity.getEvents().trigger("dodge");
         dodge_available = true;
       }
     };

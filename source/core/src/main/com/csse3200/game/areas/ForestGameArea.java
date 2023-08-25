@@ -1,11 +1,13 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
@@ -17,6 +19,9 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -47,6 +52,7 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
+  private static EntityService mapEntities = new EntityService();
 
   private final TerrainFactory terrainFactory;
 
@@ -66,7 +72,6 @@ public class ForestGameArea extends GameArea {
   @Override
   public void create() {
     loadAssets();
-
     displayUI();
 
     spawnTerrain();
@@ -139,9 +144,13 @@ public class ForestGameArea extends GameArea {
     for (int i = 0; i < 5; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity powerup = PowerupFactory.createHealthPowerup();
+      //mapEntities.add(powerup);
+      mapEntities.register(powerup);
       spawnEntityAt(powerup, randomPos, true, false);
     }
   }
+
+
 
   private void spawnGhosts() {
     GridPoint2 minPos = new GridPoint2(0, 0);
@@ -150,6 +159,7 @@ public class ForestGameArea extends GameArea {
     for (int i = 0; i < NUM_GHOSTS; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity ghost = NPCFactory.createGhost(player);
+      mapEntities.register(ghost);
       spawnEntityAt(ghost, randomPos, true, true);
     }
   }
@@ -160,6 +170,7 @@ public class ForestGameArea extends GameArea {
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
     Entity ghostKing = NPCFactory.createGhostKing(player);
+    mapEntities.register(ghostKing);
     spawnEntityAt(ghostKing, randomPos, true, true);
   }
 
@@ -191,6 +202,12 @@ public class ForestGameArea extends GameArea {
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
     resourceService.unloadAssets(forestMusic);
+  }
+
+  public static void removeEntity(Entity entity) {
+    entity.setEnabled(false);
+    mapEntities.unregister(entity);
+    Gdx.app.postRunnable(entity::dispose);
   }
 
   @Override

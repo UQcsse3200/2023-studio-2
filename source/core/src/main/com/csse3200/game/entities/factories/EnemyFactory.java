@@ -14,6 +14,7 @@ import com.csse3200.game.entities.configs.BossConfig;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.entities.enemies.BossType;
+import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -48,7 +49,8 @@ public class EnemyFactory {
    * @param type type of enemy - melee or ranged
    * @return entity
    */
-  public static Entity createEnemy(ArrayList<Entity> targets, EnemyType type) {
+  public static Entity createEnemy(ArrayList<Entity> targets, EnemyType type, EnemyBehaviour behaviour) {
+
 
     Entity enemy = createBaseEnemy();
 
@@ -56,15 +58,37 @@ public class EnemyFactory {
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
-    if (type == EnemyType.Melee) {
+
+    if (type == EnemyType.Ranged) {
       for (Entity i : targets) {
-        aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
-      }
-    } else {
-      for (Entity i : targets) {
-        aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+        if(i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER){
+          aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+        }
+        else{
+          aiComponent.addTask(new ChaseTask(i, 0, 3f, 4f));
+        }
       }
     }
+
+    else {
+      for (Entity i : targets) {
+        if (behaviour == EnemyBehaviour.PTB) {
+          if (i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
+            aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+          } else {
+            aiComponent.addTask(new ChaseTask(i, 5, 3f, 4f));
+          }
+        } else {
+          if ( i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+            aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+          } else {
+            aiComponent.addTask(new ChaseTask(i, 5, 3f, 4f));
+          }
+        }
+      }
+    }
+
+
     EnemyConfig config = configs.GetEnemyConfig(type);
 
     AnimationRenderComponent animator =
@@ -101,10 +125,14 @@ public class EnemyFactory {
     if (type == BossType.Melee) {
       for (Entity i : targets) {
         aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+
+
       }
     } else {
       for (Entity i : targets) {
         aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+
+
       }
     }
 

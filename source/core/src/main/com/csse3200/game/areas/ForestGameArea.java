@@ -12,6 +12,12 @@ import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.PowerupFactory;
+import com.csse3200.game.entities.buildables.WallType;
+import com.csse3200.game.entities.factories.EnemyFactory;
+import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.StructureFactory;
+import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -27,12 +33,16 @@ import java.util.List;
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
-  private static final int NUM_GHOSTS = 2;
+  private static final int NUM_ENEMIES = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+    "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+    "images/broken_elixir_collector.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
+    "images/wall.png",
+    "images/wall2.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
@@ -55,8 +65,7 @@ public class ForestGameArea extends GameArea {
   private static EntityService mapEntities = new EntityService();
 
   private final TerrainFactory terrainFactory;
-
-  private Entity player;
+  private final ArrayList<Entity> targetables;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -66,6 +75,7 @@ public class ForestGameArea extends GameArea {
   public ForestGameArea(TerrainFactory terrainFactory) {
     super();
     this.terrainFactory = terrainFactory;
+    this.targetables = new ArrayList<>();
   }
 
   /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -76,13 +86,37 @@ public class ForestGameArea extends GameArea {
 
     spawnTerrain();
     spawnTrees();
-    player = spawnPlayer();
-    spawnGhosts();
-    spawnGhostKing();
-    spawnPowerup();  // uncomment to spawn powerups
+    spawnPowerup();
+    spawnExtractors();
+    spawnPlayer();
+    spawnEnemies();
+    spawnBoss();
+    spawnWalls();
 
     playMusic();
   }
+
+  private List<Entity> spawnWalls() {
+    List<Entity> walls = new ArrayList<Entity>();
+
+    Entity wall = ObstacleFactory.createCustomWall(WallType.basic);
+    Entity intermediateWall = ObstacleFactory.createCustomWall(WallType.intermediate);
+    spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
+    spawnEntityAt(intermediateWall, new GridPoint2(15, 15), false, false);
+
+    walls.add(wall);
+    walls.add(intermediateWall);
+
+    return walls;
+  }
+
+
+  private void spawnExtractors() {
+    GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
+    Entity extractor = StructureFactory.createExtractor();
+    spawnEntityAt(extractor, pos, true, false);
+  }
+
 
   private void displayUI() {
     Entity ui = new Entity();
@@ -131,10 +165,10 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private Entity spawnPlayer() {
+  private void spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-    return newPlayer;
+    targetables.add(newPlayer);
   }
 
   private void spawnPowerup() {
@@ -150,34 +184,32 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-
-
-  private void spawnGhosts() {
+  private void spawnEnemies() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < NUM_GHOSTS; i++) {
+    for (int i = 0; i < NUM_ENEMIES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = NPCFactory.createGhost(player);
-      mapEntities.register(ghost);
+      Entity ghost = EnemyFactory.createMeleeEnemy(targetables);
       spawnEntityAt(ghost, randomPos, true, true);
     }
   }
 
-  private void spawnGhostKing() {
+  private void spawnBoss() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity ghostKing = NPCFactory.createGhostKing(player);
-    mapEntities.register(ghostKing);
-    spawnEntityAt(ghostKing, randomPos, true, true);
+    Entity boss = EnemyFactory.createBoss(targetables);
+    spawnEntityAt(boss, randomPos, true, true);
   }
 
   private void playMusic() {
+    UserSettings.Settings settings = UserSettings.get();
+
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
-    music.setVolume(0.3f);
+    music.setVolume(settings.musicVolume);
     music.play();
   }
 

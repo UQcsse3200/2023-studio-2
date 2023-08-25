@@ -30,9 +30,13 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_ENEMIES = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
+  private static final float ASTEROID_SIZE = 0.9f;
+  private static final float BOUNCE = 5.0f;
   private static final String[] forestTextures = {
+
     "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
     "images/broken_elixir_collector.png",
+          "images/meteor.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
     "images/wall.png",
@@ -84,10 +88,19 @@ public class ForestGameArea extends GameArea {
     spawnEnemies();
     spawnBoss();
     spawnWalls();
+    spawnAsteroids();
+
 
     playMusic();
   }
 
+  private void spawnAsteroids() {
+    //Extra Spicy Asteroids
+    GridPoint2 posAs = new GridPoint2(8, 8);
+    spawnEntityAt(
+            ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE, BOUNCE), posAs, false, false);
+
+  }
   private List<Entity> spawnWalls() {
     List<Entity> walls = new ArrayList<Entity>();
 
@@ -144,6 +157,7 @@ public class ForestGameArea extends GameArea {
     // Bottom
     spawnEntityAt(
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+
   }
 
   private void spawnTrees() {

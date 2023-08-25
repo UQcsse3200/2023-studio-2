@@ -48,12 +48,7 @@ public abstract class InputFactory {
    * @return Player input handler
    */
   public abstract InputComponent createForPlayer();
-  /**
-   * Creates an input handler for the companion
-   *
-   * @return Companion input handler
-   */
-  public abstract InputComponent createForCompanion();
+
   /**
    * Creates an input handler for the terminal
    *

@@ -21,11 +21,11 @@ public class PowerupFactory {
      * 
      * 
      */
-    public static Entity createPowerup(PowerupType type, double modifier) {
+    public static Entity createPowerup(PowerupType type) {
         Entity powerup = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                .addComponent(new PowerupComponent(type, PhysicsLayer.PLAYER)); // temporary
+                .addComponent(new PowerupComponent(type, PhysicsLayer.PLAYER));
 
         // todo: Add switch cases for texture render component for various textures between powerups
 
@@ -33,7 +33,7 @@ public class PowerupFactory {
     }
 
     public static Entity createHealthPowerup() {
-        Entity healthPowerup = createPowerup(PowerupType.HEALTH_BOOST, 100)
+        Entity healthPowerup = createPowerup(PowerupType.HEALTH_BOOST)
                 .addComponent(new TextureRenderComponent("images/healthpowerup.png"));
         return healthPowerup;
     }

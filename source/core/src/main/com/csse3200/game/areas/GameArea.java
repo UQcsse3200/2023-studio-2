@@ -5,7 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.StructurePlacementService;
+import jdk.jfr.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.List;
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
   protected List<Entity> areaEntities;
+  protected StructurePlacementService structurePlacementService;
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -35,7 +39,9 @@ public abstract class GameArea implements Disposable {
   }
 
   protected void registerStructurePlacementService() {
-
+    EventHandler handler = new EventHandler();
+    structurePlacementService = new StructurePlacementService(handler);
+    ServiceLocator.registerStructurePlacementService(structurePlacementService);
   }
 
   /**

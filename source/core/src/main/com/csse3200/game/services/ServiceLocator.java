@@ -25,6 +25,8 @@ public class ServiceLocator {
   private static ResourceService resourceService;
   private static GameState gameStateService;
 
+  private static StructurePlacementService structurePlacementService;
+
   public static EntityService getEntityService() {
     return entityService;
   }
@@ -50,6 +52,13 @@ public class ServiceLocator {
   }
 
   public static GameState getGameStateService() { return gameStateService; }
+
+  public static StructurePlacementService getStructurePlacementService() { return structurePlacementService; }
+
+  public static void registerStructurePlacementService(StructurePlacementService service) {
+    logger.debug("Registering stucture placement service {}", service);
+    structurePlacementService = service;
+  }
 
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);

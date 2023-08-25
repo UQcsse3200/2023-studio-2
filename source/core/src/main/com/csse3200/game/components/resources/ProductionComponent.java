@@ -32,11 +32,13 @@ public class ProductionComponent extends Component {
     @Override
     public void update() {
         super.update();
+        GameState gameState = ServiceLocator.getGameStateService();
         while (this.timer.getTimeSince(this.lastTime) >= this.tickRate) {
             this.getEntity().getEvents().trigger("produceResource", this.produces, this.tickSize);
-            Map<String, Object> gameStateData = ServiceLocator.getGameStateService().getStateData();
-            int newAmount = (int) gameStateData.getOrDefault("resource/" + this.produces.toString(), 0.0) + this.tickSize;
-            gameStateData.put("resource/" + this.produces.toString(), newAmount);
+            String resourceKey = "resource/" + this.produces.toString();
+            int currentAmount = gameState.get(resourceKey) == null ? 0 : (int) gameState.get(resourceKey);
+            int newAmount = currentAmount + this.tickSize;
+            gameState.put(resourceKey, newAmount);
             this.lastTime += this.tickRate;
         }
     }

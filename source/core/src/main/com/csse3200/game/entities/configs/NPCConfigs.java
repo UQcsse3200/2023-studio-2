@@ -13,11 +13,17 @@ public class NPCConfigs {
   public BossConfig meleeBoss = new BossConfig();
   public BossConfig rangeBoss = new BossConfig();
 
+  public BulletConfig bullet = new BulletConfig();
+
   public EnemyConfig GetEnemyConfig(EnemyType type) {
     return switch (type) {
       case Melee -> meleeEnemy;
       case Ranged -> rangeEnemy;
     };
+  }
+
+  public BulletConfig GetBulletConfig() {
+    return bullet;
   }
 
   public BossConfig GetBossConfig(BossType type) {

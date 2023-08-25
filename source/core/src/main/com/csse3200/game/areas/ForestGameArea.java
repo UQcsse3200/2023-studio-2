@@ -34,6 +34,7 @@ public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_ENEMIES = 2;
+  private static final int NUM_POWERUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -53,7 +54,8 @@ public class ForestGameArea extends GameArea {
     "images/hex_grass_3.png",
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
-    "images/healthpowerup.png",
+    "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+    "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/iso_grass_3.png"
   };
   private static final String[] forestTextureAtlases = {
@@ -86,7 +88,7 @@ public class ForestGameArea extends GameArea {
 
     spawnTerrain();
     spawnTrees();
-    spawnPowerup();
+    spawnPowerups();
     spawnExtractors();
     spawnPlayer();
     spawnEnemies();
@@ -110,13 +112,11 @@ public class ForestGameArea extends GameArea {
     return walls;
   }
 
-
   private void spawnExtractors() {
     GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
     Entity extractor = StructureFactory.createExtractor();
     spawnEntityAt(extractor, pos, true, false);
   }
-
 
   private void displayUI() {
     Entity ui = new Entity();
@@ -171,16 +171,21 @@ public class ForestGameArea extends GameArea {
     targetables.add(newPlayer);
   }
 
-  private void spawnPowerup() {
+  private void spawnPowerups() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < NUM_POWERUPS; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity powerup = PowerupFactory.createHealthPowerup();
-      //mapEntities.add(powerup);
-      mapEntities.register(powerup);
-      spawnEntityAt(powerup, randomPos, true, false);
+      GridPoint2 randomPos2 = RandomUtils.random(minPos, maxPos);
+
+      Entity healthPowerup = PowerupFactory.createHealthPowerup();
+      Entity speedPowerup = PowerupFactory.createSpeedPowerup();
+      mapEntities.register(healthPowerup);
+      mapEntities.register(speedPowerup);
+
+      spawnEntityAt(healthPowerup, randomPos, true, false);
+      spawnEntityAt(speedPowerup, randomPos2, true, false);
     }
   }
 

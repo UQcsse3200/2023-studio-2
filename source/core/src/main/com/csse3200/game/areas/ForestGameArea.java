@@ -76,6 +76,8 @@ public class ForestGameArea extends GameArea {
   public void create() {
     loadAssets();
 
+    registerStructureHandlers();
+
     displayUI();
 
     spawnTerrain();

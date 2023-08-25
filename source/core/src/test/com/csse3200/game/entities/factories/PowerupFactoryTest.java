@@ -53,7 +53,7 @@ public class PowerupFactoryTest {
         ResourceService resourceService = ServiceLocator.getResourceService();
         String[] imgs = {"images/healthpowerup.png"};
         resourceService.loadTextures(imgs);
-        Entity powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST, 100);
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
         PowerupComponent powerupComponent = powerup.getComponent(PowerupComponent.class);
 
         // Check they aren't Null
@@ -62,6 +62,5 @@ public class PowerupFactoryTest {
 
         // Ensure they do as expected
         assertEquals(PowerupType.HEALTH_BOOST, powerupComponent.getType());
-        // assertEquals(100, powerupComponent.getModifier());
     }
 }

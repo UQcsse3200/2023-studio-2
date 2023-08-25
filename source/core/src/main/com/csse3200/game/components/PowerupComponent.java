@@ -1,10 +1,14 @@
 package com.csse3200.game.components;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 
 
 /**
@@ -14,7 +18,6 @@ import com.csse3200.game.physics.components.HitboxComponent;
 public class PowerupComponent extends Component {
 
     private PowerupType type;
-    private double modifier;
     private short targetLayer;
     private CombatStatsComponent combatStats;
     private HitboxComponent hitboxComponent;
@@ -52,7 +55,7 @@ public class PowerupComponent extends Component {
         }
     }
 
-    // Applies an effect to a given entity
+    // Applies an effect to a given entity, removes powerup from game on pickup
     public void applyEffect(Entity target) {
         CombatStatsComponent playerStats =
                 target.getComponent(CombatStatsComponent.class);
@@ -61,25 +64,15 @@ public class PowerupComponent extends Component {
                 playerStats.setHealth(100);
                 break;
         }
+        ForestGameArea.removeEntity(entity);
     }
 
-    // todo
-    public void disposePowerup() {    }
-    
     public PowerupType getType() {
         return type;
     }
-    
-    public double getModifier() {
-        return modifier;
-    }
-    
+
     public void setType(PowerupType type) {
         this.type = type;
-    }
-    
-    public void setModifier(double modifier) {
-        this.modifier = modifier;
     }
 }
 

@@ -8,6 +8,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WallConfig;
 //import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
@@ -40,6 +41,8 @@ public class Wall extends Entity {
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         addComponent(new CombatStatsComponent(config.health, 0));
         addComponent(new DisplayEntityHealthComponent(true));
+
+        PhysicsUtils.setScaledCollider(this, 1f, 0.5f);
 
         setScale(1f, 1f);
         getComponent(TextureRenderComponent.class).scaleEntity();

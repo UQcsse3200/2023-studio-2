@@ -11,37 +11,49 @@ import com.csse3200.game.utils.math.Vector2Utils;
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
+
   private final Vector2 walkDirection = Vector2.Zero.cpy();
+
   private int flagW = 0;
   private int flagA = 0;
   private int flagS = 0;
   private int flagD = 0;
   private int flagMul = 0;
-  private int movFlagSum(){
+
+  /**
+   * @return int
+   */
+  private int movFlagSum() {
     return flagW + flagA + flagS + flagD;
   }
+
   private boolean dodge_available = true;
   private boolean dodged_up = false;
   private boolean dodged_left = false;
   private boolean dodged_down = false;
   private boolean dodged_right = false;
-  private void diagonal(){
+
+  /**
+   * Triggers when keys are pressed or released.
+   * Responsible for Diagonal movement when specific keys are pressed
+   */
+  private void diagonal() {
     int movFlagSum = movFlagSum();
     if (movFlagSum == 2) {
       flagMul = 1;
-      walkDirection.scl(new Vector2(0.707f,0.707f));
-    }else if (movFlagSum == 1){
-      if (flagW == 1){
+      walkDirection.scl(new Vector2(0.707f, 0.707f));
+    } else if (movFlagSum == 1) {
+      if (flagW == 1) {
         walkDirection.set(Vector2Utils.UP);
-      }else if (flagA == 1){
+      } else if (flagA == 1) {
         walkDirection.set(Vector2Utils.LEFT);
-      }else if (flagS == 1){
+      } else if (flagS == 1) {
         walkDirection.set(Vector2Utils.DOWN);
-      }else if (flagD == 1){
+      } else if (flagD == 1) {
         walkDirection.set(Vector2Utils.RIGHT);
       }
       triggerWalkEvent();
-    }else if (movFlagSum == 0){
+    } else if (movFlagSum == 0) {
       flagMul = 0;
       walkDirection.scl(0);
     }
@@ -62,44 +74,44 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     diagonal();
     switch (keycode) {
       case Keys.W:
-        flagW = 1;        
+        flagW = 1;
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.UP);
-        }else{
+        } else {
           walkDirection.add(Vector2Utils.UP);
           diagonal();
         }
         triggerWalkEvent();
         return true;
       case Keys.A:
-        flagA = 1;                
+        flagA = 1;
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.LEFT);
-        }else{
+        } else {
           walkDirection.add(Vector2Utils.LEFT);
           diagonal();
         }
         triggerWalkEvent();
         return true;
       case Keys.S:
-        flagS = 1;        
+        flagS = 1;
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.DOWN);
-        }else{
+        } else {
           walkDirection.add(Vector2Utils.DOWN);
           diagonal();
         }
         triggerWalkEvent();
         return true;
       case Keys.D:
-        flagD = 1;        
+        flagD = 1;
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.RIGHT);
-        }else{
+        } else {
           walkDirection.add(Vector2Utils.RIGHT);
           diagonal();
         }
@@ -110,7 +122,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         System.out.println("Attack");
         if (flagW == 1) {
           System.out.println("Multiple");
-      }
+        }
         return true;
       case Keys.SPACE:
         if (dodge_available) {
@@ -144,16 +156,16 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyUp(int keycode) {
     switch (keycode) {
       case Keys.W:
-          flagW = 0;
+        flagW = 0;
+        diagonal();
+        if (movFlagSum() == 2) {
           diagonal();
-          if (movFlagSum() == 2) {
-            diagonal();
-          }
-          if (movFlagSum() == 0) {
-            walkDirection.scl(0);
-          }
-          triggerWalkEvent();
-          return true;
+        }
+        if (movFlagSum() == 0) {
+          walkDirection.scl(0);
+        }
+        triggerWalkEvent();
+        return true;
       case Keys.A:
         flagA = 0;
         diagonal();
@@ -210,6 +222,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
   }
 
+  /**
+   * Triggers walk event
+   */
   private void triggerWalkEvent() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
       entity.getEvents().trigger("walkStop");
@@ -217,6 +232,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       entity.getEvents().trigger("walk", walkDirection);
     }
   }
+
+  /**
+   * Triggers dodge event
+   */
   private void triggerDodgeEvent() {
     entity.getEvents().trigger("walk", walkDirection);
     java.util.TimerTask stopDodge = new java.util.TimerTask() {
@@ -227,6 +246,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     };
     new java.util.Timer().schedule(stopDodge, 100);
   }
+
+  /**
+   * Responsible for dodge action
+   * Triggers when the spacebar is clicked
+   * Cooldown of 3s
+   */
   private void dodge() {
     dodge_available = false;
     java.util.TimerTask makeDodgeAvailable = new java.util.TimerTask() {

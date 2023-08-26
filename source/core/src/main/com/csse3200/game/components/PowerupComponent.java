@@ -1,12 +1,16 @@
 package com.csse3200.game.components;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.areas.ForestGameArea;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Represents a power-up component within the game.
@@ -88,7 +92,9 @@ public class PowerupComponent extends Component {
             default:
                 throw new IllegalArgumentException("You must specify a valid PowerupType");
         }
-        ForestGameArea.removeEntity(entity);
+        ServiceLocator.getEntityService().unregister(entity);
+        // entity.dispose();
+        Gdx.app.postRunnable(entity::dispose);
     }
 
     /**

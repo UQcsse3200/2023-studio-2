@@ -6,7 +6,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.rendering.RenderComponent;
 
 /**
@@ -93,5 +95,9 @@ public class TerrainComponent extends RenderComponent {
     ORTHOGONAL,
     ISOMETRIC,
     HEXAGONAL
+  }
+
+  public Vector3 unproject(Vector3 screenCoords) {
+    return camera.unproject(screenCoords).scl(new Vector3(1/tileSize, 1/tileSize, 1/tileSize));
   }
 }

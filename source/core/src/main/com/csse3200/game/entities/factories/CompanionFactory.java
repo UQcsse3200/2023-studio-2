@@ -38,8 +38,8 @@ public class CompanionFactory {
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new CompanionActions())
-                        .addComponent(inputComponent)
-                        .addComponent(new CompanionStatsDisplay());
+                        .addComponent(inputComponent);
+
 
         PhysicsUtils.setScaledCollider(Companion, 0.4f, 0.2f);
         Companion.getComponent(ColliderComponent.class).setDensity(1.0f);

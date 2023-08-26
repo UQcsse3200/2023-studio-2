@@ -40,25 +40,33 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
-    "images/broken_elixir_collector.png",
-    "images/box_boy_leaf.png",
-    "images/tree.png",
-    "images/wall.png",
-    "images/wall2.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-    "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-    "images/iso_grass_3.png"
+          "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+          "images/broken_elixir_collector.png",
+          "images/box_boy_leaf.png",
+          "images/tree.png",
+          "images/wall.png",
+          "images/wall2.png",
+          "images/ghost_king.png",
+          "images/ghost_1.png",
+          "images/grass_1.png",
+          "images/grass_2.png",
+          "images/grass_3.png",
+          "images/hex_grass_1.png",
+          "images/hex_grass_2.png",
+          "images/hex_grass_3.png",
+          "images/iso_grass_1.png",
+          "images/iso_grass_2.png",
+          "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+          "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+          "images/iso_grass_3.png",
+          "images/playerFrame0.png",
+          "images/playerFrame1.png",
+          "images/playerFrame2.png",
+          "images/playerFrame3.png",
+          "images/playerFrame4.png",
+          "images/playerFrame5.png",
+          "images/playerFrame6.png",
+          "images/playerFrame7.png",
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"

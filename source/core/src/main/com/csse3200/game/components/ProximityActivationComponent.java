@@ -30,11 +30,11 @@ public class ProximityActivationComponent extends Component {
     @Override
     public void update() {
         if (!isInProximity && entered != null
-                && entity.getPosition().dst(trackingEntity.getPosition()) <= radius) {
+                && entity.getCenterPosition().dst(trackingEntity.getCenterPosition()) <= radius) {
             isInProximity = true;
             entered.call(trackingEntity);
         } else if (isInProximity && exited != null
-                && entity.getPosition().dst(trackingEntity.getPosition()) > radius) {
+                && entity.getCenterPosition().dst(trackingEntity.getCenterPosition()) > radius) {
             isInProximity = false;
             exited.call(trackingEntity);
         }

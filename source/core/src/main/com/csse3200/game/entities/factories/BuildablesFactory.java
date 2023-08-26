@@ -20,6 +20,12 @@ public class BuildablesFactory {
       return new Wall(configs.GetWallConfig(type));
     }
 
+    /**
+     * Creates a gate which can be placed on the map.
+     * @param type the type of wall to create.
+     * @param player the player which can pass through the gate.
+     * @return The created Wall entity.
+     */
     public static Entity createGate(WallType type, Entity player) {
         return new Gate(configs.GetWallConfig(type), player);
     }

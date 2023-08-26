@@ -1,53 +1,38 @@
 package com.csse3200.game.services;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Represents the current state of the game and facilitates state transitions
- * while ensuring thread safety.
+ * Represents the current state of the game whilst ensuring thread safety.
  */
 public class GameState {
 
-    // Mutex lock
-    private final Object lock = new Object();
+    // Holds the current state's information.
+    private ConcurrentHashMap<String, Object> stateData = new ConcurrentHashMap<>();
 
-    // Holds the current state data
-    private Map<String, Object> stateData = new HashMap<>();
-
-    // Callback listeners for state changes
-    private List<StateChangeListener> stateChangeListeners = new CopyOnWriteArrayList<>();
+    // Callback list of state changes' listeners.
+    private final CopyOnWriteArrayList<StateChangeListener> stateChangeListeners = new CopyOnWriteArrayList<>();
 
     /**
-     * Initializes a new GameState instance.
+     * Add or update the state data and trigger the state change callbacks.
+     *
+     * @param key The key of the state to be set.
+     * @param newValue The new value to be set.
      */
-    public GameState() {
+    public void put(String key, Object newValue) {
+        stateData.put(key, newValue);
+        notifyStateChangeListeners();
     }
 
     /**
-     * Sets the new state data and triggers the state change callbacks.
+     * Retrieves the value corresponding to the input key from the current state data.
      *
-     * @param newData New state data to be set.
+     * @param key The key of the data to be fetched.
+     * @return The data corresponding to the provided key.
      */
-    public void setStateData(Map<String, Object> newData) {
-        synchronized (lock) {
-            stateData = new HashMap<>(newData);
-        }
-        notifyStateChangeListeners(); // Inform about state change
-    }
-
-    /**
-     * Retrieves a safe, immutable copy of the current state data.
-     *
-     * @return An immutable copy of the current state data.
-     */
-    public Map<String, Object> getStateData() {
-        synchronized (lock) {
-            return Collections.unmodifiableMap(new HashMap<>(stateData));
-        }
+    public Object get(String key) {
+        return stateData.get(key);
     }
 
     /**
@@ -69,13 +54,8 @@ public class GameState {
     }
 
     private void notifyStateChangeListeners() {
-        // No need for synchronization here, using CopyOnWriteArrayList
-        Map<String, Object> stateCopy;
-        synchronized (lock) {
-            stateCopy = new HashMap<>(stateData);
-        }
         for (StateChangeListener listener : stateChangeListeners) {
-            listener.onStateChange(stateCopy);
+            listener.onStateChange(stateData);
         }
     }
 
@@ -90,6 +70,6 @@ public class GameState {
          *
          * @param newStateData The new state data after the change.
          */
-        void onStateChange(Map<String, Object> newStateData);
+        void onStateChange(ConcurrentHashMap<String, Object> newStateData);
     }
 }

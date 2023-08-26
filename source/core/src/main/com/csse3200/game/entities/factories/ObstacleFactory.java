@@ -10,6 +10,8 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.entities.buildables.WallType;
+import com.csse3200.game.entities.buildables.Wall;
 
 /**
  * Factory to create obstacle entities.

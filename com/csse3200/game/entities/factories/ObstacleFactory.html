@@ -95,6 +95,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createAsteroid(float,float,float)" class="member-name-link">createAsteroid</a><wbr>(float&nbsp;width,
+ float&nbsp;height,
+ float&nbsp;restitution)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates an Asteroid that has bounce</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createCustomWall(com.csse3200.game.entities.buildables.WallType)" class="member-name-link">createCustomWall</a><wbr>(<a href="../buildables/WallType.html" title="enum class in com.csse3200.game.entities.buildables">WallType</a>&nbsp;type)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTree()" class="member-name-link">createTree</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a tree entity.</div>
@@ -146,6 +156,29 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>Wall entity of given width and height</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createAsteroid(float,float,float)">
+<h3>createAsteroid</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createAsteroid</span><wbr><span class="parameters">(float&nbsp;width,
+ float&nbsp;height,
+ float&nbsp;restitution)</span></div>
+<div class="block">Creates an Asteroid that has bounce</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>width</code> - Asteroid width in world units</dd>
+<dd><code>height</code> - Asteroid height in world units</dd>
+<dd><code>restitution</code> - Asteroid bounce once hit</dd>
+<dt>Returns:</dt>
+<dd>Asteroid entity of given width, height and bounciness</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createCustomWall(com.csse3200.game.entities.buildables.WallType)">
+<h3>createCustomWall</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createCustomWall</span><wbr><span class="parameters">(<a href="../buildables/WallType.html" title="enum class in com.csse3200.game.entities.buildables">WallType</a>&nbsp;type)</span></div>
 </section>
 </li>
 </ul>

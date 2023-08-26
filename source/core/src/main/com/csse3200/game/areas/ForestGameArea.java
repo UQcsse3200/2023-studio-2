@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -7,6 +8,11 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.factories.NPCFactory;
+import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.files.UserSettings;
@@ -26,6 +32,7 @@ public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_ENEMIES = 2;
+  private static final int NUM_POWERUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -45,6 +52,8 @@ public class ForestGameArea extends GameArea {
     "images/hex_grass_3.png",
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
+    "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+    "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/iso_grass_3.png"
   };
   private static final String[] forestTextureAtlases = {
@@ -53,6 +62,7 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
+  private static EntityService mapEntities = new EntityService();
 
   private final TerrainFactory terrainFactory;
   private final ArrayList<Entity> targetables;
@@ -79,6 +89,7 @@ public class ForestGameArea extends GameArea {
 
     spawnTerrain();
     spawnTrees();
+    spawnPowerups();
     spawnExtractors();
     spawnPlayer();
     spawnEnemies();
@@ -102,13 +113,11 @@ public class ForestGameArea extends GameArea {
     return walls;
   }
 
-
   private void spawnExtractors() {
     GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
     Entity extractor = StructureFactory.createExtractor(30, Resource.Unobtanium, (long) 1.0, 1);
     spawnEntityAt(extractor, pos, true, false);
   }
-
 
   private void displayUI() {
     Entity ui = new Entity();
@@ -163,6 +172,24 @@ public class ForestGameArea extends GameArea {
     targetables.add(newPlayer);
   }
 
+  private void spawnPowerups() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_POWERUPS; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      GridPoint2 randomPos2 = RandomUtils.random(minPos, maxPos);
+
+      Entity healthPowerup = PowerupFactory.createHealthPowerup();
+      Entity speedPowerup = PowerupFactory.createSpeedPowerup();
+      mapEntities.register(healthPowerup);
+      mapEntities.register(speedPowerup);
+
+      spawnEntityAt(healthPowerup, randomPos, true, false);
+      spawnEntityAt(speedPowerup, randomPos2, true, false);
+    }
+  }
+
   private void spawnEnemies() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -213,6 +240,12 @@ public class ForestGameArea extends GameArea {
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
     resourceService.unloadAssets(forestMusic);
+  }
+
+  public static void removeEntity(Entity entity) {
+    entity.setEnabled(false);
+    mapEntities.unregister(entity);
+    Gdx.app.postRunnable(entity::dispose);
   }
 
   @Override

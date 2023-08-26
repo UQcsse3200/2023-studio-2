@@ -10,7 +10,6 @@ import java.security.Provider;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ProductionComponent extends Component {
     // Timer used to track time since last tick
     GameTime timer;
@@ -63,35 +62,19 @@ public class ProductionComponent extends Component {
         return (long) 1.0;
     }
 
-    /**
-     * Produce resources and send them to GameState (and produceResource event).
-     * Resources produced are based on how many ticks have occurred since the last update, and production quantity.
-     */
-    public void produce() {
-        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate) {
-            this.getEntity().getEvents().trigger("produceResource", this.produces, this.tickSize);
-            // Extract the current state from the ServiceLocator
-            GameState state = ServiceLocator.getGameStateService();
-            if (state == null) {
-                return;
-            }
-            Map<String, Object> currentState = state.getStateData();
-            HashMap<String, Object> newState = new HashMap<>(currentState);
-
-            // Update the quantity of this resource
-            int produced = (int) ((long) this.tickSize * this.getProductionModifier());
-            int newAmount = (int) newState.getOrDefault("resource/" + this.produces.toString(), 0.0) + produced;
-            newState.put("resource/" + this.produces.toString(), newAmount);
-
-            // Send the updated value back
-            state.setStateData(newState);
-            this.lastTime += this.tickRate;
-        }
-    }
-
     @Override
     public void update() {
         super.update();
-        this.produce();
+        //Produce resources, send produceResource event and update GameState.
+        GameState gameState = ServiceLocator.getGameStateService();
+        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate) {
+            int produced = (int) ((long) this.tickSize * this.getProductionModifier());
+            this.getEntity().getEvents().trigger("produceResource", this.produces, produced);
+            String resourceKey = "resource/" + this.produces.toString();
+            int currentAmount = gameState.get(resourceKey) == null ? 0 : (int) gameState.get(resourceKey);
+            int newAmount = currentAmount + produced;
+            gameState.put(resourceKey, newAmount);
+            this.lastTime += this.tickRate;
+        }
     }
 }

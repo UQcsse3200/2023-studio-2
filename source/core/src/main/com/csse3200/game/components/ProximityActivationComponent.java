@@ -27,12 +27,18 @@ public class ProximityActivationComponent extends Component {
         this.trackingEntity = entity;
     }
 
+
+    /**
+     * Checks whether the entity has entered or exited the radius calls the relevant method if so.
+     */
     @Override
     public void update() {
+        // checks if the entity has entered the radius
         if (!isInProximity && entered != null
                 && entity.getCenterPosition().dst(trackingEntity.getCenterPosition()) <= radius) {
             isInProximity = true;
             entered.call(trackingEntity);
+        // checks if the entity has exited the radius
         } else if (isInProximity && exited != null
                 && entity.getCenterPosition().dst(trackingEntity.getCenterPosition()) > radius) {
             isInProximity = false;
@@ -40,6 +46,10 @@ public class ProximityActivationComponent extends Component {
         }
     }
 
+
+    /**
+     * This interface is used to allow a function to be passed as a parameter in the constructor.
+     */
     public interface ProximityFunc {
         void call(Entity entity);
     }

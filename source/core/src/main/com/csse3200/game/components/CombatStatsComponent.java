@@ -145,7 +145,6 @@ public class CombatStatsComponent extends Component {
     return getBaseAttack() * getAttackMultiplier();
   }
 
-
   public void hit(CombatStatsComponent attacker) {
     if (getImmunity()) {
       return;

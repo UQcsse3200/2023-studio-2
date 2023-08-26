@@ -7,10 +7,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.buildables.WallType;
-import com.csse3200.game.entities.factories.EnemyFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.entities.factories.StructureFactory;
+import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
@@ -30,9 +27,13 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_ENEMIES = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
+  private static final float ASTEROID_SIZE = 0.9f;
+  private static final float BOUNCE = 5.0f;
   private static final String[] forestTextures = {
+
     "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
     "images/broken_elixir_collector.png",
+          "images/meteor.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
     "images/wall.png",
@@ -84,15 +85,24 @@ public class ForestGameArea extends GameArea {
     spawnEnemies();
     spawnBoss();
     spawnWalls();
+    spawnAsteroids();
+
 
     playMusic();
   }
 
+  private void spawnAsteroids() {
+    //Extra Spicy Asteroids
+    GridPoint2 posAs = new GridPoint2(8, 8);
+    spawnEntityAt(
+            ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE, BOUNCE), posAs, false, false);
+
+  }
   private List<Entity> spawnWalls() {
     List<Entity> walls = new ArrayList<Entity>();
 
-    Entity wall = ObstacleFactory.createCustomWall(WallType.basic);
-    Entity intermediateWall = ObstacleFactory.createCustomWall(WallType.intermediate);
+    Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
+    Entity intermediateWall = BuildablesFactory.createCustomWall(WallType.intermediate);
     spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
     spawnEntityAt(intermediateWall, new GridPoint2(15, 15), false, false);
 
@@ -144,6 +154,7 @@ public class ForestGameArea extends GameArea {
     // Bottom
     spawnEntityAt(
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+
   }
 
   private void spawnTrees() {

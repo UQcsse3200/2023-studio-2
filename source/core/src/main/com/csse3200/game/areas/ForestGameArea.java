@@ -7,10 +7,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.buildables.WallType;
-import com.csse3200.game.entities.factories.EnemyFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.entities.factories.StructureFactory;
+import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
@@ -104,8 +101,8 @@ public class ForestGameArea extends GameArea {
   private List<Entity> spawnWalls() {
     List<Entity> walls = new ArrayList<Entity>();
 
-    Entity wall = ObstacleFactory.createCustomWall(WallType.basic);
-    Entity intermediateWall = ObstacleFactory.createCustomWall(WallType.intermediate);
+    Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
+    Entity intermediateWall = BuildablesFactory.createCustomWall(WallType.intermediate);
     spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
     spawnEntityAt(intermediateWall, new GridPoint2(15, 15), false, false);
 

@@ -88,18 +88,18 @@ public class ForestGameArea extends GameArea {
     var player = spawnPlayer();
     spawnEnemies();
     spawnBoss();
-<<<<<<< HEAD
-    spawnWalls();
+//<<<<<<< HEAD
+//    spawnWalls();
     spawnAsteroids();
 
-=======
+//=======
     spawnWalls(player);
->>>>>>> feature/buildables
+//>>>>>>> feature/buildables
 
     playMusic();
   }
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
   private void spawnAsteroids() {
     //Extra Spicy Asteroids
     GridPoint2 posAs = new GridPoint2(8, 8);
@@ -107,10 +107,10 @@ public class ForestGameArea extends GameArea {
             ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE, BOUNCE), posAs, false, false);
 
   }
-  private List<Entity> spawnWalls() {
-=======
+//  private List<Entity> spawnWalls() {
+//=======
   private List<Entity> spawnWalls(Entity player) {
->>>>>>> feature/buildables
+//>>>>>>> feature/buildables
     List<Entity> walls = new ArrayList<Entity>();
     StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
 
@@ -172,10 +172,10 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
 
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
     ServiceLocator.registerTerrainService(new TerrainService(terrain));
->>>>>>> feature/buildables
+//>>>>>>> feature/buildables
   }
 
   private void spawnTrees() {

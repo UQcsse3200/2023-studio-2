@@ -77,15 +77,15 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     spawnExtractors();
-    spawnPlayer();
+    var player = spawnPlayer();
     spawnEnemies();
     spawnBoss();
-    spawnWalls();
+    spawnWalls(player);
 
     playMusic();
   }
 
-  private List<Entity> spawnWalls() {
+  private List<Entity> spawnWalls(Entity player) {
     List<Entity> walls = new ArrayList<Entity>();
 
     Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
@@ -95,6 +95,9 @@ public class ForestGameArea extends GameArea {
 
     walls.add(wall);
     walls.add(intermediateWall);
+
+    Entity gate = BuildablesFactory.createGate(WallType.basic, player);
+    spawnEntityAt(gate, new GridPoint2(10, 15), false, false);
 
     return walls;
   }
@@ -154,10 +157,11 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private void spawnPlayer() {
+  private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     targetables.add(newPlayer);
+    return newPlayer;
   }
 
   private void spawnEnemies() {

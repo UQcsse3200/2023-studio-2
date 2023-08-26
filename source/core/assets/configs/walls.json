@@ -1,10 +1,10 @@
 {
   "basic": {
     "health": 200,
-    "texture": "images/wall.png"
+    "texture": "images/wall2.png"
   },
   "intermediate": {
     "health": 400,
-    "texture": "images/wall2.png"
+    "texture": "images/wall.png"
   }
 }

@@ -40,6 +40,8 @@ public class ForestGameArea extends GameArea {
     "images/tree.png",
     "images/wall.png",
     "images/wall2.png",
+          "images/gate_close.png",
+          "images/gate_open.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
@@ -109,14 +111,14 @@ public class ForestGameArea extends GameArea {
 
     Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
     Entity intermediateWall = BuildablesFactory.createCustomWall(WallType.intermediate);
-    structurePlacementService.PlaceStructureAt(wall, new GridPoint2(10, 10), false, false);
-    structurePlacementService.PlaceStructureAt(intermediateWall, new GridPoint2(20, 15), false, false);
+    structurePlacementService.PlaceStructureAt(wall, new GridPoint2(10, 10), true, true);
+    structurePlacementService.PlaceStructureAt(intermediateWall, new GridPoint2(11, 10), true, true);
 
     walls.add(wall);
     walls.add(intermediateWall);
 
     Entity gate = BuildablesFactory.createGate(WallType.basic, player);
-    spawnEntityAt(gate, new GridPoint2(10, 15), false, false);
+    spawnEntityAt(gate, new GridPoint2(12, 10), true, true);
 
     return walls;
   }

@@ -115,3 +115,73 @@ angry_float
   orig: 100, 200
   offset: 0, 0
   index: 0
+left
+  rotate: false
+  xy: 1600, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 1700, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 1800, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 1900, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 2000, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 2100, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 2200, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 2300, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+stand
+  rotate: false
+  xy: 2400, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+stand
+  rotate: false
+  xy: 2500, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0

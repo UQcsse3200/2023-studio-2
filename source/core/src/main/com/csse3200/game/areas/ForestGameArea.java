@@ -7,10 +7,15 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.buildables.WallType;
+
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.entities.factories.StructureFactory;
+
+import com.csse3200.game.entities.factories.*;
+
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
@@ -29,28 +34,34 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_ENEMIES = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
+  private static final float ASTEROID_SIZE = 0.9f;
+  private static final float BOUNCE = 5.0f;
   private static final String[] forestTextures = {
-    "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
-    "images/broken_elixir_collector.png",
-    "images/box_boy_leaf.png",
-    "images/tree.png",
-    "images/wall.png",
-    "images/wall2.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png"
+
+          "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+          "images/broken_elixir_collector.png",
+          "images/meteor.png",
+          "images/box_boy_leaf.png",
+          "images/tree.png",
+          "images/wall.png",
+          "images/wall2.png",
+          "images/ghost_king.png",
+          "images/ghost_1.png",
+          "images/grass_1.png",
+          "images/grass_2.png",
+          "images/grass_3.png",
+          "images/hex_grass_1.png",
+          "images/hex_grass_2.png",
+          "images/hex_grass_3.png",
+          "images/iso_grass_1.png",
+          "images/iso_grass_2.png",
+          "images/iso_grass_3.png",
+          "images/companion.jpeg"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
+          "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -81,26 +92,16 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     spawnExtractors();
     spawnPlayer();
+    spawnCompanion();
     spawnEnemies();
     spawnBoss();
-    spawnWalls();
+
+
 
     playMusic();
   }
 
-  private List<Entity> spawnWalls() {
-    List<Entity> walls = new ArrayList<Entity>();
 
-    Entity wall = ObstacleFactory.createCustomWall(WallType.basic);
-    Entity intermediateWall = ObstacleFactory.createCustomWall(WallType.intermediate);
-    spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
-    spawnEntityAt(intermediateWall, new GridPoint2(15, 15), false, false);
-
-    walls.add(wall);
-    walls.add(intermediateWall);
-
-    return walls;
-  }
 
 
   private void spawnExtractors() {
@@ -128,22 +129,23 @@ public class ForestGameArea extends GameArea {
 
     // Left
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        new GridPoint2(tileBounds.x, 0),
-        false,
-        false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+            new GridPoint2(tileBounds.x, 0),
+            false,
+            false);
     // Top
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-        new GridPoint2(0, tileBounds.y),
-        false,
-        false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+            new GridPoint2(0, tileBounds.y),
+            false,
+            false);
     // Bottom
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+
   }
 
   private void spawnTrees() {
@@ -163,6 +165,11 @@ public class ForestGameArea extends GameArea {
     targetables.add(newPlayer);
   }
 
+  private void spawnCompanion() {
+    Entity newCompanion = CompanionFactory.createCompanion();
+    spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
+    targetables.add(newCompanion);
+  }
   private void spawnEnemies() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -222,3 +229,5 @@ public class ForestGameArea extends GameArea {
     this.unloadAssets();
   }
 }
+
+

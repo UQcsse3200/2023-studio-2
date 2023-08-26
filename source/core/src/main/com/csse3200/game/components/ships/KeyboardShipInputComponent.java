@@ -23,22 +23,22 @@ public class KeyboardShipInputComponent extends InputComponent {
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
-            case Keys.Y -> {
+            case Keys.UP -> {
                 flyDirection.add(Vector2Utils.UP);
                 triggerFlyEvent();
                 return true;
             }
-            case Keys.G -> {
+            case Keys.LEFT -> {
                 flyDirection.add(Vector2Utils.LEFT);
                 triggerFlyEvent();
                 return true;
             }
-            case Keys.H -> {
+            case Keys.DOWN -> {
                 flyDirection.add(Vector2Utils.DOWN);
                 triggerFlyEvent();
                 return true;
             }
-            case Keys.J -> {
+            case Keys.RIGHT -> {
                 flyDirection.add(Vector2Utils.RIGHT);
                 triggerFlyEvent();
                 return true;
@@ -58,22 +58,22 @@ public class KeyboardShipInputComponent extends InputComponent {
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
-            case Keys.Y -> {
+            case Keys.UP -> {
                 flyDirection.sub(Vector2Utils.UP);
                 triggerFlyEvent();
                 return true;
             }
-            case Keys.G -> {
+            case Keys.LEFT-> {
                 flyDirection.sub(Vector2Utils.LEFT);
                 triggerFlyEvent();
                 return true;
             }
-            case Keys.H -> {
+            case Keys.DOWN -> {
                 flyDirection.sub(Vector2Utils.DOWN);
                 triggerFlyEvent();
                 return true;
             }
-            case Keys.J -> {
+            case Keys.RIGHT-> {
                 flyDirection.sub(Vector2Utils.RIGHT);
                 triggerFlyEvent();
                 return true;

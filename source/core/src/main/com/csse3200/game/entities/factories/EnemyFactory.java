@@ -93,10 +93,9 @@ public class EnemyFactory {
     EnemyConfig config = configs.GetEnemyConfig(type);
 
     AnimationRenderComponent animator =
-        new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset(config.atlas, TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+        new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/base_enemy.atlas", TextureAtlas.class));
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
     enemy
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack))

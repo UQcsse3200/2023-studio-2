@@ -2,8 +2,7 @@
   "meleeEnemy": {
     "health": 40,
     "baseAttack": 10,
-    "speed": 5,
-    "atlas": "images/ghost.atlas"
+    "speed": 5
   },
 
   "rangeEnemy": {

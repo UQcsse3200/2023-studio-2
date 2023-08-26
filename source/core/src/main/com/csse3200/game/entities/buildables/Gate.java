@@ -8,7 +8,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 public class Gate extends Wall {
     public Gate(WallConfig config, Entity player) {
         super(config);
-        addComponent(new ProximityActivationComponent(2f, player, this::openGate, this::closeGate));
+        addComponent(new ProximityActivationComponent(1.5f, player, this::openGate, this::closeGate));
     }
 
     public void openGate(Entity player) {

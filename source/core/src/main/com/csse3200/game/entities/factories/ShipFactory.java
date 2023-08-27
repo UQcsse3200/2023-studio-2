@@ -28,7 +28,7 @@ public class ShipFactory {
 
         Entity ship =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/pixil-frame-0.png"))
+                        .addComponent(new TextureRenderComponent("images/Spaceship.png"))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SHIP))

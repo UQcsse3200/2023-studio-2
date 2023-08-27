@@ -65,6 +65,7 @@ public class ServiceLocator {
     structurePlacementService = service;
   }
 
+
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);
     entityService = service;

@@ -16,6 +16,10 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.Gdx;
+
+
+
 
 /** The game screen containing the settings. */
 public class SettingsScreen extends ScreenAdapter {
@@ -37,8 +41,15 @@ public class SettingsScreen extends ScreenAdapter {
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(5f, 5f);
 
+    // Set the background color to navy blue
+    Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // (R, G, B, A)
+
+
+
     createUI();
   }
+
+
 
   @Override
   public void render(float delta) {

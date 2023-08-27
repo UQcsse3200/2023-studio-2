@@ -11,6 +11,8 @@ import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -28,8 +30,10 @@ import java.util.List;
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
-  private static final int NUM_MELEE_ENEMIES = 3;
-  private static final int NUM_RANGE_ENEMIES = 3;
+  private static final int NUM_MELEE_ENEMIES_PTE = 1;
+  private static final int NUM_MELEE_ENEMIES_DTE = 1;
+  private static final int NUM_RANGE_ENEMIES_PTE = 1;
+  private static final int NUM_RANGE_ENEMIES_DTE = 1;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final float ASTEROID_SIZE = 0.9f;
@@ -194,13 +198,25 @@ public class ForestGameArea extends GameArea {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < NUM_MELEE_ENEMIES; i++) {
+    for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
-    for (int i = 0; i < NUM_RANGE_ENEMIES; i++) {
+    for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+      spawnEntityAt(melee, randomPos, true, true);
+    }
+
+    for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+      spawnEntityAt(melee, randomPos, true, true);
+    }
+
+    for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
       spawnEntityAt(ranged, randomPos, true, true);

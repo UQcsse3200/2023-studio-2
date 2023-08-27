@@ -16,7 +16,10 @@ import com.csse3200.game.entities.factories.StructureFactory;
 
 import com.csse3200.game.entities.factories.*;
 
+
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.services.StructurePlacementService;
+import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -40,25 +43,28 @@ public class ForestGameArea extends GameArea {
   private static final float BOUNCE = 5.0f;
   private static final String[] forestTextures = {
 
-          "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
-          "images/broken_elixir_collector.png",
-          "images/meteor.png",
-          "images/box_boy_leaf.png",
-          "images/tree.png",
-          "images/wall.png",
-          "images/wall2.png",
-          "images/ghost_king.png",
-          "images/ghost_1.png",
-          "images/grass_1.png",
-          "images/grass_2.png",
-          "images/grass_3.png",
-          "images/hex_grass_1.png",
-          "images/hex_grass_2.png",
-          "images/hex_grass_3.png",
-          "images/iso_grass_1.png",
-          "images/iso_grass_2.png",
-          "images/iso_grass_3.png",
-          "images/companion.jpeg"
+
+    "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+    "images/broken_elixir_collector.png",
+    "images/meteor.png",
+    "images/box_boy_leaf.png",
+    "images/tree.png",
+    "images/wall.png",
+    "images/wall2.png",
+    "images/ghost_king.png",
+    "images/ghost_1.png",
+    "images/grass_1.png",
+    "images/grass_2.png",
+    "images/grass_3.png",
+    "images/hex_grass_1.png",
+    "images/hex_grass_2.png",
+    "images/hex_grass_3.png",
+    "images/iso_grass_1.png",
+    "images/iso_grass_2.png",
+    "images/iso_grass_3.png",
+    "images/companion.jpeg"
+
+>>>>>>> origin/main
   };
   private static final String[] forestTextureAtlases = {
           "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -86,28 +92,58 @@ public class ForestGameArea extends GameArea {
   public void create() {
     loadAssets();
 
+    registerStructurePlacementService();
+
     displayUI();
 
     spawnTerrain();
     spawnTrees();
     spawnExtractors();
-    spawnPlayer();
     spawnCompanion();
+
+    var player = spawnPlayer();
     spawnEnemies();
     spawnBoss();
-
-
+    spawnAsteroids();
+    spawnWalls(player);
 
     playMusic();
   }
 
+
+  private void spawnAsteroids() {
+    //Extra Spicy Asteroids
+    GridPoint2 posAs = new GridPoint2(8, 8);
+    spawnEntityAt(
+            ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE, BOUNCE), posAs, false, false);
+
+  }
+
+  private List<Entity> spawnWalls(Entity player) {
+    List<Entity> walls = new ArrayList<Entity>();
+    StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
+
+    Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
+    Entity intermediateWall = BuildablesFactory.createCustomWall(WallType.intermediate);
+    structurePlacementService.PlaceStructureAt(wall, new GridPoint2(10, 10), false, false);
+    structurePlacementService.PlaceStructureAt(intermediateWall, new GridPoint2(20, 15), false, false);
+
+    walls.add(wall);
+    walls.add(intermediateWall);
+
+    Entity gate = BuildablesFactory.createGate(WallType.basic, player);
+    spawnEntityAt(gate, new GridPoint2(10, 15), false, false);
+
+    return walls;
+  }
 
 
 
   private void spawnExtractors() {
     GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
     Entity extractor = StructureFactory.createExtractor();
-    spawnEntityAt(extractor, pos, true, false);
+    extractor.setPosition(terrain.tileToWorldPosition(pos));
+    spawnExtractor(extractor);
   }
 
 
@@ -144,8 +180,9 @@ public class ForestGameArea extends GameArea {
             false);
     // Bottom
     spawnEntityAt(
-            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
 
+        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+    ServiceLocator.registerTerrainService(new TerrainService(terrain));
   }
 
   private void spawnTrees() {
@@ -159,10 +196,11 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private void spawnPlayer() {
+  private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     targetables.add(newPlayer);
+    return newPlayer;
   }
 
   private void spawnCompanion() {

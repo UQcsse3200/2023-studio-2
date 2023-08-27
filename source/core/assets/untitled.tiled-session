@@ -1,0 +1,36 @@
+{
+    "activeFile": "base.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "/Users/jordan/Desktop/buch-outdoor.tsx": {
+            "scaleInDock": 1
+        },
+        "base.tmx": {
+            "scale": 0.4,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 477.5,
+                "y": 852.5
+            }
+        },
+        "buch-outdoor.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.externalTilesetPath": "/Users/jordan/Desktop/2023-studio-2/source/core/assets",
+    "last.imagePath": "/Users/jordan/Desktop/2023-studio-2/source/core/assets",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "base.tmx",
+        "buch-outdoor.tsx"
+    ],
+    "project": "untitled.tiled-project",
+    "recentFiles": [
+        "buch-outdoor.tsx",
+        "base.tmx"
+    ]
+}

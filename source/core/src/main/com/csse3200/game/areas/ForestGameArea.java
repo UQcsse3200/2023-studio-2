@@ -28,6 +28,7 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_ENEMIES = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final float ASTEROID_SIZE = 0.9f;
   private static final float BOUNCE = 5.0f;
@@ -50,7 +51,8 @@ public class ForestGameArea extends GameArea {
     "images/hex_grass_3.png",
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
-    "images/iso_grass_3.png"
+    "images/iso_grass_3.png",
+    "images/pixil-frame-0.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -85,7 +87,12 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     spawnExtractors();
+
     var player = spawnPlayer();
+
+    spawnPlayer();
+    spawnShip();
+
     spawnEnemies();
     spawnBoss();
     spawnAsteroids();
@@ -182,6 +189,12 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     targetables.add(newPlayer);
     return newPlayer;
+  }
+  private void spawnShip()
+  {
+    Entity newShip = ShipFactory.createShip();
+    spawnEntityAt(newShip, SHIP_SPAWN, true, true);
+    targetables.add(newShip);
   }
 
   private void spawnEnemies() {

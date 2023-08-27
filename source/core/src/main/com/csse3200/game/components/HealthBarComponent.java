@@ -10,9 +10,9 @@ import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.ui.UIComponent;
 
 /**
- * A ui component for displaying a walls health on top of its location on the map.
+ * A ui component for displaying an entities health at its location on the map.
  */
-public class DisplayEntityHealthComponent extends UIComponent {
+public class HealthBarComponent extends UIComponent {
     private static final float SCALE_REDUCTION = 70;
     private final boolean center;
     private final float offsetY;
@@ -20,13 +20,13 @@ public class DisplayEntityHealthComponent extends UIComponent {
     private ProgressBar healthBar;
 
 
-    public DisplayEntityHealthComponent(boolean center, float offsetY, float width) {
+    public HealthBarComponent(boolean center, float offsetY, float width) {
         this.center = center;
         this.width = width;
         this.offsetY = offsetY;
     }
 
-    public DisplayEntityHealthComponent(boolean center) {
+    public HealthBarComponent(boolean center) {
         this.center = center;
         this.width = 0.9f;
         this.offsetY = 0;
@@ -75,7 +75,6 @@ public class DisplayEntityHealthComponent extends UIComponent {
 
         var position = new Vector3(entity.getCenterPosition().x - width/2, yPos, 0);
         position.scl(SCALE_REDUCTION);
-        updateWallHealthUI(100);
         healthBar.setPosition(position.x, position.y - centerOffset);
     }
 

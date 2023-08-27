@@ -59,14 +59,14 @@ public class ForestGameArea extends GameArea {
           "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
           "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
           "images/iso_grass_3.png",
+          "images/playerSS_2.png",
+          "images/playerSS_4.png",
           "images/playerSS_0.png",
           "images/playerSS_1.png",
-          "images/playerSS_2.png",
           "images/playerSS_3.png",
-          "images/playerSS_4.png",
           "images/playerSS_5.png",
-          "images/playerSS_6.png",
           "images/playerSS_7.png",
+          "images/playerSS_6.png",
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"

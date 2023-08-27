@@ -33,4 +33,9 @@ public class StructureFactory {
 
         return extractor;
     }
+    public static Entity createExtractorrepairpart() {
+        Entity extractorrepairpart = new Entity();
+        extractorrepairpart.setScale(3f, 3f);
+        return extractorrepairpart;
+    }
 }

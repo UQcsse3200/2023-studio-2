@@ -196,13 +196,13 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < NUM_MELEE_ENEMIES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTB);
+      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
     for (int i = 0; i < NUM_RANGE_ENEMIES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTB);
+      Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
       spawnEntityAt(ranged, randomPos, true, true);
     }
   }
@@ -212,7 +212,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity boss = EnemyFactory.createBoss(targetables, BossType.Melee, BossBehaviour.PTB);
+    Entity boss = EnemyFactory.createBoss(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
   }
 

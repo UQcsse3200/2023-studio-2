@@ -39,7 +39,7 @@ public class Wall extends Entity {
     public Wall(WallConfig config) {
         super();
 
-        var textures = ServiceLocator.getResourceService().getAsset(config.texture, TextureAtlas.class);
+        var textures = ServiceLocator.getResourceService().getAsset(config.textureAtlas, TextureAtlas.class);
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));

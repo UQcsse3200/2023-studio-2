@@ -9,6 +9,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.services.StructurePlacementService;
+import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -33,7 +35,7 @@ public class ForestGameArea extends GameArea {
 
     "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
     "images/broken_elixir_collector.png",
-          "images/meteor.png",
+    "images/meteor.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
     "images/wall.png",
@@ -76,17 +78,18 @@ public class ForestGameArea extends GameArea {
   public void create() {
     loadAssets();
 
+    registerStructurePlacementService();
+
     displayUI();
 
     spawnTerrain();
     spawnTrees();
     spawnExtractors();
-    spawnPlayer();
+    var player = spawnPlayer();
     spawnEnemies();
     spawnBoss();
-    spawnWalls();
     spawnAsteroids();
-
+    spawnWalls(player);
 
     playMusic();
   }
@@ -98,16 +101,21 @@ public class ForestGameArea extends GameArea {
             ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE, BOUNCE), posAs, false, false);
 
   }
-  private List<Entity> spawnWalls() {
+
+  private List<Entity> spawnWalls(Entity player) {
     List<Entity> walls = new ArrayList<Entity>();
+    StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
 
     Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
     Entity intermediateWall = BuildablesFactory.createCustomWall(WallType.intermediate);
-    spawnEntityAt(wall, new GridPoint2(10, 10), false, false);
-    spawnEntityAt(intermediateWall, new GridPoint2(15, 15), false, false);
+    structurePlacementService.PlaceStructureAt(wall, new GridPoint2(10, 10), false, false);
+    structurePlacementService.PlaceStructureAt(intermediateWall, new GridPoint2(20, 15), false, false);
 
     walls.add(wall);
     walls.add(intermediateWall);
+
+    Entity gate = BuildablesFactory.createGate(WallType.basic, player);
+    spawnEntityAt(gate, new GridPoint2(10, 15), false, false);
 
     return walls;
   }
@@ -116,7 +124,8 @@ public class ForestGameArea extends GameArea {
   private void spawnExtractors() {
     GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
     Entity extractor = StructureFactory.createExtractor();
-    spawnEntityAt(extractor, pos, true, false);
+    extractor.setPosition(terrain.tileToWorldPosition(pos));
+    spawnExtractor(extractor);
   }
 
 
@@ -154,7 +163,7 @@ public class ForestGameArea extends GameArea {
     // Bottom
     spawnEntityAt(
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
-
+    ServiceLocator.registerTerrainService(new TerrainService(terrain));
   }
 
   private void spawnTrees() {
@@ -168,10 +177,11 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private void spawnPlayer() {
+  private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     targetables.add(newPlayer);
+    return newPlayer;
   }
 
   private void spawnEnemies() {

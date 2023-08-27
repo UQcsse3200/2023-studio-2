@@ -20,7 +20,7 @@ public class MainMenuActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("start", this::onStart);
-    entity.getEvents().addListener("mini", this::onMini);
+    entity.getEvents().addListener("space minigame", this::onMini);
     entity.getEvents().addListener("load", this::onLoad);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
@@ -60,7 +60,7 @@ public class MainMenuActions extends Component {
     game.setScreen(GdxGame.ScreenType.SETTINGS);
   }
   private void onMini(){
-    logger.info("starting mini");
+    logger.info("starting space minigame");
     game.setScreen(GdxGame.ScreenType.SPACE_MAP);
   }
 

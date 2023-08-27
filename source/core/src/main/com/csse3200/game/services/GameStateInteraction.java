@@ -22,7 +22,7 @@ public class GameStateInteraction {
         String resourceKey = "resource/" + resourceName;
         Object value = gameState.get(resourceKey);
         int amount = value == null ? 0 : (int) value;
-        gameState.put(resourceKey, amount + changeAmount);
+        this.put(resourceKey, amount + changeAmount);
     }
 
 

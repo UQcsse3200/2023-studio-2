@@ -6,32 +6,25 @@ import com.csse3200.game.events.EventHandler;
 import java.util.Map;
 
 
-public class GameStateObserver {
+public class GameStateObserver extends EventHandler{
 
     private final GameStateInteraction stateInteraction;
-    private final EventHandler eventHandler;
 
     public GameStateObserver() {
-        eventHandler = new EventHandler();
         stateInteraction =  new GameStateInteraction();
         this.generateStateListeners();
     }
 
-    public EventHandler getEvents() {
-        return eventHandler;
-    }
-
-    // Testing methods to get data from state
-    public Map<String, Object> getStateData() {
+    // Testing method to get full state data
+    public Map<String, Object> getFullStateData() {
         return stateInteraction.getStateData();
     }
-    public Object getData(String key) {
+
+    public Object getStateData(String key) {
         return stateInteraction.get(key);
     }
 
     private void generateStateListeners() {
-        getEvents().addListener("resourceAdd", stateInteraction::updateResource);
+        this.addListener("resourceAdd", stateInteraction::updateResource);
     }
-
-
 }

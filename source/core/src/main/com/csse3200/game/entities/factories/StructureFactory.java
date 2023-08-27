@@ -1,12 +1,15 @@
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
@@ -32,6 +35,13 @@ public class StructureFactory {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new CombatStatsComponent(health, 0, 0, false))
                 .addComponent(new ProductionComponent(producedResource, tickRate, tickSize));
+
+        extractor.addComponent(new InteractableComponent(entity -> {
+            CombatStatsComponent healthStats = extractor.getComponent(CombatStatsComponent.class);
+            if (healthStats.isDead()) {
+                healthStats.setHealth(healthStats.getMaxHealth());
+            }
+        }, 5f));
         extractor.setScale(1.8f, 2f);
         PhysicsUtils.setScaledCollider(extractor, 1f, 0.6f);
 

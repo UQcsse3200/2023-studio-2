@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
@@ -24,6 +25,10 @@ public class ServiceLocator {
   private static InputService inputService;
   private static ResourceService resourceService;
   private static GameState gameStateService;
+  private static TerrainService terrainService;
+
+
+  private static StructurePlacementService structurePlacementService;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -50,6 +55,15 @@ public class ServiceLocator {
   }
 
   public static GameState getGameStateService() { return gameStateService; }
+
+  public static StructurePlacementService getStructurePlacementService() { return structurePlacementService; }
+
+  public static TerrainService getTerrainService() { return terrainService; }
+
+  public static void registerStructurePlacementService(StructurePlacementService service) {
+    logger.debug("Registering stucture placement service {}", service);
+    structurePlacementService = service;
+  }
 
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);
@@ -85,6 +99,11 @@ public class ServiceLocator {
     logger.debug("Registering game state service {}", source);
     gameStateService = source;
   }
+  public static void registerTerrainService(TerrainService source) {
+    logger.debug("Registering game state service {}", source);
+    terrainService = source;
+  }
+
 
   public static void clear() {
     entityService = null;
@@ -94,6 +113,7 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     gameStateService = null;
+    terrainService = null;
   }
 
   private ServiceLocator() {

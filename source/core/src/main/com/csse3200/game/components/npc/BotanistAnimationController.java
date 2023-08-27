@@ -18,12 +18,12 @@ public class BotanistAnimationController extends Component {
         animator = this.entity.getComponent(AnimationRenderComponent.class);
 
         entity.getEvents().addListener("changeDirection", this::setDirection);
-        entity.getEvents().addListener("walk", this::animateWander);
+        entity.getEvents().addListener("wanderStart", this::animateWander);
         entity.getEvents().addListener("idle", this::animateIdle);
     }
 
     void animateWander() {
-        animator.startAnimation("walk_" + direction);
+        animator.startAnimation("wanderStart_" + direction);
     }
 
     void animateIdle() { animator.startAnimation("idle_" + direction);}

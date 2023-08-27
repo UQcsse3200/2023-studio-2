@@ -104,8 +104,8 @@ public class NPCFactory {
             ServiceLocator.getResourceService().getAsset("images/botanist.atlas", TextureAtlas.class));
     animator.addAnimation("idle_left", Float.MAX_VALUE, Animation.PlayMode.LOOP);
     animator.addAnimation("idle_right", Float.MAX_VALUE, Animation.PlayMode.LOOP);
-    animator.addAnimation("walk_left", 0.4f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("walk_right", 0.4f, Animation.PlayMode.LOOP);
+    animator.addAnimation("wanderStart_left", 0.4f, Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("wanderStart_right", 0.4f, Animation.PlayMode.LOOP);
 //    animator.addAnimation("runLeft", 0.2f, Animation.PlayMode.LOOP_REVERSED);
 //    animator.addAnimation("runRight", 0.2f, Animation.PlayMode.LOOP);
 

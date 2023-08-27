@@ -24,6 +24,7 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("load", this::onLoad);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
+    entity.getEvents().addListener("extractor minigame",this::onExtractor);
 
   }
 
@@ -61,5 +62,10 @@ public class MainMenuActions extends Component {
   private void onMini(){
     logger.info("starting mini");
     game.setScreen(GdxGame.ScreenType.SPACE_MAP);
+  }
+
+  private void onExtractor(){
+    logger.info("starting extractor");
+    game.setScreen(GdxGame.ScreenType.EXTRACTOR_GAME);
   }
 }

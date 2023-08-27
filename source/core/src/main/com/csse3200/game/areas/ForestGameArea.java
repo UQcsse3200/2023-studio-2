@@ -13,6 +13,7 @@ import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.entities.factories.StructureFactory;
+import com.csse3200.game.entities.factories.PowerupFactory;
 
 import com.csse3200.game.entities.factories.*;
 
@@ -33,6 +34,7 @@ public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_ENEMIES = 2;
+  private static final int NUM_POWERUPS = 0;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
@@ -58,7 +60,7 @@ public class ForestGameArea extends GameArea {
           "images/iso_grass_1.png",
           "images/iso_grass_2.png",
           "images/iso_grass_3.png",
-          "images/companion.jpeg"
+          "images/static.png",
   };
   private static final String[] forestTextureAtlases = {
           "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -93,6 +95,7 @@ public class ForestGameArea extends GameArea {
     spawnExtractors();
     spawnPlayer();
     spawnCompanion();
+    spawnPowerups();
     spawnEnemies();
     spawnBoss();
 
@@ -169,6 +172,19 @@ public class ForestGameArea extends GameArea {
     Entity newCompanion = CompanionFactory.createCompanion();
     spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
     targetables.add(newCompanion);
+  }
+  private void spawnPowerups() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_POWERUPS; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      GridPoint2 randomPos2 = RandomUtils.random(minPos, maxPos);
+
+      Entity speedPowerup = PowerupFactory.createSpeedPowerup();
+      spawnEntityAt(speedPowerup, randomPos2, true, false);
+
+    }
   }
   private void spawnEnemies() {
     GridPoint2 minPos = new GridPoint2(0, 0);

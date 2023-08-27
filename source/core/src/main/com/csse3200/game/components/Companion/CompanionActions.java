@@ -6,13 +6,14 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.CombatStatsComponent;
 
 /**
  * Action component for interacting with the Companion. Companion events should be initialised in create()
  * and when triggered should call methods within this class.
  */
 public class CompanionActions extends Component {
-    private static final Vector2 MAX_SPEED = new Vector2(2f, 2f); // Metres per second
+    private static Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
@@ -62,10 +63,28 @@ public class CompanionActions extends Component {
     }
 
     /**
-     * Makes the player attack.
+     * Makes the companion attack.
      */
     void attack() {
         Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
         attackSound.play();
+    }
+
+    /**
+     * sets max speed in directions x and y
+     * @param x
+     * @param y
+     */
+    public static void setSpeed(float x, float y)
+    {
+        MAX_SPEED = new Vector2(x,y);
+    }
+
+    /**
+     * returns the max speed
+     * @return
+     */
+    public Vector2 getSpeed() {
+        return MAX_SPEED;
     }
 }

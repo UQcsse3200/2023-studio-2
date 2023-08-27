@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.TitleBox;
 
+import static com.csse3200.game.screens.MainMenuScreen.logger;
+
 /**
  * This class listens to events relevant to the Main Menu Screen and does something when one of the
  * events is triggered.
@@ -37,8 +39,9 @@ public class MainMenuActions extends Component {
    * Swaps to the Main Game screen.
    */
   private void onStart() {
-    logger.info("Start game");
-    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    logger.info("Loading Story");
+    TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
+    titleBox.showDialog(stage);
   }
 
   /**
@@ -47,8 +50,7 @@ public class MainMenuActions extends Component {
    */
   private void onLoad() {
     logger.info("Load game");
-    TitleBox titleBox = new TitleBox("Story Introduction", skin);
-    titleBox.showDialog(stage);
+    //game.setScreen(GdxGame.ScreenType.MAIN_GAME);
   }
 
   /**
@@ -66,4 +68,5 @@ public class MainMenuActions extends Component {
     logger.info("Launching settings screen");
     game.setScreen(GdxGame.ScreenType.SETTINGS);
   }
+
 }

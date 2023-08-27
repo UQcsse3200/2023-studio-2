@@ -13,12 +13,13 @@ public class GameStateInteraction {
     public Object get(String key) {
         return gameState.get(key);
     }
-//
+
     public Map<String, Object> getStateData() {
         return gameState.getStateData();
     }
 
-    public void updateResource(String resourceKey, int changeAmount){
+    public void updateResource(String resourceName, int changeAmount){
+        String resourceKey = "resource/" + resourceName;
         Object value = gameState.get(resourceKey);
         int amount = value == null ? 0 : (int) value;
         gameState.put(resourceKey, amount + changeAmount);

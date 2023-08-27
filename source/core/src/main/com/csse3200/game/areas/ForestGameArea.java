@@ -38,17 +38,10 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
-    "images/oldman_down_1.png",
-    "images/oldman_down_2.png",
-    "images/oldman_left_1.png",
-    "images/oldman_left_2.png",
-    "images/oldman_right_1.png",
-    "images/oldman_right_2.png",
-    "images/oldman_up_1.png",
-    "images/oldman_up_2.png"
+    "images/oldman_down_1.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
+    "images/terrain_iso_grass.atlas","images/botanist.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -150,12 +143,16 @@ public class ForestGameArea extends GameArea {
       spawnEntityAt(ghost, randomPos, true, true);
     }
   }
-  private void spawnBotanist() {
+  private void spawnBotanist() { // TODO: Temp
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-    GridPoint2 pos = RandomUtils.random(minPos, maxPos);
-    Entity botanist = NPCFactory.createBotanist(player);
-    spawnEntityAt(botanist, pos, true, true);
+
+
+//      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      GridPoint2 BOTANIST_SPAWN = new GridPoint2(14, 10);
+      Entity botanist = NPCFactory.createBotanist();
+      spawnEntityAt(botanist, BOTANIST_SPAWN, true, true);
+
   }
   private void spawnGhostKing() {
     GridPoint2 minPos = new GridPoint2(0, 0);

@@ -15,6 +15,10 @@ public class GameStateObserver extends EventHandler{
         this.generateStateListeners();
     }
 
+    private void generateStateListeners() {
+        this.addListener("resourceAdd", stateInteraction::updateResource);
+    }
+
     // Testing method to get full state data
     public Map<String, Object> getFullStateData() {
         return stateInteraction.getStateData();
@@ -24,7 +28,5 @@ public class GameStateObserver extends EventHandler{
         return stateInteraction.get(key);
     }
 
-    private void generateStateListeners() {
-        this.addListener("resourceAdd", stateInteraction::updateResource);
-    }
+
 }

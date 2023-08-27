@@ -34,7 +34,7 @@ public class ProductionComponent extends Component {
         super.update();
         while (this.timer.getTimeSince(this.lastTime) >= this.tickRate ) {
             this.getEntity().getEvents().trigger("produceResource", this.produces, this.tickSize);
-            ServiceLocator.getGameStateObserverService().getEvents().trigger("resourceAdd", this.produces.toString(), this.tickSize);
+            ServiceLocator.getGameStateObserverService().trigger("resourceAdd", this.produces.toString(), this.tickSize);
             this.lastTime += this.tickRate;
         }
     }

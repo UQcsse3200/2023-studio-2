@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
+import com.csse3200.game.components.PowerupComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -62,7 +64,6 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
-  private static EntityService mapEntities = new EntityService();
 
   private final TerrainFactory terrainFactory;
   private final ArrayList<Entity> targetables;
@@ -182,11 +183,12 @@ public class ForestGameArea extends GameArea {
 
       Entity healthPowerup = PowerupFactory.createHealthPowerup();
       Entity speedPowerup = PowerupFactory.createSpeedPowerup();
-      mapEntities.register(healthPowerup);
-      mapEntities.register(speedPowerup);
 
       spawnEntityAt(healthPowerup, randomPos, true, false);
       spawnEntityAt(speedPowerup, randomPos2, true, false);
+
+      // Test
+      // System.out.println(ServiceLocator.getEntityService().getEntitiesByComponent(PowerupComponent.class).toString());
     }
   }
 
@@ -240,12 +242,6 @@ public class ForestGameArea extends GameArea {
     resourceService.unloadAssets(forestTextureAtlases);
     resourceService.unloadAssets(forestSounds);
     resourceService.unloadAssets(forestMusic);
-  }
-
-  public static void removeEntity(Entity entity) {
-    entity.setEnabled(false);
-    mapEntities.unregister(entity);
-    Gdx.app.postRunnable(entity::dispose);
   }
 
   @Override

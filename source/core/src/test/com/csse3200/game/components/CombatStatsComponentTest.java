@@ -52,4 +52,40 @@ class CombatStatsComponentTest {
     combat.setBaseAttack(-50);
     assertEquals(150, combat.getBaseAttack());
   }
+
+  @Test
+  void shouldSetGetAttackMultiplier() {
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 1, false);
+    assertEquals(1, combat.getAttackMultiplier());
+
+    combat.setAttackMultiplier(2);
+    assertEquals(2, combat.getAttackMultiplier());
+
+    combat.setAttackMultiplier(-1);
+    assertEquals(2, combat.getAttackMultiplier());
+  }
+
+  @Test
+  void shouldSetGetImmunity() {
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 1, false);
+    assertFalse(combat.getImmunity());
+
+    combat.setImmunity(true);
+    assertTrue(combat.getImmunity());
+
+    combat.setImmunity(false);
+    assertFalse(combat.getImmunity());
+  }
+
+  @Test
+  void shouldChangeImmunityStatus() {
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 1, false);
+    assertFalse(combat.getImmunity());
+
+    combat.changeImmunityStatus();
+    assertTrue(combat.getImmunity());
+
+    combat.changeImmunityStatus();
+    assertFalse(combat.getImmunity());
+  }
 }

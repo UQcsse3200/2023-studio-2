@@ -111,14 +111,14 @@ public class ForestGameArea extends GameArea {
 
     Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
     Entity intermediateWall = BuildablesFactory.createCustomWall(WallType.intermediate);
-    structurePlacementService.PlaceStructureAt(wall, new GridPoint2(10, 10), true, true);
-    structurePlacementService.PlaceStructureAt(intermediateWall, new GridPoint2(11, 10), true, true);
+    structurePlacementService.PlaceStructureAt(wall, new GridPoint2(10, 10), false, false);
+    structurePlacementService.PlaceStructureAt(intermediateWall, new GridPoint2(12, 10), false, false);
 
     walls.add(wall);
     walls.add(intermediateWall);
 
     Entity gate = BuildablesFactory.createGate(WallType.basic, player);
-    spawnEntityAt(gate, new GridPoint2(12, 10), true, true);
+    spawnEntityAt(gate, new GridPoint2(14, 10), false, false);
 
     return walls;
   }

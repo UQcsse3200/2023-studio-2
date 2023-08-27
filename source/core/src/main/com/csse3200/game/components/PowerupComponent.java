@@ -68,7 +68,7 @@ public class PowerupComponent extends Component {
      *
      * @param target  The entity receiving the Powerup effect.
      */
-    private void applyEffect(Entity target) {
+    public void applyEffect(Entity target) {
         playerCombatStats = target.getComponent(CombatStatsComponent.class);
         playerActions = target.getComponent(PlayerActions.class);
 
@@ -92,8 +92,7 @@ public class PowerupComponent extends Component {
             default:
                 throw new IllegalArgumentException("You must specify a valid PowerupType");
         }
-        ServiceLocator.getEntityService().unregister(entity);
-        // entity.dispose();
+        // entity.dispose() doesn't work here - concurrency issue
         Gdx.app.postRunnable(entity::dispose);
     }
 

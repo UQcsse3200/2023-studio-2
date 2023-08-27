@@ -7,6 +7,10 @@
     "health": 100,
     "baseAttack": 25,
     "spookyFactor": 7
+  },
+  "botanist": {
+    "health": 50,
+    "healingAbility": 15
   }
 }
 

@@ -1,0 +1,23 @@
+oldman_left_1.png
+size: 32, 32  
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+
+oldman_right_1.png
+size: 32, 32
+format: RGBA8888 
+filter: Nearest,Nearest
+repeat: none
+
+oldman_down_1.png
+size: 32, 32  
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+
+oldman_up_1.png
+size: 32, 32
+format: RGBA8888 
+filter: Nearest,Nearest
+repeat: none

@@ -37,7 +37,15 @@ public class ForestGameArea extends GameArea {
     "images/hex_grass_3.png",
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
-    "images/iso_grass_3.png"
+    "images/iso_grass_3.png",
+    "images/oldman_down_1.png",
+    "images/oldman_down_2.png",
+    "images/oldman_left_1.png",
+    "images/oldman_left_2.png",
+    "images/oldman_right_1.png",
+    "images/oldman_right_2.png",
+    "images/oldman_up_1.png",
+    "images/oldman_up_2.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -49,6 +57,7 @@ public class ForestGameArea extends GameArea {
   private final TerrainFactory terrainFactory;
 
   private Entity player;
+  private Entity botanist;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -71,6 +80,7 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     player = spawnPlayer();
     spawnGhosts();
+    spawnBotanist();
     spawnGhostKing();
 
     playMusic();
@@ -123,6 +133,7 @@ public class ForestGameArea extends GameArea {
     }
   }
 
+
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
@@ -139,7 +150,13 @@ public class ForestGameArea extends GameArea {
       spawnEntityAt(ghost, randomPos, true, true);
     }
   }
-
+  private void spawnBotanist() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    GridPoint2 pos = RandomUtils.random(minPos, maxPos);
+    Entity botanist = NPCFactory.createBotanist(player);
+    spawnEntityAt(botanist, pos, true, true);
+  }
   private void spawnGhostKing() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);

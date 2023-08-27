@@ -30,7 +30,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("walk", this::walk);
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
-    entity.getEvents().addListener("place", this::place);
+    entity.getEvents().addListener("place", this::placeOrUpgradeWall);
   }
 
   @Override
@@ -76,13 +76,19 @@ public class PlayerActions extends Component {
     attackSound.play();
   }
 
-  void place(int screenX, int screenY) {
+  void placeOrUpgradeWall(int screenX, int screenY) {
     var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-    Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
-//    if(WallType.basic){
-//
-//    }
-    ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall,new GridPoint2(((int)((location.x)/2)*2), ((int)((location.y)/2))*2),false, false);
-  }
+    GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
+    Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
 
+    if (existingWall != null) {
+      if (existingWall.getWallType() != WallType.basic) {
+        Entity wall = BuildablesFactory.createCustomWall(WallType.intermediate);
+        ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, new GridPoint2(((int) ((location.x) / 2) * 2), ((int) ((location.y) / 2)) * 2), false, false);
+      }
+    } else {
+      Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
+      ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, new GridPoint2(((int) ((location.x) / 2) * 2), ((int) ((location.y) / 2)) * 2), false, false);
+    }
+  }
 }

@@ -58,6 +58,7 @@ public class EnemyFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    AnimationRenderComponent animator;
 
 
     if (type == EnemyType.Ranged) {
@@ -69,6 +70,12 @@ public class EnemyFactory {
           aiComponent.addTask(new ChaseTask(i, 0, 3f, 4f));
         }
       }
+      animator =
+          new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/base_enemy.atlas", TextureAtlas.class));
+      animator.addAnimation("float", 0.2f, Animation.PlayMode.LOOP);
+      animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+      animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
+      animator.addAnimation("stand",0.3f,Animation.PlayMode.LOOP);
     }
 
     else {
@@ -87,17 +94,18 @@ public class EnemyFactory {
           }
         }
       }
+      animator =
+          new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/troll_enemy.atlas", TextureAtlas.class));
+      animator.addAnimation("float", 0.2f, Animation.PlayMode.LOOP);
+      animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+      animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
+      animator.addAnimation("stand",0.3f,Animation.PlayMode.LOOP);
     }
 
 
     EnemyConfig config = configs.GetEnemyConfig(type);
 
-    AnimationRenderComponent animator =
-        new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/base_enemy.atlas", TextureAtlas.class));
-    animator.addAnimation("float", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
-    animator.addAnimation("stand",0.3f,Animation.PlayMode.LOOP);
+
 
     enemy
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack))

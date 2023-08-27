@@ -1,9 +1,13 @@
 package com.csse3200.game.components.mainmenu;
 
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.ui.TitleBox;
 
 /**
  * This class listens to events relevant to the Main Menu Screen and does something when one of the
@@ -12,9 +16,13 @@ import org.slf4j.LoggerFactory;
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
   private GdxGame game;
+  private Stage stage; // Add the stage
+  private Skin skin;   // Add the skin
 
-  public MainMenuActions(GdxGame game) {
+  public MainMenuActions(GdxGame game, Stage stage, Skin skin) { // Modify the constructor
     this.game = game;
+    this.stage = stage; // Initialize stage
+    this.skin = skin;   // Initialize skin
   }
 
   @Override
@@ -39,6 +47,8 @@ public class MainMenuActions extends Component {
    */
   private void onLoad() {
     logger.info("Load game");
+    TitleBox titleBox = new TitleBox("Story Introduction", skin);
+    titleBox.showDialog(stage);
   }
 
   /**

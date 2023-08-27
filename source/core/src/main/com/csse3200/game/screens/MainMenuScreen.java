@@ -2,6 +2,7 @@ package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
@@ -16,6 +17,8 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.csse3200.game.ui.UIComponent.skin;
 
 /**
  * The game screen containing the main menu.
@@ -98,7 +101,7 @@ public class MainMenuScreen extends ScreenAdapter {
     Entity ui = new Entity();
     ui.addComponent(new MainMenuDisplay())
             .addComponent(new InputDecorator(stage, 10))
-            .addComponent(new MainMenuActions(game));
+            .addComponent(new MainMenuActions(game,stage,skin));
     ServiceLocator.getEntityService().register(ui);
   }
 }

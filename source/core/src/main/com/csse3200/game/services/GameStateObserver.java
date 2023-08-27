@@ -21,16 +21,16 @@ public class GameStateObserver {
         return eventHandler;
     }
 
+    // Testing methods to get data from state
     public Map<String, Object> getStateData() {
         return stateInteraction.getStateData();
     }
+    public Object getData(String key) {
+        return stateInteraction.get(key);
+    }
 
     private void generateStateListeners() {
-
-        getEvents().addListener("resourceAddition", stateInteraction::updateResource);
-
-
-
+        getEvents().addListener("resourceAdd", stateInteraction::updateResource);
     }
 
 

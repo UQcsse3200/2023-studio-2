@@ -47,4 +47,20 @@ public class StructureFactory {
 
         return extractor;
     }
+
+    public static Entity createShip() {
+        Entity ship =
+                new Entity()
+                        .addComponent(new TextureRenderComponent("images/Ship.png"))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+        ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        ship.getComponent(TextureRenderComponent.class).scaleEntity();
+        ship.scaleHeight(1.5f);
+        PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
+        return ship;
+    }
+
+
 }

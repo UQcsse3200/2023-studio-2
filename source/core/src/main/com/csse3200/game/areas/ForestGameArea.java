@@ -52,7 +52,7 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
-    "images/Spaceship.png"
+
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -91,7 +91,7 @@ public class ForestGameArea extends GameArea {
     var player = spawnPlayer();
 
     spawnPlayer();
-    spawnShip();
+
 
     spawnEnemies();
     spawnBoss();
@@ -189,12 +189,6 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     targetables.add(newPlayer);
     return newPlayer;
-  }
-  private void spawnShip()
-  {
-    Entity newShip = ShipFactory.createShip();
-    spawnEntityAt(newShip, SHIP_SPAWN, true, true);
-    targetables.add(newShip);
   }
 
   private void spawnEnemies() {

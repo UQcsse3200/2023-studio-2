@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.components.DisplayEntityHealthComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
@@ -99,8 +100,10 @@ public class EnemyFactory {
       }
     }
 
-    animator =
-            new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset(config.atlas, TextureAtlas.class));
+    TextureAtlas atlas = ServiceLocator.getResourceService().getAsset(config.atlas, TextureAtlas.class);
+    TextureAtlas atlasCopy = atlas;
+    animator = new AnimationRenderComponent(atlasCopy);
+
 
     Entity enemy =
         new Entity()
@@ -109,6 +112,7 @@ public class EnemyFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new DisplayEntityHealthComponent(false))
+            .addComponent(new DeathComponent())
             .addComponent(animator)
             .addComponent(new TouchAttackComponent((short) (
                     PhysicsLayer.PLAYER |

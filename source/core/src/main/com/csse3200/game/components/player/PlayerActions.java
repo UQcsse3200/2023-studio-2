@@ -79,7 +79,10 @@ public class PlayerActions extends Component {
   void place(int screenX, int screenY) {
     var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
     Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
-    ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall,new GridPoint2(Math.round(location.x), Math.round(location.y)),false, false);
+//    if(WallType.basic){
+//
+//    }
+    ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall,new GridPoint2(((int)((location.x)/2)*2), ((int)((location.y)/2))*2),false, false);
   }
 
 }

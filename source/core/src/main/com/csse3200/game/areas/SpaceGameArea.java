@@ -5,6 +5,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ShipFactory;
+import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
@@ -17,8 +18,10 @@ import java.util.ArrayList;
 public class SpaceGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
+    private static final float ASTEROID_SIZE = 0.9f;
     private static final String[] spaceMiniGameTextures = {
             "images/SpaceMiniGameBackground.png",
+            "images/meteor.png",
             "images/Spaceship.png"//TODO: Replace these images with copyright free images - these are just for testing purposes!!
     };
 
@@ -47,7 +50,20 @@ public class SpaceGameArea extends GameArea {
 
         spawnTerrain();
         spawnShip();
+        spawnAsteroids();
 
+
+    }
+
+    /**
+     * Spawn Asteroids of a given size and position
+     * @requires ASTEROID_SIZE != null
+     */
+    private void spawnAsteroids() {
+        //Extra Spicy Asteroids
+        GridPoint2 posAs = new GridPoint2(8, 10);
+        spawnEntityAt(
+                ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
 
     }
 

@@ -20,7 +20,7 @@ public class RenderService implements Disposable {
    * Map from layer to list of renderables, allows us to render each layer in the correct order
    */
   private final SortedIntMap<Array<Renderable>> renderables =
-      new SortedIntMap<>(INITIAL_LAYER_CAPACITY);
+          new SortedIntMap<>(INITIAL_LAYER_CAPACITY);
 
   /**
    * Register a new renderable.
@@ -62,6 +62,8 @@ public class RenderService implements Disposable {
         renderable.render(batch);
       }
     }
+
+
   }
 
   public void setStage(Stage stage) {

@@ -25,13 +25,16 @@ public class PowerupComponent extends Component {
     private long duration;
 
     /**
-     * Assigns a type and modifier value to a given Powerup
+     * Assigns a type and targetLayer value to a given Powerup
      */
     public PowerupComponent(PowerupType type, short targetLayer) {
         this.type = type;
         this.targetLayer = targetLayer;
     }
 
+    /**
+     * Overrides the Component create() function
+     */
     @Override
     public void create() {
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
@@ -68,16 +71,14 @@ public class PowerupComponent extends Component {
      *
      * @param target  The entity receiving the Powerup effect.
      */
-    private void applyEffect(Entity target) {
+    void applyEffect(Entity target) {
         playerCombatStats = target.getComponent(CombatStatsComponent.class);
         playerActions = target.getComponent(PlayerActions.class);
 
         switch (type) {
-            case HEALTH_BOOST:
-                playerCombatStats.setHealth(100);
-                break;
-            case SPEED_BOOST:
-                playerActions.setSpeed(5,5);
+            case HEALTH_BOOST -> playerCombatStats.setHealth(100);
+            case SPEED_BOOST -> {
+                playerActions.setSpeed(5, 5);
                 this.setDuration(1500);
 
                 // Speed up for 1.5 seconds, then return to normal speed
@@ -88,13 +89,13 @@ public class PowerupComponent extends Component {
                     }
                 };
                 new java.util.Timer().schedule(speedUp, getDuration());
-                break;
-            default:
-                throw new IllegalArgumentException("You must specify a valid PowerupType");
+            }
+            default -> throw new IllegalArgumentException("You must specify a valid PowerupType");
         }
-        ServiceLocator.getEntityService().unregister(entity);
-        // entity.dispose();
-        Gdx.app.postRunnable(entity::dispose);
+
+        if (entity != null) {
+            Gdx.app.postRunnable(entity::dispose);
+        }
     }
 
     /**

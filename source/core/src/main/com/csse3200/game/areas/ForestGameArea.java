@@ -57,8 +57,8 @@ public class ForestGameArea extends GameArea {
     "images/tree.png",
     "images/wall.png",
     "images/wall2.png",
-          "images/gate_close.png",
-          "images/gate_open.png",
+    "images/gate_close.png",
+    "images/gate_open.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
@@ -70,15 +70,12 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
-      "images/base_enemy.png",
-      "images/Troll.png",
-          "images/rangeEnemy.png",
-
-    "images/iso_grass_3.png",
+    "images/base_enemy.png",
+    "images/Troll.png",
+    "images/rangeEnemy.png",
     "images/stone_wall.png",
     "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-    "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-    "images/iso_grass_3.png"
+    "images/speedpowerup.png" // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
   };
   private static final String[] forestTextureAtlases = {
           "images/terrain_iso_grass.atlas",

@@ -33,14 +33,9 @@ public class PowerupFactory {
 
         // Assigns texture based on the specific PowerupType
         switch (type) {
-            case HEALTH_BOOST:
-                powerup.addComponent(new TextureRenderComponent("images/healthpowerup.png"));
-                break;
-            case SPEED_BOOST:
-                powerup.addComponent(new TextureRenderComponent("images/speedpowerup.png"));
-                break;
-            default:
-                throw new IllegalArgumentException("You must assign a valid PowerupType");
+            case HEALTH_BOOST -> powerup.addComponent(new TextureRenderComponent("images/healthpowerup.png"));
+            case SPEED_BOOST -> powerup.addComponent(new TextureRenderComponent("images/speedpowerup.png"));
+            default -> throw new IllegalArgumentException("You must assign a valid PowerupType");
         }
         return powerup;
     }

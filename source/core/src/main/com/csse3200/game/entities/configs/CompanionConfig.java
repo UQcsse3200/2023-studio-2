@@ -6,4 +6,5 @@ package com.csse3200.game.entities.configs;
 public class CompanionConfig extends BaseEntityConfig  {
     public int gold = 1;
     public String favouriteColour = "none";
+    public String bulletTexturePath = "images/bullet.png";
 }

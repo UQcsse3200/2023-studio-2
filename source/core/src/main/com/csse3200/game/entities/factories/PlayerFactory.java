@@ -1,8 +1,10 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -13,6 +15,7 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -34,6 +37,18 @@ public class PlayerFactory {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/playerSS.atlas", TextureAtlas.class));
+    animator.addAnimation("UP", 1f);
+    animator.addAnimation("DOWN", 1f);
+    animator.addAnimation("LEFT", 1f);
+    animator.addAnimation("RIGHT", 1f);
+    animator.addAnimation("UP_RIGHT", 1f);
+    animator.addAnimation("UP_LEFT", 1f);
+    animator.addAnimation("DOWN_RIGHT", 1f);
+    animator.addAnimation("DOWN_LEFT", 1f);
+
     Entity player =
         new Entity()
             .addComponent(new TextureRenderComponent("images/playerSS_5.png"))
@@ -44,7 +59,9 @@ public class PlayerFactory {
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
             .addComponent(new InventoryComponent(stats.gold))
             .addComponent(inputComponent)
-            .addComponent(new PlayerStatsDisplay());
+            .addComponent(new PlayerStatsDisplay())
+            .addComponent(animator)
+            .addComponent(new PlayerAnimationController());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.joinable.JoinableComponent;
+import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.buildables.Gate;
@@ -14,6 +15,8 @@ import com.csse3200.game.entities.buildables.Wall;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.BuildablesFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.GameState;
+import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.CombatStatsComponent;
 
@@ -28,6 +31,7 @@ public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
+  private GameStateInteraction gameStateInteraction;
 
   @Override
   public void create() {
@@ -38,6 +42,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("place", this::placeOrUpgradeWall);
     entity.getEvents().addListener("remove", this::removeWall);
     entity.getEvents().addListener("dodged", this::dodged);
+    gameStateInteraction = new GameStateInteraction();
   }
 
   @Override
@@ -114,7 +119,6 @@ public class PlayerActions extends Component {
     var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
     GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
     Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
-
     if (existingWall != null) {
       if (existingWall.getWallType() != WallType.intermediate) {
         existingWall.dispose();
@@ -124,7 +128,6 @@ public class PlayerActions extends Component {
       }
     } else {
       Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
-
       ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, new GridPoint2(((int) ((location.x) / 2) * 2), ((int) ((location.y) / 2)) * 2), false, false);
       wall.getComponent(JoinableComponent.class).notifyNeighbours(true);
     }
@@ -142,5 +145,8 @@ public class PlayerActions extends Component {
         ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
         this.entityService.unregister(existingWall);
     }
+  }
+  void updateResources(int change) {
+    gameStateInteraction.updateResource(Resource.Unobtanium.toString(),change);
   }
 }

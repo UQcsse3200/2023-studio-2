@@ -65,15 +65,10 @@ public class ProductionComponent extends Component {
     @Override
     public void update() {
         super.update();
-        //Produce resources, send produceResource event and update GameState.
-        GameState gameState = ServiceLocator.getGameStateService();
-        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate) {
+        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate ) {
+            this.getEntity().getEvents().trigger("produceResource", this.produces, this.tickSize);
             int produced = (int) ((long) this.tickSize * this.getProductionModifier());
-            this.getEntity().getEvents().trigger("produceResource", this.produces, produced);
-            String resourceKey = "resource/" + this.produces.toString();
-            int currentAmount = gameState.get(resourceKey) == null ? 0 : (int) gameState.get(resourceKey);
-            int newAmount = currentAmount + produced;
-            gameState.put(resourceKey, newAmount);
+            ServiceLocator.getGameStateObserverService().trigger("resourceAdd", this.produces.toString(), produced);
             this.lastTime += this.tickRate;
         }
     }

@@ -1,9 +1,12 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
 /**
@@ -225,6 +228,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       default:
         return false;
     }
+  }
+  @Override
+  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    if(button == Input.Buttons.LEFT){
+      entity.getEvents().trigger("place", screenX, screenY);
+      return true;
+    }
+    return false;
   }
 
   /**

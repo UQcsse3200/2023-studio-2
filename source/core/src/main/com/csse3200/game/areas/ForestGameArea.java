@@ -133,7 +133,7 @@ public class ForestGameArea extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
-      tree.addComponent(new DialogComponent());
+      tree.addComponent(new DialogComponent(dialogueBox));
     }
   }
 
@@ -152,7 +152,7 @@ public class ForestGameArea extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity ghost = NPCFactory.createGhost(player);
       spawnEntityAt(ghost, randomPos, true, true);
-      ghost.addComponent(new DialogComponent());
+      ghost.addComponent(new DialogComponent(dialogueBox));
     }
   }
 //  private void spawnBotanist() { // TODO: Temp
@@ -172,7 +172,7 @@ public class ForestGameArea extends GameArea {
             terrain.getMapBounds(0).sub(1, 1).y/3);
     Entity ship = NPCFactory.createBotanist();
     spawnEntityAt(ship, spawnPosition, false, false);
-    ship.addComponent(new DialogComponent());
+    ship.addComponent(new DialogComponent(dialogueBox));
   }
   private void spawnGhostKing() {
     GridPoint2 minPos = new GridPoint2(0, 0);
@@ -181,7 +181,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
     Entity ghostKing = NPCFactory.createGhostKing(player);
     spawnEntityAt(ghostKing, randomPos, true, true);
-    ghostKing.addComponent(new DialogComponent());
+    ghostKing.addComponent(new DialogComponent(dialogueBox));
   }
 
   private void playMusic() {

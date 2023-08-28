@@ -75,7 +75,7 @@ public class NPCFactory {
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
         .addComponent(animator)
         .addComponent(new GhostAnimationController())
-        .addComponent(new DialogComponent());
+        .addComponent(new DialogComponent(dialogueBox));
     ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     return ghost;
@@ -102,7 +102,7 @@ public class NPCFactory {
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
         .addComponent(animator)
         .addComponent(new GhostAnimationController())
-        .addComponent(new DialogComponent());
+        .addComponent(new DialogComponent(dialogueBox));
     ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
     return ghostKing;
   }

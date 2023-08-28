@@ -74,10 +74,12 @@ public class TouchAttackComponent extends Component {
 
     // Try to attack target.
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+    Entity source = ((BodyUserData) me.getBody().getUserData()).entity;
     DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
     if (targetStats != null) {
-      //dialogue.showDialogue("Hello!");
+      //
+
       targetStats.hit(combatStats);
     }
 
@@ -89,8 +91,5 @@ public class TouchAttackComponent extends Component {
       Vector2 impulse = direction.setLength(knockbackForce);
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
-
-
-    if(dialogue != null) {}
   }
 }

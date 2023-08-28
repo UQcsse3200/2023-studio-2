@@ -36,14 +36,32 @@ public class Entity {
   private boolean created = false;
   private Vector2 position = Vector2.Zero.cpy();
   private Vector2 scale = new Vector2(1, 1);
+  private float rotation = 0;
   private Array<Component> createdComponents;
 
   public Entity() {
     id = nextId;
     nextId++;
+    this.rotation = 0;
 
     components = new IntMap<>(4);
     eventHandler = new EventHandler();
+  }
+
+  /**
+   * Function to set rotation
+   * @param rot - rotation of entity to set to
+   */
+  public void setRotation(float rot) {
+    this.rotation = rot;
+  }
+
+  /**
+   * function to get rotation
+   * @return return rotation of entity
+   */
+  public float getRotation() {
+    return this.rotation;
   }
 
   /**

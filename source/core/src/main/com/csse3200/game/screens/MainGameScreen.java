@@ -150,6 +150,24 @@ public class MainGameScreen extends ScreenAdapter {
   }
 
   private void followPlayer() {
-    renderer.getCamera().getEntity().setPosition(player.getPosition());
+    float playerX = player.getPosition().x;
+    float playerY = player.getPosition().y;
+
+    // Calculate half of the camera's viewport dimensions
+    float halfViewportWidth = renderer.getCamera().getCamera().viewportWidth * 0.5f;
+    float halfViewportHeight = renderer.getCamera().getCamera().viewportHeight * 0.5f;
+
+    // Define the minimum and maximum allowed camera positions based on map boundaries
+    float minX = halfViewportWidth;
+    float maxX = 60 * 0.5f - halfViewportWidth;
+    float minY = halfViewportHeight;
+    float maxY = 60 * 0.5f - halfViewportHeight;
+
+    // Calculate the camera's new X and Y positions within map boundaries
+    float cameraX = Math.min(maxX, Math.max(minX, playerX));
+    float cameraY = Math.min(maxY, Math.max(minY, playerY));
+
+    //Set new position
+    renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
   }
 }

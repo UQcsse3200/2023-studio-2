@@ -109,13 +109,6 @@ public class ForestGameArea extends GameArea {
     spawnPowerups();
     spawnExtractors();
 
-
-    var player = spawnPlayer();
-
-    spawnPlayer();
-
-
-
     spawnShip();
     spawnPlayer();
 

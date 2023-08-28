@@ -19,9 +19,13 @@ import java.util.ArrayList;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class SpaceGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-    private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 SHIP_SPAWN = new GridPoint2(5, 10);
     private static final float ASTEROID_SIZE = 0.9f;
+    private static final float STATIC_ASTEROID_SIZE =0.9f;
     private static final float WORMHOLE_SIZE = 0.9f;
+    GridPoint2 startingPosition = new GridPoint2(0, 0);
+    int numberOfAsteroids = 10; // Change this to the desired number of asteroids
+
     private static final String[] spaceMiniGameTextures = {
             "images/SpaceMiniGameBackground.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
@@ -55,6 +59,7 @@ public class SpaceGameArea extends GameArea {
         spawnShip();
         spawnAsteroids();
         spawnGoal();
+        spawnStaticAsteroids(numberOfAsteroids,startingPosition);
 
 
 
@@ -80,6 +85,22 @@ public class SpaceGameArea extends GameArea {
                 ObstacleFactory.createAsteroid(ASTEROID_SIZE,ASTEROID_SIZE), posAs, false, false);
 
     }
+    private void spawnStaticAsteroids(int n, GridPoint2 pos){
+        if (n <= 0) {
+            return;
+        }
+
+        spawnEntityAt(
+                ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE), pos, false, false);
+
+        // Increment the position for the next asteroid
+        pos.x += 1;
+        pos.y += 1;
+
+        spawnStaticAsteroids(n - 1, pos); // Recursive call
+    }
+
+
 
     private void spawnGoal(){
         GridPoint2 position = new GridPoint2(24,10);

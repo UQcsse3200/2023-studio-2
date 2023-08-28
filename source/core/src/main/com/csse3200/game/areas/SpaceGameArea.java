@@ -1,4 +1,6 @@
 package com.csse3200.game.areas;
+import com.badlogic.gdx.audio.Music;
+import com.csse3200.game.files.UserSettings;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -24,6 +26,8 @@ public class SpaceGameArea extends GameArea {
             "images/meteor.png",
             "images/Spaceship.png"//TODO: Replace these images with copyright free images - these are just for testing purposes!!
     };
+    private static final String backgroundMusic = "sounds/WereWasI.ogg";
+    private static final String[] spaceMusic = {backgroundMusic};
 
 
 
@@ -46,13 +50,24 @@ public class SpaceGameArea extends GameArea {
     public void create() {
         loadAssets();
 
-        displayUI();
 
+        displayUI();
+        playMusic();
         spawnTerrain();
         spawnShip();
         spawnAsteroids();
 
 
+
+    }
+
+    private void playMusic() {
+        UserSettings.Settings settings = UserSettings.get();
+
+        Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+        music.setLooping(true);
+        music.setVolume(settings.musicVolume);
+        music.play();
     }
 
     /**
@@ -100,6 +115,7 @@ public class SpaceGameArea extends GameArea {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(spaceMiniGameTextures);
+        resourceService.loadMusic(spaceMusic);
 
 
         while (!resourceService.loadForMillis(10)) {
@@ -112,6 +128,7 @@ public class SpaceGameArea extends GameArea {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(spaceMiniGameTextures);
+        resourceService.unloadAssets(spaceMusic);
 
     }
 

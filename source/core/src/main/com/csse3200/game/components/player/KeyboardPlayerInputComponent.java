@@ -19,6 +19,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private int flagS = 0;
   private int flagD = 0;
   private int flagMul = 0;
+  private int testing = 0;
+
+  public int getTesting() {
+    return testing;
+  }
+
+  public void setTesting(int testing) {
+    this.testing = testing;
+  }
 
   /**
    * @return int
@@ -78,7 +87,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.UP);
-          entity.getEvents().trigger("walkUp");
         } else {
           walkDirection.add(Vector2Utils.UP);
           diagonal();
@@ -90,7 +98,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.LEFT);
-          entity.getEvents().trigger("walkLeft");
         } else {
           walkDirection.add(Vector2Utils.LEFT);
           diagonal();
@@ -102,7 +109,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.DOWN);
-          entity.getEvents().trigger("walkDown");
         } else {
           walkDirection.add(Vector2Utils.DOWN);
           diagonal();
@@ -114,7 +120,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.RIGHT);
-          entity.getEvents().trigger("walkRight");
         } else {
           walkDirection.add(Vector2Utils.RIGHT);
           diagonal();
@@ -226,14 +231,20 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
   }
 
+  public Vector2 getDirection(){
+    return this.walkDirection;
+  }
+
   /**
    * Triggers walk event
    */
   private void triggerWalkEvent() {
-    if (walkDirection.epsilonEquals(Vector2.Zero)) {
-      entity.getEvents().trigger("walkStop");
-    } else {
-      entity.getEvents().trigger("walk", walkDirection);
+    if (this.getTesting() == 0){
+      if (walkDirection.epsilonEquals(Vector2.Zero)) {
+        entity.getEvents().trigger("walkStop");
+      } else {
+        entity.getEvents().trigger("walk", walkDirection);
+      }
     }
   }
 

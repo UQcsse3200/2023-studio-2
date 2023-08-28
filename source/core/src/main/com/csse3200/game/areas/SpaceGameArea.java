@@ -25,7 +25,8 @@ public class SpaceGameArea extends GameArea {
     private static final String[] spaceMiniGameTextures = {
             "images/SpaceMiniGameBackground.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-            "images/RightShip.png",
+            "images/LeftShip.png",
+            "images/Ship.png",
             "images/wormhole.jpg"
     };
     private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i

@@ -5,11 +5,28 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 import com.badlogic.gdx.InputProcessor;
+public class TouchCompanionInputComponent extends InputComponent {
+    public TouchCompanionInputComponent() {
+        super(5);
+    }
 
-/**
+    /**
+     * Triggers the Companion attack.
+     * @return whether the input was processed
+     * @see InputProcessor#touchDown(int, int, int, int)
+     */
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        entity.getEvents().trigger("attack");
+        return true;
+    }
+}
+
+/*
+*//**
  * Input handler for the Companion for keyboard and touch (mouse) input.
  * This input handler uses keyboard and touch input.
- */
+ *//*
 public class TouchCompanionInputComponent extends InputComponent {
     private final Vector2 walkDirection = Vector2.Zero.cpy();
 
@@ -17,12 +34,12 @@ public class TouchCompanionInputComponent extends InputComponent {
         super(5);
     }
 
-    /**
+    *//**
      * Triggers Companion events on specific keycodes.
      *
      * @return whether the input was processed
      * @see InputProcessor#keyDown(int)
-     */
+     *//*
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
@@ -47,12 +64,12 @@ public class TouchCompanionInputComponent extends InputComponent {
         }
     }
 
-    /**
+    *//**
      * Triggers Companion events on specific keycodes.
      *
      * @return whether the input was processed
      * @see InputProcessor#keyUp(int)
-     */
+     *//*
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
@@ -77,11 +94,11 @@ public class TouchCompanionInputComponent extends InputComponent {
         }
     }
 
-    /**
+    *//**
      * Triggers the Companionattack.
      * @return whether the input was processed
      * @see InputProcessor#touchDown(int, int, int, int)
-     */
+     *//*
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         entity.getEvents().trigger("attack");
@@ -95,7 +112,7 @@ public class TouchCompanionInputComponent extends InputComponent {
             entity.getEvents().trigger("walk", walkDirection);
         }
     }
-}
+}*/
 
 
 

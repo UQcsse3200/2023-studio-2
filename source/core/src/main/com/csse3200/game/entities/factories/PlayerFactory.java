@@ -15,6 +15,8 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
 
 /**
  * Factory to create a player entity.
@@ -22,7 +24,9 @@ import com.csse3200.game.services.ServiceLocator;
  * <p>Predefined player properties are loaded from a config stored as a json file and should have
  * the properties stores in 'PlayerConfig'.
  */
+
 public class PlayerFactory {
+  private static DialogueBox dialogueBox;
   private static final PlayerConfig stats =
       FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
@@ -44,7 +48,8 @@ public class PlayerFactory {
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
             .addComponent(new InventoryComponent(stats.gold))
             .addComponent(inputComponent)
-            .addComponent(new PlayerStatsDisplay());
+            .addComponent(new PlayerStatsDisplay())
+            .addComponent(new DialogComponent());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

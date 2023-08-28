@@ -11,6 +11,7 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.areas.ForestGameArea;
@@ -60,6 +61,7 @@ public class TouchAttackComponent extends Component {
 
 
   private void onCollisionStart(Fixture me, Fixture other) {
+
     if (hitboxComponent.getFixture() != me) {
       // Not triggered by hitbox, ignore
       return;
@@ -72,8 +74,10 @@ public class TouchAttackComponent extends Component {
 
     // Try to attack target.
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+    DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
     if (targetStats != null) {
+      //dialogue.showDialogue("Hello!");
       targetStats.hit(combatStats);
     }
 
@@ -85,5 +89,8 @@ public class TouchAttackComponent extends Component {
       Vector2 impulse = direction.setLength(knockbackForce);
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
+
+
+    if(dialogue != null) {}
   }
 }

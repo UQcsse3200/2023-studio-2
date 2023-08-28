@@ -11,6 +11,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
@@ -25,9 +26,6 @@ import static com.csse3200.game.ui.UIComponent.skin;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
 
-
-  private Stage stage;
-  private DialogueBox dialoguebox;
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
@@ -60,6 +58,7 @@ public class ForestGameArea extends GameArea {
 
   private Entity player;
   private Entity botanist;
+  private DialogueBox dialogueBox;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -134,6 +133,7 @@ public class ForestGameArea extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
+      tree.addComponent(new DialogComponent());
     }
   }
 
@@ -152,6 +152,7 @@ public class ForestGameArea extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity ghost = NPCFactory.createGhost(player);
       spawnEntityAt(ghost, randomPos, true, true);
+      ghost.addComponent(new DialogComponent());
     }
   }
 //  private void spawnBotanist() { // TODO: Temp
@@ -171,6 +172,7 @@ public class ForestGameArea extends GameArea {
             terrain.getMapBounds(0).sub(1, 1).y/3);
     Entity ship = NPCFactory.createBotanist();
     spawnEntityAt(ship, spawnPosition, false, false);
+    ship.addComponent(new DialogComponent());
   }
   private void spawnGhostKing() {
     GridPoint2 minPos = new GridPoint2(0, 0);
@@ -179,6 +181,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
     Entity ghostKing = NPCFactory.createGhostKing(player);
     spawnEntityAt(ghostKing, randomPos, true, true);
+    ghostKing.addComponent(new DialogComponent());
   }
 
   private void playMusic() {

@@ -28,6 +28,8 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.ui.TitleBox;
 
 
@@ -42,6 +44,7 @@ import com.csse3200.game.ui.TitleBox;
  * similar characteristics.
  */
 public class NPCFactory {
+  public static DialogueBox dialogueBox;
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
@@ -58,6 +61,7 @@ public class NPCFactory {
    * @return entity
    */
   public static Entity createGhost(Entity target) {
+
     Entity ghost = createBaseNPC(target);
     BaseEntityConfig config = configs.ghost;
 
@@ -70,8 +74,8 @@ public class NPCFactory {
     ghost
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
         .addComponent(animator)
-        .addComponent(new GhostAnimationController());
-
+        .addComponent(new GhostAnimationController())
+        .addComponent(new DialogComponent());
     ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     return ghost;
@@ -97,8 +101,8 @@ public class NPCFactory {
     ghostKing
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
         .addComponent(animator)
-        .addComponent(new GhostAnimationController());
-
+        .addComponent(new GhostAnimationController())
+        .addComponent(new DialogComponent());
     ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
     return ghostKing;
   }

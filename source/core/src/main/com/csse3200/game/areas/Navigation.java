@@ -26,9 +26,9 @@ public class Navigation extends GameArea {
         displayUI();
         Entity planet1=new Entity().addComponent(new PlanetComponent(image,500,300));
         planet1.getEvents().addListener("Navigate",()->{
-            ForestGameArea forestGameArea=new ForestGameArea(terrainFactory);
+            ForestGameArea nextGameArea=new ForestGameArea(terrainFactory);
             this.dispose();
-            forestGameArea.create();
+            nextGameArea.create();
 
 
         });

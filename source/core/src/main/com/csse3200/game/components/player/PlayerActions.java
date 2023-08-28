@@ -3,11 +3,10 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.joinable.JoinableComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.buildables.Wall;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.BuildablesFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -88,7 +87,9 @@ public class PlayerActions extends Component {
       }
     } else {
       Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
+
       ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, new GridPoint2(((int) ((location.x) / 2) * 2), ((int) ((location.y) / 2)) * 2), false, false);
+      wall.getComponent(JoinableComponent.class).notifyNeighbours(true);
     }
   }
 }

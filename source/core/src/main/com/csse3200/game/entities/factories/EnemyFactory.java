@@ -6,13 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.DeathComponent;
-import com.csse3200.game.components.DisplayEntityHealthComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.BossConfig;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
@@ -111,7 +109,6 @@ public class EnemyFactory {
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(new DisplayEntityHealthComponent(false))
             .addComponent(new DeathComponent())
             .addComponent(animator)
             .addComponent(new TouchAttackComponent((short) (
@@ -129,7 +126,7 @@ public class EnemyFactory {
     enemy
             .addComponent(new GhostAnimationController())
             .addComponent(aiComponent)    // adds tasks depending on enemy type
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 0, false));
 
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 

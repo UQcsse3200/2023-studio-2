@@ -47,7 +47,7 @@ public class BulletFactory {
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
         enemy
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 0, false))
                 .addComponent(animator)
                 .addComponent(new GhostAnimationController())
                 .addComponent(aiComponent);    // adds tasks depending on enemy type

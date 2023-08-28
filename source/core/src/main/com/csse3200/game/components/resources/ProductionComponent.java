@@ -71,10 +71,4 @@ public class ProductionComponent extends Component {
             this.lastTime += this.tickRate;
         }
     }
-
-    @Override
-    public void update() {
-        super.update();
-        this.produce();
-    }
 }

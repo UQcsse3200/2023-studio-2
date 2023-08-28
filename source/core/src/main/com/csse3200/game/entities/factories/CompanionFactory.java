@@ -42,7 +42,7 @@ public class CompanionFactory {
                         .addComponent(new ColliderComponent())
                         .addComponent(new CompanionActions())
                         .addComponent(inputComponent)
-                        .addComponent(new FollowComponent(playerEntity, 20.f));
+                        .addComponent(new FollowComponent(playerEntity, 3.f));
 
 
         PhysicsUtils.setScaledCollider(Companion, 0.4f, 0.2f);

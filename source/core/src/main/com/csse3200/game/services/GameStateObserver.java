@@ -17,7 +17,18 @@ public class GameStateObserver extends EventHandler {
      * Initialises the GameStateInteraction and registers event listeners.
      */
     public GameStateObserver() {
-        stateInteraction =  new GameStateInteraction();
+        this.stateInteraction =  new GameStateInteraction();
+        this.generateStateListeners();
+    }
+
+    /**
+     * Constructs the GameStateObserver instance.
+     * Uses the given GameStateInteraction for interactions and registers event listeners.
+     *
+     * @param gameStateInteractor   The chosen GameStateInteraction to interface with.
+     */
+    public  GameStateObserver(GameStateInteraction gameStateInteractor) {
+        this.stateInteraction = gameStateInteractor;
         this.generateStateListeners();
     }
 

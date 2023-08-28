@@ -8,7 +8,25 @@ import java.util.Map;
 public class GameStateInteraction {
 
     // Corresponding GameState to be managed by interactions
-    private final GameState gameState = new GameState();
+    private final GameState gameState;
+
+    /**
+     * Constructs a GameStateInteraction instance.
+     * Initialises a GameState.
+     */
+    public GameStateInteraction() {
+        this.gameState = new GameState();
+    }
+
+    /**
+     * Constructs a GameStateInteraction instance.
+     * Manages the given GameState.
+     *
+     * @param gameState The chosen GameState to modify and manage.
+     */
+    public GameStateInteraction(GameState gameState) {
+        this.gameState = gameState;
+    }
 
     /**
      * Updates or adds the given key-value pair in the game state data.

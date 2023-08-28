@@ -63,12 +63,11 @@ public class ObstacleFactory {
    * Creates an Asteroid that has bounce
    * @param width Asteroid width in world units
    * @param height Asteroid height in world units
-   * @param restitution Asteroid bounce once hit
-   * @return Asteroid entity of given width, height and bounciness
+   * @return Asteroid entity of given width and height
    */
-  public static Entity createAsteroid(float width, float height, float restitution) {
+  public static Entity createAsteroid(float width, float height) {
     ColliderComponent asteroidCollider = new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE);
-    asteroidCollider.setRestitution(restitution);
+    //asteroidCollider.setRestitution(restitution); bounce removed
     Entity asteroid = new Entity()
             .addComponent(new TextureRenderComponent("images/meteor.png"))
             .addComponent(new PhysicsComponent().setBodyType(BodyType.DynamicBody))
@@ -76,7 +75,14 @@ public class ObstacleFactory {
     asteroid.setScale(width, height);
     return asteroid;
   }
-
+  public static Entity createObstacleGameGoal(float width, float height){
+    Entity goal = new Entity()
+            .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new TextureRenderComponent("images/wormhole.jpg"));
+    goal.setScale(width, height);
+    return goal;
+  }
   public static Entity createCustomWall(WallType type) {
     return new Wall(configs.GetWallConfig(type));
   }

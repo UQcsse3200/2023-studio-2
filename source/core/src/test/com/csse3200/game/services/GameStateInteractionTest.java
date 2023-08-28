@@ -10,19 +10,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ExtendWith(GameExtension.class)
-public class GameStateInteractionTest {
+class GameStateInteractionTest {
 
     GameState gameState;
     GameStateInteraction stateInteraction;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         gameState = new GameState();
         stateInteraction = new GameStateInteraction(gameState);
     }
 
     @Test
-    public void testPutData() {
+    void testPutData() {
         String key1 = "testKey1";
         int value1 = 100;
         String key2 = "testKey2";
@@ -36,7 +36,7 @@ public class GameStateInteractionTest {
     }
 
     @Test
-    public void testGetData() {
+    void testGetData() {
         String key1 = "testKey1";
         int value1 = 100;
         String key2 = "testKey2";
@@ -51,7 +51,7 @@ public class GameStateInteractionTest {
     }
 
     @Test
-    public void testGetAllStateData() {
+    void testGetAllStateData() {
         String key1 = "testKey1";
         int value1 = 100;
         String key2 = "testKey2";
@@ -67,7 +67,7 @@ public class GameStateInteractionTest {
     }
 
     @Test
-    public void testUpdateResource() {
+    void testUpdateResource() {
         String resourceName = "testResource1";
         int startAmount = 1000;
         int changeAmount = 500;

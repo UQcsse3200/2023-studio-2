@@ -36,6 +36,15 @@ public class GameState {
     }
 
     /**
+     * Returns a copy of the current game state data
+     *
+     * @return The copy of current state data
+     */
+    public ConcurrentHashMap<String, Object> getStateData() {
+        return new ConcurrentHashMap<>(stateData);
+    }
+
+    /**
      * Registers a state change listener.
      *
      * @param listener The listener to be registered.

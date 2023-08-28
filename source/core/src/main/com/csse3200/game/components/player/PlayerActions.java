@@ -1,9 +1,15 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.buildables.Wall;
+import com.csse3200.game.entities.buildables.WallType;
+import com.csse3200.game.entities.factories.BuildablesFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -26,6 +32,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("dodged", this::dodged);
+    entity.getEvents().addListener("place", this::place);
   }
 
   @Override
@@ -96,4 +103,11 @@ public class PlayerActions extends Component {
   public Vector2 getSpeed() {
     return MAX_SPEED;
   }
+
+  void place(int screenX, int screenY) {
+    var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
+    Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
+    ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall,new GridPoint2(Math.round(location.x), Math.round(location.y)),false, false);
+  }
+
 }

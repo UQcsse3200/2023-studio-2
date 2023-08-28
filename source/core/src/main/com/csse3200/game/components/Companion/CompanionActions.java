@@ -36,6 +36,9 @@ public class CompanionActions extends Component {
         this.playerEntity = playerEntity;
     }
 
+    public void setBulletTexturePath(String path){
+        bulletTexturePath = path;
+    }
     @Override
     public void update() {
         if (playerEntity != null && moving) {

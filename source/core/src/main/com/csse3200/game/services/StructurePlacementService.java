@@ -40,6 +40,10 @@ public class StructurePlacementService {
         placedStructures.put(tilePos, entity);
         handler.trigger("placeStructureAt", new PlaceStructureAtArgs(entity, tilePos, centerX, centerY));
     }
+
+    public void removeStructureAt(GridPoint2 tilePos) {
+        placedStructures.remove(tilePos);
+    }
     public Entity getStructureAt(GridPoint2 position) {
         return placedStructures.get(position);
     }

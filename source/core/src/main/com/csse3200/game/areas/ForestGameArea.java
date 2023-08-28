@@ -51,6 +51,8 @@ public class ForestGameArea extends GameArea {
     "images/tree.png",
     "images/wall.png",
     "images/wall2.png",
+          "images/gate_close.png",
+          "images/gate_open.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
@@ -61,12 +63,15 @@ public class ForestGameArea extends GameArea {
     "images/hex_grass_3.png",
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
+    "images/iso_grass_3.png",
+    "images/stone_wall.png",
     "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/iso_grass_3.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/stone_wall.atlas",
+          "images/dirt_wall.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -100,11 +105,10 @@ public class ForestGameArea extends GameArea {
     spawnPowerups();
     spawnExtractors();
     spawnShip();
-    var player = spawnPlayer();
+    spawnPlayer();
     spawnEnemies();
     spawnBoss();
     spawnAsteroids();
-    spawnWalls(player);
 
     playMusic();
   }
@@ -115,24 +119,6 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(
             ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE, BOUNCE), posAs, false, false);
 
-  }
-
-  private List<Entity> spawnWalls(Entity player) {
-    List<Entity> walls = new ArrayList<Entity>();
-    StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
-
-    Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
-    Entity intermediateWall = BuildablesFactory.createCustomWall(WallType.intermediate);
-    structurePlacementService.PlaceStructureAt(wall, new GridPoint2(10, 10), false, false);
-    structurePlacementService.PlaceStructureAt(intermediateWall, new GridPoint2(20, 15), false, false);
-
-    walls.add(wall);
-    walls.add(intermediateWall);
-
-    Entity gate = BuildablesFactory.createGate(WallType.basic, player);
-    spawnEntityAt(gate, new GridPoint2(10, 15), false, false);
-
-    return walls;
   }
 
   private void spawnExtractors() {
@@ -182,6 +168,7 @@ public class ForestGameArea extends GameArea {
     // Bottom
     spawnEntityAt(
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+
     ServiceLocator.registerTerrainService(new TerrainService(terrain));
   }
 

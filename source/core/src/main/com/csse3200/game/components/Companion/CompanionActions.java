@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -26,12 +27,31 @@ public class CompanionActions extends Component {
         entity.getEvents().addListener("walkStop", this::stopWalking);
         entity.getEvents().addListener("attack", this::attack);
     }
+    //initialising a reference player entity
+    private Entity playerEntity;
+
+    public void setPlayerEntity(Entity playerEntity){
+        this.playerEntity = playerEntity;
+    }
 
     @Override
     public void update() {
-        if (moving) {
+        if (playerEntity != null && moving) {
+            updateFollowPlayer();
+        } else if (moving) {
             updateSpeed();
         }
+    }
+//functionality for basic player tracking
+    private void updateFollowPlayer() {
+        Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
+        Vector2 companionPosition = physicsComponent.getBody().getPosition();
+
+        // Calculate direction vector towards the player
+        walkDirection = playerPosition.cpy().sub(companionPosition).nor();
+
+        // Update the speed to make the companion move towards the player
+        updateSpeed();
     }
 
     private void updateSpeed() {

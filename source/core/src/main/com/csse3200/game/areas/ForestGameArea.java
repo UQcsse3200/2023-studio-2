@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.buildables.WallType;
 
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
@@ -15,9 +14,8 @@ import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.entities.factories.PowerupFactory;
 
-import com.csse3200.game.entities.factories.*;
-
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -93,8 +91,8 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     spawnExtractors();
-    spawnPlayer();
-    spawnCompanion();
+    Entity playerEntity = spawnPlayer();
+    spawnCompanion(playerEntity, new Vector2(20.0f,20.0f));
     spawnPowerups();
     spawnEnemies();
     spawnBoss();
@@ -161,15 +159,23 @@ public class ForestGameArea extends GameArea {
       spawnEntityAt(tree, randomPos, true, false);
     }
   }
-
-  private void spawnPlayer() {
+//declared spawnPlayer an entity to return an Entity
+  private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     targetables.add(newPlayer);
+    return newPlayer;
   }
 
-  private void spawnCompanion() {
-    Entity newCompanion = CompanionFactory.createCompanion();
+  private void spawnCompanion(Entity playerEntity, Vector2 offset) {
+    Entity newCompanion = CompanionFactory.createCompanion(playerEntity);
+    PhysicsComponent playerPhysics = playerEntity.getComponent(PhysicsComponent.class);
+    //calculate the player position
+    Vector2 playerPosition = playerPhysics.getBody().getPosition();
+    // Calculate the spawn position with the desired offset
+    Vector2 companionSpawnPosition = playerPosition.cpy().add(offset);
+    // Figure out a way to input companionSpawnPosition into spawnEntity to maintain an offset
+
     spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
     targetables.add(newCompanion);
   }

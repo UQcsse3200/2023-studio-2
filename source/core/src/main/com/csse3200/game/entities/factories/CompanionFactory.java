@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -13,6 +14,7 @@ import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.FollowComponent;
 
 /**
  * Factory to create a companion entity.
@@ -28,7 +30,8 @@ public class CompanionFactory {
      * Create a Companion entity.
      * @return entity
      */
-    public static Entity createCompanion() {
+    //added a player reference for basic player tracking
+    public static Entity createCompanion(Entity playerEntity) {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForCompanion();
 
@@ -38,7 +41,8 @@ public class CompanionFactory {
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new CompanionActions())
-                        .addComponent(inputComponent);
+                        .addComponent(inputComponent)
+                        .addComponent(new FollowComponent(playerEntity, 20.f));
 
 
         PhysicsUtils.setScaledCollider(Companion, 0.4f, 0.2f);

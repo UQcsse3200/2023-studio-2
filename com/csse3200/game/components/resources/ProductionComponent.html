@@ -102,7 +102,10 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.components.resources.Resource,long,int)" class="member-name-link">ProductionComponent</a><wbr>(<a href="Resource.html" title="enum class in com.csse3200.game.components.resources">Resource</a>&nbsp;produces,
  long&nbsp;tickRate,
  int&nbsp;tickSize)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">ProductionComponent allows an entity to produce resources on some real time interval and send them to
+ the gameState and event handler.</div>
+</div>
 </div>
 </section>
 </li>
@@ -122,9 +125,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called when the entity is created and registered.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProductionModifier()" class="member-name-link">getProductionModifier</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">getProductionModifier returns a value between 0 and 1 for how efficient the extractor is.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called once per frame of the game, and should be used for most component logic.</div>
 </div>
 </div>
@@ -153,6 +161,14 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ProductionComponent</span><wbr><span class="parameters">(<a href="Resource.html" title="enum class in com.csse3200.game.components.resources">Resource</a>&nbsp;produces,
  long&nbsp;tickRate,
  int&nbsp;tickSize)</span></div>
+<div class="block">ProductionComponent allows an entity to produce resources on some real time interval and send them to
+ the gameState and event handler.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>produces</code> - the resource type this should produce</dd>
+<dd><code>tickRate</code> - the amount of seconds between ticks (not guaranteed but catchup is performed if a tick is missed)</dd>
+<dd><code>tickSize</code> - the amount of the resource to produce on each tick</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -173,6 +189,18 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getProductionModifier()">
+<h3>getProductionModifier</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getProductionModifier</span>()</div>
+<div class="block">getProductionModifier returns a value between 0 and 1 for how efficient the extractor is.
+ For example a fully functioning extractor would have an efficiency of 1.0, and a broken one 0.0.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>long between 0 and 1.</dd>
 </dl>
 </section>
 </li>

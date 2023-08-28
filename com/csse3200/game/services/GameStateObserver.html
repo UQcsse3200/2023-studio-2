@@ -79,6 +79,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">GameStateObserver</span>
 <span class="extends-implements">extends <a href="../events/EventHandler.html" title="class in com.csse3200.game.events">EventHandler</a></span></div>
+<div class="block">The global game state observer class (EventHandler) that allows components
+ to interface with the stored game state data using event calls and triggers.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -91,7 +93,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">GameStateObserver</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructs the GameStateObserver instance.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.services.GameStateInteraction)" class="member-name-link">GameStateObserver</a><wbr>(<a href="GameStateInteraction.html" title="class in com.csse3200.game.services">GameStateInteraction</a>&nbsp;gameStateInteractor)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Constructs the GameStateObserver instance.</div>
+</div>
 </div>
 </section>
 </li>
@@ -108,10 +116,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFullStateData()" class="member-name-link">getFullStateData</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a copy of the entire game state at the current moment.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStateData(java.lang.String)" class="member-name-link">getStateData</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value corresponding to the given key in the game state data.</div>
+</div>
 </div>
 </div>
 </div>
@@ -136,6 +148,20 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>GameStateObserver</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GameStateObserver</span>()</div>
+<div class="block">Constructs the GameStateObserver instance.
+ Initialises the GameStateInteraction and registers event listeners.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.services.GameStateInteraction)">
+<h3>GameStateObserver</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GameStateObserver</span><wbr><span class="parameters">(<a href="GameStateInteraction.html" title="class in com.csse3200.game.services">GameStateInteraction</a>&nbsp;gameStateInteractor)</span></div>
+<div class="block">Constructs the GameStateObserver instance.
+ Uses the given GameStateInteraction for interactions and registers event listeners.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>gameStateInteractor</code> - The chosen GameStateInteraction to interface with.</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -150,12 +176,24 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getFullStateData()">
 <h3>getFullStateData</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span>&nbsp;<span class="element-name">getFullStateData</span>()</div>
+<div class="block">Returns a copy of the entire game state at the current moment.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>A map of the game state data.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getStateData(java.lang.String)">
 <h3>getStateData</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getStateData</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="block">Returns the value corresponding to the given key in the game state data.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>key</code> - The key for which the value should be retrieved from</dd>
+<dt>Returns:</dt>
+<dd>The value at the given key, or null if key doesn't exist.</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -77,6 +77,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">GameStateInteraction</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">A utility interaction class to manage and modify game state</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -89,7 +90,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">GameStateInteraction</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a GameStateInteraction instance.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.services.GameState)" class="member-name-link">GameStateInteraction</a><wbr>(<a href="GameState.html" title="class in com.csse3200.game.services">GameState</a>&nbsp;gameState)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Constructs a GameStateInteraction instance.</div>
+</div>
 </div>
 </section>
 </li>
@@ -106,18 +113,26 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get(java.lang.String)" class="member-name-link">get</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value stored at the give key in the game state.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStateData()" class="member-name-link">getStateData</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a copy of the current entire game state data.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#put(java.lang.String,java.lang.Object)" class="member-name-link">put</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates or adds the given key-value pair in the game state data.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateResource(java.lang.String,int)" class="member-name-link">updateResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
  int&nbsp;changeAmount)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Increases the specified resource name by a given amount.</div>
+</div>
 </div>
 </div>
 </div>
@@ -139,6 +154,20 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>GameStateInteraction</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GameStateInteraction</span>()</div>
+<div class="block">Constructs a GameStateInteraction instance.
+ Initialises a GameState.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.services.GameState)">
+<h3>GameStateInteraction</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GameStateInteraction</span><wbr><span class="parameters">(<a href="GameState.html" title="class in com.csse3200.game.services">GameState</a>&nbsp;gameState)</span></div>
+<div class="block">Constructs a GameStateInteraction instance.
+ Manages the given GameState.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>gameState</code> - The chosen GameState to modify and manage.</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -154,18 +183,36 @@ loadScripts(document, 'script');</script>
 <h3>put</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">put</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
+<div class="block">Updates or adds the given key-value pair in the game state data.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>key</code> - The key to associate the value with.</dd>
+<dd><code>value</code> - The corresponding value to save to the key.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="get(java.lang.String)">
 <h3>get</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="block">Returns the value stored at the give key in the game state.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>key</code> - The key from which the value should be retrieved from.</dd>
+<dt>Returns:</dt>
+<dd>The value stored at the given key, or null if key found.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getStateData()">
 <h3>getStateData</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span>&nbsp;<span class="element-name">getStateData</span>()</div>
+<div class="block">Returns a copy of the current entire game state data.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>A map of game state data at the current moment.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -173,6 +220,14 @@ loadScripts(document, 'script');</script>
 <h3>updateResource</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateResource</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
  int&nbsp;changeAmount)</span></div>
+<div class="block">Increases the specified resource name by a given amount.
+ Retrieves the current amount stored and adds the given amount.
+ Note: the game state key is "resource/{resourceName}" not just the resource's name.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>resourceName</code> - The name of the resource to be saved.</dd>
+<dd><code>changeAmount</code> - The amount the resource should increase by.</dd>
+</dl>
 </section>
 </li>
 </ul>

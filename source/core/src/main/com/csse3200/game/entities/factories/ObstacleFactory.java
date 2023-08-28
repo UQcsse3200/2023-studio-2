@@ -45,6 +45,15 @@ public class ObstacleFactory {
     return tree;
   }
 
+  public static Entity createEnvironment() {
+    Entity environment =
+            new Entity().addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    environment.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    return environment;
+  }
+
   /**
    * Creates an invisible physics wall.
    * @param width Wall width in world units

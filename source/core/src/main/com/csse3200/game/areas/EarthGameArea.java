@@ -1,6 +1,7 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -22,7 +23,7 @@ import java.util.List;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class EarthGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
-    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(15, 15);
 
     private static final int NUM_ENEMIES = 2;
     private static final float WALL_WIDTH = 0.1f;
@@ -69,6 +70,7 @@ public class EarthGameArea extends GameArea {
         displayUI();
 
         spawnTerrain();
+        spawnEnvironment();
         spawnExtractors();
         spawnPlayer();
         spawnEnemies();
@@ -86,6 +88,20 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(
                 ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE, BOUNCE), posAs, false, false);
 
+    }
+    private void spawnEnvironment() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
+
+        for (int y = 0; y < collisionLayer.getHeight(); y++) {
+            for (int x = 0; x < collisionLayer.getWidth(); x++) {
+                TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, collisionLayer.getHeight() - 1 - y);
+                if (cell != null) {
+                    GridPoint2 tilePosition = new GridPoint2(x, collisionLayer.getHeight() - 1 - y);
+                    Entity environment = ObstacleFactory.createEnvironment();
+                    spawnEntityAt(environment, tilePosition, false, false);
+                }
+            }
+        }
     }
     private List<Entity> spawnWalls() {
         List<Entity> walls = new ArrayList<Entity>();

@@ -80,6 +80,10 @@ public class TerrainFactory {
         TextureRegion hexRocks =
             new TextureRegion(resourceService.getAsset("images/hex_grass_3.png", Texture.class));
         return createForestDemoTerrain(1f, hexGrass, hexTuft, hexRocks);
+      case SPACE_DEMO:
+        TextureRegion spaceVoid =
+                new TextureRegion(resourceService.getAsset("images/SpaceMiniGameBackground.png", Texture.class));
+        return createSpaceDemoTerrain(1f,spaceVoid);
       default:
         return null;
     }
@@ -92,6 +96,15 @@ public class TerrainFactory {
     TiledMapRenderer renderer = createRenderer(tiledMap, tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
+
+  private TerrainComponent createSpaceDemoTerrain(
+          float tileWorldSize, TextureRegion spaceVoid) {
+    GridPoint2 tilePixelSize = new GridPoint2(spaceVoid.getRegionWidth(),spaceVoid.getRegionHeight());
+    TiledMap tiledMap = createSpaceDemoTiles(tilePixelSize,spaceVoid);
+    TiledMapRenderer renderer= createRenderer(tiledMap,tileWorldSize/tilePixelSize.x);
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
+  }
+
 
   private TiledMapRenderer createRenderer(TiledMap tiledMap, float tileScale) {
     switch (orientation) {
@@ -125,6 +138,19 @@ public class TerrainFactory {
     return tiledMap;
   }
 
+  private TiledMap createSpaceDemoTiles(
+          GridPoint2 tileSize, TextureRegion spaceVoid) {
+    TiledMap tiledMap = new TiledMap();
+    TerrainTile spaceTile = new TerrainTile(spaceVoid);
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+
+    fillTiles(layer,MAP_SIZE,spaceTile);
+    tiledMap.getLayers().add(layer);
+    return tiledMap;
+
+  }
+
+
   private static void fillTilesAtRandom(
       TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {
     GridPoint2 min = new GridPoint2(0, 0);
@@ -155,6 +181,7 @@ public class TerrainFactory {
   public enum TerrainType {
     FOREST_DEMO,
     FOREST_DEMO_ISO,
-    FOREST_DEMO_HEX
+    FOREST_DEMO_HEX,
+    SPACE_DEMO
   }
 }

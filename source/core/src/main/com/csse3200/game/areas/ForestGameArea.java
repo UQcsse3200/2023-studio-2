@@ -38,16 +38,16 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_ENEMIES = 2;
   private static final int NUM_POWERUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final float ASTEROID_SIZE = 0.9f;
-  private static final float BOUNCE = 5.0f;
   private static final String[] forestTextures = {
 
     "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
     "images/broken_elixir_collector.png",
-    "images/meteor.png",
+    "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
     "images/box_boy_leaf.png",
-    "images/Ship.png",
+    "images/RightShip.png",
     "images/tree.png",
     "images/wall.png",
     "images/wall2.png",
@@ -64,10 +64,15 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
+          "images/Ship.png",
+
+
+
     "images/stone_wall.png",
     "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/iso_grass_3.png"
+
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/stone_wall.atlas",
@@ -104,8 +109,10 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     spawnPowerups();
     spawnExtractors();
+
     spawnShip();
     spawnPlayer();
+
     spawnEnemies();
     spawnBoss();
     spawnAsteroids();
@@ -117,7 +124,7 @@ public class ForestGameArea extends GameArea {
     //Extra Spicy Asteroids
     GridPoint2 posAs = new GridPoint2(8, 8);
     spawnEntityAt(
-            ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE, BOUNCE), posAs, false, false);
+            ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
 
   }
 

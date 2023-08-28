@@ -1,14 +1,7 @@
 package com.csse3200.game.entities.factories;
 
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.components.ships.ShipActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.entities.configs.ShipConfig;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -28,8 +21,12 @@ public class ShipFactory {
 
         Entity ship =
                 new Entity()
+
                         .addComponent(new TextureRenderComponent("images/Spaceship.png"))
                         .addComponent(new TextureRenderComponent("images/Spaceship.png"))
+
+                        .addComponent(new TextureRenderComponent("images/RightShip.png"))
+
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SHIP))

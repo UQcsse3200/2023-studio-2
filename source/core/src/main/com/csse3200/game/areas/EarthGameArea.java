@@ -50,6 +50,7 @@ public class EarthGameArea extends GameArea {
 
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
+    private Entity player;
 
     /**
      * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -167,6 +168,7 @@ public class EarthGameArea extends GameArea {
         Entity newPlayer = PlayerFactory.createPlayer();
         spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
         targetables.add(newPlayer);
+        player = newPlayer;
     }
 
     private void spawnEnemies() {
@@ -228,4 +230,8 @@ public class EarthGameArea extends GameArea {
         ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
         this.unloadAssets();
     }
+
+    public Entity getPlayer() {
+        return player;
+  }
 }

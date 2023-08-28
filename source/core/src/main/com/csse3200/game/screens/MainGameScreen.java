@@ -42,6 +42,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  private Entity player;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -71,12 +73,14 @@ public class MainGameScreen extends ScreenAdapter {
     //forestGameArea.create();
     EarthGameArea earthGameArea = new EarthGameArea(terrainFactory);
     earthGameArea.create();
+    player = earthGameArea.getPlayer();
   }
 
   @Override
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
+    followPlayer();
     renderer.render();
   }
 
@@ -143,5 +147,9 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
+  }
+
+  private void followPlayer() {
+    renderer.getCamera().getEntity().setPosition(player.getPosition());
   }
 }

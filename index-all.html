@@ -825,6 +825,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Callback interface to be implemented by classes interested in
  receiving notifications about state changes.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/GameStateInteraction.html" class="type-name-link" title="class in com.csse3200.game.services">GameStateInteraction</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/GameStateInteraction.html#%3Cinit%3E()" class="member-name-link">GameStateInteraction()</a> - Constructor for class com.csse3200.game.services.<a href="com/csse3200/game/services/GameStateInteraction.html" title="class in com.csse3200.game.services">GameStateInteraction</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/GameStateObserver.html" class="type-name-link" title="class in com.csse3200.game.services">GameStateObserver</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/GameStateObserver.html#%3Cinit%3E()" class="member-name-link">GameStateObserver()</a> - Constructor for class com.csse3200.game.services.<a href="com/csse3200/game/services/GameStateObserver.html" title="class in com.csse3200.game.services">GameStateObserver</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/GameTime.html" class="type-name-link" title="class in com.csse3200.game.services">GameTime</a> - Class in <a href="com/csse3200/game/services/package-summary.html">com.csse3200.game.services</a></dt>
 <dd>
 <div class="block">Controls the game time</div>
@@ -859,6 +867,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Retrieves the value corresponding to the input key from the current state data.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/GameStateInteraction.html#get(java.lang.String)" class="member-name-link">get(String)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameStateInteraction.html" title="class in com.csse3200.game.services">GameStateInteraction</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/DebugRenderer.html#getActive()" class="member-name-link">getActive()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/DebugRenderer.html" title="class in com.csse3200.game.rendering">DebugRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ResourceService.html#getAsset(java.lang.String,java.lang.Class)" class="member-name-link">getAsset(String, Class&lt;T&gt;)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ResourceService.html" title="class in com.csse3200.game.services">ResourceService</a></dt>
@@ -915,7 +925,9 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ComponentType.html#getFrom(java.lang.Class)" class="member-name-link">getFrom(Class&lt;? extends Component&gt;)</a> - Static method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ComponentType.html" title="class in com.csse3200.game.components">ComponentType</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/services/ServiceLocator.html#getGameStateService()" class="member-name-link">getGameStateService()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
+<dt><a href="com/csse3200/game/services/GameStateObserver.html#getFullStateData()" class="member-name-link">getFullStateData()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameStateObserver.html" title="class in com.csse3200.game.services">GameStateObserver</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/ServiceLocator.html#getGameStateObserverService()" class="member-name-link">getGameStateObserverService()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#getGold()" class="member-name-link">getGold()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
 <dd>
@@ -1012,6 +1024,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/rendering/Renderer.html#getStage()" class="member-name-link">getStage()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/Renderer.html" title="class in com.csse3200.game.rendering">Renderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/RenderService.html#getStage()" class="member-name-link">getStage()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/GameState.html#getStateData()" class="member-name-link">getStateData()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameState.html" title="class in com.csse3200.game.services">GameState</a></dt>
+<dd>
+<div class="block">Returns a copy of the current game state data</div>
+</dd>
+<dt><a href="com/csse3200/game/services/GameStateInteraction.html#getStateData()" class="member-name-link">getStateData()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameStateInteraction.html" title="class in com.csse3200.game.services">GameStateInteraction</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/services/GameStateObserver.html#getStateData(java.lang.String)" class="member-name-link">getStateData(String)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameStateObserver.html" title="class in com.csse3200.game.services">GameStateObserver</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/tasks/DefaultTask.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></dt>
 <dd>&nbsp;</dd>
@@ -1619,6 +1639,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Add or update the state data and trigger the state change callbacks.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/GameStateInteraction.html#put(java.lang.String,java.lang.Object)" class="member-name-link">put(String, Object)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameStateInteraction.html" title="class in com.csse3200.game.services">GameStateInteraction</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:R">R</h2>
 <dl class="index">
@@ -1678,7 +1700,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerEntityService(com.csse3200.game.entities.EntityService)" class="member-name-link">registerEntityService(EntityService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/services/ServiceLocator.html#registerGameStateService(com.csse3200.game.services.GameState)" class="member-name-link">registerGameStateService(GameState)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
+<dt><a href="com/csse3200/game/services/ServiceLocator.html#registerGameStateObserverService(com.csse3200.game.services.GameStateObserver)" class="member-name-link">registerGameStateObserverService(GameStateObserver)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#registerInputService(com.csse3200.game.input.InputService)" class="member-name-link">registerInputService(InputService)</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
@@ -2370,6 +2392,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Updates the player's health on the ui.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/GameStateInteraction.html#updateResource(java.lang.String,int)" class="member-name-link">updateResource(String, int)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameStateInteraction.html" title="class in com.csse3200.game.services">GameStateInteraction</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/DisplayEntityHealthComponent.html#updateWallHealthUI(int)" class="member-name-link">updateWallHealthUI(int)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/DisplayEntityHealthComponent.html" title="class in com.csse3200.game.components">DisplayEntityHealthComponent</a></dt>
 <dd>
 <div class="block">Updates the Wall's health on the ui.</div>

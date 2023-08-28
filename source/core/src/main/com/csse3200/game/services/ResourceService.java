@@ -184,4 +184,5 @@ public class ResourceService implements Disposable {
   @Override
   public void dispose() {
     assetManager.clear();
-  }}
+  }
+}

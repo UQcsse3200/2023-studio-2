@@ -18,12 +18,12 @@ public class GhostAnimationController extends Component {
     entity.getEvents().addListener("chaseStart", this::animateChase);
     entity.getEvents().addListener("wander_left", this::animateWanderLeft);
     entity.getEvents().addListener("standing", this::animateWanderStand);
+    entity.getEvents().addListener("dispose", this::animateDeath);
   }
 
   void animateWander() {
     animator.startAnimation("float");
   }
-
   void animateChase() {
     animator.startAnimation("angry_float");
   }
@@ -32,6 +32,9 @@ public class GhostAnimationController extends Component {
   }
   void animateWanderStand() {
     animator.startAnimation("stand");
+  }
+  void animateDeath() {
+    animator.startAnimation("death");
   }
 
 }

@@ -105,11 +105,10 @@ public class ForestGameArea extends GameArea {
     spawnPowerups();
     spawnExtractors();
     spawnShip();
-    var player = spawnPlayer();
+    spawnPlayer();
     spawnEnemies();
     spawnBoss();
     spawnAsteroids();
-    spawnWalls(player);
 
     playMusic();
   }
@@ -120,24 +119,6 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(
             ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE, BOUNCE), posAs, false, false);
 
-  }
-
-  private List<Entity> spawnWalls(Entity player) {
-    List<Entity> walls = new ArrayList<Entity>();
-    StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
-
-    Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
-    Entity intermediateWall = BuildablesFactory.createCustomWall(WallType.intermediate);
-    structurePlacementService.PlaceStructureAt(wall, new GridPoint2(10, 10), false, false);
-    structurePlacementService.PlaceStructureAt(intermediateWall, new GridPoint2(12, 10), false, false);
-
-    walls.add(wall);
-    walls.add(intermediateWall);
-
-    Entity gate = BuildablesFactory.createGate(WallType.basic, player);
-    spawnEntityAt(gate, new GridPoint2(14, 10), false, false);
-
-    return walls;
   }
 
   private void spawnExtractors() {

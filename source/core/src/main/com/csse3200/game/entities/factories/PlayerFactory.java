@@ -52,7 +52,7 @@ public class PlayerFactory {
 
     Entity player =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/blank.png"))
+            .addComponent(new TextureRenderComponent("images/player_blank.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))

@@ -41,8 +41,8 @@ public class SettingsScreen extends ScreenAdapter {
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(5f, 5f);
 
-    // Set the background color to navy blue
-    Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // (R, G, B, A)
+    // Set the background color to black
+    Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // (R, G, B, A)
 
 
 

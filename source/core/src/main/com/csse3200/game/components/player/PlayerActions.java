@@ -15,13 +15,14 @@ import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.BuildablesFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.CombatStatsComponent;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
  * and when triggered should call methods within this class.
  */
 public class PlayerActions extends Component {
-  private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
+  private static Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
   private EntityService entityService = new EntityService();
   private PhysicsComponent physicsComponent;
@@ -36,6 +37,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("attack", this::attack);
     entity.getEvents().addListener("place", this::placeOrUpgradeWall);
     entity.getEvents().addListener("remove", this::removeWall);
+    entity.getEvents().addListener("dodged", this::dodged);
   }
 
   @Override
@@ -79,6 +81,33 @@ public class PlayerActions extends Component {
   void attack() {
     Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
     attackSound.play();
+  }
+
+
+  /**
+   * Changes player's immunity status while dodging.
+   */
+  void dodged() {
+    entity.getComponent(CombatStatsComponent.class).changeImmunityStatus();
+  }
+
+  /**
+   * Sets the maximum speed of the entity given x and y.
+   *
+   * @param x The horizontal speed
+   * @param y The vertical speed
+   */
+  public void setSpeed(float x, float y) {
+    MAX_SPEED = new Vector2(x, y);
+  }
+
+  /**
+   * Retrieves the players current maximum speed.
+   *
+   * @return The maximum speed in Vector2 format.
+   */
+  public Vector2 getSpeed() {
+    return MAX_SPEED;
   }
 
   void placeOrUpgradeWall(int screenX, int screenY) {

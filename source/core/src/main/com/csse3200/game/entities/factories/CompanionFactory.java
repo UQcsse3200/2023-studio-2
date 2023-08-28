@@ -48,8 +48,12 @@ public class CompanionFactory {
         PhysicsUtils.setScaledCollider(Companion, 0.4f, 0.2f);
         Companion.getComponent(ColliderComponent.class).setDensity(1.0f);
         Companion.getComponent(TextureRenderComponent.class).scaleEntity();
+        Companion.getComponent(CompanionActions.class).setBulletTexturePath(stats.bulletTexturePath);
         return Companion;
     }
+
+
+
 
 
     private CompanionFactory() {

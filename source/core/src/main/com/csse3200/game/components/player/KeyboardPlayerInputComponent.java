@@ -1,10 +1,13 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
+
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -268,5 +271,32 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       }
     };
     new java.util.Timer().schedule(makeDodgeAvailable, 3000);
+  }
+
+  @Override
+  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    if(button == Input.Buttons.LEFT){
+      //Don't really know what I'm doing, these are hard coded values to work on my screen
+      Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
+      Vector2 position = new Vector2(mouse.x/2, (mouse.y - 2) / 2);
+      //Vector2 mouse = new screenY);
+      double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
+      System.out.println("Cen" + entity.getPosition() + " Mouse:" + position);
+      System.out.println("Ang:" + initRot);
+      entity.getEvents().trigger("playerAttack", entity.getPosition(), (int) initRot + 90);
+      return true;
+    }
+    return false;
+  }
+
+  //https://stackoverflow.com/questions/9970281/java-calculating-the-angle-between-two-points-in-degrees
+  public double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt)  {
+    double theta = Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x);
+    double angle = Math.toDegrees(theta);
+    if (angle < 0) {
+      angle += 360;
+    }
+
+    return angle;
   }
 }

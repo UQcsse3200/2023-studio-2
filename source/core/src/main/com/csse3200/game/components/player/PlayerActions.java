@@ -121,6 +121,7 @@ public class PlayerActions extends Component {
     Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
     if (existingWall != null) {
       if (existingWall.getWallType() != WallType.intermediate) {
+        updateResources(-2);
         existingWall.dispose();
         this.entityService.unregister(existingWall);
         Entity wall = BuildablesFactory.createCustomWall(WallType.intermediate);
@@ -128,6 +129,7 @@ public class PlayerActions extends Component {
       }
     } else {
       Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
+      updateResources(-2);
       ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, new GridPoint2(((int) ((location.x) / 2) * 2), ((int) ((location.y) / 2)) * 2), false, false);
       wall.getComponent(JoinableComponent.class).notifyNeighbours(true);
     }
@@ -141,7 +143,7 @@ public class PlayerActions extends Component {
     if (existingWall != null) {
         existingWall.getComponent(JoinableComponent.class).notifyNeighbours(false);
         existingWall.dispose();
-
+        updateResources(1);
         ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
         this.entityService.unregister(existingWall);
     }

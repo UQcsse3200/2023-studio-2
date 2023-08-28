@@ -1,5 +1,4 @@
 package com.csse3200.game.areas;
-
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -33,27 +32,27 @@ public class ForestGameArea extends GameArea {
   private static final float BOUNCE = 5.0f;
   private static final String[] forestTextures = {
 
-    "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
-    "images/broken_elixir_collector.png",
-    "images/meteor.png",
-    "images/box_boy_leaf.png",
-    "images/tree.png",
-    "images/wall.png",
-    "images/wall2.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png"
+          "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+          "images/broken_elixir_collector.png",
+          "images/meteor.png",
+          "images/box_boy_leaf.png",
+          "images/tree.png",
+          "images/wall.png",
+          "images/wall2.png",
+          "images/ghost_king.png",
+          "images/ghost_1.png",
+          "images/grass_1.png",
+          "images/grass_2.png",
+          "images/grass_3.png",
+          "images/hex_grass_1.png",
+          "images/hex_grass_2.png",
+          "images/hex_grass_3.png",
+          "images/iso_grass_1.png",
+          "images/iso_grass_2.png",
+          "images/iso_grass_3.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
+          "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -147,22 +146,22 @@ public class ForestGameArea extends GameArea {
 
     // Left
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        new GridPoint2(tileBounds.x, 0),
-        false,
-        false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+            new GridPoint2(tileBounds.x, 0),
+            false,
+            false);
     // Top
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-        new GridPoint2(0, tileBounds.y),
-        false,
-        false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+            new GridPoint2(0, tileBounds.y),
+            false,
+            false);
     // Bottom
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
     ServiceLocator.registerTerrainService(new TerrainService(terrain));
   }
 
@@ -204,6 +203,8 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(boss, randomPos, true, true);
   }
 
+
+
   private void playMusic() {
     UserSettings.Settings settings = UserSettings.get();
 
@@ -243,3 +244,4 @@ public class ForestGameArea extends GameArea {
     this.unloadAssets();
   }
 }
+

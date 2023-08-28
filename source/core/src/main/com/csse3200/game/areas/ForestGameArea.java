@@ -1,6 +1,7 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -167,6 +168,7 @@ public class ForestGameArea extends GameArea {
       spawnEntityAt(tree, randomPos, true, false);
     }
   }
+
 
   private void spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();

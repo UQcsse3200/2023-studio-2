@@ -81,7 +81,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.UP);
-          entity.getEvents().trigger("walkUp");
         } else {
           walkDirection.add(Vector2Utils.UP);
           diagonal();
@@ -93,7 +92,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.LEFT);
-          entity.getEvents().trigger("walkLeft");
         } else {
           walkDirection.add(Vector2Utils.LEFT);
           diagonal();
@@ -105,7 +103,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.DOWN);
-          entity.getEvents().trigger("walkDown");
         } else {
           walkDirection.add(Vector2Utils.DOWN);
           diagonal();
@@ -117,7 +114,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.RIGHT);
-          entity.getEvents().trigger("walkRight");
         } else {
           walkDirection.add(Vector2Utils.RIGHT);
           diagonal();
@@ -236,6 +232,32 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
       entity.getEvents().trigger("walkStop");
     } else {
+      if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
+        entity.getEvents().trigger("walkUpLeft");
+        System.out.println(walkDirection);
+      }
+      else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
+        entity.getEvents().trigger("walkUpRight");
+      }
+      else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
+        entity.getEvents().trigger("walkUp");
+      }
+      else if (walkDirection.epsilonEquals(Vector2Utils.DOWN)) {
+        entity.getEvents().trigger("walkDown");
+      }
+      else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_LEFT)) {
+        entity.getEvents().trigger("walkDownLeft");
+      }
+      else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_RIGHT)) {
+        entity.getEvents().trigger("walkDownRight");
+      }
+      else if (walkDirection.epsilonEquals(Vector2Utils.LEFT)) {
+        entity.getEvents().trigger("walkLeft");
+      }
+      else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
+        entity.getEvents().trigger("walkRight");
+        System.out.println("right");
+      }
       entity.getEvents().trigger("walk", walkDirection);
     }
   }
@@ -260,7 +282,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   /**
    * Responsible for dodge action
    * Triggers when the spacebar is clicked.
-   * Cooldown of 3s.
+   * Cooldown of 3000 ms.
    */
   private void dodge() {
     dodge_available = false;

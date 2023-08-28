@@ -85,13 +85,13 @@ public class MainMenuDisplay extends UIComponent {
 
         table.add(title);
         table.row();
-        table.add(startBtn).padTop(30f).padRight(800f);
+        table.add(startBtn).padTop(30f).padLeft(1200f);
         table.row();
-        table.add(loadBtn).padTop(15f).padRight(800f);
+        table.add(loadBtn).padTop(15f).padLeft(1200f);
         table.row();
-        table.add(settingsBtn).padTop(15f).padRight(800f);
+        table.add(settingsBtn).padTop(15f).padLeft(1200f);
         table.row();
-        table.add(exitBtn).padTop(15f).padRight(800f);
+        table.add(exitBtn).padTop(15f).padLeft(1200f);
 
         stage.addActor(title);
         stage.addActor(table);

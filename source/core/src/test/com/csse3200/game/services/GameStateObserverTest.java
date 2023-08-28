@@ -9,19 +9,19 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @ExtendWith(GameExtension.class)
-public class GameStateObserverTest {
+class GameStateObserverTest {
 
     GameStateObserver stateObserver;
     GameStateInteraction stateInteraction;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         stateInteraction = new GameStateInteraction();
         stateObserver = new GameStateObserver(stateInteraction);
     }
 
     @Test
-    public void testAddListener() {
+    void testAddListener() {
         int setValue = 100;
 
         AtomicInteger value = new AtomicInteger();
@@ -33,7 +33,7 @@ public class GameStateObserverTest {
     }
 
     @Test
-    public void testTriggerCallback() {
+    void testTriggerCallback() {
         String name = "testResource1";
         int amount = 100;
 
@@ -43,7 +43,7 @@ public class GameStateObserverTest {
     }
 
     @Test
-    public void testGetStateData() {
+    void testGetStateData() {
         String key1 = "testKey1";
         int value1 = 200;
         String key2 = "testKey2";

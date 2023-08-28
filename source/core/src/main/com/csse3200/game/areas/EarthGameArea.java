@@ -45,7 +45,7 @@ public class EarthGameArea extends GameArea {
     private static final String[] earthTextureAtlases = {
             "images/ghost.atlas", "images/ghostKing.atlas"
     };
-    private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+    private static final String backgroundMusic = "sounds/theEND.mp3";
     private static final String[] earthMusic = {backgroundMusic};
 
     private final TerrainFactory terrainFactory;

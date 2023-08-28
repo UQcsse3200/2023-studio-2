@@ -17,7 +17,10 @@ import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -35,24 +38,27 @@ import java.util.List;
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
-  private static final int NUM_ENEMIES = 2;
+  private static final int NUM_MELEE_ENEMIES_PTE = 1;
+  private static final int NUM_MELEE_ENEMIES_DTE = 1;
+  private static final int NUM_RANGE_ENEMIES_PTE = 1;
+  private static final int NUM_RANGE_ENEMIES_DTE = 1;
   private static final int NUM_POWERUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final float ASTEROID_SIZE = 0.9f;
-  private static final float BOUNCE = 5.0f;
   private static final String[] forestTextures = {
 
     "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
     "images/broken_elixir_collector.png",
-    "images/meteor.png",
+    "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
     "images/box_boy_leaf.png",
-    "images/Ship.png",
+    "images/RightShip.png",
     "images/tree.png",
     "images/wall.png",
     "images/wall2.png",
-          "images/gate_close.png",
-          "images/gate_open.png",
+    "images/gate_close.png",
+    "images/gate_open.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
@@ -64,13 +70,23 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
+    "images/base_enemy.png",
+    "images/Troll.png",
+    "images/rangeEnemy.png",
     "images/stone_wall.png",
     "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-    "images/iso_grass_3.png"
+    "images/Ship.png",
+    "images/stone_wall.png"
   };
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas", "images/stone_wall.atlas",
+          "images/terrain_iso_grass.atlas",
+          "images/ghost.atlas",
+          "images/ghostKing.atlas",
+          "images/base_enemy.atlas",
+          "images/troll_enemy.atlas",
+          "images/rangeEnemy.atlas",
+          "images/stone_wall.atlas",
           "images/dirt_wall.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -104,8 +120,10 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     spawnPowerups();
     spawnExtractors();
+
     spawnShip();
     spawnPlayer();
+
     spawnEnemies();
     spawnBoss();
     spawnAsteroids();
@@ -117,7 +135,7 @@ public class ForestGameArea extends GameArea {
     //Extra Spicy Asteroids
     GridPoint2 posAs = new GridPoint2(8, 8);
     spawnEntityAt(
-            ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE, BOUNCE), posAs, false, false);
+            ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
 
   }
 
@@ -168,7 +186,6 @@ public class ForestGameArea extends GameArea {
     // Bottom
     spawnEntityAt(
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
-
     ServiceLocator.registerTerrainService(new TerrainService(terrain));
   }
 
@@ -213,10 +230,28 @@ public class ForestGameArea extends GameArea {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < NUM_ENEMIES; i++) {
+    for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = EnemyFactory.createMeleeEnemy(targetables);
-      spawnEntityAt(ghost, randomPos, true, true);
+      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+      spawnEntityAt(melee, randomPos, true, true);
+    }
+
+    for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+      spawnEntityAt(melee, randomPos, true, true);
+    }
+
+    for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
+      spawnEntityAt(melee, randomPos, true, true);
+    }
+
+    for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+      spawnEntityAt(ranged, randomPos, true, true);
     }
   }
 
@@ -225,7 +260,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity boss = EnemyFactory.createBoss(targetables);
+    Entity boss = EnemyFactory.createBoss(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
   }
 

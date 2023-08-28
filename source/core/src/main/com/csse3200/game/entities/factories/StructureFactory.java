@@ -21,6 +21,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
  * Factory to create structure entities - such as extractors or ships.
  *
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
+ * @param health the max and initial health of the extractor
+ * @param producedResource the resource type produced by the extractor
+ * @param tickRate the frequency at which the extractor ticks (produces resources)
+ * @param tickSize the amount of the resource produced at each tick
  */
 public class StructureFactory {
     // * @param health the max and initial health of the extractor

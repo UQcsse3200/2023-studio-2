@@ -16,6 +16,8 @@ import com.csse3200.game.components.CombatStatsComponent;
  * and when triggered should call methods within this class.
  */
 public class CompanionActions extends Component {
+    private String bulletTexturePath;
+
     private static Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
     private static final float ROTATION_SPEED = 10.0f; // Adjust the rotation speed as needed
@@ -42,6 +44,9 @@ public class CompanionActions extends Component {
         this.playerEntity = playerEntity;
     }
 
+    public void setBulletTexturePath(String path){
+        bulletTexturePath = path;
+    }
     @Override
     public void update() {
         if (playerEntity != null && moving) {

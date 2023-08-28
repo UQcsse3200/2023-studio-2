@@ -204,8 +204,6 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(boss, randomPos, true, true);
   }
 
-
-
   private void playMusic() {
     UserSettings.Settings settings = UserSettings.get();
 

@@ -66,9 +66,9 @@ public class ObstacleFactory {
    * @param restitution Asteroid bounce once hit
    * @return Asteroid entity of given width, height and bounciness
    */
-  public static Entity createAsteroid(float width, float height, float restitution) {
+  public static Entity createAsteroid(float width, float height) {
     ColliderComponent asteroidCollider = new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE);
-    asteroidCollider.setRestitution(restitution);
+    //asteroidCollider.setRestitution(restitution); bounce removed
     Entity asteroid = new Entity()
             .addComponent(new TextureRenderComponent("images/meteor.png"))
             .addComponent(new PhysicsComponent().setBodyType(BodyType.DynamicBody))

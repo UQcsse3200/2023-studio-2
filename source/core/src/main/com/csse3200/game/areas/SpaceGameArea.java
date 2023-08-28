@@ -23,10 +23,10 @@ public class SpaceGameArea extends GameArea {
     private static final float ASTEROID_SIZE = 0.9f;
     private static final String[] spaceMiniGameTextures = {
             "images/SpaceMiniGameBackground.png",
-            "images/meteor.png",
+            "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/Spaceship.png"//TODO: Replace these images with copyright free images - these are just for testing purposes!!
     };
-    private static final String backgroundMusic = "sounds/WereWasI.ogg";
+    private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
     private static final String[] spaceMusic = {backgroundMusic};
 
 

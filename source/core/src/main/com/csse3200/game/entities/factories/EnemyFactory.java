@@ -56,7 +56,7 @@ public class EnemyFactory {
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
     enemy
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 1, false))
         .addComponent(animator)
         .addComponent(new GhostAnimationController());
 
@@ -83,7 +83,7 @@ public class EnemyFactory {
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
     boss
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 2, false))
         .addComponent(animator)
         .addComponent(new GhostAnimationController());
 

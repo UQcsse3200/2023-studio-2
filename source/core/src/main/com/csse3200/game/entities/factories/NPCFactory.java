@@ -132,11 +132,11 @@ public class NPCFactory {
             new Entity()
                     .addComponent(new TextureRenderComponent("images/oldman_down_1.png"))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE));
 
     botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     botanist.getComponent(TextureRenderComponent.class).scaleEntity();
-    botanist.scaleHeight(1.5f);
+    botanist.scaleHeight(1.1f);
     PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.7f);
     return botanist;
   }

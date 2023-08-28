@@ -290,6 +290,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/settingsmenu/package-summary.html">com.csse3200.game.components.settingsmenu</a> - package com.csse3200.game.components.settingsmenu</dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ships/package-summary.html">com.csse3200.game.components.ships</a> - package com.csse3200.game.components.ships</dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/package-summary.html">com.csse3200.game.components.tasks</a> - package com.csse3200.game.components.tasks</dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/concurrency/package-summary.html">com.csse3200.game.concurrency</a> - package com.csse3200.game.concurrency</dt>
@@ -364,6 +366,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/utils/SortedIntMap.html#containsKey(int)" class="member-name-link">containsKey(int)</a> - Method in class com.csse3200.game.utils.<a href="com/csse3200/game/utils/SortedIntMap.html" title="class in com.csse3200.game.utils">SortedIntMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/ExtractorMiniGameArea.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/ForestGameArea.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ForestGameArea.html" title="class in com.csse3200.game.areas">ForestGameArea</a></dt>
 <dd>
 <div class="block">Create the game area, including terrain, static entities (trees), dynamic entities (player)</div>
@@ -371,6 +375,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/areas/GameArea.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></dt>
 <dd>
 <div class="block">Create the game area in the world.</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/SpaceGameArea.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/SpaceGameArea.html" title="class in com.csse3200.game.areas">SpaceGameArea</a></dt>
+<dd>
+<div class="block">Create the game area, including terrain, static entities (trees), dynamic entities (player)</div>
 </dd>
 <dt><a href="com/csse3200/game/components/Component.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/Component.html" title="class in com.csse3200.game.components">Component</a></dt>
 <dd>
@@ -408,6 +416,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/settingsmenu/SettingsMenuDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.settingsmenu.<a href="com/csse3200/game/components/settingsmenu/SettingsMenuDisplay.html" title="class in com.csse3200.game.components.settingsmenu">SettingsMenuDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ships/ShipActions.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/ShipActions.html" title="class in com.csse3200.game.components.ships">ShipActions</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/TouchAttackComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/TouchAttackComponent.html" title="class in com.csse3200.game.components">TouchAttackComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/Entity.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></dt>
@@ -442,7 +452,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Create the task and attach it to the task runner.</div>
 </dd>
-<dt><a href="com/csse3200/game/entities/factories/ObstacleFactory.html#createAsteroid(float,float,float)" class="member-name-link">createAsteroid(float, float, float)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ObstacleFactory.html" title="class in com.csse3200.game.entities.factories">ObstacleFactory</a></dt>
+<dt><a href="com/csse3200/game/entities/factories/ObstacleFactory.html#createAsteroid(float,float)" class="member-name-link">createAsteroid(float, float)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ObstacleFactory.html" title="class in com.csse3200.game.entities.factories">ObstacleFactory</a></dt>
 <dd>
 <div class="block">Creates an Asteroid that has bounce</div>
 </dd>
@@ -474,6 +484,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates an input handler for the player</div>
 </dd>
+<dt><a href="com/csse3200/game/input/InputFactory.html#createForShip()" class="member-name-link">createForShip()</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputFactory.html" title="class in com.csse3200.game.input">InputFactory</a></dt>
+<dd>
+<div class="block">Creates an input handler for the ship</div>
+</dd>
+<dt><a href="com/csse3200/game/input/KeyboardInputFactory.html#createForShip()" class="member-name-link">createForShip()</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/KeyboardInputFactory.html" title="class in com.csse3200.game.input">KeyboardInputFactory</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/input/TouchInputFactory.html#createForShip()" class="member-name-link">createForShip()</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/TouchInputFactory.html" title="class in com.csse3200.game.input">TouchInputFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/InputFactory.html#createForTerminal()" class="member-name-link">createForTerminal()</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputFactory.html" title="class in com.csse3200.game.input">InputFactory</a></dt>
 <dd>
 <div class="block">Creates an input handler for the terminal</div>
@@ -511,6 +529,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a powerup entity based on the specified type.</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/factories/RenderFactory.html#createRenderer()" class="member-name-link">createRenderer()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/RenderFactory.html" title="class in com.csse3200.game.entities.factories">RenderFactory</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/factories/ShipFactory.html#createShip()" class="member-name-link">createShip()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ShipFactory.html" title="class in com.csse3200.game.entities.factories">ShipFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/StructureFactory.html#createShip()" class="member-name-link">createShip()</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/StructureFactory.html" title="class in com.csse3200.game.entities.factories">StructureFactory</a></dt>
 <dd>&nbsp;</dd>
@@ -588,6 +608,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Dispose of all internal entities in the area</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/SpaceGameArea.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/SpaceGameArea.html" title="class in com.csse3200.game.areas">SpaceGameArea</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainComponent.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/Component.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/Component.html" title="class in com.csse3200.game.components">Component</a></dt>
@@ -639,6 +661,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/screens/MainMenuScreen.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MainMenuScreen.html" title="class in com.csse3200.game.screens">MainMenuScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/SettingsScreen.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/SettingsScreen.html" title="class in com.csse3200.game.screens">SettingsScreen</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/SpaceMapScreen.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/SpaceMapScreen.html" title="class in com.csse3200.game.screens">SpaceMapScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ResourceService.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ResourceService.html" title="class in com.csse3200.game.services">ResourceService</a></dt>
 <dd>&nbsp;</dd>
@@ -788,6 +812,16 @@ loadScripts(document, 'script');</script>
 <div class="block">Exit the game.</div>
 </dd>
 <dt><a href="com/csse3200/game/files/FileLoader.Location.html#EXTERNAL" class="member-name-link">EXTERNAL</a> - Enum constant in enum class com.csse3200.game.files.<a href="com/csse3200/game/files/FileLoader.Location.html" title="enum class in com.csse3200.game.files">FileLoader.Location</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/GdxGame.ScreenType.html#EXTRACTOR_GAME" class="member-name-link">EXTRACTOR_GAME</a> - Enum constant in enum class com.csse3200.game.<a href="com/csse3200/game/GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/ExtractorMiniGameArea.html" class="type-name-link" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a> - Class in <a href="com/csse3200/game/areas/package-summary.html">com.csse3200.game.areas</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/ExtractorMiniGameArea.html#%3Cinit%3E()" class="member-name-link">ExtractorMiniGameArea()</a> - Constructor for class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/ExtractorMiniGameScreen.html" class="type-name-link" title="class in com.csse3200.game.screens">ExtractorMiniGameScreen</a> - Class in <a href="com/csse3200/game/screens/package-summary.html">com.csse3200.game.screens</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/ExtractorMiniGameScreen.html#%3Cinit%3E(com.csse3200.game.GdxGame)" class="member-name-link">ExtractorMiniGameScreen(GdxGame)</a> - Constructor for class com.csse3200.game.screens.<a href="com/csse3200/game/screens/ExtractorMiniGameScreen.html" title="class in com.csse3200.game.screens">ExtractorMiniGameScreen</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:F">F</h2>
@@ -1390,6 +1424,12 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.html#%3Cinit%3E()" class="member-name-link">KeyboardPlayerInputComponent()</a> - Constructor for class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.html" title="class in com.csse3200.game.components.player">KeyboardPlayerInputComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ships/KeyboardShipInputComponent.html" class="type-name-link" title="class in com.csse3200.game.components.ships">KeyboardShipInputComponent</a> - Class in <a href="com/csse3200/game/components/ships/package-summary.html">com.csse3200.game.components.ships</a></dt>
+<dd>
+<div class="block">Input handler for the ship for keyboard.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/ships/KeyboardShipInputComponent.html#%3Cinit%3E()" class="member-name-link">KeyboardShipInputComponent()</a> - Constructor for class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/KeyboardShipInputComponent.html" title="class in com.csse3200.game.components.ships">KeyboardShipInputComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/KeyboardTerminalInputComponent.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal">KeyboardTerminalInputComponent</a> - Class in <a href="com/csse3200/game/ui/terminal/package-summary.html">com.csse3200.game.ui.terminal</a></dt>
 <dd>
 <div class="block">Input handler for the debug terminal for keyboard and touch (mouse) input.</div>
@@ -1405,6 +1445,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/player/TouchPlayerInputComponent.html#keyDown(int)" class="member-name-link">keyDown(int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/TouchPlayerInputComponent.html" title="class in com.csse3200.game.components.player">TouchPlayerInputComponent</a></dt>
 <dd>
 <div class="block">Triggers player events on specific keycodes.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/ships/KeyboardShipInputComponent.html#keyDown(int)" class="member-name-link">keyDown(int)</a> - Method in class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/KeyboardShipInputComponent.html" title="class in com.csse3200.game.components.ships">KeyboardShipInputComponent</a></dt>
+<dd>
+<div class="block">Triggers ship events on specific keycodes.</div>
 </dd>
 <dt><a href="com/csse3200/game/input/InputComponent.html#keyDown(int)" class="member-name-link">keyDown(int)</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -1445,6 +1489,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Triggers player events on specific keycodes.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/player/TouchPlayerInputComponent.html#keyUp(int)" class="member-name-link">keyUp(int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/TouchPlayerInputComponent.html" title="class in com.csse3200.game.components.player">TouchPlayerInputComponent</a></dt>
+<dd>
+<div class="block">Triggers player events on specific keycodes.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/ships/KeyboardShipInputComponent.html#keyUp(int)" class="member-name-link">keyUp(int)</a> - Method in class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/KeyboardShipInputComponent.html" title="class in com.csse3200.game.components.ships">KeyboardShipInputComponent</a></dt>
 <dd>
 <div class="block">Triggers player events on specific keycodes.</div>
 </dd>
@@ -1925,11 +1973,15 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Render everything to the render service.</div>
 </dd>
+<dt><a href="com/csse3200/game/screens/ExtractorMiniGameScreen.html#render(float)" class="member-name-link">render(float)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/ExtractorMiniGameScreen.html" title="class in com.csse3200.game.screens">ExtractorMiniGameScreen</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/MainGameScreen.html#render(float)" class="member-name-link">render(float)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MainGameScreen.html" title="class in com.csse3200.game.screens">MainGameScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/MainMenuScreen.html#render(float)" class="member-name-link">render(float)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MainMenuScreen.html" title="class in com.csse3200.game.screens">MainMenuScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/SettingsScreen.html#render(float)" class="member-name-link">render(float)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/SettingsScreen.html" title="class in com.csse3200.game.screens">SettingsScreen</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/SpaceMapScreen.html#render(float)" class="member-name-link">render(float)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/SpaceMapScreen.html" title="class in com.csse3200.game.screens">SpaceMapScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/Renderable.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">render(SpriteBatch)</a> - Method in interface com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a></dt>
 <dd>
@@ -1988,6 +2040,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/screens/MainMenuScreen.html#resize(int,int)" class="member-name-link">resize(int, int)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MainMenuScreen.html" title="class in com.csse3200.game.screens">MainMenuScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/SettingsScreen.html#resize(int,int)" class="member-name-link">resize(int, int)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/SettingsScreen.html" title="class in com.csse3200.game.screens">SettingsScreen</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/SpaceMapScreen.html#resize(int,int)" class="member-name-link">resize(int, int)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/SpaceMapScreen.html" title="class in com.csse3200.game.screens">SpaceMapScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/CameraComponent.html#resize(int,int,float)" class="member-name-link">resize(int, int, float)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CameraComponent.html" title="class in com.csse3200.game.components">CameraComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -2240,6 +2294,20 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/entities/Entity.html#setWallType(com.csse3200.game.entities.buildables.WallType)" class="member-name-link">setWallType(WallType)</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/physics/PhysicsLayer.html#SHIP" class="member-name-link">SHIP</a> - Static variable in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsLayer.html" title="class in com.csse3200.game.physics">PhysicsLayer</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ships/ShipActions.html" class="type-name-link" title="class in com.csse3200.game.components.ships">ShipActions</a> - Class in <a href="com/csse3200/game/components/ships/package-summary.html">com.csse3200.game.components.ships</a></dt>
+<dd>
+<div class="block">Action component for interacting with the player.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/ships/ShipActions.html#%3Cinit%3E()" class="member-name-link">ShipActions()</a> - Constructor for class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/ShipActions.html" title="class in com.csse3200.game.components.ships">ShipActions</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/ShipConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">ShipConfig</a> - Class in <a href="com/csse3200/game/entities/configs/package-summary.html">com.csse3200.game.entities.configs</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/ShipConfig.html#%3Cinit%3E()" class="member-name-link">ShipConfig()</a> - Constructor for class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/ShipConfig.html" title="class in com.csse3200.game.entities.configs">ShipConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/factories/ShipFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">ShipFactory</a> - Class in <a href="com/csse3200/game/entities/factories/package-summary.html">com.csse3200.game.entities.factories</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/raycast/SingleHitCallback.html" class="type-name-link" title="class in com.csse3200.game.physics.raycast">SingleHitCallback</a> - Class in <a href="com/csse3200/game/physics/raycast/package-summary.html">com.csse3200.game.physics.raycast</a></dt>
 <dd>
 <div class="block">Cast a ray against all colliders that match the layermask.</div>
@@ -2256,6 +2324,24 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Create a sorted intmap with the specified capacity</div>
 </dd>
+<dt><a href="com/csse3200/game/areas/terrain/TerrainFactory.TerrainType.html#SPACE_DEMO" class="member-name-link">SPACE_DEMO</a> - Enum constant in enum class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainFactory.TerrainType.html" title="enum class in com.csse3200.game.areas.terrain">TerrainFactory.TerrainType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/GdxGame.ScreenType.html#SPACE_MAP" class="member-name-link">SPACE_MAP</a> - Enum constant in enum class com.csse3200.game.<a href="com/csse3200/game/GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/SpaceGameArea.html" class="type-name-link" title="class in com.csse3200.game.areas">SpaceGameArea</a> - Class in <a href="com/csse3200/game/areas/package-summary.html">com.csse3200.game.areas</a></dt>
+<dd>
+<div class="block">Forest area for the demo game with trees, a player, and some enemies.</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/SpaceGameArea.html#%3Cinit%3E(com.csse3200.game.areas.terrain.TerrainFactory)" class="member-name-link">SpaceGameArea(TerrainFactory)</a> - Constructor for class com.csse3200.game.areas.<a href="com/csse3200/game/areas/SpaceGameArea.html" title="class in com.csse3200.game.areas">SpaceGameArea</a></dt>
+<dd>
+<div class="block">Initialise this ForestGameArea to use the provided TerrainFactory.</div>
+</dd>
+<dt><a href="com/csse3200/game/screens/SpaceMapScreen.html" class="type-name-link" title="class in com.csse3200.game.screens">SpaceMapScreen</a> - Class in <a href="com/csse3200/game/screens/package-summary.html">com.csse3200.game.screens</a></dt>
+<dd>
+<div class="block">The game screen containing the main game.</div>
+</dd>
+<dt><a href="com/csse3200/game/screens/SpaceMapScreen.html#%3Cinit%3E(com.csse3200.game.GdxGame)" class="member-name-link">SpaceMapScreen(GdxGame)</a> - Constructor for class com.csse3200.game.screens.<a href="com/csse3200/game/screens/SpaceMapScreen.html" title="class in com.csse3200.game.screens">SpaceMapScreen</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/GameArea.html#spawnEntity(com.csse3200.game.entities.Entity)" class="member-name-link">spawnEntity(Entity)</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></dt>
 <dd>
 <div class="block">Spawn entity at its current position</div>
@@ -2596,6 +2682,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/resources/ProductionComponent.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.resources.<a href="com/csse3200/game/components/resources/ProductionComponent.html" title="class in com.csse3200.game.components.resources">ProductionComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/settingsmenu/SettingsMenuDisplay.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.settingsmenu.<a href="com/csse3200/game/components/settingsmenu/SettingsMenuDisplay.html" title="class in com.csse3200.game.components.settingsmenu">SettingsMenuDisplay</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ships/ShipActions.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/ShipActions.html" title="class in com.csse3200.game.components.ships">ShipActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
 <dd>&nbsp;</dd>

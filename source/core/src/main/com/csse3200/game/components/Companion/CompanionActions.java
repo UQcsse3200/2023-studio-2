@@ -1,6 +1,8 @@
 package com.csse3200.game.components.Companion;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
@@ -16,6 +18,9 @@ import com.csse3200.game.components.CombatStatsComponent;
 public class CompanionActions extends Component {
     private static Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
+    private static final float ROTATION_SPEED = 10.0f; // Adjust the rotation speed as needed
+    private float currentRotation = 0.0f;
+
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
@@ -26,6 +31,9 @@ public class CompanionActions extends Component {
         entity.getEvents().addListener("walk", this::walk);
         entity.getEvents().addListener("walkStop", this::stopWalking);
         entity.getEvents().addListener("attack", this::attack);
+
+        // Initialize currentRotation based on the initial orientation of the companion
+        currentRotation = physicsComponent.getBody().getAngle()*MathUtils.radiansToDegrees;
     }
     //initialising a reference player entity
     private Entity playerEntity;
@@ -52,6 +60,16 @@ public class CompanionActions extends Component {
 
         // Update the speed to make the companion move towards the player
         updateSpeed();
+
+        // Calculate the rotation angle towards the player
+
+        float targetRotation = walkDirection.angleDeg() + 90;
+
+        // Interpolate the rotation angle smoothly
+        currentRotation = MathUtils.lerpAngleDeg(currentRotation, targetRotation, ROTATION_SPEED* Gdx.graphics.getDeltaTime());
+
+        // Set the new rotation for the companion
+        physicsComponent.getBody().setTransform(companionPosition, currentRotation*MathUtils.degreesToRadians);
     }
 
     private void updateSpeed() {

@@ -30,7 +30,7 @@ public class EarthGameArea extends GameArea {
     private static final float ASTEROID_SIZE = 0.9f;
     private static final float BOUNCE = 5.0f;
 
-    private static final String[] earthSounds = {"sounds/HeroDemise.mp3"};
+    private static final String[] earthSounds = {"sounds/Impact4.ogg"};
 
     private static final String[] earthTextures = {
 

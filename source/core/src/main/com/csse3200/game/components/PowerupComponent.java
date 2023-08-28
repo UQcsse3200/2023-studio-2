@@ -75,8 +75,6 @@ public class PowerupComponent extends Component {
         playerCombatStats = target.getComponent(CombatStatsComponent.class);
         playerActions = target.getComponent(PlayerActions.class);
 
-        if (playerActions == null) {return;}
-
         switch (type) {
             case HEALTH_BOOST -> playerCombatStats.setHealth(100);
             case SPEED_BOOST -> {

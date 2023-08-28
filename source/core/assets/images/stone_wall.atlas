@@ -1,96 +1,110 @@
 
 stone_wall.png
-size: 512, 64
+size: 104, 104
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-back-left
+left-right
   rotate: false
-  xy: 2, 2
+  xy: 2, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-junction-left
+left-up-right
   rotate: false
-  xy: 2, 2
+  xy: 2, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-black-right
+left-up
   rotate: false
-  xy: 138, 2
+  xy: 70, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-junction-right
+left
   rotate: false
-  xy: 138, 2
+  xy: 70, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-front
+left-up-down
   rotate: false
-  xy: 206, 2
+  xy: 2, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-junction-up
+left-down
   rotate: false
-  xy: 206, 2
+  xy: 2, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-front-left
+left-up-right-down
   rotate: false
-  xy: 36, 2
+  xy: 36, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-front-right
+left-right-down
   rotate: false
-  xy: 240, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-junction-down
-  rotate: false
-  xy: 70, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-junction-cross
-  rotate: false
-  xy: 70, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-side
-  rotate: false
-  xy: 172, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-side-front
-  rotate: false
-  xy: 104, 2
+  xy: 36, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 no-connection
   rotate: false
-  xy: 104, 2
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+up
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+up-down
+  rotate: false
+  xy: 70, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+up-right
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+up-right-down
+  rotate: false
+  xy: 36, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-down
+  rotate: false
+  xy: 36, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

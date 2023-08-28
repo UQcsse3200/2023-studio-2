@@ -1,96 +1,117 @@
 
 dirt_wall.png
-size: 512, 64
+size: 140, 140
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-back-left
+down
   rotate: false
   xy: 2, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-back-right
-  rotate: false
-  xy: 36, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-front
-  rotate: false
-  xy: 410, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-front-left
+left
   rotate: false
   xy: 70, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-front-right
+left-down
   rotate: false
-  xy: 342, 2
+  xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-junction-cross
+left-right
   rotate: false
-  xy: 206, 2
+  xy: 2, 104
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-junction-down
+left-right-down
   rotate: false
   xy: 104, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-junction-left
+left-up
   rotate: false
-  xy: 240, 2
+  xy: 70, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-junction-right
+left-up-down
   rotate: false
-  xy: 308, 2
+  xy: 36, 104
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-junction-up
+left-up-right
   rotate: false
-  xy: 376, 2
+  xy: 2, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-up-right-down
+  rotate: false
+  xy: 36, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 no-connection
   rotate: false
-  xy: 172, 2
+  xy: 104, 104
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-side
+right
   rotate: false
-  xy: 274, 2
+  xy: 70, 104
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-side-front
+right-down
   rotate: false
-  xy: 138, 2
+  xy: 70, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-up
+  rotate: false
+  xy: 2, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+up
+  rotate: false
+  xy: 104, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+up-down
+  rotate: false
+  xy: 104, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+up-right-down
+  rotate: false
+  xy: 36, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

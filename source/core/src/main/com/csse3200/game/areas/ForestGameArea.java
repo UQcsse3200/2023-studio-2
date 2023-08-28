@@ -42,6 +42,7 @@ public class ForestGameArea extends GameArea {
           "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
           "images/broken_elixir_collector.png",
           "images/box_boy_leaf.png",
+          "images/blank.png",
           "images/tree.png",
           "images/wall.png",
           "images/wall2.png",
@@ -182,6 +183,7 @@ public class ForestGameArea extends GameArea {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     targetables.add(newPlayer);
+    newPlayer.getEvents().trigger("walkRight");
   }
 
   private void spawnPowerups() {

@@ -21,10 +21,12 @@ public class SpaceGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float ASTEROID_SIZE = 0.9f;
+    private static final float WORMHOLE_SIZE = 0.9f;
     private static final String[] spaceMiniGameTextures = {
             "images/SpaceMiniGameBackground.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-            "images/RightShip.png"//TODO: Replace these images with copyright free images - these are just for testing purposes!!
+            "images/RightShip.png",
+            "images/wormhole.jpg"
     };
     private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
     private static final String[] spaceMusic = {backgroundMusic};
@@ -34,18 +36,14 @@ public class SpaceGameArea extends GameArea {
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
 
-    /**
-     * Initialise this ForestGameArea to use the provided TerrainFactory.
-     * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
-     * @requires terrainFactory != null
-     */
+
     public SpaceGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
         this.targetables = new ArrayList<>();
     }
 
-    /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
+
     @Override
     public void create() {
         loadAssets();
@@ -56,6 +54,7 @@ public class SpaceGameArea extends GameArea {
         spawnTerrain();
         spawnShip();
         spawnAsteroids();
+        spawnGoal();
 
 
 
@@ -78,7 +77,14 @@ public class SpaceGameArea extends GameArea {
         //Extra Spicy Asteroids
         GridPoint2 posAs = new GridPoint2(8, 10);
         spawnEntityAt(
-                ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
+                ObstacleFactory.createAsteroid(ASTEROID_SIZE,ASTEROID_SIZE), posAs, false, false);
+
+    }
+
+    private void spawnGoal(){
+        GridPoint2 position = new GridPoint2(24,10);
+        spawnEntityAt(
+                ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE,WORMHOLE_SIZE), position,false,false);
 
     }
 
@@ -137,4 +143,5 @@ public class SpaceGameArea extends GameArea {
         super.dispose();
         this.unloadAssets();
     }
+
 }

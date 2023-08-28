@@ -78,6 +78,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.UP);
+          entity.getEvents().trigger("walkUp");
         } else {
           walkDirection.add(Vector2Utils.UP);
           diagonal();
@@ -89,6 +90,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.LEFT);
+          entity.getEvents().trigger("walkLeft");
         } else {
           walkDirection.add(Vector2Utils.LEFT);
           diagonal();
@@ -100,6 +102,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.DOWN);
+          entity.getEvents().trigger("walkDown");
         } else {
           walkDirection.add(Vector2Utils.DOWN);
           diagonal();
@@ -111,6 +114,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (movFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.RIGHT);
+          entity.getEvents().trigger("walkRight");
         } else {
           walkDirection.add(Vector2Utils.RIGHT);
           diagonal();

@@ -3,11 +3,19 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.TitleBox;
+import com.csse3200.game.ui.DialogueBox;
+import com.csse3200.game.areas.ForestGameArea;
+
+import static com.csse3200.game.ui.UIComponent.skin;
 
 /**
  * When this entity touches a valid enemy's hitbox, deal damage to them and apply a knockback.
@@ -18,6 +26,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
  * if target entity has a PhysicsComponent.
  */
 public class TouchAttackComponent extends Component {
+
   private short targetLayer;
   private float knockbackForce = 0f;
   private CombatStatsComponent combatStats;
@@ -46,7 +55,9 @@ public class TouchAttackComponent extends Component {
     entity.getEvents().addListener("collisionStart", this::onCollisionStart);
     combatStats = entity.getComponent(CombatStatsComponent.class);
     hitboxComponent = entity.getComponent(HitboxComponent.class);
+
   }
+
 
   private void onCollisionStart(Fixture me, Fixture other) {
     if (hitboxComponent.getFixture() != me) {

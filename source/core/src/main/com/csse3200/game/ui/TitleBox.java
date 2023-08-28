@@ -11,11 +11,13 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.ui.TitleBox;
 
 import static com.csse3200.game.screens.MainMenuScreen.logger;
 
 
 public class TitleBox extends Dialog {
+    private TitleBox titleBox;
     private GdxGame game;
     public TitleBox( GdxGame game, String title, Skin skin) {
         super(title, skin);

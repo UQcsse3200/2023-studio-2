@@ -26,7 +26,7 @@
     "health": 40,
     "baseAttack": 10,
     "speed": 5,
-    "atlas": ""
+    "atlas": "images/rangeEnemy.atlas"
   },
 
   "meleeBossPTE": {

@@ -47,7 +47,7 @@ public class ForestGameArea extends GameArea {
     "images/broken_elixir_collector.png",
     "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
     "images/box_boy_leaf.png",
-    "images/Ship.png",
+    "images/RightShip.png",
     "images/tree.png",
     "images/wall.png",
     "images/wall2.png",

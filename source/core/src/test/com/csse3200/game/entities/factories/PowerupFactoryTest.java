@@ -51,6 +51,6 @@ public class PowerupFactoryTest {
 
     @Test
     public void testCreateHealthBoostPowerup() {
-        // todo: fix this
+
     }
 }

@@ -79,8 +79,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ProximityActivationComponent</span>
 <span class="extends-implements">extends <a href="Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
-<div class="block">This component can be used to call a given method when the given entity enters
- the given proximity. An exit method can also be configured.</div>
+<div class="block">This component can be used to call an entry or exit method when on of the tracking
+ entities enters or exits a proximity.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -96,7 +96,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="ProximityActivationComponent.ProximityFunc.html" class="type-name-link" title="interface in com.csse3200.game.components">ProximityActivationComponent.ProximityFunc</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">This interface is used to allow a function to be passed as a parameter in the constructor.</div>
+<div class="block">Defines the entry and exit function type.</div>
 </div>
 </div>
 </section>
@@ -123,6 +123,11 @@ loadScripts(document, 'script');</script>
  <a href="ProximityActivationComponent.ProximityFunc.html" title="interface in com.csse3200.game.components">ProximityActivationComponent.ProximityFunc</a>&nbsp;entered,
  <a href="ProximityActivationComponent.ProximityFunc.html" title="interface in com.csse3200.game.components">ProximityActivationComponent.ProximityFunc</a>&nbsp;exited)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(float,java.util.List,com.csse3200.game.components.ProximityActivationComponent.ProximityFunc,com.csse3200.game.components.ProximityActivationComponent.ProximityFunc)" class="member-name-link">ProximityActivationComponent</a><wbr>(float&nbsp;radius,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;entities,
+ <a href="ProximityActivationComponent.ProximityFunc.html" title="interface in com.csse3200.game.components">ProximityActivationComponent.ProximityFunc</a>&nbsp;entered,
+ <a href="ProximityActivationComponent.ProximityFunc.html" title="interface in com.csse3200.game.components">ProximityActivationComponent.ProximityFunc</a>&nbsp;exited)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -167,6 +172,15 @@ loadScripts(document, 'script');</script>
 <h3>ProximityActivationComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ProximityActivationComponent</span><wbr><span class="parameters">(float&nbsp;radius,
  <a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity,
+ <a href="ProximityActivationComponent.ProximityFunc.html" title="interface in com.csse3200.game.components">ProximityActivationComponent.ProximityFunc</a>&nbsp;entered,
+ <a href="ProximityActivationComponent.ProximityFunc.html" title="interface in com.csse3200.game.components">ProximityActivationComponent.ProximityFunc</a>&nbsp;exited)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(float,java.util.List,com.csse3200.game.components.ProximityActivationComponent.ProximityFunc,com.csse3200.game.components.ProximityActivationComponent.ProximityFunc)">
+<h3>ProximityActivationComponent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ProximityActivationComponent</span><wbr><span class="parameters">(float&nbsp;radius,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;entities,
  <a href="ProximityActivationComponent.ProximityFunc.html" title="interface in com.csse3200.game.components">ProximityActivationComponent.ProximityFunc</a>&nbsp;entered,
  <a href="ProximityActivationComponent.ProximityFunc.html" title="interface in com.csse3200.game.components">ProximityActivationComponent.ProximityFunc</a>&nbsp;exited)</span></div>
 </section>

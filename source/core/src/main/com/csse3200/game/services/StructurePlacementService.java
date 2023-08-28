@@ -20,10 +20,25 @@ public class StructurePlacementService {
         handler.trigger("placeStructure", entity);
     }
 
-    public void PlaceStructureAt(Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
-        handler.trigger("placeStructureAt", new PlaceStructureAtArgs(entity, tilePos, centerX, centerY));
-        placedStructures.put(tilePos, entity);
+    /**
+     * Gets the position of the given entity.
+     *
+     * @param searchEntity - the entity to get the position of.
+     * @return the position of the entity.
+     */
+    public GridPoint2 getStructurePosition(Entity searchEntity) {
+        for (var entry : placedStructures.entrySet()) {
+            if (entry.getValue() == searchEntity) {
+                return entry.getKey();
+            }
+        }
 
+        return null;
+    }
+
+    public void PlaceStructureAt(Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+        placedStructures.put(tilePos, entity);
+        handler.trigger("placeStructureAt", new PlaceStructureAtArgs(entity, tilePos, centerX, centerY));
     }
     public Entity getStructureAt(GridPoint2 position) {
         return placedStructures.get(position);

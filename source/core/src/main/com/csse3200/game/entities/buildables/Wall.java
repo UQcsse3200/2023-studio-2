@@ -1,21 +1,19 @@
 package com.csse3200.game.entities.buildables;
 
-//import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WallConfig;
-//import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AtlasRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.components.joinable.JoinableComponent;
+import com.csse3200.game.components.joinable.JoinLayer;
+import com.csse3200.game.components.joinable.JoinableComponentShapes;
 import com.csse3200.game.services.ServiceLocator;
-//import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Core wall class. Wall inherits entity and adds the required components and functionality for
@@ -30,6 +28,9 @@ import com.csse3200.game.services.ServiceLocator;
  * </pre>
  */
 public class Wall extends Entity {
+    private static final JoinableComponentShapes shapes =
+            FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
+
     /**
      * Constructor to create a Wall entity based on the given config.
      *
@@ -45,11 +46,8 @@ public class Wall extends Entity {
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         addComponent(new CombatStatsComponent(config.health, 0));
         addComponent(new HealthBarComponent(true));
-        addComponent(new AtlasRenderComponent(textures, "front"));
+        addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));
 
-        PhysicsUtils.setScaledCollider(this, 1f, 0.5f);
-
-        setScale(1f, 1f);
-        getComponent(AtlasRenderComponent.class).scaleEntity();
+        getComponent(JoinableComponent.class).scaleEntity();
     }
 }

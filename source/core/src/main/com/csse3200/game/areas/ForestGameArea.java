@@ -143,16 +143,23 @@ public class ForestGameArea extends GameArea {
       spawnEntityAt(ghost, randomPos, true, true);
     }
   }
-  private void spawnBotanist() { // TODO: Temp
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+//  private void spawnBotanist() { // TODO: Temp
+//    GridPoint2 minPos = new GridPoint2(0, 0);
+//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+//
+//
+////      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//      GridPoint2 BOTANIST_SPAWN = new GridPoint2(14, 10);
+//      Entity botanist = NPCFactory.createBotanist();
+//      spawnEntityAt(botanist, BOTANIST_SPAWN, true, true);
+//
+//  }
 
-
-//      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      GridPoint2 BOTANIST_SPAWN = new GridPoint2(14, 10);
-      Entity botanist = NPCFactory.createBotanist();
-      spawnEntityAt(botanist, BOTANIST_SPAWN, true, true);
-
+  private void spawnBotanist() {
+    GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
+            terrain.getMapBounds(0).sub(1, 1).y/3);
+    Entity ship = NPCFactory.createBotanist();
+    spawnEntityAt(ship, spawnPosition, false, false);
   }
   private void spawnGhostKing() {
     GridPoint2 minPos = new GridPoint2(0, 0);

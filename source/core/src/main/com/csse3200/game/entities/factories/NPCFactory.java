@@ -25,7 +25,9 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 
 /**
@@ -99,31 +101,44 @@ public class NPCFactory {
     ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
     return ghostKing;
   }
+  //TODO
+//  public static Entity createBotanist() {
+//    AnimationRenderComponent animator = new AnimationRenderComponent(
+//            ServiceLocator.getResourceService().getAsset("images/botanist.atlas", TextureAtlas.class));
+//    animator.addAnimation("idle_left", Float.MAX_VALUE, Animation.PlayMode.LOOP);
+//    animator.addAnimation("idle_right", Float.MAX_VALUE, Animation.PlayMode.LOOP);
+//    animator.addAnimation("wanderStart_left", 0.4f, Animation.PlayMode.LOOP_REVERSED);
+//    animator.addAnimation("wanderStart_right", 0.4f, Animation.PlayMode.LOOP);
+////    animator.addAnimation("runLeft", 0.2f, Animation.PlayMode.LOOP_REVERSED);
+////    animator.addAnimation("runRight", 0.2f, Animation.PlayMode.LOOP);
+//
+//    AITaskComponent aiTaskComponent = new AITaskComponent()
+//            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+//
+//    Entity botanist = new Entity()
+//            .addComponent(new PhysicsComponent())
+//            .addComponent(new PhysicsMovementComponent())
+//            .addComponent(new ColliderComponent())
+//            .addComponent(aiTaskComponent)
+//            .addComponent(animator)
+//            .addComponent(new BotanistAnimationController());
+//
+//    PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.4f);
+//    return botanist;
+//  }
   public static Entity createBotanist() {
-    AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/botanist.atlas", TextureAtlas.class));
-    animator.addAnimation("idle_left", Float.MAX_VALUE, Animation.PlayMode.LOOP);
-    animator.addAnimation("idle_right", Float.MAX_VALUE, Animation.PlayMode.LOOP);
-    animator.addAnimation("wanderStart_left", 0.4f, Animation.PlayMode.LOOP_REVERSED);
-    animator.addAnimation("wanderStart_right", 0.4f, Animation.PlayMode.LOOP);
-//    animator.addAnimation("runLeft", 0.2f, Animation.PlayMode.LOOP_REVERSED);
-//    animator.addAnimation("runRight", 0.2f, Animation.PlayMode.LOOP);
+    Entity botanist =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/oldman_down_1.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    AITaskComponent aiTaskComponent = new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
-
-    Entity chicken = new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new PhysicsMovementComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(aiTaskComponent)
-            .addComponent(animator)
-            .addComponent(new BotanistAnimationController());
-
-    PhysicsUtils.setScaledCollider(chicken, 0.9f, 0.4f);
-    return chicken;
+    botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    botanist.getComponent(TextureRenderComponent.class).scaleEntity();
+    botanist.scaleHeight(1.5f);
+    PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.7f);
+    return botanist;
   }
-
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    *

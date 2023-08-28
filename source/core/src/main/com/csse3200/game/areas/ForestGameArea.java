@@ -38,7 +38,7 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_ENEMIES = 2;
   private static final int NUM_POWERUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
-  private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
+
   private static final float WALL_WIDTH = 0.1f;
   private static final float ASTEROID_SIZE = 0.9f;
   private static final String[] forestTextures = {
@@ -64,7 +64,6 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_1.png",
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
-          "images/Ship.png",
 
 
 
@@ -110,7 +109,7 @@ public class ForestGameArea extends GameArea {
     spawnPowerups();
     spawnExtractors();
 
-    spawnShip();
+
     spawnPlayer();
 
     spawnEnemies();
@@ -134,12 +133,6 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(extractor, pos, true, false);
   }
 
-  private void spawnShip() {
-    GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
-            terrain.getMapBounds(0).sub(1, 1).y/3);
-    Entity ship = StructureFactory.createShip();
-    spawnEntityAt(ship, spawnPosition, false, false);
-  }
 
   private void displayUI() {
     Entity ui = new Entity();

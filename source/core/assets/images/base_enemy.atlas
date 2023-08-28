@@ -185,3 +185,47 @@ stand
   orig: 100, 200
   offset: 0, 0
   index: 0
+death
+  rotate: false
+  xy: 2600, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 2700, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 2800, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 2900, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 3000, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 3100, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+
+

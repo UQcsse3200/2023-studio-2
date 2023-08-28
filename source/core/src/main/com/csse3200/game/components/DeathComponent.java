@@ -2,11 +2,12 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class DeathComponent extends Component {
-    private short targetLayer;
     private CombatStatsComponent combatStats;
     private HitboxComponent hitboxComponent;
 
@@ -27,7 +28,16 @@ public class DeathComponent extends Component {
             return;
         }
         if (combatStats.isDead()) {
-            Gdx.app.postRunnable(entity::dispose);
+            entity.getEvents().trigger("dispose");
+            // Schedule a task to execute entity::dispose after a delay
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Gdx.app.postRunnable(entity::dispose);
+                }
+            }, 2000); // 10 milliseconds delay
+
         }
     }
 }

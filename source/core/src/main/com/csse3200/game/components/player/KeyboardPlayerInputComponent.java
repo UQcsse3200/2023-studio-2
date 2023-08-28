@@ -147,7 +147,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.F:
         InteractionControllerComponent interactionController = entity.getComponent(InteractionControllerComponent.class);
         if (interactionController != null) {
-          interactionController.interact(false);
+          interactionController.interact();
         }
       default:
         return false;

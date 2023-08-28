@@ -22,10 +22,8 @@ public class ShipFactory {
         Entity ship =
                 new Entity()
 
-                        .addComponent(new TextureRenderComponent("images/Spaceship.png"))
-                        .addComponent(new TextureRenderComponent("images/Spaceship.png"))
-
-                        .addComponent(new TextureRenderComponent("images/RightShip.png"))
+                        .addComponent(new TextureRenderComponent("images/Ship.png"))
+                        .addComponent(new TextureRenderComponent("images/LeftShip.png"))
 
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())

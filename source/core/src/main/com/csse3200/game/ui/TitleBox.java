@@ -79,7 +79,7 @@ public class TitleBox extends Dialog {
     }
     private void onOK() {
         logger.info("Start game");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        game.setScreen(GdxGame.ScreenType.GAME_STORY);
     }
 
 }

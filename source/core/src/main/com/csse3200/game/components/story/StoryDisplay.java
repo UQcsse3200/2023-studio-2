@@ -56,13 +56,14 @@ public class StoryDisplay extends UIComponent {
         table.bottom().right();
 
         storyImages = new ArrayList<>();
-        storyImages.add("images/EARTH_1.png");
-        storyImages.add("images/EARTH_2.png");
-        storyImages.add("images/EARTH_3.png");
-        storyImages.add("images/EARTH_4.png");
-        storyImages.add("images/EARTH_5.png");
+        storyImages.add("images/1.png");
+        storyImages.add("images/2.png");
+        storyImages.add("images/3.png");
+        storyImages.add("images/4.png");
+        storyImages.add("images/5.png");
+        storyImages.add("images/6.png");
         start = 0;
-        end = 5;
+        end = 6;
 
         Texture storyLine = new Texture(Gdx.files.internal(storyImages.get(start)));
         TextureRegionDrawable storyBackground = new TextureRegionDrawable(storyLine);

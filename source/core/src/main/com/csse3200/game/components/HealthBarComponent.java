@@ -29,11 +29,10 @@ public class HealthBarComponent extends UIComponent {
         this.offsetY = offsetY;
     }
 
-    public HealthBarComponent(boolean center, boolean setVisible, Vector2 position) {
+    public HealthBarComponent(boolean center, Vector2 position) {
         this.center = center;
         this.width = 0.9f;
         this.offsetY = 0;
-        this.setVisible = setVisible;
         this.healthBarPosition = position;
     }
 
@@ -72,10 +71,10 @@ public class HealthBarComponent extends UIComponent {
         float yPos = offsetY;
         float centerOffset = 0;
         if (center) {
-            yPos += position.y;
-            centerOffset = healthBar.getHeight()/2;
+            yPos += entity.getCenterPosition().y;
+            centerOffset = healthBar.getHeight();
         } else {
-            yPos += entity.getPosition().y;
+            yPos += entity.getCenterPosition().y;
         }
 
         var position2 = new Vector3(entity.getCenterPosition().x - width/2, yPos, 0);

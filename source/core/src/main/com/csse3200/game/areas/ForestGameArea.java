@@ -53,6 +53,7 @@ public class ForestGameArea extends GameArea {
     "images/broken_elixir_collector.png",
     "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
     "images/box_boy_leaf.png",
+    "images/bullet.png",
     "images/RightShip.png",
     "images/tree.png",
     "images/wall.png",
@@ -87,7 +88,8 @@ public class ForestGameArea extends GameArea {
           "images/troll_enemy.atlas",
           "images/rangeEnemy.atlas",
           "images/stone_wall.atlas",
-          "images/dirt_wall.atlas"
+          "images/dirt_wall.atlas",
+          "images/bullet.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";

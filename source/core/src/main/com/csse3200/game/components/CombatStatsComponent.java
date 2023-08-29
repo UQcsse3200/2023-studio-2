@@ -13,10 +13,16 @@ public class CombatStatsComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
   private int health;
   private int baseAttack;
+  private int maxHealth;
+  private int attackMultiplier;
+  private Boolean isImmune;
 
-  public CombatStatsComponent(int health, int baseAttack) {
+  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune) {
+    maxHealth = health;
     setHealth(health);
     setBaseAttack(baseAttack);
+    setAttackMultiplier(attackMultiplier);
+    setImmunity(isImmune);
   }
 
   /**
@@ -35,6 +41,15 @@ public class CombatStatsComponent extends Component {
    */
   public int getHealth() {
     return health;
+  }
+
+  /**
+   * Returns the entity's maximum health.
+   *
+   * @return entity's maximum health
+   */
+  public int getMaxHealth() {
+    return maxHealth;
   }
 
   /**
@@ -84,8 +99,68 @@ public class CombatStatsComponent extends Component {
     }
   }
 
+  /**
+   * Returns the entity's attack multiplier.
+   *
+   * @return attack multiplier
+   */
+  public int getAttackMultiplier() {
+    return attackMultiplier;
+  }
+
+  /**
+   * Sets the entity's attack multiplier. Attack multiplier has a minimum bound of 0.
+   *
+   * @param attackMultiplier attack multiplier
+   */
+  public void setAttackMultiplier(int attackMultiplier) {
+    if (attackMultiplier >= 0) {
+      this.attackMultiplier = attackMultiplier;
+    } else {
+      logger.error("Can not set base attack multiplier to a negative attack value");
+    }
+  }
+
+  /**
+   * Returns the entity's immunity status.
+   *
+   * @return immunity status
+   */
+  public Boolean getImmunity() {
+    return isImmune;
+  }
+
+  /**
+   * Sets the entity's immunity status.
+   *
+   * @param isImmune immunity status
+   */
+  public void setImmunity(boolean isImmune) {
+    this.isImmune = isImmune;
+  }
+
+  /**
+   * Inverts the entity's current immunity status.
+   */
+  public void changeImmunityStatus() {
+    this.isImmune = !this.getImmunity();
+  }
+
+  /**
+   * Returns the entity's attack damage. This is the base damage scaled by
+   *  the entity's attack multiplier.
+   *
+   * @return attack damage
+   */
+  public int getAttack() {
+    return getBaseAttack() * getAttackMultiplier();
+  }
+
   public void hit(CombatStatsComponent attacker) {
-    int newHealth = getHealth() - attacker.getBaseAttack();
+    if (getImmunity()) {
+      return;
+    }
+    int newHealth = getHealth() - attacker.getAttack();
     setHealth(newHealth);
   }
 }

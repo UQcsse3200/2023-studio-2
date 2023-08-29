@@ -39,6 +39,7 @@ public class CompanionFactory {
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/static.png"))
                         .addComponent(new PhysicsComponent())
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
                         .addComponent(new ColliderComponent())
                         .addComponent(new CompanionActions())
                         .addComponent(inputComponent)

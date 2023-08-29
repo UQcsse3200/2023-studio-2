@@ -55,6 +55,12 @@ public abstract class InputFactory {
    */
   public abstract InputComponent createForCompanion();
   /**
+   * Creates an input handler for the ship
+   *
+   * @return Ship input handler
+   */
+  public abstract InputComponent createForShip();
+  /**
    * Creates an input handler for the terminal
    *
    * @return Terminal input handler

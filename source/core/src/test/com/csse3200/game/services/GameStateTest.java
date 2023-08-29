@@ -10,23 +10,25 @@ import java.util.concurrent.ConcurrentHashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
-public class GameStateTest {
+class GameStateTest {
     private GameState gameState;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         gameState = new GameState();
     }
 
     @Test
-    public void testPutAndGet() {
+
+    void testPutAndGet() {
+
         gameState.put("planet", "Mars");
 
         assertEquals("Mars", gameState.get("planet"), "The state data should match the set data.");
     }
 
     @Test
-    public void testStateChangeListenerNotification() {
+    void testStateChangeListenerNotification() {
         TestStateChangeListener listener = new TestStateChangeListener();
         gameState.registerStateChangeListener(listener);
 
@@ -37,7 +39,7 @@ public class GameStateTest {
     }
 
     @Test
-    public void testMultipleStateChangeListeners() {
+    void testMultipleStateChangeListeners() {
         TestStateChangeListener listener1 = new TestStateChangeListener();
         TestStateChangeListener listener2 = new TestStateChangeListener();
 
@@ -54,7 +56,7 @@ public class GameStateTest {
     }
 
     @Test
-    public void testUnregisterStateChangeListener() {
+    void testUnregisterStateChangeListener() {
         TestStateChangeListener listener = new TestStateChangeListener();
         gameState.registerStateChangeListener(listener);
         gameState.unregisterStateChangeListener(listener);

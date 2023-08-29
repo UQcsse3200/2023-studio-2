@@ -1,5 +1,11 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.Companion.CompanionInteractionControllerComponent;
+import com.csse3200.game.components.Companion.CompanionInventoryComponent;
+import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -42,8 +48,11 @@ public class CompanionFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
                         .addComponent(new ColliderComponent())
                         .addComponent(new CompanionActions())
+                        .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
+                        .addComponent(new CompanionInventoryComponent(stats.gold))
                         .addComponent(inputComponent)
-                        .addComponent(new FollowComponent(playerEntity, 3.f));
+                        .addComponent(new FollowComponent(playerEntity, 4.f))
+                        .addComponent(new CompanionInteractionControllerComponent());
 
 
         PhysicsUtils.setScaledCollider(Companion, 0.4f, 0.2f);

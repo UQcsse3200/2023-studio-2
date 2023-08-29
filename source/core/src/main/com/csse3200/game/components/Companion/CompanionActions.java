@@ -23,7 +23,8 @@ public class CompanionActions extends Component {
 
     private static final float ROTATION_SPEED = 10.0f; // Adjust the rotation speed as needed
     private float followRadius = 10.0f;
-    private float currentRotation = 0.0f;
+    private float currentRotation = 5.0f;
+    private float minDistance = 50.0f; // Define the minimum distance
 
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
@@ -38,6 +39,10 @@ public class CompanionActions extends Component {
 
         // Initialize currentRotation based on the initial orientation of the companion
         currentRotation = physicsComponent.getBody().getAngle()*MathUtils.radiansToDegrees;
+        if (playerEntity != null) {
+            Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
+            physicsComponent.getBody().setTransform(playerPosition, currentRotation * MathUtils.degreesToRadians);
+        }
     }
     //initialising a reference player entity
     private Entity playerEntity;
@@ -61,6 +66,18 @@ public class CompanionActions extends Component {
 private void updateFollowPlayer() {
     Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
     Vector2 companionPosition = physicsComponent.getBody().getPosition();
+
+    // Calculate direction vector towards the player
+    Vector2 directionToPlayer = playerPosition.cpy().sub(companionPosition);
+    float distanceToPlayer = directionToPlayer.len();
+
+    double minDistanceThreshold = 50.0f;
+    if (distanceToPlayer < minDistanceThreshold) {
+        physicsComponent.getBody().setActive(false); // Disable physics simulation
+    } else {
+        physicsComponent.getBody().setActive(true); // Enable physics simulation
+        updateSpeed(); // Only apply speed if physics is active
+    }
 
     // Check if any movement key is pressed
     boolean isMovementKeyPressed = isMovementKeyPressed();
@@ -86,6 +103,11 @@ private void updateFollowPlayer() {
             // Stop the companion from walking
             stopWalking();
         }
+        // Ensure minimum distance
+        if (distanceToPlayer < minDistance) {
+            Vector2 newPosition = companionPosition.cpy().add(directionToPlayer.nor().scl(minDistance));
+            physicsComponent.getBody().setTransform(newPosition, physicsComponent.getBody().getAngle());
+        }
     } else {
         // Stop the companion from walking when movement keys are pressed
         stopWalking();
@@ -105,6 +127,21 @@ private void updateFollowPlayer() {
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
     }
+
+   /* private void ensureMinDistance() {
+        if (playerEntity != null) {
+            Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
+            Vector2 companionPosition = physicsComponent.getBody().getPosition();
+            Vector2 offset = companionPosition.cpy().sub(playerPosition);
+            float distance = offset.len();
+
+            if (distance < minDistance) {
+                // Calculate the new position for the companion
+                Vector2 newPosition = playerPosition.cpy().add(offset.nor().scl(minDistance));
+                physicsComponent.getBody().setTransform(newPosition, physicsComponent.getBody().getAngle());
+            }
+        }
+    }*/
 
     /**
      * Moves the Companion towards a given direction.

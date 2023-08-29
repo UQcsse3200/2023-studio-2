@@ -29,6 +29,8 @@ import com.csse3200.game.services.ServiceLocator;
  * </pre>
  */
 public class Wall extends Entity {
+
+    private boolean showHealthBar = true;
     private static final JoinableComponentShapes shapes =
             FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
 
@@ -43,7 +45,7 @@ public class Wall extends Entity {
      * <p>Predefined wall properties are loaded from a config stored as a json file and should have
      * the properties stored in 'WallConfig'.
      */
-    public Wall(WallType type) {
+    public Wall(WallType type, Entity player) {
         super();
         this.type = type;
 
@@ -53,13 +55,22 @@ public class Wall extends Entity {
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
         addComponent(new CombatStatsComponent(config.health, 0,0,false));
-        addComponent(new HealthBarComponent(true));
+        addComponent(new HealthBarComponent(true,false, getCenterPosition()));
         addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));
+        addComponent(new ProximityActivationComponent(1.5f, player, this::onPlayerEnter, this::onPlayerExit));
 
         getComponent(JoinableComponent.class).scaleEntity();
     }
 
     public WallType getWallType() {
         return type;
+    }
+
+    private void onPlayerEnter(Entity player) {
+        getComponent(HealthBarComponent.class).show();
+    }
+
+    private void onPlayerExit(Entity player) {
+        getComponent(HealthBarComponent.class).hide();
     }
 }

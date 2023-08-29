@@ -127,7 +127,7 @@ public class PlayerActions extends Component {
 
     // if structure doesn't exist at position, adds wall.
     if (structure == null) {
-      Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
+      Entity wall = BuildablesFactory.createCustomWall(WallType.basic, entity);
       updateResources(-2);
       ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, gridPosition, false, false);
       wall.getComponent(JoinableComponent.class).notifyNeighbours(true);
@@ -137,7 +137,7 @@ public class PlayerActions extends Component {
         updateResources(-2);
         structure.dispose();
         this.entityService.unregister(structure);
-        Entity wall = BuildablesFactory.createCustomWall(WallType.intermediate);
+        Entity wall = BuildablesFactory.createCustomWall(WallType.intermediate, entity);
         ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, gridPosition, false, false);
       }
     }

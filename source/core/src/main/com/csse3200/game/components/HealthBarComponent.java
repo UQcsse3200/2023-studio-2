@@ -1,12 +1,13 @@
 package com.csse3200.game.components;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.csse3200.game.rendering.RenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
 /**
@@ -17,7 +18,9 @@ public class HealthBarComponent extends UIComponent {
     private final boolean center;
     private final float offsetY;
     private final float width;
+    private boolean setVisible = false;
     private ProgressBar healthBar;
+    private Vector2 healthBarPosition;
 
 
     public HealthBarComponent(boolean center, float offsetY, float width) {
@@ -26,10 +29,12 @@ public class HealthBarComponent extends UIComponent {
         this.offsetY = offsetY;
     }
 
-    public HealthBarComponent(boolean center) {
+    public HealthBarComponent(boolean center, boolean setVisible, Vector2 position) {
         this.center = center;
         this.width = 0.9f;
         this.offsetY = 0;
+        this.setVisible = setVisible;
+        this.healthBarPosition = position;
     }
 
     /**
@@ -43,13 +48,12 @@ public class HealthBarComponent extends UIComponent {
             return;
         }
 
-        healthBar = new ProgressBar(0, getCombatStatsComponent().getMaxHealth(), 1, false, skin);
-        updateWallHealthUI(getCombatStatsComponent().getHealth());
-        healthBar.setColor(new Color(0, 1, 0, 1));
-        healthBar.setWidth(SCALE_REDUCTION * width);
-        updateUIPosition();
-
+        healthBar = new ProgressBar(0, 800, 1, false, skin);
+        updateWallHealthUI(entity.getComponent(CombatStatsComponent.class).getHealth());
+        this.healthBar.setWidth(SCALE_REDUCTION * width);
+        updateUIPosition(this.healthBarPosition);
         entity.getEvents().addListener("updateHealth", this::updateWallHealthUI);
+        ServiceLocator.getRenderService().unregister(this);
     }
 
     /**
@@ -63,19 +67,20 @@ public class HealthBarComponent extends UIComponent {
     /**
      * Updates the position of the UI in the game world (accounting for the difference in scale)
      */
-    private void updateUIPosition() {
+    private void updateUIPosition(Vector2 position) {
+
         float yPos = offsetY;
         float centerOffset = 0;
         if (center) {
-            yPos += entity.getCenterPosition().y;
+            yPos += position.y;
             centerOffset = healthBar.getHeight()/2;
         } else {
             yPos += entity.getPosition().y;
         }
 
-        var position = new Vector3(entity.getCenterPosition().x - width/2, yPos, 0);
-        position.scl(SCALE_REDUCTION);
-        healthBar.setPosition(position.x, position.y - centerOffset);
+        var position2 = new Vector3(entity.getCenterPosition().x - width/2, yPos, 0);
+        position2.scl(SCALE_REDUCTION);
+        healthBar.setPosition(position2.x, position2.y - centerOffset);
     }
 
     /**
@@ -88,7 +93,7 @@ public class HealthBarComponent extends UIComponent {
      */
     @Override
     public void draw(SpriteBatch batch)  {
-        updateUIPosition();
+        updateUIPosition(this.healthBarPosition);
         Matrix4 originalMatrix = batch.getProjectionMatrix().cpy(); // cpy() needed to properly set afterwards because calling set() seems to modify kept matrix, not replaces it
 
         var newScale = new Vector3();
@@ -110,13 +115,26 @@ public class HealthBarComponent extends UIComponent {
      * @param health player health
      */
     public void updateWallHealthUI(int health) {
-        healthBar.setValue(health);
+        this.healthBar.setValue(health);
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        healthBar.remove();
+        this.healthBar.remove();
+    }
+
+    public void show() {
+
+        stage.addActor(healthBar);
+        setVisible = false;
+
+    }
+
+    public Component hide() {
+        this.healthBar.remove();
+        setVisible = true;
+        return null;
     }
 
 }

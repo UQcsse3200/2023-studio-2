@@ -20,7 +20,6 @@ public class HealthBarComponent extends UIComponent {
     private final float width;
     private boolean setVisible = false;
     private ProgressBar healthBar;
-    private Vector2 healthBarPosition;
 
 
     public HealthBarComponent(boolean center, float offsetY, float width) {
@@ -29,11 +28,10 @@ public class HealthBarComponent extends UIComponent {
         this.offsetY = offsetY;
     }
 
-    public HealthBarComponent(boolean center, Vector2 position) {
+    public HealthBarComponent(boolean center) {
         this.center = center;
         this.width = 0.9f;
         this.offsetY = 0;
-        this.healthBarPosition = position;
     }
 
     /**
@@ -47,12 +45,15 @@ public class HealthBarComponent extends UIComponent {
             return;
         }
 
-        healthBar = new ProgressBar(0, 800, 1, false, skin);
+        healthBar = new ProgressBar(0, getCombatStatsComponent().getMaxHealth(), 1, false, skin);
+
         updateWallHealthUI(entity.getComponent(CombatStatsComponent.class).getHealth());
         this.healthBar.setWidth(SCALE_REDUCTION * width);
-        updateUIPosition(this.healthBarPosition);
-        entity.getEvents().addListener("updateHealth", this::updateWallHealthUI);
-        ServiceLocator.getRenderService().unregister(this);
+        updateUIPosition();
+
+        healthBar.setDisabled(true);
+
+        entity.getEvents().addListener("updateHealth", this::updateUIPosition);
     }
 
     /**
@@ -66,8 +67,7 @@ public class HealthBarComponent extends UIComponent {
     /**
      * Updates the position of the UI in the game world (accounting for the difference in scale)
      */
-    private void updateUIPosition(Vector2 position) {
-
+    private void updateUIPosition() {
         float yPos = offsetY;
         float centerOffset = 0;
         if (center) {
@@ -92,21 +92,24 @@ public class HealthBarComponent extends UIComponent {
      */
     @Override
     public void draw(SpriteBatch batch)  {
-        updateUIPosition(this.healthBarPosition);
-        Matrix4 originalMatrix = batch.getProjectionMatrix().cpy(); // cpy() needed to properly set afterwards because calling set() seems to modify kept matrix, not replaces it
+        if (!healthBar.isDisabled()) {
+            updateUIPosition();
+            Matrix4 originalMatrix = batch.getProjectionMatrix().cpy(); // cpy() needed to properly set afterwards because calling set() seems to modify kept matrix, not replaces it
 
-        var newScale = new Vector3();
-        newScale = originalMatrix.getScale(newScale);
-        newScale.scl(1/SCALE_REDUCTION);
+            var newScale = new Vector3();
+            newScale = originalMatrix.getScale(newScale);
+            newScale.scl(1/SCALE_REDUCTION);
 
-        var originalPosition = originalMatrix.getTranslation(new Vector3());
-        var originalRotation = originalMatrix.getRotation(new Quaternion());
+            var originalPosition = originalMatrix.getTranslation(new Vector3());
+            var originalRotation = originalMatrix.getRotation(new Quaternion());
 
-        var newMatrix = new Matrix4(originalPosition, originalRotation, newScale);
-        batch.setProjectionMatrix(newMatrix);
+            var newMatrix = new Matrix4(originalPosition, originalRotation, newScale);
+            batch.setProjectionMatrix(newMatrix);
 
-        healthBar.draw(batch, 1.0f);
-        batch.setProjectionMatrix(originalMatrix); //revert projection
+
+            healthBar.draw(batch, 1.0f);
+            batch.setProjectionMatrix(originalMatrix); //revert projection
+        }
     }
 
     /**
@@ -124,16 +127,12 @@ public class HealthBarComponent extends UIComponent {
     }
 
     public void show() {
-
-        stage.addActor(healthBar);
-        setVisible = false;
+        healthBar.setDisabled(false);
 
     }
 
-    public Component hide() {
-        this.healthBar.remove();
-        setVisible = true;
-        return null;
+    public void hide() {
+        healthBar.setDisabled(true);
     }
 
 }

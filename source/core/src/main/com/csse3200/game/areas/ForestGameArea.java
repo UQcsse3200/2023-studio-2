@@ -55,6 +55,7 @@ public class ForestGameArea extends GameArea {
   private static final float ASTEROID_SIZE = 0.9f;
   private static final String[] forestTextures = {
 
+
           "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
           "images/broken_elixir_collector.png",
           "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
@@ -85,6 +86,38 @@ public class ForestGameArea extends GameArea {
           "images/Ship.png",
           "images/stone_wall.png",
           "images/oldman_down_1.png"
+
+    "images/SpaceMiniGameBackground.png",
+    "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+    "images/broken_elixir_collector.png",
+    "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
+    "images/box_boy_leaf.png",
+    "images/RightShip.png",
+    "images/tree.png",
+    "images/wall.png",
+    "images/wall2.png",
+    "images/gate_close.png",
+    "images/gate_open.png",
+    "images/ghost_king.png",
+    "images/ghost_1.png",
+    "images/grass_1.png",
+    "images/grass_2.png",
+    "images/grass_3.png",
+    "images/hex_grass_1.png",
+    "images/hex_grass_2.png",
+    "images/hex_grass_3.png",
+    "images/iso_grass_1.png",
+    "images/iso_grass_2.png",
+    "images/iso_grass_3.png",
+    "images/base_enemy.png",
+    "images/Troll.png",
+    "images/rangeEnemy.png",
+    "images/stone_wall.png",
+    "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+    "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+    "images/Ship.png",
+    "images/stone_wall.png"
+
   };
   private static final String[] forestTextureAtlases = {
           "images/terrain_iso_grass.atlas",

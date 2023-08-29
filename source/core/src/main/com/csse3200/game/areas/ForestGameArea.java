@@ -13,6 +13,7 @@ import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.entities.factories.PowerupFactory;
+import com.csse3200.game.entities.factories.BoxFactory;
 
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -35,6 +36,7 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_POWERUPS = 0;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final float ASTEROID_SIZE = 0.9f;
   private static final float BOUNCE = 5.0f;
@@ -59,6 +61,7 @@ public class ForestGameArea extends GameArea {
           "images/iso_grass_2.png",
           "images/iso_grass_3.png",
           "images/static.png",
+          "images/alert.png",
   };
   private static final String[] forestTextureAtlases = {
           "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -92,10 +95,11 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     spawnExtractors();
     Entity playerEntity = spawnPlayer();
-    spawnCompanion(playerEntity, new Vector2(20.0f,20.0f));
+    Entity  companionEntity = spawnCompanion(playerEntity, new Vector2(20.0f,20.0f));
     spawnPowerups();
     spawnEnemies();
     spawnBoss();
+    spawnBox(companionEntity, new Vector2(20.0f,20.0f));
 
 
 
@@ -167,7 +171,7 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
-  private void spawnCompanion(Entity playerEntity, Vector2 offset) {
+  private Entity spawnCompanion(Entity playerEntity, Vector2 offset) {
     Entity newCompanion = CompanionFactory.createCompanion(playerEntity);
     PhysicsComponent playerPhysics = playerEntity.getComponent(PhysicsComponent.class);
     //calculate the player position
@@ -178,6 +182,18 @@ public class ForestGameArea extends GameArea {
 
     spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
     targetables.add(newCompanion);
+    return newCompanion;
+  }
+
+  private void spawnBox(Entity companionEntity, Vector2 offset) {
+    Entity newBox = BoxFactory.createBox(companionEntity);
+    PhysicsComponent companionPhysics = companionEntity.getComponent(PhysicsComponent.class);
+    //calculate the companion position
+    Vector2 companionPosition = companionPhysics.getBody().getPosition();
+    Vector2 boxSpawnPosition = companionPosition.cpy().add(offset);
+
+    spawnEntityAt(newBox, BOX_SPAWN, true, true);
+   // targetables.add(newBox);
   }
   private void spawnPowerups() {
     GridPoint2 minPos = new GridPoint2(0, 0);

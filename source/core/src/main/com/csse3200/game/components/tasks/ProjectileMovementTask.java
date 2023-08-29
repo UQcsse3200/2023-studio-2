@@ -1,5 +1,6 @@
 package com.csse3200.game.components.tasks;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
@@ -41,6 +42,13 @@ public class ProjectileMovementTask extends DefaultTask implements PriorityTask 
     movementTask.start();
 
     this.owner.getEntity().getEvents().trigger("chaseStart");
+  }
+
+  public void update() {
+    movementTask.update();
+    if (movementTask.getStatus() != Status.ACTIVE) {
+      Gdx.app.postRunnable(owner.getEntity()::dispose);
+    }
   }
 
   @Override

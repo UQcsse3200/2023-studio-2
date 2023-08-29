@@ -84,6 +84,10 @@ public class TerrainFactory {
         TextureRegion spaceVoid =
                 new TextureRegion(resourceService.getAsset("images/SpaceMiniGameBackground.png", Texture.class));
         return createSpaceDemoTerrain(1f,spaceVoid);
+      case REPAIR_DEMO:
+        TextureRegion extractorRepair =
+                new TextureRegion(resourceService.getAsset("images/ExtractorMiniGameBackground.png", Texture.class));
+        return createExtractorDemoTerrain(1f, extractorRepair);
       default:
         return null;
     }

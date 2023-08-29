@@ -10,11 +10,23 @@ import com.csse3200.game.services.GameState;
      * Responsible for travel between planets and stored the number of planets remaining
      */
     public class PlanetTravel {
-        private final GdxGame game = new GdxGame();
+        /**
+         * The variable to set screen for the minigame
+         */
+        private final GdxGame game;
+
+        /**
+         * The current gameState
+         */
         private final GameState gameState;
 
-        public PlanetTravel(GameState gameState) {
+        /**
+         * Constructor to set the current game state for using
+         * @param gameState
+         */
+        public PlanetTravel(GameState gameState, GdxGame game) {
             this.gameState = gameState;
+            this.game = game; // Set the game object
         }
 
         /**
@@ -22,11 +34,12 @@ import com.csse3200.game.services.GameState;
          * @param planet - the destination planet
          */
         public void moveToNextPlanet(Object planet) {
+            game.setScreen(GdxGame.ScreenType.SPACE_MAP);
             gameState.put("planet", planet);
         }
 
         /**
-         * Return the planet where player are currently in
+         * Return the current planet where player are in
          * @return current planet
          */
         public Object returnCurrent() {

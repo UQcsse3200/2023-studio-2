@@ -75,7 +75,6 @@ public class GdxGame extends Game {
         return new SpaceMapScreen(this);
       case EXTRACTOR_GAME:
         return new ExtractorMiniGameScreen(this);
-
       default:
         return null;
     }

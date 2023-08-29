@@ -237,6 +237,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       entity.getEvents().trigger("place", screenX, screenY);
       return true;
     }
+    if (button == Input.Buttons.RIGHT) {
+      entity.getEvents().trigger("remove", screenX, screenY);
+      return true;
+    }
     return false;
   }
 

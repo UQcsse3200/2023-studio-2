@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -9,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class GameState {
 
     // Holds the current state's information.
-    private ConcurrentHashMap<String, Object> stateData = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Object> stateData = new ConcurrentHashMap<>();
 
     // Callback list of state changes' listeners.
     private final CopyOnWriteArrayList<StateChangeListener> stateChangeListeners = new CopyOnWriteArrayList<>();
@@ -40,7 +41,7 @@ public class GameState {
      *
      * @return The copy of current state data
      */
-    public ConcurrentHashMap<String, Object> getStateData() {
+    public Map<String, Object> getStateData() {
         return new ConcurrentHashMap<>(stateData);
     }
 

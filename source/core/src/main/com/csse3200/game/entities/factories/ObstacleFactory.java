@@ -46,6 +46,37 @@ public class ObstacleFactory {
   }
 
   /**
+   * Creates a visible obstacle
+   * @return Environment entity
+   */
+  public static Entity createEnvironment() {
+    Entity environment =
+            new Entity().addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    environment.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    return environment;
+  }
+
+  /**
+   * Creates an obstacle with a custom sized collision box
+   * @param sizeX the length of the new collision box
+   * @param sizeY the height of the new collision box
+   * @param posX the relative x coordinate of the top left corner of the collision box
+   * @param posY the relative y coordinate of the top left corner of the collision box
+   * @return Environment entity with the set collision box
+   */
+  public static Entity createEnvironment(float sizeX, float sizeY, float posX, float posY) {
+    Entity environment =
+            new Entity().addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    environment.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    PhysicsUtils.setCustomCollider(environment, sizeX, sizeY, posX, posY);
+    return environment;
+  }
+
+  /**
    * Creates an invisible physics wall.
    * @param width Wall width in world units
    * @param height Wall height in world units
@@ -63,12 +94,11 @@ public class ObstacleFactory {
    * Creates an Asteroid that has bounce
    * @param width Asteroid width in world units
    * @param height Asteroid height in world units
-   * @param restitution Asteroid bounce once hit
-   * @return Asteroid entity of given width, height and bounciness
+   * @return Asteroid entity of given width and height
    */
-  public static Entity createAsteroid(float width, float height, float restitution) {
+  public static Entity createAsteroid(float width, float height) {
     ColliderComponent asteroidCollider = new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE);
-    asteroidCollider.setRestitution(restitution);
+    //asteroidCollider.setRestitution(restitution); bounce removed
     Entity asteroid = new Entity()
             .addComponent(new TextureRenderComponent("images/meteor.png"))
             .addComponent(new PhysicsComponent().setBodyType(BodyType.DynamicBody))

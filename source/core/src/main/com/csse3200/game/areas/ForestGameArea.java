@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.PowerupComponent;
@@ -23,6 +25,8 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.services.TerrainService;
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -30,12 +34,14 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
+import static com.csse3200.game.ui.UIComponent.skin;
+
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
+
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_MELEE_ENEMIES_PTE = 1;
@@ -77,7 +83,8 @@ public class ForestGameArea extends GameArea {
     "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/Ship.png",
-    "images/stone_wall.png"
+    "images/stone_wall.png",
+          "images/oldman_down_1.png"
   };
   private static final String[] forestTextureAtlases = {
           "images/terrain_iso_grass.atlas",
@@ -87,7 +94,10 @@ public class ForestGameArea extends GameArea {
           "images/troll_enemy.atlas",
           "images/rangeEnemy.atlas",
           "images/stone_wall.atlas",
-          "images/dirt_wall.atlas"
+          "images/dirt_wall.atlas",
+          "images/botanist.atlas"
+
+
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -95,6 +105,10 @@ public class ForestGameArea extends GameArea {
 
   private final TerrainFactory terrainFactory;
   private final ArrayList<Entity> targetables;
+
+  private Entity player;
+  private Entity botanist;
+  private DialogueBox dialogueBox;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -127,10 +141,12 @@ public class ForestGameArea extends GameArea {
     spawnEnemies();
     spawnBoss();
     spawnAsteroids();
+    player = spawnPlayer();
+    spawnBotanist();
 
     playMusic();
-  }
 
+  }
   private void spawnAsteroids() {
     //Extra Spicy Asteroids
     GridPoint2 posAs = new GridPoint2(8, 8);
@@ -197,8 +213,10 @@ public class ForestGameArea extends GameArea {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
+      tree.addComponent(new DialogComponent(dialogueBox));
     }
   }
+
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
@@ -223,9 +241,21 @@ public class ForestGameArea extends GameArea {
 
       // Test
       // System.out.println(ServiceLocator.getEntityService().getEntitiesByComponent(PowerupComponent.class).toString());
+
+
     }
   }
-
+//  private void spawnBotanist() { // TODO: Temp
+//    GridPoint2 minPos = new GridPoint2(0, 0);
+//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+//
+//
+////      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//      GridPoint2 BOTANIST_SPAWN = new GridPoint2(14, 10);
+//      Entity botanist = NPCFactory.createBotanist();
+//      spawnEntityAt(botanist, BOTANIST_SPAWN, true, true);
+//
+//  }
   private void spawnEnemies() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -255,6 +285,14 @@ public class ForestGameArea extends GameArea {
     }
   }
 
+  private void spawnBotanist() {
+    GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
+            terrain.getMapBounds(0).sub(1, 1).y/3);
+    Entity ship = NPCFactory.createBotanist();
+    spawnEntityAt(ship, spawnPosition, false, false);
+    ship.addComponent(new DialogComponent(dialogueBox));
+  }
+
   private void spawnBoss() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -262,6 +300,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
     Entity boss = EnemyFactory.createBoss(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
+    boss.addComponent(new DialogComponent(dialogueBox));
   }
 
   private void playMusic() {

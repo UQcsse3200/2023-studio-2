@@ -1,11 +1,23 @@
 package com.csse3200.game.entities.factories;
 
+
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.npc.BotanistAnimationController;
+import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.BaseEntityConfig;
+import com.csse3200.game.entities.configs.BotanistConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -14,6 +26,14 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
+import com.csse3200.game.ui.TitleBox;
+
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -26,9 +46,67 @@ import com.csse3200.game.physics.components.PhysicsMovementComponent;
  * similar characteristics.
  */
 public class NPCFactory {
+  public static DialogueBox dialogueBox;
   private static final NPCConfigs configs =
+
           FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
+  public AssetManager assetManager;
+
+
+  public NPCFactory(AssetManager assetManager) {
+    this.assetManager = assetManager;
+  }
+  /**
+   * Creates a ghost entity.
+   *
+   * @param target entity to chase
+   * @return entity
+   */
+
+
+  /**
+   * @return entity
+   */
+
+  //TODO
+//  public static Entity createBotanist() {
+//    AnimationRenderComponent animator = new AnimationRenderComponent(
+//            ServiceLocator.getResourceService().getAsset("images/botanist.atlas", TextureAtlas.class));
+//    animator.addAnimation("idle_left", Float.MAX_VALUE, Animation.PlayMode.LOOP);
+//    animator.addAnimation("idle_right", Float.MAX_VALUE, Animation.PlayMode.LOOP);
+//    animator.addAnimation("wanderStart_left", 0.4f, Animation.PlayMode.LOOP_REVERSED);
+//    animator.addAnimation("wanderStart_right", 0.4f, Animation.PlayMode.LOOP);
+////    animator.addAnimation("runLeft", 0.2f, Animation.PlayMode.LOOP_REVERSED);
+////    animator.addAnimation("runRight", 0.2f, Animation.PlayMode.LOOP);
+//
+//    AITaskComponent aiTaskComponent = new AITaskComponent()
+//            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+//
+//    Entity botanist = new Entity()
+//            .addComponent(new PhysicsComponent())
+//            .addComponent(new PhysicsMovementComponent())
+//            .addComponent(new ColliderComponent())
+//            .addComponent(aiTaskComponent)
+//            .addComponent(animator)
+//            .addComponent(new BotanistAnimationController());
+//
+//    PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.4f);
+//    return botanist;
+//  }
+  public static Entity createBotanist() {
+    Entity botanist =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/oldman_down_1.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE));
+
+    botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    botanist.getComponent(TextureRenderComponent.class).scaleEntity();
+    botanist.scaleHeight(1.1f);
+    PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.7f);
+    return botanist;
+  }
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    *
@@ -52,7 +130,9 @@ public class NPCFactory {
     return npc;
   }
 
-  private NPCFactory() {
+  public NPCFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
+
 }
+

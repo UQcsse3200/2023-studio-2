@@ -38,7 +38,7 @@ public class MainMenuDisplay extends UIComponent {
     TextButton loadBtn = new TextButton("Load", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton exitBtn = new TextButton("Exit", skin);
-    TextButton miniBtn = new TextButton("mini", skin);
+    TextButton miniBtn = new TextButton("space minigame", skin);
     TextButton extractorBtn = new TextButton("extractor minigame", skin);
 
     // Triggers an event when the button is pressed
@@ -82,8 +82,9 @@ public class MainMenuDisplay extends UIComponent {
               new ChangeListener() {
                   @Override
                   public void changed(ChangeEvent changeEvent, Actor actor) {
-                      logger.debug("Mini button clicked");
-                      entity.getEvents().trigger("mini");
+
+                      logger.debug("Settings button clicked");
+                      entity.getEvents().trigger("space minigame");
                   }
               });
       extractorBtn.addListener(

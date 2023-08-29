@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.ExtractorMinigameWindow;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
@@ -15,6 +16,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -61,19 +63,27 @@ public class StructureFactory {
     /**
      * Creates a ship entity
      */
-    public static Entity createShip() {
+    public static Entity createShip(GdxGame game) {
         Entity ship =
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/Ship.png"))
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE));
+                        .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
+                        .addComponent(new InteractableComponent(entity -> {
+                            //Exit to main menu if resource > 1000
+                            GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
+                            String resourceKey = "resource/" + Resource.Unobtanium;
+                            int currentResourceCount = (int) gameStateOb.getStateData(resourceKey);
+                            if (currentResourceCount > 1000) {
+                                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                            }
+                        }, 5));
 
         ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();
-        ship.scaleHeight(1.5f);
+        ship.setScale(4f, 4.5f);
         PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
         return ship;
     }
-
 
 }

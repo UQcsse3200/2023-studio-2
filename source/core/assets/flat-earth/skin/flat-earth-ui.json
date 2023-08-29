@@ -265,7 +265,7 @@
 	},
 	"WindowStyle": {
 		"default": {
-			"background": "metalPanel_blue",
+			"background": "metalPanel_red",
 			"titleFont": "thick_white"
 		},
 		"orange": {

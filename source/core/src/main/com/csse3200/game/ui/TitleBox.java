@@ -31,8 +31,15 @@ public class TitleBox extends Dialog {
                 "\nThe spaceship belongs to Dr Emily Carter, a brilliant scientist determined to find a cure for the virus and make the earth habitable again. " +
                 "\nBut the cosmos is a vast and dangerous place, filled with unknown challenges and mysteries, from alien encounters to unexpected phenomena. " +
                 "\nYour journey begins now as you board the spaceship \"Aurora\" and venture into the unknown.\n";
-        text(storyText);
 
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("large", Label.LabelStyle.class));
+        labelStyle.font.getData().setScale(1.5f); // Set the font scale to make it larger
+        Label textLabel = new Label(storyText, labelStyle);
+
+        // Lay out the dialog's components
+        getContentTable().row();
+        getContentTable().add(textLabel).pad(20f).center();
         // Create a "Start" button to close the dialog
         TextButton startButton = new TextButton("OK", skin);
         button(startButton, true);
@@ -53,7 +60,7 @@ public class TitleBox extends Dialog {
         getContentTable().add(startButton).pad(20f).center();
 
         // Size and positioning of the dialog
-        setSize(1920f, 1200f); // Adjust the size as needed
+        setSize(1600f, 1080f); // Adjust the size as needed
         setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, (Gdx.graphics.getHeight() - getHeight()) / 2);
     }
 

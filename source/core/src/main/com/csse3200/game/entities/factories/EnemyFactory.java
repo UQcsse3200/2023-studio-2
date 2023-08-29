@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.ai.tasks.PriorityTask;
+import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.components.TouchAttackComponent;
@@ -42,18 +44,6 @@ public class EnemyFactory {
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
 
   /**
-   * Creates a boss entity.
-   *
-   * @param targets entities to chase
-   * @param type type of enemy - melee or ranged
-   * @return entity
-   */
-  public static Entity createBoss(ArrayList<Entity> targets, EnemyType type, EnemyBehaviour behaviour) {
-    Entity boss = createEnemy(targets, type, behaviour);
-    return boss;
-  }
-
-  /**
    * Creates a melee enemy entity.
    *
    * @param targets entity to chase
@@ -64,38 +54,15 @@ public class EnemyFactory {
 
     EnemyConfig config = configs.GetEnemyConfig(type, behaviour);
     AnimationRenderComponent animator;
+    PriorityTask chaseTask;
 
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
-    if (type == EnemyType.Ranged) {
-      for (Entity i : targets) {
-        if(i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER){
-          aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
-        }
-        else{
-          aiComponent.addTask(new ChaseTask(i, 0, 3f, 4f));
-        }
-      }
-    }
-
-    else {
-      for (Entity i : targets) {
-        if (behaviour == EnemyBehaviour.PTE) {
-          if (i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-            aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
-          } else {
-            aiComponent.addTask(new ChaseTask(i, 5, 3f, 4f));
-          }
-        } else {
-          if (i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-            aiComponent.addTask(new ChaseTask(i, 10, 10000f, 100000f));
-          } else {
-            aiComponent.addTask(new ChaseTask(i, 0, 3f, 4f));
-          }
-        }
-      }
+    for (Entity target : targets) {
+      chaseTask = EnemyBehaviourSelector(target, type, behaviour);
+      aiComponent.addTask(chaseTask);
     }
 
     TextureAtlas atlas = new TextureAtlas(config.atlas);
@@ -120,7 +87,7 @@ public class EnemyFactory {
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
     animator.addAnimation("stand",0.3f,Animation.PlayMode.LOOP);
-    //animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
 
 
     enemy
@@ -132,6 +99,77 @@ public class EnemyFactory {
 
     PhysicsUtils.setScaledCollider(enemy, 0.9f, 0.4f);
     return enemy;
+  }
+
+  private static PriorityTask EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour) {
+    PriorityTask chaseTask = null;
+    if (type == EnemyType.Ranged) {
+      if (behaviour == EnemyBehaviour.PTE) {
+        if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
+          chaseTask = (new ChaseTask(target, 10, 100f, 100f));
+        } else {
+          chaseTask = (new ChaseTask(target, 0, 3f, 4f));
+        }
+      }
+      if (behaviour == EnemyBehaviour.DTE) {
+        if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+          chaseTask = (new ChaseTask(target, 10, 100f, 100f));
+        } else {
+          chaseTask = (new ChaseTask(target, 0, 3f, 4f));
+        }
+      }
+    }
+    if (type == EnemyType.Melee) {
+      if (behaviour == EnemyBehaviour.PTE) {
+        if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
+          chaseTask = (new ChaseTask(target, 10, 100f, 100f));
+        } else {
+          chaseTask = (new ChaseTask(target, 0, 3f, 4f));
+        }
+      }
+      if (behaviour == EnemyBehaviour.DTE) {
+        if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+          chaseTask = (new ChaseTask(target, 10, 100f, 100f));
+        } else {
+          chaseTask = (new ChaseTask(target, 0, 3f, 4f));
+        }
+      }
+    }
+
+    if (type == EnemyType.BossMelee) {
+      if (behaviour == EnemyBehaviour.PTE) {
+        if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
+          chaseTask = (new ChaseTask(target, 10, 100f, 100f));
+        } else {
+          chaseTask = (new ChaseTask(target, 0, 3f, 4f));
+        }
+      }
+      if (behaviour == EnemyBehaviour.DTE) {
+        if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+          chaseTask = (new ChaseTask(target, 10, 100f, 4f));
+        } else {
+          chaseTask = (new ChaseTask(target, 0, 3f, 4f));
+        }
+      }
+    }
+
+    if (type == EnemyType.BossRanged) {
+      if (behaviour == EnemyBehaviour.PTE) {
+        if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
+          chaseTask = (new ChaseTask(target, 10, 100f, 100f));
+        } else {
+          chaseTask = (new ChaseTask(target, 0, 3f, 4f));
+        }
+      }
+      if (behaviour == EnemyBehaviour.DTE) {
+        if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+          chaseTask = (new ChaseTask(target, 10, 100f, 4f));
+        } else {
+          chaseTask = (new ChaseTask(target, 0, 3f, 4f));
+        }
+      }
+    }
+    return chaseTask;
   }
 
   private EnemyFactory() {

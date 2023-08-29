@@ -47,7 +47,7 @@ public class PlayerFactory {
             .addComponent(new InventoryComponent(stats.gold))
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())
-            .addComponent(new TouchAttackComponent(PhysicsLayer.NPC)) // TODO: Remove this when we merge to main
+            //.addComponent(new TouchAttackComponent(PhysicsLayer.NPC)) // TODO: Remove this when we merge to main
             .addComponent(new InteractionControllerComponent());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

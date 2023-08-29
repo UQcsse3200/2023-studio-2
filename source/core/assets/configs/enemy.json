@@ -19,6 +19,7 @@
     "health": 40,
     "baseAttack": 10,
     "speed": 5,
+    "behaviour": "PTE",
     "atlas": "images/base_enemy.atlas"
   },
 
@@ -26,6 +27,7 @@
     "health": 40,
     "baseAttack": 10,
     "speed": 5,
+    "behaviour": "DTE",
     "atlas": "images/rangeEnemy.atlas"
   },
 

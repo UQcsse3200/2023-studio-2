@@ -20,33 +20,40 @@ public class NPCConfigs {
   public BulletConfig bullet = new BulletConfig();
 
   public EnemyConfig GetEnemyConfig(EnemyType type, EnemyBehaviour behaviour) {
+    EnemyConfig config = null;
     if (type == EnemyType.Ranged) {
       if (behaviour ==  EnemyBehaviour.DTE) {
-        return rangeEnemyDTE;
-      } else {
-        return rangeEnemyPTE;
+        config = rangeEnemyDTE;
+      }
+      if (behaviour ==  EnemyBehaviour.PTE) {
+        config = rangeEnemyPTE;
       }
     }
     if (type == EnemyType.Melee) {
       if (behaviour == EnemyBehaviour.DTE) {
-        return meleeEnemyDTE;
-      } else {
-        return meleeEnemyPTE;
+        config = meleeEnemyDTE;
+      }
+      if (behaviour ==  EnemyBehaviour.PTE) {
+        config = meleeEnemyPTE;
       }
     }
     if (type == EnemyType.BossRanged) {
       if (behaviour ==  EnemyBehaviour.DTE) {
-        return rangeBossDTE;
-      } else {
-        return rangeBossPTE;
+        config = rangeBossDTE;
       }
-    } else {
-      if (behaviour == EnemyBehaviour.DTE) {
-        return meleeBossDTE;
-      } else {
-        return meleeBossPTE;
+      if (behaviour ==  EnemyBehaviour.PTE) {
+        config = rangeBossPTE;
       }
     }
+    if (type == EnemyType.BossMelee) {
+      if (behaviour == EnemyBehaviour.DTE) {
+        config = meleeBossDTE;
+      }
+      if (behaviour ==  EnemyBehaviour.PTE) {
+        config = meleeBossPTE;
+      }
+    }
+    return config;
   }
 
   public BulletConfig GetBulletConfig() {

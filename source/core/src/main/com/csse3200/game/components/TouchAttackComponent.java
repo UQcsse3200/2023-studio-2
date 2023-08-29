@@ -87,6 +87,7 @@ public class TouchAttackComponent extends Component {
       }, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
     } else {
       //hit once, push away
+      System.out.println("First Hit");
       hitOnce(target, targetStats);
     }
   }
@@ -94,6 +95,7 @@ public class TouchAttackComponent extends Component {
   private void hitOnce(Entity target, CombatStatsComponent targetStats){
     if (targetStats != null) {
       // Valid damage dealt
+      entity.getEvents().trigger("enemyAttack");
       targetStats.hit(combatStats);
     }
 

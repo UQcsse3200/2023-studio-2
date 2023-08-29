@@ -54,7 +54,7 @@ public class ExtractorMiniGameArea extends GameArea {
 
     private void spawnTerrain() {
         // Background terrain
-        terrain = terrainFactory.createTerrain(TerrainFactory.TerrainType.REPAIR_DEMO);
+        terrain = terrainFactory.createTerrain();
         spawnEntity(new Entity().addComponent(terrain));
     }
 

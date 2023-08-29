@@ -37,12 +37,12 @@ import java.util.List;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-  private static final int NUM_TREES = 0;
-  private static final int NUM_MELEE_ENEMIES_PTE = 0;
-  private static final int NUM_MELEE_ENEMIES_DTE = 10;
-  private static final int NUM_RANGE_ENEMIES_PTE = 0;
-  private static final int NUM_RANGE_ENEMIES_DTE = 0;
-  private static final int NUM_POWERUPS = 0;
+  private static final int NUM_TREES = 7;
+  private static final int NUM_MELEE_ENEMIES_PTE = 1;
+  private static final int NUM_MELEE_ENEMIES_DTE = 5;
+  private static final int NUM_RANGE_ENEMIES_PTE = 1;
+  private static final int NUM_RANGE_ENEMIES_DTE = 1;
+  private static final int NUM_POWERUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
@@ -119,18 +119,17 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
-    spawnPowerups();
+    //spawnTrees();
+    //spawnPowerups();
     spawnExtractors();
 
-    spawnShip();
+    //spawnShip();
     spawnPlayer();
 
     spawnEnemies();
-    //spawnBoss();
-    spawnAsteroids();
+    //spawnAsteroids();
 
-    playMusic();
+    //playMusic();
   }
 
   private void spawnAsteroids() {
@@ -145,6 +144,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
     Entity extractor = StructureFactory.createExtractor(30, Resource.Unobtanium, (long) 1.0, 1);
     spawnEntityAt(extractor, pos, true, false);
+    targetables.add(extractor);
   }
 
   private void spawnShip() {
@@ -232,12 +232,6 @@ public class ForestGameArea extends GameArea {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
-      spawnEntityAt(melee, randomPos, true, true);
-    }
-
     for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
@@ -246,24 +240,9 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
+      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
-
-    for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
-      spawnEntityAt(ranged, randomPos, true, true);
-    }
-  }
-
-  private void spawnBoss() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity boss = EnemyFactory.createBoss(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
-    spawnEntityAt(boss, randomPos, true, true);
   }
 
   private void playMusic() {

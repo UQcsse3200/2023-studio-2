@@ -92,7 +92,7 @@ public class SpaceGameArea extends GameArea {
 
     private void spawnTerrain() {
         // Background terrain
-        terrain = terrainFactory.createTerrain(TerrainType.SPACE_DEMO);
+        terrain = terrainFactory.createSpaceTerrain(TerrainType.SPACE_DEMO);
         spawnEntity(new Entity().addComponent(terrain));
 
         // Terrain walls

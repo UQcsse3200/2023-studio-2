@@ -11,6 +11,7 @@ import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.tasks.ChaseTask;
+import com.csse3200.game.components.tasks.WanderAndShootTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.EnemyConfig;
@@ -55,10 +56,10 @@ public class EnemyFactory {
     EnemyConfig config = configs.GetEnemyConfig(type, behaviour);
     AnimationRenderComponent animator;
     PriorityTask chaseTask;
-
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    AITaskComponent aiComponent = new AITaskComponent();
+    if (type != EnemyType.Ranged) {
+      aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    }
 
     for (Entity target : targets) {
       chaseTask = EnemyBehaviourSelector(target, type, behaviour);
@@ -106,7 +107,7 @@ public class EnemyFactory {
     if (type == EnemyType.Ranged) {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          chaseTask = (new ChaseTask(target, 10, 100f, 100f));
+          chaseTask = (new WanderAndShootTask(new Vector2(2f, 2f), 2f, target));
         } else {
           chaseTask = (new ChaseTask(target, 0, 3f, 4f));
         }

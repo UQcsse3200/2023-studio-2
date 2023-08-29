@@ -40,9 +40,11 @@ public class BulletFactory {
 
         BulletConfig config = configs.GetBulletConfig();
 
+        TextureAtlas atlas = new TextureAtlas(config.atlas);
+
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset(config.atlas, TextureAtlas.class));
+                        atlas);
         animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 

@@ -35,17 +35,16 @@ public class AimTask extends DefaultTask {
     @Override
     public void start() {
         super.start();
-        this.spawn = owner.getEntity().getCenterPosition();
+        this.spawn = owner.getEntity().getPosition();
         hasShot = false;
         Entity bullet = BulletFactory.createBullet(target);
-        ServiceLocator.getStructurePlacementService().PlaceStructureAt(bullet,new GridPoint2(Math.round(spawn.x), Math.round(spawn.y)),false, false);
+        ServiceLocator.getStructurePlacementService().PlaceStructureAt(bullet,new GridPoint2(Math.round(spawn.x), Math.round(spawn.y)),true, true);
         hasShot = true;
     }
 
     @Override
     public void update() {
         if (hasShot) {
-            movementComponent.setMoving(false);
             status = Status.FINISHED;
             logger.debug("Finished aiming");
         }

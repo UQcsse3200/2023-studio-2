@@ -22,11 +22,30 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private int flagS = 0;
   private int flagD = 0;
   private int flagMul = 0;
+  private int testing = 0;
+
+  
+  /** 
+   * Returns value for testing.
+   * @return int
+   */
+  public int getTesting() {
+    return testing;
+  }
+
+  
+  /** 
+   * Sets value for testing.
+   * @param testing
+   */
+  public void setTesting(int testing) {
+    this.testing = testing;
+  }
 
   /**
    * @return int
    */
-  private int movFlagSum() {
+  private int getMovFlagSum() {
     return flagW + flagA + flagS + flagD;
   }
 
@@ -41,7 +60,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * Responsible for Diagonal movement when specific keys are pressed
    */
   private void diagonal() {
-    int movFlagSum = movFlagSum();
+    int movFlagSum = getMovFlagSum();
+    if (movFlagSum >= 3){
+      walkDirection.set(Vector2.Zero);
+    }
     if (movFlagSum == 2) {
       flagMul = 1;
       walkDirection.scl(new Vector2(0.707f, 0.707f));
@@ -78,7 +100,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     switch (keycode) {
       case Keys.W:
         flagW = 1;
-        if (movFlagSum() == 1) {
+        if (getMovFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.UP);
         } else {
@@ -89,7 +111,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.A:
         flagA = 1;
-        if (movFlagSum() == 1) {
+        if (getMovFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.LEFT);
         } else {
@@ -100,7 +122,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.S:
         flagS = 1;
-        if (movFlagSum() == 1) {
+        if (getMovFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.DOWN);
         } else {
@@ -111,7 +133,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.D:
         flagD = 1;
-        if (movFlagSum() == 1) {
+        if (getMovFlagSum() == 1) {
           walkDirection.scl(0);
           walkDirection.add(Vector2Utils.RIGHT);
         } else {
@@ -161,10 +183,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         flagW = 0;
         diagonal();
-        if (movFlagSum() == 2) {
+        if (getMovFlagSum() == 2) {
           diagonal();
         }
-        if (movFlagSum() == 0) {
+        if (getMovFlagSum() == 0) {
           walkDirection.scl(0);
         }
         triggerWalkEvent();
@@ -172,10 +194,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.A:
         flagA = 0;
         diagonal();
-        if (movFlagSum() == 2) {
+        if (getMovFlagSum() == 2) {
           diagonal();
         }
-        if (movFlagSum() == 0) {
+        if (getMovFlagSum() == 0) {
           walkDirection.scl(0);
         }
         triggerWalkEvent();
@@ -183,10 +205,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.S:
         flagS = 0;
         diagonal();
-        if (movFlagSum() == 2) {
+        if (getMovFlagSum() == 2) {
           diagonal();
         }
-        if (movFlagSum() == 0) {
+        if (getMovFlagSum() == 0) {
           walkDirection.scl(0);
         }
         triggerWalkEvent();
@@ -194,10 +216,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.D:
         flagD = 0;
         diagonal();
-        if (movFlagSum() == 2) {
+        if (getMovFlagSum() == 2) {
           diagonal();
         }
-        if (movFlagSum() == 0) {
+        if (getMovFlagSum() == 0) {
           walkDirection.scl(0);
         }
         triggerWalkEvent();
@@ -225,40 +247,51 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
   }
 
+  
+  /** 
+   * Returns the direction of the player.
+   * @return Vector2
+   */
+  public Vector2 getDirection(){
+    return this.walkDirection;
+  }
+
   /**
    * Triggers walk event
    */
   private void triggerWalkEvent() {
-    if (walkDirection.epsilonEquals(Vector2.Zero)) {
-      entity.getEvents().trigger("walkStop");
-    } else {
-      if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
-        entity.getEvents().trigger("walkUpLeft");
-        System.out.println(walkDirection);
+    if (this.getTesting() == 0){
+      if (walkDirection.epsilonEquals(Vector2.Zero)) {
+        entity.getEvents().trigger("walkStop");
+      } else {
+        if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
+          entity.getEvents().trigger("walkUpLeft");
+          System.out.println(walkDirection);
+        }
+        else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
+          entity.getEvents().trigger("walkUpRight");
+        }
+        else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
+          entity.getEvents().trigger("walkUp");
+        }
+        else if (walkDirection.epsilonEquals(Vector2Utils.DOWN)) {
+          entity.getEvents().trigger("walkDown");
+        }
+        else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_LEFT)) {
+          entity.getEvents().trigger("walkDownLeft");
+        }
+        else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_RIGHT)) {
+          entity.getEvents().trigger("walkDownRight");
+        }
+        else if (walkDirection.epsilonEquals(Vector2Utils.LEFT)) {
+          entity.getEvents().trigger("walkLeft");
+        }
+        else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
+          entity.getEvents().trigger("walkRight");
+          System.out.println("right");
+        }
+        entity.getEvents().trigger("walk", walkDirection);
       }
-      else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
-        entity.getEvents().trigger("walkUpRight");
-      }
-      else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
-        entity.getEvents().trigger("walkUp");
-      }
-      else if (walkDirection.epsilonEquals(Vector2Utils.DOWN)) {
-        entity.getEvents().trigger("walkDown");
-      }
-      else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_LEFT)) {
-        entity.getEvents().trigger("walkDownLeft");
-      }
-      else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_RIGHT)) {
-        entity.getEvents().trigger("walkDownRight");
-      }
-      else if (walkDirection.epsilonEquals(Vector2Utils.LEFT)) {
-        entity.getEvents().trigger("walkLeft");
-      }
-      else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
-        entity.getEvents().trigger("walkRight");
-        System.out.println("right");
-      }
-      entity.getEvents().trigger("walk", walkDirection);
     }
   }
 
@@ -295,6 +328,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     new java.util.Timer().schedule(makeDodgeAvailable, 3000);
   }
 
+  
+  /** 
+   * @param screenX
+   * @param screenY
+   * @param pointer
+   * @param button
+   * @return boolean
+   */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     if(button == Input.Buttons.LEFT){
@@ -311,6 +352,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     return false;
   }
 
+  
+  /** 
+   * @param centerPt
+   * @param targetPt
+   * @return double
+   */
   //https://stackoverflow.com/questions/9970281/java-calculating-the-angle-between-two-points-in-degrees
   public double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt)  {
     double theta = Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x);

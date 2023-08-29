@@ -19,12 +19,19 @@ import java.util.ArrayList;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class SpaceGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-    private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 SHIP_SPAWN = new GridPoint2(5, 10);
     private static final float ASTEROID_SIZE = 0.9f;
+    private static final float STATIC_ASTEROID_SIZE =0.9f;
+    private static final float WORMHOLE_SIZE = 0.9f;
+    GridPoint2 startingPosition = new GridPoint2(0, 0);
+    int numberOfAsteroids = 10; // Change this to the desired number of asteroids
+
     private static final String[] spaceMiniGameTextures = {
             "images/SpaceMiniGameBackground.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-            "images/RightShip.png"//TODO: Replace these images with copyright free images - these are just for testing purposes!!
+            "images/LeftShip.png",
+            "images/Ship.png",
+            "images/wormhole.jpg"
     };
     private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
     private static final String[] spaceMusic = {backgroundMusic};
@@ -34,18 +41,14 @@ public class SpaceGameArea extends GameArea {
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
 
-    /**
-     * Initialise this ForestGameArea to use the provided TerrainFactory.
-     * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
-     * @requires terrainFactory != null
-     */
+
     public SpaceGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
         this.targetables = new ArrayList<>();
     }
 
-    /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
+
     @Override
     public void create() {
         loadAssets();
@@ -56,6 +59,9 @@ public class SpaceGameArea extends GameArea {
         spawnTerrain();
         spawnShip();
         spawnAsteroids();
+        spawnGoal();
+        createMaze();
+
 
 
 
@@ -76,9 +82,85 @@ public class SpaceGameArea extends GameArea {
      */
     private void spawnAsteroids() {
         //Extra Spicy Asteroids
-        GridPoint2 posAs = new GridPoint2(8, 10);
+        GridPoint2 posAs = new GridPoint2(22, 10);
         spawnEntityAt(
-                ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
+                ObstacleFactory.createAsteroid(ASTEROID_SIZE,ASTEROID_SIZE), posAs, false, false);
+
+    }
+
+    private void spawnStaticAsteroidsRight(int n, GridPoint2 pos){
+        if (n <= 0) {
+            return;
+        }
+
+        spawnEntityAt(
+                ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE), pos, false, false);
+
+        // Increment the position for the next asteroid
+        pos.x += 1;
+        pos.y += 0;
+
+        spawnStaticAsteroidsRight(n - 1, pos); // Recursive call
+    }
+    private void createMaze(){
+
+        spawnStaticAsteroidsRight(7,new GridPoint2(5,15));
+        spawnStaticAsteroidsRight(2,new GridPoint2(23,15));
+
+        spawnStaticAsteroidsRight(7,new GridPoint2(5,14));
+        spawnStaticAsteroidsRight(7,new GridPoint2(13,14));
+        spawnStaticAsteroidsRight(1,new GridPoint2(21,14));
+        spawnStaticAsteroidsRight(3,new GridPoint2(22,14));
+
+        spawnStaticAsteroidsRight(3,new GridPoint2(5,13));
+        spawnStaticAsteroidsRight(1,new GridPoint2(11,13));
+        spawnStaticAsteroidsRight(2,new GridPoint2(13,13));
+        spawnStaticAsteroidsRight(2,new GridPoint2(22,13));
+
+        spawnStaticAsteroidsRight(3,new GridPoint2(5,12));
+        spawnStaticAsteroidsRight(1,new GridPoint2(9,12));
+        spawnStaticAsteroidsRight(2,new GridPoint2(13,12));
+        spawnStaticAsteroidsRight(8,new GridPoint2(16,12));
+
+
+        spawnStaticAsteroidsRight(3,new GridPoint2(5,11));
+        spawnStaticAsteroidsRight(6,new GridPoint2(9,11));
+        spawnStaticAsteroidsRight(9,new GridPoint2(16,11));
+
+        spawnStaticAsteroidsRight(6,new GridPoint2(9,10));
+        spawnStaticAsteroidsRight(6,new GridPoint2(16,10));
+
+        spawnStaticAsteroidsRight(5,new GridPoint2(5,9));
+        spawnStaticAsteroidsRight(3,new GridPoint2(16,9));
+
+        spawnStaticAsteroidsRight(5,new GridPoint2(5,8));
+        spawnStaticAsteroidsRight(2,new GridPoint2(15,8));
+        spawnStaticAsteroidsRight(5,new GridPoint2(20,8));
+
+        spawnStaticAsteroidsRight(9,new GridPoint2(5,7));
+        spawnStaticAsteroidsRight(2,new GridPoint2(15,7));
+        spawnStaticAsteroidsRight(7,new GridPoint2(18,7));
+
+        spawnStaticAsteroidsRight(7,new GridPoint2(5,6));
+        spawnStaticAsteroidsRight(1,new GridPoint2(15,6));
+        spawnStaticAsteroidsRight(7,new GridPoint2(18,6));
+
+        spawnStaticAsteroidsRight(7,new GridPoint2(5,5));
+        spawnStaticAsteroidsRight(3,new GridPoint2(13,5));
+        spawnStaticAsteroidsRight(8,new GridPoint2(17,5));
+
+        spawnStaticAsteroidsRight(7,new GridPoint2(5,4));
+        spawnStaticAsteroidsRight(8,new GridPoint2(17,4));
+
+
+    }
+
+
+
+    private void spawnGoal(){
+        GridPoint2 position = new GridPoint2(24,10);
+        spawnEntityAt(
+                ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE,WORMHOLE_SIZE), position,false,false);
 
     }
 
@@ -137,4 +219,5 @@ public class SpaceGameArea extends GameArea {
         super.dispose();
         this.unloadAssets();
     }
+
 }

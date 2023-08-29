@@ -167,6 +167,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             dodged_right = true;
           }
           triggerDodgeEvent();
+          dodge();
         }
       default:
         return false;
@@ -226,24 +227,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         triggerWalkEvent();
         return true;
-      case Keys.SPACE:
-        if (dodge_available) {
-          if (dodged_up) {
-            walkDirection.sub(Vector2Utils.DODGE_UP);
-            dodged_up = false;
-          } else if (dodged_left) {
-            walkDirection.sub(Vector2Utils.DODGE_LEFT);
-            dodged_left = false;
-          } else if (dodged_down) {
-            walkDirection.sub(Vector2Utils.DODGE_DOWN);
-            dodged_down = false;
-          } else if (dodged_right) {
-            walkDirection.sub(Vector2Utils.DODGE_RIGHT);
-            dodged_right = false;
-          }
-          triggerWalkEvent();
-          dodge();
-        }
       default:
         return false;
     }

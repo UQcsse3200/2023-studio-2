@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.ProjectileAttackComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.tasks.ChaseTask;
@@ -28,15 +29,14 @@ public class BulletFactory {
 
     static final NPCConfigs configs =
             FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
-    public static Entity createBullet(Entity target, EnemyType type) {
+    public static Entity createBullet(Entity target) {
 
         Entity enemy = createBaseBullet();
 
-        AITaskComponent aiComponent =
-                new AITaskComponent()
-                        .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+        AITaskComponent aiComponent = new AITaskComponent();
 
-        aiComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+
+        aiComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
 
         BulletConfig config = configs.GetBulletConfig();
 
@@ -47,10 +47,10 @@ public class BulletFactory {
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
         enemy
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 0, false))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 0 , false))
                 .addComponent(animator)
                 .addComponent(new GhostAnimationController())
-                .addComponent(aiComponent);    // adds tasks depending on enemy type
+                .addComponent(aiComponent);
 
         enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 
@@ -66,7 +66,7 @@ public class BulletFactory {
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(new TouchAttackComponent((short) (
+                        .addComponent(new ProjectileAttackComponent((short) (
                                 PhysicsLayer.PLAYER |
                                         PhysicsLayer.WALL |
                                         PhysicsLayer.STRUCTURE),

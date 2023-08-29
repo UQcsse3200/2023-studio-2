@@ -12,7 +12,6 @@ import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.entities.factories.StructureFactory;
-import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.factories.BoxFactory;
 
 import com.csse3200.game.files.UserSettings;
@@ -33,7 +32,6 @@ public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_ENEMIES = 2;
-  private static final int NUM_POWERUPS = 0;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);
@@ -96,7 +94,6 @@ public class ForestGameArea extends GameArea {
     spawnExtractors();
     Entity playerEntity = spawnPlayer();
     Entity  companionEntity = spawnCompanion(playerEntity, new Vector2(20.0f,20.0f));
-    spawnPowerups();
     spawnEnemies();
     spawnBoss();
     spawnBox(companionEntity, new Vector2(20.0f,20.0f));
@@ -195,19 +192,7 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newBox, BOX_SPAWN, true, true);
    // targetables.add(newBox);
   }
-  private void spawnPowerups() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < NUM_POWERUPS; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      GridPoint2 randomPos2 = RandomUtils.random(minPos, maxPos);
-
-      Entity speedPowerup = PowerupFactory.createSpeedPowerup();
-      spawnEntityAt(speedPowerup, randomPos2, true, false);
-
-    }
-  }
   private void spawnEnemies() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);

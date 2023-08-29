@@ -31,13 +31,11 @@ public class SpaceGameArea extends GameArea {
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/LeftShip.png",
             "images/Ship.png",
-            "images/wormhole.jpg"
+            "images/wormhole.jpg",
+            "images/obstacle-enemy.png"
     };
     private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
     private static final String[] spaceMusic = {backgroundMusic};
-
-
-
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
 
@@ -52,8 +50,6 @@ public class SpaceGameArea extends GameArea {
     @Override
     public void create() {
         loadAssets();
-
-
         displayUI();
         playMusic();
         spawnTerrain();
@@ -61,15 +57,12 @@ public class SpaceGameArea extends GameArea {
         spawnAsteroids();
         spawnGoal();
         createMaze();
-
-
-
+        spawnEnemy();
 
     }
 
     private void playMusic() {
         UserSettings.Settings settings = UserSettings.get();
-
         Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
         music.setLooping(true);
         music.setVolume(settings.musicVolume);
@@ -99,11 +92,10 @@ public class SpaceGameArea extends GameArea {
         // Increment the position for the next asteroid
         pos.x += 1;
         pos.y += 0;
-
         spawnStaticAsteroidsRight(n - 1, pos); // Recursive call
     }
-    private void createMaze(){
 
+    private void createMaze(){
         spawnStaticAsteroidsRight(7,new GridPoint2(5,15));
         spawnStaticAsteroidsRight(2,new GridPoint2(23,15));
 
@@ -152,10 +144,13 @@ public class SpaceGameArea extends GameArea {
         spawnStaticAsteroidsRight(7,new GridPoint2(5,4));
         spawnStaticAsteroidsRight(8,new GridPoint2(17,4));
 
-
     }
 
-
+    private void spawnEnemy(){
+        GridPoint2 position = new GridPoint2(7,10);
+        spawnEntityAt(
+                ObstacleFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE), position,false,false);
+    }
 
     private void spawnGoal(){
         GridPoint2 position = new GridPoint2(24,10);
@@ -163,7 +158,6 @@ public class SpaceGameArea extends GameArea {
                 ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE,WORMHOLE_SIZE), position,false,false);
 
     }
-
 
 
     private void displayUI() {

@@ -21,7 +21,7 @@ public class AtlasRenderComponent extends RenderComponent {
 
     /** Scale the entity to a width of 1 and a height matching the texture's ratio */
     public void scaleEntity() {
-        entity.setScale(1f, (float) currentRegion.getRegionHeight() /currentRegion.getRegionHeight());
+        entity.setScale(1f, ((float)currentRegion.getRegionHeight()) / ((float)currentRegion.getRegionWidth()));
     }
 
     public void setRegion(String region, boolean scaleEntity) {

@@ -18,21 +18,12 @@ public class PlanetTravelTest {
 
     @BeforeEach
     public void setUp() {
-        // Mocking InputFactory
         InputFactory inputFactoryMock = mock(InputFactory.class);
-
-        // Mocking Gdx.input
         Input inputMock = mock(Input.class);
         Gdx.input = inputMock;
-
-        // Mocking GdxGame
         mockGame = mock(GdxGame.class);
-
-        // Now pass the mock to your service
         InputService inputService = new InputService(inputFactoryMock);
         gameState = new GameState();
-
-        // Initialize PlanetTravel with mock game
         planetTravel = new PlanetTravel(gameState, mockGame);  // Modify constructor to accept GdxGame as a parameter
     }
 

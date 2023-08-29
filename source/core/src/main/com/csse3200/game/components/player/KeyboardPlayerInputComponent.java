@@ -309,7 +309,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         entity.getEvents().trigger("dodged");
       }
     };
-    new java.util.Timer().schedule(stopDodge, 200);
+    new java.util.Timer().schedule(stopDodge, 150);
   }
 
   /**

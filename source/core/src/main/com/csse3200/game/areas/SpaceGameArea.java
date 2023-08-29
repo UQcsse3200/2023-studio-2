@@ -57,8 +57,8 @@ public class SpaceGameArea extends GameArea {
         spawnAsteroids();
         spawnGoal();
         createMaze();
-        spawnEnemy();
-
+        spawnEnemy(21,15);
+        spawnEnemy(11,9);
     }
 
     private void playMusic() {
@@ -146,8 +146,8 @@ public class SpaceGameArea extends GameArea {
 
     }
 
-    private void spawnEnemy(){
-        GridPoint2 position = new GridPoint2(7,10);
+    private void spawnEnemy(int x , int y){
+        GridPoint2 position = new GridPoint2(x,y);
         spawnEntityAt(
                 ObstacleFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE), position,false,false);
     }
@@ -156,7 +156,6 @@ public class SpaceGameArea extends GameArea {
         GridPoint2 position = new GridPoint2(24,10);
         spawnEntityAt(
                 ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE,WORMHOLE_SIZE), position,false,false);
-
     }
 
 

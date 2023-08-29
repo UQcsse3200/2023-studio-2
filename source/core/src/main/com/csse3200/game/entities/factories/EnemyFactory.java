@@ -10,9 +10,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
-import com.csse3200.game.components.tasks.ChaseTask;
-import com.csse3200.game.components.tasks.WanderAndShootTask;
-import com.csse3200.game.components.tasks.WanderTask;
+import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
@@ -62,6 +60,9 @@ public class EnemyFactory {
     }
 
     for (Entity target : targets) {
+      if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
+        aiComponent.addTask(new RangeChase(target, 10, 100f, 100f, 4f));
+      }
       chaseTask = EnemyBehaviourSelector(target, type, behaviour);
       aiComponent.addTask(chaseTask);
     }
@@ -107,7 +108,7 @@ public class EnemyFactory {
     if (type == EnemyType.Ranged) {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          chaseTask = (new WanderAndShootTask(new Vector2(2f, 2f), 2f, target));
+          chaseTask = (new WaitAndShootTask( 2f, target));
         } else {
           chaseTask = (new ChaseTask(target, 0, 3f, 4f));
         }

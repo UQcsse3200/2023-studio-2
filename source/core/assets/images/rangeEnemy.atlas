@@ -1,0 +1,131 @@
+rangenemy.png
+size: 1800, 200
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+float
+  rotate: false
+  xy: 936, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 1124, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 1320, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 1520 , 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 1690, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+default
+  rotate: false
+  xy: 1211, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 936, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 1124, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 1320, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 1520 , 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 1690, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 6, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 203, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 391, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 575, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 773, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+stand
+  rotate: false
+  xy: 6, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+stand
+  rotate: false
+   xy: 6, 0
+   size: 85, 148
+   orig: 85, 148
+   offset: 0, 0
+   index: 0

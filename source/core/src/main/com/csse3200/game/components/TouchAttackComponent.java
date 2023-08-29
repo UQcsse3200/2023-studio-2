@@ -18,6 +18,8 @@ import com.csse3200.game.areas.ForestGameArea;
 
 import static com.csse3200.game.ui.UIComponent.skin;
 
+import java.util.logging.Logger;
+
 /**
  * When this entity touches a valid enemy's hitbox, deal damage to them and apply a knockback.
  *

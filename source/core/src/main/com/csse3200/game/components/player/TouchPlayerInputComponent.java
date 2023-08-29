@@ -26,19 +26,19 @@ public class TouchPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyDown(int keycode) {
     switch (keycode) {
-      case Input.Keys.UP:
+      case Input.Keys.W:
         walkDirection.add(Vector2Utils.UP);
         triggerWalkEvent();
         return true;
-      case Input.Keys.LEFT:
+      case Input.Keys.A:
         walkDirection.add(Vector2Utils.LEFT);
         triggerWalkEvent();
         return true;
-      case Input.Keys.DOWN:
+      case Input.Keys.S:
         walkDirection.add(Vector2Utils.DOWN);
         triggerWalkEvent();
         return true;
-      case Input.Keys.RIGHT:
+      case Input.Keys.D:
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
         return true;
@@ -56,19 +56,19 @@ public class TouchPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyUp(int keycode) {
     switch (keycode) {
-      case Input.Keys.UP:
+      case Input.Keys.W:
         walkDirection.sub(Vector2Utils.UP);
         triggerWalkEvent();
         return true;
-      case Input.Keys.LEFT:
+      case Input.Keys.A:
         walkDirection.sub(Vector2Utils.LEFT);
         triggerWalkEvent();
         return true;
-      case Input.Keys.DOWN:
+      case Input.Keys.S:
         walkDirection.sub(Vector2Utils.DOWN);
         triggerWalkEvent();
         return true;
-      case Input.Keys.RIGHT:
+      case Input.Keys.D:
         walkDirection.sub(Vector2Utils.RIGHT);
         triggerWalkEvent();
         return true;

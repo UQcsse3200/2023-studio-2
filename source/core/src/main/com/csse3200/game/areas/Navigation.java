@@ -5,6 +5,7 @@ import com.csse3200.game.components.navigation.PlanetComponent;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.navigation.PlanetComponentt;
 import com.csse3200.game.components.navigation.level3;
+import com.csse3200.game.components.navigation.level4;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -43,7 +44,7 @@ public class Navigation extends GameArea {
         planet2.getEvents().addListener("Navigatee", () -> {
             ForestGameArea nextGameArea=new ForestGameArea(terrainFactory);
             this.dispose();
-            nextGameArea.create();// Similar navigation logic for planet2 if needed
+            nextGameArea.create();// Similar navigation logic for other planets if needed
         });
         spawnEntity(planet2);
 
@@ -51,9 +52,17 @@ public class Navigation extends GameArea {
         planet3.getEvents().addListener("Navigateee", () -> {
             ForestGameArea nextGameArea=new ForestGameArea(terrainFactory);
             this.dispose();
-            nextGameArea.create();// Similar navigation logic for planet2 if needed
+            nextGameArea.create();// Similar navigation logic for other planets if needed
         });
         spawnEntity(planet3);
+
+        Entity planet4 = new Entity().addComponent(new level4(image, 600, 580)); // You need to provide the appropriate image and coordinates
+        planet4.getEvents().addListener("Navigateeee", () -> {
+            ForestGameArea nextGameArea=new ForestGameArea(terrainFactory);
+            this.dispose();
+            nextGameArea.create();// Similar navigation logic for other planets if needed
+        });
+        spawnEntity(planet4);
     }
 
     private void displayUI() {

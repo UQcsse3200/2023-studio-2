@@ -31,7 +31,7 @@ public class PlanetComponent extends UIComponent {
         super.create();
         table=new Table();
         Image planetImage = new Image(ServiceLocator.getResourceService().getAsset(PlanetImage, Texture.class));
-        Label label=new Label("Navigate here",skin,"large");
+        Label label=new Label("Level 1 ",skin,"large");
         Button button=new Button(label,skin);
         button.addListener(
                 new ChangeListener() {

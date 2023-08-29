@@ -2,6 +2,7 @@ package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
@@ -17,14 +18,16 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.csse3200.game.ui.UIComponent.skin;
+
 /**
  * The game screen containing the main menu.
  */
 public class MainMenuScreen extends ScreenAdapter {
-  private static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
+  public static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  private static final String[] mainMenuTextures = {"images/box_boy_title.png"};
+  private static final String[] mainMenuTextures = {"images/escape-earth2.png"};
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -97,8 +100,8 @@ public class MainMenuScreen extends ScreenAdapter {
     Stage stage = ServiceLocator.getRenderService().getStage();
     Entity ui = new Entity();
     ui.addComponent(new MainMenuDisplay())
-        .addComponent(new InputDecorator(stage, 10))
-        .addComponent(new MainMenuActions(game));
+            .addComponent(new InputDecorator(stage, 10))
+            .addComponent(new MainMenuActions(game,stage,skin));
     ServiceLocator.getEntityService().register(ui);
   }
 }

@@ -1,0 +1,10 @@
+{
+  "open": {
+    "health": 0,
+    "texture": "images/gate_open.png"
+  },
+  "close": {
+    "health": 200,
+    "texture": "images/gate_close.png"
+  }
+}

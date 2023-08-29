@@ -1,0 +1,54 @@
+{
+  "meleeEnemyPTE": {
+    "health": 40,
+    "baseAttack": 10,
+    "speed": 5,
+    "behaviour": "PTE",
+    "atlas": ""
+  },
+
+  "meleeEnemyDTE": {
+    "health": 40,
+    "baseAttack": 10,
+    "speed": 5,
+    "behaviour": "DTE",
+    "atlas": "images/troll_enemy.atlas"
+  },
+
+  "rangeEnemyPTE": {
+    "health": 40,
+    "baseAttack": 10,
+    "speed": 5,
+    "atlas": "images/base_enemy.atlas"
+  },
+
+  "rangeEnemyDTE": {
+    "health": 40,
+    "baseAttack": 10,
+    "speed": 5,
+    "atlas": "images/rangeEnemy.atlas"
+  },
+
+  "meleeBossPTE": {
+    "health": 100,
+    "baseAttack": 25,
+    "speed": 8,
+    "specialAttack": 40,
+    "atlas": "images/ghostKing.atlas"
+  },
+
+  "rangeBossPTE": {
+    "health": 100,
+    "baseAttack": 25,
+    "speed": 8,
+    "specialAttack": 40,
+    "atlas": ""
+  },
+
+  "bullet": {
+    "health": 100,
+    "baseAttack": 10,
+    "speed" : 12,
+    "atlas": "images/bullet.atlas"
+  }
+}

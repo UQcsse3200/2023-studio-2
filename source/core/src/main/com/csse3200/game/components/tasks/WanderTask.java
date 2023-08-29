@@ -67,13 +67,26 @@ public class WanderTask extends DefaultTask implements PriorityTask {
 
   private void startWaiting() {
     logger.debug("Starting waiting");
+    this.owner.getEntity().getEvents().trigger("standing");
     swapTask(waitTask);
     this.owner.getEntity().getEvents().trigger("idle");
   }
 
   private void startMoving() {
     logger.debug("Starting moving");
-    movementTask.setTarget(getRandomPosInRange());
+    Vector2 newPosition = getRandomPosInRange();
+    char direction = getDirection(newPosition);
+
+    if(direction == '<'){
+      this.owner.getEntity().getEvents().trigger("wander_left");
+    }
+    if(direction == '>'||direction == '='){
+      this.owner.getEntity().getEvents().trigger("wanderStart");
+    }
+    if(direction == '='){
+      this.owner.getEntity().getEvents().trigger("standing");
+    }
+    movementTask.setTarget(newPosition);
     swapTask(movementTask);
     this.owner.getEntity().getEvents().trigger("wanderStart");
   }
@@ -91,5 +104,16 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     Vector2 min = startPos.cpy().sub(halfRange);
     Vector2 max = startPos.cpy().add(halfRange);
     return RandomUtils.random(min, max);
+  }
+
+}
+  public char getDirection(Vector2 destination) {
+    if (owner.getEntity().getPosition().x - destination.x < 0) {
+      return '>';
+    }
+    if (owner.getEntity().getPosition().x - destination.x > 0) {
+      return '<';
+    }
+    return '=';
   }
 }

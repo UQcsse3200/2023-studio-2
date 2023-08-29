@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
@@ -19,27 +20,36 @@ import static com.csse3200.game.screens.MainMenuScreen.logger;
 public class TitleBox extends Dialog {
     private TitleBox titleBox;
     private GdxGame game;
-    public TitleBox( GdxGame game, String title, Skin skin) {
+    public TitleBox(GdxGame game, String title, Skin skin) {
         super(title, skin);
         this.game = game;
         setMovable(false);
         setResizable(true);
 
         // Create a label with your story text
-        String storyText = "Earth has become a desolate wasteland ravaged by a deadly virus. \nCivilisation as we know  has crumbled, and humanity's last hope lies among the stars." +
-                " \nYou are one of the few survivors who have managed to secure a spot on a spaceship built with the hopes of finding a cure or a new home on distant planets. " +
-                "\nThe spaceship belongs to Dr Emily Carter, a brilliant scientist determined to find a cure for the virus and make the earth habitable again. " +
-                "\nBut the cosmos is a vast and dangerous place, filled with unknown challenges and mysteries, from alien encounters to unexpected phenomena. " +
-                "\nYour journey begins now as you board the spaceship \"Aurora\" and venture into the unknown.\n";
+        String storyText = "Earth has become a desolate wasteland ravaged by a deadly virus. Civilisation as we know  has crumbled, and humanity's last hope lies among the stars. You are one of the few survivors who have managed to secure a spot on a spaceship built with the hopes of finding a cure or a new home on distant planets. The spaceship belongs to Dr Emily Carter, a brilliant scientist determined to find a cure for the virus and make the earth habitable again. But the cosmos is a vast and dangerous place, filled with unknown challenges and mysteries, from alien encounters to unexpected phenomena. Your journey begins now as you board the spaceship \"Aurora\" and venture into the unknown.";
+
+        Label titleLabel = getTitleLabel();
+        titleLabel.setText(title);
+        titleLabel.setAlignment(Align.center);
+        titleLabel.setFontScale(1.8f); // Adjust font scale as needed
+        titleLabel.setColor(Color.WHITE); //TitleBox Title Colour can be changed here
 
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("large", Label.LabelStyle.class));
-        labelStyle.font.getData().setScale(1.5f); // Set the font scale to make it larger
-        Label textLabel = new Label(storyText, labelStyle);
+        labelStyle.font.getData().setScale(1.6f); // Set the font scale to make it larger
+
+
+        Label storyLabel = new Label(storyText, labelStyle);
+        storyLabel.setAlignment(Align.center);
+        storyLabel.setWrap(true); // Enable text wrapping
+        ScrollPane scrollPane = new ScrollPane(storyLabel, skin);
+        getContentTable().add(scrollPane).width(1300f).height(800f).pad(20f).center(); // Adjust width and height as needed
+
 
         // Lay out the dialog's components
         getContentTable().row();
-        getContentTable().add(textLabel).pad(20f).center();
+
         // Create a "Start" button to close the dialog
         TextButton startButton = new TextButton("OK", skin);
         button(startButton, true);

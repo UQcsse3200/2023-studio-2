@@ -260,6 +260,10 @@ public class Entity {
     return id;
   }
 
+  public Vector2 getPosition1() {
+    return position;
+  }
+
   /**
    * Get the event handler attached to this entity. Can be used to trigger events from an attached
    * component, or listen to events from a component.

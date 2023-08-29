@@ -57,7 +57,7 @@ public class TerrainFactory {
   public TerrainComponent createTerrain() {
     ResourceService resourceService = ServiceLocator.getResourceService();
     TmxMapLoader mapLoader = new TmxMapLoader();
-    TiledMap tiledMap = mapLoader.load(Gdx.files.internal("/Users/yashmittal/Desktop/Github/CSSE3200/2023-studio-2/source/core/assets/map/base.tmx").file().getAbsolutePath());
+    TiledMap tiledMap = mapLoader.load(Gdx.files.internal("source/core/assets/map/base.tmx").file().getAbsolutePath());
     TiledMapRenderer renderer = createRenderer(tiledMap, 0.5f / 16);
 
     return new TerrainComponent(camera, tiledMap, renderer, orientation, 0.5f);

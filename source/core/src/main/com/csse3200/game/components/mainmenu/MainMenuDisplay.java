@@ -17,98 +17,130 @@ import org.slf4j.LoggerFactory;
  * A ui component for displaying the Main menu.
  */
 public class MainMenuDisplay extends UIComponent {
-  private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
-  private static final float Z_INDEX = 2f;
-  private Table table;
+    private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
+    private static final float Z_INDEX = 2f;
+    private Table table;
 
-  @Override
-  public void create() {
-    super.create();
-    addActors();
-  }
+    @Override
+    public void create() {
+        super.create();
+        addActors();
+    }
 
-  private void addActors() {
-    table = new Table();
-    table.setFillParent(true);
-    Image title =
-        new Image(
-            ServiceLocator.getResourceService()
-                .getAsset("images/box_boy_title.png", Texture.class));
+    private void addActors() {
+        table = new Table();
+        table.setFillParent(true);
+        Image title =
+                new Image(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/escape-earth2.png", Texture.class));
 
       title.setWidth(Gdx.graphics.getWidth());
       title.setHeight(Gdx.graphics.getHeight());
       title.setPosition(0, 0);
 
-    TextButton startBtn = new TextButton("Start", skin);
-    TextButton loadBtn = new TextButton("Load", skin);
-    TextButton settingsBtn = new TextButton("Settings", skin);
-    TextButton exitBtn = new TextButton("Exit", skin);
 
-    // Triggers an event when the button is pressed
-    startBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Start button clicked");
-            entity.getEvents().trigger("start");
-          }
-        });
+        title.setWidth(Gdx.graphics.getWidth());
+        title.setHeight(Gdx.graphics.getHeight());
+        title.setPosition(0, 0);
 
-    loadBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Load button clicked");
-            entity.getEvents().trigger("load");
-          }
-        });
 
-    settingsBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Settings button clicked");
-            entity.getEvents().trigger("settings");
-          }
-        });
 
-    exitBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
+        TextButton startBtn = new TextButton("Start", skin);
+        TextButton loadBtn = new TextButton("Load", skin);
+        TextButton settingsBtn = new TextButton("Settings", skin);
+        TextButton exitBtn = new TextButton("Exit", skin);
+        TextButton miniBtn = new TextButton("space minigame", skin);
+        TextButton extractorBtn = new TextButton("extractor minigame", skin);
 
-            logger.debug("Exit button clicked");
-            entity.getEvents().trigger("exit");
-          }
-        });
+        // Triggers an event when the button is pressed
+        startBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Start button clicked");
+                        entity.getEvents().trigger("start");
+                    }
+                });
 
-    table.add(title);
-    table.row();
-    table.add(startBtn).padTop(30f);
-    table.row();
-    table.add(loadBtn).padTop(15f);
-    table.row();
-    table.add(settingsBtn).padTop(15f);
-    table.row();
-    table.add(exitBtn).padTop(15f);
+        loadBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Load button clicked");
+                        entity.getEvents().trigger("load");
+                    }
+                });
+
+        settingsBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Settings button clicked");
+                        entity.getEvents().trigger("settings");
+                    }
+                });
+        miniBtn.addListener(
+              new ChangeListener() {
+                  @Override
+                  public void changed(ChangeEvent changeEvent, Actor actor) {
+                      logger.debug("Settings button clicked");
+                      entity.getEvents().trigger("space minigame");
+                  }
+              });
+      extractorBtn.addListener(
+              new ChangeListener() {
+                  @Override
+                  public void changed(ChangeEvent changeEvent, Actor actor) {
+                      logger.debug("Settings button clicked");
+                      entity.getEvents().trigger("extractor minigame");
+                  }
+              });
+
+        exitBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
 
    // stage.addActor(title);
-    stage.addActor(table);
-  }
+        stage.addActor(table);
+                        logger.debug("Exit button clicked");
+                        entity.getEvents().trigger("exit");
+                    }
+                });
 
-  @Override
-  public void draw(SpriteBatch batch) {
-    // draw is handled by the stage
-  }
+        table.add(title);
+        table.row();
+        table.add(startBtn).padTop(30f).padLeft(1200f);
+        table.row();
+        table.add(loadBtn).padTop(15f).padLeft(1200f);
+        table.row();
+        table.add(settingsBtn).padTop(15f).padLeft(1200f);
+        table.row();
+         table.add(miniBtn).padTop(15f).padLeft(1200f);
+         table.row();
+        table.add(extractorBtn).padTop(15f).padLeft(1200f);
+       table.row();
+        table.add(exitBtn).padTop(15f).padLeft(1200f);
 
-  @Override
-  public float getZIndex() {
-    return Z_INDEX;
-  }
+        stage.addActor(title);
+        stage.addActor(table);
+    }
 
-  @Override
-  public void dispose() {
-    table.clear();
-    super.dispose();
-  }
+    @Override
+    public void draw(SpriteBatch batch) {
+        // draw is handled by the stage
+    }
+
+    @Override
+    public float getZIndex() {
+        return Z_INDEX;
+    }
+
+    @Override
+    public void dispose() {
+        table.clear();
+        super.dispose();
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
@@ -23,7 +24,11 @@ public class ServiceLocator {
   private static GameTime timeSource;
   private static InputService inputService;
   private static ResourceService resourceService;
+  private static GameStateObserver gameStateObserverService;
   private static GameState gameStateService;
+  private static TerrainService terrainService;
+
+  private static StructurePlacementService structurePlacementService;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -37,6 +42,7 @@ public class ServiceLocator {
     return physicsService;
   }
 
+
   public static GameTime getTimeSource() {
     return timeSource;
   }
@@ -48,8 +54,20 @@ public class ServiceLocator {
   public static ResourceService getResourceService() {
     return resourceService;
   }
+  public static GameState getGameStateService(){return gameStateService;}
 
-  public static GameState getGameStateService() { return gameStateService; }
+
+  public static GameStateObserver getGameStateObserverService() { return gameStateObserverService; }
+
+  public static StructurePlacementService getStructurePlacementService() { return structurePlacementService; }
+
+  public static TerrainService getTerrainService() { return terrainService; }
+
+  public static void registerStructurePlacementService(StructurePlacementService service) {
+    logger.debug("Registering stucture placement service {}", service);
+    structurePlacementService = service;
+  }
+
 
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);
@@ -81,9 +99,15 @@ public class ServiceLocator {
     resourceService = source;
   }
 
-  public static void registerGameStateService(GameState source) {
+  public static void registerTerrainService(TerrainService source) {
     logger.debug("Registering game state service {}", source);
-    gameStateService = source;
+    terrainService = source;
+  }
+
+
+  public static void registerGameStateObserverService(GameStateObserver source) {
+    logger.debug("Registering game state observer service {}", source);
+    gameStateObserverService = source;
   }
 
   public static void clear() {
@@ -93,7 +117,8 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
-    gameStateService = null;
+    gameStateObserverService = null;
+    terrainService = null;
   }
 
   private ServiceLocator() {

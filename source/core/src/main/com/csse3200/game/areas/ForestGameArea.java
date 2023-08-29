@@ -37,12 +37,12 @@ import java.util.List;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-  private static final int NUM_TREES = 7;
-  private static final int NUM_MELEE_ENEMIES_PTE = 1;
-  private static final int NUM_MELEE_ENEMIES_DTE = 1;
-  private static final int NUM_RANGE_ENEMIES_PTE = 1;
-  private static final int NUM_RANGE_ENEMIES_DTE = 1;
-  private static final int NUM_POWERUPS = 3;
+  private static final int NUM_TREES = 0;
+  private static final int NUM_MELEE_ENEMIES_PTE = 0;
+  private static final int NUM_MELEE_ENEMIES_DTE = 10;
+  private static final int NUM_RANGE_ENEMIES_PTE = 0;
+  private static final int NUM_RANGE_ENEMIES_DTE = 0;
+  private static final int NUM_POWERUPS = 0;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
@@ -125,7 +125,7 @@ public class ForestGameArea extends GameArea {
     spawnPlayer();
 
     spawnEnemies();
-    spawnBoss();
+    //spawnBoss();
     spawnAsteroids();
 
     playMusic();

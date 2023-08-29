@@ -10,6 +10,8 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
 import java.util.logging.Logger;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * When this entity touches a valid enemy's hitbox, deal damage to them and apply a knockback.
@@ -24,7 +26,8 @@ public class TouchAttackComponent extends Component {
   private float knockbackForce = 0f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
-
+  private boolean leftContact;
+  private Timer triggerTimer;
   /**
    * Create a component which attacks entities on collision, without knockback.
    * @param targetLayer The physics layer of the target's collider.
@@ -46,8 +49,10 @@ public class TouchAttackComponent extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("collisionStart", this::onCollisionStart);
+    entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
     combatStats = entity.getComponent(CombatStatsComponent.class);
     hitboxComponent = entity.getComponent(HitboxComponent.class);
+    leftContact = true;
   }
 
   private void onCollisionStart(Fixture me, Fixture other) {
@@ -60,15 +65,39 @@ public class TouchAttackComponent extends Component {
       // Doesn't match our target layer, ignore
       return;
     }
+    // Has come into contact
 
-    // Try to attack target.
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+    leftContact = false;
+
+    // Targeting STRUCTURE entity type
+    if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+      // Damage Structure while still in contact
+      triggerTimer = new Timer();
+      // Schedule the trigger every 2 seconds
+      triggerTimer.scheduleAtFixedRate(new TimerTask() {
+        @Override
+        public void run() {
+          if (!leftContact) {
+            System.out.println("Hits STRUCTURE"); // hitting twice for some reason
+            hitOnce(target, targetStats);
+          }
+        }
+      }, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
+    } else {
+      //hit once, push away
+      hitOnce(target, targetStats);
+    }
+  }
+
+  private void hitOnce(Entity target, CombatStatsComponent targetStats){
     if (targetStats != null) {
+      // Valid damage dealt
       targetStats.hit(combatStats);
     }
 
-    // Apply knockback
+    // Knockback
     PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
     if (physicsComponent != null && knockbackForce > 0f) {
       Body targetBody = physicsComponent.getBody();
@@ -76,5 +105,16 @@ public class TouchAttackComponent extends Component {
       Vector2 impulse = direction.setLength(knockbackForce);
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
+  }
+
+
+
+
+
+
+
+  private void onCollisionEnd(Fixture me, Fixture other) {
+    // Stop dealing tick damage
+    leftContact = true;
   }
 }

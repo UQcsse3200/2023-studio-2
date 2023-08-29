@@ -32,8 +32,7 @@ public class PlayerFactory {
       FileLoader.readClass(origiPlayerConfig.class, "configs/player.json");
 
   private static DialogueBox dialogueBox;
-  private static final PlayerConfig stats =
-      FileLoader.readClass(PlayerConfig.class, "configs/player.json");
+
 
 
   /**

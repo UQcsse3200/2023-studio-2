@@ -25,7 +25,18 @@ public class DialogueBox extends Dialog {
         this.dialogueBox = dialogueBox;
         this.dialogueLabel = new Label("", skin);
         this.getContentTable().add(dialogueLabel).align(Align.left);
-//
+        TextButton starttButton = new TextButton("OK", skin);
+        button(starttButton, true);
+        Entity entity = new Entity();
+        entity.getEvents().addListener("ok", this::onOK);
+        starttButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("OK button clicked");
+                        entity.getEvents().trigger("ok");
+                    }
+                });
     }
 
 
@@ -35,5 +46,9 @@ public class DialogueBox extends Dialog {
     public void showDialog(Stage stage) {
         stage.addActor(this);
     }
-//
+    private void onOK() {
+        logger.info("Start game");
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+
+    }
 }

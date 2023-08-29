@@ -78,9 +78,10 @@ public class TouchAttackComponent extends Component {
     DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
     if (targetStats != null) {
-      //
-
-      targetStats.hit(combatStats);
+//      if(dialogue != null) {
+//        dialogue.showdialogue("You hit a Ghost");
+//      }
+        targetStats.hit(combatStats);
     }
 
     // Apply knockback

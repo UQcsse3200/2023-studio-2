@@ -9,6 +9,8 @@ import com.csse3200.game.utils.math.Vector2Utils;
 
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.Timer;
+
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
@@ -300,6 +302,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * Immunity is applied for 200 milliseconds whilst player moves.
    */
   private void triggerDodgeEvent() {
+    final Timer timer = new Timer();
     entity.getEvents().trigger("walk", walkDirection);
     entity.getEvents().trigger("dodged");
     java.util.TimerTask stopDodge = new java.util.TimerTask() {
@@ -307,9 +310,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       public void run() {
         entity.getEvents().trigger("walkStop");
         entity.getEvents().trigger("dodged");
+        timer.cancel();
+        timer.purge();
       }
     };
-    new java.util.Timer().schedule(stopDodge, 150);
+    timer.schedule(stopDodge, 150);
   }
 
   /**
@@ -319,13 +324,16 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   private void dodge() {
     dodge_available = false;
+    final Timer timer = new Timer();
     java.util.TimerTask makeDodgeAvailable = new java.util.TimerTask() {
       @Override
       public void run() {
         dodge_available = true;
+        timer.cancel();
+        timer.purge();
       }
     };
-    new java.util.Timer().schedule(makeDodgeAvailable, 3000);
+    timer.schedule(makeDodgeAvailable, 3000);
   }
 
   

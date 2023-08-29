@@ -39,14 +39,19 @@ public class SpaceGameArea extends GameArea {
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
 
-
+    /**
+     * Constructor for initializing terrain area
+     * @param terrainFactory Terrain factory being used in the area
+     */
     public SpaceGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
         this.targetables = new ArrayList<>();
     }
 
-
+    /**
+     * Main method for calling all the methods in the obstacle minigame into the SpaceMapScreen class
+     */
     @Override
     public void create() {
         loadAssets();
@@ -81,6 +86,11 @@ public class SpaceGameArea extends GameArea {
 
     }
 
+    /**
+     * Recursively calls n number of asteroids starting from position to the right
+     * @param n Number of asteroids
+     * @param pos Starting position for asteroid spawning
+     */
     private void spawnStaticAsteroidsRight(int n, GridPoint2 pos){
         if (n <= 0) {
             return;
@@ -95,6 +105,9 @@ public class SpaceGameArea extends GameArea {
         spawnStaticAsteroidsRight(n - 1, pos); // Recursive call
     }
 
+    /**
+     * Method for creating maze layout of the obstacle minigame
+     */
     private void createMaze(){
         spawnStaticAsteroidsRight(7,new GridPoint2(5,15));
         spawnStaticAsteroidsRight(2,new GridPoint2(23,15));
@@ -146,12 +159,20 @@ public class SpaceGameArea extends GameArea {
 
     }
 
+    /**
+     * Method for spawning enemy on the minigame map
+     * @param x X-Coordinate of the enemy
+     * @param y Y-Coordinate of the enemy
+     */
     private void spawnEnemy(int x , int y){
         GridPoint2 position = new GridPoint2(x,y);
         spawnEntityAt(
                 ObstacleFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE), position,false,false);
     }
 
+    /**
+     * Method for placing the exit point from the obstacle minigame
+     */
     private void spawnGoal(){
         GridPoint2 position = new GridPoint2(24,10);
         spawnEntityAt(
@@ -165,6 +186,9 @@ public class SpaceGameArea extends GameArea {
         spawnEntity(ui);
     }
 
+    /**
+     * Method for spawning terrain for background of obstacle minigame
+     */
     private void spawnTerrain() {
         // Background terrain
         terrain = terrainFactory.createSpaceTerrain(TerrainType.SPACE_DEMO);
@@ -175,10 +199,11 @@ public class SpaceGameArea extends GameArea {
         GridPoint2 tileBounds = terrain.getMapBounds(0);
         Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
-
     }
 
-
+    /**
+     * Method for spawning ship on the obstacle minigame map
+     */
     private void spawnShip()
     {
         Entity newShip = ShipFactory.createShip();
@@ -186,19 +211,23 @@ public class SpaceGameArea extends GameArea {
         targetables.add(newShip);
     }
 
+    /**
+     * Method for loading the texture and the music of the map
+     */
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(spaceMiniGameTextures);
         resourceService.loadMusic(spaceMusic);
-
-
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
         }
     }
 
+    /**
+     * Method for unloading the texture and the music of the map
+     */
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();

@@ -41,6 +41,8 @@ public class MovementTask extends DefaultTask {
     logger.debug("Starting movement towards {}", target);
     lastTimeMoved = gameTime.getTime();
     lastPos = owner.getEntity().getPosition();
+
+    this.owner.getEntity().getEvents().trigger("changeDirection", getDirection());
   }
 
   @Override
@@ -83,5 +85,10 @@ public class MovementTask extends DefaultTask {
 
   private boolean didMove() {
     return owner.getEntity().getPosition().dst2(lastPos) > 0.001f;
+  }
+
+  private String getDirection() {
+    Vector2 currentPosition = owner.getEntity().getPosition();
+    return currentPosition.sub(target).x < 0 ? "right" : "left";
   }
 }

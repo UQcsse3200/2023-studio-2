@@ -1,8 +1,5 @@
 package com.csse3200.game.entities.factories;
 
-
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -12,12 +9,15 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.npc.BotanistAnimationController;
 import com.csse3200.game.components.npc.GhostAnimationController;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.BaseEntityConfig;
 import com.csse3200.game.entities.configs.BotanistConfig;
+import com.csse3200.game.entities.configs.GhostKingConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -33,8 +33,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.ui.TitleBox;
-
-
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
  *
@@ -47,9 +45,7 @@ import com.csse3200.game.ui.TitleBox;
  */
 public class NPCFactory {
   public static DialogueBox dialogueBox;
-  private static final NPCConfigs configs =
-
-          FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+  private static final NPCConfigs configs =  FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
   public AssetManager assetManager;
 
@@ -63,12 +59,52 @@ public class NPCFactory {
    * @param target entity to chase
    * @return entity
    */
+  public static Entity createGhost(Entity target) {
 
+    Entity ghost = createBaseNPC(target);
+    BaseEntityConfig config = configs.ghost;
+
+    AnimationRenderComponent animator =
+        new AnimationRenderComponent(
+            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
+    ghost
+        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+        .addComponent(animator)
+        .addComponent(new GhostAnimationController())
+        .addComponent(new DialogComponent(dialogueBox));
+    ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+    return ghost;
+  }
 
   /**
+   * Creates a ghost king entity.
+   *
+   * @param target entity to chase
    * @return entity
    */
+  public static Entity createGhostKing(Entity target) {
+    Entity ghostKing = createBaseNPC(target);
+    GhostKingConfig config = configs.ghostKing;
 
+    AnimationRenderComponent animator =
+        new AnimationRenderComponent(
+            ServiceLocator.getResourceService()
+                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+
+    ghostKing
+        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+        .addComponent(animator)
+        .addComponent(new GhostAnimationController())
+        .addComponent(new DialogComponent(dialogueBox));
+    ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
+    return ghostKing;
+  }
   //TODO
 //  public static Entity createBotanist() {
 //    AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -100,6 +136,7 @@ public class NPCFactory {
                     .addComponent(new TextureRenderComponent("images/oldman_down_1.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE));
+       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
     botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     botanist.getComponent(TextureRenderComponent.class).scaleEntity();
@@ -134,5 +171,5 @@ public class NPCFactory {
     throw new IllegalStateException("Instantiating static util class");
   }
 
-}
 
+}

@@ -4,6 +4,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.navigation.PlanetComponent;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.navigation.PlanetComponentt;
+import com.csse3200.game.components.navigation.level3;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -45,6 +46,14 @@ public class Navigation extends GameArea {
             nextGameArea.create();// Similar navigation logic for planet2 if needed
         });
         spawnEntity(planet2);
+
+        Entity planet3 = new Entity().addComponent(new level3(image, 500, 500)); // You need to provide the appropriate image and coordinates
+        planet3.getEvents().addListener("Navigateee", () -> {
+            ForestGameArea nextGameArea=new ForestGameArea(terrainFactory);
+            this.dispose();
+            nextGameArea.create();// Similar navigation logic for planet2 if needed
+        });
+        spawnEntity(planet3);
     }
 
     private void displayUI() {

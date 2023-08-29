@@ -9,6 +9,7 @@ import com.csse3200.game.components.ProjectileAttackComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.tasks.ChaseTask;
+import com.csse3200.game.components.tasks.ProjectileMovementTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.BulletConfig;
@@ -35,8 +36,7 @@ public class BulletFactory {
 
         AITaskComponent aiComponent = new AITaskComponent();
 
-
-        aiComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
+        aiComponent.addTask(new ProjectileMovementTask(target, 10, 100f, 100f));
 
         BulletConfig config = configs.GetBulletConfig();
 

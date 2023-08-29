@@ -35,7 +35,7 @@ public class Gate extends Entity {
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
         addComponent(new CombatStatsComponent(config.health, 0,0,false));
-        addComponent(new HealthBarComponent(true, getCenterPosition()));
+        addComponent(new HealthBarComponent(true));
 
         String region = isLeftRight ? "closed-left-right" : "closed-up-down";
 

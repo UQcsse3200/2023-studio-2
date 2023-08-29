@@ -44,7 +44,7 @@ jobs:
           GRADLE_DIR: 'source' # Modify this to wherever './gradlew' is
 
       - name: Automatic Release # note the path for the files on this one
-        uses: marvinpinto/action-automatic-releases@v1.1.1
+        uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"

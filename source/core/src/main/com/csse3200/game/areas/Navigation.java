@@ -7,9 +7,13 @@ import com.csse3200.game.components.navigation.PlanetComponentt;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Navigation extends GameArea {
     private final TerrainFactory terrainFactory;
+    private static final Logger logger = LoggerFactory.getLogger(Navigation.class);
+    private static final String[] NavigationTextures = {"images/box_boy_title.png"};
     private final String image;
     public Navigation(TerrainFactory terrainFactory,String image ){
         this.terrainFactory=terrainFactory;
@@ -48,6 +52,21 @@ public class Navigation extends GameArea {
         ui.addComponent(new GameAreaDisplay("Box Forest"));
         spawnEntity(ui);
 
+    }
+    private void loadAssists() {
+        logger.debug("Loading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(NavigationTextures);
+        ServiceLocator.getResourceService().loadAll();
+    }
+
+    /**
+     *
+     */
+    private void unloadAssets() {
+        logger.debug("Unloading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.unloadAssets(NavigationTextures);
     }
 
     @Override

@@ -38,10 +38,7 @@ import java.util.List;
 public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
-  private static final int NUM_MELEE_ENEMIES_PTE = 1;
-  private static final int NUM_MELEE_ENEMIES_DTE = 5;
-  private static final int NUM_RANGE_ENEMIES_PTE = 1;
-  private static final int NUM_RANGE_ENEMIES_DTE = 1;
+  private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(5, 5);
   private static final int NUM_POWERUPS = 3;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
@@ -78,7 +75,8 @@ public class ForestGameArea extends GameArea {
     "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/Ship.png",
-    "images/stone_wall.png"
+    "images/stone_wall.png",
+    "images/Spawner.png"
   };
   private static final String[] forestTextureAtlases = {
           "images/terrain_iso_grass.atlas",
@@ -228,21 +226,26 @@ public class ForestGameArea extends GameArea {
     }
   }
 
+//  private void spawnEnemies() {
+//    GridPoint2 minPos = new GridPoint2(0, 0);
+//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+//
+//    for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
+//      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+//      spawnEntityAt(melee, randomPos, true, true);
+//    }
+//
+//    for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
+//      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+//      spawnEntityAt(melee, randomPos, true, true);
+//    }
+//  }
+
   private void spawnEnemies() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
-      spawnEntityAt(melee, randomPos, true, true);
-    }
-
-    for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
-      spawnEntityAt(melee, randomPos, true, true);
-    }
+    Entity spawner = StructureFactory.createSpawner(targetables, 5000, EnemyType.Melee, EnemyBehaviour.DTE);
+    spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
   }
 
   private void playMusic() {

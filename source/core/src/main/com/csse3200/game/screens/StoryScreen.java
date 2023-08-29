@@ -28,11 +28,12 @@ public class StoryScreen extends ScreenAdapter {
     private final GdxGame game;
     private final Renderer renderer;
     private static final String[] storyTextures = {
-            "images/EARTH_1.png",
-            "images/EARTH_2.png",
-            "images/EARTH_3.png",
-            "images/EARTH_4.png",
-            "images/EARTH_5.png",
+            "images/1.png",
+            "images/2.png",
+            "images/3.png",
+            "images/4.png",
+            "images/5.png",
+            "images/6.png"
     };
 
 

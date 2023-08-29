@@ -22,7 +22,7 @@ import com.csse3200.game.services.ServiceLocator;
  *
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
-public class StructureFactory {
+//public class StructureFactory { This here, why is this line here.... someone should check and decide its fate!
     /**
      * Creates a new extractor.
      *
@@ -48,7 +48,7 @@ public class StructureFactory {
      * @return
      */
 
-     */
+
 
 
     public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
@@ -94,3 +94,4 @@ public class StructureFactory {
 
 
 }
+

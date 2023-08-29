@@ -35,8 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SpaceMapScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SpaceMapScreen.class);
-    private static final String[] mainGameTextures = {"images/heart.png"};
-    private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
+    private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
 
     private final GdxGame game;
     private final Renderer renderer;
@@ -45,7 +44,7 @@ public class SpaceMapScreen extends ScreenAdapter {
     public SpaceMapScreen(GdxGame game) {
         this.game = game;
 
-        logger.debug("Initialising main game screen services");
+        logger.debug("Initialising space mini game screen services");
         ServiceLocator.registerTimeSource(new GameTime());
 
         PhysicsService physicsService = new PhysicsService();
@@ -65,7 +64,7 @@ public class SpaceMapScreen extends ScreenAdapter {
         loadAssets();
         createUI();
 
-        logger.debug("Initialising main game screen entities");
+        logger.debug("Initialising space minigame screen entities");
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         SpaceGameArea spaceGameArea= new SpaceGameArea(terrainFactory);
         spaceGameArea.create();
@@ -84,15 +83,6 @@ public class SpaceMapScreen extends ScreenAdapter {
         logger.trace("Resized renderer: ({} x {})", width, height);
     }
 
-    @Override
-    public void pause() {
-        logger.info("Game paused");
-    }
-
-    @Override
-    public void resume() {
-        logger.info("Game resumed");
-    }
 
     @Override
     public void dispose() {
@@ -111,14 +101,12 @@ public class SpaceMapScreen extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(mainGameTextures);
         ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(mainGameTextures);
     }
 
     /**

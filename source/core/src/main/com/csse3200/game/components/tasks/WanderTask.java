@@ -69,6 +69,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     logger.debug("Starting waiting");
     this.owner.getEntity().getEvents().trigger("standing");
     swapTask(waitTask);
+    this.owner.getEntity().getEvents().trigger("idle");
   }
 
   private void startMoving() {
@@ -87,6 +88,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     }
     movementTask.setTarget(newPosition);
     swapTask(movementTask);
+    this.owner.getEntity().getEvents().trigger("wanderStart");
   }
 
   private void swapTask(Task newTask) {
@@ -103,6 +105,8 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     Vector2 max = startPos.cpy().add(halfRange);
     return RandomUtils.random(min, max);
   }
+
+
   public char getDirection(Vector2 destination) {
     if (owner.getEntity().getPosition().x - destination.x < 0) {
       return '>';

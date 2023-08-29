@@ -45,12 +45,34 @@ public class ObstacleFactory {
     return tree;
   }
 
+  /**
+   * Creates a visible obstacle
+   * @return Environment entity
+   */
   public static Entity createEnvironment() {
     Entity environment =
             new Entity().addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
     environment.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    return environment;
+  }
+
+  /**
+   * Creates an obstacle with a custom sized collision box
+   * @param sizeX the length of the new collision box
+   * @param sizeY the height of the new collision box
+   * @param posX the relative x coordinate of the top left corner of the collision box
+   * @param posY the relative y coordinate of the top left corner of the collision box
+   * @return Environment entity with the set collision box
+   */
+  public static Entity createEnvironment(float sizeX, float sizeY, float posX, float posY) {
+    Entity environment =
+            new Entity().addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    environment.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    PhysicsUtils.setCustomCollider(environment, sizeX, sizeY, posX, posY);
     return environment;
   }
 

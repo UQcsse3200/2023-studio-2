@@ -39,7 +39,8 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("walk", this::walk);
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
-    entity.getEvents().addListener("place", this::placeWallOrGate);
+    entity.getEvents().addListener("place", this::placeWallOrUpgradeWall);
+    entity.getEvents().addListener("ctrl_place", this::placeGate);
     entity.getEvents().addListener("remove", this::removeWall);
     entity.getEvents().addListener("dodged", this::dodged);
     gameStateInteraction = new GameStateInteraction();
@@ -115,23 +116,48 @@ public class PlayerActions extends Component {
     return MAX_SPEED;
   }
 
-  void placeWallOrGate(int screenX, int screenY) {
+
+  void placeWallOrUpgradeWall(int screenX, int screenY) {
+    // gets the gridPosition of the wall from the screen click
     var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
     GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
-    Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
-    if (existingWall != null) {
-      if (existingWall.getWallType() != WallType.intermediate) {
-        updateResources(-2);
-        existingWall.dispose();
-        this.entityService.unregister(existingWall);
-        Entity gate = BuildablesFactory.createGate(WallType.gate,entity);
-        ServiceLocator.getStructurePlacementService().PlaceStructureAt(gate, new GridPoint2(((int) ((location.x) / 2) * 2), ((int) ((location.y) / 2)) * 2), false, false);
-      }
-    } else {
+
+    // gets the structure at that position if it exists.
+    Entity structure = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
+
+    // if structure doesn't exist at position, adds wall.
+    if (structure == null) {
       Entity wall = BuildablesFactory.createCustomWall(WallType.basic);
       updateResources(-2);
-      ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, new GridPoint2(((int) ((location.x) / 2) * 2), ((int) ((location.y) / 2)) * 2), false, false);
+      ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, gridPosition, false, false);
       wall.getComponent(JoinableComponent.class).notifyNeighbours(true);
+    // if the existing structure is a wall, attempt upgrade.
+    } else if (structure instanceof Wall existingWall) {
+      if (existingWall.getWallType() == WallType.basic) {
+        updateResources(-2);
+        structure.dispose();
+        this.entityService.unregister(structure);
+        Entity wall = BuildablesFactory.createCustomWall(WallType.intermediate);
+        ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, gridPosition, false, false);
+      }
+    }
+
+    // does nothing if the existing structure is not a wall.
+  }
+
+  private void placeGate(int screenX, int screenY) {
+    // gets the gridPosition of the wall from the screen click
+    var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
+    GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
+
+    // gets the structure at that position if it exists.
+    Entity structure = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
+
+    // if structure doesn't exist at position, adds wall.
+    if (structure == null) {
+      updateResources(-2);
+      Entity gate = BuildablesFactory.createGate(WallType.gate, true, entity);
+      ServiceLocator.getStructurePlacementService().PlaceStructureAt(gate, gridPosition, false, false);
     }
   }
 
@@ -141,7 +167,12 @@ public class PlayerActions extends Component {
     Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
 
     if (existingWall != null) {
-        existingWall.getComponent(JoinableComponent.class).notifyNeighbours(false);
+        var joinableComponent = existingWall.getComponent(JoinableComponent.class);
+
+        if (joinableComponent != null) {
+          joinableComponent.notifyNeighbours(false);
+        }
+
         existingWall.dispose();
         updateResources(1);
         ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);

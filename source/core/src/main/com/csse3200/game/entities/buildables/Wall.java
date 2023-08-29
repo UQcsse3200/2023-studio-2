@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WallConfig;
+import com.csse3200.game.entities.configs.WallConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -31,23 +32,34 @@ public class Wall extends Entity {
     private static final JoinableComponentShapes shapes =
             FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
 
+    private static final WallConfigs configs =
+            FileLoader.readClass(WallConfigs.class, "configs/walls.json");
+
+    WallType type;
+
     /**
      * Constructor to create a Wall entity based on the given config.
      *
      * <p>Predefined wall properties are loaded from a config stored as a json file and should have
      * the properties stored in 'WallConfig'.
      */
-    public Wall(WallConfig config) {
+    public Wall(WallType type) {
         super();
+        this.type = type;
 
+        WallConfig config = configs.GetWallConfig(type);
         var textures = ServiceLocator.getResourceService().getAsset(config.textureAtlas, TextureAtlas.class);
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
-        addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
         addComponent(new CombatStatsComponent(config.health, 0,0,false));
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));
 
         getComponent(JoinableComponent.class).scaleEntity();
+    }
+
+    public WallType getWallType() {
+        return type;
     }
 }

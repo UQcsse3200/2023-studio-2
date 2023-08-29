@@ -67,7 +67,8 @@ public class EarthGameArea extends GameArea {
             "images/troll_enemy.atlas",
             "images/rangeEnemy.atlas",
             "images/stone_wall.atlas",
-            "images/dirt_wall.atlas"
+            "images/dirt_wall.atlas",
+            "images/gate.atlas"
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/theEND.mp3";

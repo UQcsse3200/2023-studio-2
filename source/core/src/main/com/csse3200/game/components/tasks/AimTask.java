@@ -38,7 +38,7 @@ public class AimTask extends DefaultTask {
         this.spawn = owner.getEntity().getPosition();
         hasShot = false;
         Entity bullet = BulletFactory.createBullet(target);
-        ServiceLocator.getStructurePlacementService().PlaceStructureAt(bullet,new GridPoint2(Math.round(spawn.x), Math.round(spawn.y)),true, true);
+        ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawn);
         hasShot = true;
     }
 

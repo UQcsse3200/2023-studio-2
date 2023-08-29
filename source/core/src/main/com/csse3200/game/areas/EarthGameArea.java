@@ -1,28 +1,18 @@
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.components.PowerupComponent;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.PowerupFactory;
-import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
@@ -33,11 +23,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
-/** Forest area for the demo game with trees, a player, and some enemies. */
+/** Planet Earth area for the demo game with trees, a player, and some enemies. */
 public class EarthGameArea extends GameArea {
-    private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+    private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     private static final int NUM_TREES = 7;
     private static final int NUM_MELEE_ENEMIES_PTE = 1;
     private static final int NUM_MELEE_ENEMIES_DTE = 1;
@@ -48,29 +37,19 @@ public class EarthGameArea extends GameArea {
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
-    private static final String[] forestTextures = {
+    private static final String[] earthTextures = {
 
             "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
             "images/broken_elixir_collector.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
             "images/RightShip.png",
-            "images/tree.png",
             "images/wall.png",
             "images/wall2.png",
             "images/gate_close.png",
             "images/gate_open.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
-            "images/grass_1.png",
-            "images/grass_2.png",
-            "images/grass_3.png",
-            "images/hex_grass_1.png",
-            "images/hex_grass_2.png",
-            "images/hex_grass_3.png",
-            "images/iso_grass_1.png",
-            "images/iso_grass_2.png",
-            "images/iso_grass_3.png",
             "images/base_enemy.png",
             "images/Troll.png",
             "images/rangeEnemy.png",
@@ -80,7 +59,7 @@ public class EarthGameArea extends GameArea {
             "images/Ship.png",
             "images/stone_wall.png"
     };
-    private static final String[] forestTextureAtlases = {
+    private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
             "images/ghost.atlas",
             "images/ghostKing.atlas",
@@ -90,16 +69,16 @@ public class EarthGameArea extends GameArea {
             "images/stone_wall.atlas",
             "images/dirt_wall.atlas"
     };
-    private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-    private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-    private static final String[] forestMusic = {backgroundMusic};
+    private static final String[] earthSounds = {"sounds/Impact4.ogg"};
+    private static final String backgroundMusic = "sounds/theEND.mp3";
+    private static final String[] earthMusic = {backgroundMusic};
 
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
     private Entity player;
 
     /**
-     * Initialise this ForestGameArea to use the provided TerrainFactory.
+     * Initialise this EarthGameArea to use the provided TerrainFactory.
      * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
      * @requires terrainFactory != null
      */
@@ -170,7 +149,7 @@ public class EarthGameArea extends GameArea {
 
     private void displayUI() {
         Entity ui = new Entity();
-        ui.addComponent(new GameAreaDisplay("Box Forest"));
+        ui.addComponent(new GameAreaDisplay("Planet Earth"));
         spawnEntity(ui);
     }
 
@@ -292,10 +271,10 @@ public class EarthGameArea extends GameArea {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(forestTextures);
-        resourceService.loadTextureAtlases(forestTextureAtlases);
-        resourceService.loadSounds(forestSounds);
-        resourceService.loadMusic(forestMusic);
+        resourceService.loadTextures(earthTextures);
+        resourceService.loadTextureAtlases(earthTextureAtlases);
+        resourceService.loadSounds(earthSounds);
+        resourceService.loadMusic(earthMusic);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -306,10 +285,10 @@ public class EarthGameArea extends GameArea {
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(forestTextures);
-        resourceService.unloadAssets(forestTextureAtlases);
-        resourceService.unloadAssets(forestSounds);
-        resourceService.unloadAssets(forestMusic);
+        resourceService.unloadAssets(earthTextures);
+        resourceService.unloadAssets(earthTextureAtlases);
+        resourceService.unloadAssets(earthSounds);
+        resourceService.unloadAssets(earthMusic);
     }
 
     @Override

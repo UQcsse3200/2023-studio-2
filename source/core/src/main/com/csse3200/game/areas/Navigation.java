@@ -3,6 +3,7 @@ package com.csse3200.game.areas;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.navigation.PlanetComponent;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.navigation.PlanetComponentt;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -33,6 +34,13 @@ public class Navigation extends GameArea {
 
         });
         spawnEntity(planet1);
+        Entity planet2 = new Entity().addComponent(new PlanetComponentt(image, 900, 600)); // You need to provide the appropriate image and coordinates
+        planet2.getEvents().addListener("Navigatee", () -> {
+            ForestGameArea nextGameArea=new ForestGameArea(terrainFactory);
+            this.dispose();
+            nextGameArea.create();// Similar navigation logic for planet2 if needed
+        });
+        spawnEntity(planet2);
     }
 
     private void displayUI() {

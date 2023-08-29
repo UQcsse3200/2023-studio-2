@@ -11,12 +11,12 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
-public class PlanetComponent extends UIComponent {
+public class PlanetComponentt extends UIComponent {
     private final String PlanetImage;
     private final float x;
     private final float y;
     private Table table;
-    public PlanetComponent(String PlanetImage,float x,float y)
+    public PlanetComponentt(String PlanetImage,float x,float y)
     {
 
         this.PlanetImage=PlanetImage;
@@ -31,14 +31,14 @@ public class PlanetComponent extends UIComponent {
         super.create();
         table=new Table();
         Image planetImage = new Image(ServiceLocator.getResourceService().getAsset(PlanetImage, Texture.class));
-        Label label=new Label("Level 1 ",skin,"large");
+        Label label=new Label("Level 2 ",skin,"large");
         Button button=new Button(label,skin);
         button.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
 
-                        entity.getEvents().trigger("Navigate");
+                        entity.getEvents().trigger("Navigatee");
                     }
                 });
 
@@ -66,5 +66,4 @@ public class PlanetComponent extends UIComponent {
         table.remove();
     }
 }
-
 

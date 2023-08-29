@@ -89,10 +89,10 @@ public class EnemyFactory {
             aiComponent.addTask(new ChaseTask(i, 5, 3f, 4f));
           }
         } else {
-          if ( i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-            aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+          if (i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+            aiComponent.addTask(new ChaseTask(i, 10, 10000f, 100000f));
           } else {
-            aiComponent.addTask(new ChaseTask(i, 5, 3f, 4f));
+            aiComponent.addTask(new ChaseTask(i, 0, 3f, 4f));
           }
         }
       }
@@ -120,7 +120,7 @@ public class EnemyFactory {
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
     animator.addAnimation("stand",0.3f,Animation.PlayMode.LOOP);
-    animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
+    //animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
 
 
     enemy

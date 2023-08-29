@@ -36,6 +36,7 @@ public class StructureFactory {
                 .addComponent(new DamageTextureComponent("images/elixir_collector.png")
                         .addTexture(20, "images/broken_elixir_collector.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new CombatStatsComponent(health, 0, 0, false))
                 .addComponent(new ProductionComponent(producedResource, tickRate, tickSize));

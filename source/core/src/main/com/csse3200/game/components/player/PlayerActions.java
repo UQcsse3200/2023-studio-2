@@ -39,7 +39,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("walk", this::walk);
     entity.getEvents().addListener("walkStop", this::stopWalking);
     entity.getEvents().addListener("attack", this::attack);
-    entity.getEvents().addListener("place", this::placeOrUpgradeWall);
+    entity.getEvents().addListener("place", this::placeWallOrGate);
     entity.getEvents().addListener("remove", this::removeWall);
     entity.getEvents().addListener("dodged", this::dodged);
     gameStateInteraction = new GameStateInteraction();
@@ -115,7 +115,7 @@ public class PlayerActions extends Component {
     return MAX_SPEED;
   }
 
-  void placeOrUpgradeWall(int screenX, int screenY) {
+  void placeWallOrGate(int screenX, int screenY) {
     var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
     GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
     Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
@@ -124,8 +124,8 @@ public class PlayerActions extends Component {
         updateResources(-2);
         existingWall.dispose();
         this.entityService.unregister(existingWall);
-        Entity wall = BuildablesFactory.createCustomWall(WallType.intermediate);
-        ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, new GridPoint2(((int) ((location.x) / 2) * 2), ((int) ((location.y) / 2)) * 2), false, false);
+        Entity gate = BuildablesFactory.createGate(WallType.gate,entity);
+        ServiceLocator.getStructurePlacementService().PlaceStructureAt(gate, new GridPoint2(((int) ((location.x) / 2) * 2), ((int) ((location.y) / 2)) * 2), false, false);
       }
     } else {
       Entity wall = BuildablesFactory.createCustomWall(WallType.basic);

@@ -1,8 +1,12 @@
 package com.csse3200.game.entities;
 
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
@@ -16,6 +20,31 @@ public class EntityService {
   private static final int INITIAL_CAPACITY = 16;
 
   private final Array<Entity> entities = new Array<>(false, INITIAL_CAPACITY);
+
+  private Array<Entity> getEntities() {
+    return entities;
+  }
+
+  /**
+   * Gets all entities belonging to a specified component class.
+   *
+   * Example:
+   *    getEntitiesByComponent(PowerupComponent.class) will return a list
+   *    of all registered powerup entities.
+   *
+   * @param componentClass The component class to search for
+   * @return An array of entities who have the specified component
+   */
+  public Array<Entity> getEntitiesByComponent(Class<? extends Component> componentClass) {
+    Array<Entity> filteredEntities = new Array<>();
+
+    for (Entity entity : entities) {
+      if (entity.getComponent(componentClass) != null) {
+        filteredEntities.add(entity);
+      }
+    }
+    return filteredEntities;
+  }
 
   /**
    * Register a new entity with the entity service. The entity will be created and start updating.

@@ -8,8 +8,6 @@ import com.csse3200.game.entities.configs.WallConfigs;
 import com.csse3200.game.files.FileLoader;
 
 public class BuildablesFactory {
-    private static final WallConfigs configs =
-            FileLoader.readClass(WallConfigs.class, "configs/walls.json");
 
     /**
      * Creates a wall which can be placed on the map.
@@ -17,7 +15,7 @@ public class BuildablesFactory {
      * @return The created Wall entity.
      */
     public static Entity createCustomWall(WallType type) {
-      return new Wall(configs.GetWallConfig(type));
+      return new Wall(type);
     }
 
     /**
@@ -26,7 +24,7 @@ public class BuildablesFactory {
      * @param player the player which can pass through the gate.
      * @return The created Wall entity.
      */
-    public static Entity createGate(WallType type, Entity player) {
-        return new Gate(configs.GetWallConfig(type), player);
+    public static Entity createGate(WallType type, boolean isLeftRight,  Entity player) {
+        return new Gate(type, isLeftRight, player);
     }
 }

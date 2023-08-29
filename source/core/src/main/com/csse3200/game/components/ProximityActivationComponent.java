@@ -44,14 +44,12 @@ public class ProximityActivationComponent extends Component {
             boolean isInProximity = entityWithinRadiusMap.get(entity);
 
             // checks if the entity has entered the radius
-            if (!isInProximity && entered != null
-                    && entity.getCenterPosition().dst(entity.getCenterPosition()) <= radius) {
-                isInProximity = true;
+            if (!isInProximity && this.entity.getCenterPosition().dst(entity.getCenterPosition()) <= radius) {
+                entityWithinRadiusMap.put(entity, true);
                 entered.call(entity);
                 // checks if the entity has exited the radius
-            } else if (isInProximity && exited != null
-                    && entity.getCenterPosition().dst(entity.getCenterPosition()) > radius) {
-                isInProximity = false;
+            } else if (isInProximity && this.entity.getCenterPosition().dst(entity.getCenterPosition()) > radius) {
+                entityWithinRadiusMap.put(entity, false);
                 exited.call(entity);
             }
         }

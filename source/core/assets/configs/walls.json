@@ -1,14 +1,14 @@
 {
   "basic": {
     "health": 200,
-    "textureAtlas": "images/stone_wall.atlas"
+    "textureAtlas": "images/dirt_wall.atlas"
   },
   "intermediate": {
     "health": 400,
-    "textureAtlas": "images/dirt_wall.atlas"
+    "textureAtlas": "images/stone_wall.atlas"
   },
     "gate": {
         "health": 200,
-        "textureAtlas": "images/dirt_wall.atlas"
+        "textureAtlas": "images/gate.atlas"
     }
 }

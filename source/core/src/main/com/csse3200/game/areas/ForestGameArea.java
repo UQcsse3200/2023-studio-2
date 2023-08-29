@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.PowerupComponent;
@@ -95,14 +96,16 @@ public class ForestGameArea extends GameArea {
 
   private final TerrainFactory terrainFactory;
   private final ArrayList<Entity> targetables;
+  private GdxGame game;
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
    * @requires terrainFactory != null
    */
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  public ForestGameArea(TerrainFactory terrainFactory, GdxGame game) {
     super();
+    this.game = game;
     this.terrainFactory = terrainFactory;
     this.targetables = new ArrayList<>();
   }
@@ -148,7 +151,7 @@ public class ForestGameArea extends GameArea {
   private void spawnShip() {
     GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
             terrain.getMapBounds(0).sub(1, 1).y/3);
-    Entity ship = StructureFactory.createShip();
+    Entity ship = StructureFactory.createShip(game);
     spawnEntityAt(ship, spawnPosition, false, false);
   }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
@@ -76,14 +77,16 @@ public class EarthGameArea extends GameArea {
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
     private Entity player;
+    private GdxGame game;
 
     /**
      * Initialise this EarthGameArea to use the provided TerrainFactory.
      * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
      * @requires terrainFactory != null
      */
-    public EarthGameArea(TerrainFactory terrainFactory) {
+    public EarthGameArea(TerrainFactory terrainFactory, GdxGame game) {
         super();
+        this.game = game;
         this.terrainFactory = terrainFactory;
         this.targetables = new ArrayList<>();
     }
@@ -142,9 +145,9 @@ public class EarthGameArea extends GameArea {
     }
 
     private void spawnShip() {
-        GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
-                terrain.getMapBounds(0).sub(1, 1).y/3);
-        Entity ship = StructureFactory.createShip();
+        GridPoint2 spawnPosition = new GridPoint2(7*terrain.getMapBounds(0).sub(1, 1).x/12,
+                2*terrain.getMapBounds(0).sub(1, 1).y/3);
+        Entity ship = StructureFactory.createShip(game);
         spawnEntityAt(ship, spawnPosition, false, false);
     }
 

@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.terrain;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.HexagonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -50,40 +52,24 @@ public class TerrainFactory {
    * Create a terrain of the given type, using the orientation of the factory. This can be extended
    * to add additional game terrains.
    *
-   * @param terrainType Terrain to create
    * @return Terrain component which renders the terrain
    */
-  public TerrainComponent createTerrain(TerrainType terrainType) {
+  public TerrainComponent createTerrain() {
+    ResourceService resourceService = ServiceLocator.getResourceService();
+    TmxMapLoader mapLoader = new TmxMapLoader();
+    TiledMap tiledMap = mapLoader.load(Gdx.files.internal("map/base.tmx").file().getAbsolutePath());
+    TiledMapRenderer renderer = createRenderer(tiledMap, 0.5f / 16);
+
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, 0.5f);
+  }
+
+  public TerrainComponent createSpaceTerrain(TerrainType terrainType) {
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {
-      case FOREST_DEMO:
-        TextureRegion orthoGrass =
-            new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
-        TextureRegion orthoTuft =
-            new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));
-        TextureRegion orthoRocks =
-            new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
-        return createForestDemoTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
-      case FOREST_DEMO_ISO:
-        TextureRegion isoGrass =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
-        TextureRegion isoTuft =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
-        TextureRegion isoRocks =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_3.png", Texture.class));
-        return createForestDemoTerrain(1f, isoGrass, isoTuft, isoRocks);
-      case FOREST_DEMO_HEX:
-        TextureRegion hexGrass =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_1.png", Texture.class));
-        TextureRegion hexTuft =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_2.png", Texture.class));
-        TextureRegion hexRocks =
-            new TextureRegion(resourceService.getAsset("images/hex_grass_3.png", Texture.class));
-        return createForestDemoTerrain(1f, hexGrass, hexTuft, hexRocks);
       case SPACE_DEMO:
         TextureRegion spaceVoid =
                 new TextureRegion(resourceService.getAsset("images/SpaceMiniGameBackground.png", Texture.class));
-        return createSpaceDemoTerrain(1f,spaceVoid);
+        return createSpaceDemoTerrain(1f, spaceVoid);
       default:
         return null;
     }
@@ -104,7 +90,6 @@ public class TerrainFactory {
     TiledMapRenderer renderer= createRenderer(tiledMap,tileWorldSize/tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
-
 
   private TiledMapRenderer createRenderer(TiledMap tiledMap, float tileScale) {
     switch (orientation) {
@@ -149,7 +134,6 @@ public class TerrainFactory {
     return tiledMap;
 
   }
-
 
   private static void fillTilesAtRandom(
       TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {

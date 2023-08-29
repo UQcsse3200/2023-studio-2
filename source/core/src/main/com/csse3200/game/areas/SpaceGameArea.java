@@ -1,9 +1,13 @@
 package com.csse3200.game.areas;
+import com.badlogic.gdx.audio.Music;
+import com.csse3200.game.files.UserSettings;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.ShipFactory;
+import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
@@ -15,10 +19,15 @@ import java.util.ArrayList;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class SpaceGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-
+    private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
+    private static final float ASTEROID_SIZE = 0.9f;
     private static final String[] spaceMiniGameTextures = {
-            "images/SpaceMiniGameBackground.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+            "images/SpaceMiniGameBackground.png",
+            "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
+            "images/RightShip.png"//TODO: Replace these images with copyright free images - these are just for testing purposes!!
     };
+    private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
+    private static final String[] spaceMusic = {backgroundMusic};
 
 
 
@@ -41,11 +50,35 @@ public class SpaceGameArea extends GameArea {
     public void create() {
         loadAssets();
 
+
         displayUI();
-
+        playMusic();
         spawnTerrain();
+        spawnShip();
+        spawnAsteroids();
 
 
+
+    }
+
+    private void playMusic() {
+        UserSettings.Settings settings = UserSettings.get();
+
+        Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+        music.setLooping(true);
+        music.setVolume(settings.musicVolume);
+        music.play();
+    }
+
+    /**
+     * Spawn Asteroids of a given size and position
+     * @requires ASTEROID_SIZE != null
+     */
+    private void spawnAsteroids() {
+        //Extra Spicy Asteroids
+        GridPoint2 posAs = new GridPoint2(8, 10);
+        spawnEntityAt(
+                ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
 
     }
 
@@ -59,7 +92,7 @@ public class SpaceGameArea extends GameArea {
 
     private void spawnTerrain() {
         // Background terrain
-        terrain = terrainFactory.createTerrain(TerrainType.SPACE_DEMO);
+        terrain = terrainFactory.createSpaceTerrain(TerrainType.SPACE_DEMO);
         spawnEntity(new Entity().addComponent(terrain));
 
         // Terrain walls
@@ -71,12 +104,18 @@ public class SpaceGameArea extends GameArea {
     }
 
 
-
+    private void spawnShip()
+    {
+        Entity newShip = ShipFactory.createShip();
+        spawnEntityAt(newShip, SHIP_SPAWN, true, true);
+        targetables.add(newShip);
+    }
 
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(spaceMiniGameTextures);
+        resourceService.loadMusic(spaceMusic);
 
 
         while (!resourceService.loadForMillis(10)) {
@@ -89,6 +128,7 @@ public class SpaceGameArea extends GameArea {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(spaceMiniGameTextures);
+        resourceService.unloadAssets(spaceMusic);
 
     }
 

@@ -9,6 +9,8 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 
+import java.util.logging.Logger;
+
 /**
  * When this entity touches a valid enemy's hitbox, deal damage to them and apply a knockback.
  *

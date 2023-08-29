@@ -38,9 +38,9 @@ public class EarthGameArea extends GameArea {
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
     private static final String[] earthTextures = {
-
-            "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
-            "images/broken_elixir_collector.png",
+            "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
+            "images/extractor.png",
+            "images/broken_extractor.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
             "images/RightShip.png",
@@ -138,6 +138,7 @@ public class EarthGameArea extends GameArea {
         GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
         Entity extractor = StructureFactory.createExtractor(30, Resource.Unobtanium, (long) 1.0, 1);
         spawnEntityAt(extractor, pos, true, false);
+        targetables.add(extractor);
     }
 
     private void spawnShip() {

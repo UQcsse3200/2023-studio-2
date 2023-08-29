@@ -16,8 +16,6 @@ import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.ui.DialogComponent;
-import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.*;
@@ -27,6 +25,8 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.services.TerrainService;
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -34,9 +34,9 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static com.csse3200.game.ui.UIComponent.skin;
 import java.util.ArrayList;
 import java.util.List;
+import static com.csse3200.game.ui.UIComponent.skin;
 
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -55,49 +55,48 @@ public class ForestGameArea extends GameArea {
   private static final float ASTEROID_SIZE = 0.9f;
   private static final String[] forestTextures = {
 
-    "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
-    "images/broken_elixir_collector.png",
-    "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-    "images/box_boy_leaf.png",
-    "images/RightShip.png",
-    "images/tree.png",
-    "images/wall.png",
-    "images/wall2.png",
-    "images/gate_close.png",
-    "images/gate_open.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
-    "images/oldman_down_1.png",
-    "images/base_enemy.png",
-    "images/Troll.png",
-    "images/rangeEnemy.png",
-    "images/stone_wall.png",
-    "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-    "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-    "images/Ship.png",
-    "images/stone_wall.png"
+          "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+          "images/broken_elixir_collector.png",
+          "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
+          "images/box_boy_leaf.png",
+          "images/RightShip.png",
+          "images/tree.png",
+          "images/wall.png",
+          "images/wall2.png",
+          "images/gate_close.png",
+          "images/gate_open.png",
+          "images/ghost_king.png",
+          "images/ghost_1.png",
+          "images/grass_1.png",
+          "images/grass_2.png",
+          "images/grass_3.png",
+          "images/hex_grass_1.png",
+          "images/hex_grass_2.png",
+          "images/hex_grass_3.png",
+          "images/iso_grass_1.png",
+          "images/iso_grass_2.png",
+          "images/iso_grass_3.png",
+          "images/base_enemy.png",
+          "images/Troll.png",
+          "images/rangeEnemy.png",
+          "images/stone_wall.png",
+          "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+          "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+          "images/Ship.png",
+          "images/stone_wall.png",
+          "images/oldman_down_1.png"
   };
- 
-    
   private static final String[] forestTextureAtlases = {
           "images/terrain_iso_grass.atlas",
           "images/ghost.atlas",
           "images/ghostKing.atlas",
           "images/base_enemy.atlas",
           "images/troll_enemy.atlas",
-          "images/botanist.atlas",
           "images/rangeEnemy.atlas",
           "images/stone_wall.atlas",
-          "images/dirt_wall.atlas"
+          "images/dirt_wall.atlas",
+          "images/botanist.atlas"
+
 
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -105,12 +104,11 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestMusic = {backgroundMusic};
 
   private final TerrainFactory terrainFactory;
+  private final ArrayList<Entity> targetables;
 
   private Entity player;
   private Entity botanist;
   private DialogueBox dialogueBox;
-  private final ArrayList<Entity> targetables;
-
 
   /**
    * Initialise this ForestGameArea to use the provided TerrainFactory.
@@ -134,11 +132,6 @@ public class ForestGameArea extends GameArea {
 
     spawnTerrain();
     spawnTrees();
-    player = spawnPlayer();
-    spawnGhosts();
-    spawnBotanist();
-    spawnGhostKing();
-
     spawnPowerups();
     spawnExtractors();
 
@@ -148,12 +141,12 @@ public class ForestGameArea extends GameArea {
     spawnEnemies();
     spawnBoss();
     spawnAsteroids();
+    player = spawnPlayer();
+    spawnBotanist();
 
     playMusic();
 
   }
-
-
   private void spawnAsteroids() {
     //Extra Spicy Asteroids
     GridPoint2 posAs = new GridPoint2(8, 8);
@@ -175,7 +168,6 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(ship, spawnPosition, false, false);
   }
 
-
   private void displayUI() {
     Entity ui = new Entity();
     ui.addComponent(new GameAreaDisplay("Box Forest"));
@@ -194,22 +186,22 @@ public class ForestGameArea extends GameArea {
 
     // Left
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        new GridPoint2(tileBounds.x, 0),
-        false,
-        false);
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+            new GridPoint2(tileBounds.x, 0),
+            false,
+            false);
     // Top
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-        new GridPoint2(0, tileBounds.y),
-        false,
-        false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+            new GridPoint2(0, tileBounds.y),
+            false,
+            false);
     // Bottom
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
     ServiceLocator.registerTerrainService(new TerrainService(terrain));
   }
 
@@ -249,21 +241,11 @@ public class ForestGameArea extends GameArea {
 
       // Test
       // System.out.println(ServiceLocator.getEntityService().getEntitiesByComponent(PowerupComponent.class).toString());
+
+
     }
   }
-
-  private void spawnEnemies() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-    for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = NPCFactory.createGhost(player);
-      spawnEntityAt(ghost, randomPos, true, true);
-      ghost.addComponent(new DialogComponent(dialogueBox));
-    }
-  }
-//  private void spawnBotanist() { // TODO: Temp
+  //  private void spawnBotanist() { // TODO: Temp
 //    GridPoint2 minPos = new GridPoint2(0, 0);
 //    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 //
@@ -274,15 +256,12 @@ public class ForestGameArea extends GameArea {
 //      spawnEntityAt(botanist, BOTANIST_SPAWN, true, true);
 //
 //  }
+  private void spawnEnemies() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-  private void spawnBotanist() {
-    GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
-            terrain.getMapBounds(0).sub(1, 1).y/3);
-    Entity ship = NPCFactory.createBotanist();
-    spawnEntityAt(ship, spawnPosition, false, false);
-    ship.addComponent(new DialogComponent(dialogueBox));
-  }
-  private void spawnGhostKing() {
+    for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
@@ -306,17 +285,22 @@ public class ForestGameArea extends GameArea {
     }
   }
 
-  private void spawnBoss() {
+  private void spawnBotanist() {
+    GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
+            terrain.getMapBounds(0).sub(1, 1).y/3);
+    Entity ship = NPCFactory.createBotanist();
+    spawnEntityAt(ship, spawnPosition, false, false);
+    ship.addComponent(new DialogComponent(dialogueBox));
+  }
 
+  private void spawnBoss() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-
     Entity boss = EnemyFactory.createBoss(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
     boss.addComponent(new DialogComponent(dialogueBox));
-
   }
 
   private void playMusic() {

@@ -17,7 +17,6 @@ import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.BaseEntityConfig;
 import com.csse3200.game.entities.configs.BotanistConfig;
-import com.csse3200.game.entities.configs.GhostKingConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -53,58 +52,29 @@ public class NPCFactory {
   public NPCFactory(AssetManager assetManager) {
     this.assetManager = assetManager;
   }
-  /**
-   * Creates a ghost entity.
-   *
-   * @param target entity to chase
-   * @return entity
-   */
-  public static Entity createGhost(Entity target) {
 
-    Entity ghost = createBaseNPC(target);
-    BaseEntityConfig config = configs.ghost;
+//  public static Entity createGhost(Entity target) {
+//
+//    Entity ghost = createBaseNPC(target);
+//    BaseEntityConfig config = configs.ghost;
+//
+//    AnimationRenderComponent animator =
+//        new AnimationRenderComponent(
+//            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
+//    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+//
+//    ghost
+//        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
+//        .addComponent(animator)
+//        .addComponent(new GhostAnimationController())
+//        .addComponent(new DialogComponent(dialogueBox));
+//    ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
+//
+//    return ghost;
+//  }
 
-    AnimationRenderComponent animator =
-        new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
-    ghost
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController())
-        .addComponent(new DialogComponent(dialogueBox));
-    ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
-
-    return ghost;
-  }
-
-  /**
-   * Creates a ghost king entity.
-   *
-   * @param target entity to chase
-   * @return entity
-   */
-  public static Entity createGhostKing(Entity target) {
-    Entity ghostKing = createBaseNPC(target);
-    GhostKingConfig config = configs.ghostKing;
-
-    AnimationRenderComponent animator =
-        new AnimationRenderComponent(
-            ServiceLocator.getResourceService()
-                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-
-    ghostKing
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController())
-        .addComponent(new DialogComponent(dialogueBox));
-    ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
-    return ghostKing;
-  }
   //TODO
 //  public static Entity createBotanist() {
 //    AnimationRenderComponent animator = new AnimationRenderComponent(

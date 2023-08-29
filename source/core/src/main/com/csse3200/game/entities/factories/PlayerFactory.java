@@ -50,7 +50,7 @@ public class PlayerFactory {
             .addComponent(new InventoryComponent(stats.gold))
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())
-            .addComponent(new DialogComponent(dialogueBox));
+            .addComponent(new DialogComponent(dialogueBox))
             .addComponent(new InteractionControllerComponent());
 
 

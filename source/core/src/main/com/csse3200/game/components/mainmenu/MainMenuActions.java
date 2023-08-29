@@ -70,7 +70,7 @@ public class MainMenuActions extends Component {
   private void onSettings() {
     logger.info("Launching settings screen");
     game.setScreen(GdxGame.ScreenType.SETTINGS);
-    
+  }
   private void onMini(){
     logger.info("starting space minigame");
     game.setScreen(GdxGame.ScreenType.SPACE_MAP);

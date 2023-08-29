@@ -106,7 +106,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     return RandomUtils.random(min, max);
   }
 
-}
+
   public char getDirection(Vector2 destination) {
     if (owner.getEntity().getPosition().x - destination.x < 0) {
       return '>';

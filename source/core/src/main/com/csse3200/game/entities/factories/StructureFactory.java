@@ -2,9 +2,12 @@ package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractableComponent;
+import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -13,6 +16,8 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
+import java.util.ArrayList;
 
 
 /**
@@ -66,5 +71,17 @@ public class StructureFactory {
         return ship;
     }
 
+    public static Entity createSpawner(ArrayList<Entity> targets, long tickRate, EnemyType type, EnemyBehaviour behaviour) {
+        Entity spawner =
+                new Entity()
+                        .addComponent(new TextureRenderComponent("images/Spawner.png"))
+                        .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                        .addComponent(new ColliderComponent())
+                        .addComponent(new SpawnerComponent(targets, tickRate, type, behaviour));
 
+        spawner.getComponent(TextureRenderComponent.class).scaleEntity();
+        spawner.scaleHeight(1.5f);
+        PhysicsUtils.setScaledCollider(spawner, 0.001f, 0.001f);
+        return spawner;
+    }
 }

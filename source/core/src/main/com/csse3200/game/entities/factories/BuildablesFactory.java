@@ -14,8 +14,8 @@ public class BuildablesFactory {
      * @param type the type of wall to create.
      * @return The created Wall entity.
      */
-    public static Entity createCustomWall(WallType type) {
-      return new Wall(type);
+    public static Entity createCustomWall(WallType type, Entity player) {
+      return new Wall(type, player);
     }
 
     /**

@@ -173,7 +173,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	}
 	slider-horizontal-s: {
 		name: slider-horizontal
-		color: selection
+		color: pressed
 	}
 	slider-vertical-s: {
 		name: slider-vertical

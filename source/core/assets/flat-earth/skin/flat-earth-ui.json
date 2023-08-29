@@ -132,7 +132,7 @@
 			"font": "thin_white"
 		},
 		"large": {
-			"font": "thick_white"
+			"font": "thick_black"
 		}
 	},
 	"ListStyle": {

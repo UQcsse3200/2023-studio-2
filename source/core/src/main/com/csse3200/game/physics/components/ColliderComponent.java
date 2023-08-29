@@ -104,9 +104,9 @@ public class ColliderComponent extends Component {
    * @return self
    */
   public ColliderComponent setFriction(float friction) {
-    if (fixture == null) {
-      fixtureDef.friction = friction;
-    } else {
+    fixtureDef.friction = friction;
+
+    if (fixture != null) {
       fixture.setFriction(friction);
     }
     return this;
@@ -120,9 +120,9 @@ public class ColliderComponent extends Component {
    * @return self
    */
   public ColliderComponent setSensor(boolean isSensor) {
-    if (fixture == null) {
-      fixtureDef.isSensor = isSensor;
-    } else {
+    fixtureDef.isSensor = isSensor;
+
+    if (fixture != null) {
       fixture.setSensor(isSensor);
     }
     return this;
@@ -136,9 +136,9 @@ public class ColliderComponent extends Component {
    * @return self
    */
   public ColliderComponent setDensity(float density) {
-    if (fixture == null) {
-      fixtureDef.density = density;
-    } else {
+    fixtureDef.density = density;
+
+    if (fixture != null) {
       fixture.setDensity(density);
     }
     return this;
@@ -151,9 +151,9 @@ public class ColliderComponent extends Component {
    * @return self
    */
   public ColliderComponent setRestitution(float restitution) {
-    if (fixture == null) {
-      fixtureDef.restitution = restitution;
-    } else {
+    fixtureDef.restitution = restitution;
+
+    if (fixture != null) {
       fixture.setRestitution(restitution);
     }
     return this;
@@ -166,10 +166,14 @@ public class ColliderComponent extends Component {
    * @return self
    */
   public ColliderComponent setShape(Shape shape) {
-    if (fixture == null) {
-      fixtureDef.shape = shape;
-    } else {
-      logger.error("{} Cannot set Collider shape after create(), ignoring.", this);
+    fixtureDef.shape = shape;
+
+    if (fixture != null) {
+      Body physBody = entity.getComponent(PhysicsComponent.class).getBody();
+
+      // destroys and recreates the fixture if the shape changes
+      physBody.destroyFixture(fixture);
+      fixture = physBody.createFixture(fixtureDef);
     }
     return this;
   }
@@ -218,6 +222,7 @@ public class ColliderComponent extends Component {
     PolygonShape bbox = new PolygonShape();
     Vector2 center = entity.getScale().scl(0.5f);
     bbox.setAsBox(center.x, center.y, center, 0f);
+
     return bbox;
   }
 }

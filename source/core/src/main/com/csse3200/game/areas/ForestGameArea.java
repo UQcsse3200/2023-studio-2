@@ -160,7 +160,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+    terrain = terrainFactory.createTerrain();
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.factories.CompanionFactory;
+import com.csse3200.game.entities.factories.BoxFactory;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
@@ -41,6 +42,7 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_POWERUPS = 3;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
+    /*private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);*/
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
@@ -53,7 +55,7 @@ public class EarthGameArea extends GameArea {
             "images/RightShip.png",
             "images/wall.png",
             "images/static.png",
-            "images/alert.png",
+            /*"images/alert.png",*/
             "images/wall2.png",
             "images/gate_close.png",
             "images/gate_open.png",
@@ -117,6 +119,7 @@ public class EarthGameArea extends GameArea {
         spawnShip();
         Entity playerEntity = spawnPlayer();
         Entity  companionEntity = spawnCompanion(playerEntity, new Vector2(1.0f,1.0f));
+        /*spawnBox(companionEntity, new Vector2(20.0f,20.0f));*/
 
         spawnEnemies();
         spawnBoss();
@@ -237,6 +240,17 @@ public class EarthGameArea extends GameArea {
         targetables.add(newCompanion);
         return newCompanion;
     }
+
+   /* private void spawnBox(Entity companionEntity, Vector2 offset) {
+        Entity newBox = BoxFactory.createBox(companionEntity);
+        PhysicsComponent companionPhysics = companionEntity.getComponent(PhysicsComponent.class);
+        //calculate the companion position
+        Vector2 companionPosition = companionPhysics.getBody().getPosition();
+        Vector2 boxSpawnPosition = companionPosition.cpy().add(offset);
+
+        spawnEntityAt(newBox, BOX_SPAWN, true, true);
+        // targetables.add(newBox);
+    }*/
 
     private void spawnPowerups() {
         GridPoint2 minPos = new GridPoint2(0, 0);

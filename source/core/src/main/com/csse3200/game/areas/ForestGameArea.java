@@ -20,6 +20,7 @@ import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.entities.factories.BoxFactory;
 
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.NPCFactory;

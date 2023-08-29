@@ -104,6 +104,19 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createCustomWall(com.csse3200.game.entities.buildables.WallType)" class="member-name-link">createCustomWall</a><wbr>(<a href="../buildables/WallType.html" title="enum class in com.csse3200.game.entities.buildables">WallType</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEnvironment()" class="member-name-link">createEnvironment</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a visible obstacle</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEnvironment(float,float,float,float)" class="member-name-link">createEnvironment</a><wbr>(float&nbsp;sizeX,
+ float&nbsp;sizeY,
+ float&nbsp;posX,
+ float&nbsp;posY)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates an obstacle with a custom sized collision box</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTree()" class="member-name-link">createTree</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a tree entity.</div>
@@ -139,6 +152,36 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>entity</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createEnvironment()">
+<h3>createEnvironment</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createEnvironment</span>()</div>
+<div class="block">Creates a visible obstacle</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Environment entity</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createEnvironment(float,float,float,float)">
+<h3>createEnvironment</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createEnvironment</span><wbr><span class="parameters">(float&nbsp;sizeX,
+ float&nbsp;sizeY,
+ float&nbsp;posX,
+ float&nbsp;posY)</span></div>
+<div class="block">Creates an obstacle with a custom sized collision box</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>sizeX</code> - the length of the new collision box</dd>
+<dd><code>sizeY</code> - the height of the new collision box</dd>
+<dd><code>posX</code> - the relative x coordinate of the top left corner of the collision box</dd>
+<dd><code>posY</code> - the relative y coordinate of the top left corner of the collision box</dd>
+<dt>Returns:</dt>
+<dd>Environment entity with the set collision box</dd>
 </dl>
 </section>
 </li>

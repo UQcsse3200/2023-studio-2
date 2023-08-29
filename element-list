@@ -18,6 +18,7 @@ com.csse3200.game.concurrency
 com.csse3200.game.entities
 com.csse3200.game.entities.buildables
 com.csse3200.game.entities.configs
+com.csse3200.game.entities.enemies
 com.csse3200.game.entities.factories
 com.csse3200.game.events
 com.csse3200.game.events.listeners

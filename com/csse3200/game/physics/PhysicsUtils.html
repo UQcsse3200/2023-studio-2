@@ -92,10 +92,20 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setScaledCollider(com.csse3200.game.entities.Entity,float,float)" class="member-name-link">setScaledCollider</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setCustomCollider(com.csse3200.game.entities.Entity,float,float,float,float)" class="member-name-link">setCustomCollider</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity,
+ float&nbsp;sizeX,
+ float&nbsp;sizeY,
+ float&nbsp;posX,
+ float&nbsp;posY)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Modifies the collider of an entity to be a rectangle of a specified size with the corner
+ being in the specified relative coordinates</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setScaledCollider(com.csse3200.game.entities.Entity,float,float)" class="member-name-link">setScaledCollider</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity,
  float&nbsp;scaleX,
  float&nbsp;scaleY)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -119,6 +129,26 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setScaledCollider</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity,
  float&nbsp;scaleX,
  float&nbsp;scaleY)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setCustomCollider(com.csse3200.game.entities.Entity,float,float,float,float)">
+<h3>setCustomCollider</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCustomCollider</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity,
+ float&nbsp;sizeX,
+ float&nbsp;sizeY,
+ float&nbsp;posX,
+ float&nbsp;posY)</span></div>
+<div class="block">Modifies the collider of an entity to be a rectangle of a specified size with the corner
+ being in the specified relative coordinates</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>entity</code> - the entity the collider is bound to</dd>
+<dd><code>sizeX</code> - the length of the new collision box</dd>
+<dd><code>sizeY</code> - the height of the new collision box</dd>
+<dd><code>posX</code> - the relative x coordinate of the top left corner of the collision box</dd>
+<dd><code>posY</code> - the relative y coordinate of the top left corner of the collision box</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -7,6 +7,7 @@ import com.csse3200.game.entities.enemies.EnemyType;
  * Defines all NPC configs to be loaded by Related Factories.
  */
 public class NPCConfigs {
+
   // Enemies Factory
   public EnemyConfig meleeEnemyPTE = new EnemyConfig();
   public EnemyConfig meleeEnemyDTE = new EnemyConfig();
@@ -52,5 +53,8 @@ public class NPCConfigs {
   public BulletConfig GetBulletConfig() {
     return bullet;
   }
+  public BaseEntityConfig ghost = new BaseEntityConfig();
+  public BotanistConfig botanist = new BotanistConfig();
+
 
 }

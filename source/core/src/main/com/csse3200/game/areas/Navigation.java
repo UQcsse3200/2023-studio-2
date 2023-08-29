@@ -8,8 +8,8 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
 public class Navigation extends GameArea {
-    private TerrainFactory terrainFactory;
-    private String image;
+    private final TerrainFactory terrainFactory;
+    private final String image;
     public Navigation(TerrainFactory terrainFactory,String image ){
         this.terrainFactory=terrainFactory;
         this.image=image;
@@ -24,7 +24,7 @@ public class Navigation extends GameArea {
 //            logger.info("Loading... {}%", resourceService.getProgress());
         }
         displayUI();
-        Entity planet1=new Entity().addComponent(new PlanetComponent(image,950,1100));
+        Entity planet1=new Entity().addComponent(new PlanetComponent(image,730,750));
         planet1.getEvents().addListener("Navigate",()->{
             ForestGameArea nextGameArea=new ForestGameArea(terrainFactory);
             this.dispose();

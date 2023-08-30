@@ -32,11 +32,12 @@ public class EarthGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     private DialogueBox dialogueBox;
     private static final int NUM_TREES = 7;
-    private static final int NUM_MELEE_PTE = 5;
-    private static final int NUM_MELEE_DTE = 5;
-    private static final int NUM_RANGE_PTE = 5;
+    private static final int NUM_MELEE_PTE = 1;
+    private static final int NUM_MELEE_DTE = 3;
+    private static final int NUM_RANGE_PTE = 3;
     private static final int NUM_POWERUPS = 3;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(35, 3);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
@@ -108,6 +109,7 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
+        spawnSpawner();
 
         spawnShip();
         spawnPlayer();
@@ -263,13 +265,6 @@ public class EarthGameArea extends GameArea {
             Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
             spawnEntityAt(rangePTE, randomPos3, true, true);
         }
-
-
-        for (int i = 0; i < NUM_RANGE_PTE; i++) {
-            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
-            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
-            spawnEntityAt(rangePTE, randomPos3, true, true);
-        }
     }
 
     /**
@@ -283,7 +278,11 @@ public class EarthGameArea extends GameArea {
         Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
         spawnEntityAt(boss, randomPos, true, true);
         boss.addComponent(new DialogComponent(dialogueBox));
+    }
 
+    private void spawnSpawner() {
+        Entity spawner = StructureFactory.createSpawner(targetables, 5000, EnemyType.Melee, EnemyBehaviour.PTE, 5);
+        spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
     }
 
     private void playMusic() {

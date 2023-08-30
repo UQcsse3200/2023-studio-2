@@ -1,6 +1,7 @@
 package com.csse3200.game.input;
 
 import com.csse3200.game.components.player.TouchPlayerInputComponent;
+import com.csse3200.game.components.ships.KeyboardShipInputComponent;
 import com.csse3200.game.ui.terminal.TouchTerminalInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,12 @@ public class TouchInputFactory extends InputFactory{
   public InputComponent createForPlayer() {
     logger.debug("Creating player input handler");
     return new TouchPlayerInputComponent();
+  }
+
+  @Override
+  public InputComponent createForShip() {
+    logger.debug("Creating ship input handler");
+    return new KeyboardShipInputComponent();
   }
 
   /**

@@ -28,7 +28,7 @@ public class PhysicsUtils {
   public static void setCustomCollider(Entity entity, float sizeX, float sizeY, float posX, float posY) {
     Vector2 currentBox = entity.getScale().cpy();
     Vector2 pos = new Vector2(posX, posY);
-    Vector2 boundingBox = entity.getScale().cpy().scl(sizeX / currentBox.x, sizeY / currentBox.y);
+    Vector2 boundingBox = entity.getScale().cpy().scl(sizeX, sizeY);
     entity.getComponent(ColliderComponent.class).setAsBox(boundingBox, pos);
   }
 

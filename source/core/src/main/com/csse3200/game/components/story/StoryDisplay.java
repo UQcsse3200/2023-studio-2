@@ -1,33 +1,28 @@
+/**
+ * StoryDisplay is a UI component that displays a sequence of images along with navigation buttons for a story presentation.
+ * It allows the user to navigate through different scenes and skip the story.
+ */
 package com.csse3200.game.components.story;
 
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.GdxGame;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.mainmenu.InsertButtons;
-import com.csse3200.game.components.mainmenu.MainMenuDisplay;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-
 import java.util.ArrayList;
 
 /**
- * A ui component for displaying the Main menu.
+ * A UI component that displays a sequence of images along with navigation buttons for a story presentation.
  */
 public class StoryDisplay extends UIComponent {
+
     private static final Logger logger = LoggerFactory.getLogger(StoryDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
@@ -38,9 +33,6 @@ public class StoryDisplay extends UIComponent {
 
     private static final String[] buttonImages = {"images/next_cut.png", "images/prev-cut.png"};
 
-
-
-
     @Override
     public void create() {
         super.create();
@@ -49,10 +41,12 @@ public class StoryDisplay extends UIComponent {
         entity.getEvents().addListener("previous", this::prevScene);
     }
 
+    /**
+     * Adds UI components such as images and navigation buttons to the stage.
+     */
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
-
         table.bottom().right();
 
         storyImages = new ArrayList<>();
@@ -73,36 +67,22 @@ public class StoryDisplay extends UIComponent {
         stage.addActor(table);
         InsertButtons bothButtons = new InsertButtons();
 
-        // next button
-
+        // Create next button
         String nextTexture = "images/next_cut.png";
         String nextTextureHover = "images/next_cut_hover.png";
+        ImageButton nextBtn = bothButtons.draw(nextTexture, nextTextureHover);
 
-        ImageButton nextBtn;
-        nextBtn = bothButtons.draw(nextTexture, nextTextureHover);
-
-
-
-        // prev buttons
+        // Create previous button
         String prevTexture = "images/prev_cut.png";
         String prevTextureHover = "images/prev_cut_hover.png";
-        ImageButton prevBtn;
-        prevBtn = bothButtons.draw(prevTexture, prevTextureHover);
+        ImageButton prevBtn = bothButtons.draw(prevTexture, prevTextureHover);
 
-        // skip button
+        // Create skip button
         String skipTexture = "images/skip_btn.png";
         String skipTextureHover = "images/skip_btn_hover.png";
-        ImageButton skipBtn;
-        skipBtn = bothButtons.draw(skipTexture, skipTextureHover);
+        ImageButton skipBtn = bothButtons.draw(skipTexture, skipTextureHover);
 
-
-
-        //TextButton nextBtn = new TextButton("Next", skin);
-        //TextButton skipBtn = new TextButton("Skip", skin);
-        //TextButton prevBtn = new TextButton("Previous", skin);
-
-        // Triggers an event when the button is pressed
-
+        // Attach listeners to navigation buttons
         nextBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -116,7 +96,6 @@ public class StoryDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-
                         logger.debug("Skip button clicked");
                         entity.getEvents().trigger("skip");
                     }
@@ -126,27 +105,26 @@ public class StoryDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-
                         logger.debug("Previous button clicked");
                         entity.getEvents().trigger("previous");
                     }
                 });
-
-
 
         table.add(skipBtn).expand().top().right().width(200f);
         table.row();
         table.add(prevBtn).left().width(70f).padBottom(300f);
         table.add(nextBtn).right().width(70f).padBottom(300f);
         stage.addActor(table);
-
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        // draw is handled by the stage
+        // Drawing is handled by the stage
     }
 
+    /**
+     * Advances to the next scene of the story.
+     */
     private void nextScene() {
         if (start < end) {
             Drawable next = new TextureRegionDrawable(new Texture(Gdx.files.internal(storyImages.get(start))));
@@ -154,16 +132,19 @@ public class StoryDisplay extends UIComponent {
             start += 1;
         } else {
             entity.getEvents().trigger("skip");
-        }}
-
-    private void prevScene(){
-        if (end - start > 0 && start > 0){
-            Drawable prev = new TextureRegionDrawable(new Texture(Gdx.files.internal(storyImages.get(start-1))));
-            table.setBackground(prev);
-            start -=1;
         }
     }
 
+    /**
+     * Moves to the previous scene of the story.
+     */
+    private void prevScene() {
+        if (end - start > 0 && start > 0) {
+            Drawable prev = new TextureRegionDrawable(new Texture(Gdx.files.internal(storyImages.get(start - 1))));
+            table.setBackground(prev);
+            start -= 1;
+        }
+    }
 
     @Override
     public float getZIndex() {

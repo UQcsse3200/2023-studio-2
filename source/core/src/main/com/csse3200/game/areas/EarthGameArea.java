@@ -165,12 +165,12 @@ public class EarthGameArea extends GameArea {
         Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 100.0, 1);
         spawnEntityAt(extractor, pos, true, false);
 
-        pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
+        pos = new GridPoint2(terrain.getMapBounds(0).sub(8, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
         extractor = StructureFactory.createExtractor(30, Resource.Solstite, (long) 100.0, 1);
         spawnEntityAt(extractor, pos, true, false);
 
-        pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 100.0, 1);
+        pos = new GridPoint2(terrain.getMapBounds(0).sub(16, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
+        extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
         spawnEntityAt(extractor, pos, true, false);
 
         ResourceDisplay resourceDisplayComponent = new ResourceDisplay()

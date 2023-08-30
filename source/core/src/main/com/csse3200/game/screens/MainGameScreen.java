@@ -72,7 +72,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    Navigation gameArea=new Navigation(terrainFactory,"images/current_planet-preview.png");
+    Navigation gameArea=new Navigation(terrainFactory,"images/heart.png");
     gameArea.create();
   }
 

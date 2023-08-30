@@ -42,7 +42,7 @@ public class CompanionStatsDisplay extends UIComponent {
     public Label messageLabel;
 
     // Remaining time for message display
-    private float messageDisplayTimeLeft;
+    public float messageDisplayTimeLeft;
 
     public CompanionStatsDisplay(boolean center, float offsetY, int health) {
         this.center = center;

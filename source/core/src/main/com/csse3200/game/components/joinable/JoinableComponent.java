@@ -19,7 +19,14 @@ import java.util.Map;
  * depending on its neighbours.
  */
 public class JoinableComponent extends AtlasRenderComponent {
-    private final Map<JoinDirection, Boolean> JoinedInDirectionMap = new HashMap<>();
+    private final Map<JoinDirection, Boolean> JoinedInDirectionMap = new HashMap<>() {
+        {
+            put(JoinDirection.UP, false);
+            put(JoinDirection.DOWN, false);
+            put(JoinDirection.LEFT, false);
+            put(JoinDirection.RIGHT, false);
+        }
+    };
     private final JoinLayer layer;
     private final JoinableComponentShapes shapes;
     private static final Map<JoinDirection, GridPoint2> DirectionMatrices = new HashMap<>() {
@@ -30,7 +37,6 @@ public class JoinableComponent extends AtlasRenderComponent {
             put(JoinDirection.RIGHT, new GridPoint2(-2,0));
         }
     };
-
     @Override
     public void create() {
         super.create();
@@ -118,7 +124,7 @@ public class JoinableComponent extends AtlasRenderComponent {
     /**
      * Updates the entities texture to match the new cardinalities.
      */
-    public void updateAtlasTexture() {
+    private void updateAtlasTexture() {
         setRegion(deriveCardinalityId(), false);
     }
 
@@ -175,7 +181,7 @@ public class JoinableComponent extends AtlasRenderComponent {
      * @param centrePosition - the centre position of the entity.
      * @param isJoined - whether the neighbour should or should not be joined.
      */
-    public void notifyNeighbour(JoinDirection direction, GridPoint2 centrePosition, boolean isJoined) {
+    private void notifyNeighbour(JoinDirection direction, GridPoint2 centrePosition, boolean isJoined) {
         StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
 
         GridPoint2 position = centrePosition.cpy().add(DirectionMatrices.get(direction));
@@ -208,6 +214,15 @@ public class JoinableComponent extends AtlasRenderComponent {
      */
     public JoinLayer getJoinLayer() {
         return layer;
+    }
+
+    /**
+     * Changes the texture atlas being used to the atlas given.
+     *
+     * @param atlas - new atlas.
+     */
+    public void updateTextureAtlas(TextureAtlas atlas) {
+        updateTextureAtlas(atlas, deriveCardinalityId());
     }
 }
 

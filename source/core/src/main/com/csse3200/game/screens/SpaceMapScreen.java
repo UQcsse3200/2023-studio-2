@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
+import com.csse3200.game.input.InputFactory;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
@@ -54,7 +55,6 @@ public class SpaceMapScreen extends ScreenAdapter {
         PhysicsService physicsService = new PhysicsService();
         ServiceLocator.registerPhysicsService(physicsService);
         physicsEngine = physicsService.getPhysics();
-
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
 

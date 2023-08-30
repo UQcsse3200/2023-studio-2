@@ -55,7 +55,7 @@ public class ProximityActivationComponent extends Component {
 
     public boolean entityIsInProximity(Entity entity) {
         // Calculate the distance between the entity and the center position
-        float distance = entity.getCenterPosition().dst(entity.getCenterPosition());
+        float distance = this.entity.getCenterPosition().dst(entity.getCenterPosition());
         return distance <= radius;
     }
 

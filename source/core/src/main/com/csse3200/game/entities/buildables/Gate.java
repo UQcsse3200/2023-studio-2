@@ -23,6 +23,7 @@ public class Gate extends Entity {
     WallType type;
     private static final GateConfig config =
             FileLoader.readClass(GateConfig.class, "configs/gates.json");
+
     private static final JoinableComponentShapes shapes =
             FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
     private TextureAtlas openAtlas;
@@ -40,7 +41,7 @@ public class Gate extends Entity {
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
         addComponent(new CombatStatsComponent(config.health, 0,0,false));
         addComponent(new HealthBarComponent(true));
-        addComponent(new JoinableComponent(openAtlas,JoinLayer.WALLS, shapes));
+        addComponent(new JoinableComponent(closedAtlas,JoinLayer.WALLS, shapes));
         getComponent(JoinableComponent.class).scaleEntity();
 
     }
@@ -49,14 +50,14 @@ public class Gate extends Entity {
         getComponent(PhysicsComponent.class).setEnabled(false);
 
 
-
+        getComponent(JoinableComponent.class).updateTextureAtlas(openAtlas);
 
     }
 
     public void closeGate(Entity player) {
         getComponent(PhysicsComponent.class).setEnabled(true);
 
-
+        getComponent(JoinableComponent.class).updateTextureAtlas(closedAtlas);
 
 
     }

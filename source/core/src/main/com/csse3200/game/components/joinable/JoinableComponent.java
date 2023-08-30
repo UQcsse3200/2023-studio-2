@@ -37,7 +37,9 @@ public class JoinableComponent extends AtlasRenderComponent {
             put(JoinDirection.RIGHT, new GridPoint2(-2,0));
         }
     };
-
+    public void updateTextureAtlas(TextureAtlas atlas) {
+        updateTextureAtlas(atlas, deriveCardinalityId());
+    }
     @Override
     public void create() {
         super.create();

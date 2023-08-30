@@ -14,6 +14,8 @@ import com.csse3200.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType; //Temporary, for extractor minigame
+
 import java.util.ArrayList;
 
 public class ExtractorMiniGameArea extends GameArea {
@@ -36,7 +38,7 @@ public class ExtractorMiniGameArea extends GameArea {
         registerStructurePlacementService();
 
         displayUI();
-        spawnTerrain();
+        spawnTerrain(); //
         spawnExtractorsRepairPart();
     }
 
@@ -54,7 +56,8 @@ public class ExtractorMiniGameArea extends GameArea {
 
     private void spawnTerrain() {
         // Background terrain
-        terrain = terrainFactory.createTerrain();
+
+        terrain = terrainFactory.createSpaceTerrain(TerrainType.REPAIR_DEMO); //PLEASE EDIT
         spawnEntity(new Entity().addComponent(terrain));
     }
 

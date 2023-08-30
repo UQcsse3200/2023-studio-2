@@ -32,6 +32,8 @@ public class SpawnerComponent extends Component {
 
     int count;
 
+    int spawnedAmount = 0;
+
     /**
      * SpawnerComponent allows an entity to spawn enemies on some real time interval and send them to
      * the gameState and event handler.
@@ -58,19 +60,15 @@ public class SpawnerComponent extends Component {
 
     @Override
     public void update() {
-        int spawnedAmount = 0;
         super.update();
         Vector2 worldPos;
-        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate) {
-            if (spawnedAmount != count) {
+        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate && spawnedAmount < count) {
                 worldPos = entity.getCenterPosition();
                 Entity enemy = EnemyFactory.createEnemy(targets, type, behaviour);
                 ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
-                spawnedAmount++;
+                spawnedAmount += 1;
+                System.out.println(spawnedAmount);
                 this.lastTime += this.tickRate;
-            } else {
-                break;
-            }
         }
     }
 }

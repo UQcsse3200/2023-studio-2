@@ -71,7 +71,7 @@ public class BulletFactory {
                                 1.5f));
 
 
-        PhysicsUtils.setScaledCollider(bullet, 0.9f, 0.4f);
+        PhysicsUtils.setScaledCollider(bullet, 0.05f, 0.05f);
         return bullet;
     }
 }

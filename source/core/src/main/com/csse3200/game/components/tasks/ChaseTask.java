@@ -18,6 +18,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private final int priority;
   private final float viewDistance;
   private final float maxChaseDistance;
+  private float shootDistance;
   private final PhysicsEngine physics;
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
@@ -34,6 +35,24 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     this.priority = priority;
     this.viewDistance = viewDistance;
     this.maxChaseDistance = maxChaseDistance;
+    this.shootDistance = 0;
+    physics = ServiceLocator.getPhysicsService().getPhysics();
+    debugRenderer = ServiceLocator.getRenderService().getDebug();
+  }
+
+  /**
+   * @param target The entity to chase.
+   * @param priority Task priority when chasing (0 when not chasing).
+   * @param viewDistance Maximum distance from the entity at which chasing can start.
+   * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
+   * @param shootDistance The distance where the entity stops to shoot at the target.
+   */
+  public ChaseTask(Entity target, int priority, float viewDistance, float maxChaseDistance, float shootDistance) {
+    this.target = target;
+    this.priority = priority;
+    this.viewDistance = viewDistance;
+    this.maxChaseDistance = maxChaseDistance;
+    this.shootDistance = shootDistance;
     physics = ServiceLocator.getPhysicsService().getPhysics();
     debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
@@ -78,7 +97,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   private int getActivePriority() {
     float dst = getDistanceToTarget();
-    if (dst > maxChaseDistance || !isTargetVisible()) {
+    if (dst > maxChaseDistance || dst < shootDistance || !isTargetVisible()) {
       return -1; // Too far, stop chasing
     }
     return priority;
@@ -86,7 +105,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   private int getInactivePriority() {
     float dst = getDistanceToTarget();
-    if (dst < viewDistance && isTargetVisible()) {
+    if (dst < viewDistance && dst > shootDistance && isTargetVisible()) {
       return priority;
     }
     return -1;

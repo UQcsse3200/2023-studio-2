@@ -63,6 +63,9 @@ public class TerrainFactory {
     return new TerrainComponent(camera, tiledMap, renderer, orientation, 0.5f);
   }
 
+
+
+  //Create terrain using testmap. This terrain is used by JunxianHuang for testing. Temporary method.
   public TerrainComponent createSpaceTerrain(TerrainType terrainType) {
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {

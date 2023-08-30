@@ -107,6 +107,9 @@ public class TouchAttackComponent extends Component {
     }
   }
 
+  /**
+   * Helper Method that deals damage and knockback to Target
+   */
   private void hitOnce(Entity target, CombatStatsComponent targetStats){
     if (targetStats != null) {
 //      if(dialogue != null) {

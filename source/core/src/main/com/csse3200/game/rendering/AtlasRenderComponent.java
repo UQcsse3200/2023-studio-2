@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.services.ServiceLocator;
 
 public class AtlasRenderComponent extends RenderComponent {
-    private final TextureAtlas atlas;
+    private TextureAtlas atlas;
     private TextureAtlas.AtlasRegion currentRegion;
 
     public AtlasRenderComponent(String atlasPath, String region) {
@@ -17,6 +17,12 @@ public class AtlasRenderComponent extends RenderComponent {
     public AtlasRenderComponent(TextureAtlas atlas, String region) {
         this.atlas = atlas;
         this.currentRegion = atlas.findRegion(region);
+    }
+
+    public void updateTextureAtlas(TextureAtlas atlas, String region) {
+        this.atlas = atlas;
+
+        currentRegion = atlas.findRegion(region);
     }
 
     /** Scale the entity to a width of 1 and a height matching the texture's ratio */

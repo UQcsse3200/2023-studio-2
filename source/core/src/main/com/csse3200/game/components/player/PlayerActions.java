@@ -158,6 +158,7 @@ public class PlayerActions extends Component {
             updateResources(-2);
             Entity gate = BuildablesFactory.createGate(WallType.gate, true, entity);
             ServiceLocator.getStructurePlacementService().PlaceStructureAt(gate, gridPosition, false, false);
+            gate.getComponent(JoinableComponent.class).notifyNeighbours(true);
         }
     }
 

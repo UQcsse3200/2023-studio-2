@@ -18,9 +18,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class PowerupComponent extends Component {
 
     private PowerupType type;
-    private short targetLayer;
     private CombatStatsComponent playerCombatStats;
-    private HitboxComponent hitboxComponent;
     private PlayerActions playerActions;
     private long duration;
 
@@ -29,38 +27,11 @@ public class PowerupComponent extends Component {
      */
     public PowerupComponent(PowerupType type, short targetLayer) {
         this.type = type;
-        this.targetLayer = targetLayer;
     }
 
     @Override
     public void create() {
-        entity.getEvents().addListener("collisionStart", this::onCollisionStart);
         playerCombatStats = entity.getComponent(CombatStatsComponent.class);
-        hitboxComponent = entity.getComponent(HitboxComponent.class);
-    }
-
-    /**
-     * Called when a collision begins. Determines if the Powerup should be applied.
-     *
-     * @param me     The fixture representing this Powerup.
-     * @param other  The fixture this Powerup collided with.
-     */
-    private void onCollisionStart(Fixture me, Fixture other) {
-        if (hitboxComponent.getFixture() != me) {
-            // Not triggered by hitbox, ignore
-            return;
-        }
-
-        if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
-            // Doesn't match our target layer, ignore
-            return;
-        }
-
-        Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-        CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-        if (targetStats != null) {
-            applyEffect(target);
-        }
     }
 
     /**

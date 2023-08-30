@@ -3,11 +3,9 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.csse3200.game.rendering.RenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
 /**
@@ -47,13 +45,13 @@ public class HealthBarComponent extends UIComponent {
 
         healthBar = new ProgressBar(0, getCombatStatsComponent().getMaxHealth(), 1, false, skin);
 
-        updateWallHealthUI(entity.getComponent(CombatStatsComponent.class).getHealth());
+        updateHealth(entity.getComponent(CombatStatsComponent.class).getHealth());
         this.healthBar.setWidth(SCALE_REDUCTION * width);
         updateUIPosition();
 
         healthBar.setDisabled(true);
 
-        entity.getEvents().addListener("updateHealth", this::updateUIPosition);
+        entity.getEvents().addListener("updateHealth", this::updateHealth);
     }
 
     /**
@@ -116,7 +114,7 @@ public class HealthBarComponent extends UIComponent {
      * Updates the Wall's health on the ui.
      * @param health player health
      */
-    public void updateWallHealthUI(int health) {
+    public void updateHealth(int health) {
         this.healthBar.setValue(health);
     }
 

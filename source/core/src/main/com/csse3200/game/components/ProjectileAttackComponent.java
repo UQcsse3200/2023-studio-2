@@ -80,7 +80,6 @@ public class ProjectileAttackComponent extends Component {
         @Override
         public void run() {
           if (!leftContact) {
-            System.out.println("Hits STRUCTURE"); // hitting twice for some reason
             hitOnce(target, targetStats);
           }
         }
@@ -118,12 +117,6 @@ public class ProjectileAttackComponent extends Component {
     }, 2000);
 
   }
-
-
-
-
-
-
 
   private void onCollisionEnd(Fixture me, Fixture other) {
     // Stop dealing tick damage

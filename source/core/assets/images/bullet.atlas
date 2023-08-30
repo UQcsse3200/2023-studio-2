@@ -1,124 +1,55 @@
 bullet.png
-size: 1146, 1000
+size: 2000,500
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-angry_float
+float
   rotate: false
   xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
+  size: 500, 500
+  orig: 500, 500
   offset: 0, 0
   index: 0
-angry_float
+float
   rotate: false
   xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
+  size: 500, 500
+  orig: 500, 500
   offset: 0, 0
-  index: 1
-angry_float
-  rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
-  offset: 0, 0
-  index: 2
-angry_float
-  rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
-  offset: 0, 0
-  index: 3
-angry_float
-  rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
-  offset: 0, 0
-  index: 4
-angry_float
-  rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
-  offset: 0, 0
-  index: 5
-angry_float
-  rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
-  offset: 0, 0
-  index: 6
-angry_float
-  rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
-  offset: 0, 0
-  index: 7
+  index: 0
 default
   rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
+  xy: 500, 0
+  size: 500, 500
+  orig: 500, 500
   offset: 0, 0
   index: 0
-float
+angry_float
   rotate: false
   xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
+  size: 500, 500
+  orig: 500, 500
   offset: 0, 0
   index: 0
-float
+angry_float
   rotate: false
   xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
+  size: 500, 500
+  orig: 500, 500
   offset: 0, 0
-  index: 1
-float
+  index: 0
+explode
   rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
+  xy: 1000, 0
+  size: 500, 500
+  orig: 500, 500
   offset: 0, 0
-  index: 2
-float
+  index: 0
+explode
   rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
+  xy: 1500, 0
+  size: 500, 500
+  orig: 500, 500
   offset: 0, 0
-  index: 3
-float
-  rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
-  offset: 0, 0
-  index: 4
-float
-  rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
-  offset: 0, 0
-  index: 5
-float
-  rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
-  offset: 0, 0
-  index: 6
-float
-  rotate: false
-  xy: 0, 0
-  size: 1146, 1000
-  orig: 1146, 1000
-  offset: 0, 0
-  index: 7
+  index: 0
+

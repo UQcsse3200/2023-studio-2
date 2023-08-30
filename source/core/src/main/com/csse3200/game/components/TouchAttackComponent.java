@@ -1,5 +1,6 @@
 package com.csse3200.game.components;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -114,6 +115,14 @@ public class TouchAttackComponent extends Component {
       // Valid damage dealt
       entity.getEvents().trigger("enemyAttack");
       targetStats.hit(combatStats);
+      Timer timer = new Timer();
+      timer.schedule(new TimerTask() {
+        @Override
+        public void run() {
+
+        }
+      }, 2000);
+
     }
 
     // Apply knockback

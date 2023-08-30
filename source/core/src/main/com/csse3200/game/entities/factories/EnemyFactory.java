@@ -83,6 +83,7 @@ public class EnemyFactory {
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
     animator.addAnimation("stand",0.3f,Animation.PlayMode.LOOP);
+    animator.addAnimation("attack",0.05f,Animation.PlayMode.LOOP);
     //animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
 
 

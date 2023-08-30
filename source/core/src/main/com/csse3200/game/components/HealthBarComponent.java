@@ -16,7 +16,6 @@ public class HealthBarComponent extends UIComponent {
     private final boolean center;
     private final float offsetY;
     private final float width;
-    private boolean setVisible = false;
     private ProgressBar healthBar;
 
 
@@ -49,7 +48,7 @@ public class HealthBarComponent extends UIComponent {
         this.healthBar.setWidth(SCALE_REDUCTION * width);
         updateUIPosition();
 
-        healthBar.setDisabled(true);
+        setEnabled(false);
 
         entity.getEvents().addListener("updateHealth", this::updateHealth);
     }
@@ -90,7 +89,7 @@ public class HealthBarComponent extends UIComponent {
      */
     @Override
     public void draw(SpriteBatch batch)  {
-        if (!healthBar.isDisabled()) {
+        if (enabled) {
             updateUIPosition();
             Matrix4 originalMatrix = batch.getProjectionMatrix().cpy(); // cpy() needed to properly set afterwards because calling set() seems to modify kept matrix, not replaces it
 
@@ -125,12 +124,12 @@ public class HealthBarComponent extends UIComponent {
     }
 
     public void show() {
-        healthBar.setDisabled(false);
+        setEnabled(true);
 
     }
 
     public void hide() {
-        healthBar.setDisabled(true);
+        setEnabled(false);
     }
 
     public ProgressBar getHealthBar() {

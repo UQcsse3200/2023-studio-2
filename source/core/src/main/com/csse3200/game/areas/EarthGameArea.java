@@ -32,11 +32,12 @@ public class EarthGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     private DialogueBox dialogueBox;
     private static final int NUM_TREES = 7;
-    private static final int NUM_MELEE_PTE = 2;
-    private static final int NUM_MELEE_DTE = 2;
-    private static final int NUM_RANGE_PTE = 2;
+    private static final int NUM_MELEE_PTE = 1;
+    private static final int NUM_MELEE_DTE = 3;
+    private static final int NUM_RANGE_PTE = 3;
     private static final int NUM_POWERUPS = 3;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(35, 3);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
@@ -61,7 +62,8 @@ public class EarthGameArea extends GameArea {
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/Ship.png",
             "images/stone_wall.png",
-            "images/oldman_down_1.png"
+            "images/oldman_down_1.png",
+            "images/Spawner.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -72,7 +74,8 @@ public class EarthGameArea extends GameArea {
             "images/rangeEnemy.atlas",
             "images/stone_wall.atlas",
             "images/dirt_wall.atlas",
-            "images/botanist.atlas"
+            "images/botanist.atlas",
+            "images/boss_enemy.atlas"
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -106,6 +109,7 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
+        spawnSpawner();
 
         spawnShip();
         spawnPlayer();
@@ -236,10 +240,14 @@ public class EarthGameArea extends GameArea {
         }
     }
 
+    /**
+     * Spawns all the enemies detailed in the Game Area.
+     */
     private void spawnEnemies() {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
+        // Spawning enemies based on set number of each type
         for (int i = 0; i < NUM_MELEE_PTE; i++) {
             GridPoint2 randomPos1 = RandomUtils.random(minPos, maxPos);
             Entity meleePTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.PTE);
@@ -252,13 +260,16 @@ public class EarthGameArea extends GameArea {
             spawnEntityAt(meleeDTE, randomPos2, true, true);
         }
 
-//        for (int i = 0; i < NUM_RANGE_PTE; i++) {
-//            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
-//            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
-//            spawnEntityAt(rangePTE, randomPos3, true, true);
-//        }
+        for (int i = 0; i < NUM_RANGE_PTE; i++) {
+            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
+            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+            spawnEntityAt(rangePTE, randomPos3, true, true);
+        }
     }
 
+    /**
+     * Spawns the boss for the Game Area's map.
+     */
     private void spawnBoss() {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -267,7 +278,11 @@ public class EarthGameArea extends GameArea {
         Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
         spawnEntityAt(boss, randomPos, true, true);
         boss.addComponent(new DialogComponent(dialogueBox));
+    }
 
+    private void spawnSpawner() {
+        Entity spawner = StructureFactory.createSpawner(targetables, 5000, EnemyType.Melee, EnemyBehaviour.PTE, 5);
+        spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
     }
 
     private void playMusic() {

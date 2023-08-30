@@ -48,6 +48,7 @@ public class ProjectileFactory {
 
         TextureAtlas atlas = new TextureAtlas(config.atlas);
 
+        // Animations for the bullet
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         atlas);
@@ -73,7 +74,7 @@ public class ProjectileFactory {
      * @return The base projectile entity
      */
     public static Entity createBaseBullet() {
-
+        // Makes bullet entity with physical interaction components
         Entity bullet =
                 new Entity()
                         .addComponent(new PhysicsComponent())
@@ -86,7 +87,7 @@ public class ProjectileFactory {
                                 PhysicsLayer.STRUCTURE),
                                 1.5f));
 
-
+        // Image scaling
         PhysicsUtils.setScaledCollider(bullet, 0.05f, 0.05f);
         return bullet;
     }

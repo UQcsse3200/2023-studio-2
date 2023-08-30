@@ -13,6 +13,7 @@
     "speed": 5,
     "behaviour": "DTE",
     "atlas": "images/troll_enemy.atlas"
+
   },
 
   "rangeEnemyPTE": {
@@ -36,7 +37,7 @@
     "baseAttack": 25,
     "speed": 8,
     "specialAttack": 40,
-    "atlas": "images/ghostKing.atlas"
+    "atlas": "images/boss_enemy.atlas"
   },
 
   "rangeBossPTE": {

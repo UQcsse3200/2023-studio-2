@@ -1,465 +1,276 @@
 {
-com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	button: {
-		file: fonts/pixel_18.fnt
+	"BitmapFont": {
+		"thick_black": {
+			"file": "fonts/kenvector_future.fnt",
+			"scaledSize": -1,
+			"markupEnabled": false,
+			"flip": false
+		},
+		"thick_white": {
+			"file": "fonts/kenvector_future(1).fnt",
+			"scaledSize": 12,
+			"markupEnabled": false,
+			"flip": false
+		},
+		"thin_black": {
+			"file": "fonts/kenvector_future_thin.fnt",
+			"scaledSize": -1,
+			"markupEnabled": true,
+			"flip": false
+		},
+		"thin_white": {
+			"file": "fonts/kenvector_future_thin_white.fnt",
+			"scaledSize": 12,
+			"markupEnabled": false,
+			"flip": false
+		},
+		"title_black": {
+			"file": "fonts/kenvector_future_title.fnt",
+			"scaledSize": -1,
+			"markupEnabled": false,
+			"flip": false
+		},
+		"title_white": {
+			"file": "fonts/kenvector_future_title_white.fnt",
+			"scaledSize": -1,
+			"markupEnabled": false,
+			"flip": false
+		}
+	},
+	"Color": {
+		"black": {
+			"hex": "000000ff"
+		},
+		"blue": {
+			"hex": "1ea7e1ff"
+		},
+		"darkGrey": {
+			"hex": "444849ff"
+		},
+		"orange": {
+			"hex": "e86a17ff"
+		},
+		"white": {
+			"hex": "fbffffff"
+		}
+	},
+	"TintedDrawable": {
+		"default_progress": {
+			"name": "grey_sliderHorizontal",
+			"color": "blue"
+		},
+		"default_progress_v": {
+			"name": "grey_sliderVertical",
+			"color": "blue"
+		},
+		"orange_progress": {
+			"name": "grey_sliderHorizontal",
+			"color": "orange"
+		},
+		"orange_progress_v": {
+			"name": "grey_sliderVertical",
+			"color": "orange"
+		},
+		"grey_button_hover": {
+			"name": "grey_button_high.9",
+			"color": {
+				"hex": "e9e9e9ff"
+			}
+		}
+	},
+	"ButtonStyle": {
+		"default": {
+			"up": "grey_button_high.9",
+			"down": "blue_button_select.9",
+			"over": "grey_button_hover"
+		},
+		"orange": {
+			"up": "grey_button_high.9",
+			"down": "red_button_select.9",
+			"over": "grey_button_hover"
+		}
+	},
+	"CheckBoxStyle": {
+		"default": {
+			"checkboxOn": "blue_boxCheckmark",
+			"checkboxOff": "grey_box",
+			"font": "thin_white",
+			"fontColor": "white"
+		},
+		"orange": {
+			"checkboxOn": "red_boxCheckmark",
+			"checkboxOff": "grey_box",
+			"font": "thin_white"
+		},
+		"cross_default": {
+			"checkboxOn": "blue_boxCross",
+			"checkboxOff": "grey_box",
+			"font": "thin_white"
+		},
+		"cross_orange": {
+			"checkboxOn": "red_boxCross",
+			"checkboxOff": "grey_box",
+			"font": "thin_white"
+		}
+	},
+	"ImageTextButtonStyle": {
+		"default": {
+			"font": "thick_black"
+		}
+	},
+	"LabelStyle": {
+		"default": {
+			"font": "thin_white"
+		},
+		"title": {
+			"font": "title_white"
+		},
+		"thick": {
+			"font": "thick_white"
+		},
+		"small": {
+			"font": "thin_white"
+		},
+		"large": {
+			"font": "thick_black"
+		}
+	},
+	"ListStyle": {
+		"default": {
+			"font": "thin_white",
+			"fontColorSelected": "white",
+			"fontColorUnselected": "black",
+			"selection": "blue_button05",
+			"background": "grey_button_high.9"
+		},
+		"orange": {
+			"font": "thin_white",
+			"fontColorSelected": "white",
+			"fontColorUnselected": "black",
+			"selection": "red_button05.9",
+			"background": "grey_button_high.9"
+		}
+	},
+	"ProgressBarStyle": {
+		"default-horizontal": {
+			"background": "grey_sliderHorizontal",
+			"knobBefore": "default_progress"
+		},
+		"default-vertical": {
+			"background": "grey_sliderVertical",
+			"knob": "default_progress_v"
+		},
+		"orange-horizontal": {
+			"background": "grey_sliderHorizontal",
+			"knobBefore": "orange_progress"
+		},
+		"orange-vertical": {
+			"background": "grey_sliderVertical",
+			"knob": "orange_progress_v"
+		}
+	},
+	"ScrollPaneStyle": {
+		"default": {
+			"hScrollKnob": "squareBlue",
+			"vScrollKnob": "squareBlue"
+		},
+		"orange": {
+			"hScrollKnob": "squareRed",
+			"vScrollKnob": "squareRed"
+		}
+	},
+	"SelectBoxStyle": {
+		"default": {
+			"font": "thin_white",
+			"fontColor": "black",
+			"overFontColor": "white",
+			"background": "blue_button_select.9",
+			"scrollStyle": "default",
+			"listStyle": "default",
+			"backgroundOver": "blue_button05",
+			"backgroundOpen": "blue_button05"
+		},
+		"orange": {
+			"font": "thin_white",
+			"fontColor": "black",
+			"overFontColor": "white",
+			"background": "red_button_select.9",
+			"scrollStyle": "orange",
+			"listStyle": "orange",
+			"backgroundOver": "red_button05.9",
+			"backgroundOpen": "red_button05.9"
+		}
+	},
+	"SliderStyle": {
+		"default-horizontal": {
+			"background": "grey_sliderHorizontal",
+			"knob": "squareBlue"
+		},
+		"default-vertical": {
+			"background": "grey_sliderVertical",
+			"knob": "squareBlue"
+		},
+		"orange-horizontal": {
+			"background": "grey_sliderHorizontal",
+			"knob": "squareRed"
+		},
+		"orange-vertical": {
+			"background": "grey_sliderVertical",
+			"knob": "squareRed"
+		}
+	},
+	"TextButtonStyle": {
+		"default": {
+			"font": "thin_white",
+			"fontColor": "black",
+			"downFontColor": "blue",
+			"overFontColor": "darkGrey",
+			"up": "grey_button_high.9",
+			"down": "blue_button_select.9",
+			"over": "grey_button_hover"
+		},
+		"orange": {
+			"font": "thin_white",
+			"fontColor": "black",
+			"downFontColor": "orange",
+			"overFontColor": "darkGrey",
+			"up": "grey_button_high.9",
+			"down": "red_button_select.9",
+			"over": "grey_button_hover"
+		}
+	},
+	"TextFieldStyle": {
+		"default": {
+			"font": "thin_white",
+			"fontColor": "black",
+			"background": "grey_button_high.9",
+			"focusedBackground": "blue_button_select.9"
+		}
+	},
+	"TextTooltipStyle": {
+		"default": {
+			"label": "default",
+			"background": "blue_button05"
+		},
+		"orange": {
+			"label": "default",
+			"background": "red_button05.9"
+		}
+	},
+	"TreeStyle": {
+		"default": {
+			"plus": "grey_arrowDownGrey",
+			"minus": "grey_arrowDownWhite"
+		}
+	},
+	"WindowStyle": {
+		"default": {
+			"background": "metalPanel_red",
+			"titleFont": "thick_white"
+		},
+		"orange": {
+			"background": "metalPanel_red",
+			"titleFont": "thick_white"
+		}
 	}
-	font: {
-		file: fonts/pixel_18.fnt
-	}
-	title: {
-		file: fonts/pixel_32.fnt
-	}
-	font_small: {
-		file: fonts/pixel_16.fnt
-	}
-	font_large: {
-		file: fonts/pixel_26.fnt
-	}
-}
-com.badlogic.gdx.graphics.Color: {
-	black: {
-		r: 0
-		g: 0
-		b: 0
-		a: 1
-	}
-	color: {
-		r: 0.3372549
-		g: 0.8
-		b: 0.44705883
-		a: 1
-	}
-	gray: {
-		r: 0.5
-		g: 0.5
-		b: 0.5
-		a: 1
-	}
-	highlight: {
-		r: 0.42156863
-		g: 1
-		b: 0.5552286
-		a: 1
-	}
-	pressed: {
-		r: 0.2529412
-		g: 0.6
-		b: 0.33313715
-		a: 1
-	}
-	selection: {
-		r: 0.22745098
-		g: 0.59607846
-		b: 0.85882354
-		a: 1
-	}
-	white: {
-		r: 1
-		g: 1
-		b: 1
-		a: 1
-	}
-	window: {
-		r: 0.76862746
-		g: 0.4509804
-		b: 0
-		a: 1
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
-	button-c: {
-		name: button
-		color: color
-	}
-	button-close-c: {
-		name: button-close
-		color: color
-	}
-	button-pressed-c: {
-		name: button-pressed
-		color: color
-	}
-	button-h: {
-		name: button
-		color: highlight
-	}
-	checkbox-c: {
-		name: checkbox
-		color: color
-	}
-	checkbox-pressed-c: {
-		name: checkbox-pressed
-		color: color
-	}
-	list-c: {
-		name: list
-		color: color
-	}
-	radio-pressed-c: {
-		name: radio-pressed
-		color: color
-	}
-	scrollbar-c: {
-		name: scrollbar
-		color: color
-	}
-	scrollbar-android-c: {
-		name: scrollbar-android
-		color: color
-	}
-	select-box-c: {
-		name: select-box
-		color: color
-	}
-	select-box-pressed-c: {
-		name: select-box-pressed
-		color: color
-	}
-	slider-horizontal-c: {
-		name: slider-horizontal
-		color: color
-	}
-	slider-knob-c: {
-		name: slider-knob
-		color: color
-	}
-	slider-vertical-c: {
-		name: slider-vertical
-		color: color
-	}
-	splitpane-horizontal-c: {
-		name: splitpane-horizontal
-		color: color
-	}
-	splitpane-vertical-c: {
-		name: splitpane-vertical
-		color: color
-	}
-	textfield-c: {
-		name: textfield
-		color: color
-	}
-	tooltip-c: {
-		name: tooltip
-		color: color
-	}
-	touchpad-c: {
-		name: touchpad
-		color: color
-	}
-	touchpad-knob-c: {
-		name: touchpad-knob
-		color: color
-	}
-	tree-minus-c: {
-		name: tree-minus
-		color: color
-	}
-	tree-plus-c: {
-		name: tree-plus
-		color: color
-	}
-	color: {
-		name: white
-		color: color
-	}
-	window-c: {
-		name: window
-		color: color
-	}
-	selection: {
-		name: white
-		color: selection
-	}
-	slider-horizontal-s: {
-		name: slider-horizontal
-		color: pressed
-	}
-	slider-vertical-s: {
-		name: slider-vertical
-		color: selection
-	}
-	select-box-pressed-h: {
-		name: select-box-pressed
-		color: highlight
-	}
-	select-box-h: {
-		name: select-box
-		color: highlight
-	}
-	slider-knob-h: {
-		name: slider-knob
-		color: highlight
-	}
-	slider-horizontal-p: {
-		name: slider-horizontal
-		color: pressed
-	}
-	slider-vertical-p: {
-		name: slider-vertical
-		color: pressed
-	}
-	black: {
-		name: white
-		color: black
-	}
-	button-close-p: {
-		name: button-close
-		color: pressed
-	}
-	button-close-h: {
-		name: button-close
-		color: highlight
-	}
-	button-close-s: {
-		name: button-close
-		color: selection
-	}
-	window-w: {
-		name: window
-		color: window
-	}
-	button-p: {
-		name: button
-		color: pressed
-	}
-	slider-fancy-p: {
-		name: slider-fancy
-		color: pressed
-	}
-	checkbox-h: {
-		name: checkbox
-		color: highlight
-	}
-	checkbox-pressed-h: {
-		name: checkbox-pressed
-		color: highlight
-	}
-	checkbox-p: {
-		name: checkbox
-		color: pressed
-	}
-	checkbox-pressed-p: {
-		name: checkbox-pressed
-		color: pressed
-	}
-	radio-pressed-h: {
-		name: radio-pressed
-		color: highlight
-	}
-	radio-pressed-p: {
-		name: radio-pressed
-		color: pressed
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
-	default: {
-		up: button-c
-		down: button-p
-		over: button-h
-	}
-	close: {
-		up: button-close-c
-		down: button-close-p
-		over: button-close-h
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
-	default: {
-		checkboxOn: checkbox-pressed-c
-		checkboxOff: checkbox-c
-		font: button
-		fontColor: color
-		downFontColor: pressed
-		overFontColor: highlight
-	}
-	radio: {
-		checkboxOn: radio-pressed-c
-		checkboxOff: checkbox-c
-		font: button
-		fontColor: color
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
-	default: {
-		up: button-c
-		down: button-p
-		over: button-h
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
-	default: {
-		font: button
-		fontColor: white
-		downFontColor: white
-		overFontColor: gray
-		up: button-c
-		down: button-p
-		over: button-h
-	}
-	check: {
-		imageUp: checkbox-c
-		imageDown: checkbox-pressed-p
-		imageOver: checkbox-h
-		imageChecked: checkbox-pressed-c
-		imageCheckedOver: checkbox-pressed-h
-		font: button
-		fontColor: color
-		downFontColor: pressed
-		overFontColor: highlight
-	}
-	radio: {
-		imageUp: checkbox-c
-		imageDown: radio-pressed-p
-		imageOver: checkbox-h
-		imageChecked: radio-pressed-c
-		imageCheckedOver: radio-pressed-h
-		font: button
-		fontColor: color
-		downFontColor: pressed
-		overFontColor: highlight
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	default: {
-		font: font
-		fontColor: black
-	}
-	button: {
-		font: button
-		fontColor: color
-	}
-	title: {
-		font: title
-		fontColor: color
-	}
-	small: {
-		font: font_small,
-		fontColor: black
-	}
-	large: {
-		font: font_large,
-		fontColor: black
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
-	default: {
-		font: font
-		fontColorSelected: white
-		fontColorUnselected: white
-		selection: selection
-		background: list-c
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
-	default-horizontal: {
-		background: slider-horizontal-c
-		knobBefore: slider-horizontal-s
-	}
-	default-vertical: {
-		background: slider-vertical-c
-		knobBefore: slider-vertical-s
-	}
-	fancy: {
-		background: slider-fancy-p
-		knobBefore: slider-fancy-knob
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
-	default: {
-		hScrollKnob: scrollbar-c
-		vScrollKnob: scrollbar-c
-	}
-	android: {
-		hScrollKnob: scrollbar-android-c
-		vScrollKnob: scrollbar-android-c
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
-	default: {
-		font: font
-		fontColor: white
-		background: select-box-c
-		scrollStyle: default
-		listStyle: default
-		backgroundOver: select-box-h
-		backgroundOpen: select-box-pressed-c
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
-	default-horizontal: {
-		knobOver: slider-knob-h
-		knobDown: slider-knob-h
-		background: slider-horizontal-p
-		knob: slider-knob-c
-		knobBefore: slider-horizontal-s
-	}
-	default-vertical: {
-		knobOver: slider-knob-h
-		knobDown: slider-knob-h
-		background: slider-vertical-p
-		knob: slider-knob-c
-		knobBefore: slider-vertical-s
-	}
-	fancy: {
-		knobOver: slider-knob-h
-		knobDown: slider-knob-h
-		background: slider-fancy-p
-		knob: slider-knob-c
-		knobBefore: slider-fancy-knob
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
-	default-horizontal: {
-		handle: splitpane-horizontal-c
-	}
-	default-vertical: {
-		handle: splitpane-vertical-c
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-	default: {
-		font: button
-		fontColor: white
-		downFontColor: white
-		overFontColor: gray
-		up: button-c
-		down: button-p
-		over: button-h
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
-	default: {
-		font: font
-		fontColor: white
-		background: textfield-c
-		cursor: white
-		selection: selection
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
-	default: {
-		label: default
-		background: tooltip-c
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
-	default: {
-		background: touchpad-c
-		knob: touchpad-knob-c
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
-	default: {
-		plus: tree-plus-c
-		minus: tree-minus-c
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
-	default: {
-		background: window-w
-		titleFont: font
-		titleFontColor: white
-	}
-}
 }

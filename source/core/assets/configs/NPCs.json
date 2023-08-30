@@ -11,5 +11,9 @@
     "attackMultiplier": 1,
     "isImmune": false,
     "spookyFactor": 7
+  },
+  "botanist": {
+    "health": 50,
+    "healingAbility": 15
   }
 }

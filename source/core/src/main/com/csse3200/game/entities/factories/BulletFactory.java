@@ -43,6 +43,8 @@ public class BulletFactory {
                         atlas);
         animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("explode",0.3f, Animation.PlayMode.LOOP);
+
 
         enemy
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 0 , false))

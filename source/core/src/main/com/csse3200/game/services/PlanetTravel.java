@@ -12,16 +12,9 @@ import com.csse3200.game.services.GameState;
         private final GdxGame game;
 
         /**
-         * The current gameState
-         */
-        private final GameState gameState;
-
-        /**
          * Constructor to set the current game state for using
-         * @param gameState
          */
-        public PlanetTravel(GameState gameState, GdxGame game) {
-            this.gameState = gameState;
+        public PlanetTravel(GdxGame game) {
             this.game = game; // Set the game object
         }
 
@@ -31,14 +24,12 @@ import com.csse3200.game.services.GameState;
          */
         public void moveToNextPlanet(Object planet) {
             game.setScreen(GdxGame.ScreenType.SPACE_MAP);
-            gameState.put("planet", planet);
+            ServiceLocator.getGameStateObserverService().trigger("setCurrentPlanet", planet);
         }
 
         /**
          * Return the current planet where player are in
          * @return current planet
          */
-        public Object returnCurrent() {
-            return gameState.get("planet");
-        }
+        
     }

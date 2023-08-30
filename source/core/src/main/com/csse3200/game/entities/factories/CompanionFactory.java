@@ -1,13 +1,9 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.graphics.Color;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.CompanionInteractionControllerComponent;
 import com.csse3200.game.components.Companion.CompanionInventoryComponent;
-import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -38,6 +34,8 @@ public class CompanionFactory {
      */
     //added a player reference for basic player tracking
     public static Entity createCompanion(Entity playerEntity) {
+
+
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForCompanion();
 
@@ -54,6 +52,11 @@ public class CompanionFactory {
                         .addComponent(new FollowComponent(playerEntity, 4.f))
                         .addComponent(new CompanionInteractionControllerComponent());
 
+
+
+        int health = playerEntity.getComponent(CombatStatsComponent.class).getHealth();
+        CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(true, 0, health);
+        Companion.addComponent(companionStatsDisplay);
 
         PhysicsUtils.setScaledCollider(Companion, 0.4f, 0.2f);
         Companion.getComponent(ColliderComponent.class).setDensity(1.0f);

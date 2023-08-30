@@ -72,7 +72,7 @@ public class StructureFactory {
                         .addComponent(new InteractableComponent(entity -> {
                             //Exit to main menu if resource > 1000
                             GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
-                            String resourceKey = "resource/" + Resource.Unobtanium;
+                            String resourceKey = "resource/" + Resource.Solstite;
                             int currentResourceCount = (int) gameStateOb.getStateData(resourceKey);
                             if (currentResourceCount > 1000) {
                                 game.setScreen(GdxGame.ScreenType.MAIN_MENU);

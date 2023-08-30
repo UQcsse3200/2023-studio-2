@@ -40,6 +40,7 @@ public class TouchAttackComponent extends Component {
   private HitboxComponent hitboxComponent;
   private boolean leftContact;
   private Timer triggerTimer;
+
   /**
    * Create a component which attacks entities on collision, without knockback.
    * @param targetLayer The physics layer of the target's collider.
@@ -58,6 +59,9 @@ public class TouchAttackComponent extends Component {
     this.knockbackForce = knockback;
   }
 
+  /**
+   * Creates listener that checks if current entity and a target entity come into contact.
+   */
   @Override
   public void create() {
     entity.getEvents().addListener("collisionStart", this::onCollisionStart);
@@ -68,7 +72,13 @@ public class TouchAttackComponent extends Component {
 
   }
 
-
+  /**
+   * Initial collision between current entity and target entity.
+   * Deals single instance of damage when hit by enemy.
+   * Deals Damage over time if enemy hits a destructible and still in contact with entity.
+   * @param me
+   * @param other
+   */
   private void onCollisionStart(Fixture me, Fixture other) {
 
     if (hitboxComponent.getFixture() != me) {
@@ -120,6 +130,9 @@ public class TouchAttackComponent extends Component {
       // Valid damage dealt
       entity.getEvents().trigger("enemyAttack");
       targetStats.hit(combatStats);
+
+      // Gives a delay every time there is a collision for the
+      // attack animation to complete
       Timer timer = new Timer();
       timer.schedule(new TimerTask() {
         @Override
@@ -128,8 +141,6 @@ public class TouchAttackComponent extends Component {
         }
       }, 2000);
     }
-
-
 
     // Apply knockback
     PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
@@ -141,6 +152,11 @@ public class TouchAttackComponent extends Component {
     }
   }
 
+  /**
+   * Indicates when current entity loses contact with target entity.
+   * @param me
+   * @param other
+   */
   private void onCollisionEnd(Fixture me, Fixture other) {
     // Stop dealing tick damage
     leftContact = true;

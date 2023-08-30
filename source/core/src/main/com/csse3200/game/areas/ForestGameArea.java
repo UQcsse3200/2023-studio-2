@@ -315,7 +315,7 @@ public class ForestGameArea extends GameArea {
             terrain.getMapBounds(0).sub(1, 1).y/3);
     Entity ship = NPCFactory.createBotanist();
     spawnEntityAt(ship, spawnPosition, false, false);
-    ship.addComponent(new DialogComponent(dialogueBox));
+    //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
   }
 
   private void spawnBoss() {
@@ -325,7 +325,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
     Entity boss = EnemyFactory.createBoss(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
-    boss.addComponent(new DialogComponent(dialogueBox));
+    //boss.addComponent(new DialogComponent(dialogueBox));
   }
 
   private void playMusic() {

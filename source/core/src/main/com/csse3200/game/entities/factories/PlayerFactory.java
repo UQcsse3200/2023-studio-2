@@ -28,11 +28,9 @@ import com.csse3200.game.ui.DialogueBox;
 
 public class PlayerFactory {
 
+  private static DialogueBox dialogueBox;
   private static final origiPlayerConfig stats =
       FileLoader.readClass(origiPlayerConfig.class, "configs/player.json");
-
-  private static DialogueBox dialogueBox;
-
 
 
   /**
@@ -55,10 +53,10 @@ public class PlayerFactory {
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())
 
-            .addComponent(new DialogComponent(dialogueBox))
+            .addComponent(new InteractionControllerComponent(false))
 
+            .addComponent(new DialogComponent(dialogueBox));
 
-            .addComponent(new InteractionControllerComponent(false));
 
 
 

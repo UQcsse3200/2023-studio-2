@@ -11,6 +11,8 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.components.ExtractorRepairPartComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -18,15 +20,9 @@ import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Factory to create structure entities - such as extractors or ships.
-<<<<<<< HEAD
+
  *
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
- */
-//public class StructureFactory { This here, why is this line here.... someone should check and decide its fate!
-    /**
-     * Creates a new extractor.
-     *
-=======
  */
 public class StructureFactory {
 
@@ -75,9 +71,18 @@ public class StructureFactory {
         return extractor;
     }
 
-    /**
-     * Creates a ship entity
-     */
+
+
+
+    public static Entity createExtractorRepairPart() {
+        Entity extractorRepairPart = new Entity()
+                .addComponent(new TextureRenderComponent("images/fire.png"))
+                .addComponent(new ExtractorRepairPartComponent());
+        extractorRepairPart.setScale(1.8f, 2f);
+        return extractorRepairPart;
+    }
+
+
     public static Entity createShip() {
         Entity ship =
                 new Entity()

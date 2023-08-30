@@ -105,6 +105,7 @@ public class NPCFactory {
             new Entity()
                     .addComponent(new TextureRenderComponent("images/oldman_down_1.png"))
                     .addComponent(new PhysicsComponent())
+                    .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE));
        FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 

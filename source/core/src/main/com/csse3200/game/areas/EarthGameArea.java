@@ -30,7 +30,7 @@ import java.util.ArrayList;
 /** Planet Earth area for the demo game with trees, a player, and some enemies. */
 public class EarthGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
-    private DialogueBox dialogueBox;
+    //private DialogueBox dialogueBox;
     private static final int NUM_TREES = 7;
     private static final int NUM_MELEE_ENEMIES_PTE = 1;
     private static final int NUM_MELEE_ENEMIES_DTE = 1;
@@ -138,7 +138,7 @@ public class EarthGameArea extends GameArea {
                 terrain.getMapBounds(0).sub(2, 2).y/3);
         Entity botanist = NPCFactory.createBotanist();
         spawnEntityAt(botanist, spawnPosition, true, false);
-        botanist.addComponent(new DialogComponent(dialogueBox));
+        //botanist.addComponent(new DialogComponent(dialogueBox));
 
     }
     private void spawnAsteroids() {
@@ -245,28 +245,28 @@ public class EarthGameArea extends GameArea {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
-            melee.addComponent(new DialogComponent(dialogueBox));
+            //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
-            melee.addComponent(new DialogComponent(dialogueBox));
+            //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
-            melee.addComponent(new DialogComponent(dialogueBox));
+            //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
             spawnEntityAt(ranged, randomPos, true, true);
-            ranged.addComponent(new DialogComponent(dialogueBox));
+            //ranged.addComponent(new DialogComponent(dialogueBox));
         }
     }
 
@@ -277,7 +277,7 @@ public class EarthGameArea extends GameArea {
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
         Entity boss = EnemyFactory.createBoss(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
         spawnEntityAt(boss, randomPos, true, true);
-        boss.addComponent(new DialogComponent(dialogueBox));
+        //boss.addComponent(new DialogComponent(dialogueBox));
 
     }
 

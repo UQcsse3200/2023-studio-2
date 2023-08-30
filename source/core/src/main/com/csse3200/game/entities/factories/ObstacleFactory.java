@@ -114,6 +114,16 @@ public class ObstacleFactory {
     asteroid.setScale(width, height);
     return asteroid;
   }
+
+  public static Entity createObstacleEnemy(float width, float height){
+    Entity enemy = new Entity()
+            .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new TextureRenderComponent("images/obstacle-enemy.png"));
+    enemy.setScale(width, height);
+    return enemy;
+  }
+
   public static Entity createObstacleGameGoal(float width, float height){
     Entity goal = new Entity()
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))

@@ -16,7 +16,6 @@ public class RangeChase extends DefaultTask implements PriorityTask {
   private final int priority;
   private final float viewDistance;
   private final float maxChaseDistance;
-
   private final float minChaseDistance;
   private final PhysicsEngine physics;
   private final DebugRenderer debugRenderer;

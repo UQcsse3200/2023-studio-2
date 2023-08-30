@@ -1,5 +1,6 @@
 package com.csse3200.game.components.tasks;
 
+import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
@@ -8,8 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Wander around by moving a random position within a range of the starting position. Wait a little
- * bit between movements. Requires an entity with a PhysicsMovementComponent.
+ * Waits around for a set amount of time and then fires a projectile at a target.
  */
 public class AimTask extends DefaultTask implements PriorityTask {
 
@@ -24,9 +24,10 @@ public class AimTask extends DefaultTask implements PriorityTask {
 
 
   /**
-   * called.
+   * creates an aim task.
    *
-   * @param waitTime How long in seconds to wait between wandering.
+   * @param waitTime How long in seconds to wait between firing a projectile.
+   * @param target The target for
    */
   public AimTask(float waitTime, Entity target, float range) {
     this.waitTime = waitTime;
@@ -70,10 +71,20 @@ public class AimTask extends DefaultTask implements PriorityTask {
     currentTask.update();
   }
 
+  /**
+   * Returns the distance between the current entity and the target location.
+   *
+   * @return The distance between the owner's entity and the target location.
+   */
   private float getDistanceToTarget() {
     return owner.getEntity().getPosition().dst(target.getPosition());
   }
 
+  /**
+   * Returns the priority if task is currently active.
+   *
+   * @return The current priority.
+   */
   private int getActivePriority() {
     float dst = getDistanceToTarget();
     if (dst > range) {
@@ -82,6 +93,11 @@ public class AimTask extends DefaultTask implements PriorityTask {
     return priority;
   }
 
+  /**
+   * Returns the priority if task is currently inactive.
+   *
+   * @return The current priority.
+   */
   private int getInactivePriority() {
     float dst = getDistanceToTarget();
     if (dst <= range) {
@@ -90,19 +106,29 @@ public class AimTask extends DefaultTask implements PriorityTask {
     return -1;
   }
 
+  /**
+   * Makes the entity wait.
+   */
   private void startWaiting() {
     logger.debug("Starting waiting");
     this.owner.getEntity().getEvents().trigger("standing");
     swapTask(waitTask);
   }
 
-
+  /**
+   * Makes the entity aim.
+   */
   private void startAiming() {
     logger.debug("Starting aiming");
     this.owner.getEntity().getEvents().trigger("standing");
     swapTask(aimTask);
   }
 
+  /**
+   * Stops the old task being performed and starts the new one.
+   *
+   * @param newTask The task to be performed.
+   */
   private void swapTask(Task newTask) {
     if (currentTask != null) {
       currentTask.stop();

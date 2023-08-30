@@ -19,8 +19,6 @@ public class NPCConfigs {
   public BossConfig rangeBossPTE = new BossConfig();
   public BossConfig rangeBossDTE = new BossConfig();
 
-  public BulletConfig bullet = new BulletConfig();
-
   public EnemyConfig GetEnemyConfig(EnemyType type, EnemyBehaviour behaviour) {
     EnemyConfig config = null;
     if (type == EnemyType.Ranged) {
@@ -57,9 +55,4 @@ public class NPCConfigs {
     }
     return config;
   }
-
-  public BulletConfig GetBulletConfig() {
-    return bullet;
-  }
-
 }

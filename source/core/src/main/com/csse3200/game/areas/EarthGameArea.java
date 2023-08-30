@@ -1,8 +1,12 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
@@ -14,6 +18,8 @@ import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.TerrainService;
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -24,9 +30,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
+
 /** Planet Earth area for the demo game with trees, a player, and some enemies. */
 public class EarthGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
+    //private DialogueBox dialogueBox;
     private static final int NUM_TREES = 7;
     private static final int NUM_MELEE_ENEMIES_PTE = 1;
     private static final int NUM_MELEE_ENEMIES_DTE = 1;
@@ -57,7 +65,9 @@ public class EarthGameArea extends GameArea {
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/Ship.png",
-            "images/stone_wall.png"
+            "images/stone_wall.png",
+            "images/oldman_down_1.png",
+            "images/SpaceMiniGameBackground.png" // For the minigame popup window test
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -67,10 +77,11 @@ public class EarthGameArea extends GameArea {
             "images/troll_enemy.atlas",
             "images/rangeEnemy.atlas",
             "images/stone_wall.atlas",
-            "images/dirt_wall.atlas"
+            "images/dirt_wall.atlas",
+            "images/botanist.atlas"
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};
-    private static final String backgroundMusic = "sounds/theEND.mp3";
+    private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
     private static final String[] earthMusic = {backgroundMusic};
 
     private final TerrainFactory terrainFactory;
@@ -108,23 +119,44 @@ public class EarthGameArea extends GameArea {
         spawnEnemies();
         spawnBoss();
         spawnAsteroids();
+        spawnBotanist();
 
         playMusic();
     }
 
     private void spawnEnvironment() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
-
+        Entity environment;
         for (int y = 0; y < collisionLayer.getHeight(); y++) {
             for (int x = 0; x < collisionLayer.getWidth(); x++) {
                 TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, collisionLayer.getHeight() - 1 - y);
                 if (cell != null) {
+                    MapObjects objects = cell.getTile().getObjects();
                     GridPoint2 tilePosition = new GridPoint2(x, collisionLayer.getHeight() - 1 - y);
-                    Entity environment = ObstacleFactory.createEnvironment();
+                    if (objects.getCount() >= 1) {
+                        RectangleMapObject object = (RectangleMapObject) objects.get(0);
+                        Rectangle collisionBox = object.getRectangle();
+                        float collisionX = 0.5f-collisionBox.x / 16;
+                        float collisionY = 0.5f-collisionBox.y / 16;
+                        float collisionWidth = collisionBox.width / 32;
+                        float collisionHeight = collisionBox.height / 32;
+                        environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
+                    }
+                    else {
+                        environment = ObstacleFactory.createEnvironment();
+                    }
                     spawnEntityAt(environment, tilePosition, false, false);
                 }
             }
         }
+    }
+    private void spawnBotanist() {
+        GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(15, 2).x/2,
+                terrain.getMapBounds(0).sub(2, 2).y/3);
+        Entity botanist = NPCFactory.createBotanist();
+        spawnEntityAt(botanist, spawnPosition, true, false);
+        //botanist.addComponent(new DialogComponent(dialogueBox));
+
     }
     private void spawnAsteroids() {
         //Extra Spicy Asteroids
@@ -225,28 +257,33 @@ public class EarthGameArea extends GameArea {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
+
         for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
             spawnEntityAt(ranged, randomPos, true, true);
+            //ranged.addComponent(new DialogComponent(dialogueBox));
         }
     }
 
@@ -257,6 +294,8 @@ public class EarthGameArea extends GameArea {
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
         Entity boss = EnemyFactory.createBoss(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
         spawnEntityAt(boss, randomPos, true, true);
+        //boss.addComponent(new DialogComponent(dialogueBox));
+
     }
 
     private void playMusic() {

@@ -57,19 +57,38 @@ public class TerrainFactory {
   public TerrainComponent createTerrain() {
     ResourceService resourceService = ServiceLocator.getResourceService();
     TmxMapLoader mapLoader = new TmxMapLoader();
-    TiledMap tiledMap = mapLoader.load(Gdx.files.internal("map/base.tmx").file().getAbsolutePath());
+    TiledMap tiledMap = null;
+
+    try {
+      
+      tiledMap = mapLoader.load(Gdx.files.internal("map/base.tmx").file().getAbsolutePath());
+    } catch (Exception ex) {
+      
+      // Handle the exception (e.g., print an error message)
+      System.err.println("Error loading TiledMap: " + ex.getMessage());
+    }
+    
+
+
     TiledMapRenderer renderer = createRenderer(tiledMap, 0.5f / 16);
 
     return new TerrainComponent(camera, tiledMap, renderer, orientation, 0.5f);
   }
 
+
+
+  //Create terrain using testmap. This terrain is used by JunxianHuang for testing. Temporary method.
   public TerrainComponent createSpaceTerrain(TerrainType terrainType) {
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {
       case SPACE_DEMO:
         TextureRegion spaceVoid =
                 new TextureRegion(resourceService.getAsset("images/SpaceMiniGameBackground.png", Texture.class));
-        return createSpaceDemoTerrain(1f, spaceVoid);
+        return createSpaceDemoTerrain(1f,spaceVoid);
+      case REPAIR_DEMO:
+        TextureRegion extractorRepair =
+                new TextureRegion(resourceService.getAsset("images/ExtractorMiniGameBackground.png", Texture.class));
+        return createExtractorDemoTerrain(1f, extractorRepair);
       default:
         return null;
     }
@@ -90,6 +109,15 @@ public class TerrainFactory {
     TiledMapRenderer renderer= createRenderer(tiledMap,tileWorldSize/tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
+
+  private TerrainComponent createExtractorDemoTerrain(
+          float tileWorldSize, TextureRegion extractorRepair) {
+    GridPoint2 tilePixelSize = new GridPoint2(extractorRepair.getRegionWidth(),extractorRepair.getRegionHeight());
+    TiledMap tiledMap = createExtractorDemoTiles(tilePixelSize,extractorRepair);
+    TiledMapRenderer renderer= createRenderer(tiledMap,tileWorldSize/tilePixelSize.x * 20);
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
+  }
+
 
   private TiledMapRenderer createRenderer(TiledMap tiledMap, float tileScale) {
     switch (orientation) {
@@ -135,6 +163,19 @@ public class TerrainFactory {
 
   }
 
+  private TiledMap createExtractorDemoTiles(
+          GridPoint2 tileSize, TextureRegion extractorRepair) {
+    TiledMap tiledMap = new TiledMap();
+    TerrainTile spaceTile = new TerrainTile(extractorRepair);
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+
+    fillTiles(layer,MAP_SIZE,spaceTile);
+    tiledMap.getLayers().add(layer);
+    return tiledMap;
+
+  }
+
+
   private static void fillTilesAtRandom(
       TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile, int amount) {
     GridPoint2 min = new GridPoint2(0, 0);
@@ -166,6 +207,7 @@ public class TerrainFactory {
     FOREST_DEMO,
     FOREST_DEMO_ISO,
     FOREST_DEMO_HEX,
-    SPACE_DEMO
+    SPACE_DEMO,
+    REPAIR_DEMO
   }
 }

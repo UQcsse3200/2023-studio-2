@@ -3,11 +3,20 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.TitleBox;
+import com.csse3200.game.ui.DialogueBox;
+import com.csse3200.game.areas.ForestGameArea;
+
+import static com.csse3200.game.ui.UIComponent.skin;
 
 import java.util.logging.Logger;
 import java.util.Timer;
@@ -22,6 +31,7 @@ import java.util.TimerTask;
  * if target entity has a PhysicsComponent.
  */
 public class TouchAttackComponent extends Component {
+
   private short targetLayer;
   private float knockbackForce = 0f;
   private CombatStatsComponent combatStats;
@@ -53,9 +63,12 @@ public class TouchAttackComponent extends Component {
     combatStats = entity.getComponent(CombatStatsComponent.class);
     hitboxComponent = entity.getComponent(HitboxComponent.class);
     leftContact = true;
+
   }
 
+
   private void onCollisionStart(Fixture me, Fixture other) {
+
     if (hitboxComponent.getFixture() != me) {
       // Not triggered by hitbox, ignore
       return;
@@ -68,6 +81,8 @@ public class TouchAttackComponent extends Component {
     // Has come into contact
 
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+    Entity source = ((BodyUserData) me.getBody().getUserData()).entity;
+    DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
     leftContact = false;
 
@@ -94,12 +109,16 @@ public class TouchAttackComponent extends Component {
 
   private void hitOnce(Entity target, CombatStatsComponent targetStats){
     if (targetStats != null) {
+//      if(dialogue != null) {
+//        dialogue.showdialogue("You hit a Ghost");
+//      }
+        targetStats.hit(combatStats);
       // Valid damage dealt
       entity.getEvents().trigger("enemyAttack");
       targetStats.hit(combatStats);
     }
 
-    // Knockback
+    // Apply knockback
     PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
     if (physicsComponent != null && knockbackForce > 0f) {
       Body targetBody = physicsComponent.getBody();
@@ -108,12 +127,6 @@ public class TouchAttackComponent extends Component {
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
   }
-
-
-
-
-
-
 
   private void onCollisionEnd(Fixture me, Fixture other) {
     // Stop dealing tick damage

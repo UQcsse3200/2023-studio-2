@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.components.TouchAttackComponent;
@@ -52,18 +51,18 @@ public class EnemyFactory {
     EnemyConfig config = configs.GetEnemyConfig(type, behaviour);
     AnimationRenderComponent animator;
     AITaskComponent aiComponent = new AITaskComponent();
-
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
-
+    // Cycles through all targets
     for (Entity target : targets) {
+      // Adds the specific behaviour to entity
       EnemyBehaviourSelector(target, type, behaviour, aiComponent);
     }
 
     TextureAtlas atlas = new TextureAtlas(config.atlas);
     animator = new AnimationRenderComponent(atlas);
 
-
+    // Create enemy with basic functionalities seen in components
     Entity enemy =
         new Entity()
             .addComponent(new PhysicsComponent())
@@ -78,6 +77,7 @@ public class EnemyFactory {
                     PhysicsLayer.STRUCTURE),
                     1.5f));
 
+    // Animations for each enemy
     animator.addAnimation("float", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
@@ -85,29 +85,32 @@ public class EnemyFactory {
     animator.addAnimation("attack",0.05f,Animation.PlayMode.LOOP);
     //animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
 
-
+    // Adding in animation controllers into the new enemy
     enemy
             .addComponent(new EnemyAnimationController())
-            .addComponent(aiComponent)    // adds tasks depending on enemy type
+            // adds tasks depending on enemy type
+            .addComponent(aiComponent)
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 1, false));
 
+    // Scaling the enemy's visual size
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
-
     PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
     enemy.scaleHeight(2f);
+
     return enemy;
   }
 
   /**
    * Function to set the behaviour of the desired entity
    *
-   * @param target
-   * @param type
-   * @param behaviour
-   * @return task
+   * @param target The player entity
+   * @param type Melee, Ranged, Boss or Mixture of the referred
+   * @param behaviour Player or Destructible Targeting
    */
   private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent) {
+    // Ranged Enemies
     if (type == EnemyType.Ranged) {
+      // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
@@ -116,6 +119,7 @@ public class EnemyFactory {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
+      // Destructible Targeting
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
@@ -124,7 +128,9 @@ public class EnemyFactory {
         }
       }
     }
+    // Melee Enemy
     if (type == EnemyType.Melee) {
+      // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
@@ -132,6 +138,7 @@ public class EnemyFactory {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
+      // Destructible Targeting
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
@@ -140,8 +147,9 @@ public class EnemyFactory {
         }
       }
     }
-
+    // Boss Melee
     if (type == EnemyType.BossMelee) {
+      // Player Targetting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
@@ -149,6 +157,7 @@ public class EnemyFactory {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
+      // Destructible Targetting
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
@@ -157,8 +166,9 @@ public class EnemyFactory {
         }
       }
     }
-
+    // Boss Ranged (For future sprints)
     if (type == EnemyType.BossRanged) {
+      // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
@@ -166,6 +176,7 @@ public class EnemyFactory {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
+      // Destructible Targeting
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
@@ -176,6 +187,9 @@ public class EnemyFactory {
     }
   }
 
+  /**
+   * Throws error when attempting the instantiating of static class
+   */
   private EnemyFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

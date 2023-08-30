@@ -129,3 +129,31 @@ stand
    orig: 85, 148
    offset: 0, 0
    index: 0
+attack
+  rotate: false
+  xy: 391, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 575, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+dispose
+  rotate: false
+  xy: 391, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0
+dispose
+  rotate: false
+  xy: 575, 0
+  size: 85, 148
+  orig: 85, 148
+  offset: 0, 0
+  index: 0

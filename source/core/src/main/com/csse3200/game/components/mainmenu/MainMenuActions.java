@@ -1,7 +1,13 @@
 package com.csse3200.game.components.mainmenu;
 
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.ForestGameArea;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.Navigation;
+import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.factories.RenderFactory;
+import com.csse3200.game.screens.MainGameScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +57,9 @@ public class MainMenuActions extends Component {
   }
   private void onSpace() {
     logger.info("Space game");
-    game.setScreen(GdxGame.ScreenType.SPACE_GAME);
+    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    MainGameScreen screen = (MainGameScreen) game.getScreen();
+    screen.loadNavigation();
   }
 
   /**

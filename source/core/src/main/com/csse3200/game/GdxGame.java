@@ -78,10 +78,6 @@ public class GdxGame extends Game {
         return new MainGameScreen(this);
       case SETTINGS:
         return new SettingsScreen(this);
-//      case SPACE_GAME:
-//        TerrainFactory terrainFactory = new TerrainFactory(cameraComponent);
-//        String navigationImagePath = "images/navigation_image.png"; // Replace with the actual image path
-//        return new Navigation(terrainFactory, navigationImagePath);
       default:
         return null;
     }
@@ -89,7 +85,7 @@ public class GdxGame extends Game {
 
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, SPACE_GAME
+    MAIN_MENU, MAIN_GAME, SETTINGS
   }
 
   /**

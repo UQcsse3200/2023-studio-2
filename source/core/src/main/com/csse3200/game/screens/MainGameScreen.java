@@ -1,10 +1,13 @@
 package com.csse3200.game.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ForestGameArea;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.Navigation;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
@@ -41,6 +44,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  private final ForestGameArea forestGameArea;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -66,9 +71,17 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+    forestGameArea = new ForestGameArea(terrainFactory);
     forestGameArea.create();
   }
+
+  public void loadNavigation() {
+    forestGameArea.dispose();
+    TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+    GameArea gameArea = new Navigation(terrainFactory, "images/current_planet-preview.png");
+    gameArea.create();
+  }
+
 
   @Override
   public void render(float delta) {

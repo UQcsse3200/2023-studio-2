@@ -1,6 +1,5 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -11,12 +10,10 @@ import com.csse3200.game.components.joinable.JoinableComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.buildables.Gate;
 import com.csse3200.game.entities.buildables.Wall;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.BuildablesFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.services.GameState;
 import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -190,7 +187,7 @@ public class PlayerActions extends Component {
         if (existingWall != null) {
             if (existingWall.getComponent(CombatStatsComponent.class).getHealth() < existingWall.getComponent(CombatStatsComponent.class).getMaxHealth()) {
                 updateResources(-1);
-                entity.getComponent(HealthBarComponent.class).updateWallHealthUI(entity.getComponent(CombatStatsComponent.class).getMaxHealth());
+                entity.getComponent(HealthBarComponent.class).updateHealth(entity.getComponent(CombatStatsComponent.class).getMaxHealth());
             }
         }
     }

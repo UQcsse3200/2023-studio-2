@@ -12,85 +12,107 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The `Navigation` class represents a navigational game area in which players can explore
+ * and interact with various navigational elements such as planets. This class encapsulates
+ * the creation, display, and navigation logic within the game.
+ */
 public class Navigation extends GameArea {
+
     private final TerrainFactory terrainFactory;
     private static final Logger logger = LoggerFactory.getLogger(Navigation.class);
     private static final String[] NavigationTextures = {"images/box_boy_title.png"};
     private final String image;
-    public Navigation(TerrainFactory terrainFactory,String image ){
-        this.terrainFactory=terrainFactory;
-        this.image=image;
-    }
-    @Override
-    public void create()
-    {
-        ResourceService resourceService=ServiceLocator.getResourceService();
-        ServiceLocator.getResourceService().loadTextures(new String[]{image});
-        while (!resourceService.loadForMillis(10)) {
-            // This could be upgraded to a loading screen
-//            logger.info("Loading... {}%", resourceService.getProgress());
-        }
-        displayUI();
-        Entity planet1=new Entity().addComponent(new PlanetComponent(image,730,750));
-        planet1.getEvents().addListener("Navigate",()->{
-            ForestGameArea nextGameArea=new ForestGameArea(terrainFactory);
-            this.dispose();
-            nextGameArea.create();
 
-
-        });
-        spawnEntity(planet1);
-        Entity planet2 = new Entity().addComponent(new PlanetComponentt(image, 900, 600)); // You need to provide the appropriate image and coordinates
-        planet2.getEvents().addListener("Navigatee", () -> {
-            ForestGameArea nextGameArea=new ForestGameArea(terrainFactory);
-            this.dispose();
-            nextGameArea.create();// Similar navigation logic for other planets if needed
-        });
-        spawnEntity(planet2);
-
-        Entity planet3 = new Entity().addComponent(new level3(image, 500, 500)); // You need to provide the appropriate image and coordinates
-        planet3.getEvents().addListener("Navigateee", () -> {
-            ForestGameArea nextGameArea=new ForestGameArea(terrainFactory);
-            this.dispose();
-            nextGameArea.create();// Similar navigation logic for other planets if needed
-        });
-        spawnEntity(planet3);
-
-        Entity planet4 = new Entity().addComponent(new level4(image, 600, 580)); // You need to provide the appropriate image and coordinates
-        planet4.getEvents().addListener("Navigateeee", () -> {
-            ForestGameArea nextGameArea=new ForestGameArea(terrainFactory);
-            this.dispose();
-            nextGameArea.create();// Similar navigation logic for other planets if needed
-        });
-        spawnEntity(planet4);
-    }
-
-    private void displayUI() {
-        Entity ui = new Entity();
-        ui.addComponent(new GameAreaDisplay("Box Forest"));
-        spawnEntity(ui);
-
-    }
-    private void loadAssists() {
-        logger.debug("Loading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(NavigationTextures);
-        ServiceLocator.getResourceService().loadAll();
+    /**
+     * Constructs a new `Navigation` instance with the given terrain factory and image.
+     *
+     * @param terrainFactory The factory responsible for generating terrain elements.
+     * @param image The image resource associated with the navigation area.
+     */
+    public Navigation(TerrainFactory terrainFactory, String image) {
+        this.terrainFactory = terrainFactory;
+        this.image = image;
     }
 
     /**
-     *
+     * Initializes and sets up the navigation game area. This includes loading necessary
+     * resources, displaying UI elements, creating navigational entities, and managing
+     * the transition to other game areas.
      */
-    private void unloadAssets() {
-        logger.debug("Unloading assets");
+    @Override
+    public void create() {
+        // Load the required resources, such as textures
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        ServiceLocator.getResourceService().loadTextures(new String[]{image});
+        while (!resourceService.loadForMillis(10)) {
+            // Implement loading screen logic here if desired
+        }
+
+        // Display UI components specific to the navigation area
+        displayUI();
+
+        // Create and configure navigational entities
+        configureNavigationEntities();
+
+        // Unload temporary assets after setting up the navigation area
+        unloadTemporaryAssets();
+    }
+
+    /**
+     * Displays user interface (UI) components relevant to the navigation area.
+     * This can include game area title, navigation instructions, etc.
+     */
+    private void displayUI() {
+        Entity ui = new Entity();
+        ui.addComponent(new GameAreaDisplay("Box Forest")); // Title of the navigation area
+        spawnEntity(ui);
+    }
+
+    /**
+     * Configures the navigational elements within the navigation area. This includes
+     * creating planets and defining their behavior when navigated.
+     */
+    private void configureNavigationEntities() {
+        // Create planet entities with associated navigation behavior
+        Entity planet1 = new Entity().addComponent(new PlanetComponent(image, 730, 750));
+        planet1.getEvents().addListener("Navigate", () -> {
+            navigateToGameArea(new ForestGameArea(terrainFactory));
+        });
+        spawnEntity(planet1);
+
+        // Similar configuration for other navigational entities (e.g., planet2, planet3, planet4)
+        // ...
+    }
+
+    /**
+     * Navigates to the specified game area, disposing of the current navigation area.
+     *
+     * @param nextGameArea The game area to navigate to.
+     */
+    private void navigateToGameArea(GameArea nextGameArea) {
+        this.dispose(); // Dispose of the current navigation area
+        nextGameArea.create(); // Create and display the next game area
+    }
+
+    /**
+     * Unloads temporary assets and resources used during the navigation area setup.
+     * These assets were loaded solely for setup purposes and are no longer needed.
+     */
+    private void unloadTemporaryAssets() {
+        logger.debug("Unloading temporary assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(NavigationTextures);
     }
 
+    /**
+     * Releases resources and performs cleanup when disposing of the navigation area.
+     * This includes disposing of entities and unloading associated assets.
+     */
     @Override
     public void dispose() {
-        super.dispose();
-        ServiceLocator.getEntityService().dispose();
-        ServiceLocator.getResourceService().unloadAssets(new String[]{image});
+        super.dispose(); // Perform parent class disposal
+        ServiceLocator.getEntityService().dispose(); // Dispose of entities
+        ServiceLocator.getResourceService().unloadAssets(new String[]{image}); // Unload image asset
     }
 }

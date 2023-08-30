@@ -168,10 +168,6 @@ public class EarthGameArea extends GameArea {
         // Spawn the entity at the calculated position
         // Arguments: entity, position, isCentered, isLocal
         spawnEntityAt(botanist, spawnPosition, true, false);
-        //botanist.addComponent(new DialogComponent(dialogueBox));
-
-        // Add a DialogComponent to the entity for dialog interactions
-        botanist.addComponent(new DialogComponent(dialogueBox));
     }
 
     private void spawnAsteroids() {

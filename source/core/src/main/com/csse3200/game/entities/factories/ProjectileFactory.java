@@ -57,7 +57,7 @@ public class ProjectileFactory {
 
 
         enemy
-                .addComponent(new CombatStatsComponent(0, damage, 0 , false))
+                .addComponent(new CombatStatsComponent(0, damage, 1, false))
                 .addComponent(animator)
                 .addComponent(new EnemyAnimationController())
                 .addComponent(aiComponent);

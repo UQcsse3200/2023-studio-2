@@ -6,8 +6,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
-
 import com.csse3200.game.services.ServiceLocator;
+
+//Testing:
+import com.csse3200.game.components.Weapons.WeaponType;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -273,30 +275,49 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     new java.util.Timer().schedule(makeDodgeAvailable, 3000);
   }
 
+  /** TODO this is barely works
+   * Function to repond to player mouse press
+   * @param screenX - X position on screen that mouse was pressed
+   * @param screenY - Y position on screen that mouse was pressed
+   * @param pointer -
+   * @param button  - Button that pas pressed
+   * @return - True or false based on if an acction occured
+   */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    if(button == Input.Buttons.LEFT){
-      //Don't really know what I'm doing, these are hard coded values to work on my screen
-      Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-      Vector2 position = new Vector2(mouse.x/2, (mouse.y - 2) / 2);
-      //Vector2 mouse = new screenY);
-      double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
-      System.out.println("Cen" + entity.getPosition() + " Mouse:" + position);
-      System.out.println("Ang:" + initRot);
-      entity.getEvents().trigger("playerAttack", entity.getPosition(), (int) initRot + 90);
-      return true;
+    if(button != Input.Buttons.LEFT && button != Input.Buttons.RIGHT) {
+      return false;
     }
-    return false;
+
+    Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
+    //Problems with screen to game coord - this is a temporary fix
+    Vector2 entityScale = entity.getScale();
+    Vector2 position = new Vector2(mouse.x/2 - entityScale.x/2, (mouse.y) / 2 - entityScale.y/2);
+    double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
+
+    if(button == Input.Buttons.LEFT){
+      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
+    } else if (button == Input.Buttons.RIGHT) {
+      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
+    }
+
+    return true;
   }
 
+  /**
+   * Calcuate angle between 2 points from the center point to the target point, angle is
+   * in degrees with 0degrees being in the direction of the positive x-axis going counter clockwise
+   * up to 359.9... until wrapping back around
+   * @param centerPt - point from where angle is calculated from
+   * @param targetPt - Tart point to where angle is calculated to
+   * @return return angle between points in degrees from the positive x-axis
+   */
   //https://stackoverflow.com/questions/9970281/java-calculating-the-angle-between-two-points-in-degrees
-  public double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt)  {
-    double theta = Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x);
-    double angle = Math.toDegrees(theta);
+  private double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt)  {
+    double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
     if (angle < 0) {
       angle += 360;
     }
-
     return angle;
   }
 }

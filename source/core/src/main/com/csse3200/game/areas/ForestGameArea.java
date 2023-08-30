@@ -17,7 +17,7 @@ import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.services.StructurePlacementService;
+import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
@@ -95,7 +95,8 @@ public class ForestGameArea extends GameArea {
     loadAssets();
     displayUI();
 
-    registerStructurePlacementService();
+    //To be used for spawning weapons during gameplay
+    registerEntityPlacementService();
 
     spawnTerrain();
     spawnTrees();

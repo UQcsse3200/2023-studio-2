@@ -8,7 +8,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.events.listeners.EventListener1;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.StructurePlacementService;
+import com.csse3200.game.services.EntityPlacementService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
   protected List<Entity> areaEntities;
-  protected StructurePlacementService structurePlacementService;
+  protected EntityPlacementService entityPlacementService;
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -38,27 +38,29 @@ public abstract class GameArea implements Disposable {
     }
   }
 
-  protected void registerStructurePlacementService() {
+  /**
+   * Function to register entity placement service using teh approripate listeners.
+   * This allows entities to be placed after initilisation.
+   */
+  protected void registerEntityPlacementService() {
     EventHandler handler = new EventHandler();
-    structurePlacementService = new StructurePlacementService(handler);
-    ServiceLocator.registerStructurePlacementService(structurePlacementService);
-//    handler.addListener("spawnExtractor", this::spawnExtractor);
-//    handler.addListener("placeStructure", this::spawnEntity);
-//    handler.addListener("placeStructureAt",
-//            (StructurePlacementService.PlaceStructureAtArgs args) ->
-//                    spawnEntityAt(args.entity, args.tilePos, args.centerX, args.centerY)
-//    );
-    handler.addListener("rtEntity", this::spawnEntity);
-    handler.addListener("rtEntityAt",
-            (StructurePlacementService.PlaceStructureAtArgs args) ->
-                    spawnRTEntityAt(args.entity, args.position));
-
+    entityPlacementService = new EntityPlacementService(handler);
+    ServiceLocator.registerEntityPlacementService(entityPlacementService);
+    handler.addListener("placeEntity", this::spawnEntity);
+    handler.addListener("placeEntityAt", this::placeEntityAt);
   }
 
-  protected void spawnRTEntityAt(Entity entity, Vector2 position) {
+  /**
+   * Function to listen for "placeEntityAt" trigger and repond by
+   * placing entitiy at specified position.
+   * @param entity - Entity to be placed
+   * @param position - position for where entity should be placed
+   */
+  protected void placeEntityAt(Entity entity, Vector2 position) {
     entity.setPosition(position);
     spawnEntity(entity);
   }
+
   /**
    * Spawn entity at its current position
    *

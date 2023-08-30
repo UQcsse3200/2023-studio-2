@@ -4,7 +4,7 @@
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
-    "atlas": "images/rangeEnemy.atlas"
+    "atlas": "images/base_enemy.atlas"
   },
 
   "meleeEnemyDTE": {
@@ -21,7 +21,7 @@
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
-    "atlas": "images/base_enemy.atlas"
+    "atlas": "images/rangeEnemy.atlas"
   },
 
   "rangeEnemyDTE": {
@@ -46,12 +46,5 @@
     "speed": 8,
     "specialAttack": 40,
     "atlas": ""
-  },
-
-  "bullet": {
-    "health": 100,
-    "baseAttack": 10,
-    "speed" : 12,
-    "atlas": "images/bullet.atlas"
   }
 }

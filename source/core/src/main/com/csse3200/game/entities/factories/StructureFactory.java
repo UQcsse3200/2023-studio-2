@@ -11,6 +11,7 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.components.ExtractorRepairPartComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
@@ -53,6 +54,15 @@ public class StructureFactory {
         return extractor;
     }
 
+    public static Entity createExtractorRepairPart() {
+        Entity extractorRepairPart = new Entity()
+                .addComponent(new TextureRenderComponent("images/fire.png"))
+                .addComponent(new ExtractorRepairPartComponent());
+        extractorRepairPart.setScale(1.8f, 2f);
+        return extractorRepairPart;
+    }
+
+
     public static Entity createShip() {
         Entity ship =
                 new Entity()
@@ -69,3 +79,4 @@ public class StructureFactory {
 
 
 }
+

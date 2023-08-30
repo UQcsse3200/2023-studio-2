@@ -150,9 +150,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.P:
         entity.getEvents().trigger("attack");
-        System.out.println("Attack");
-        if (flagW == 1) {
-          System.out.println("Multiple");
+        if (flagW == 1) {  
         }
         return true;
       case Keys.SPACE:
@@ -254,8 +252,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         entity.getEvents().trigger("walkStop");
       } else {
         if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
-          entity.getEvents().trigger("walkUpLeft");
-          System.out.println(walkDirection);
+          entity.getEvents().trigger("walkUpLeft");  
         }
         else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
           entity.getEvents().trigger("walkUpRight");
@@ -276,8 +273,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           entity.getEvents().trigger("walkLeft");
         }
         else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
-          entity.getEvents().trigger("walkRight");
-          System.out.println("right");
+          entity.getEvents().trigger("walkRight");  
         }
         entity.getEvents().trigger("walk", walkDirection);
       }

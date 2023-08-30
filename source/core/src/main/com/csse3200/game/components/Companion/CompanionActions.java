@@ -36,6 +36,7 @@ public class CompanionActions extends Component {
         entity.getEvents().addListener("walk", this::walk);
         entity.getEvents().addListener("walkStop", this::stopWalking);
         entity.getEvents().addListener("attack", this::attack);
+        entity.getEvents().trigger("displayMessage", "Hello, I am your companion!");
 
         // Initialize currentRotation based on the initial orientation of the companion
         currentRotation = physicsComponent.getBody().getAngle()*MathUtils.radiansToDegrees;

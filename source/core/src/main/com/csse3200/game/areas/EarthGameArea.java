@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.factories.CompanionFactory;
-import com.csse3200.game.entities.factories.BoxFactory;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
@@ -235,6 +234,14 @@ public class EarthGameArea extends GameArea {
         // Calculate the spawn position with the desired offset
         Vector2 companionSpawnPosition = playerPosition.cpy().add(offset);
         // Figure out a way to input companionSpawnPosition into spawnEntity to maintain an offset
+
+
+
+
+
+       // if (health < 50)
+           // displayMessage("Player's health is low!");
+           // playerEntity.getEvents().addListener("displayMessage", this::displayMessage);
 
         spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
         targetables.add(newCompanion);

@@ -3,11 +3,15 @@ package com.csse3200.game.components.resources;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import org.w3c.dom.css.Rect;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A ui component for displaying player stats, e.g. health.
@@ -17,12 +21,15 @@ public class ResourceDisplay extends UIComponent {
     TextureRegion lightsTextureRegion;
     HashMap<String, TextureRegion> resourceBars;
     HashMap<String, Float> barWidths;
+    HashMap<String, Image> resourceBarImages;
     int scale = 5;
+    int maxResource = 1000; // TODO make this a reference to gamestate and actually work
 
     public ResourceDisplay() {
         this.table = new Table();
         this.resourceBars = new HashMap<>();
         this.barWidths = new HashMap<>();
+        this.resourceBarImages = new HashMap<>();
     }
 
     /**
@@ -35,7 +42,12 @@ public class ResourceDisplay extends UIComponent {
     }
 
     void setWidth(Resource resource, double pct) {
-        this.resourceBars.get(resource.toString()).setRegionWidth((int) (pct * this.barWidths.get(resource.toString())));
+        TextureRegion region = this.resourceBars.get(resource.toString());
+        float originalWidth = this.barWidths.get(resource.toString());
+        region.setRegionWidth((int) (pct * originalWidth));
+        Image resourceBarImage = this.resourceBarImages.get(resource.toString());
+        resourceBarImage.setSize((float) (originalWidth * pct * 5.0), resourceBarImage.getImageHeight());
+//        region.setRegion(0, 0, (int) (pct * originalWidth), region.getRegionHeight());
     }
 
     public ResourceDisplay withResource(Resource resource) {
@@ -48,11 +60,13 @@ public class ResourceDisplay extends UIComponent {
 
         String barPath = "images/resourcebar_" + resource.toString().toLowerCase() + ".png";
         Texture resourceBarTexture = ServiceLocator.getResourceService().getAsset(barPath, Texture.class);
-        TextureRegion resourceBarTextureRegion = new TextureRegion(resourceBarTexture, (int) (resourceBarTexture.getWidth() * 0.75), resourceBarTexture.getHeight());
+        TextureRegion resourceBarTextureRegion = new TextureRegion(resourceBarTexture,
+                (int) (resourceBarTexture.getWidth() * 1.0),
+                resourceBarTexture.getHeight());
         resourceBars.put(resource.toString(), resourceBarTextureRegion);
         barWidths.put(resource.toString(), (float) resourceBarTexture.getWidth());
         Image resourceBar = new Image(resourceBarTextureRegion);
-//        subTable.add(resourceBar).pad(0.0F).width(10).fill(); //.padLeft((float) (0.0 * resourceBar.getWidth()));
+        resourceBarImages.put(resource.toString(), resourceBar);
 
         Stack barStack = new Stack();
         barStack.add(barBackgroundImage);
@@ -80,6 +94,13 @@ public class ResourceDisplay extends UIComponent {
     @Override
     public void draw(SpriteBatch batch)  {
         // draw is handled by the stage
-        setWidth(Resource.Durasteel, 0.4);
+        for (Resource resource : new Resource[]{Resource.Durasteel, Resource.Nebulite, Resource.Solstite}) {
+            Object quantity = ServiceLocator.getGameStateObserverService().getStateData(resource.toString());
+            if (quantity != null) {
+                int value = (int) quantity;
+                System.out.println(value);
+                setWidth(resource, (float) value / (float) maxResource);
+            }
+        }
     }
 }

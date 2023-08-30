@@ -35,11 +35,10 @@ public class WeaponComponent extends Component {
      *                  0<=initRot<=360, East:0, North:90: West:180, South:270
      */
     private void playerAttacking(Vector2 position, WeaponType weaponType, float initRot) {
-        //Player will likey store a weapon type in the future (entity.getCurrentWeapon) or something
+        //Player will likely store a weapon type in the future (entity.getCurrentWeapon) or something
         Entity newAttack = AttackFactory.createAttack(weaponType, initRot);
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, position);
-        animator = newAttack.getComponent(AnimationRenderComponent.class);
-        animator.startAnimation("attack");
+        // animator = newAttack.getComponent(AnimationRenderComponent.class);  todo: daniel plz
+        // animator.startAnimation("attack");
     }
 }
-

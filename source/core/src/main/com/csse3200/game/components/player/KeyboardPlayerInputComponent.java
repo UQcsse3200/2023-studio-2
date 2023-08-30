@@ -240,6 +240,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return false;
     }
   }
+
+  /** TODO this is barely works
+   * Function to repond to player mouse press
+   * @param screenX - X position on screen that mouse was pressed
+   * @param screenY - Y position on screen that mouse was pressed
+   * @param pointer -
+   * @param button  - Button that pas pressed
+   * @return - True or false based on if an acction occured
+   */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     if(button == Input.Buttons.LEFT){
@@ -250,7 +259,24 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       entity.getEvents().trigger("remove", screenX, screenY);
       return true;
     }
-    return false;
+
+
+    Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
+    //Problems with screen to game coord - this is a temporary fix
+    Vector2 entityScale = entity.getScale();
+    Vector2 position = new Vector2(mouse.x/2 - entityScale.x/2, (mouse.y) / 2 - entityScale.y/2);
+    double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
+
+    if(button == Input.Buttons.MIDDLE){
+      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
+    }
+
+    if (button == Input.Buttons.MIDDLE) {
+     entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
+    }
+
+
+    return true;
   }
 
   
@@ -336,36 +362,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       }
     };
     timer.schedule(makeDodgeAvailable, 3000);
-  }
-
-
-  /** TODO this is barely works
-   * Function to repond to player mouse press
-   * @param screenX - X position on screen that mouse was pressed
-   * @param screenY - Y position on screen that mouse was pressed
-   * @param pointer -
-   * @param button  - Button that pas pressed
-   * @return - True or false based on if an acction occured
-   */
-  @Override
-  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    if(button != Input.Buttons.LEFT && button != Input.Buttons.RIGHT) {
-      return false;
-    }
-
-    Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-    //Problems with screen to game coord - this is a temporary fix
-    Vector2 entityScale = entity.getScale();
-    Vector2 position = new Vector2(mouse.x/2 - entityScale.x/2, (mouse.y) / 2 - entityScale.y/2);
-    double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
-
-    if(button == Input.Buttons.LEFT){
-      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
-    } else if (button == Input.Buttons.RIGHT) {
-      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
-    }
-
-    return true;
   }
 
   /**

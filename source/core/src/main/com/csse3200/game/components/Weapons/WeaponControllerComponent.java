@@ -1,8 +1,12 @@
 package com.csse3200.game.components.Weapons;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.services.ServiceLocator;
+
 import java.util.*;
 
 /**
@@ -67,7 +71,7 @@ public class WeaponControllerComponent extends Component {
         //Function to despawn Projectile after left is zero
         //Todo this needs to be changed to actually work
         if (--this.remainigLife == 0) {
-            entity.setPosition(new Vector2(-100000, -100000));
+            Gdx.app.postRunnable(entity::dispose);
         }
     }
 }

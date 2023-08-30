@@ -17,6 +17,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -50,15 +51,15 @@ public class AttackFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                     .addComponent(new TouchAttackComponent(PhysicsLayer.NPC, 1f))
+                    .addComponent(new TextureRenderComponent("images/wrench.png"))
                     .addComponent(change);
 
-    AnimationRenderComponent animator =
-            new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/wrench.atlas", TextureAtlas.class));
-    animator.addAnimation("attack", 0.1f, Animation.PlayMode.LOOP);
+    //AnimationRenderComponent animator =
+            // new AnimationRenderComponent(     ServiceLocator.getResourceService().getAsset("images/wrench.atlas", TextureAtlas.class));
+    //animator.addAnimation("attack", 0.1f, Animation.PlayMode.LOOP);
       attack
-        .addComponent(new CombatStatsComponent(1, 5, 1, true))
-        .addComponent(animator);
+        .addComponent(new CombatStatsComponent(1, 5, 1, true));
+        //.addComponent(animator);
     return attack;
   }
 

@@ -66,7 +66,9 @@ public class EarthGameArea extends GameArea {
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/Ship.png",
             "images/stone_wall.png",
-            "images/oldman_down_1.png"
+            "images/oldman_down_1.png",
+            "images/player_blank.png",
+            "images/wrench.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -77,7 +79,9 @@ public class EarthGameArea extends GameArea {
             "images/rangeEnemy.atlas",
             "images/stone_wall.atlas",
             "images/dirt_wall.atlas",
-            "images/botanist.atlas"
+            "images/botanist.atlas",
+            "images/playerSS.atlas",
+            "images/wrench.atlas"
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -103,6 +107,7 @@ public class EarthGameArea extends GameArea {
     public void create() {
         loadAssets();
 
+        registerEntityPlacementService();
         registerStructurePlacementService();
 
         displayUI();

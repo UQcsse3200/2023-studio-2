@@ -19,11 +19,9 @@ import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.*;
-<<<<<<< HEAD
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.TerrainService;
-=======
 import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -32,7 +30,6 @@ import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
->>>>>>> main
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;

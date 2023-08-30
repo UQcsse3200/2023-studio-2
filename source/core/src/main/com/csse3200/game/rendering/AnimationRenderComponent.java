@@ -173,8 +173,8 @@ public class AnimationRenderComponent extends RenderComponent {
     TextureRegion region = currentAnimation.getKeyFrame(animationPlayTime);
     Vector2 pos = entity.getPosition();
     Vector2 scale = entity.getScale();
-    //Why can't I change this?? ;(
-    //batch.draw(region, pos.x, pos.y, scale.x/2, scale.y/2, scale.x, scale.y, 1, 1, entity.getRotation());
+    //Why can't I change this?? ;(  todo: daniel plz
+    // batch.draw(region, pos.x, pos.y, scale.x/2, scale.y/2, scale.x, scale.y, 1, 1, entity.getRotation());
     batch.draw(region, pos.x, pos.y, scale.x, scale.y);
     animationPlayTime += timeSource.getDeltaTime();
   }

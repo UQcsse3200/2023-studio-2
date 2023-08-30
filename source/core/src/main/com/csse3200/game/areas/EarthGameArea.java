@@ -1,8 +1,12 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
@@ -132,13 +136,25 @@ public class EarthGameArea extends GameArea {
 
     private void spawnEnvironment() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
-
+        Entity environment;
         for (int y = 0; y < collisionLayer.getHeight(); y++) {
             for (int x = 0; x < collisionLayer.getWidth(); x++) {
                 TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, collisionLayer.getHeight() - 1 - y);
                 if (cell != null) {
+                    MapObjects objects = cell.getTile().getObjects();
                     GridPoint2 tilePosition = new GridPoint2(x, collisionLayer.getHeight() - 1 - y);
-                    Entity environment = ObstacleFactory.createEnvironment();
+                    if (objects.getCount() >= 1) {
+                        RectangleMapObject object = (RectangleMapObject) objects.get(0);
+                        Rectangle collisionBox = object.getRectangle();
+                        float collisionX = 0.5f-collisionBox.x / 16;
+                        float collisionY = 0.5f-collisionBox.y / 16;
+                        float collisionWidth = collisionBox.width / 32;
+                        float collisionHeight = collisionBox.height / 32;
+                        environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
+                    }
+                    else {
+                        environment = ObstacleFactory.createEnvironment();
+                    }
                     spawnEntityAt(environment, tilePosition, false, false);
                 }
             }

@@ -34,9 +34,17 @@ public class ShootTask extends DefaultTask {
         super.start();
         this.spawn = owner.getEntity().getPosition();
         hasShot = false;
-        Entity bullet = ProjectileFactory.createEnemyBullet(target.getPosition(), owner.getEntity());
-        ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawn);
+        fireProjectile(target.getPosition());
         hasShot = true;
+    }
+
+    public void fireProjectile(Vector2 position) {
+        Vector2 currentPos = owner.getEntity().getPosition();
+        Entity bullet = ProjectileFactory.createEnemyBullet(target.getPosition(), owner.getEntity());
+        if (currentPos.y < position.y) {
+            spawn.y += 1;
+        }
+        ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawn);
     }
 
     @Override

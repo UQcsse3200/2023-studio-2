@@ -62,7 +62,8 @@ public class EarthGameArea extends GameArea {
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/Ship.png",
             "images/stone_wall.png",
-            "images/oldman_down_1.png"
+            "images/oldman_down_1.png",
+            "images/SpaceMiniGameBackground.png" // For the minigame popup window test
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",

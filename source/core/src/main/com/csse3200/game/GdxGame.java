@@ -7,9 +7,7 @@ import com.csse3200.game.areas.Navigation;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.screens.MainGameScreen;
-import com.csse3200.game.screens.MainMenuScreen;
-import com.csse3200.game.screens.SettingsScreen;
+import com.csse3200.game.screens.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +33,7 @@ public class GdxGame extends Game {
     cameraComponent = new CameraComponent();
 
     setScreen(ScreenType.MAIN_MENU);
+
   }
 
   /**
@@ -78,6 +77,10 @@ public class GdxGame extends Game {
         return new MainGameScreen(this);
       case SETTINGS:
         return new SettingsScreen(this);
+      case SPACE_MAP:
+        return new SpaceMapScreen(this);
+      case EXTRACTOR_GAME:
+        return new ExtractorMiniGameScreen(this);
       default:
         return null;
     }
@@ -85,7 +88,9 @@ public class GdxGame extends Game {
 
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS
+
+    MAIN_MENU, MAIN_GAME, SETTINGS, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME
+
   }
 
   /**

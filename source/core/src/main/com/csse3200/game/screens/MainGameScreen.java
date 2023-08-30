@@ -5,6 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.Navigation;
@@ -23,6 +24,7 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
@@ -30,12 +32,15 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.csse3200.game.ui.UIComponent.skin;
+
 /**
  * The game screen containing the main game.
  *
  * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class MainGameScreen extends ScreenAdapter {
+  private TitleBox titleBox;
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -43,8 +48,10 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-
   private final ForestGameArea forestGameArea;
+
+  private Entity player;
+
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -71,8 +78,19 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+
     forestGameArea = new ForestGameArea(terrainFactory);
     forestGameArea.create();
+
+
+    //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+    //forestGameArea.create();
+    EarthGameArea earthGameArea = new EarthGameArea(terrainFactory);
+    earthGameArea.create();
+    player = earthGameArea.getPlayer();
+    titleBox = new TitleBox(game, "Title", skin);
+
+
   }
 
   public void loadNavigation() {
@@ -87,6 +105,7 @@ public class MainGameScreen extends ScreenAdapter {
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
+    followPlayer();
     renderer.render();
   }
 
@@ -154,4 +173,30 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.getEntityService().register(ui);
   }
+
+
+
+
+  private void followPlayer() {
+    float playerX = player.getPosition().x;
+    float playerY = player.getPosition().y;
+
+    // Calculate half of the camera's viewport dimensions
+    float halfViewportWidth = renderer.getCamera().getCamera().viewportWidth * 0.5f;
+    float halfViewportHeight = renderer.getCamera().getCamera().viewportHeight * 0.5f;
+
+    // Define the minimum and maximum allowed camera positions based on map boundaries
+    float minX = halfViewportWidth;
+    float maxX = 60 * 0.5f - halfViewportWidth;
+    float minY = halfViewportHeight;
+    float maxY = 60 * 0.5f - halfViewportHeight;
+
+    // Calculate the camera's new X and Y positions within map boundaries
+    float cameraX = Math.min(maxX, Math.max(minX, playerX));
+    float cameraY = Math.min(maxY, Math.max(minY, playerY));
+
+    //Set new position
+    renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
+  }
 }
+

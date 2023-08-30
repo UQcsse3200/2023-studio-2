@@ -5,14 +5,16 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.GhostAnimationController;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.BossConfig;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
+import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -40,71 +42,66 @@ public class EnemyFactory {
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
 
   /**
-   * Creates a melee enemy entity.
-   *
-   * @param targets entity to chase
-   * @return entity
-   */
-  public static Entity createMeleeEnemy(ArrayList<Entity> targets) {
-    Entity enemy = createBaseEnemy(targets);
-    EnemyConfig config = configs.enemy;
-
-    AnimationRenderComponent animator =
-        new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-
-    enemy
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController());
-
-    enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
-
-    return enemy;
-  }
-
-  /**
    * Creates a boss entity.
    *
    * @param targets entities to chase
+   * @param type type of enemy - melee or ranged
    * @return entity
    */
-  public static Entity createBoss(ArrayList<Entity> targets) {
-    Entity boss = createBaseEnemy(targets);
-    BossConfig config = configs.boss;
-
-    AnimationRenderComponent animator =
-        new AnimationRenderComponent(
-            ServiceLocator.getResourceService()
-                .getAsset("images/ghostKing.atlas", TextureAtlas.class)); //  Currently a placeholder
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-
-    boss
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController());
-
-    boss.getComponent(AnimationRenderComponent.class).scaleEntity();
+  public static Entity createBoss(ArrayList<Entity> targets, EnemyType type, EnemyBehaviour behaviour) {
+    Entity boss = createEnemy(targets, type, behaviour);
     return boss;
   }
 
   /**
-   * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
+   * Creates a melee enemy entity.
    *
+   * @param targets entity to chase
+   * @param type type of enemy - melee or ranged
    * @return entity
    */
-  private static Entity createBaseEnemy(ArrayList<Entity> targets) {
+  public static Entity createEnemy(ArrayList<Entity> targets, EnemyType type, EnemyBehaviour behaviour) {
+
+    EnemyConfig config = configs.GetEnemyConfig(type, behaviour);
+    AnimationRenderComponent animator;
+
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
-    // Add all the targets
-    for (Entity i : targets) {
-      aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+    if (type == EnemyType.Ranged) {
+      for (Entity i : targets) {
+        if(i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER){
+          aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+        }
+        else{
+          aiComponent.addTask(new ChaseTask(i, 0, 3f, 4f));
+        }
+      }
     }
+
+    else {
+      for (Entity i : targets) {
+        if (behaviour == EnemyBehaviour.PTE) {
+          if (i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
+            aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+          } else {
+            aiComponent.addTask(new ChaseTask(i, 5, 3f, 4f));
+          }
+        } else {
+          if ( i.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+            aiComponent.addTask(new ChaseTask(i, 10, 3f, 4f));
+          } else {
+            aiComponent.addTask(new ChaseTask(i, 5, 3f, 4f));
+          }
+        }
+      }
+    }
+
+    TextureAtlas atlas = ServiceLocator.getResourceService().getAsset(config.atlas, TextureAtlas.class);
+    TextureAtlas atlasCopy = atlas;
+    animator = new AnimationRenderComponent(atlasCopy);
+
 
     Entity enemy =
         new Entity()
@@ -112,8 +109,26 @@ public class EnemyFactory {
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-            .addComponent(aiComponent);
+            .addComponent(new DeathComponent())
+            .addComponent(animator)
+            .addComponent(new TouchAttackComponent((short) (
+                    PhysicsLayer.PLAYER |
+                    PhysicsLayer.WALL |
+                    PhysicsLayer.STRUCTURE),
+                    1.5f));
+
+    animator.addAnimation("float", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
+    animator.addAnimation("stand",0.3f,Animation.PlayMode.LOOP);
+
+
+    enemy
+            .addComponent(new GhostAnimationController())
+            .addComponent(aiComponent)    // adds tasks depending on enemy type
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 0, false));
+
+    enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     PhysicsUtils.setScaledCollider(enemy, 0.9f, 0.4f);
     return enemy;

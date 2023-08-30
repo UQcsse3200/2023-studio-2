@@ -1,10 +1,10 @@
 {
   "basic": {
     "health": 200,
-    "texture": "images/wall.png"
+    "textureAtlas": "images/dirt_wall.atlas"
   },
   "intermediate": {
     "health": 400,
-    "texture": "images/wall2.png"
+    "textureAtlas": "images/stone_wall.atlas"
   }
 }

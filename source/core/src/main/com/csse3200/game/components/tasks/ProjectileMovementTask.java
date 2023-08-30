@@ -11,9 +11,9 @@ import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 
-/** Bullet moves towards the target in a straight line until it reaches the target position  */
+/** Projectile moves towards the target in a straight line and is disposed once it reaches the target position  */
 public class ProjectileMovementTask extends DefaultTask implements PriorityTask {
-  private Vector2 targetLocation;
+  private final Vector2 targetLocation;
   private final int priority;
   private final float viewDistance;
   private final float maxChaseDistance;
@@ -21,6 +21,8 @@ public class ProjectileMovementTask extends DefaultTask implements PriorityTask 
   private MovementTask movementTask;
 
   /**
+   * Creates a new projectile movement task.
+   *
    * @param targetLocation The location where the projectile will go to.
    * @param priority Task priority when moving (0 when not chasing).
    * @param viewDistance Maximum distance from the entity at which the movement can start.
@@ -44,6 +46,7 @@ public class ProjectileMovementTask extends DefaultTask implements PriorityTask 
     this.owner.getEntity().getEvents().trigger("chaseStart");
   }
 
+  @Override
   public void update() {
     movementTask.update();
     if (movementTask.getStatus() != Status.ACTIVE) {
@@ -60,10 +63,20 @@ public class ProjectileMovementTask extends DefaultTask implements PriorityTask 
     return getInactivePriority();
   }
 
+  /**
+   * Returns the distance between the current entity and the target location.
+   *
+   * @return The distance between the owner's entity and the target location.
+   */
   private float getDistanceToTarget() {
     return owner.getEntity().getPosition().dst(targetLocation);
   }
 
+  /**
+   * Returns the priority if task is currently active.
+   *
+   * @return The current priority.
+   */
   private int getActivePriority() {
     float dst = getDistanceToTarget();
     if (dst > maxChaseDistance || !isTargetVisible()) {
@@ -72,6 +85,11 @@ public class ProjectileMovementTask extends DefaultTask implements PriorityTask 
     return priority;
   }
 
+  /**
+   * Returns the priority if task is currently inactive.
+   *
+   * @return The current priority.
+   */
   private int getInactivePriority() {
     float dst = getDistanceToTarget();
     if (dst < viewDistance && isTargetVisible()) {
@@ -80,6 +98,13 @@ public class ProjectileMovementTask extends DefaultTask implements PriorityTask 
     return -1;
   }
 
+  /**
+   * Returns whether the enemy's vision of the target is being blocked.
+   * This method uses a line of sight renderer to check if the line between the enemy's
+   * center position and the target location is blocked by any in game obstacles.
+   *
+   * @return True if the target is visible, false otherwise.
+   */
   private boolean isTargetVisible() {
     Vector2 from = owner.getEntity().getCenterPosition();
     Vector2 to = targetLocation;

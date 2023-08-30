@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Shoots the bullet when triggered by the AimTask
+ * Shoots a projectile at a target in game.
  */
 public class ShootTask extends DefaultTask {
     private static final Logger logger = LoggerFactory.getLogger(ShootTask.class);
@@ -20,9 +20,13 @@ public class ShootTask extends DefaultTask {
 
     Entity target;
 
+    /**
+     * Creates a new shoot task.
+     *
+     * @param target The target Entity which the projectile will be fired at.
+     */
     public ShootTask(Entity target) {
         this.target = target;
-        //this.gameTime = ServiceLocator.getTimeSource();
     }
 
     @Override

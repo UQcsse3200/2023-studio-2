@@ -21,12 +21,20 @@ import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 /**
- * Factory to create bullet entities with predefined components.
+ * Factory to create projectile entities with predefined components.
  */
 public class ProjectileFactory {
 
     static final ProjectileConfigs configs =
             FileLoader.readClass(ProjectileConfigs.class, "configs/projectile.json");
+
+    /**
+     * Creates A projectile, using the stats of the shooter which will fire towards a certain location.
+     *
+     * @param targetLocation The location where the projectile is aimed
+     * @param shooter The entity which fired the projectile
+     * @return The projectile entity
+     */
     public static Entity createEnemyBullet(Vector2 targetLocation, Entity shooter) {
         int damage = shooter.getComponent(CombatStatsComponent.class).getAttack();
 
@@ -59,7 +67,11 @@ public class ProjectileFactory {
         return enemy;
     }
 
-
+    /**
+     * Creates the base projectile entity with the default components.
+     *
+     * @return The base projectile entity
+     */
     public static Entity createBaseBullet() {
 
         Entity bullet =

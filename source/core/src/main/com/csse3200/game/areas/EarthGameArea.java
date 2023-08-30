@@ -237,10 +237,14 @@ public class EarthGameArea extends GameArea {
         }
     }
 
+    /**
+     * Spawns all the enemies detailed in the Game Area.
+     */
     private void spawnEnemies() {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
+        // Spawning enemies based on set number of each type
         for (int i = 0; i < NUM_MELEE_PTE; i++) {
             GridPoint2 randomPos1 = RandomUtils.random(minPos, maxPos);
             Entity meleePTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.PTE);
@@ -267,6 +271,9 @@ public class EarthGameArea extends GameArea {
         }
     }
 
+    /**
+     * Spawns the boss for the Game Area's map.
+     */
     private void spawnBoss() {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);

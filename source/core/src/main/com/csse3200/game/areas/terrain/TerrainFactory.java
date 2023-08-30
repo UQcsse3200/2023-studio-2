@@ -60,13 +60,15 @@ public class TerrainFactory {
 
     TiledMap tiledMap = null;
 
-      try {
-        tiledMap = mapLoader.load(Gdx.files.internal("map/base.tmx").file().getAbsolutePath());
-      } catch (Exception ex) {
-        // Handle the exception (e.g., print an error message)
-        System.err.println("Error loading TiledMap: " + ex.getMessage());
-      }
+    try {
+      
+      tiledMap = mapLoader.load(Gdx.files.internal("map/base.tmx").file().getAbsolutePath());
+    } catch (Exception ex) {
+      
+      // Handle the exception (e.g., print an error message)
+      System.err.println("Error loading TiledMap: " + ex.getMessage());
     }
+    
 
     TiledMapRenderer renderer = createRenderer(tiledMap, 0.5f / 16);
 

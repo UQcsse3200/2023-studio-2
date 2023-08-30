@@ -2,3 +2,4 @@
 
 ### Gradle ###
 .gradle/
+.DS_Store

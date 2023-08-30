@@ -30,6 +30,7 @@ public class SpawnerComponent extends Component {
 
     EnemyBehaviour behaviour;
 
+    int count;
 
     /**
      * SpawnerComponent allows an entity to spawn enemies on some real time interval and send them to
@@ -40,13 +41,14 @@ public class SpawnerComponent extends Component {
      * @param type the type of enemy e.g.(Melee, Ranged) (Recommend to use for just small enemies)
      * @param behaviour the behaviour of the enemy, what it will prioritise
      */
-    public SpawnerComponent(ArrayList<Entity> targets, long tickRate, EnemyType type, EnemyBehaviour behaviour) {
+    public SpawnerComponent(ArrayList<Entity> targets, long tickRate, EnemyType type, EnemyBehaviour behaviour, int count) {
         this.timer = new GameTime();
         this.tickRate = tickRate;
         this.lastTime = timer.getTime();
         this.targets = targets;
         this.type = type;
         this.behaviour = behaviour;
+        this.count = count;
     }
 
     @Override
@@ -56,13 +58,19 @@ public class SpawnerComponent extends Component {
 
     @Override
     public void update() {
+        int spawnedAmount = 0;
         super.update();
         Vector2 worldPos;
         while (this.timer.getTimeSince(this.lastTime) >= this.tickRate) {
-            worldPos = entity.getCenterPosition();
-            Entity enemy = EnemyFactory.createEnemy(targets, type, behaviour);
-            ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
-            this.lastTime += this.tickRate;
+            if (spawnedAmount != count) {
+                worldPos = entity.getCenterPosition();
+                Entity enemy = EnemyFactory.createEnemy(targets, type, behaviour);
+                ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
+                spawnedAmount++;
+                this.lastTime += this.tickRate;
+            } else {
+                break;
+            }
         }
     }
 }

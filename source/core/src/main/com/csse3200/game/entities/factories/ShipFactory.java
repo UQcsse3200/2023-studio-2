@@ -23,7 +23,7 @@ public class ShipFactory {
                 new Entity()
 
                         .addComponent(new TextureRenderComponent("images/Ship.png"))
-                        .addComponent(new TextureRenderComponent("images/LeftShip.png"))
+                        //.addComponent(new TextureRenderComponent("images/LeftShip.png"))Dont add 2 of the same component class
 
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())

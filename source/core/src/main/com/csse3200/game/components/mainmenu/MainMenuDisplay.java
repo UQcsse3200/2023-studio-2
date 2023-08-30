@@ -78,6 +78,7 @@ public class MainMenuDisplay extends UIComponent {
               new ChangeListener() {
                   @Override
                   public void changed(ChangeEvent changeEvent, Actor actor) {
+
                       logger.debug("Settings button clicked");
                       entity.getEvents().trigger("space minigame");
                   }
@@ -86,7 +87,7 @@ public class MainMenuDisplay extends UIComponent {
               new ChangeListener() {
                   @Override
                   public void changed(ChangeEvent changeEvent, Actor actor) {
-                      logger.debug("Settings button clicked");
+                      logger.debug("Extractor button clicked");
                       entity.getEvents().trigger("extractor minigame");
                   }
               });

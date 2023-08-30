@@ -34,6 +34,7 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ExtractorMiniGameScreen.class);
 
     private static final String[] fireTexture = {"images/fire.png"};
+    private static final String[] HoleTexture = {"images/Hole.png"};
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
@@ -74,6 +75,7 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(fireTexture);
+        resourceService.loadTextures(HoleTexture);
         ServiceLocator.getResourceService().loadAll();
     }
 
@@ -81,6 +83,7 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(fireTexture);
+        resourceService.unloadAssets(HoleTexture);
     }
 
     @Override

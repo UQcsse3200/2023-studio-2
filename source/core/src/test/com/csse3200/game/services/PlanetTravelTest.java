@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Plane;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.input.InputFactory;
 import com.csse3200.game.input.InputService;
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,9 +27,13 @@ public class PlanetTravelTest {
         Input inputMock = mock(Input.class);
         Gdx.input = inputMock;
         mockGame = mock(GdxGame.class);
-        stateInteraction = new GameStateInteraction();
-        stateObserver = new GameStateObserver(stateInteraction);
+        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
         planetTravel = new PlanetTravel(mockGame);
+    }
+
+    @AfterEach
+    public void Final(){
+        ServiceLocator.clear();
     }
 
     @Test

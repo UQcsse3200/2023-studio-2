@@ -67,7 +67,7 @@ public class PowerupComponent extends Component {
      *
      * @param target  The entity receiving the Powerup effect.
      */
-    void applyEffect(Entity target) {
+    public void applyEffect(Entity target) {
         playerCombatStats = target.getComponent(CombatStatsComponent.class);
         playerActions = target.getComponent(PlayerActions.class);
 

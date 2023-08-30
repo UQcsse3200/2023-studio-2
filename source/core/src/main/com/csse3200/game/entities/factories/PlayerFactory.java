@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.player.PlayerAnimationController;
@@ -19,6 +20,8 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
 
 /**
  * Factory to create a player entity.
@@ -26,7 +29,9 @@ import com.csse3200.game.services.ServiceLocator;
  * <p>Predefined player properties are loaded from a config stored as a json file and should have
  * the properties stores in 'PlayerConfig'.
  */
+
 public class PlayerFactory {
+  private static DialogueBox dialogueBox;
   private static final PlayerConfig stats =
       FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
@@ -63,7 +68,11 @@ public class PlayerFactory {
             .addComponent(new PlayerStatsDisplay())
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
-            .addComponent(new WeaponComponent());
+            .addComponent(new WeaponComponent())
+            .addComponent(new DialogComponent(dialogueBox))
+            .addComponent(new InteractionControllerComponent());
+
+
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(TextureRenderComponent.class).scaleEntity();

@@ -19,6 +19,7 @@ import com.csse3200.game.areas.ForestGameArea;
 
 import static com.csse3200.game.ui.UIComponent.skin;
 
+
 import java.util.logging.Logger;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -111,10 +112,10 @@ public class TouchAttackComponent extends Component {
 //      if(dialogue != null) {
 //        dialogue.showdialogue("You hit a Ghost");
 //      }
-        targetStats.hit(combatStats);
+      targetStats.hit(combatStats);
+
       // Valid damage dealt
       entity.getEvents().trigger("enemyAttack");
-      targetStats.hit(combatStats);
       Timer timer = new Timer();
       timer.schedule(new TimerTask() {
         @Override
@@ -122,8 +123,9 @@ public class TouchAttackComponent extends Component {
 
         }
       }, 2000);
-
     }
+
+
 
     // Apply knockback
     PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);

@@ -45,6 +45,7 @@ public class PlayerActions extends Component {
         gameStateInteraction = new GameStateInteraction();
     }
 
+
     @Override
     public void update() {
         if (moving) {
@@ -194,5 +195,6 @@ public class PlayerActions extends Component {
 
     void updateResources(int change) {
         gameStateInteraction.updateResource(Resource.Unobtanium.toString(), change);
+
     }
-}
+ }

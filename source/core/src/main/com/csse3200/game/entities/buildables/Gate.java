@@ -7,7 +7,9 @@ import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.ProximityActivationComponent;
 import com.csse3200.game.components.joinable.JoinLayer;
 import com.csse3200.game.components.joinable.JoinableComponent;
+import com.csse3200.game.components.joinable.JoinableComponentShapes;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.GateConfig;
 import com.csse3200.game.entities.configs.WallConfig;
 import com.csse3200.game.entities.configs.WallConfigs;
 import com.csse3200.game.files.FileLoader;
@@ -19,45 +21,46 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class Gate extends Entity {
     WallType type;
-    private static final WallConfigs configs =
-            FileLoader.readClass(WallConfigs.class, "configs/walls.json");
+    private static final GateConfig config =
+            FileLoader.readClass(GateConfig.class, "config/gate.json");
+    private static final JoinableComponentShapes shapes =
+            FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
     private boolean isLeftRight;
+    private TextureAtlas openAtlas;
+
+    private TextureAtlas closedAtlas;
 
     public Gate(WallType type, boolean isLeftRight, Entity player) {
-
+        openAtlas = ServiceLocator.getResourceService().getAsset(config.openTextureAtlas, TextureAtlas.class);
+        closedAtlas = ServiceLocator.getResourceService().getAsset(config.closedTextureAtlas, TextureAtlas.class);
         this.type = type;
         this.isLeftRight = isLeftRight;
 
-        WallConfig config = configs.GetWallConfig(type);
-        var textures = ServiceLocator.getResourceService().getAsset(config.textureAtlas, TextureAtlas.class);
 
         addComponent(new ProximityActivationComponent(1.5f, player, this::openGate, this::closeGate));
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
         addComponent(new CombatStatsComponent(config.health, 0,0,false));
         addComponent(new HealthBarComponent(true));
-
-        String region = isLeftRight ? "closed-left-right" : "closed-up-down";
-
-        addComponent(new AtlasRenderComponent(textures, region));
-        getComponent(AtlasRenderComponent.class).scaleEntity();
+        addComponent(new JoinableComponent(openAtlas,JoinLayer.WALLS, shapes));
+        getComponent(JoinableComponent.class).scaleEntity();
 
     }
 
     public void openGate(Entity player) {
         getComponent(PhysicsComponent.class).setEnabled(false);
 
-        String region = isLeftRight ? "open-left-right" : "open-up-down";
 
-        getComponent(AtlasRenderComponent.class).setRegion(region, false);
+
+
     }
 
     public void closeGate(Entity player) {
         getComponent(PhysicsComponent.class).setEnabled(true);
 
-        String region = isLeftRight ? "closed-left-right" : "closed-up-down";
 
-        getComponent(AtlasRenderComponent.class).setRegion(region, false);
+
+
     }
 
     public WallType getWallType() {

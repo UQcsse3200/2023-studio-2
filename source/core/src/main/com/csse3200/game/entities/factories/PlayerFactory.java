@@ -29,9 +29,9 @@ import com.csse3200.game.ui.DialogueBox;
 public class PlayerFactory {
 
   private static DialogueBox dialogueBox;
-
   private static final origiPlayerConfig stats =
       FileLoader.readClass(origiPlayerConfig.class, "configs/player.json");
+
 
   /**
    * Create a player entity.
@@ -56,6 +56,7 @@ public class PlayerFactory {
             .addComponent(new InteractionControllerComponent(false))
 
             .addComponent(new DialogComponent(dialogueBox));
+
 
 
 

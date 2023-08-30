@@ -5,7 +5,6 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
-
 import java.security.Provider;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +25,6 @@ public class ProductionComponent extends Component {
 
     // The resource type this produces
     Resource produces;
-
-    private int totalProducedResources = 0; //code added by abhi
-
 
     /**
      * ProductionComponent allows an entity to produce resources on some real time interval and send them to
@@ -72,14 +68,9 @@ public class ProductionComponent extends Component {
         while (this.timer.getTime() - this.lastTime >= this.tickRate ) {
             this.getEntity().getEvents().trigger("produceResource", this.produces, this.tickSize);
             int produced = (int) ((long) this.tickSize * this.getProductionModifier());
-            this.totalProducedResources += produced; //code added by abhi
             ServiceLocator.getGameStateObserverService().trigger("resourceAdd", this.produces.toString(), produced);
             this.lastTime += this.tickRate;
         }
-    }
-
-    public int getProducedResources() {
-        return totalProducedResources;
     }
 
     public void setTimer(GameTime timer) {

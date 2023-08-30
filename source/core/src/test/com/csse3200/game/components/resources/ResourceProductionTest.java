@@ -70,7 +70,7 @@ class ResourceProductionTest{
         for (int i = 1; i < 10; i++) {
             when(gameTime.getTime()).thenReturn((tickRate * i));
             entity.update();
-            assertEquals(tickSize * i, ServiceLocator.getGameStateObserverService().getStateData("resource/Unobtanium"));
+            assertEquals(tickSize * i, ServiceLocator.getGameStateObserverService().getStateData("resource/Solstite"));
         }
     }
 
@@ -80,7 +80,7 @@ class ResourceProductionTest{
         entity.create();
         when(gameTime.getTime()).thenReturn((long) (tickRate * 10.5));
         entity.update();
-        assertEquals(tickSize * 10, ServiceLocator.getGameStateObserverService().getStateData("resource/Unobtanium"));
+        assertEquals(tickSize * 10, ServiceLocator.getGameStateObserverService().getStateData("resource/Solstite"));
     }
 
     @Test
@@ -89,15 +89,15 @@ class ResourceProductionTest{
         entity.create();
         when(gameTime.getTime()).thenReturn(0L);
         entity.update();
-        assertNull(ServiceLocator.getGameStateObserverService().getStateData("resource/Unobtanium"));
+        assertNull(ServiceLocator.getGameStateObserverService().getStateData("resource/Solstite"));
 
         when(gameTime.getTime()).thenReturn(500L);
         entity.update();
-        assertNull(ServiceLocator.getGameStateObserverService().getStateData("resource/Unobtanium"));
+        assertNull(ServiceLocator.getGameStateObserverService().getStateData("resource/Solstite"));
 
         when(gameTime.getTime()).thenReturn(1000L);
         entity.update();
-        assertEquals(tickSize, ServiceLocator.getGameStateObserverService().getStateData("resource/Unobtanium"));
+        assertEquals(tickSize, ServiceLocator.getGameStateObserverService().getStateData("resource/Solstite"));
     }
 
     @Test
@@ -106,14 +106,14 @@ class ResourceProductionTest{
         entity.create();
         when(gameTime.getTime()).thenReturn(999L);
         entity.update();
-        assertNull(ServiceLocator.getGameStateObserverService().getStateData("resource/Unobtanium"));
+        assertNull(ServiceLocator.getGameStateObserverService().getStateData("resource/Solstite"));
 
         when(gameTime.getTime()).thenReturn(1000L);
         entity.update();
-        assertEquals(tickSize, ServiceLocator.getGameStateObserverService().getStateData("resource/Unobtanium"));
+        assertEquals(tickSize, ServiceLocator.getGameStateObserverService().getStateData("resource/Solstite"));
 
         when(gameTime.getTime()).thenReturn(1001L);
         entity.update();
-        assertEquals(tickSize, ServiceLocator.getGameStateObserverService().getStateData("resource/Unobtanium"));
+        assertEquals(tickSize, ServiceLocator.getGameStateObserverService().getStateData("resource/Solstite"));
     }
 }

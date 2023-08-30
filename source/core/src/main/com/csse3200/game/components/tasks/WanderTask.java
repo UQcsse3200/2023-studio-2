@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Wander around by moving a random position within a range of the starting position. Wait a little
- * bit between movements. Requires an entity with a PhysicsMovementComponent.
+ * Represents a task that causes the entity to wander around by moving to random positions within a specified range of its starting position.
+ * The entity will wait for a certain amount of time between movements. Requires an entity with a PhysicsMovementComponent.
  */
 public class WanderTask extends DefaultTask implements PriorityTask {
   private static final Logger logger = LoggerFactory.getLogger(WanderTask.class);
@@ -23,9 +23,10 @@ public class WanderTask extends DefaultTask implements PriorityTask {
   private Task currentTask;
 
   /**
-   * @param wanderRange Distance in X and Y the entity can move from its position when start() is
-   *     called.
-   * @param waitTime How long in seconds to wait between wandering.
+   * Creates a new WanderTask.
+   *
+   * @param wanderRange The distance in X and Y that the entity can move from its position when start() is called.
+   * @param waitTime The duration in seconds to wait between wandering.
    */
   public WanderTask(Vector2 wanderRange, float waitTime) {
     this.wanderRange = wanderRange;
@@ -69,6 +70,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     logger.debug("Starting waiting");
     this.owner.getEntity().getEvents().trigger("standing");
     swapTask(waitTask);
+    this.owner.getEntity().getEvents().trigger("idle");
   }
 
   private void startMoving() {
@@ -87,6 +89,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     }
     movementTask.setTarget(newPosition);
     swapTask(movementTask);
+    this.owner.getEntity().getEvents().trigger("wanderStart");
   }
 
   private void swapTask(Task newTask) {
@@ -103,6 +106,13 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     Vector2 max = startPos.cpy().add(halfRange);
     return RandomUtils.random(min, max);
   }
+
+  /**
+   * Determines the direction from the entity's current position to the destination position.
+   *
+   * @param destination The destination position to which the direction is calculated.
+   * @return A character representing the direction ('<', '>', or '=') relative to the current position.
+   */
   public char getDirection(Vector2 destination) {
     if (owner.getEntity().getPosition().x - destination.x < 0) {
       return '>';

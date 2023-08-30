@@ -129,7 +129,7 @@ public class SpaceGameArea extends GameArea {
      */
     private void createMaze(){
         spawnStaticAsteroidsRight(7,new GridPoint2(5,15));
-        spawnStaticAsteroidsRight(2,new GridPoint2(23,15));
+        spawnStaticAsteroidsRight(6,new GridPoint2(23,15));
 
         spawnStaticAsteroidsRight(7,new GridPoint2(5,14));
         spawnStaticAsteroidsRight(7,new GridPoint2(13,14));
@@ -174,7 +174,7 @@ public class SpaceGameArea extends GameArea {
         spawnStaticAsteroidsRight(8,new GridPoint2(17,5));
 
         spawnStaticAsteroidsRight(7,new GridPoint2(5,4));
-        spawnStaticAsteroidsRight(8,new GridPoint2(17,4));
+        spawnStaticAsteroidsRight(12,new GridPoint2(17,4));
 
     }
 

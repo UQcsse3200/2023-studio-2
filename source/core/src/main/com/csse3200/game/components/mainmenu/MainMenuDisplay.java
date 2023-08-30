@@ -38,6 +38,7 @@ public class MainMenuDisplay extends UIComponent {
     TextButton loadBtn = new TextButton("Load", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton exitBtn = new TextButton("Exit", skin);
+    TextButton SpaceBtn = new TextButton("Space", skin);
 
     // Triggers an event when the button is pressed
     startBtn.addListener(
@@ -67,6 +68,14 @@ public class MainMenuDisplay extends UIComponent {
           }
         });
 
+      SpaceBtn.addListener(
+              new ChangeListener() {
+                  @Override
+                  public void changed(ChangeEvent changeEvent, Actor actor) {
+                      logger.debug("Space button clicked");
+                      entity.getEvents().trigger("space");
+                  }
+              });
     exitBtn.addListener(
         new ChangeListener() {
           @Override
@@ -86,6 +95,8 @@ public class MainMenuDisplay extends UIComponent {
     table.add(settingsBtn).padTop(15f);
     table.row();
     table.add(exitBtn).padTop(15f);
+    table.row();
+    table.add(SpaceBtn).padTop(15f);
 
     stage.addActor(table);
   }

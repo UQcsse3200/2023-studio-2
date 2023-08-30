@@ -3,6 +3,9 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.csse3200.game.areas.Navigation;
+import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.MainGameScreen;
 import com.csse3200.game.screens.MainMenuScreen;
@@ -19,14 +22,17 @@ import static com.badlogic.gdx.Gdx.app;
  */
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
+  private CameraComponent cameraComponent;
 
   @Override
   public void create() {
     logger.info("Creating game");
     loadSettings();
 
-    // Sets background to light yellow
     Gdx.gl.glClearColor(248f/255f, 249/255f, 178/255f, 1);
+
+    // Create an instance of your CameraComponent
+    cameraComponent = new CameraComponent();
 
     setScreen(ScreenType.MAIN_MENU);
   }
@@ -72,13 +78,18 @@ public class GdxGame extends Game {
         return new MainGameScreen(this);
       case SETTINGS:
         return new SettingsScreen(this);
+//      case SPACE_GAME:
+//        TerrainFactory terrainFactory = new TerrainFactory(cameraComponent);
+//        String navigationImagePath = "images/navigation_image.png"; // Replace with the actual image path
+//        return new Navigation(terrainFactory, navigationImagePath);
       default:
         return null;
     }
   }
 
+
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS
+    MAIN_MENU, MAIN_GAME, SETTINGS, SPACE_GAME
   }
 
   /**

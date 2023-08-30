@@ -23,6 +23,7 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("load", this::onLoad);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
+    entity.getEvents().addListener("space", this::onSpace);
   }
 
   /**
@@ -47,6 +48,10 @@ public class MainMenuActions extends Component {
   private void onExit() {
     logger.info("Exit game");
     game.exit();
+  }
+  private void onSpace() {
+    logger.info("Space game");
+    game.setScreen(GdxGame.ScreenType.SPACE_GAME);
   }
 
   /**

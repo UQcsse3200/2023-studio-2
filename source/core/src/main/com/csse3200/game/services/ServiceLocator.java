@@ -20,6 +20,7 @@ public class ServiceLocator {
   private static final Logger logger = LoggerFactory.getLogger(ServiceLocator.class);
   private static EntityService entityService;
   private static RenderService renderService;
+
   private static PhysicsService physicsService;
   private static GameTime timeSource;
   private static InputService inputService;

@@ -38,6 +38,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.csse3200.game.components.resources.ProductionComponent;
 
 import static com.csse3200.game.ui.UIComponent.skin;
 
@@ -63,6 +64,7 @@ public class MainGameScreen extends ScreenAdapter {
   private SpriteBatch spriteBatch;
   private int playerResources = 0; // Initial value of resources
   private int maxResources = 100; // Adjustable
+  private ProductionComponent productionComponent;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -108,29 +110,50 @@ public class MainGameScreen extends ScreenAdapter {
 
     spriteBatch = new SpriteBatch();
 
+    setProductionComponent(productionComponent);
+
   }
 
+  public void setProductionComponent(ProductionComponent productionComponent) {
+    this.productionComponent = productionComponent;
+  }
+
+  /**
+   * Renders the entity's production status, including the progress of resource production
+   * and a visual representation of the resource bar.
+   * This method is responsible for rendering the current status of resource production for
+   * the entity. It displays a visual representation of the resource production progress using
+   * a resource bar. The resource bar indicates the amount of resource produced relative to
+   * the tick size and the time since the last production tick.
+   * Resource production is determined by the tick rate and tick size specified during
+   * component initialization. The resource bar visually represents the amount of resource
+   * produced on each tick and how close the entity is to the next production.
+   */
   @Override
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
     renderer.render();
 
-    playerResources = 50;
+    if (productionComponent != null) {
+      int producedResources = productionComponent.getProducedResources();
+      playerResources += producedResources;
 
-    //Added code by Abhijith for resource bar
+      playerResources = Math.min(playerResources, maxResources);
+    }
+
     shapeRenderer.begin();
 
     shapeRenderer.set(ShapeType.Filled);
     shapeRenderer.setColor(Color.WHITE);
-    shapeRenderer.rect(10, Gdx.graphics.getHeight() - 140, 32, 32); // Keep the elixir icon at the same position
+    shapeRenderer.rect(10, Gdx.graphics.getHeight() - 140, 32, 32);
 
-    float progressBarWidth = 320 * ((float) playerResources / maxResources); // Reduced the width by 20%
+    float progressBarWidth = 320 * ((float) playerResources / maxResources);
     progressBarWidth = Math.min(progressBarWidth, 320); // Clamp the width
 
     shapeRenderer.setColor(Color.GREEN);
     shapeRenderer.set(ShapeType.Filled);
-    shapeRenderer.rect(50, Gdx.graphics.getHeight() - 140, 320, 16); // Raised the position by 10 units
+    shapeRenderer.rect(50, Gdx.graphics.getHeight() - 140, 320, 16);
 
     shapeRenderer.setColor(Color.PURPLE);
     shapeRenderer.set(ShapeType.Filled);

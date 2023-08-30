@@ -52,10 +52,6 @@ public class EarthGameArea extends GameArea {
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
             "images/RightShip.png",
-            "images/wall.png",
-            "images/wall2.png",
-            "images/gate_close.png",
-            "images/gate_open.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
             "images/base_enemy.png",
@@ -77,6 +73,8 @@ public class EarthGameArea extends GameArea {
             "images/rangeEnemy.atlas",
             "images/stone_wall.atlas",
             "images/dirt_wall.atlas",
+            "images/open_gate.atlas",
+            "images/closed_gate.atlas",
             "images/botanist.atlas"
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};

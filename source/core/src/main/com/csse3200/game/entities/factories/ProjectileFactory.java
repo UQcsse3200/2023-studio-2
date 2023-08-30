@@ -84,7 +84,8 @@ public class ProjectileFactory {
                         .addComponent(new ProjectileAttackComponent((short) (
                                 PhysicsLayer.PLAYER |
                                 PhysicsLayer.WALL |
-                                PhysicsLayer.STRUCTURE),
+                                PhysicsLayer.STRUCTURE |
+                                PhysicsLayer.NPC),
                                 1.5f));
 
         // Image scaling

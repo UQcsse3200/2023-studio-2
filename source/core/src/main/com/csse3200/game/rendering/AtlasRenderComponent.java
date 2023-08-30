@@ -19,6 +19,13 @@ public class AtlasRenderComponent extends RenderComponent {
         this.currentRegion = atlas.findRegion(region);
     }
 
+    /**
+     * Changes the atlas being used to a new atlas and sets the region to be
+     * the given region.
+     *
+     * @param atlas - the new atlas
+     * @param region - the new region
+     */
     public void updateTextureAtlas(TextureAtlas atlas, String region) {
         this.atlas = atlas;
 
@@ -30,6 +37,12 @@ public class AtlasRenderComponent extends RenderComponent {
         entity.setScale(1f, ((float)currentRegion.getRegionHeight()) / ((float)currentRegion.getRegionWidth()));
     }
 
+    /**
+     * Sets the region to use when drawing the texture.
+     *
+     * @param region - the region to use
+     * @param scaleEntity - whether the scale should be updated.
+     */
     public void setRegion(String region, boolean scaleEntity) {
         this.currentRegion = atlas.findRegion(region);
 

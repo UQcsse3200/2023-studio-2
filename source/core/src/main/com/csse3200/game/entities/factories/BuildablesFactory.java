@@ -20,11 +20,10 @@ public class BuildablesFactory {
 
     /**
      * Creates a gate which can be placed on the map.
-     * @param type the type of wall to create.
      * @param player the player which can pass through the gate.
      * @return The created Wall entity.
      */
-    public static Entity createGate(WallType type, boolean isLeftRight,  Entity player) {
-        return new Gate(type, isLeftRight, player);
+    public static Entity createGate(Entity player) {
+        return new Gate(player);
     }
 }

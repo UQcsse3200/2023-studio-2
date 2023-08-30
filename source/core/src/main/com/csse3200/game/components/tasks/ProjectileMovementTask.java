@@ -12,8 +12,8 @@ import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 
 /** Bullet moves towards the target in a straight line until it reaches the target position  */
-public class ProjectileMovementTask extends ChaseTask implements PriorityTask {
-  private final Entity target;
+public class ProjectileMovementTask extends DefaultTask implements PriorityTask {
+  private Vector2 targetLocation;
   private final int priority;
   private final float viewDistance;
   private final float maxChaseDistance;
@@ -21,14 +21,13 @@ public class ProjectileMovementTask extends ChaseTask implements PriorityTask {
   private MovementTask movementTask;
 
   /**
-   * @param target The entity to target.
+   * @param targetLocation The location where the projectile will go to.
    * @param priority Task priority when moving (0 when not chasing).
    * @param viewDistance Maximum distance from the entity at which the movement can start.
    * @param maxChaseDistance Maximum distance from the entity while moving before giving up.
    */
-  public ProjectileMovementTask(Entity target, int priority, float viewDistance, float maxChaseDistance) {
-    super(target, priority, viewDistance, maxChaseDistance);
-    this.target = target;
+  public ProjectileMovementTask(Vector2 targetLocation, int priority, float viewDistance, float maxChaseDistance) {
+    this.targetLocation = targetLocation;
     this.priority = priority;
     this.viewDistance = viewDistance;
     this.maxChaseDistance = maxChaseDistance;
@@ -38,7 +37,7 @@ public class ProjectileMovementTask extends ChaseTask implements PriorityTask {
   @Override
   public void start() {
     super.start();
-    movementTask = new MovementTask(target.getPosition());
+    movementTask = new MovementTask(targetLocation);
     movementTask.create(owner);
     movementTask.start();
 
@@ -62,7 +61,7 @@ public class ProjectileMovementTask extends ChaseTask implements PriorityTask {
   }
 
   private float getDistanceToTarget() {
-    return owner.getEntity().getPosition().dst(target.getPosition());
+    return owner.getEntity().getPosition().dst(targetLocation);
   }
 
   private int getActivePriority() {
@@ -83,7 +82,7 @@ public class ProjectileMovementTask extends ChaseTask implements PriorityTask {
 
   private boolean isTargetVisible() {
     Vector2 from = owner.getEntity().getCenterPosition();
-    Vector2 to = target.getCenterPosition();
+    Vector2 to = targetLocation;
 
     debugRenderer.drawLine(from, to);
     return true;

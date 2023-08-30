@@ -3,7 +3,7 @@ package com.csse3200.game.components.tasks;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.BulletFactory;
+import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class ShootTask extends DefaultTask {
         super.start();
         this.spawn = owner.getEntity().getPosition();
         hasShot = false;
-        Entity bullet = BulletFactory.createBullet(target);
+        Entity bullet = ProjectileFactory.createBullet(target.getPosition());
         ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawn);
         hasShot = true;
     }

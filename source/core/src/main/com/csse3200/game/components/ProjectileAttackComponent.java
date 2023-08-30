@@ -107,7 +107,16 @@ public class ProjectileAttackComponent extends Component {
     }
 
     // despawn
-    Gdx.app.postRunnable(entity::dispose);
+    entity.getEvents().trigger("explode");
+    // Schedule a task to execute entity::dispose after a delay
+    Timer timer = new Timer();
+    timer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        Gdx.app.postRunnable(entity::dispose);
+      }
+    }, 2000);
+
   }
 
 

@@ -53,16 +53,12 @@ public class EnemyFactory {
     AnimationRenderComponent animator;
     PriorityTask chaseTask;
     AITaskComponent aiComponent = new AITaskComponent();
-    if (type != EnemyType.Ranged) {
-      aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
-    }
+
+    aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+
 
     for (Entity target : targets) {
-      if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-        aiComponent.addTask(new RangeChase(target, 10, 3f, 4f, 4f));
-      }
-      chaseTask = EnemyBehaviourSelector(target, type, behaviour);
-      aiComponent.addTask(chaseTask);
+      EnemyBehaviourSelector(target, type, behaviour, aiComponent);
     }
 
     TextureAtlas atlas = new TextureAtlas(config.atlas);
@@ -87,6 +83,7 @@ public class EnemyFactory {
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
     animator.addAnimation("stand",0.3f,Animation.PlayMode.LOOP);
+    animator.addAnimation("attack",0.05f,Animation.PlayMode.LOOP);
     //animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
 
 
@@ -97,7 +94,8 @@ public class EnemyFactory {
 
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 
-    PhysicsUtils.setScaledCollider(enemy, 0.9f, 0.4f);
+    PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
+    enemy.scaleHeight(2f);
     return enemy;
   }
 
@@ -109,37 +107,38 @@ public class EnemyFactory {
    * @param behaviour
    * @return task
    */
-  private static PriorityTask EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour) {
+  private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent) {
     PriorityTask task = null;
     if (type == EnemyType.Ranged) {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          task = (new AimTask( 2f, target));
+          aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 6f, 6f, 3f));
         } else {
-          task = (new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-          task = (new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         } else {
-          task = (new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
     }
     if (type == EnemyType.Melee) {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          task = (new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         } else {
-          task = (new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-          task = (new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         } else {
-          task = (new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
     }
@@ -147,16 +146,16 @@ public class EnemyFactory {
     if (type == EnemyType.BossMelee) {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          task = (new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         } else {
-          task = (new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-          task = (new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         } else {
-          task = (new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
     }
@@ -164,20 +163,19 @@ public class EnemyFactory {
     if (type == EnemyType.BossRanged) {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          task = (new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         } else {
-          task = (new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-          task = (new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         } else {
-          task = (new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
     }
-    return task;
   }
 
   private EnemyFactory() {

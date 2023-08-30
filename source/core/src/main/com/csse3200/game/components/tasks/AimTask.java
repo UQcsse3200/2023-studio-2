@@ -12,26 +12,35 @@ import org.slf4j.LoggerFactory;
  * bit between movements. Requires an entity with a PhysicsMovementComponent.
  */
 public class AimTask extends DefaultTask implements PriorityTask {
+
+  private final int priority = 5;
   private static final Logger logger = LoggerFactory.getLogger(AimTask.class);
   private final float waitTime;
   private WaitTask waitTask;
   private Task currentTask;
   private ShootTask aimTask;
   private final Entity target;
+  private final float range;
+
 
   /**
    * called.
    *
    * @param waitTime How long in seconds to wait between wandering.
    */
-  public AimTask(float waitTime, Entity target) {
+  public AimTask(float waitTime, Entity target, float range) {
     this.waitTime = waitTime;
     this.target = target;
+    this.range = range;
   }
 
   @Override
   public int getPriority() {
-    return 1; // Low priority task
+    if (status == Status.ACTIVE) {
+      return getActivePriority();
+    }
+
+    return getInactivePriority();
   }
 
   @Override
@@ -59,6 +68,26 @@ public class AimTask extends DefaultTask implements PriorityTask {
       }
     }
     currentTask.update();
+  }
+
+  private float getDistanceToTarget() {
+    return owner.getEntity().getPosition().dst(target.getPosition());
+  }
+
+  private int getActivePriority() {
+    float dst = getDistanceToTarget();
+    if (dst > range) {
+      return -1; // Too far, stop chasing
+    }
+    return priority;
+  }
+
+  private int getInactivePriority() {
+    float dst = getDistanceToTarget();
+    if (dst <= range) {
+      return priority;
+    }
+    return -1;
   }
 
   private void startWaiting() {

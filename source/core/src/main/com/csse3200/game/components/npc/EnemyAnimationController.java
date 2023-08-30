@@ -19,6 +19,7 @@ public class EnemyAnimationController extends Component {
     entity.getEvents().addListener("wander_left", this::animateWanderLeft);
     entity.getEvents().addListener("standing", this::animateWanderStand);
     entity.getEvents().addListener("dispose", this::animateDeath);
+    entity.getEvents().addListener("explode", this::animateExplosion);
   }
 
   void animateWander() {
@@ -35,6 +36,9 @@ public class EnemyAnimationController extends Component {
   }
   void animateDeath() {
     animator.startAnimation("death");
+  }
+  void animateExplosion (){
+    animator.startAnimation("explode");
   }
 
 }

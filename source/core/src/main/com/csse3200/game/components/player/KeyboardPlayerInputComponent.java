@@ -291,7 +291,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
           entity.getEvents().trigger("walkUpRight");
-        }wwww
+        }
         else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
           entity.getEvents().trigger("walkUp");
         }

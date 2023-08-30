@@ -46,6 +46,37 @@ public class ObstacleFactory {
   }
 
   /**
+   * Creates a visible obstacle
+   * @return Environment entity
+   */
+  public static Entity createEnvironment() {
+    Entity environment =
+            new Entity().addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    environment.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    return environment;
+  }
+
+  /**
+   * Creates an obstacle with a custom sized collision box
+   * @param sizeX the length of the new collision box
+   * @param sizeY the height of the new collision box
+   * @param posX the relative x coordinate of the top left corner of the collision box
+   * @param posY the relative y coordinate of the top left corner of the collision box
+   * @return Environment entity with the set collision box
+   */
+  public static Entity createEnvironment(float sizeX, float sizeY, float posX, float posY) {
+    Entity environment =
+            new Entity().addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    environment.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    PhysicsUtils.setCustomCollider(environment, sizeX, sizeY, posX, posY);
+    return environment;
+  }
+
+  /**
    * Creates an invisible physics wall.
    * @param width Wall width in world units
    * @param height Wall height in world units
@@ -75,6 +106,24 @@ public class ObstacleFactory {
     asteroid.setScale(width, height);
     return asteroid;
   }
+  public static Entity createStaticAsteroid(float width, float height) {
+    Entity asteroid = new Entity()
+            .addComponent(new TextureRenderComponent("images/meteor.png"))
+            .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+    asteroid.setScale(width, height);
+    return asteroid;
+  }
+
+  public static Entity createObstacleEnemy(float width, float height){
+    Entity enemy = new Entity()
+            .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+            .addComponent(new TextureRenderComponent("images/obstacle-enemy.png"));
+    enemy.setScale(width, height);
+    return enemy;
+  }
+
   public static Entity createObstacleGameGoal(float width, float height){
     Entity goal = new Entity()
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))

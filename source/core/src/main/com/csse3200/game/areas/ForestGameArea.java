@@ -71,9 +71,11 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
 
+
     "images/base_enemy.png",
     "images/Troll.png",
     "images/rangeEnemy.png",
+
 
     "images/stone_wall.png",
     "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
@@ -156,7 +158,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+    terrain = terrainFactory.createTerrain();
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls

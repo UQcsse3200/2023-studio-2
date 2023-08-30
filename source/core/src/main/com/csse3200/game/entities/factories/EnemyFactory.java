@@ -90,7 +90,7 @@ public class EnemyFactory {
     enemy
             .addComponent(new EnemyAnimationController())
             .addComponent(aiComponent)    // adds tasks depending on enemy type
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 0, false));
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 1, false));
 
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 

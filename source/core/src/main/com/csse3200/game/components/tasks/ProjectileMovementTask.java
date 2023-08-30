@@ -11,8 +11,8 @@ import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 
-/** Chases a target entity until they get too far away or line of sight is lost */
-public class ProjectileMovementTask extends DefaultTask implements PriorityTask {
+/** Bullet moves towards the target in a straight line until it reaches the target position  */
+public class ProjectileMovementTask extends ChaseTask implements PriorityTask {
   private final Entity target;
   private final int priority;
   private final float viewDistance;
@@ -21,12 +21,13 @@ public class ProjectileMovementTask extends DefaultTask implements PriorityTask 
   private MovementTask movementTask;
 
   /**
-   * @param target The entity to chase.
-   * @param priority Task priority when chasing (0 when not chasing).
-   * @param viewDistance Maximum distance from the entity at which chasing can start.
-   * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
+   * @param target The entity to target.
+   * @param priority Task priority when moving (0 when not chasing).
+   * @param viewDistance Maximum distance from the entity at which the movement can start.
+   * @param maxChaseDistance Maximum distance from the entity while moving before giving up.
    */
   public ProjectileMovementTask(Entity target, int priority, float viewDistance, float maxChaseDistance) {
+    super(target, priority, viewDistance, maxChaseDistance);
     this.target = target;
     this.priority = priority;
     this.viewDistance = viewDistance;

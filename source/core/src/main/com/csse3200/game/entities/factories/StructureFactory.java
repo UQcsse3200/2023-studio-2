@@ -42,7 +42,6 @@ public class StructureFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new CombatStatsComponent(health, 0, 0, false))
                 .addComponent(new ProductionComponent(producedResource, tickRate, tickSize));
 
@@ -72,6 +71,15 @@ public class StructureFactory {
         return ship;
     }
 
+    /**
+     * Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map
+     *
+     * @param targets
+     * @param tickRate
+     * @param type
+     * @param behaviour
+     * @return
+     */
     public static Entity createSpawner(ArrayList<Entity> targets, long tickRate, EnemyType type, EnemyBehaviour behaviour) {
         Entity spawner =
                 new Entity()

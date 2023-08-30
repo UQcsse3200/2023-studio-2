@@ -44,8 +44,10 @@ public class ForestGameArea extends GameArea {
 
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
-  private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(5, 5);
   private static final int NUM_POWERUPS = 3;
+  private static final int NUM_MELEE_PTE = 2;
+  private static final int NUM_MELEE_DTE = 2;
+  private static final int NUM_RANGE_PTE = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
@@ -75,7 +77,7 @@ public class ForestGameArea extends GameArea {
     "images/iso_grass_2.png",
     "images/iso_grass_3.png",
     "images/base_enemy.png",
-          "images/boss_enemy.png",
+    "images/boss_enemy.png",
     "images/Troll.png",
     "images/rangeEnemy.png",
     "images/stone_wall.png",
@@ -83,37 +85,8 @@ public class ForestGameArea extends GameArea {
     "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/Ship.png",
     "images/stone_wall.png",
-    "images/Spawner.png"
-          "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
-          "images/broken_elixir_collector.png",
-          "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-          "images/box_boy_leaf.png",
-          "images/RightShip.png",
-          "images/tree.png",
-          "images/wall.png",
-          "images/wall2.png",
-          "images/gate_close.png",
-          "images/gate_open.png",
-          "images/ghost_king.png",
-          "images/ghost_1.png",
-          "images/grass_1.png",
-          "images/grass_2.png",
-          "images/grass_3.png",
-          "images/hex_grass_1.png",
-          "images/hex_grass_2.png",
-          "images/hex_grass_3.png",
-          "images/iso_grass_1.png",
-          "images/iso_grass_2.png",
-          "images/iso_grass_3.png",
-          "images/base_enemy.png",
-          "images/Troll.png",
-          "images/rangeEnemy.png",
-          "images/stone_wall.png",
-          "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-          "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-          "images/Ship.png",
-          "images/stone_wall.png",
-          "images/oldman_down_1.png"
+    "images/Spawner.png",
+    "images/oldman_down_1.png"
   };
   private static final String[] forestTextureAtlases = {
           "images/terrain_iso_grass.atlas",
@@ -125,10 +98,7 @@ public class ForestGameArea extends GameArea {
           "images/rangeEnemy.atlas",
           "images/stone_wall.atlas",
           "images/dirt_wall.atlas",
-          "images/botanist.atlas"
-
-
-          "images/dirt_wall.atlas",
+          "images/botanist.atlas",
           "images/bullet.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -289,19 +259,40 @@ public class ForestGameArea extends GameArea {
 //      spawnEntityAt(botanist, BOTANIST_SPAWN, true, true);
 //
 //  }
+
+  /**
+   * Current available small enemies:
+   *   Melee PTE
+   *   Melee DTE
+   *   Ranged PTE
+   */
   private void spawnEnemies() {
-    Entity spawner = StructureFactory.createSpawner(targetables, 5000, EnemyType.Melee, EnemyBehaviour.DTE);
-    spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_MELEE_PTE; i++) {
+      GridPoint2 randomPos1 = RandomUtils.random(minPos, maxPos);
+      Entity meleePTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.PTE);
+      spawnEntityAt(meleePTE, randomPos1, true, true);
+    }
+
+    for (int i = 0; i < NUM_MELEE_DTE; i++) {
+      GridPoint2 randomPos2 = RandomUtils.random(minPos, maxPos);
+      Entity meleeDTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+      spawnEntityAt(meleeDTE, randomPos2, true, true);
+    }
+
+    for (int i = 0; i < NUM_RANGE_PTE; i++) {
+      GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
+      Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+      spawnEntityAt(rangePTE, randomPos3, true, true);
+    }
   }
 
-  private void spawnBotanist() {
-    GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
-            terrain.getMapBounds(0).sub(1, 1).y/3);
-    Entity ship = NPCFactory.createBotanist();
-    spawnEntityAt(ship, spawnPosition, false, false);
-    ship.addComponent(new DialogComponent(dialogueBox));
-  }
-
+  /**
+   * Current available Boss enemies:
+   *  Melee Boss PTE
+   */
   private void spawnBoss() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -310,6 +301,14 @@ public class ForestGameArea extends GameArea {
     Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
     boss.addComponent(new DialogComponent(dialogueBox));
+  }
+
+  private void spawnBotanist() {
+    GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
+            terrain.getMapBounds(0).sub(1, 1).y/3);
+    Entity ship = NPCFactory.createBotanist();
+    spawnEntityAt(ship, spawnPosition, false, false);
+    ship.addComponent(new DialogComponent(dialogueBox));
   }
 
   private void playMusic() {

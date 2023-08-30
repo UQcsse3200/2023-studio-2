@@ -7,6 +7,9 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * When this entity (usually killable entities) has health = 0, it disposes the enemy form the field of play.
+ */
 public class DeathComponent extends Component {
     private CombatStatsComponent combatStats;
     private HitboxComponent hitboxComponent;

@@ -4,10 +4,10 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 /**
- * This class listens to events relevant to a ghost entity's state and plays the animation when one
+ * This class listens to events relevant to all enemy entities' state and plays the animation when one
  * of the events is triggered.
  */
-public class GhostAnimationController extends Component {
+public class EnemyAnimationController extends Component {
   AnimationRenderComponent animator;
 
   @Override

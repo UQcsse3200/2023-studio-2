@@ -297,7 +297,7 @@ public class EarthGameArea extends GameArea {
     }
 
     private void spawnSpawner() {
-        Entity spawner = StructureFactory.createSpawner(targetables, 5000, EnemyType.Melee, EnemyBehaviour.PTE, 5);
+        Entity spawner = StructureFactory.createSpawner(targetables, 5000, EnemyType.Melee, EnemyBehaviour.PTE, 3);
         spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
     }
 

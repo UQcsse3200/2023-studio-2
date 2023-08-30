@@ -165,7 +165,11 @@ public class EarthGameArea extends GameArea {
         Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 1.0, 1);
         spawnEntityAt(extractor, pos, true, false);
 
-        Entity resourceDisplay = new Entity().addComponent(new ResourceDisplay());
+        ResourceDisplay resourceDisplayComponent = new ResourceDisplay()
+                .withResource(Resource.Durasteel)
+                .withResource(Resource.Solstite)
+                .withResource(Resource.Nebulite);
+        Entity resourceDisplay = new Entity().addComponent(resourceDisplayComponent);
         spawnEntity(resourceDisplay);
     }
 

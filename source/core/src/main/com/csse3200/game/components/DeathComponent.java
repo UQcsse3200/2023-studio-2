@@ -14,10 +14,15 @@ public class DeathComponent extends Component {
     private CombatStatsComponent combatStats;
     private HitboxComponent hitboxComponent;
 
-
+    /**
+     * The Death Component holding Physical Interaction Stats, and facilitates listeners for entity death
+     */
     public DeathComponent() {
     }
 
+    /**
+     * Creates a new listener on an entity to wait for kill condition
+     */
     @Override
     public void create() {
         entity.getEvents().addListener("collisionEnd", this::kill);
@@ -25,6 +30,11 @@ public class DeathComponent extends Component {
         hitboxComponent = entity.getComponent(HitboxComponent.class);
     }
 
+    /**
+     * When kill condition met, target entity will be disposed.
+     * @param me The current Entity's Fixture
+     * @param other The targeted Entity's Fixture
+     */
     private void kill(Fixture me, Fixture other) {
         if (hitboxComponent.getFixture() != me) {
             // Not triggered by hitbox, ignore
@@ -40,7 +50,6 @@ public class DeathComponent extends Component {
                     Gdx.app.postRunnable(entity::dispose);
                 }
             }, 2000); // 10 milliseconds delay
-
         }
     }
 }

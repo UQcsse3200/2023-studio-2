@@ -31,10 +31,9 @@ public class PlanetTravelTest {
     public void PlanetTravelTest() {
         gameState.put("planet", "Earth");  // Modifying the same gameState that planetTravel has
         assertEquals("Earth", planetTravel.returnCurrent(), "The state data should match the set data.");
-
+        //Skip the minigame because we are responsible for testing it.
         doNothing().when(mockGame).setScreen(any(GdxGame.ScreenType.class)); // Stub the setScreen method
         planetTravel.moveToNextPlanet("Mars");
-
         assertEquals("Mars", gameState.get("planet"), "The state data should match the set data.");
     }
 }

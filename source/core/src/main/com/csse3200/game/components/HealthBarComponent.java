@@ -1,6 +1,5 @@
 package com.csse3200.game.components;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
@@ -44,12 +43,14 @@ public class HealthBarComponent extends UIComponent {
         }
 
         healthBar = new ProgressBar(0, getCombatStatsComponent().getMaxHealth(), 1, false, skin);
-        updateWallHealthUI(getCombatStatsComponent().getHealth());
-        healthBar.setColor(new Color(0, 1, 0, 1));
-        healthBar.setWidth(SCALE_REDUCTION * width);
+
+        updateHealth(entity.getComponent(CombatStatsComponent.class).getHealth());
+        this.healthBar.setWidth(SCALE_REDUCTION * width);
         updateUIPosition();
 
-        entity.getEvents().addListener("updateHealth", this::updateWallHealthUI);
+        setEnabled(false);
+
+        entity.getEvents().addListener("updateHealth", this::updateHealth);
     }
 
     /**
@@ -68,14 +69,14 @@ public class HealthBarComponent extends UIComponent {
         float centerOffset = 0;
         if (center) {
             yPos += entity.getCenterPosition().y;
-            centerOffset = healthBar.getHeight()/2;
+            centerOffset = healthBar.getHeight();
         } else {
-            yPos += entity.getPosition().y;
+            yPos += entity.getCenterPosition().y;
         }
 
-        var position = new Vector3(entity.getCenterPosition().x - width/2, yPos, 0);
-        position.scl(SCALE_REDUCTION);
-        healthBar.setPosition(position.x, position.y - centerOffset);
+        var position2 = new Vector3(entity.getCenterPosition().x - width/2, yPos, 0);
+        position2.scl(SCALE_REDUCTION);
+        healthBar.setPosition(position2.x, position2.y - centerOffset);
     }
 
     /**
@@ -88,35 +89,50 @@ public class HealthBarComponent extends UIComponent {
      */
     @Override
     public void draw(SpriteBatch batch)  {
-        updateUIPosition();
-        Matrix4 originalMatrix = batch.getProjectionMatrix().cpy(); // cpy() needed to properly set afterwards because calling set() seems to modify kept matrix, not replaces it
+        if (enabled) {
+            updateUIPosition();
+            Matrix4 originalMatrix = batch.getProjectionMatrix().cpy(); // cpy() needed to properly set afterwards because calling set() seems to modify kept matrix, not replaces it
 
-        var newScale = new Vector3();
-        newScale = originalMatrix.getScale(newScale);
-        newScale.scl(1/SCALE_REDUCTION);
+            var newScale = new Vector3();
+            newScale = originalMatrix.getScale(newScale);
+            newScale.scl(1/SCALE_REDUCTION);
 
-        var originalPosition = originalMatrix.getTranslation(new Vector3());
-        var originalRotation = originalMatrix.getRotation(new Quaternion());
+            var originalPosition = originalMatrix.getTranslation(new Vector3());
+            var originalRotation = originalMatrix.getRotation(new Quaternion());
 
-        var newMatrix = new Matrix4(originalPosition, originalRotation, newScale);
-        batch.setProjectionMatrix(newMatrix);
+            var newMatrix = new Matrix4(originalPosition, originalRotation, newScale);
+            batch.setProjectionMatrix(newMatrix);
 
-        healthBar.draw(batch, 1.0f);
-        batch.setProjectionMatrix(originalMatrix); //revert projection
+
+            healthBar.draw(batch, 1.0f);
+            batch.setProjectionMatrix(originalMatrix); //revert projection
+        }
     }
 
     /**
      * Updates the Wall's health on the ui.
      * @param health player health
      */
-    public void updateWallHealthUI(int health) {
-        healthBar.setValue(health);
+    public void updateHealth(int health) {
+        this.healthBar.setValue(health);
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        healthBar.remove();
+        this.healthBar.remove();
     }
 
+    public void show() {
+        setEnabled(true);
+
+    }
+
+    public void hide() {
+        setEnabled(false);
+    }
+
+    public ProgressBar getHealthBar() {
+        return healthBar;
+    }
 }

@@ -52,10 +52,6 @@ public class EarthGameArea extends GameArea {
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
             "images/RightShip.png",
-            "images/wall.png",
-            "images/wall2.png",
-            "images/gate_close.png",
-            "images/gate_open.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
             "images/base_enemy.png",
@@ -81,7 +77,11 @@ public class EarthGameArea extends GameArea {
             "images/dirt_wall.atlas",
             "images/botanist.atlas",
             "images/playerSS.atlas",
-            "images/wrench.atlas"
+            "images/wrench.atlas",
+            "images/open_gate.atlas",
+            "images/closed_gate.atlas",
+            "images/botanist.atlas"
+
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -154,14 +154,29 @@ public class EarthGameArea extends GameArea {
             }
         }
     }
+    /**
+     * Spawns a Botanist NPC entity at a predefined spawn position on the terrain.
+     * The Botanist entity is created using the NPCFactory.createBotanist() method.
+     * The entity is then added to the world and positioned at the specified spawn position.
+     *
+     * @see NPCFactory#createBotanist() Method used to create the Botanist NPC entity.
+     */
     private void spawnBotanist() {
-        GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(15, 2).x/2,
-                terrain.getMapBounds(0).sub(2, 2).y/3);
-        Entity botanist = NPCFactory.createBotanist();
-        spawnEntityAt(botanist, spawnPosition, true, false);
-        botanist.addComponent(new DialogComponent(dialogueBox));
+        // Calculate the spawn position based on terrain bounds
+        GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(15, 2).x / 2,
+                terrain.getMapBounds(0).sub(2, 2).y / 3);
 
+        // Create the Botanist NPC entity
+        Entity botanist = NPCFactory.createBotanist();
+
+        // Spawn the entity at the calculated position
+        // Arguments: entity, position, isCentered, isLocal
+        spawnEntityAt(botanist, spawnPosition, true, false);
+
+        // Add a DialogComponent to the entity for dialog interactions
+        botanist.addComponent(new DialogComponent(dialogueBox));
     }
+
     private void spawnAsteroids() {
         //Extra Spicy Asteroids
         GridPoint2 posAs = new GridPoint2(8, 8);

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Component {
   private static final Logger logger = LoggerFactory.getLogger(Component.class);
-  protected Entity entity;
+  public Entity entity;
   protected boolean enabled = true;
 
   /**

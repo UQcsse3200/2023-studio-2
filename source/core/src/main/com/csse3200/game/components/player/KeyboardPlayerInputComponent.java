@@ -30,9 +30,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private int flagS = 0;
   private int flagD = 0;
   private int flagMul = 0;
+
   private int testing = 0;
 
-  
   /** 
    * Returns value for testing.
    * @return int
@@ -41,7 +41,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     return testing;
   }
 
-  
   /** 
    * Sets value for testing.
    * @param testing
@@ -49,6 +48,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public void setTesting(int testing) {
     this.testing = testing;
   }
+
+  private boolean leftCtrlFlag = false;
 
   /**
    * @return int
@@ -149,6 +150,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (flagW == 1) {  
         }
         return true;
+      case Keys.CONTROL_LEFT:
+        leftCtrlFlag = true;
+        return true;
       case Keys.SPACE:
         if (dodge_available) {
           if (flagW == 1) {
@@ -226,6 +230,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         triggerWalkEvent();
         return true;
+      case Keys.CONTROL_LEFT:
+        leftCtrlFlag = false;
+        return true;
       default:
         return false;
     }
@@ -242,7 +249,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     if(button == Input.Buttons.LEFT){
-      entity.getEvents().trigger("place", screenX, screenY);
+      if (leftCtrlFlag) {
+        entity.getEvents().trigger("ctrl_place", screenX, screenY);
+      } else {
+        entity.getEvents().trigger("place", screenX, screenY);
+      }
       return true;
     }
     if (button == Input.Buttons.RIGHT) {

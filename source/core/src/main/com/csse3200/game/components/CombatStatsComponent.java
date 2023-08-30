@@ -18,11 +18,11 @@ public class CombatStatsComponent extends Component {
   private Boolean isImmune;
 
   public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune) {
-    maxHealth = health;
-    setHealth(health);
-    setBaseAttack(baseAttack);
-    setAttackMultiplier(attackMultiplier);
-    setImmunity(isImmune);
+    this.maxHealth = health;
+    this.setHealth(health);
+    this.setBaseAttack(baseAttack);
+    this.setAttackMultiplier(attackMultiplier);
+    this.setImmunity(isImmune);
   }
 
   /**
@@ -31,7 +31,7 @@ public class CombatStatsComponent extends Component {
    * @return is player dead
    */
   public Boolean isDead() {
-    return health == 0;
+    return this.health == 0;
   }
 
   /**
@@ -40,7 +40,7 @@ public class CombatStatsComponent extends Component {
    * @return entity's health
    */
   public int getHealth() {
-    return health;
+    return this.health;
   }
 
   /**
@@ -49,7 +49,7 @@ public class CombatStatsComponent extends Component {
    * @return entity's maximum health
    */
   public int getMaxHealth() {
-    return maxHealth;
+    return this.maxHealth;
   }
 
   /**

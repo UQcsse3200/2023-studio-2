@@ -37,9 +37,6 @@ public class JoinableComponent extends AtlasRenderComponent {
             put(JoinDirection.RIGHT, new GridPoint2(-2,0));
         }
     };
-    public void updateTextureAtlas(TextureAtlas atlas) {
-        updateTextureAtlas(atlas, deriveCardinalityId());
-    }
     @Override
     public void create() {
         super.create();
@@ -217,6 +214,15 @@ public class JoinableComponent extends AtlasRenderComponent {
      */
     public JoinLayer getJoinLayer() {
         return layer;
+    }
+
+    /**
+     * Changes the texture atlas being used to the atlas given.
+     *
+     * @param atlas - new atlas.
+     */
+    public void updateTextureAtlas(TextureAtlas atlas) {
+        updateTextureAtlas(atlas, deriveCardinalityId());
     }
 }
 

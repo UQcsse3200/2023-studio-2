@@ -116,7 +116,13 @@ public class PlayerActions extends Component {
         return MAX_SPEED;
     }
 
-
+    /**
+     * Converts the screen coords to a grid position and then places a wall if a wall
+     * doesn't exist at the grid position, otherwise upgrades the wall.
+     *
+     * @param screenX - the x coord of the screen
+     * @param screenY - the y coord of teh screen
+     */
     void placeWallOrUpgradeWall(int screenX, int screenY) {
         // gets the gridPosition of the wall from the screen click
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
@@ -145,6 +151,14 @@ public class PlayerActions extends Component {
         // does nothing if the existing structure is not a wall.
     }
 
+
+    /**
+     * Converts the screen coords to a grid position and then places a gate at the
+     * grid position.
+     *
+     * @param screenX - the x coord of the screen
+     * @param screenY - the y coord of teh screen
+     */
     private void placeGate(int screenX, int screenY) {
         // gets the gridPosition of the wall from the screen click
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
@@ -156,12 +170,18 @@ public class PlayerActions extends Component {
         // if structure doesn't exist at position, adds wall.
         if (structure == null) {
             updateResources(-2);
-            Entity gate = BuildablesFactory.createGate(WallType.gate, true, entity);
+            Entity gate = BuildablesFactory.createGate(entity);
             ServiceLocator.getStructurePlacementService().PlaceStructureAt(gate, gridPosition, false, false);
             gate.getComponent(JoinableComponent.class).notifyNeighbours(true);
         }
     }
 
+    /**
+     * Removes a wall or gate the corresponding grid value from screen coords.
+     *
+     * @param screenX - the x coord of the screen
+     * @param screenY - the y coord of teh screen
+     */
     void removeWall(int screenX, int screenY) {
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
         GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
@@ -181,6 +201,12 @@ public class PlayerActions extends Component {
         }
     }
 
+    /**
+     * Converts screen coords to grid coords and then repairs the wall at the grid position.
+     *
+     * @param screenX - the x coord of the screen
+     * @param screenY - the y coord of teh screen
+     */
     void repairWall(int screenX, int screenY) {
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
         GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
@@ -194,6 +220,11 @@ public class PlayerActions extends Component {
         }
     }
 
+    /**
+     * Updates the Unobtanium resource supply.
+     *
+     * @param change - how much to change the existing resource by.
+     */
     void updateResources(int change) {
         gameStateInteraction.updateResource(Resource.Unobtanium.toString(), change);
 

@@ -20,7 +20,6 @@ import com.csse3200.game.rendering.AtlasRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 public class Gate extends Entity {
-    WallType type;
     private static final GateConfig config =
             FileLoader.readClass(GateConfig.class, "configs/gates.json");
 
@@ -30,10 +29,9 @@ public class Gate extends Entity {
 
     private TextureAtlas closedAtlas;
 
-    public Gate(WallType type, boolean isLeftRight, Entity player) {
+    public Gate(Entity player) {
         openAtlas = ServiceLocator.getResourceService().getAsset(config.openTextureAtlas, TextureAtlas.class);
         closedAtlas = ServiceLocator.getResourceService().getAsset(config.closedTextureAtlas, TextureAtlas.class);
-        this.type = type;
 
 
         addComponent(new ProximityActivationComponent(1.5f, player, this::openGate, this::closeGate));
@@ -46,6 +44,11 @@ public class Gate extends Entity {
 
     }
 
+    /**
+     * Changes the texture to resemble an open gate and disables the collision.
+     *
+     * @param player - the player who opened the gate
+     */
     public void openGate(Entity player) {
         getComponent(PhysicsComponent.class).setEnabled(false);
 
@@ -54,15 +57,16 @@ public class Gate extends Entity {
 
     }
 
+    /**
+     * Changes the texture to resemble a closed gate and enables the collision.
+     *
+     * @param player - the player who opened the gate
+     */
     public void closeGate(Entity player) {
         getComponent(PhysicsComponent.class).setEnabled(true);
 
         getComponent(JoinableComponent.class).updateTextureAtlas(closedAtlas);
 
 
-    }
-
-    public WallType getWallType() {
-        return type;
     }
 }

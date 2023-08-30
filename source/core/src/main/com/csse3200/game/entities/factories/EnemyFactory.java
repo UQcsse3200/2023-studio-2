@@ -51,7 +51,6 @@ public class EnemyFactory {
 
     EnemyConfig config = configs.GetEnemyConfig(type, behaviour);
     AnimationRenderComponent animator;
-    PriorityTask chaseTask;
     AITaskComponent aiComponent = new AITaskComponent();
 
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -108,7 +107,6 @@ public class EnemyFactory {
    * @return task
    */
   private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent) {
-    PriorityTask task = null;
     if (type == EnemyType.Ranged) {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {

@@ -27,7 +27,8 @@ public class ProjectileFactory {
 
     static final ProjectileConfigs configs =
             FileLoader.readClass(ProjectileConfigs.class, "configs/projectile.json");
-    public static Entity createBullet(Vector2 targetLocation) {
+    public static Entity createEnemyBullet(Vector2 targetLocation, Entity shooter) {
+        int damage = shooter.getComponent(CombatStatsComponent.class).getAttack();
 
         Entity enemy = createBaseBullet();
 
@@ -48,7 +49,7 @@ public class ProjectileFactory {
 
 
         enemy
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 0 , false))
+                .addComponent(new CombatStatsComponent(0, damage, 1, false))
                 .addComponent(animator)
                 .addComponent(new EnemyAnimationController())
                 .addComponent(aiComponent);
@@ -69,8 +70,8 @@ public class ProjectileFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                         .addComponent(new ProjectileAttackComponent((short) (
                                 PhysicsLayer.PLAYER |
-                                        PhysicsLayer.WALL |
-                                        PhysicsLayer.STRUCTURE),
+                                PhysicsLayer.WALL |
+                                PhysicsLayer.STRUCTURE),
                                 1.5f));
 
 

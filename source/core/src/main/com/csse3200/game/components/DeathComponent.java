@@ -32,8 +32,8 @@ public class DeathComponent extends Component {
 
     /**
      * When kill condition met, target entity will be disposed.
-     * @param me
-     * @param other
+     * @param me The current Entity's Fixture
+     * @param other The targeted Entity's Fixture
      */
     private void kill(Fixture me, Fixture other) {
         if (hitboxComponent.getFixture() != me) {

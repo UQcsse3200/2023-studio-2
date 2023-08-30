@@ -1,26 +1,14 @@
 package com.csse3200.game.components;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
-import com.csse3200.game.ui.TitleBox;
-import com.csse3200.game.ui.DialogueBox;
-import com.csse3200.game.areas.ForestGameArea;
-
-import static com.csse3200.game.ui.UIComponent.skin;
-
-
-import java.util.logging.Logger;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -76,8 +64,8 @@ public class TouchAttackComponent extends Component {
    * Initial collision between current entity and target entity.
    * Deals single instance of damage when hit by enemy.
    * Deals Damage over time if enemy hits a destructible and still in contact with entity.
-   * @param me
-   * @param other
+   * @param me The current entity as a Fixture
+   * @param other The Target entity as a Fixture
    */
   private void onCollisionStart(Fixture me, Fixture other) {
 
@@ -119,6 +107,8 @@ public class TouchAttackComponent extends Component {
 
   /**
    * Helper Method that deals damage and knockback to Target
+   * @param target The Targeted Entity, usually the Player Entity
+   * @param targetStats The Targeted Entity's stats
    */
   private void hitOnce(Entity target, CombatStatsComponent targetStats){
     if (targetStats != null) {
@@ -154,8 +144,8 @@ public class TouchAttackComponent extends Component {
 
   /**
    * Indicates when current entity loses contact with target entity.
-   * @param me
-   * @param other
+   * @param me The current Entity's Fixture
+   * @param other The Target Entity's Fixture
    */
   private void onCollisionEnd(Fixture me, Fixture other) {
     // Stop dealing tick damage

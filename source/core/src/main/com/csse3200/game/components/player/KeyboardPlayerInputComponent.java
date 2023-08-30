@@ -257,11 +257,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     Vector2 position = new Vector2(mouse.x/2 - entityScale.x/2, (mouse.y) / 2 - entityScale.y/2);
     double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
 
-    if(button == Input.Buttons.MIDDLE){
+    if((button == Input.Buttons.MIDDLE) && this.flagD != 1){
       entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
     }
 
-    if (button == Input.Buttons.MIDDLE) {
+    if (button == Input.Buttons.MIDDLE && this.flagD == 1) {
      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
     }
 
@@ -291,7 +291,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
           entity.getEvents().trigger("walkUpRight");
-        }
+        }wwww
         else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
           entity.getEvents().trigger("walkUp");
         }

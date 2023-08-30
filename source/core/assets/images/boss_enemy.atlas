@@ -227,3 +227,17 @@ death
   orig: 100, 200
   offset: 0, 0
   index: 0
+attack
+  rotate: false
+  xy: 2400, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 2500, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0

@@ -18,8 +18,7 @@ import com.csse3200.game.services.GameStateObserver;
          */
         public PlanetTravel(GdxGame game) {
             this.game = game; // Set the game object
-            this.state = new GameStateObserver();
-            ServiceLocator.getGameStateObserverService();
+            this.state = ServiceLocator.getGameStateObserverService();
         }
 
         /**

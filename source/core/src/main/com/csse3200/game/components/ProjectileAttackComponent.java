@@ -61,8 +61,8 @@ public class ProjectileAttackComponent extends Component {
   /**
    * Runs when projectile collision listener initially makes contact with another entity.
    * Will deal damage to entity upon contact.
-   * @param me
-   * @param other
+   * @param me The current entity's fixture
+   * @param other The targeted entity's fixture
    */
   private void onCollisionStart(Fixture me, Fixture other) {
     if (hitboxComponent.getFixture() != me) {
@@ -102,8 +102,8 @@ public class ProjectileAttackComponent extends Component {
   /**
    * Helper Function that deals damage and knockback to target entity.
    * Will also despawn the projectile after hit has been made.
-   * @param target
-   * @param targetStats
+   * @param target The targeted entity
+   * @param targetStats The targeted entity's stats
    */
   private void hitOnce(Entity target, CombatStatsComponent targetStats){
     if (targetStats != null) {
@@ -135,8 +135,8 @@ public class ProjectileAttackComponent extends Component {
 
   /**
    * Will signal when projectile no longer is in contact with target entity
-   * @param me
-   * @param other
+   * @param me The current entity's fixture
+   * @param other The targeted entity's fixture
    */
   private void onCollisionEnd(Fixture me, Fixture other) {
     // Stop dealing tick damage

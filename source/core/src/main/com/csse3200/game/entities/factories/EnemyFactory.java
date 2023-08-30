@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.components.TouchAttackComponent;
@@ -104,10 +103,9 @@ public class EnemyFactory {
   /**
    * Function to set the behaviour of the desired entity
    *
-   * @param target
-   * @param type
-   * @param behaviour
-   * @return task
+   * @param target The player entity
+   * @param type Melee, Ranged, Boss or Mixture of the referred
+   * @param behaviour Player or Destructible Targeting
    */
   private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent) {
     // Ranged Enemies

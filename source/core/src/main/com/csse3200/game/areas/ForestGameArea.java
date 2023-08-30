@@ -160,7 +160,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnExtractors() {
     GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-    Entity extractor = StructureFactory.createExtractor(30, Resource.Unobtanium, (long) 1.0, 1);
+    Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 1000.0, 1);
     spawnEntityAt(extractor, pos, true, false);
   }
 

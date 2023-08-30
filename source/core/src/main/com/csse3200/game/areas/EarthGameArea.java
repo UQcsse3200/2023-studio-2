@@ -44,8 +44,8 @@ public class EarthGameArea extends GameArea {
     private static final float ASTEROID_SIZE = 0.9f;
     private static final String[] earthTextures = {
 
-            "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
-            "images/broken_elixir_collector.png",
+            "images/Extractor.png",
+            "images/Extractor.png", // TODO replace this with broken extractor
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
             "images/RightShip.png",

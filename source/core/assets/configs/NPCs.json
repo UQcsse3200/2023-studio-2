@@ -1,0 +1,19 @@
+{
+  "ghost": {
+    "health": 40,
+    "baseAttack": 10,
+    "attackMultiplier": 1,
+    "isImmune": false
+  },
+  "ghostKing": {
+    "health": 100,
+    "baseAttack": 25,
+    "attackMultiplier": 1,
+    "isImmune": false,
+    "spookyFactor": 7
+  },
+  "botanist": {
+    "health": 50,
+    "healingAbility": 15
+  }
+}

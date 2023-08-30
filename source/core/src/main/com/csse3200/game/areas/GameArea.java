@@ -9,6 +9,12 @@ import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.events.listeners.EventListener1;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
+import com.csse3200.game.entities.factories.StructureFactory;
+import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.events.listeners.EventListener1;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.StructurePlacementService;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +29,7 @@ public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
   protected List<Entity> areaEntities;
   protected EntityPlacementService entityPlacementService;
+  protected StructurePlacementService structurePlacementService;
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
@@ -36,6 +43,29 @@ public abstract class GameArea implements Disposable {
     for (Entity entity : areaEntities) {
       entity.dispose();
     }
+  }
+
+  protected void registerStructurePlacementService() {
+    EventHandler handler = new EventHandler();
+    structurePlacementService = new StructurePlacementService(handler);
+    ServiceLocator.registerStructurePlacementService(structurePlacementService);
+    handler.addListener("spawnExtractor", this::spawnExtractor);
+    handler.addListener("placeStructure", this::spawnEntity);
+    handler.addListener("placeStructureAt",
+            (StructurePlacementService.PlaceStructureAtArgs args) ->
+                    spawnEntityAt(args.entity, args.tilePos, args.centerX, args.centerY)
+    );
+  }
+
+  /**
+   * Spawn a given extractor at its current position
+   * Includes handling the animation of the extractor
+   *
+   * @param entity Entity (not yet registered) representing the extractor
+   */
+  protected void spawnExtractor(Entity entity) {
+    // TODO: Right now this just passes to spawnEntity but in future will have additional functionality
+    this.spawnEntity(entity);
   }
 
   /**

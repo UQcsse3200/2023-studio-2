@@ -1,6 +1,6 @@
 {
   "meleeEnemyPTE": {
-    "health": 40,
+    "health": 20,
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
@@ -8,8 +8,8 @@
   },
 
   "meleeEnemyDTE": {
-    "health": 40,
-    "baseAttack": 10,
+    "health": 50,
+    "baseAttack": 5,
     "speed": 5,
     "behaviour": "DTE",
     "atlas": "images/troll_enemy.atlas"

@@ -103,6 +103,5 @@ public abstract class GameArea implements Disposable {
   protected void spawnEntityAtVector(Entity entity, Vector2 worldPos) {
     entity.setPosition(worldPos);
     spawnEntity(entity);
-    System.out.println("spawned");
   }
 }

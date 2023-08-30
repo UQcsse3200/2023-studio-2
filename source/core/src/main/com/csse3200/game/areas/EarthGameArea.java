@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
@@ -62,7 +63,17 @@ public class EarthGameArea extends GameArea {
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/Ship.png",
             "images/stone_wall.png",
-            "images/oldman_down_1.png"
+            "images/oldman_down_1.png",
+            "images/durastell.png",
+            "images/nebulite.png",
+            "images/uparrow.png",
+            "images/solsite.png",
+            "images/resourcebar_background.png",
+            "images/resourcebar_durasteel.png",
+            "images/resourcebar_foreground.png",
+            "images/resourcebar_nebulite.png",
+            "images/resourcebar_solstite.png",
+            "images/resourcebar_lights.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -151,8 +162,11 @@ public class EarthGameArea extends GameArea {
 
     private void spawnExtractors() {
         GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        Entity extractor = StructureFactory.createExtractor(30, Resource.Unobtanium, (long) 1.0, 1);
+        Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 1.0, 1);
         spawnEntityAt(extractor, pos, true, false);
+
+        Entity resourceDisplay = new Entity().addComponent(new ResourceDisplay());
+        spawnEntity(resourceDisplay);
     }
 
     private void spawnShip() {

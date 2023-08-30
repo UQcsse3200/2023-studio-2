@@ -58,7 +58,7 @@ public class AttackFactory {
             // new AnimationRenderComponent(     ServiceLocator.getResourceService().getAsset("images/wrench.atlas", TextureAtlas.class));
     //animator.addAnimation("attack", 0.1f, Animation.PlayMode.LOOP);
       attack
-        .addComponent(new CombatStatsComponent(1, 5, 1, true));
+        .addComponent(new CombatStatsComponent(1, 5, 1, false));
         //.addComponent(animator);
     return attack;
   }

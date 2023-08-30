@@ -24,7 +24,7 @@ import java.util.Timer;
 public class KeyboardPlayerInputComponent extends InputComponent {
 
   private final Vector2 walkDirection = Vector2.Zero.cpy();
-
+  private boolean dodge_available = true;
   private int flagW = 0;
   private int flagA = 0;
   private int flagS = 0;
@@ -56,12 +56,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private int getMovFlagSum() {
     return flagW + flagA + flagS + flagD;
   }
-
-  private boolean dodge_available = true;
-  private boolean dodged_up = false;
-  private boolean dodged_left = false;
-  private boolean dodged_down = false;
-  private boolean dodged_right = false;
 
   /**
    * Triggers when keys are pressed or released.
@@ -159,16 +153,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (dodge_available) {
           if (flagW == 1) {
             walkDirection.add(Vector2Utils.DODGE_UP);
-            dodged_up = true;
           } else if (flagA == 1) {
             walkDirection.add(Vector2Utils.DODGE_LEFT);
-            dodged_left = true;
           } else if (flagS == 1) {
             walkDirection.add(Vector2Utils.DODGE_DOWN);
-            dodged_down = true;
           } else {
             walkDirection.add(Vector2Utils.DODGE_RIGHT);
-            dodged_right = true;
           }
           triggerDodgeEvent();
           dodge();

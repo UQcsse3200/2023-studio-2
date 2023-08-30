@@ -95,11 +95,12 @@ public class ResourceDisplay extends UIComponent {
     public void draw(SpriteBatch batch)  {
         // draw is handled by the stage
         for (Resource resource : new Resource[]{Resource.Durasteel, Resource.Nebulite, Resource.Solstite}) {
-            Object quantity = ServiceLocator.getGameStateObserverService().getStateData(resource.toString());
+            Object quantity = ServiceLocator.getGameStateObserverService().getStateData("resource/" + resource.toString());
             if (quantity != null) {
                 int value = (int) quantity;
-                System.out.println(value);
-                setWidth(resource, (float) value / (float) maxResource);
+                setWidth(resource, Math.min((float) value / (float) maxResource, maxResource));
+            } else {
+                setWidth(resource, 0.0);
             }
         }
     }

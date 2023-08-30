@@ -22,10 +22,9 @@ import com.csse3200.game.services.ServiceLocator;
 public class Gate extends Entity {
     WallType type;
     private static final GateConfig config =
-            FileLoader.readClass(GateConfig.class, "config/gate.json");
+            FileLoader.readClass(GateConfig.class, "configs/gates.json");
     private static final JoinableComponentShapes shapes =
             FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
-    private boolean isLeftRight;
     private TextureAtlas openAtlas;
 
     private TextureAtlas closedAtlas;
@@ -34,7 +33,6 @@ public class Gate extends Entity {
         openAtlas = ServiceLocator.getResourceService().getAsset(config.openTextureAtlas, TextureAtlas.class);
         closedAtlas = ServiceLocator.getResourceService().getAsset(config.closedTextureAtlas, TextureAtlas.class);
         this.type = type;
-        this.isLeftRight = isLeftRight;
 
 
         addComponent(new ProximityActivationComponent(1.5f, player, this::openGate, this::closeGate));

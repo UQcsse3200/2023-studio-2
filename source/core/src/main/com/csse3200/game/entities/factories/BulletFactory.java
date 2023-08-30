@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.ProjectileAttackComponent;
@@ -26,13 +27,13 @@ public class BulletFactory {
 
     static final NPCConfigs configs =
             FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
-    public static Entity createBullet(Entity target) {
+    public static Entity createBullet(Vector2 targetLocation) {
 
         Entity enemy = createBaseBullet();
 
         AITaskComponent aiComponent = new AITaskComponent();
 
-        aiComponent.addTask(new ProjectileMovementTask(target, 10, 100f, 100f));
+        aiComponent.addTask(new ProjectileMovementTask(targetLocation, 10, 100f, 100f));
 
         BulletConfig config = configs.GetBulletConfig();
 

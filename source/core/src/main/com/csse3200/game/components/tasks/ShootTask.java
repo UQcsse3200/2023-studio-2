@@ -30,7 +30,7 @@ public class ShootTask extends DefaultTask {
         super.start();
         this.spawn = owner.getEntity().getPosition();
         hasShot = false;
-        Entity bullet = BulletFactory.createBullet(target);
+        Entity bullet = BulletFactory.createBullet(target.getPosition());
         ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawn);
         hasShot = true;
     }

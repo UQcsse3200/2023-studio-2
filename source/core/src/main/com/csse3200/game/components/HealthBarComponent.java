@@ -133,4 +133,7 @@ public class HealthBarComponent extends UIComponent {
         healthBar.setDisabled(true);
     }
 
+    public ProgressBar getHealthBar() {
+        return healthBar;
+    }
 }

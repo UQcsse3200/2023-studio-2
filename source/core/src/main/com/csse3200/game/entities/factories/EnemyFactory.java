@@ -95,6 +95,7 @@ public class EnemyFactory {
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
+    enemy.scaleHeight(2f);
     return enemy;
   }
 

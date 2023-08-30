@@ -95,14 +95,12 @@ public class TouchAttackComponent extends Component {
         @Override
         public void run() {
           if (!leftContact) {
-            System.out.println("Hits STRUCTURE"); // hitting twice for some reason
             hitOnce(target, targetStats);
           }
         }
       }, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
     } else {
       //hit once, push away
-      System.out.println("First Hit");
       hitOnce(target, targetStats);
     }
   }

@@ -2,19 +2,14 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.ProjectileAttackComponent;
-import com.csse3200.game.components.TouchAttackComponent;
-import com.csse3200.game.components.npc.GhostAnimationController;
-import com.csse3200.game.components.tasks.ChaseTask;
+import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.tasks.ProjectileMovementTask;
-import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.BulletConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
-import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -23,9 +18,10 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 
-
+/**
+ * Factory to create bullet entities with predefined components.
+ */
 public class BulletFactory {
 
     static final NPCConfigs configs =
@@ -51,7 +47,7 @@ public class BulletFactory {
         enemy
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 0 , false))
                 .addComponent(animator)
-                .addComponent(new GhostAnimationController())
+                .addComponent(new EnemyAnimationController())
                 .addComponent(aiComponent);
 
         enemy.getComponent(AnimationRenderComponent.class).scaleEntity();

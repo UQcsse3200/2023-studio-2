@@ -37,7 +37,7 @@ public class SpawnerComponent extends Component {
      *
      * @param targets the list of enemy targets
      * @param tickRate the amount of seconds between ticks (not guaranteed but catchup is performed if a tick is missed)
-     * @param type the type of enemy e.g.(Melee, Ranged)
+     * @param type the type of enemy e.g.(Melee, Ranged) (Recommend to use for just small enemies)
      * @param behaviour the behaviour of the enemy, what it will prioritise
      */
     public SpawnerComponent(ArrayList<Entity> targets, long tickRate, EnemyType type, EnemyBehaviour behaviour) {

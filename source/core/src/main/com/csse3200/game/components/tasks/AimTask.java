@@ -1,59 +1,85 @@
 package com.csse3200.game.components.tasks;
 
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
+import com.csse3200.game.ai.tasks.PriorityTask;
+import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.BulletFactory;
-import com.csse3200.game.physics.components.PhysicsMovementComponent;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Move to a given position, finishing when you get close enough. Requires an entity with a
- * PhysicsMovementComponent.
+ * Wander around by moving a random position within a range of the starting position. Wait a little
+ * bit between movements. Requires an entity with a PhysicsMovementComponent.
  */
-public class AimTask extends DefaultTask {
-    private static final Logger logger = LoggerFactory.getLogger(AimTask.class);
+public class AimTask extends DefaultTask implements PriorityTask {
+  private static final Logger logger = LoggerFactory.getLogger(AimTask.class);
+  private final float waitTime;
+  private WaitTask waitTask;
+  private Task currentTask;
+  private ShootTask aimTask;
+  private final Entity target;
 
-    private Vector2 spawn;
+  /**
+   * called.
+   *
+   * @param waitTime How long in seconds to wait between wandering.
+   */
+  public AimTask(float waitTime, Entity target) {
+    this.waitTime = waitTime;
+    this.target = target;
+  }
 
-    private long lastTimeMoved;
-    private Vector2 lastPos;
-    private PhysicsMovementComponent movementComponent;
+  @Override
+  public int getPriority() {
+    return 1; // Low priority task
+  }
 
-    boolean hasShot;
+  @Override
+  public void start() {
+    super.start();
 
-    Entity target;
+    waitTask = new WaitTask(waitTime);
+    waitTask.create(owner);
+    aimTask = new ShootTask(target);
+    aimTask.create(owner);
 
-    public AimTask(Entity target) {
-        this.target = target;
-        //this.gameTime = ServiceLocator.getTimeSource();
+    waitTask.start();
+    currentTask = waitTask;
+
+    this.owner.getEntity().getEvents().trigger("standing");
+  }
+
+  @Override
+  public void update() {
+    if (currentTask.getStatus() != Status.ACTIVE) {
+      if (currentTask == waitTask) {
+        startAiming();
+      } else {
+        startWaiting();
+      }
     }
+    currentTask.update();
+  }
 
-    @Override
-    public void start() {
-        super.start();
-        this.spawn = owner.getEntity().getPosition();
-        hasShot = false;
-        Entity bullet = BulletFactory.createBullet(target);
-        ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawn);
-        hasShot = true;
+  private void startWaiting() {
+    logger.debug("Starting waiting");
+    this.owner.getEntity().getEvents().trigger("standing");
+    swapTask(waitTask);
+  }
+
+
+  private void startAiming() {
+    logger.debug("Starting aiming");
+    this.owner.getEntity().getEvents().trigger("standing");
+    swapTask(aimTask);
+  }
+
+  private void swapTask(Task newTask) {
+    if (currentTask != null) {
+      currentTask.stop();
     }
-
-    @Override
-    public void update() {
-        if (hasShot) {
-            status = Status.FINISHED;
-            logger.debug("Finished aiming");
-        }
-    }
-
-    @Override
-    public void stop() {
-        super.stop();
-        logger.debug("Stopping aim");
-    }
-
+    currentTask = newTask;
+    currentTask.start();
+  }
 }
+

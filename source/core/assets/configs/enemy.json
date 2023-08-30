@@ -4,7 +4,7 @@
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
-    "atlas": ""
+    "atlas": "images/rangeEnemy.atlas"
   },
 
   "meleeEnemyDTE": {
@@ -29,7 +29,7 @@
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "DTE",
-    "atlas": "images/rangeEnemy.atlas"
+    "atlas": ""
   },
 
   "meleeBossPTE": {

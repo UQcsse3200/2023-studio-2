@@ -78,7 +78,7 @@ public class MainGameScreen extends ScreenAdapter {
   public void loadNavigation() {
     forestGameArea.dispose();
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    GameArea gameArea = new Navigation(terrainFactory, "images/current_planet-preview.png");
+    GameArea gameArea = new Navigation(terrainFactory, "images/heart.png");
     gameArea.create();
   }
 

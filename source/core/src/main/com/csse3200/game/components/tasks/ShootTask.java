@@ -16,7 +16,7 @@ public class ShootTask extends DefaultTask {
 
     private Vector2 spawn;
 
-    boolean hasShot;
+    private boolean hasShot;
 
     Entity target;
 
@@ -52,5 +52,4 @@ public class ShootTask extends DefaultTask {
         super.stop();
         logger.debug("Stopping aim");
     }
-
 }

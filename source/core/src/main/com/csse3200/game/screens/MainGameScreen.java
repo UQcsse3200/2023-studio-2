@@ -30,15 +30,6 @@ import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;  //additional imports from here
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.csse3200.game.components.resources.ProductionComponent;
 
 import static com.csse3200.game.ui.UIComponent.skin;
 
@@ -58,13 +49,6 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
 
   private Entity player;
-  private ShapeRenderer shapeRenderer;
-  private Texture elixirIconTexture;
-  private TextureRegion elixirIconRegion;
-  private SpriteBatch spriteBatch;
-  private int playerResources = 0; // Initial value of resources
-  private int maxResources = 100; // Adjustable
-  private ProductionComponent productionComponent;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -101,74 +85,14 @@ public class MainGameScreen extends ScreenAdapter {
     player = earthGameArea.getPlayer();
     titleBox = new TitleBox(game, "Title", skin);
 
-
-    shapeRenderer = new ShapeRenderer();
-    shapeRenderer.setAutoShapeType(true);
-
-    elixirIconTexture = new Texture("images/elixir.png");
-    elixirIconRegion = new TextureRegion(elixirIconTexture);
-
-    spriteBatch = new SpriteBatch();
-
-    setProductionComponent(productionComponent);
-
   }
 
-  public void setProductionComponent(ProductionComponent productionComponent) {
-    this.productionComponent = productionComponent;
-  }
-
-  /**
-   * Renders the entity's production status, including the progress of resource production
-   * and a visual representation of the resource bar.
-   * This method is responsible for rendering the current status of resource production for
-   * the entity. It displays a visual representation of the resource production progress using
-   * a resource bar. The resource bar indicates the amount of resource produced relative to
-   * the tick size and the time since the last production tick.
-   * Resource production is determined by the tick rate and tick size specified during
-   * component initialization. The resource bar visually represents the amount of resource
-   * produced on each tick and how close the entity is to the next production.
-   */
   @Override
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
+    followPlayer();
     renderer.render();
-
-    if (productionComponent != null) {
-      int producedResources = productionComponent.getProducedResources();
-      playerResources += producedResources;
-
-      playerResources = Math.min(playerResources, maxResources);
-    }
-
-    shapeRenderer.begin();
-
-    shapeRenderer.set(ShapeType.Filled);
-    shapeRenderer.setColor(Color.WHITE);
-    shapeRenderer.rect(10, Gdx.graphics.getHeight() - 140, 32, 32);
-
-    float progressBarWidth = 320 * ((float) playerResources / maxResources);
-    progressBarWidth = Math.min(progressBarWidth, 320); // Clamp the width
-
-    shapeRenderer.setColor(Color.GREEN);
-    shapeRenderer.set(ShapeType.Filled);
-    shapeRenderer.rect(50, Gdx.graphics.getHeight() - 140, 320, 16);
-
-    shapeRenderer.setColor(Color.PURPLE);
-    shapeRenderer.set(ShapeType.Filled);
-    shapeRenderer.rect(50, Gdx.graphics.getHeight() - 140, progressBarWidth, 16); // Raised the position by 10 units
-
-    float radius = 8; // Reduced the radius by 20%
-    shapeRenderer.setColor(Color.PURPLE);
-    shapeRenderer.set(ShapeType.Filled);
-    //shapeRenderer.arc(50 + progressBarWidth - radius, Gdx.graphics.getHeight() - 132 + radius, radius, -90, 180, 20);
-
-    shapeRenderer.end();
-
-    spriteBatch.begin();
-    spriteBatch.draw(elixirIconRegion, 20, Gdx.graphics.getHeight() - 140, 24, 24); // Keep the elixir icon at the same position
-    spriteBatch.end();
   }
 
   @Override

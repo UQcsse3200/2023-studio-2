@@ -83,8 +83,6 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     terrainFactory = new TerrainFactory(renderer.getCamera());
-    //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, game);
-    //forestGameArea.create();
     gameArea = new EarthGameArea(terrainFactory, game);
     gameArea.create();
     player = ((EarthGameArea) gameArea).getPlayer();
@@ -92,6 +90,9 @@ public class MainGameScreen extends ScreenAdapter {
 
   }
 
+  /**
+   * Loads the space map game area onto the screen to allow transitions to new planets (GameAreas)
+   */
   public void loadSpaceMap(){
     gameArea.dispose();
     NavigationArea navArea = new NavigationArea(game, terrainFactory);

@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.screens.MainGameScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.TitleBox;
@@ -84,8 +86,7 @@ public class MainMenuActions extends Component {
   private void onSpaceMap() {
     logger.info("Launching Space Map in Screen");
     game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-    //LAUNCH THING NOW
-    System.out.println("MAP LOADING");
+    ((MainGameScreen)game.getScreen()).loadSpaceMap();
   }
 
 }

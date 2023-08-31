@@ -9,6 +9,9 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.screens.MainGameScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.ui.AlertBox;
+
+import static com.csse3200.game.screens.MainMenuScreen.logger;
 import com.csse3200.game.ui.TitleBox;
 
 
@@ -18,6 +21,7 @@ import com.csse3200.game.ui.TitleBox;
  */
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
+
   public static GdxGame game;
   private Stage stage; // Add the stage
   private Skin skin;   // Add the skin
@@ -27,6 +31,7 @@ public class MainMenuActions extends Component {
     this.stage = stage; // Initialize stage
     this.skin = skin;   // Initialize skin
   }
+
 
   @Override
   public void create() {
@@ -44,6 +49,10 @@ public class MainMenuActions extends Component {
    * Swaps to the Main Game screen.
    */
   private void onStart() {
+    logger.info("Start game");
+    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    AlertBox alertBox = new AlertBox(game," Alert Box", skin);
+    alertBox.showDialog(stage);
     logger.info("Loading Story");
     TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
     titleBox.showDialog(stage);

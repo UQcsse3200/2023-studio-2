@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ObstacleFactory;
@@ -19,6 +20,7 @@ import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
@@ -43,6 +45,8 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_RANGE_PTE = 2;
     private static final int NUM_POWERUPS = 3;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
+    /*private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);*/
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
@@ -53,6 +57,11 @@ public class EarthGameArea extends GameArea {
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
             "images/RightShip.png",
+            "images/wall.png",
+            "images/Companion1.png",
+            "images/wall2.png",
+            "images/gate_close.png",
+            "images/gate_open.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
             "images/base_enemy.png",
@@ -134,7 +143,8 @@ public class EarthGameArea extends GameArea {
         spawnExtractors();
 
         spawnShip();
-        spawnPlayer();
+        Entity playerEntity = spawnPlayer();
+        spawnCompanion(playerEntity);
 
         spawnEnemies();
         spawnBoss();
@@ -277,12 +287,24 @@ public class EarthGameArea extends GameArea {
         }
     }
 
-    private void spawnPlayer() {
+    private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer();
         spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
         targetables.add(newPlayer);
         player = newPlayer;
+        return newPlayer;
     }
+    private Entity spawnCompanion(Entity playerEntity) {
+        Entity newCompanion = CompanionFactory.createCompanion(playerEntity);
+        PhysicsComponent playerPhysics = playerEntity.getComponent(PhysicsComponent.class);
+        //calculate the player position
+        Vector2 playerPosition = playerPhysics.getBody().getPosition();
+
+        spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
+        targetables.add(newCompanion);
+        return newCompanion;
+    }
+
 
     private void spawnPowerups() {
         GridPoint2 minPos = new GridPoint2(0, 0);

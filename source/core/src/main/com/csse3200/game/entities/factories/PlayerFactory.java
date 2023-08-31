@@ -70,7 +70,7 @@ public class PlayerFactory {
             .addComponent(new PlayerAnimationController())
             .addComponent(new WeaponComponent())
             .addComponent(new DialogComponent(dialogueBox))
-            .addComponent(new InteractionControllerComponent());
+            .addComponent(new InteractionControllerComponent(false));
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

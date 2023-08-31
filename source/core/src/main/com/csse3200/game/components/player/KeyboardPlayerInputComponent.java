@@ -167,11 +167,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerDodgeEvent();
           dodge();
         }
+        return true;
       case Keys.F:
         InteractionControllerComponent interactionController = entity.getComponent(InteractionControllerComponent.class);
         if (interactionController != null) {
-          interactionController.interact(false);
+          interactionController.interact();
         }
+        return true;
       default:
         return false;
     }

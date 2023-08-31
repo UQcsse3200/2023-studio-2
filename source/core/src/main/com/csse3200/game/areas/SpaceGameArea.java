@@ -62,6 +62,7 @@ public class SpaceGameArea extends GameArea {
         spawnAsteroids();
         spawnGoal();
         createMaze();
+        createBoundary();
         spawnEnemy(21,15);
         spawnEnemy(11,9);
     }
@@ -104,13 +105,31 @@ public class SpaceGameArea extends GameArea {
         pos.y += 0;
         spawnStaticAsteroidsRight(n - 1, pos); // Recursive call
     }
+    private void spawnStaticAsteroidsUp(int n, GridPoint2 pos){
+        if (n <= 0) {
+            return;
+        }
 
+        spawnEntityAt(
+                ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE), pos, false, false);
+
+        // Increment the position for the next asteroid
+        pos.y += 1;
+        spawnStaticAsteroidsUp(n - 1, pos); // Recursive call
+    }
+
+    private void createBoundary(){
+        spawnStaticAsteroidsRight(30,new GridPoint2(0,0));
+        spawnStaticAsteroidsRight(30,new GridPoint2(0,29));
+        spawnStaticAsteroidsUp(28,new GridPoint2(0,1));
+        spawnStaticAsteroidsUp(28,new GridPoint2(29,1));
+    }
     /**
      * Method for creating maze layout of the obstacle minigame
      */
     private void createMaze(){
         spawnStaticAsteroidsRight(7,new GridPoint2(5,15));
-        spawnStaticAsteroidsRight(2,new GridPoint2(23,15));
+        spawnStaticAsteroidsRight(6,new GridPoint2(23,15));
 
         spawnStaticAsteroidsRight(7,new GridPoint2(5,14));
         spawnStaticAsteroidsRight(7,new GridPoint2(13,14));
@@ -155,7 +174,7 @@ public class SpaceGameArea extends GameArea {
         spawnStaticAsteroidsRight(8,new GridPoint2(17,5));
 
         spawnStaticAsteroidsRight(7,new GridPoint2(5,4));
-        spawnStaticAsteroidsRight(8,new GridPoint2(17,4));
+        spawnStaticAsteroidsRight(12,new GridPoint2(17,4));
 
     }
 

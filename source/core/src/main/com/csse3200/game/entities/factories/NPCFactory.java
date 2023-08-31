@@ -1,22 +1,12 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.npc.BotanistAnimationController;
-import com.csse3200.game.components.npc.GhostAnimationController;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.BaseEntityConfig;
-import com.csse3200.game.entities.configs.BotanistConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -25,13 +15,11 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
-import com.csse3200.game.ui.TitleBox;
+
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
  *
@@ -43,12 +31,21 @@ import com.csse3200.game.ui.TitleBox;
  * similar characteristics.
  */
 public class NPCFactory {
-  public static DialogueBox dialogueBox;
-  private static final NPCConfigs configs =  FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
+  /** The shared dialogue box instance used by NPCs. */
+  public static DialogueBox dialogueBox;
+
+  /** Configuration class for NPC properties. */
+  private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+
+  /** Asset manager to load and manage assets. */
   public AssetManager assetManager;
 
-
+  /**
+   * Creates an instance of NPCFactory.
+   *
+   * @param assetManager The asset manager to use for asset loading.
+   */
   public NPCFactory(AssetManager assetManager) {
     this.assetManager = assetManager;
   }
@@ -100,6 +97,11 @@ public class NPCFactory {
 //    PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.4f);
 //    return botanist;
 //  }
+  /**
+   * Creates a generic Botanist NPC entity.
+   *
+   * @return The created Botanist NPC entity.
+   */
   public static Entity createBotanist() {
     Entity botanist =
             new Entity()
@@ -118,7 +120,8 @@ public class NPCFactory {
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    *
-   * @return entity
+   * @param target The target entity to be chased by the NPC.
+   * @return The created base NPC entity.
    */
   private static Entity createBaseNPC(Entity target) {
     AITaskComponent aiComponent =
@@ -137,7 +140,11 @@ public class NPCFactory {
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
     return npc;
   }
-
+  /**
+   * Private constructor to prevent instantiation of the NPCFactory.
+   *
+   * <p>This class should be used as a static util class.
+   */
   public NPCFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }

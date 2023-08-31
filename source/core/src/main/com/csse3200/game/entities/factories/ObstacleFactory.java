@@ -132,9 +132,6 @@ public class ObstacleFactory {
     goal.setScale(width, height);
     return goal;
   }
-  public static Entity createCustomWall(WallType type) {
-    return new Wall(configs.GetWallConfig(type));
-  }
 
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");

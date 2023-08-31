@@ -79,6 +79,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DeathComponent</span>
 <span class="extends-implements">extends <a href="Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
+<div class="block">When this entity (usually killable entities) has health = 0, it disposes the enemy form the field of play.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -100,7 +101,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">DeathComponent</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">The Death Component holding Physical Interaction Stats, and facilitates listeners for entity death</div>
+</div>
 </div>
 </section>
 </li>
@@ -118,7 +121,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Creates a new listener on an entity to wait for kill condition</div>
 </div>
 </div>
 </div>
@@ -144,6 +147,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>DeathComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DeathComponent</span>()</div>
+<div class="block">The Death Component holding Physical Interaction Stats, and facilitates listeners for entity death</div>
 </section>
 </li>
 </ul>
@@ -158,9 +162,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Creates a new listener on an entity to wait for kill condition</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>

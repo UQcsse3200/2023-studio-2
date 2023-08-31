@@ -84,7 +84,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">AimTask</span>
 <span class="extends-implements">extends <a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a>
 implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.csse3200.game.ai.tasks">PriorityTask</a></span></div>
-<div class="block">Aims at a target entity until they get too far away or line of sight is lost</div>
+<div class="block">Waits around for a set amount of time and then fires a projectile at a target.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -114,11 +114,12 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.Entity,int,float,float)" class="member-name-link">AimTask</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
- int&nbsp;priority,
- float&nbsp;viewDistance,
- float&nbsp;maxAimDistance)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(float,com.csse3200.game.entities.Entity,float)" class="member-name-link">AimTask</a><wbr>(float&nbsp;waitTime,
+ <a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
+ float&nbsp;range)</code></div>
+<div class="col-last even-row-color">
+<div class="block">creates an aim task.</div>
+</div>
 </div>
 </section>
 </li>
@@ -142,13 +143,8 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <div class="block">Start running this task.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Stop the task immediately.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Run one frame of the task.</div>
 </div>
 </div>
@@ -156,13 +152,13 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.ai.tasks.DefaultTask">Methods inherited from class&nbsp;com.csse3200.game.ai.tasks.<a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></h3>
-<code><a href="../../ai/tasks/DefaultTask.html#create(com.csse3200.game.ai.tasks.TaskRunner)">create</a>, <a href="../../ai/tasks/DefaultTask.html#getStatus()">getStatus</a></code></div>
+<code><a href="../../ai/tasks/DefaultTask.html#create(com.csse3200.game.ai.tasks.TaskRunner)">create</a>, <a href="../../ai/tasks/DefaultTask.html#getStatus()">getStatus</a>, <a href="../../ai/tasks/DefaultTask.html#stop()">stop</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.ai.tasks.Task">Methods inherited from interface&nbsp;com.csse3200.game.ai.tasks.<a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></h3>
-<code><a href="../../ai/tasks/Task.html#create(com.csse3200.game.ai.tasks.TaskRunner)">create</a>, <a href="../../ai/tasks/Task.html#getStatus()">getStatus</a></code></div>
+<code><a href="../../ai/tasks/Task.html#create(com.csse3200.game.ai.tasks.TaskRunner)">create</a>, <a href="../../ai/tasks/Task.html#getStatus()">getStatus</a>, <a href="../../ai/tasks/Task.html#stop()">stop</a></code></div>
 </section>
 </li>
 </ul>
@@ -175,18 +171,16 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.csse3200.game.entities.Entity,int,float,float)">
+<section class="detail" id="&lt;init&gt;(float,com.csse3200.game.entities.Entity,float)">
 <h3>AimTask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AimTask</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
- int&nbsp;priority,
- float&nbsp;viewDistance,
- float&nbsp;maxAimDistance)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AimTask</span><wbr><span class="parameters">(float&nbsp;waitTime,
+ <a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target,
+ float&nbsp;range)</span></div>
+<div class="block">creates an aim task.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>target</code> - The entity to aim.</dd>
-<dd><code>priority</code> - Task priority when chasing (0 when not chasing).</dd>
-<dd><code>viewDistance</code> - Maximum distance from the entity at which aiming can start.</dd>
-<dd><code>maxAimDistance</code> - Maximum distance from the entity while aiming before giving up.</dd>
+<dd><code>waitTime</code> - How long in seconds to wait between firing a projectile.</dd>
+<dd><code>target</code> - The target for</dd>
 </dl>
 </section>
 </li>
@@ -198,6 +192,16 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getPriority()">
+<h3>getPriority</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getPriority</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../ai/tasks/PriorityTask.html#getPriority()">getPriority</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/PriorityTask.html" title="interface in com.csse3200.game.ai.tasks">PriorityTask</a></code></dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="start()">
 <h3>start</h3>
@@ -223,30 +227,6 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <dd><code><a href="../../ai/tasks/Task.html#update()">update</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></code></dd>
 <dt>Overrides:</dt>
 <dd><code><a href="../../ai/tasks/DefaultTask.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="stop()">
-<h3>stop</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stop</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../ai/tasks/Task.html#stop()">Task</a></code></span></div>
-<div class="block">Stop the task immediately. This can be called at any time by the AI controller.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../../ai/tasks/Task.html#stop()">stop</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></code></dd>
-<dt>Overrides:</dt>
-<dd><code><a href="../../ai/tasks/DefaultTask.html#stop()">stop</a></code>&nbsp;in class&nbsp;<code><a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getPriority()">
-<h3>getPriority</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getPriority</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../../ai/tasks/PriorityTask.html#getPriority()">getPriority</a></code>&nbsp;in interface&nbsp;<code><a href="../../ai/tasks/PriorityTask.html" title="interface in com.csse3200.game.ai.tasks">PriorityTask</a></code></dd>
 </dl>
 </section>
 </li>

@@ -99,10 +99,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>com.badlogic.gdx.assets.AssetManager</code></div>
 <div class="col-second even-row-color"><code><a href="#assetManager" class="member-name-link">assetManager</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Asset manager to load and manage assets.</div>
+</div>
 <div class="col-first odd-row-color"><code>static <a href="../../ui/DialogueBox.html" title="class in com.csse3200.game.ui">DialogueBox</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#dialogueBox" class="member-name-link">dialogueBox</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">The shared dialogue box instance used by NPCs.</div>
+</div>
 </div>
 </section>
 </li>
@@ -115,9 +119,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">NPCFactory</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Private constructor to prevent instantiation of the NPCFactory.</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.assets.AssetManager)" class="member-name-link">NPCFactory</a><wbr>(com.badlogic.gdx.assets.AssetManager&nbsp;assetManager)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Creates an instance of NPCFactory.</div>
+</div>
 </div>
 </section>
 </li>
@@ -134,7 +142,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBotanist()" class="member-name-link">createBotanist</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a generic Botanist NPC entity.</div>
+</div>
 </div>
 </div>
 </div>
@@ -156,12 +166,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="dialogueBox">
 <h3>dialogueBox</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../../ui/DialogueBox.html" title="class in com.csse3200.game.ui">DialogueBox</a></span>&nbsp;<span class="element-name">dialogueBox</span></div>
+<div class="block">The shared dialogue box instance used by NPCs.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="assetManager">
 <h3>assetManager</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.assets.AssetManager</span>&nbsp;<span class="element-name">assetManager</span></div>
+<div class="block">Asset manager to load and manage assets.</div>
 </section>
 </li>
 </ul>
@@ -176,12 +188,20 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(com.badlogic.gdx.assets.AssetManager)">
 <h3>NPCFactory</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">NPCFactory</span><wbr><span class="parameters">(com.badlogic.gdx.assets.AssetManager&nbsp;assetManager)</span></div>
+<div class="block">Creates an instance of NPCFactory.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>assetManager</code> - The asset manager to use for asset loading.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>NPCFactory</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">NPCFactory</span>()</div>
+<div class="block">Private constructor to prevent instantiation of the NPCFactory.
+
+ <p>This class should be used as a static util class.</div>
 </section>
 </li>
 </ul>
@@ -196,6 +216,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="createBotanist()">
 <h3>createBotanist</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createBotanist</span>()</div>
+<div class="block">Creates a generic Botanist NPC entity.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The created Botanist NPC entity.</dd>
+</dl>
 </section>
 </li>
 </ul>

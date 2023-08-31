@@ -79,12 +79,13 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">TouchAttackComponent</span>
 <span class="extends-implements">extends <a href="Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
-<div class="block">When this entity touches a valid enemy's hitbox, deal damage to them and apply a knockback.
+<div class="block">TouchAttackComponent is responsible for dealing damage and applying knockback to entities when
+ this entity collides with a valid enemy's hitbox.
 
- <p>Requires CombatStatsComponent, HitboxComponent on this entity.
+ <p>This component requires the presence of CombatStatsComponent and HitboxComponent on this entity.
 
- <p>Damage is only applied if target entity has a CombatStatsComponent. Knockback is only applied
- if target entity has a PhysicsComponent.</div>
+ <p>Damage is only applied if the target entity has a CombatStatsComponent. Knockback is only applied
+ if the target entity has a PhysicsComponent.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -107,12 +108,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(short)" class="member-name-link">TouchAttackComponent</a><wbr>(short&nbsp;targetLayer)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Create a component which attacks entities on collision, without knockback.</div>
+<div class="block">Creates a TouchAttackComponent that attacks entities on collision, without knockback.</div>
 </div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(short,float)" class="member-name-link">TouchAttackComponent</a><wbr>(short&nbsp;targetLayer,
  float&nbsp;knockback)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Create a component which attacks entities on collision, with knockback.</div>
+<div class="block">Creates a TouchAttackComponent that attacks entities on collision, with knockback.</div>
 </div>
 </div>
 </section>
@@ -157,7 +158,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(short)">
 <h3>TouchAttackComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TouchAttackComponent</span><wbr><span class="parameters">(short&nbsp;targetLayer)</span></div>
-<div class="block">Create a component which attacks entities on collision, without knockback.</div>
+<div class="block">Creates a TouchAttackComponent that attacks entities on collision, without knockback.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>targetLayer</code> - The physics layer of the target's collider.</dd>
@@ -169,7 +170,7 @@ loadScripts(document, 'script');</script>
 <h3>TouchAttackComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TouchAttackComponent</span><wbr><span class="parameters">(short&nbsp;targetLayer,
  float&nbsp;knockback)</span></div>
-<div class="block">Create a component which attacks entities on collision, with knockback.</div>
+<div class="block">Creates a TouchAttackComponent that attacks entities on collision, with knockback.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>targetLayer</code> - The physics layer of the target's collider.</dd>

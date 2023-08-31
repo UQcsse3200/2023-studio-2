@@ -84,8 +84,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">WanderTask</span>
 <span class="extends-implements">extends <a href="../../ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a>
 implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.csse3200.game.ai.tasks">PriorityTask</a></span></div>
-<div class="block">Wander around by moving a random position within a range of the starting position. Wait a little
- bit between movements. Requires an entity with a PhysicsMovementComponent.</div>
+<div class="block">Represents a task that causes the entity to wander around by moving to random positions within a specified range of its starting position.
+ The entity will wait for a certain amount of time between movements. Requires an entity with a PhysicsMovementComponent.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -117,7 +117,9 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.math.Vector2,float)" class="member-name-link">WanderTask</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;wanderRange,
  float&nbsp;waitTime)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new WanderTask.</div>
+</div>
 </div>
 </section>
 </li>
@@ -134,7 +136,9 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>char</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDirection(com.badlogic.gdx.math.Vector2)" class="member-name-link">getDirection</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;destination)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determines the direction from the entity's current position to the destination position.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPriority()" class="member-name-link">getPriority</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -176,11 +180,11 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <h3>WanderTask</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WanderTask</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;wanderRange,
  float&nbsp;waitTime)</span></div>
+<div class="block">Creates a new WanderTask.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>wanderRange</code> - Distance in X and Y the entity can move from its position when start() is
-     called.</dd>
-<dd><code>waitTime</code> - How long in seconds to wait between wandering.</dd>
+<dd><code>wanderRange</code> - The distance in X and Y that the entity can move from its position when start() is called.</dd>
+<dd><code>waitTime</code> - The duration in seconds to wait between wandering.</dd>
 </dl>
 </section>
 </li>
@@ -234,6 +238,13 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.cs
 <section class="detail" id="getDirection(com.badlogic.gdx.math.Vector2)">
 <h3>getDirection</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">getDirection</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;destination)</span></div>
+<div class="block">Determines the direction from the entity's current position to the destination position.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>destination</code> - The destination position to which the direction is calculated.</dd>
+<dt>Returns:</dt>
+<dd>A character representing the direction ('&lt;', '&gt;', or '=') relative to the current position.</dd>
+</dl>
 </section>
 </li>
 </ul>

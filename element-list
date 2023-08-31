@@ -13,6 +13,7 @@ com.csse3200.game.components.player
 com.csse3200.game.components.resources
 com.csse3200.game.components.settingsmenu
 com.csse3200.game.components.ships
+com.csse3200.game.components.story
 com.csse3200.game.components.tasks
 com.csse3200.game.concurrency
 com.csse3200.game.entities

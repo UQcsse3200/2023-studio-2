@@ -140,21 +140,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Retrieves the layer which is being joined on.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#notifyNeighbour(com.csse3200.game.components.joinable.JoinDirection,com.badlogic.gdx.math.GridPoint2,boolean)" class="member-name-link">notifyNeighbour</a><wbr>(<a href="JoinDirection.html" title="enum class in com.csse3200.game.components.joinable">JoinDirection</a>&nbsp;direction,
- com.badlogic.gdx.math.GridPoint2&nbsp;centrePosition,
- boolean&nbsp;isJoined)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#notifyNeighbours(boolean)" class="member-name-link">notifyNeighbours</a><wbr>(boolean&nbsp;isJoined)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Notifies the neighbour in the given direction of a change in join status.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#notifyNeighbours(boolean)" class="member-name-link">notifyNeighbours</a><wbr>(boolean&nbsp;isJoined)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Notifies all the entities neighbours of a change in join status.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateAtlasTexture()" class="member-name-link">updateAtlasTexture</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Updates the entities texture to match the new cardinalities.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateJoin(com.csse3200.game.components.joinable.JoinDirection,boolean)" class="member-name-link">updateJoin</a><wbr>(<a href="JoinDirection.html" title="enum class in com.csse3200.game.components.joinable">JoinDirection</a>&nbsp;direction,
@@ -162,12 +150,17 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates whether the entity should be joining in a given direction.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateTextureAtlas(com.badlogic.gdx.graphics.g2d.TextureAtlas)" class="member-name-link">updateTextureAtlas</a><wbr>(com.badlogic.gdx.graphics.g2d.TextureAtlas&nbsp;atlas)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Changes the texture atlas being used to the atlas given.</div>
+</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.rendering.AtlasRenderComponent">Methods inherited from class&nbsp;com.csse3200.game.rendering.<a href="../../rendering/AtlasRenderComponent.html" title="class in com.csse3200.game.rendering">AtlasRenderComponent</a></h3>
-<code><a href="../../rendering/AtlasRenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a>, <a href="../../rendering/AtlasRenderComponent.html#scaleEntity()">scaleEntity</a>, <a href="../../rendering/AtlasRenderComponent.html#setRegion(java.lang.String,boolean)">setRegion</a></code></div>
+<code><a href="../../rendering/AtlasRenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a>, <a href="../../rendering/AtlasRenderComponent.html#scaleEntity()">scaleEntity</a>, <a href="../../rendering/AtlasRenderComponent.html#setRegion(java.lang.String,boolean)">setRegion</a>, <a href="../../rendering/AtlasRenderComponent.html#updateTextureAtlas(com.badlogic.gdx.graphics.g2d.TextureAtlas,java.lang.String)">updateTextureAtlas</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.rendering.RenderComponent">Methods inherited from class&nbsp;com.csse3200.game.rendering.<a href="../../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></h3>
 <code><a href="../../rendering/RenderComponent.html#compareTo(com.csse3200.game.rendering.Renderable)">compareTo</a>, <a href="../../rendering/RenderComponent.html#dispose()">dispose</a>, <a href="../../rendering/RenderComponent.html#getLayer()">getLayer</a>, <a href="../../rendering/RenderComponent.html#getZIndex()">getZIndex</a>, <a href="../../rendering/RenderComponent.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch)">render</a></code></div>
@@ -238,13 +231,6 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="updateAtlasTexture()">
-<h3>updateAtlasTexture</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateAtlasTexture</span>()</div>
-<div class="block">Updates the entities texture to match the new cardinalities.</div>
-</section>
-</li>
-<li>
 <section class="detail" id="notifyNeighbours(boolean)">
 <h3>notifyNeighbours</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">notifyNeighbours</span><wbr><span class="parameters">(boolean&nbsp;isJoined)</span></div>
@@ -256,21 +242,6 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="notifyNeighbour(com.csse3200.game.components.joinable.JoinDirection,com.badlogic.gdx.math.GridPoint2,boolean)">
-<h3>notifyNeighbour</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">notifyNeighbour</span><wbr><span class="parameters">(<a href="JoinDirection.html" title="enum class in com.csse3200.game.components.joinable">JoinDirection</a>&nbsp;direction,
- com.badlogic.gdx.math.GridPoint2&nbsp;centrePosition,
- boolean&nbsp;isJoined)</span></div>
-<div class="block">Notifies the neighbour in the given direction of a change in join status.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>direction</code> - - the direction of the neighbour to notify.</dd>
-<dd><code>centrePosition</code> - - the centre position of the entity.</dd>
-<dd><code>isJoined</code> - - whether the neighbour should or should not be joined.</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="getJoinLayer()">
 <h3>getJoinLayer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="JoinLayer.html" title="enum class in com.csse3200.game.components.joinable">JoinLayer</a></span>&nbsp;<span class="element-name">getJoinLayer</span>()</div>
@@ -278,6 +249,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the layer being joined on.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateTextureAtlas(com.badlogic.gdx.graphics.g2d.TextureAtlas)">
+<h3>updateTextureAtlas</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateTextureAtlas</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.TextureAtlas&nbsp;atlas)</span></div>
+<div class="block">Changes the texture atlas being used to the atlas given.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>atlas</code> - - new atlas.</dd>
 </dl>
 </section>
 </li>

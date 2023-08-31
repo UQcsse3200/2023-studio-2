@@ -68,7 +68,7 @@ public class EnemyFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+            .addComponent(new HitboxComponent())
             .addComponent(new DeathComponent())
             .addComponent(animator)
             .addComponent(new TouchAttackComponent((short) (
@@ -76,6 +76,11 @@ public class EnemyFactory {
                     PhysicsLayer.WALL |
                     PhysicsLayer.STRUCTURE),
                     1.5f));
+    if (type == EnemyType.Ranged) {
+      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
+    } else {
+      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.NPC);
+    }
 
     // Animations for each enemy
     animator.addAnimation("float", 0.2f, Animation.PlayMode.LOOP);
@@ -143,7 +148,7 @@ public class EnemyFactory {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         } else {
-          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 5, 3f, 4f));
         }
       }
     }

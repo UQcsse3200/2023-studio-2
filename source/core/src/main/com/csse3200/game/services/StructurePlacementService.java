@@ -69,6 +69,7 @@ public class StructurePlacementService {
     public static class SpawnEntityAtVectorArgs {
         public Entity entity;
         public Vector2 worldPos;
+
         public SpawnEntityAtVectorArgs(Entity entity, Vector2 worldPos) {
             this.entity = entity;
             this.worldPos = worldPos;

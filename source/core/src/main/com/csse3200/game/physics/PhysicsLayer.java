@@ -11,6 +11,7 @@ public class PhysicsLayer {
   public static final short NPC_OBSTACLE = (1 << 2);
   //
   public static final short NPC = (1 << 3);
+  public static final short ENEMY_RANGE = (1 << 6);
   public static final short STRUCTURE = (1 << 5);
   public static final short WALL = (1 << 4);
   public static final short ALL = ~0;

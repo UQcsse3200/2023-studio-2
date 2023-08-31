@@ -53,7 +53,7 @@ public class CompanionFactory {
                         .addComponent(new CompanionInteractionControllerComponent());
 
 
-
+        //right now companion health linked to player. Will need to change to companion
         int health = playerEntity.getComponent(CombatStatsComponent.class).getHealth();
         CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(true, 0, health);
         Companion.addComponent(companionStatsDisplay);

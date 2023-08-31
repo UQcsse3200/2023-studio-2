@@ -10,9 +10,13 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.components.ships.ShipActions;
+import com.badlogic.gdx.utils.Array;
+import java.util.ArrayList;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
+import com.csse3200.game.input.InputFactory;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
@@ -35,6 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SpaceMapScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SpaceMapScreen.class);
+
     private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
 
     private final GdxGame game;
@@ -50,13 +55,13 @@ public class SpaceMapScreen extends ScreenAdapter {
         PhysicsService physicsService = new PhysicsService();
         ServiceLocator.registerPhysicsService(physicsService);
         physicsEngine = physicsService.getPhysics();
-
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
 
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
 
+        //Vector2 shipPos = ServiceLocator.getEntityService().getEntitiesByComponent(ShipActions.class).get(0).getPosition();
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
@@ -72,6 +77,8 @@ public class SpaceMapScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
+        Vector2 shipPos = ServiceLocator.getEntityService().getEntitiesByComponent(ShipActions.class).get(0).getPosition();
+        renderer.getCamera().getEntity().setPosition(shipPos);
         physicsEngine.update();
         ServiceLocator.getEntityService().update();
         renderer.render();

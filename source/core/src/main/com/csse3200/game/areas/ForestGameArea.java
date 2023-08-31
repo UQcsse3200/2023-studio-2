@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.GdxGame;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -54,6 +55,54 @@ public class ForestGameArea extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final float ASTEROID_SIZE = 0.9f;
   private static final String[] forestTextures = {
+
+
+
+    "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+    "images/broken_elixir_collector.png",
+
+    "images/SpaceMiniGameBackground.png",
+    "images/extractor.png",
+    "images/broken_extractor.png",
+
+    "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
+    "images/box_boy_leaf.png",
+    "images/RightShip.png",
+    "images/tree.png",
+    "images/wall.png",
+    "images/wall2.png",
+    "images/gate_close.png",
+    "images/gate_open.png",
+    "images/ghost_king.png",
+    "images/ghost_1.png",
+    "images/grass_1.png",
+    "images/grass_2.png",
+    "images/grass_3.png",
+    "images/hex_grass_1.png",
+    "images/hex_grass_2.png",
+    "images/hex_grass_3.png",
+    "images/iso_grass_1.png",
+    "images/iso_grass_2.png",
+    "images/iso_grass_3.png",
+
+
+
+    "images/base_enemy.png",
+    "images/Troll.png",
+    "images/rangeEnemy.png",
+
+
+
+    "images/base_enemy.png",
+    "images/Troll.png",
+    "images/rangeEnemy.png",
+
+    "images/stone_wall.png",
+    "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+    "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+    "images/Ship.png",
+    "images/stone_wall.png",
+
 
 
           "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
@@ -115,7 +164,10 @@ public class ForestGameArea extends GameArea {
           "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
           "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
           "images/Ship.png",
-          "images/stone_wall.png"
+          "images/stone_wall.png",
+
+    "images/oldman_down_1.png"
+
   };
   private static final String[] forestTextureAtlases = {
           "images/terrain_iso_grass.atlas",
@@ -136,6 +188,7 @@ public class ForestGameArea extends GameArea {
 
   private final TerrainFactory terrainFactory;
   private final ArrayList<Entity> targetables;
+  private GdxGame game;
 
   private Entity player;
   private Entity botanist;
@@ -146,8 +199,9 @@ public class ForestGameArea extends GameArea {
    * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
    * @requires terrainFactory != null
    */
-  public ForestGameArea(TerrainFactory terrainFactory) {
+  public ForestGameArea(TerrainFactory terrainFactory, GdxGame game) {
     super();
+    this.game = game;
     this.terrainFactory = terrainFactory;
     this.targetables = new ArrayList<>();
   }
@@ -165,7 +219,6 @@ public class ForestGameArea extends GameArea {
     spawnTrees();
     spawnPowerups();
     spawnExtractors();
-
 
     spawnPlayer();
 
@@ -188,10 +241,16 @@ public class ForestGameArea extends GameArea {
 
   private void spawnExtractors() {
     GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-    Entity extractor = StructureFactory.createExtractor(30, Resource.Unobtanium, (long) 1.0, 1);
+    Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 1000.0, 1);
     spawnEntityAt(extractor, pos, true, false);
   }
 
+  private void spawnShip() {
+    GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
+            terrain.getMapBounds(0).sub(1, 1).y/3);
+    Entity ship = StructureFactory.createShip(game);
+    spawnEntityAt(ship, spawnPosition, false, false);
+  }
 
   private void displayUI() {
     Entity ui = new Entity();

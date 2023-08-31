@@ -20,6 +20,9 @@ import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.services.EntityPlacementService;
+import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -49,7 +52,7 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_MELEE_ENEMIES_DTE = 1;
   private static final int NUM_RANGE_ENEMIES_PTE = 1;
   private static final int NUM_RANGE_ENEMIES_DTE = 1;
-  private static final int NUM_POWERUPS = 3;
+  private static final int NUM_POWERUPS = 5;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
 
   private static final float WALL_WIDTH = 0.1f;
@@ -168,20 +171,26 @@ public class ForestGameArea extends GameArea {
 
     "images/oldman_down_1.png"
 
+
   };
   private static final String[] forestTextureAtlases = {
-          "images/terrain_iso_grass.atlas",
-          "images/ghost.atlas",
-          "images/ghostKing.atlas",
-          "images/base_enemy.atlas",
-          "images/troll_enemy.atlas",
-          "images/rangeEnemy.atlas",
-          "images/stone_wall.atlas",
-          "images/dirt_wall.atlas",
-          "images/botanist.atlas"
-
-
+      "images/terrain_iso_grass.atlas",
+      "images/ghost.atlas",
+      "images/ghostKing.atlas",
+      "images/playerSS.atlas",
+      "images/wrench.atlas",
+      "images/terrain_iso_grass.atlas",
+      "images/ghost.atlas",
+      "images/ghostKing.atlas",
+      "images/base_enemy.atlas",
+      "images/troll_enemy.atlas",
+      "images/rangeEnemy.atlas",
+      "images/stone_wall.atlas",
+      "images/dirt_wall.atlas",
+      "images/botanist.atlas",
+      "images/playerSS.atlas"
   };
+
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
@@ -214,6 +223,9 @@ public class ForestGameArea extends GameArea {
     registerStructurePlacementService();
 
     displayUI();
+
+    //To be used for spawning weapons during gameplay
+    registerEntityPlacementService();
 
     spawnTerrain();
     spawnTrees();
@@ -322,11 +334,6 @@ public class ForestGameArea extends GameArea {
 
       spawnEntityAt(healthPowerup, randomPos, true, false);
       spawnEntityAt(speedPowerup, randomPos2, true, false);
-
-      // Test
-      // System.out.println(ServiceLocator.getEntityService().getEntitiesByComponent(PowerupComponent.class).toString());
-
-
     }
   }
   //  private void spawnBotanist() { // TODO: Temp

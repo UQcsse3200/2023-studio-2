@@ -88,7 +88,7 @@ public class ForestGameArea extends GameArea {
     "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/Ship.png",
-    "images/stone_wall.png"
+    "images/stone_wall.png",
 
 
           "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!

@@ -1,3 +1,7 @@
+/**
+ * This class serves as a factory for creating companion entities in the game.
+ * It defines methods for creating companion entities with predefined properties loaded from a JSON config file.
+ */
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.CombatStatsComponent;
@@ -21,8 +25,8 @@ import com.csse3200.game.components.FollowComponent;
 /**
  * Factory to create a companion entity.
  *
- * <p> Predefined companion properties are loaded from a config stored as a json file and should have
- * the properties stores in 'CompanionConfig'.
+ * <p> Predefined companion properties are loaded from a config stored as a JSON file and should have
+ * the properties stored in 'CompanionConfig'.
  */
 public class CompanionFactory {
     private static final CompanionConfig stats =
@@ -30,16 +34,16 @@ public class CompanionFactory {
 
     /**
      * Create a Companion entity.
-     * @return entity
+     *
+     * @param playerEntity The player entity to which the companion is associated.
+     * @return The created companion entity.
      */
-    //added a player reference for basic player tracking
+    // Added a player reference for basic player tracking
     public static Entity createCompanion(Entity playerEntity) {
-
-
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForCompanion();
 
-        Entity Companion =
+        Entity companion =
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/static.png"))
                         .addComponent(new PhysicsComponent())
@@ -52,22 +56,16 @@ public class CompanionFactory {
                         .addComponent(new FollowComponent(playerEntity, 4.f))
                         .addComponent(new CompanionInteractionControllerComponent());
 
-
-
         int health = playerEntity.getComponent(CombatStatsComponent.class).getHealth();
         CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(true, 0, health);
-        Companion.addComponent(companionStatsDisplay);
+        companion.addComponent(companionStatsDisplay);
 
-        PhysicsUtils.setScaledCollider(Companion, 0.4f, 0.2f);
-        Companion.getComponent(ColliderComponent.class).setDensity(1.0f);
-        Companion.getComponent(TextureRenderComponent.class).scaleEntity();
-        Companion.getComponent(CompanionActions.class).setBulletTexturePath(stats.bulletTexturePath);
-        return Companion;
+        PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
+        companion.getComponent(ColliderComponent.class).setDensity(1.0f);
+        companion.getComponent(TextureRenderComponent.class).scaleEntity();
+        companion.getComponent(CompanionActions.class).setBulletTexturePath(stats.bulletTexturePath);
+        return companion;
     }
-
-
-
-
 
     private CompanionFactory() {
         throw new IllegalStateException("Instantiating static util class");

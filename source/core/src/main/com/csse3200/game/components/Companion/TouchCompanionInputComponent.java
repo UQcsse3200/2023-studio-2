@@ -1,3 +1,7 @@
+/**
+ * This class represents the input component for controlling a companion character using touch input (mouse).
+ * It implements the InputProcessor interface to handle touch input events.
+ */
 package com.csse3200.game.components.Companion;
 
 import com.badlogic.gdx.Input;
@@ -5,14 +9,24 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 import com.badlogic.gdx.InputProcessor;
+
 public class TouchCompanionInputComponent extends InputComponent {
+
+    /**
+     * Constructs a new TouchCompanionInputComponent with a priority of 5.
+     */
     public TouchCompanionInputComponent() {
         super(5);
     }
 
     /**
-     * Triggers the Companion attack.
-     * @return whether the input was processed
+     * Handles touch input events and triggers the Companion's attack.
+     *
+     * @param screenX The x-coordinate of the touch event on the screen.
+     * @param screenY The y-coordinate of the touch event on the screen.
+     * @param pointer The pointer ID for the touch event.
+     * @param button  The button ID for the touch event.
+     * @return True if the input was processed, false otherwise.
      * @see InputProcessor#touchDown(int, int, int, int)
      */
     @Override
@@ -21,6 +35,7 @@ public class TouchCompanionInputComponent extends InputComponent {
         return true;
     }
 }
+
 
 /*
 *//**
@@ -100,6 +115,7 @@ public class TouchCompanionInputComponent extends InputComponent {
      * @see InputProcessor#touchDown(int, int, int, int)
      *//*
     @Override
+
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         entity.getEvents().trigger("attack");
         return true;

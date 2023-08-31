@@ -17,6 +17,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 
 /**
@@ -106,6 +107,7 @@ public class NPCFactory {
             new Entity()
                     .addComponent(new TextureRenderComponent("images/oldman_down_1.png"))
                     .addComponent(new PhysicsComponent())
+                    .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE));
        FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 

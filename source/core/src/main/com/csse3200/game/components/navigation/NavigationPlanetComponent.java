@@ -21,6 +21,7 @@ public class NavigationPlanetComponent extends UIComponent {
     private final float x;
     private final float y;
     private Table table;
+    private final String name;
 
     /**
      * Constructs a `PlanetComponent` instance with the specified planet image and coordinates.
@@ -29,10 +30,11 @@ public class NavigationPlanetComponent extends UIComponent {
      * @param x The x-coordinate of the planet's position.
      * @param y The y-coordinate of the planet's position.
      */
-    public NavigationPlanetComponent(String PlanetImage, float x, float y) {
+    public NavigationPlanetComponent(String PlanetImage, float x, float y, String name) {
         this.PlanetImage = PlanetImage;
         this.x = x;
         this.y = y;
+        this.name = name;
     }
 
     /**
@@ -46,7 +48,7 @@ public class NavigationPlanetComponent extends UIComponent {
         // Create and configure the UI elements
         table = new Table();
         Image planetImage = new Image(ServiceLocator.getResourceService().getAsset(PlanetImage, Texture.class));
-        Label label = new Label("Level 1 ", skin, "large");
+        Label label = new Label(name, skin, "large");
         Button button = new Button(label, skin);
 
         // Add a listener to the navigation button
@@ -54,7 +56,7 @@ public class NavigationPlanetComponent extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 // Trigger navigation event when the button is clicked
-                entity.getEvents().trigger("Navigate");
+                entity.getEvents().trigger("Navigate"+name);
             }
         });
 

@@ -11,21 +11,38 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+/**
+ * The level4 class represents a UI component for Level 4 in a game's navigation system.
+ * It displays a planet image and a button for navigation to a different level.
+ */
 public class level4 extends UIComponent {
+
+    // The path to the planet image
     private final String PlanetImage;
+
+    // The x and y coords
     private final float x;
     private final float y;
-    private Table table;
-    public level4(String PlanetImage,float x,float y)
-    {
 
+    // Table of UI elements
+    private Table table;
+
+    /**
+     * Constructs a new level4 instance.
+     *
+     * @param PlanetImage The path to the planet image.
+     * @param x           The x-coordinate for the position of the planet component.
+     * @param y           The y-coordinate for the position of the planet component.
+     */
+    public level4(String PlanetImage,float x,float y) {
         this.PlanetImage=PlanetImage;
         this.x=x;
         this.y=y;
-
-
     }
 
+    /**
+     * Creates the UI elements for Level 4 component.
+     */
     @Override
     public void create() {
         super.create();
@@ -42,7 +59,6 @@ public class level4 extends UIComponent {
                     }
                 });
 
-
         table.add(planetImage).align(Align.top).size(100f);
         table.row();
         table.add(button);
@@ -51,14 +67,19 @@ public class level4 extends UIComponent {
         stage.addActor(table);
     }
 
-
-
+    /**
+     * Draws the Level 4 component (not implemented in this class).
+     *
+     * @param batch The SpriteBatch to use for drawing.
+     */
     @Override
     protected void draw(SpriteBatch batch) {
 
-
     }
 
+    /**
+     * Disposes of resources and clears the table.
+     */
     @Override
     public void dispose() {
         table.clear();

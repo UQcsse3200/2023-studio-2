@@ -32,9 +32,9 @@ public class EarthGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     private DialogueBox dialogueBox;
     private static final int NUM_TREES = 7;
-    private static final int NUM_MELEE_PTE = 5;
-    private static final int NUM_MELEE_DTE = 5;
-    private static final int NUM_RANGE_PTE = 5;
+    private static final int NUM_MELEE_PTE = 2;
+    private static final int NUM_MELEE_DTE = 2;
+    private static final int NUM_RANGE_PTE = 2;
     private static final int NUM_POWERUPS = 3;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);

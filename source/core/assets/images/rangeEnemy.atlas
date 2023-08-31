@@ -1,159 +1,187 @@
 rangenemy.png
-size: 1800, 200
+size: 1500, 333
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 float
   rotate: false
-  xy: 936, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 842, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 float
   rotate: false
-  xy: 1124, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 751, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 float
   rotate: false
-  xy: 1320, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 652, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 float
   rotate: false
-  xy: 1520 , 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 555 , 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 float
   rotate: false
-  xy: 1690, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 458, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 default
   rotate: false
-  xy: 1211, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 555 , 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 angry_float
   rotate: false
-  xy: 936, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 842, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 angry_float
   rotate: false
-  xy: 1124, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 751, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 angry_float
   rotate: false
-  xy: 1320, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 652, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 angry_float
   rotate: false
-  xy: 1520 , 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 555 , 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 angry_float
   rotate: false
-  xy: 1690, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 458, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 left
   rotate: false
-  xy: 6, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 3, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 left
   rotate: false
-  xy: 203, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 100, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 left
   rotate: false
-  xy: 391, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 192, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 left
   rotate: false
-  xy: 575, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 285, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 left
   rotate: false
-  xy: 773, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 384, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 stand
   rotate: false
-  xy: 6, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 3, 0
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 stand
   rotate: false
-   xy: 6, 0
-   size: 85, 148
-   orig: 85, 148
+   xy: 3, 0
+   size: 60, 80
+   orig: 60, 80
    offset: 0, 0
    index: 0
 attack
   rotate: false
-  xy: 391, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 538, 105
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 attack
   rotate: false
-  xy: 575, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 635, 105
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 740, 105
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 825, 105
+  size: 60, 80
+  orig: 60, 80
   offset: 0, 0
   index: 0
 dispose
   rotate: false
-  xy: 391, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 11, 105
+  size: 70, 80
+  orig: 70, 80
   offset: 0, 0
   index: 0
 dispose
   rotate: false
-  xy: 575, 0
-  size: 85, 148
-  orig: 85, 148
+  xy: 108, 105
+  size: 72, 80
+  orig: 72, 80
+  offset: 0, 0
+  index: 0
+dispose
+  rotate: false
+  xy: 205, 105
+  size: 75, 80
+  orig: 75, 80
+  offset: 0, 0
+  index: 0
+dispose
+  rotate: false
+  xy: 304, 105
+  size: 75, 80
+  orig: 75, 80
   offset: 0, 0
   index: 0

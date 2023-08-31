@@ -83,7 +83,7 @@ public class EnemyFactory {
     animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
     animator.addAnimation("stand",0.3f,Animation.PlayMode.LOOP);
     animator.addAnimation("attack",0.05f,Animation.PlayMode.LOOP);
-    //animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
 
     // Adding in animation controllers into the new enemy
     enemy
@@ -135,7 +135,7 @@ public class EnemyFactory {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         } else {
-          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 5, 3f, 4f));
         }
       }
       // Destructible Targeting

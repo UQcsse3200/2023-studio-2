@@ -297,5 +297,19 @@ attack
   orig: 600, 600
   offset: 0, 0
   index: 0
+death
+  rotate: false
+  xy: 8000, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 8200, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
 
 

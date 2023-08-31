@@ -10,6 +10,10 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 public class EnemyAnimationController extends Component {
   AnimationRenderComponent animator;
 
+  /**
+   * Add actions listener to the entity
+   */
+
   @Override
   public void create() {
     super.create();
@@ -23,24 +27,53 @@ public class EnemyAnimationController extends Component {
     entity.getEvents().addListener("enemyAttack", this::animateAttack);
   }
 
+
+  /**
+   * Initialise animation
+   */
   void animateWander() {
     animator.startAnimation("float");
+
   }
+
+  /**
+   * Initialise animation
+   */
   void animateChase() {
     animator.startAnimation("angry_float");
   }
+
+  /**
+   * Initialise animation
+   */
   void animateWanderLeft() {
     animator.startAnimation("left");
   }
+
+  /**
+   * Initialise animation
+   */
   void animateWanderStand() {
     animator.startAnimation("stand");
   }
+
+  /**
+   * Initialise animation
+   */
   void animateDeath() {
     animator.startAnimation("death");
   }
+
+  /**
+   * Initialise animation
+   */
   void animateAttack (){
     animator.startAnimation("attack");
   }
+
+  /**
+   * Initialise animation
+   */
   void animateExplosion (){
     animator.startAnimation("explode");
   }

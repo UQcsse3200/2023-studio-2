@@ -103,7 +103,7 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.components.PowerupType,short)" class="member-name-link">PowerupComponent</a><wbr>(<a href="PowerupType.html" title="enum class in com.csse3200.game.components">PowerupType</a>&nbsp;type,
  short&nbsp;targetLayer)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Assigns a type and modifier value to a given Powerup</div>
+<div class="block">Assigns a type and targetLayer value to a given Powerup</div>
 </div>
 </div>
 </section>
@@ -127,7 +127,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Overrides the Component create() function</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDuration()" class="member-name-link">getDuration</a>()</code></div>
@@ -174,7 +174,7 @@ loadScripts(document, 'script');</script>
 <h3>PowerupComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PowerupComponent</span><wbr><span class="parameters">(<a href="PowerupType.html" title="enum class in com.csse3200.game.components">PowerupType</a>&nbsp;type,
  short&nbsp;targetLayer)</span></div>
-<div class="block">Assigns a type and modifier value to a given Powerup</div>
+<div class="block">Assigns a type and targetLayer value to a given Powerup</div>
 </section>
 </li>
 </ul>
@@ -189,9 +189,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Overrides the Component create() function</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>

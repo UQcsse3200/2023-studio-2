@@ -15,6 +15,7 @@ com.csse3200.game.components.settingsmenu
 com.csse3200.game.components.ships
 com.csse3200.game.components.story
 com.csse3200.game.components.tasks
+com.csse3200.game.components.Weapons
 com.csse3200.game.concurrency
 com.csse3200.game.entities
 com.csse3200.game.entities.buildables

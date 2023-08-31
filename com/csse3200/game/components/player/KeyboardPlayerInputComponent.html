@@ -126,6 +126,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDirection()" class="member-name-link">getDirection</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the direction of the player.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTesting()" class="member-name-link">getTesting</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns value for testing.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyDown(int)" class="member-name-link">keyDown</a><wbr>(int&nbsp;keycode)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -136,12 +146,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Triggers player events on specific keycodes.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDown(int,int,int,int)" class="member-name-link">touchDown</a><wbr>(int&nbsp;screenX,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTesting(int)" class="member-name-link">setTesting</a><wbr>(int&nbsp;testing)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets value for testing.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDown(int,int,int,int)" class="member-name-link">touchDown</a><wbr>(int&nbsp;screenX,
  int&nbsp;screenY,
  int&nbsp;pointer,
  int&nbsp;button)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">TODO this is barely works
+ Function to repond to player mouse press</div>
+</div>
 </div>
 </div>
 </div>
@@ -179,6 +197,28 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getTesting()">
+<h3>getTesting</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getTesting</span>()</div>
+<div class="block">Returns value for testing.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>int</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTesting(int)">
+<h3>setTesting</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTesting</span><wbr><span class="parameters">(int&nbsp;testing)</span></div>
+<div class="block">Sets value for testing.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>testing</code> - </dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="keyDown(int)">
 <h3>keyDown</h3>
@@ -228,17 +268,37 @@ loadScripts(document, 'script');</script>
  int&nbsp;screenY,
  int&nbsp;pointer,
  int&nbsp;button)</span></div>
+<div class="block">TODO this is barely works
+ Function to repond to player mouse press</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>touchDown</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.InputProcessor</code></dd>
 <dt>Overrides:</dt>
 <dd><code><a href="../../input/InputComponent.html#touchDown(int,int,int,int)">touchDown</a></code>&nbsp;in class&nbsp;<code><a href="../../input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>screenX</code> - - X position on screen that mouse was pressed</dd>
+<dd><code>screenY</code> - - Y position on screen that mouse was pressed</dd>
+<dd><code>pointer</code> - -</dd>
+<dd><code>button</code> - - Button that pas pressed</dd>
+<dt>Returns:</dt>
+<dd>- True or false based on if an acction occured</dd>
 <dt>See Also:</dt>
 <dd>
 <ul class="see-list-long">
 <li><code>InputProcessor.touchDown(int, int, int, int)</code></li>
 </ul>
 </dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getDirection()">
+<h3>getDirection</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.Vector2</span>&nbsp;<span class="element-name">getDirection</span>()</div>
+<div class="block">Returns the direction of the player.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Vector2</dd>
 </dl>
 </section>
 </li>

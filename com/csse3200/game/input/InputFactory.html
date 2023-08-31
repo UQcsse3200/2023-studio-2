@@ -131,23 +131,28 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createForPlayer()" class="member-name-link">createForPlayer</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createForCompanion()" class="member-name-link">createForCompanion</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Creates an input handler for the player</div>
+<div class="block">Creates an input handler for the companion</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createForShip()" class="member-name-link">createForShip</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createForPlayer()" class="member-name-link">createForPlayer</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Creates an input handler for the ship</div>
+<div class="block">Creates an input handler for the player</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createForTerminal()" class="member-name-link">createForTerminal</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createForShip()" class="member-name-link">createForShip</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Creates an input handler for the ship</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createForTerminal()" class="member-name-link">createForTerminal</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Creates an input handler for the terminal</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="InputFactory.html" title="class in com.csse3200.game.input">InputFactory</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createFromInputType(com.csse3200.game.input.InputFactory.InputType)" class="member-name-link">createFromInputType</a><wbr>(<a href="InputFactory.InputType.html" title="enum class in com.csse3200.game.input">InputFactory.InputType</a>&nbsp;inputType)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="InputFactory.html" title="class in com.csse3200.game.input">InputFactory</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createFromInputType(com.csse3200.game.input.InputFactory.InputType)" class="member-name-link">createFromInputType</a><wbr>(<a href="InputFactory.InputType.html" title="enum class in com.csse3200.game.input">InputFactory.InputType</a>&nbsp;inputType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -199,6 +204,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>Player input handler</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createForCompanion()">
+<h3>createForCompanion</h3>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></span>&nbsp;<span class="element-name">createForCompanion</span>()</div>
+<div class="block">Creates an input handler for the companion</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Companion input handler</dd>
 </dl>
 </section>
 </li>

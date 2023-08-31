@@ -56,6 +56,7 @@ loadScripts(document, 'script');</script>
 <li><a href="com/csse3200/game/areas/package-tree.html">com.csse3200.game.areas</a>, </li>
 <li><a href="com/csse3200/game/areas/terrain/package-tree.html">com.csse3200.game.areas.terrain</a>, </li>
 <li><a href="com/csse3200/game/components/package-tree.html">com.csse3200.game.components</a>, </li>
+<li><a href="com/csse3200/game/components/Companion/package-tree.html">com.csse3200.game.components.Companion</a>, </li>
 <li><a href="com/csse3200/game/components/gamearea/package-tree.html">com.csse3200.game.components.gamearea</a>, </li>
 <li><a href="com/csse3200/game/components/joinable/package-tree.html">com.csse3200.game.components.joinable</a>, </li>
 <li><a href="com/csse3200/game/components/maingame/package-tree.html">com.csse3200.game.components.maingame</a>, </li>
@@ -109,6 +110,7 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">com.badlogic.gdx.scenes.scene2d.ui.Dialog
 <ul>
+<li class="circle">com.csse3200.game.ui.<a href="com/csse3200/game/ui/AlertBox.html" class="type-name-link" title="class in com.csse3200.game.ui">AlertBox</a></li>
 <li class="circle">com.csse3200.game.ui.<a href="com/csse3200/game/ui/DialogueBox.html" class="type-name-link" title="class in com.csse3200.game.ui">DialogueBox</a></li>
 <li class="circle">com.csse3200.game.ui.<a href="com/csse3200/game/ui/TitleBox.html" class="type-name-link" title="class in com.csse3200.game.ui">TitleBox</a></li>
 </ul>
@@ -129,6 +131,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/AttackFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">AttackFactory</a></li>
 <li class="circle">com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/BaseEntityConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a>
 <ul>
+<li class="circle">com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/CompanionConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">CompanionConfig</a></li>
 <li class="circle">com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/EnemyBulletConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">EnemyBulletConfig</a></li>
 <li class="circle">com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/EnemyConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">EnemyConfig</a>
 <ul>
@@ -141,7 +144,9 @@ loadScripts(document, 'script');</script>
 </li>
 <li class="circle">com.csse3200.game.physics.<a href="com/csse3200/game/physics/BodyUserData.html" class="type-name-link" title="class in com.csse3200.game.physics">BodyUserData</a></li>
 <li class="circle">com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/BotanistConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">BotanistConfig</a></li>
+<li class="circle">com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/BoxFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">BoxFactory</a></li>
 <li class="circle">com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/BuildablesFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">BuildablesFactory</a></li>
+<li class="circle">com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/CompanionFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">CompanionFactory</a></li>
 <li class="circle">com.csse3200.game.components.<a href="com/csse3200/game/components/Component.html" class="type-name-link" title="class in com.csse3200.game.components">Component</a>
 <ul>
 <li class="circle">com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/AITaskComponent.html" class="type-name-link" title="class in com.csse3200.game.ai.tasks">AITaskComponent</a> (implements com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/TaskRunner.html" title="interface in com.csse3200.game.ai.tasks">TaskRunner</a>)</li>
@@ -153,17 +158,23 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">com.csse3200.game.components.<a href="com/csse3200/game/components/CombatStatsComponent.html" class="type-name-link" title="class in com.csse3200.game.components">CombatStatsComponent</a></li>
+<li class="circle">com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" class="type-name-link" title="class in com.csse3200.game.components.Companion">CompanionActions</a></li>
+<li class="circle">com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionInteractionControllerComponent.html" class="type-name-link" title="class in com.csse3200.game.components.Companion">CompanionInteractionControllerComponent</a></li>
+<li class="circle">com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionInventoryComponent.html" class="type-name-link" title="class in com.csse3200.game.components.Companion">CompanionInventoryComponent</a></li>
 <li class="circle">com.csse3200.game.components.<a href="com/csse3200/game/components/DeathComponent.html" class="type-name-link" title="class in com.csse3200.game.components">DeathComponent</a></li>
 <li class="circle">com.csse3200.game.ui.<a href="com/csse3200/game/ui/DialogComponent.html" class="type-name-link" title="class in com.csse3200.game.ui">DialogComponent</a></li>
 <li class="circle">com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/EnemyAnimationController.html" class="type-name-link" title="class in com.csse3200.game.components.npc">EnemyAnimationController</a></li>
 <li class="circle">com.csse3200.game.components.<a href="com/csse3200/game/components/ExtractorRepairPartComponent.html" class="type-name-link" title="class in com.csse3200.game.components">ExtractorRepairPartComponent</a></li>
+<li class="circle">com.csse3200.game.components.<a href="com/csse3200/game/components/FollowComponent.html" class="type-name-link" title="class in com.csse3200.game.components">FollowComponent</a></li>
 <li class="circle">com.csse3200.game.input.<a href="com/csse3200/game/input/InputComponent.html" class="type-name-link" title="class in com.csse3200.game.input">InputComponent</a> (implements com.badlogic.gdx.input.GestureDetector.GestureListener, com.badlogic.gdx.InputProcessor)
 <ul>
 <li class="circle">com.csse3200.game.input.<a href="com/csse3200/game/input/InputDecorator.html" class="type-name-link" title="class in com.csse3200.game.input">InputDecorator</a></li>
 <li class="circle">com.csse3200.game.input.<a href="com/csse3200/game/input/InputOverrideComponent.html" class="type-name-link" title="class in com.csse3200.game.input">InputOverrideComponent</a></li>
+<li class="circle">com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/KeyboardCompanionInputComponent.html" class="type-name-link" title="class in com.csse3200.game.components.Companion">KeyboardCompanionInputComponent</a></li>
 <li class="circle">com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/KeyboardPlayerInputComponent.html" class="type-name-link" title="class in com.csse3200.game.components.player">KeyboardPlayerInputComponent</a></li>
 <li class="circle">com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/KeyboardShipInputComponent.html" class="type-name-link" title="class in com.csse3200.game.components.ships">KeyboardShipInputComponent</a></li>
 <li class="circle">com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/KeyboardTerminalInputComponent.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal">KeyboardTerminalInputComponent</a></li>
+<li class="circle">com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/TouchCompanionInputComponent.html" class="type-name-link" title="class in com.csse3200.game.components.Companion">TouchCompanionInputComponent</a></li>
 <li class="circle">com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/TouchPlayerInputComponent.html" class="type-name-link" title="class in com.csse3200.game.components.player">TouchPlayerInputComponent</a></li>
 <li class="circle">com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/TouchTerminalInputComponent.html" class="type-name-link" title="class in com.csse3200.game.ui.terminal">TouchTerminalInputComponent</a></li>
 </ul>
@@ -194,6 +205,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/TextureRenderComponent.html" class="type-name-link" title="class in com.csse3200.game.rendering">TextureRenderComponent</a></li>
 <li class="circle">com.csse3200.game.ui.<a href="com/csse3200/game/ui/UIComponent.html" class="type-name-link" title="class in com.csse3200.game.ui">UIComponent</a> (implements com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a>)
 <ul>
+<li class="circle">com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionStatsDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.Companion">CompanionStatsDisplay</a></li>
 <li class="circle">com.csse3200.game.components.gamearea.<a href="com/csse3200/game/components/gamearea/GameAreaDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.gamearea">GameAreaDisplay</a></li>
 <li class="circle">com.csse3200.game.components.<a href="com/csse3200/game/components/HealthBarComponent.html" class="type-name-link" title="class in com.csse3200.game.components">HealthBarComponent</a></li>
 <li class="circle">com.csse3200.game.components.navigation.<a href="com/csse3200/game/components/navigation/level3.html" class="type-name-link" title="class in com.csse3200.game.components.navigation">level3</a></li>
@@ -269,6 +281,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.csse3200.game.services.<a href="com/csse3200/game/services/GameTime.html" class="type-name-link" title="class in com.csse3200.game.services">GameTime</a></li>
 <li class="circle">com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/GateConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">GateConfig</a></li>
 <li class="circle">com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/GridPoint2Utils.html" class="type-name-link" title="class in com.csse3200.game.utils.math">GridPoint2Utils</a></li>
+<li class="circle">com.csse3200.game.entities.<a href="com/csse3200/game/entities/Gun.html" class="type-name-link" title="class in com.csse3200.game.entities">Gun</a></li>
 <li class="circle">com.csse3200.game.input.<a href="com/csse3200/game/input/InputFactory.html" class="type-name-link" title="class in com.csse3200.game.input">InputFactory</a>
 <ul>
 <li class="circle">com.csse3200.game.input.<a href="com/csse3200/game/input/KeyboardInputFactory.html" class="type-name-link" title="class in com.csse3200.game.input">KeyboardInputFactory</a></li>

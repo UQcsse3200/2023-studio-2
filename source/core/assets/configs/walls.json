@@ -6,5 +6,9 @@
   "intermediate": {
     "health": 400,
     "textureAtlas": "images/stone_wall.atlas"
-  }
+  },
+    "gate": {
+        "health": 200,
+        "textureAtlas": "images/gate.atlas"
+    }
 }

@@ -14,6 +14,7 @@ public class ProximityActivationComponent extends Component {
     private final ProximityFunc exited;
     private final List<Entity> entities;
     private final Map<Entity, Boolean> entityWithinRadiusMap = new HashMap<>();
+    private boolean isWithinRadius;
 
     public ProximityActivationComponent(float radius, Entity entity,
                                         ProximityFunc entered, ProximityFunc exited) {
@@ -34,7 +35,6 @@ public class ProximityActivationComponent extends Component {
         entities.forEach(entity -> entityWithinRadiusMap.put(entity, false));
     }
 
-
     /**
      * Checks whether the entity has entered or exited the radius calls the relevant method if so.
      */
@@ -43,24 +43,22 @@ public class ProximityActivationComponent extends Component {
         for (Entity entity : entities) {
             boolean isInProximity = entityWithinRadiusMap.get(entity);
 
-            // checks if the entity has entered the radius
-            if (!isInProximity && entered != null
-                    && entity.getCenterPosition().dst(entity.getCenterPosition()) <= radius) {
-                isInProximity = true;
+            if (!isInProximity && entityIsInProximity(entity)) {
+                entityWithinRadiusMap.put(entity, true);
                 entered.call(entity);
-                // checks if the entity has exited the radius
-            } else if (isInProximity && exited != null
-                    && entity.getCenterPosition().dst(entity.getCenterPosition()) > radius) {
-                isInProximity = false;
+            } else if (isInProximity && !entityIsInProximity(entity)) {
+                entityWithinRadiusMap.put(entity, false);
                 exited.call(entity);
             }
         }
     }
 
+    public boolean entityIsInProximity(Entity entity) {
+        // Calculate the distance between the entity and the center position
+        float distance = this.entity.getCenterPosition().dst(entity.getCenterPosition());
+        return distance <= radius;
+    }
 
-    /**
-     * Defines the entry and exit function type.
-     */
     public interface ProximityFunc {
         void call(Entity entity);
     }

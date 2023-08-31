@@ -25,11 +25,11 @@ public class TerrainComponent extends RenderComponent {
   private final float tileSize;
 
   public TerrainComponent(
-      OrthographicCamera camera,
-      TiledMap map,
-      TiledMapRenderer renderer,
-      TerrainOrientation orientation,
-      float tileSize) {
+          OrthographicCamera camera,
+          TiledMap map,
+          TiledMapRenderer renderer,
+          TerrainOrientation orientation,
+          float tileSize) {
     this.camera = camera;
     this.tiledMap = map;
     this.orientation = orientation;
@@ -101,3 +101,4 @@ public class TerrainComponent extends RenderComponent {
     return camera.unproject(screenCoords).scl(new Vector3(1/tileSize, 1/tileSize, 1/tileSize));
   }
 }
+

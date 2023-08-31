@@ -44,12 +44,22 @@ public class NavigationArea extends GameArea{
     }
 
     private void createNavigationPlanets() {
-        Entity planet1 = new Entity().addComponent(new NavigationPlanetComponent(
-                "images/heart.png", 730, 750));
-        planet1.getEvents().addListener("Navigate", () -> {
+        createPlanetUI("Level 1", 100, 100);
+        createPlanetUI("Level 2", 300, 100);
+        createPlanetUI("Level 3", 500, 100);
+        createPlanetUI("Level 4", 700, 100);
+
+    }
+
+    private void createPlanetUI(String planetName, int x, int y) {
+        Entity planet = new Entity().addComponent(new NavigationPlanetComponent(
+                "images/heart.png", x, y, planetName));
+        planet.getEvents().addListener("Navigate" + planetName, () -> {
             navigateToArea(new EarthGameArea(terrainFactory, game));
         });
-        spawnEntity(planet1);
+        spawnEntity(planet);
+
+
     }
 
     private void navigateToArea(GameArea nextArea) {

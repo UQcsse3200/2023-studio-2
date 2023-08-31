@@ -1,5 +1,7 @@
 package com.csse3200.game.entities.factories;
 
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -23,6 +25,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
 
@@ -39,6 +42,7 @@ import java.util.ArrayList;
 public class EnemyFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
+  public static DialogueBox dialogueBox;
 
   /**
    * Creates a melee enemy entity.
@@ -77,7 +81,8 @@ public class EnemyFactory {
                     PhysicsLayer.PLAYER |
                     PhysicsLayer.WALL |
                     PhysicsLayer.STRUCTURE),
-                    1.5f));
+                    1.5f))
+            .addComponent(new DialogComponent(dialogueBox));
     if (type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     } else {
@@ -103,7 +108,6 @@ public class EnemyFactory {
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
     enemy.scaleHeight(2f);
-
     return enemy;
   }
 

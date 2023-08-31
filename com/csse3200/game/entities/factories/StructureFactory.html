@@ -79,6 +79,7 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Factory to create structure entities - such as extractors or ships.
 
+
  <p>Each obstacle entity type should have a creation method that returns a corresponding entity.</div>
 </section>
 <section class="summary">
@@ -113,11 +114,14 @@ loadScripts(document, 'script');</script>
  long&nbsp;tickRate,
  int&nbsp;tickSize)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates a new extractor.</div>
+<div class="block">Creates an extractor entity</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createShip(com.csse3200.game.GdxGame)" class="member-name-link">createShip</a><wbr>(<a href="../../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtractorRepairPart()" class="member-name-link">createExtractorRepairPart</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createShip(com.csse3200.game.GdxGame)" class="member-name-link">createShip</a><wbr>(<a href="../../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a ship entity</div>
 </div>
 </div>
@@ -158,7 +162,9 @@ loadScripts(document, 'script');</script>
  <a href="../../components/resources/Resource.html" title="enum class in com.csse3200.game.components.resources">Resource</a>&nbsp;producedResource,
  long&nbsp;tickRate,
  int&nbsp;tickSize)</span></div>
-<div class="block">Creates a new extractor.</div>
+<div class="block">Creates an extractor entity
+
+ <p>Each obstacle entity type should have a creation method that returns a corresponding entity.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>health</code> - the max and initial health of the extractor</dd>
@@ -168,6 +174,12 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>a new extractor Entity</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createExtractorRepairPart()">
+<h3>createExtractorRepairPart</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createExtractorRepairPart</span>()</div>
 </section>
 </li>
 <li>

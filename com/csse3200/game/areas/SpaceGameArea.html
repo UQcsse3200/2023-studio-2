@@ -106,7 +106,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.areas.terrain.TerrainFactory)" class="member-name-link">SpaceGameArea</a><wbr>(<a href="terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a>&nbsp;terrainFactory)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Initialise this ForestGameArea to use the provided TerrainFactory.</div>
+<div class="block">Constructor for initializing terrain area</div>
 </div>
 </div>
 </section>
@@ -125,7 +125,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create the game area, including terrain, static entities (trees), dynamic entities (player)</div>
+<div class="block">Main method for calling all the methods in the obstacle minigame into the SpaceMapScreen class</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dispose()" class="member-name-link">dispose</a>()</code></div>
@@ -156,12 +156,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(com.csse3200.game.areas.terrain.TerrainFactory)">
 <h3>SpaceGameArea</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SpaceGameArea</span><wbr><span class="parameters">(<a href="terrain/TerrainFactory.html" title="class in com.csse3200.game.areas.terrain">TerrainFactory</a>&nbsp;terrainFactory)</span></div>
-<div class="block">Initialise this ForestGameArea to use the provided TerrainFactory.</div>
+<div class="block">Constructor for initializing terrain area</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>terrainFactory</code> - TerrainFactory used to create the terrain for the GameArea.</dd>
-<dt>Requires:</dt>
-<dd>terrainFactory != null</dd>
+<dd><code>terrainFactory</code> - Terrain factory being used in the area</dd>
 </dl>
 </section>
 </li>
@@ -177,7 +175,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block">Create the game area, including terrain, static entities (trees), dynamic entities (player)</div>
+<div class="block">Main method for calling all the methods in the obstacle minigame into the SpaceMapScreen class</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="GameArea.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></code></dd>

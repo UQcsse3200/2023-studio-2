@@ -1,9 +1,9 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.ExtractorRepairPartComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
@@ -16,24 +16,37 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.GameStateObserver;
 
 /**
  * Factory to create structure entities - such as extractors or ships.
+
  *
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
 public class StructureFactory {
+
+    // * @param health the max and initial health of the extractor
+    // * @param producedResource the resource type produced by the extractor
+    // * @param tickRate the frequency at which the extractor ticks (produces resources)
+    // * @param tickSize the amount of the resource produced at each tick
+
     /**
-     * Creates a new extractor.
+     * Creates an extractor entity
      *
+     * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
+
      * @param health the max and initial health of the extractor
      * @param producedResource the resource type produced by the extractor
      * @param tickRate the frequency at which the extractor ticks (produces resources)
      * @param tickSize the amount of the resource produced at each tick
      * @return a new extractor Entity
      */
+
+
+
+
     public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         Entity extractor = new Entity()
                 .addComponent(new DamageTextureComponent("images/extractor.png")
@@ -58,6 +71,14 @@ public class StructureFactory {
         PhysicsUtils.setScaledCollider(extractor, 1f, 0.6f);
 
         return extractor;
+    }
+
+    public static Entity createExtractorRepairPart() {
+        Entity extractorRepairPart = new Entity()
+                .addComponent(new TextureRenderComponent("images/fire.png"))
+                .addComponent(new ExtractorRepairPartComponent());
+        extractorRepairPart.setScale(1.8f, 2f);
+        return extractorRepairPart;
     }
 
     /**
@@ -87,3 +108,4 @@ public class StructureFactory {
     }
 
 }
+

@@ -1,5 +1,5 @@
 Troll.png
-size: 6400,200
+size: 8400,200
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -223,6 +223,90 @@ stand
 stand
   rotate: false
   xy: 6200, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 6400, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 6600, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 6800, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 7000, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 7200, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 7400, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 7600, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 7800, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 8000, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 8200, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 8000, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 8200, 0
   size: 200, 200
   orig: 600, 600
   offset: 0, 0

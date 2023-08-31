@@ -21,6 +21,8 @@ import com.csse3200.game.services.ServiceLocator;
 /** Factory for creating game terrains. */
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
+
+  private static final int tileSize = 16;
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
 
@@ -64,7 +66,7 @@ public class TerrainFactory {
         System.err.println("Error loading TiledMap: " + ex.getMessage());
       }
     }
-    TiledMapRenderer renderer = createRenderer(tiledMap, 0.5f / 16);
+    TiledMapRenderer renderer = createRenderer(tiledMap, 0.5f / tileSize);
 
     return new TerrainComponent(camera, tiledMap, renderer, orientation, 0.5f);
   }
@@ -90,16 +92,12 @@ public class TerrainFactory {
   }
 
   private TiledMapRenderer createRenderer(TiledMap tiledMap, float tileScale) {
-    switch (orientation) {
-      case ORTHOGONAL:
-        return new OrthogonalTiledMapRenderer(tiledMap, tileScale);
-      case ISOMETRIC:
-        return new IsometricTiledMapRenderer(tiledMap, tileScale);
-      case HEXAGONAL:
-        return new HexagonalTiledMapRenderer(tiledMap, tileScale);
-      default:
-        return null;
-    }
+      return switch (orientation) {
+          case ORTHOGONAL -> new OrthogonalTiledMapRenderer(tiledMap, tileScale);
+          case ISOMETRIC -> new IsometricTiledMapRenderer(tiledMap, tileScale);
+          case HEXAGONAL -> new HexagonalTiledMapRenderer(tiledMap, tileScale);
+          default -> null;
+      };
   }
 
   private TiledMap createSpaceDemoTiles(

@@ -59,7 +59,7 @@ public class EarthGameArea extends GameArea {
             "images/box_boy_leaf.png",
             "images/RightShip.png",
             "images/wall.png",
-            "images/static.png",
+            "images/Companion1.png",
             "images/wall2.png",
             "images/gate_close.png",
             "images/gate_open.png",

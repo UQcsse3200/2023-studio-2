@@ -17,12 +17,18 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public class NavigationArea extends GameArea{
 
+    // Textures to be loaded
     private static final String[] spaceMapTextures = {
             "images/heart.png"
     };
 
+    // The game this area is in
     private final GdxGame game;
+
+    // The Factory to generate the new areas terrain
     private final TerrainFactory terrainFactory;
+
+    // Handler of the transition point between planets
     private final PlanetTravel planetTravel;
 
     /**

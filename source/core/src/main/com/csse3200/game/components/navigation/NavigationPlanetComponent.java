@@ -17,10 +17,17 @@ import com.csse3200.game.ui.UIComponent;
  */
 public class NavigationPlanetComponent extends UIComponent {
 
+    // The path to the planet image
     private final String PlanetImage;
+
+    // The x and y coords
     private final float x;
     private final float y;
+
+    // Table of UI elements
     private Table table;
+
+    // The name of the planet
     private final String name;
 
     /**

@@ -33,6 +33,7 @@ public class CompanionFactory {
      * @return entity
      */
     //added a player reference for basic player tracking
+    // this needs further adjusting
     public static Entity createCompanion(Entity playerEntity) {
 
 

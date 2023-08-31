@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.listeners.EventListener0;
@@ -19,6 +18,9 @@ import org.mockito.Mockito;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link CompanionActions} class.
+ */
 class CompanionActionsTest {
 
     private CompanionActions companionActions;
@@ -47,6 +49,9 @@ class CompanionActionsTest {
         ServiceLocator.registerResourceService(resourceService);
     }
 
+    /**
+     * Test the create method of CompanionActions.
+     */
     @Test
     public void testCreate()
     {
@@ -56,6 +61,9 @@ class CompanionActionsTest {
         verify(physicsComponent.getBody()).getAngle();
     }
 
+    /**
+     * Test the updateFollowPlayer method of CompanionActions.
+     */
     @Test
     public void testUpdateFollowPlayer() {
         // Simulate player and companion positions
@@ -82,6 +90,9 @@ class CompanionActionsTest {
         verify(physicsComponent.getBody(), times(2)).getPosition();
     }
 
+    /**
+     * Test the updateFollowPlayer method of CompanionActions when the companion is within the minimum distance.
+     */
     @Test
     public void testUpdateFollowPlayerWithinMinDistance() {
         // Simulate player and companion positions
@@ -105,6 +116,9 @@ class CompanionActionsTest {
         verify(companionActions, never()).updateSpeed();
     }
 
+    /**
+     * Test the walk method of CompanionActions.
+     */
     @Test
     public void testWalk() {
         Vector2 direction = new Vector2(1f, 0f);
@@ -113,6 +127,9 @@ class CompanionActionsTest {
         assertEquals(true, companionActions.moving);
     }
 
+    /**
+     * Test the stopWalking method of CompanionActions.
+     */
     @Test
     public void testStopWalking() {
         companionActions.stopWalking();
@@ -120,6 +137,9 @@ class CompanionActionsTest {
         assertEquals(false, companionActions.moving);
     }
 
+    /**
+     * Test the attack method of CompanionActions.
+     */
     @Test
     public void testAttack() {
         // Mock the resource service to simulate loading a sound

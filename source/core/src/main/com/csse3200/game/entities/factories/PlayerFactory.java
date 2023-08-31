@@ -51,7 +51,7 @@ public class PlayerFactory {
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())
             .addComponent(new DialogComponent(dialogueBox))
-            .addComponent(new InteractionControllerComponent());
+            .addComponent(new InteractionControllerComponent(false));
 
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

@@ -8,7 +8,12 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
 public class InteractionControllerComponent extends Component {
-    public void interact(boolean effectAll) {
+    private boolean effectAll;
+    public InteractionControllerComponent(boolean effectAll) {
+        this.effectAll = effectAll;
+    }
+
+    public void interact() {
         Array<Entity> entities = ServiceLocator.getEntityService().getEntitiesByComponent(InteractableComponent.class);
         float minDist = Float.MAX_VALUE;
         Entity closest = null;

@@ -5,11 +5,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.events.listeners.EventListener1;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.events.listeners.EventListener1;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +28,7 @@ import java.util.List;
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
   protected List<Entity> areaEntities;
+  protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;
 
   protected GameArea() {
@@ -45,6 +51,10 @@ public abstract class GameArea implements Disposable {
     ServiceLocator.registerStructurePlacementService(structurePlacementService);
     handler.addListener("spawnExtractor", this::spawnExtractor);
     handler.addListener("placeStructure", this::spawnEntity);
+    handler.addListener("fireBullet",
+            (StructurePlacementService.SpawnEntityAtVectorArgs args) ->
+                    spawnEntityAtVector(args.entity, args.worldPos)
+  );
     handler.addListener("placeStructureAt",
             (StructurePlacementService.PlaceStructureAtArgs args) ->
                     spawnEntityAt(args.entity, args.tilePos, args.centerX, args.centerY)
@@ -60,6 +70,29 @@ public abstract class GameArea implements Disposable {
   protected void spawnExtractor(Entity entity) {
     // TODO: Right now this just passes to spawnEntity but in future will have additional functionality
     this.spawnEntity(entity);
+  }
+
+  /**
+   * Function to register entity placement service using teh approripate listeners.
+   * This allows entities to be placed after initilisation.
+   */
+  protected void registerEntityPlacementService() {
+    EventHandler handler = new EventHandler();
+    entityPlacementService = new EntityPlacementService(handler);
+    ServiceLocator.registerEntityPlacementService(entityPlacementService);
+    handler.addListener("placeEntity", this::spawnEntity);
+    handler.addListener("placeEntityAt", this::placeEntityAt);
+  }
+
+  /**
+   * Function to listen for "placeEntityAt" trigger and repond by
+   * placing entitiy at specified position.
+   * @param entity - Entity to be placed
+   * @param position - position for where entity should be placed
+   */
+  protected void placeEntityAt(Entity entity, Vector2 position) {
+    entity.setPosition(position);
+    spawnEntity(entity);
   }
 
   /**
@@ -92,6 +125,11 @@ public abstract class GameArea implements Disposable {
       worldPos.y += (tileSize / 2) - entity.getCenterPosition().y;
     }
 
+    entity.setPosition(worldPos);
+    spawnEntity(entity);
+  }
+
+  protected void spawnEntityAtVector(Entity entity, Vector2 worldPos) {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }

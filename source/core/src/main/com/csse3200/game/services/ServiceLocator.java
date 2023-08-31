@@ -24,9 +24,10 @@ public class ServiceLocator {
   private static GameTime timeSource;
   private static InputService inputService;
   private static ResourceService resourceService;
-  private static GameStateObserver gameStateObserverService;
   private static GameState gameStateService;
   private static TerrainService terrainService;
+  private static EntityPlacementService entityPlacementService;
+  private static GameStateObserver gameStateObserverService;
 
   private static StructurePlacementService structurePlacementService;
 
@@ -68,6 +69,13 @@ public class ServiceLocator {
     structurePlacementService = service;
   }
 
+
+  public static EntityPlacementService getEntityPlacementService() { return entityPlacementService; }
+
+  public static void registerEntityPlacementService(EntityPlacementService service) {
+    logger.debug("Registering entity placement service {}", service);
+    entityPlacementService = service;
+  }
 
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);
@@ -117,6 +125,7 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
+    gameStateService = null;
     gameStateObserverService = null;
     terrainService = null;
   }

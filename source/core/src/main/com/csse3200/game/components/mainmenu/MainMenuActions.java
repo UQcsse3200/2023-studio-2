@@ -1,5 +1,6 @@
 package com.csse3200.game.components.mainmenu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
@@ -33,6 +34,7 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
+    entity.getEvents().addListener("space map", this::onSpaceMap);
 
   }
 
@@ -78,4 +80,14 @@ public class MainMenuActions extends Component {
     logger.info("starting extractor");
     game.setScreen(GdxGame.ScreenType.EXTRACTOR_GAME);
   }
+
+  private void onSpaceMap() {
+    logger.info("Launching Space Map in Screen");
+    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    //LAUNCH THING NOW
+    System.out.println("MAP LOADING");
+  }
+
 }
+
+

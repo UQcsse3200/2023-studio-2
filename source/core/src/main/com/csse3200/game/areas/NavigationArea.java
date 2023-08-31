@@ -11,6 +11,10 @@ import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
+/**
+ * A GameArea that displays all the possible planets the player can travel to and
+ * allows for the selection of which planet to go to next.
+ */
 public class NavigationArea extends GameArea{
 
     private static final String[] spaceMapTextures = {
@@ -80,9 +84,8 @@ public class NavigationArea extends GameArea{
     private void createPlanetUI(String planetName, int x, int y) {
         Entity planet = new Entity().addComponent(new NavigationPlanetComponent(
                 "images/heart.png", x, y, planetName));
-        planet.getEvents().addListener("Navigate" + planetName, () -> {
-            navigateToArea(new EarthGameArea(terrainFactory, game));
-        });
+        planet.getEvents().addListener("Navigate" + planetName, () ->
+                navigateToArea(new EarthGameArea(terrainFactory, game)));
         spawnEntity(planet);
     }
 

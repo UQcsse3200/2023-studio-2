@@ -148,7 +148,7 @@ public class EnemyFactory {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         } else {
-          aiTaskComponent.addTask(new ChaseTask(target, 5, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
     }

@@ -1,6 +1,7 @@
 package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
@@ -13,11 +14,15 @@ import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
+import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
+import com.csse3200.game.input.InputFactory;
 import com.csse3200.game.input.InputService;
+import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
@@ -27,6 +32,8 @@ import org.slf4j.LoggerFactory;
 
 public class ExtractorMiniGameScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ExtractorMiniGameScreen.class);
+
+    private static final String[] fireTexture = {"images/fire.png"};
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
@@ -48,11 +55,12 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
 
-
+        loadAssets();
         createUI();
 
         logger.debug("Initialising extractor minigame screen entities");
-        ExtractorMiniGameArea extractorMiniGameArea= new ExtractorMiniGameArea();
+        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+        ExtractorMiniGameArea extractorMiniGameArea= new ExtractorMiniGameArea(terrainFactory);
         extractorMiniGameArea.create();
     }
 
@@ -60,6 +68,25 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
     public void render(float delta) {
         ServiceLocator.getEntityService().update();
         renderer.render();
+    }
+
+    private void loadAssets() {
+        logger.debug("Loading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(fireTexture);
+        ServiceLocator.getResourceService().loadAll();
+    }
+
+    private void unloadAssets() {
+        logger.debug("Unloading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.unloadAssets(fireTexture);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        this.unloadAssets();
     }
 
 

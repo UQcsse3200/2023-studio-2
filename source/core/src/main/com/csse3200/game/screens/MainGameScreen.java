@@ -79,12 +79,8 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
-    forestGameArea = new ForestGameArea(terrainFactory);
+    forestGameArea = new ForestGameArea(terrainFactory, game);
     forestGameArea.create();
-
-
-    //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, game);
-    //forestGameArea.create();
     EarthGameArea earthGameArea = new EarthGameArea(terrainFactory, game);
     earthGameArea.create();
     player = earthGameArea.getPlayer();
@@ -96,7 +92,7 @@ public class MainGameScreen extends ScreenAdapter {
   public void loadNavigation() {
     forestGameArea.dispose();
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    GameArea gameArea = new Navigation(terrainFactory, "images/heart.png");
+    GameArea gameArea = new Navigation(terrainFactory, "images/heart.png", game);
     gameArea.create();
   }
 

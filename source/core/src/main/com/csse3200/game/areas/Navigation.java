@@ -1,5 +1,7 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.navigation.PlanetComponent;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
@@ -23,6 +25,7 @@ public class Navigation extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(Navigation.class);
     private static final String[] NavigationTextures = {"images/box_boy_title.png"};
     private final String image;
+    private final GdxGame game;
 
     /**
      * Constructs a new `Navigation` instance with the given terrain factory and image.
@@ -30,9 +33,10 @@ public class Navigation extends GameArea {
      * @param terrainFactory The factory responsible for generating terrain elements.
      * @param image The image resource associated with the navigation area.
      */
-    public Navigation(TerrainFactory terrainFactory, String image) {
+    public Navigation(TerrainFactory terrainFactory, String image, GdxGame game) {
         this.terrainFactory = terrainFactory;
         this.image = image;
+        this.game = game;
     }
 
     /**
@@ -77,7 +81,7 @@ public class Navigation extends GameArea {
         // Create planet entities with associated navigation behavior
         Entity planet1 = new Entity().addComponent(new PlanetComponent(image, 730, 750));
         planet1.getEvents().addListener("Navigate", () -> {
-            navigateToGameArea(new ForestGameArea(terrainFactory));
+            navigateToGameArea(new ForestGameArea(terrainFactory, game));
         });
         spawnEntity(planet1);
 

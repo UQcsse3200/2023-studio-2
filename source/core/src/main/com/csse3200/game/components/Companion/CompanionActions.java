@@ -26,8 +26,8 @@ public class CompanionActions extends Component {
     private float minDistance = 50.0f; // Define the minimum distance
 
     private PhysicsComponent physicsComponent;
-    private Vector2 walkDirection = Vector2.Zero.cpy();
-    private boolean moving = false;
+    public Vector2 walkDirection = Vector2.Zero.cpy();
+    public boolean moving = false;
     private boolean speedBoostActive = false;
 
     @Override
@@ -71,7 +71,7 @@ public class CompanionActions extends Component {
         }
     }
     //functionality for basic player tracking
-    private void updateFollowPlayer() {
+    public void updateFollowPlayer() {
         Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
         Vector2 companionPosition = physicsComponent.getBody().getPosition();
 
@@ -127,7 +127,7 @@ public class CompanionActions extends Component {
                 Gdx.input.isKeyPressed(Input.Keys.K) || Gdx.input.isKeyPressed(Input.Keys.L);
     }
 
-    private void updateSpeed() {
+    public void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
         Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_NORMAL_SPEED);

@@ -65,6 +65,8 @@ public class EarthGameArea extends GameArea {
             "images/Ship.png",
             "images/stone_wall.png",
             "images/oldman_down_1.png",
+            "images/player_blank.png",
+            "images/wrench.png",
             "images/durastell.png",
             "images/nebulite.png",
             "images/uparrow.png",
@@ -74,7 +76,8 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_foreground.png",
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
-            "images/resourcebar_lights.png"
+            "images/resourcebar_lights.png",
+            "images/playerSS_6.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -85,9 +88,13 @@ public class EarthGameArea extends GameArea {
             "images/rangeEnemy.atlas",
             "images/stone_wall.atlas",
             "images/dirt_wall.atlas",
+            "images/botanist.atlas",
+            "images/playerSS.atlas",
+            "images/wrench.atlas",
             "images/open_gate.atlas",
             "images/closed_gate.atlas",
             "images/botanist.atlas"
+
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -115,6 +122,7 @@ public class EarthGameArea extends GameArea {
     public void create() {
         loadAssets();
 
+        registerEntityPlacementService();
         registerStructurePlacementService();
 
         displayUI();

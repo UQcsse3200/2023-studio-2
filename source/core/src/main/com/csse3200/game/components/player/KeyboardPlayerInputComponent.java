@@ -22,6 +22,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private int flagS = 0;
   private int flagD = 0;
   private int flagMul = 0;
+  private boolean leftCtrlFlag = false;
 
   /**
    * @return int
@@ -127,6 +128,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           System.out.println("Multiple");
         }
         return true;
+      case Keys.CONTROL_LEFT:
+        leftCtrlFlag = true;
+        return true;
       case Keys.SPACE:
         if (dodge_available) {
           if (flagW == 1) {
@@ -144,11 +148,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           }
           triggerDodgeEvent();
         }
+        return true;
       case Keys.F:
         InteractionControllerComponent interactionController = entity.getComponent(InteractionControllerComponent.class);
         if (interactionController != null) {
-          interactionController.interact(false);
+          interactionController.interact();
         }
+        return true;
       default:
         return false;
     }
@@ -225,6 +231,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerWalkEvent();
           dodge();
         }
+      case Keys.CONTROL_LEFT:
+        leftCtrlFlag = false;
+        return true;
       default:
         return false;
     }
@@ -232,7 +241,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     if(button == Input.Buttons.LEFT){
-      entity.getEvents().trigger("place", screenX, screenY);
+      if (leftCtrlFlag) {
+        entity.getEvents().trigger("ctrl_place", screenX, screenY);
+      } else {
+        entity.getEvents().trigger("place", screenX, screenY);
+      }
       return true;
     }
     if (button == Input.Buttons.RIGHT) {

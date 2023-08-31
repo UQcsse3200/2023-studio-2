@@ -1,6 +1,5 @@
 package com.csse3200.game.components.mainmenu;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.TitleBox;
 
-import static com.csse3200.game.screens.MainMenuScreen.logger;
 
 /**
  * This class listens to events relevant to the Main Menu Screen and does something when one of the

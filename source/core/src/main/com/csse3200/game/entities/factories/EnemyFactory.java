@@ -1,5 +1,7 @@
 package com.csse3200.game.entities.factories;
 
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -40,6 +42,7 @@ import java.util.ArrayList;
 public class EnemyFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
+  public static DialogueBox dialogueBox;
 
   /**
    * Creates a boss entity.
@@ -50,6 +53,7 @@ public class EnemyFactory {
    */
   public static Entity createBoss(ArrayList<Entity> targets, EnemyType type, EnemyBehaviour behaviour) {
     Entity boss = createEnemy(targets, type, behaviour);
+    //boss.addComponent(new DialogComponent(dialogueBox)); already added dialogueComponent in createEnemy
     return boss;
   }
 
@@ -115,12 +119,14 @@ public class EnemyFactory {
                     PhysicsLayer.PLAYER |
                     PhysicsLayer.WALL |
                     PhysicsLayer.STRUCTURE),
-                    1.5f));
+                    1.5f))
+            .addComponent(new DialogComponent(dialogueBox));
 
     animator.addAnimation("float", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
     animator.addAnimation("stand",0.3f,Animation.PlayMode.LOOP);
+
 
 
     enemy

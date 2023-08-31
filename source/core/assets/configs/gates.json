@@ -1,10 +1,5 @@
 {
-  "open": {
-    "health": 0,
-    "texture": "images/gate_open.png"
-  },
-  "close": {
-    "health": 200,
-    "texture": "images/gate_close.png"
-  }
+  "health": 100,
+  "openTextureAtlas": "images/open_gate.atlas",
+  "closedTextureAtlas": "images/closed_gate.atlas"
 }

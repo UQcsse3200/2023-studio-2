@@ -1,3 +1,8 @@
+/**
+ * MainMenuDisplay is a UI component responsible for displaying the main menu of the game.
+ * It provides buttons for starting the game, loading a saved game, accessing settings,
+ * and exiting the game. Additionally, it offers options to access space and extractor mini-games.
+ */
 package com.csse3200.game.components.mainmenu;
 
 import com.badlogic.gdx.Gdx;
@@ -14,9 +19,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A ui component for displaying the Main menu.
+ * The UI component responsible for rendering and managing the main menu interface.
+ * It provides options for starting, loading, configuring settings, and exiting the game.
+ * It also includes options to access space and extractor mini-games.
  */
 public class MainMenuDisplay extends UIComponent {
+
     private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
@@ -27,43 +35,30 @@ public class MainMenuDisplay extends UIComponent {
         addActors();
     }
 
+    /**
+     * Adds UI elements such as buttons and title to the main menu display.
+     */
     private void addActors()
     {
         table = new Table();
         table.setFillParent(true);
-        Image title =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/escape-earth2.png", Texture.class)
-                );
 
+        // Display game title image
+        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/escape-earth2.png", Texture.class));
+        titleImage.setWidth(Gdx.graphics.getWidth());
+        titleImage.setHeight(Gdx.graphics.getHeight());
+        titleImage.setPosition(0, 0);
 
+        // Create buttons for various menu options
     TextButton startBtn = new TextButton("Start", skin);
     TextButton loadBtn = new TextButton("Load", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton exitBtn = new TextButton("Exit", skin);
     TextButton SpaceBtn = new TextButton("Space", skin);
-    TextButton miniBtn = new TextButton("space minigame", skin);
-    TextButton extractorBtn = new TextButton("extractor minigame", skin);
+    TextButton miniBtn = new TextButton("Space Minigame", skin);
+    TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
 
-
-        title.setWidth(Gdx.graphics.getWidth());
-        title.setHeight(Gdx.graphics.getHeight());
-        title.setPosition(0, 0);
-
-
-
-
-        // Triggers an event when the button is pressed
-
-        SpaceBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Space button clicked");
-                        entity.getEvents().trigger("space");
-                    }
-                });
+        // Attach listeners to buttons
         startBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -90,11 +85,12 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("settings");
                     }
                 });
+
         miniBtn.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Settings button clicked");
+                        logger.debug("Space Minigame button clicked");
                         entity.getEvents().trigger("space minigame");
                     }
                 });
@@ -102,7 +98,7 @@ public class MainMenuDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Settings button clicked");
+                        logger.debug("Extractor Minigame button clicked");
                         entity.getEvents().trigger("extractor minigame");
                     }
                 });
@@ -111,14 +107,14 @@ public class MainMenuDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-
                         logger.debug("Exit button clicked");
                         entity.getEvents().trigger("exit");
                     }
                 });
 
 
-        table.add(title);
+// Arrange UI elements in a table layout
+        table.add(titleImage);
                 table.row();
                 table.add(startBtn).padTop(30f);
                 table.row();
@@ -142,12 +138,12 @@ public class MainMenuDisplay extends UIComponent {
                 table.row();
                 table.add(exitBtn).padTop(15f).padLeft(1200f);
 
-                stage.addActor(title);
+                stage.addActor(titleImage);
                 stage.addActor(table);
             }
 
             public void draw(SpriteBatch batch) {
-                // draw is handled by the stage
+                // Drawing is handled by the stage
             }
 
 
@@ -158,6 +154,4 @@ public class MainMenuDisplay extends UIComponent {
         table.clear();
         super.dispose();
     }
-
-            // <--- Add a closing brace for this block
-        }
+}

@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 public class InteractableComponent extends Component {
     private final Consumer<Entity> interactFunction;
-    private float interactableDistance;
+    private final float interactableDistance;
     public InteractableComponent(Consumer<Entity> runOnInteract, float distance) {
         interactFunction = runOnInteract;
         interactableDistance = distance;

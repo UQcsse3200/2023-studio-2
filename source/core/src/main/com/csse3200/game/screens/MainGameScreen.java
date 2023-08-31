@@ -83,9 +83,9 @@ public class MainGameScreen extends ScreenAdapter {
     forestGameArea.create();
 
 
-    //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory);
+    //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, game);
     //forestGameArea.create();
-    EarthGameArea earthGameArea = new EarthGameArea(terrainFactory);
+    EarthGameArea earthGameArea = new EarthGameArea(terrainFactory, game);
     earthGameArea.create();
     player = earthGameArea.getPlayer();
     titleBox = new TitleBox(game, "Title", skin);

@@ -226,7 +226,7 @@ public class PlayerActions extends Component {
      * @param change - how much to change the existing resource by.
      */
     void updateResources(int change) {
-        gameStateInteraction.updateResource(Resource.Unobtanium.toString(), change);
+        gameStateInteraction.updateResource(Resource.Solstite.toString(), change);
 
     }
  }

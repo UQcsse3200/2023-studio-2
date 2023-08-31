@@ -83,6 +83,7 @@ public class EnemyFactory {
                     PhysicsLayer.STRUCTURE),
                     1.5f))
             .addComponent(new DialogComponent(dialogueBox));
+
     if (type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     } else {

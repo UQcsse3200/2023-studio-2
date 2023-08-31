@@ -97,6 +97,7 @@ public class StructureFactory {
                         .addComponent(new TextureRenderComponent("images/Ship.png"))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                         .addComponent(new InteractableComponent(entity -> {
                             //Exit to main menu if resource > 1000
                             GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();

@@ -112,6 +112,15 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
+        SpaceBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Space Map button clicked");
+                        entity.getEvents().trigger("space");
+                    }
+                });
+
 
 // Arrange UI elements in a table layout
         table.add(titleImage);

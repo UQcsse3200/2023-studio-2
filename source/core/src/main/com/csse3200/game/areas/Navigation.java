@@ -81,7 +81,7 @@ public class Navigation extends GameArea {
         // Create planet entities with associated navigation behavior
         Entity planet1 = new Entity().addComponent(new PlanetComponent(image, 730, 750));
         planet1.getEvents().addListener("Navigate", () -> {
-            navigateToGameArea(new ForestGameArea(terrainFactory, game));
+            navigateToGameArea(new EarthGameArea(terrainFactory, game));
         });
         spawnEntity(planet1);
 

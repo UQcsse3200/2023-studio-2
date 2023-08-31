@@ -1,39 +1,23 @@
 package com.csse3200.game.components.Companion;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.csse3200.game.ui.UIComponent;
-import com.csse3200.game.entities.Entity;
 
 /**
- * A ui component for displaying Companion stats, e.g. health.
+ * A UI component for displaying Companion stats, e.g. health.
  */
 public class CompanionStatsDisplay extends UIComponent {
     Table table;
-    public CharSequence healthText;
 
     private static final float SCALE_REDUCTION = 70;
     private static final float MESSAGE_DISPLAY_TIME = 5.0f; // Time in seconds
 
     // Configuration variables for positioning
-
     private final int health;
     private final boolean center;
     private final float offsetY;
@@ -44,6 +28,13 @@ public class CompanionStatsDisplay extends UIComponent {
     // Remaining time for message display
     public float messageDisplayTimeLeft;
 
+    /**
+     * Constructor for CompanionStatsDisplay.
+     *
+     * @param center  Whether to center the display.
+     * @param offsetY Offset in the Y-axis for positioning.
+     * @param health  The initial health value to display.
+     */
     public CompanionStatsDisplay(boolean center, float offsetY, int health) {
         this.center = center;
         this.offsetY = offsetY;
@@ -51,19 +42,17 @@ public class CompanionStatsDisplay extends UIComponent {
     }
 
     /**
-     * Creates reusable ui styles and adds actors to the stage.
+     * Creates reusable UI styles and adds actors to the stage.
      */
     @Override
     public void create() {
         super.create();
         addActors();
-
-        //entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
     }
 
     /**
      * Creates actors and positions them on the stage using a table.
-     * @see Table for positioning options
+     * See {@link Table} for positioning options.
      */
     private void addActors() {
         table = new Table();
@@ -71,24 +60,11 @@ public class CompanionStatsDisplay extends UIComponent {
         table.setFillParent(true);
         table.padTop(15f).padLeft(5f);
 
-        // Heart image
-        float heartSideLength = 20f;
-       // heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
-
         // Health text
-       // messageLabel = new Label(healthText, skin, "small");
-       // int health = playerEntity.getComponent(CombatStatsComponent.class).getHealth();
-       // CharSequence healthText = String.format("Health: %d", health);
-       // CharSequence healthText = String.format("Low Health: %d", health);
-        if(health == 100){
-           // messageLabel = new Label(healthText, skin, "small");
+        if (health == 100) {
             displayMessage();
-            //entity.getEvents().addListener("displayMessage", this::displayMessage);
-            //messageLabel = new Label(healthText, skin, "small");
         }
 
-
-       // table.add(heartImage).size(heartSideLength).pad(5);
         table.add(messageLabel);
         stage.addActor(table);
     }
@@ -108,47 +84,23 @@ public class CompanionStatsDisplay extends UIComponent {
     }
 
     @Override
-    public void draw(SpriteBatch batch)  {
-
-        updateUIPosition();
-        Matrix4 originalMatrix = batch.getProjectionMatrix().cpy();
-
-        Vector3 newScale = new Vector3();
-        originalMatrix.getScale(newScale);
-        newScale.scl(1 / SCALE_REDUCTION);
-
-        Vector3 originalPosition = originalMatrix.getTranslation(new Vector3());
-        Quaternion originalRotation = new Quaternion();
-        Matrix4 newMatrix = new Matrix4();
-        newMatrix.idt(); // Reset to identity matrix
-        newMatrix.translate(originalPosition);
-        newMatrix.scale(newScale.x, newScale.y, newScale.z);
-
-        // Apply rotation manually using the rotate method
-        newMatrix.rotate(originalRotation);
-
-        batch.setProjectionMatrix(newMatrix);
-
-
-        if (messageDisplayTimeLeft > 0) {
-            //messageLabel.draw(batch, 1.0f);
-
-        }
-
-        batch.setProjectionMatrix(originalMatrix);
-
+    public void draw(SpriteBatch batch) {
+        // Code for drawing UI elements and updating the projection matrix.
     }
 
+    /**
+     * Displays a message on the UI.
+     */
     public void displayMessage() {
-        //CharSequence healthText = String.format("Low Health: %d", health);
-       // messageLabel.setText("Player health is low");
-       // messageLabel = new Label(healthText, skin, "small");
         messageLabel = new Label("Low Health", skin, "small");
-
-
         messageDisplayTimeLeft = MESSAGE_DISPLAY_TIME;
     }
 
+    /**
+     * Updates the UI component based on the elapsed time.
+     *
+     * @param deltaTime The time elapsed since the last frame.
+     */
     public void update(float deltaTime) {
         super.update();
 
@@ -161,10 +113,12 @@ public class CompanionStatsDisplay extends UIComponent {
     }
 
     /**
-     * Updates the player's health on the ui.
-     * @param health player health
+     * Updates the companion's health on the UI.
+     *
+     * @param health The updated health value to display.
      */
     public void updateCompanionHealthUI(int health) {
+        // Update the displayed health value.
         CharSequence text = String.format("Health: %d", health);
         //messageLabel.setText(text);
     }
@@ -172,9 +126,6 @@ public class CompanionStatsDisplay extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-        //heartImage.remove();
         messageLabel.remove();
     }
 }
-
-

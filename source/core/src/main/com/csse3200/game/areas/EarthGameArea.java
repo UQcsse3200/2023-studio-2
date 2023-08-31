@@ -76,7 +76,8 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_foreground.png",
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
-            "images/resourcebar_lights.png"
+            "images/resourcebar_lights.png",
+            "images/playerSS_6.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",

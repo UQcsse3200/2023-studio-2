@@ -1,8 +1,12 @@
 package com.csse3200.game.components.Companion;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
@@ -48,6 +52,7 @@ public class CompanionStatsDisplay extends UIComponent {
     public void create() {
         super.create();
         addActors();
+        entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
     }
 
     /**
@@ -58,12 +63,15 @@ public class CompanionStatsDisplay extends UIComponent {
         table = new Table();
         table.top().left();
         table.setFillParent(true);
-        table.padTop(15f).padLeft(5f);
+        table.padTop(85f).padLeft(5f);
+
+        // Heart image
+        float heartSideLength = 30f;
 
         // Health text
-        if (health == 100) {
-            displayMessage();
-        }
+        int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+        CharSequence healthText = String.format("Companion Health: %d", health);
+        messageLabel = new Label(healthText, skin, "large");
 
         table.add(messageLabel);
         stage.addActor(table);
@@ -89,14 +97,6 @@ public class CompanionStatsDisplay extends UIComponent {
     }
 
     /**
-     * Displays a message on the UI.
-     */
-    public void displayMessage() {
-        messageLabel = new Label("Low Health", skin, "small");
-        messageDisplayTimeLeft = MESSAGE_DISPLAY_TIME;
-    }
-
-    /**
      * Updates the UI component based on the elapsed time.
      *
      * @param deltaTime The time elapsed since the last frame.
@@ -118,9 +118,8 @@ public class CompanionStatsDisplay extends UIComponent {
      * @param health The updated health value to display.
      */
     public void updateCompanionHealthUI(int health) {
-        // Update the displayed health value.
-        CharSequence text = String.format("Health: %d", health);
-        //messageLabel.setText(text);
+        CharSequence text = String.format("Companion Health: %d", health);
+        messageLabel.setText(text);
     }
 
     @Override

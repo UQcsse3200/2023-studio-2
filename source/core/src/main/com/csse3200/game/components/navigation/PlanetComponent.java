@@ -11,19 +11,15 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
-public class PlanetComponentt extends UIComponent {
+public class PlanetComponent extends UIComponent {
     private final String PlanetImage;
     private final float x;
     private final float y;
     private Table table;
-    public PlanetComponentt(String PlanetImage,float x,float y)
-    {
-
+    public PlanetComponent(String PlanetImage, float x, float y) {
         this.PlanetImage=PlanetImage;
         this.x=x;
         this.y=y;
-
-
     }
 
     @Override
@@ -42,7 +38,6 @@ public class PlanetComponentt extends UIComponent {
                     }
                 });
 
-
         table.add(planetImage).align(Align.top).size(100f);
         table.row();
         table.add(button);
@@ -50,7 +45,6 @@ public class PlanetComponentt extends UIComponent {
         table.setSize(20,20);
         stage.addActor(table);
     }
-
 
 
     @Override

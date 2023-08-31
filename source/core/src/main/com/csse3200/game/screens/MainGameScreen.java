@@ -99,7 +99,6 @@ public class MainGameScreen extends ScreenAdapter {
     navArea.create();
   }
 
-
   @Override
   public void render(float delta) {
     physicsEngine.update();

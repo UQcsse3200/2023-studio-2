@@ -49,7 +49,7 @@ public class DeathComponent extends Component {
                 public void run() {
                     Gdx.app.postRunnable(entity::dispose);
                 }
-            }, 2000); // 10 milliseconds delay
+            }, 1500); // 10 milliseconds delay
         }
     }
 }

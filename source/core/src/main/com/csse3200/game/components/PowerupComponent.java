@@ -2,15 +2,11 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.areas.ForestGameArea;
-import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Represents a power-up component within the game.
@@ -18,49 +14,23 @@ import com.csse3200.game.services.ServiceLocator;
 public class PowerupComponent extends Component {
 
     private PowerupType type;
-    private short targetLayer;
     private CombatStatsComponent playerCombatStats;
-    private HitboxComponent hitboxComponent;
     private PlayerActions playerActions;
     private long duration;
 
     /**
-     * Assigns a type and modifier value to a given Powerup
+     * Assigns a type and targetLayer value to a given Powerup
      */
     public PowerupComponent(PowerupType type, short targetLayer) {
         this.type = type;
-        this.targetLayer = targetLayer;
-    }
-
-    @Override
-    public void create() {
-        entity.getEvents().addListener("collisionStart", this::onCollisionStart);
-        playerCombatStats = entity.getComponent(CombatStatsComponent.class);
-        hitboxComponent = entity.getComponent(HitboxComponent.class);
     }
 
     /**
-     * Called when a collision begins. Determines if the Powerup should be applied.
-     *
-     * @param me     The fixture representing this Powerup.
-     * @param other  The fixture this Powerup collided with.
+     * Overrides the Component create() function
      */
-    private void onCollisionStart(Fixture me, Fixture other) {
-        if (hitboxComponent.getFixture() != me) {
-            // Not triggered by hitbox, ignore
-            return;
-        }
-
-        if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
-            // Doesn't match our target layer, ignore
-            return;
-        }
-
-        Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-        CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-        if (targetStats != null) {
-            applyEffect(target);
-        }
+    @Override
+    public void create() {
+        playerCombatStats = entity.getComponent(CombatStatsComponent.class);
     }
 
     /**
@@ -73,11 +43,14 @@ public class PowerupComponent extends Component {
         playerActions = target.getComponent(PlayerActions.class);
 
         switch (type) {
-            case HEALTH_BOOST:
-                playerCombatStats.setHealth(100);
-                break;
-            case SPEED_BOOST:
-                playerActions.setSpeed(5,5);
+            case HEALTH_BOOST -> playerCombatStats.setHealth(100);
+            case SPEED_BOOST -> {
+
+                if (playerActions == null) {
+                    return;
+                }
+
+                playerActions.setSpeed(5, 5);
                 this.setDuration(1500);
 
                 // Speed up for 1.5 seconds, then return to normal speed
@@ -88,12 +61,13 @@ public class PowerupComponent extends Component {
                     }
                 };
                 new java.util.Timer().schedule(speedUp, getDuration());
-                break;
-            default:
-                throw new IllegalArgumentException("You must specify a valid PowerupType");
+            }
+            default -> throw new IllegalArgumentException("You must specify a valid PowerupType");
         }
-        // entity.dispose() doesn't work here - concurrency issue
-        Gdx.app.postRunnable(entity::dispose);
+
+        if (entity != null) {
+            Gdx.app.postRunnable(entity::dispose);
+        }
     }
 
     /**

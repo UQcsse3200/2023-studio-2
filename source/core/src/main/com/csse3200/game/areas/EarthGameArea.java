@@ -8,8 +8,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
@@ -34,7 +36,7 @@ import java.util.ArrayList;
 /** Planet Earth area for the demo game with trees, a player, and some enemies. */
 public class EarthGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
-    private DialogueBox dialogueBox;
+    //private DialogueBox dialogueBox;
     private static final int NUM_TREES = 7;
     private static final int NUM_MELEE_ENEMIES_PTE = 1;
     private static final int NUM_MELEE_ENEMIES_DTE = 1;
@@ -46,16 +48,12 @@ public class EarthGameArea extends GameArea {
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
     private static final String[] earthTextures = {
-
-            "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
-            "images/broken_elixir_collector.png",
+            "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
+            "images/extractor.png",
+            "images/broken_extractor.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
             "images/RightShip.png",
-            "images/wall.png",
-            "images/wall2.png",
-            "images/gate_close.png",
-            "images/gate_open.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
             "images/base_enemy.png",
@@ -66,7 +64,20 @@ public class EarthGameArea extends GameArea {
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/Ship.png",
             "images/stone_wall.png",
-            "images/oldman_down_1.png"
+            "images/oldman_down_1.png",
+            "images/player_blank.png",
+            "images/wrench.png",
+            "images/durastell.png",
+            "images/nebulite.png",
+            "images/uparrow.png",
+            "images/solsite.png",
+            "images/resourcebar_background.png",
+            "images/resourcebar_durasteel.png",
+            "images/resourcebar_foreground.png",
+            "images/resourcebar_nebulite.png",
+            "images/resourcebar_solstite.png",
+            "images/resourcebar_lights.png",
+            "images/playerSS_6.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -77,7 +88,13 @@ public class EarthGameArea extends GameArea {
             "images/rangeEnemy.atlas",
             "images/stone_wall.atlas",
             "images/dirt_wall.atlas",
+            "images/botanist.atlas",
+            "images/playerSS.atlas",
+            "images/wrench.atlas",
+            "images/open_gate.atlas",
+            "images/closed_gate.atlas",
             "images/botanist.atlas"
+
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -86,14 +103,16 @@ public class EarthGameArea extends GameArea {
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
     private Entity player;
+    private GdxGame game;
 
     /**
      * Initialise this EarthGameArea to use the provided TerrainFactory.
      * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
      * @requires terrainFactory != null
      */
-    public EarthGameArea(TerrainFactory terrainFactory) {
+    public EarthGameArea(TerrainFactory terrainFactory, GdxGame game) {
         super();
+        this.game = game;
         this.terrainFactory = terrainFactory;
         this.targetables = new ArrayList<>();
     }
@@ -103,6 +122,7 @@ public class EarthGameArea extends GameArea {
     public void create() {
         loadAssets();
 
+        registerEntityPlacementService();
         registerStructurePlacementService();
 
         displayUI();
@@ -149,14 +169,26 @@ public class EarthGameArea extends GameArea {
             }
         }
     }
+    /**
+     * Spawns a Botanist NPC entity at a predefined spawn position on the terrain.
+     * The Botanist entity is created using the NPCFactory.createBotanist() method.
+     * The entity is then added to the world and positioned at the specified spawn position.
+     *
+     * @see NPCFactory#createBotanist() Method used to create the Botanist NPC entity.
+     */
     private void spawnBotanist() {
-        GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(15, 2).x/2,
-                terrain.getMapBounds(0).sub(2, 2).y/3);
-        Entity botanist = NPCFactory.createBotanist();
-        spawnEntityAt(botanist, spawnPosition, true, false);
-        botanist.addComponent(new DialogComponent(dialogueBox));
+        // Calculate the spawn position based on terrain bounds
+        GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(15, 2).x / 2,
+                terrain.getMapBounds(0).sub(2, 2).y / 3);
 
+        // Create the Botanist NPC entity
+        Entity botanist = NPCFactory.createBotanist();
+
+        // Spawn the entity at the calculated position
+        // Arguments: entity, position, isCentered, isLocal
+        spawnEntityAt(botanist, spawnPosition, true, false);
     }
+
     private void spawnAsteroids() {
         //Extra Spicy Asteroids
         GridPoint2 posAs = new GridPoint2(8, 8);
@@ -166,15 +198,33 @@ public class EarthGameArea extends GameArea {
     }
 
     private void spawnExtractors() {
-        GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        Entity extractor = StructureFactory.createExtractor(30, Resource.Unobtanium, (long) 1.0, 1);
+        GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(0, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
+        Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 100.0, 1);
         spawnEntityAt(extractor, pos, true, false);
+        targetables.add(extractor);
+
+        pos = new GridPoint2(terrain.getMapBounds(0).sub(8, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
+        extractor = StructureFactory.createExtractor(30, Resource.Solstite, (long) 100.0, 1);
+        targetables.add(extractor);
+        spawnEntityAt(extractor, pos, true, false);
+
+        pos = new GridPoint2(terrain.getMapBounds(0).sub(16, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
+        extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
+        targetables.add(extractor);
+        spawnEntityAt(extractor, pos, true, false);
+
+        ResourceDisplay resourceDisplayComponent = new ResourceDisplay()
+                .withResource(Resource.Durasteel)
+                .withResource(Resource.Solstite)
+                .withResource(Resource.Nebulite);
+        Entity resourceDisplay = new Entity().addComponent(resourceDisplayComponent);
+        spawnEntity(resourceDisplay);
     }
 
     private void spawnShip() {
-        GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
-                terrain.getMapBounds(0).sub(1, 1).y/3);
-        Entity ship = StructureFactory.createShip();
+        GridPoint2 spawnPosition = new GridPoint2(7*terrain.getMapBounds(0).sub(1, 1).x/12,
+                2*terrain.getMapBounds(0).sub(1, 1).y/3);
+        Entity ship = StructureFactory.createShip(game);
         spawnEntityAt(ship, spawnPosition, false, false);
     }
 
@@ -261,28 +311,28 @@ public class EarthGameArea extends GameArea {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
-            melee.addComponent(new DialogComponent(dialogueBox));
+            //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
-            melee.addComponent(new DialogComponent(dialogueBox));
+            //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
-            melee.addComponent(new DialogComponent(dialogueBox));
+            //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
             spawnEntityAt(ranged, randomPos, true, true);
-            ranged.addComponent(new DialogComponent(dialogueBox));
+            //ranged.addComponent(new DialogComponent(dialogueBox));
         }
     }
 
@@ -293,7 +343,7 @@ public class EarthGameArea extends GameArea {
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
         Entity boss = EnemyFactory.createBoss(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
         spawnEntityAt(boss, randomPos, true, true);
-        boss.addComponent(new DialogComponent(dialogueBox));
+        //boss.addComponent(new DialogComponent(dialogueBox));
 
     }
 

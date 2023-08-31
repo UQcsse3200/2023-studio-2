@@ -67,6 +67,8 @@ public class GdxGame extends Game {
     switch (screenType) {
       case MAIN_MENU:
         return new MainMenuScreen(this);
+      case GAME_STORY:
+        return new StoryScreen(this);
       case MAIN_GAME:
         return new MainGameScreen(this);
       case SETTINGS:
@@ -75,7 +77,6 @@ public class GdxGame extends Game {
         return new SpaceMapScreen(this);
       case EXTRACTOR_GAME:
         return new ExtractorMiniGameScreen(this);
-
       default:
         return null;
     }
@@ -83,7 +84,7 @@ public class GdxGame extends Game {
 
   public enum ScreenType {
 
-    MAIN_MENU, MAIN_GAME, SETTINGS, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME
+    MAIN_MENU, MAIN_GAME, SETTINGS, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME, GAME_STORY
 
   }
 
@@ -92,5 +93,6 @@ public class GdxGame extends Game {
    */
   public void exit() {
     app.exit();
+    System.exit(0);
   }
 }

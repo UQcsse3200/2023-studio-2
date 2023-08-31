@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.DeathComponent;
+import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.tasks.*;
@@ -71,6 +72,7 @@ public class EnemyFactory {
             .addComponent(new HitboxComponent())
             .addComponent(new DeathComponent())
             .addComponent(animator)
+            .addComponent(new HealthBarComponent(false))
             .addComponent(new TouchAttackComponent((short) (
                     PhysicsLayer.PLAYER |
                     PhysicsLayer.WALL |

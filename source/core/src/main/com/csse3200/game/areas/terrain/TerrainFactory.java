@@ -131,6 +131,7 @@ public class TerrainFactory {
     FOREST_DEMO,
     FOREST_DEMO_ISO,
     FOREST_DEMO_HEX,
-    SPACE_DEMO
+    SPACE_DEMO,
+    REPAIR_DEMO
   }
 }

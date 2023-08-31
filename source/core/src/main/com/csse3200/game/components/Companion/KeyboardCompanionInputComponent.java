@@ -1,3 +1,7 @@
+/**
+ * This class represents the input component for controlling a companion character using the keyboard.
+ * It implements the InputProcessor interface to handle keyboard input events.
+ */
 package com.csse3200.game.components.Companion;
 
 import com.badlogic.gdx.Input.Keys;
@@ -9,14 +13,18 @@ import com.csse3200.game.utils.math.Vector2Utils;
 public class KeyboardCompanionInputComponent extends InputComponent {
     private final Vector2 walkDirection = Vector2.Zero.cpy();
 
+    /**
+     * Constructs a new KeyboardCompanionInputComponent with a priority of 5.
+     */
     public KeyboardCompanionInputComponent() {
         super(5);
     }
 
     /**
-     * Triggers Companion events on specific keycodes.
+     * Handles key down events and triggers companion events based on specific keycodes.
      *
-     * @return whether the input was processed
+     * @param keycode The keycode of the pressed key.
+     * @return True if the input was processed, false otherwise.
      * @see InputProcessor#keyDown(int)
      */
     @Override
@@ -53,9 +61,10 @@ public class KeyboardCompanionInputComponent extends InputComponent {
     }
 
     /**
-     * Triggers Companion events on specific keycodes.
+     * Handles key up events and triggers companion events based on specific keycodes.
      *
-     * @return whether the input was processed
+     * @param keycode The keycode of the released key.
+     * @return True if the input was processed, false otherwise.
      * @see InputProcessor#keyUp(int)
      */
     @Override
@@ -86,6 +95,11 @@ public class KeyboardCompanionInputComponent extends InputComponent {
             }
         }
     }
+
+    /**
+     * Triggers the walk event for the companion based on the current walk direction.
+     * If the walk direction is zero, it triggers the walkStop event.
+     */
     private void triggerWalkEvent() {
         if (walkDirection.epsilonEquals(Vector2.Zero)) {
             entity.getEvents().trigger("walkStop");

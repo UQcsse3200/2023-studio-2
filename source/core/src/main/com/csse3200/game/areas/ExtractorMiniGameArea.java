@@ -40,18 +40,33 @@ public class ExtractorMiniGameArea extends GameArea {
         displayUI();
         spawnTerrain(); //
         spawnExtractorsRepairPart();
+        spawnExtractorsRepairPart();
+        spawnExtractorsHolePart();
+        spawnExtractorsHolePart();
     }
 
     private void spawnExtractorsRepairPart() {
 
         Entity extractorRepairPart = StructureFactory.createExtractorRepairPart();
         int[][] positions = {
-                {5,4}, {5,7}, {5,10}, {9,4}, {9,7}, {9,10}, {12,4}, {12,7}, {12,10}
+                {5,4}, {5,10}, {12,4}, {12,10}
         };
         int randomIndex = MathUtils.random(0, positions.length - 1);
         int[] randomPosition = positions[randomIndex];
         extractorRepairPart.setPosition(randomPosition[0], randomPosition[1]);
         spawnEntity(extractorRepairPart);
+    }
+
+    private void spawnExtractorsHolePart() {
+
+        Entity extractorHolePart = StructureFactory.createExtractorHolePart();
+        int[][] positions = {
+                {5,7}, {9,4}, {9,7}, {9,10},{12,7}
+        };
+        int randomIndex = MathUtils.random(0, positions.length - 1);
+        int[] randomPosition = positions[randomIndex];
+        extractorHolePart.setPosition(randomPosition[0], randomPosition[1]);
+        spawnEntity(extractorHolePart);
     }
 
     private void spawnTerrain() {

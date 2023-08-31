@@ -13,6 +13,9 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.components.ExtractorRepairPartComponent;
+import com.csse3200.game.components.ExtractorHolePartComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -80,6 +83,16 @@ public class StructureFactory {
         extractorRepairPart.setScale(1.8f, 2f);
         return extractorRepairPart;
     }
+
+
+    public static Entity createExtractorHolePart() {
+        Entity extractorHolePart = new Entity()
+                .addComponent(new TextureRenderComponent("images/Hole.png"))
+                .addComponent(new ExtractorHolePartComponent());
+        extractorHolePart.setScale(1.8f, 2f);
+        return extractorHolePart;
+    }
+
 
     /**
      * Creates a ship entity

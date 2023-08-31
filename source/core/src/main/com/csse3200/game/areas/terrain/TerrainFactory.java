@@ -57,6 +57,7 @@ public class TerrainFactory {
   public TerrainComponent createTerrain() {
     ResourceService resourceService = ServiceLocator.getResourceService();
     TmxMapLoader mapLoader = new TmxMapLoader();
+
     TiledMap tiledMap = null;
 
     try {

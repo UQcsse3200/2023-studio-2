@@ -58,6 +58,7 @@ public class ForestGameArea extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final float ASTEROID_SIZE = 0.9f;
   private static final String[] forestTextures = {
+
       "images/SpaceMiniGameBackground.png",
       "images/extractor.png",
       "images/broken_extractor.png",
@@ -97,7 +98,13 @@ public class ForestGameArea extends GameArea {
       "images/base_enemy.png",
       "images/Troll.png",
       "images/rangeEnemy.png",
-      "images/stone_wall.png"
+      "images/stone_wall.png",
+      "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+      "images/broken_elixir_collector.png",
+      "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+      "images/speedpowerup.png" // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+      //Resolved merge conflicts that loads multiple copies of the same images
+
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",

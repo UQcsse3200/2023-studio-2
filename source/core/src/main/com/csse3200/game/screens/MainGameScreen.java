@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.ForestGameArea;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.NavigationArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
@@ -50,6 +52,9 @@ public class MainGameScreen extends ScreenAdapter {
 
   private Entity player;
 
+  private GameArea gameArea;
+  private TerrainFactory terrainFactory;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -77,15 +82,22 @@ public class MainGameScreen extends ScreenAdapter {
     createUI();
 
     logger.debug("Initialising main game screen entities");
-    TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+    terrainFactory = new TerrainFactory(renderer.getCamera());
     //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, game);
     //forestGameArea.create();
-    EarthGameArea earthGameArea = new EarthGameArea(terrainFactory, game);
-    earthGameArea.create();
-    player = earthGameArea.getPlayer();
+    gameArea = new EarthGameArea(terrainFactory, game);
+    gameArea.create();
+    player = ((EarthGameArea) gameArea).getPlayer();
     titleBox = new TitleBox(game, "Title", skin);
 
   }
+
+  public void loadSpaceMap(){
+    gameArea.dispose();
+    NavigationArea navArea = new NavigationArea(game, terrainFactory);
+    navArea.create();
+  }
+
 
   @Override
   public void render(float delta) {

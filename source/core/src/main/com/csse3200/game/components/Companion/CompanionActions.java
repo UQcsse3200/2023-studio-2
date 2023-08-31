@@ -10,7 +10,6 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.CombatStatsComponent;
 
 /**
  * Action component for interacting with the Companion. Companion events should be initialised in create()
@@ -19,7 +18,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 public class CompanionActions extends Component {
     private String bulletTexturePath;
 
-    private static Vector2 MAX_SPEED = new Vector2(7f, 7f); // Metres per second
+    private static Vector2 MAX_NORMAL_SPEED = new Vector2(4f, 4f); // Metres per second
 
     private static final float ROTATION_SPEED = 10.0f; // Adjust the rotation speed as needed
     private float followRadius = 10.0f;
@@ -29,6 +28,7 @@ public class CompanionActions extends Component {
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
+    private boolean speedBoostActive = false;
 
     @Override
     public void create() {
@@ -36,7 +36,6 @@ public class CompanionActions extends Component {
         entity.getEvents().addListener("walk", this::walk);
         entity.getEvents().addListener("walkStop", this::stopWalking);
         entity.getEvents().addListener("attack", this::attack);
-        entity.getEvents().trigger("displayMessage", "Hello, I am your companion!");
 
         // Initialize currentRotation based on the initial orientation of the companion
         currentRotation = physicsComponent.getBody().getAngle()*MathUtils.radiansToDegrees;
@@ -62,58 +61,66 @@ public class CompanionActions extends Component {
         } else if (moving) {
             updateSpeed();
         }
-    }
-//functionality for basic player tracking
-private void updateFollowPlayer() {
-    Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
-    Vector2 companionPosition = physicsComponent.getBody().getPosition();
 
-    // Calculate direction vector towards the player
-    Vector2 directionToPlayer = playerPosition.cpy().sub(companionPosition);
-    float distanceToPlayer = directionToPlayer.len();
-
-    double minDistanceThreshold = 50.0f;
-    if (distanceToPlayer < minDistanceThreshold) {
-        physicsComponent.getBody().setActive(false); // Disable physics simulation
-    } else {
-        physicsComponent.getBody().setActive(true); // Enable physics simulation
-        updateSpeed(); // Only apply speed if physics is active
-    }
-
-    // Check if any movement key is pressed
-    boolean isMovementKeyPressed = isMovementKeyPressed();
-
-    if (!isMovementKeyPressed) {
-        // Calculate direction vector towards the player
-        walkDirection = playerPosition.cpy().sub(companionPosition).nor();
-
-        if (walkDirection.len() >= followRadius) {
-            // Move the companion towards the player
-            walkDirection.nor();
-            updateSpeed();
-
-            // Calculate the rotation angle towards the player
-            float targetRotation = walkDirection.angleDeg() + 90;
-
-            // Interpolate the rotation angle smoothly
-            currentRotation = MathUtils.lerpAngleDeg(currentRotation, targetRotation, ROTATION_SPEED * Gdx.graphics.getDeltaTime());
-
-            // Set the new rotation for the companion
-            physicsComponent.getBody().setTransform(companionPosition, currentRotation * MathUtils.degreesToRadians);
+        if (Gdx.input.isKeyPressed(Input.Keys.B)){
+            speedBoostActive = true;
+            MAX_NORMAL_SPEED.set(8f,8f);
         } else {
-            // Stop the companion from walking
+            speedBoostActive = false;
+            MAX_NORMAL_SPEED.set(4f, 4f);
+        }
+    }
+    //functionality for basic player tracking
+    private void updateFollowPlayer() {
+        Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
+        Vector2 companionPosition = physicsComponent.getBody().getPosition();
+
+        // Calculate direction vector towards the player
+        Vector2 directionToPlayer = playerPosition.cpy().sub(companionPosition);
+        float distanceToPlayer = directionToPlayer.len();
+
+        double minDistanceThreshold = 50.0f;
+        if (distanceToPlayer < minDistanceThreshold) {
+            physicsComponent.getBody().setActive(false); // Disable physics simulation
+        } else {
+            physicsComponent.getBody().setActive(true); // Enable physics simulation
+            updateSpeed(); // Only apply speed if physics is active
+        }
+
+        // Check if any movement key is pressed
+        boolean isMovementKeyPressed = isMovementKeyPressed();
+
+        if (!isMovementKeyPressed) {
+            // Calculate direction vector towards the player
+            walkDirection = playerPosition.cpy().sub(companionPosition).nor();
+
+            if (walkDirection.len() >= followRadius) {
+                // Move the companion towards the player
+                walkDirection.nor();
+                updateSpeed();
+
+                // Calculate the rotation angle towards the player
+                float targetRotation = walkDirection.angleDeg() + 90;
+
+                // Interpolate the rotation angle smoothly
+                currentRotation = MathUtils.lerpAngleDeg(currentRotation, targetRotation, ROTATION_SPEED * Gdx.graphics.getDeltaTime());
+
+                // Set the new rotation for the companion
+                physicsComponent.getBody().setTransform(companionPosition, currentRotation * MathUtils.degreesToRadians);
+            } else {
+                // Stop the companion from walking
+                stopWalking();
+            }
+            // Ensure minimum distance
+            if (distanceToPlayer < minDistance) {
+                Vector2 newPosition = companionPosition.cpy().add(directionToPlayer.nor().scl(minDistance));
+                physicsComponent.getBody().setTransform(newPosition, physicsComponent.getBody().getAngle());
+            }
+        } else {
+            // Stop the companion from walking when movement keys are pressed
             stopWalking();
         }
-        // Ensure minimum distance
-        if (distanceToPlayer < minDistance) {
-            Vector2 newPosition = companionPosition.cpy().add(directionToPlayer.nor().scl(minDistance));
-            physicsComponent.getBody().setTransform(newPosition, physicsComponent.getBody().getAngle());
-        }
-    } else {
-        // Stop the companion from walking when movement keys are pressed
-        stopWalking();
     }
-}
     private boolean isMovementKeyPressed() {
         // Check if any of the movement keys are pressed (I, J, K, L)
         return Gdx.input.isKeyPressed(Input.Keys.I) || Gdx.input.isKeyPressed(Input.Keys.J) ||
@@ -123,26 +130,12 @@ private void updateFollowPlayer() {
     private void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
-        Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_SPEED);
+        Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_NORMAL_SPEED);
         // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
     }
 
-   /* private void ensureMinDistance() {
-        if (playerEntity != null) {
-            Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
-            Vector2 companionPosition = physicsComponent.getBody().getPosition();
-            Vector2 offset = companionPosition.cpy().sub(playerPosition);
-            float distance = offset.len();
-
-            if (distance < minDistance) {
-                // Calculate the new position for the companion
-                Vector2 newPosition = playerPosition.cpy().add(offset.nor().scl(minDistance));
-                physicsComponent.getBody().setTransform(newPosition, physicsComponent.getBody().getAngle());
-            }
-        }
-    }*/
 
     /**
      * Moves the Companion towards a given direction.
@@ -171,21 +164,5 @@ private void updateFollowPlayer() {
         attackSound.play();
     }
 
-    /**
-     * sets max speed in directions x and y
-     * @param x
-     * @param y
-     */
-    public static void setSpeed(float x, float y)
-    {
-        MAX_SPEED = new Vector2(x,y);
-    }
 
-    /**
-     * returns the max speed
-     * @return
-     */
-    public Vector2 getSpeed() {
-        return MAX_SPEED;
-    }
 }

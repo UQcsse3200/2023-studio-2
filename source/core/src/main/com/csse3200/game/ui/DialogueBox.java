@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
 
 import static com.csse3200.game.screens.MainMenuScreen.logger;
 
@@ -14,6 +15,8 @@ import static com.csse3200.game.screens.MainMenuScreen.logger;
  * A custom dialog box for displaying in-game dialogues with an OK button.
  */
 public class DialogueBox extends Dialog {
+
+    //private final InputOverrideComponent inputOverrideComponent;
 
     private GdxGame game;
     private TitleBox titleBox;
@@ -46,6 +49,9 @@ public class DialogueBox extends Dialog {
                         entity.getEvents().trigger("ok");
                     }
                 });
+//        inputOverrideComponent = new InputOverrideComponent();
+//
+//        ServiceLocator.getInputService().register(inputOverrideComponent);
     }
 
     /**
@@ -65,9 +71,13 @@ public class DialogueBox extends Dialog {
     public void showDialog(Stage stage) {
         stage.addActor(this);
     }
-
+    @Override
+    public boolean remove() {
+        //Stop overriding input when exiting minigame
+        return super.remove();
+    }
     private void onOK() {
         logger.info("Start game");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        remove();
     }
 }

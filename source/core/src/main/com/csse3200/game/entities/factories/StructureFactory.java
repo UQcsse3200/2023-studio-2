@@ -81,8 +81,8 @@ public class StructureFactory {
 
         ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();
-        ship.setScale(4f, 4.5f);
-        PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
+        ship.setScale(5f, 4.5f);
+        PhysicsUtils.setScaledCollider(ship, 0.8f, 0.7f);
         return ship;
     }
 

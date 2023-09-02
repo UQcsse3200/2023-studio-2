@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -34,6 +35,8 @@ public class MainMenuDisplay extends UIComponent {
         super.create();
         addActors();
     }
+    //created a checkbox group for single/multi player functionality
+    ButtonGroup<CheckBox> checkBoxGroup = new ButtonGroup<>();
 
     /**
      * Adds UI elements such as buttons and title to the main menu display.
@@ -57,6 +60,14 @@ public class MainMenuDisplay extends UIComponent {
         TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
         TextButton spaceMapBtn = new TextButton("Space Map", skin);
 
+        // create checkbox for single/multi player
+        CheckBox singleplayerCheckBox = new CheckBox("Single Player", skin);
+        CheckBox multiplayerCheckBox = new CheckBox("Multi player", skin);
+
+        checkBoxGroup.add(singleplayerCheckBox);
+        checkBoxGroup.add(multiplayerCheckBox);
+
+        multiplayerCheckBox.setChecked(true);
         // Attach listeners to buttons
         startBtn.addListener(
                 new ChangeListener() {
@@ -66,7 +77,6 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("start");
                     }
                 });
-
         loadBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -75,7 +85,6 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("load");
                     }
                 });
-
         settingsBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -120,9 +129,39 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("exit");
                     }
                 });
+        //attach listners to checkboxes
+        singleplayerCheckBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                if (singleplayerCheckBox.isChecked()) {
+                    logger.debug("Single Player mode selected");
+                    // Set the input controller to the Single Player input controller
+                    //setSinglePlayerInputController();
+                    // Trigger an event or action specific to Single Player here
+                    entity.getEvents().trigger("singleplayer");
+                }
+            }
+        });
+
+        multiplayerCheckBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                if (multiplayerCheckBox.isChecked()) {
+                    logger.debug("Multiplayer mode selected");
+                    // Set the input controller to the Multiplayer input controller
+                    //setMultiplayerInputController();
+                    // Trigger an event or action specific to Multiplayer here
+                    entity.getEvents().trigger("multiplayer");
+                }
+            }
+        });
 
         // Arrange UI elements in a table layout
         table.add(titleImage);
+        table.row();
+        table.add(singleplayerCheckBox).padTop(30f).padLeft(1200f).left();
+        table.row();
+        table.add(multiplayerCheckBox).padTop(15f).padLeft(1200f).left();
         table.row();
         table.add(startBtn).padTop(30f).padLeft(1200f);
         table.row();

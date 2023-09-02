@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 /**
  * Class to implement weapon functionality in the player,
  * Acts as the central component for weapons being to
- * repond to an enemy attack use an attack factory to generate a weapon entity
+ * respond to an enemy attack use an attack factory to generate a weapon entity
  */
 public class WeaponComponent extends Component {
     /* Variable to hold reference to animation render component */
@@ -23,22 +23,25 @@ public class WeaponComponent extends Component {
      */
     @Override
     public void create() {
-        //Trigger to repond to player attack
+        //Trigger to respond to player attack
         entity.getEvents().addListener("weaponAttack", this::playerAttacking);
     }
 
     /**
-     * Core function to reponsd to weapon attacks takes a position and a rotation and spawn an entity
+     * Core function to respond to weapon attacks takes a position and a rotation and spawn an entity
      * in that direction and begin the animation of the weapon
      * @param position - position of the player at the time of attack
      * @param initRot - direction in which mouse is relative to the player in degrees
      *                  0<=initRot<=360, East:0, North:90: West:180, South:270
      */
     private void playerAttacking(Vector2 position, WeaponType weaponType, float initRot) {
-        //Player will likely store a weapon type in the future (entity.getCurrentWeapon) or something
-        Entity newAttack = AttackFactory.createAttack(weaponType, initRot);
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, position);
-        // animator = newAttack.getComponent(AnimationRenderComponent.class);  todo: daniel plz
-        // animator.startAnimation("attack");
+        Entity newAttack = AttackFactory.createAttack(weaponType, initRot, entity);
+
+        double radians = Math.toRadians(initRot);
+        float xMovement = (float) Math.cos(radians) * 0.5f;
+        float yMovement = (float) Math.sin(radians) * 0.5f;
+        var newPos = new Vector2(position.x + xMovement, position.y + yMovement);
+
+        ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
     }
 }

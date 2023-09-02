@@ -6,6 +6,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 
 import java.util.*;
 
@@ -16,9 +17,9 @@ public class WeaponControllerComponent extends Component {
     /* Weapon Type to be controlled*/
     WeaponType weaponType;
     /* Variable to hold the remaining life (in game ticks) of a weapon) */
-    int remainigLife;
+    int remainingDuration;
     /* Variable to hold the speed at which the projectile moves */
-    int speed;
+    float speed;
     /* The rotational speed of the weapon*/
     int rotationSpeed;
     /* The rotation of the weapon*/
@@ -29,10 +30,14 @@ public class WeaponControllerComponent extends Component {
     /**
      * Class to store variables of a spawned weapon
      */
-    public WeaponControllerComponent(WeaponType weaponType, float currentRotation,
-                                     int remainigLife,int speed, int rotationSpeed, int imageRotationOffset) {
+    public WeaponControllerComponent(WeaponType weaponType,
+                                     float currentRotation,
+                                     float speed,
+                                     int remainingDuration,
+                                     int rotationSpeed,
+                                     int imageRotationOffset) {
         this.weaponType = weaponType;
-        this.remainigLife = remainigLife;
+        this.remainingDuration = remainingDuration;
         this.speed = speed;
         this.rotationSpeed = rotationSpeed;
         this.currentRotation = currentRotation;
@@ -70,8 +75,12 @@ public class WeaponControllerComponent extends Component {
 
         //Function to despawn Projectile after left is zero
         //Todo this needs to be changed to actually work
-        if (--this.remainigLife == 0) {
-            Gdx.app.postRunnable(entity::dispose);
+        if (--this.remainingDuration == 0) {
+            //Gdx.app.postRunnable();
+            var animator = entity.getComponent(AnimationRenderComponent.class); // todo: daniel plz
+            animator.stopAnimation();
+            ServiceLocator.getEntityService().unregister(entity);
+            //entity.dispose();
         }
     }
 }

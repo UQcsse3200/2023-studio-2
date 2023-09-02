@@ -30,6 +30,7 @@ public class PlayerActions extends Component {
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
     private GameStateInteraction gameStateInteraction;
+    private int attackCooldown;
 
     @Override
     public void create() {
@@ -43,11 +44,15 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("dodged", this::dodged);
         entity.getEvents().addListener("repair", this::repairWall);
         gameStateInteraction = new GameStateInteraction();
+        attackCooldown = 0;
     }
 
 
     @Override
     public void update() {
+        if (attackCooldown > 0) {
+            attackCooldown--;
+        }
         if (moving) {
             updateSpeed();
         }
@@ -228,5 +233,14 @@ public class PlayerActions extends Component {
     void updateResources(int change) {
         gameStateInteraction.updateResource(Resource.Solstite.toString(), change);
 
+    }
+
+
+    public void setAttackCooldown(int cooldown) {
+        this.attackCooldown = cooldown;
+    }
+
+    public int getAttackCooldown() {
+        return this.attackCooldown;
     }
  }

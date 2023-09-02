@@ -91,6 +91,7 @@ public class EarthGameArea extends GameArea {
             "images/botanist.atlas",
             "images/playerSS.atlas",
             "images/wrench.atlas",
+            "images/baseballbat.atlas",
             "images/open_gate.atlas",
             "images/closed_gate.atlas",
             "images/botanist.atlas"

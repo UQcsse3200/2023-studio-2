@@ -263,6 +263,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       return true;
     }
 
+    PlayerActions playerActions = entity.getComponent(PlayerActions.class);
+    int cooldown = playerActions.getAttackCooldown();
 
     Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
     //Problems with screen to game coord - this is a temporary fix
@@ -270,13 +272,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     Vector2 position = new Vector2(mouse.x/2 - entityScale.x/2, (mouse.y) / 2 - entityScale.y/2);
     double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
 
-    if((button == Input.Buttons.MIDDLE) && this.flagD != 1){
-      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
+    if (cooldown == 0) {
+      if((button == Input.Buttons.MIDDLE) && this.flagD != 1){
+        entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
+      }
+      if (button == Input.Buttons.MIDDLE && this.flagD == 1) {
+        entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
+      }
     }
 
-    if (button == Input.Buttons.MIDDLE && this.flagD == 1) {
-     entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
-    }
 
 
     return true;

@@ -118,7 +118,8 @@ public class EnemyFactory {
             .addComponent(new TouchAttackComponent((short) (
                     PhysicsLayer.PLAYER |
                     PhysicsLayer.WALL |
-                    PhysicsLayer.STRUCTURE),
+                    PhysicsLayer.STRUCTURE |
+                    PhysicsLayer.WEAPON),
                     1.5f))
             .addComponent(new DialogComponent(dialogueBox));
 

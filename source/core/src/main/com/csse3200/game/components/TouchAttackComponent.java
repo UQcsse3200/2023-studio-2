@@ -89,9 +89,9 @@ public class TouchAttackComponent extends Component {
     DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
     if (targetStats != null) {
-//      if(dialogue != null) {
-//        dialogue.showdialogue("You hit a Ghost");
-//      }
+      if(dialogue != null) {
+        dialogue.showdialogue("You hit a Ghost");
+      }
       targetStats.hit(combatStats);
     }
 

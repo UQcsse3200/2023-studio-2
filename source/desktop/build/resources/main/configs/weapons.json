@@ -1,0 +1,20 @@
+{
+  "ELEC_WRENCH": {
+    "weaponSpeed": 0.75,
+    "weaponDuration": 50,
+    "rotationSpeed": 6,
+    "initialRotationOffset": 90,
+    "imageRotationOffset": 45,
+    "attackCooldown": 50,
+    "textureAtlas": "images/baseballbat.atlas"
+  },
+
+  "THROW_ELEC_WRENCH": {
+    "weaponSpeed": 10,
+    "weaponDuration": 50,
+    "rotationSpeed": 0,
+    "initialRotationOffset": 0,
+    "imageRotationOffset": 45,
+    "textureAtlas": "images/wrench.atlas"
+  }
+}

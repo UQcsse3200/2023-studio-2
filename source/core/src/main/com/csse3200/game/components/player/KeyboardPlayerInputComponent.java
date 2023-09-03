@@ -3,8 +3,10 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
@@ -14,6 +16,8 @@ import com.csse3200.game.services.ServiceLocator;
 //Testing:
 import com.csse3200.game.components.Weapons.WeaponType;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 
 
@@ -32,6 +36,16 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private int flagMul = 0;
 
   private int testing = 0;
+
+  HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
+  Vector2 lastMousePos = new Vector2(0,0);
+
+  /**
+   *
+   */
+  public Vector2 getLastMousePos() {
+    return this.lastMousePos.cpy();
+  }
 
   /** 
    * Returns value for testing.
@@ -99,6 +113,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
+    keyFlags.put(keycode, 1);
+
     diagonal();
     switch (keycode) {
       case Keys.W:
@@ -187,6 +203,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
+    keyFlags.put(keycode, 0);
+
     switch (keycode) {
       case Keys.W:
         flagW = 0;
@@ -250,40 +268,51 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    if(button == Input.Buttons.LEFT){
-      if (leftCtrlFlag) {
-        entity.getEvents().trigger("ctrl_place", screenX, screenY);
-      } else {
-        entity.getEvents().trigger("place", screenX, screenY);
-      }
-      return true;
-    }
-    if (button == Input.Buttons.RIGHT) {
-      entity.getEvents().trigger("remove", screenX, screenY);
-      return true;
-    }
+//    if(button == Input.Buttons.LEFT){
+//      if (leftCtrlFlag) {
+//        entity.getEvents().trigger("ctrl_place", screenX, screenY);
+//      } else {
+//        entity.getEvents().trigger("place", screenX, screenY);
+//      }
+//      return true;
+//    }
+//    if (button == Input.Buttons.RIGHT) {
+//      entity.getEvents().trigger("remove", screenX, screenY);
+//      return true;
+//    }
+
+    Vector2 position = mouseToGamePos(screenX, screenY);
+    this.lastMousePos = position.cpy();
 
     PlayerActions playerActions = entity.getComponent(PlayerActions.class);
     int cooldown = playerActions.getAttackCooldown();
 
-    Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-    //Problems with screen to game coord - this is a temporary fix
-    Vector2 entityScale = entity.getScale();
-    Vector2 position = new Vector2(mouse.x/2 - entityScale.x/2, (mouse.y) / 2 - entityScale.y/2);
-    double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
 
-    if (cooldown == 0) {
-      if((button == Input.Buttons.MIDDLE) && this.flagD != 1){
-        entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
-      }
-      if (button == Input.Buttons.MIDDLE && this.flagD == 1) {
-        entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
-      }
+    if (cooldown != 0 || button != Input.Buttons.LEFT) {return false;}
+    double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
+    if(is_pressed(Keys.R)){
+      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.SLING_SHOT, (float) initRot);
+    }
+    if(is_pressed(Keys.T)){
+      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
+    }
+    if(is_pressed(Keys.Y)){
+      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
     }
 
-
-
     return true;
+  }
+
+  public boolean touchDragged (int screenX, int screenY, int pointer) {
+    Vector2 position = mouseToGamePos(screenX, screenY);
+    this.lastMousePos = position.cpy();
+    return false;
+  }
+
+  public boolean mouseMoved (int screenX, int screenY) {
+    Vector2 position = mouseToGamePos(screenX, screenY);
+    this.lastMousePos = position.cpy();
+    return false;
   }
 
   
@@ -386,5 +415,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       angle += 360;
     }
     return angle;
+  }
+  private boolean is_pressed(int keycode) {
+    return keyFlags.getOrDefault(keycode, 0) == 1;
+  }
+
+  //TODO this code needs to be looked over
+  private Vector2 mouseToGamePos(int screenX, int screenY) {
+    Vector2 entityScale = entity.getScale();
+    Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
+    return new Vector2(mouse.x/2 - entityScale.x/2, (mouse.y) / 2 - entityScale.y/2);
   }
 }

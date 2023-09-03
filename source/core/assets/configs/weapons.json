@@ -1,4 +1,14 @@
 {
+  "SLING_SHOT": {
+    "weaponSpeed": 3,
+    "weaponDuration": 2500,
+    "rotationSpeed": 0,
+    "initialRotationOffset": 0,
+    "imageRotationOffset": 45,
+    "textureAtlas": "images/sling_shot.atlas",
+    "imageScale" : 0.2
+  },
+
   "ELEC_WRENCH": {
     "weaponSpeed": 0.75,
     "weaponDuration": 50,
@@ -6,7 +16,8 @@
     "initialRotationOffset": 90,
     "imageRotationOffset": 45,
     "attackCooldown": 50,
-    "textureAtlas": "images/baseballbat.atlas"
+    "textureAtlas": "images/baseballbat.atlas",
+    "imageScale" : 1
   },
 
   "THROW_ELEC_WRENCH": {
@@ -15,6 +26,7 @@
     "rotationSpeed": 0,
     "initialRotationOffset": 0,
     "imageRotationOffset": 45,
-    "textureAtlas": "images/wrench.atlas"
+    "textureAtlas": "images/wrench.atlas",
+    "imageScale" : 1
   }
 }

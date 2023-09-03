@@ -17,6 +17,8 @@ public class WeaponConfig {
 
     public int attackCooldown = 0;
 
+    public float imageScale = 1;
+
     //Texture
     public String textureAtlas = "images/wrench.atlas";
 }

@@ -1,13 +1,12 @@
 package com.csse3200.game.components.player;
 
-import com.csse3200.game.entities.factories.AttackFactory;
-import com.csse3200.game.entities.Entity;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.AttackFactory;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.graphics.g2d.Animation;
 
 /**
  * Class to implement weapon functionality in the player,
@@ -40,7 +39,11 @@ public class WeaponComponent extends Component {
         double radians = Math.toRadians(initRot);
         float xMovement = (float) Math.cos(radians) * 0.5f;
         float yMovement = (float) Math.sin(radians) * 0.5f;
-        var newPos = new Vector2(position.x + xMovement, position.y + yMovement);
+        Vector2 plySc = entity.getScale();
+        Vector2 atkSc = newAttack.getScale();
+
+        var newPos = new Vector2(position.x + xMovement + plySc.x/2 - atkSc.y/2 ,
+                position.y + yMovement + plySc.x/2 - atkSc.y/2 );
 
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
     }

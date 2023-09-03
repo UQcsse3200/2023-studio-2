@@ -66,7 +66,7 @@ public class StructureFactory {
     public static Entity createShip(GdxGame game) {
         Entity ship =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/Ship.png"))
+                        .addComponent(new TextureRenderComponent("images/refinedShip.png"))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                         .addComponent(new InteractableComponent(entity -> {
@@ -82,7 +82,7 @@ public class StructureFactory {
         ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();
         ship.setScale(5f, 4.5f);
-        PhysicsUtils.setScaledCollider(ship, 0.8f, 0.7f);
+        PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
         return ship;
     }
 

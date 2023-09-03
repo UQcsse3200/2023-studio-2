@@ -65,7 +65,7 @@ public class AttackFactory {
             new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WEAPON))
-                    .addComponent(new TouchAttackComponent(PhysicsLayer.NPC, 1f))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.NPC))
                     .addComponent(weaponController);
 
     AnimationRenderComponent animator = new AnimationRenderComponent(

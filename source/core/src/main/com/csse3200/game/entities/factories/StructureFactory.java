@@ -18,6 +18,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.upgradetree.UpgradeDisplay;
 
 /**
  * Factory to create structure entities - such as extractors or ships.
@@ -43,10 +44,6 @@ public class StructureFactory {
      * @param tickSize the amount of the resource produced at each tick
      * @return a new extractor Entity
      */
-
-
-
-
     public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         Entity extractor = new Entity()
                 .addComponent(new DamageTextureComponent("images/extractor.png")
@@ -107,5 +104,22 @@ public class StructureFactory {
         return ship;
     }
 
+    public static Entity createUpgradeBench() {
+        Entity upgradeBench = new Entity()
+                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
+                .addComponent(new HitboxComponent())
+                .addComponent(new TextureRenderComponent("images/heart.png"));
+
+        //For testing start at 0 so you can repair
+        upgradeBench.addComponent(new InteractableComponent(entity -> {
+            UpgradeDisplay minigame = UpgradeDisplay.MakeNewMinigame(upgradeBench);
+            ServiceLocator.getRenderService().getStage().addActor(minigame);
+        }, 5f));
+
+        upgradeBench.setScale(1f, 1f);
+
+        return upgradeBench;
+    }
 }
 

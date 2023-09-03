@@ -100,7 +100,8 @@ public class EarthGameArea extends GameArea {
             "images/baseballbat.atlas",
             "images/open_gate.atlas",
             "images/closed_gate.atlas",
-            "images/botanist.atlas"
+            "images/botanist.atlas",
+            "images/sling_shot.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};

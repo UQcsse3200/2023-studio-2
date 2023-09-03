@@ -49,39 +49,63 @@ public class WeaponControllerComponent extends Component {
      */
     @Override
     public void update() {
+        //switch statement to define weapon movement based on type (a projectile
+        Vector2 movement = switch (this.weaponType) {
+            case SLING_SHOT -> weapon_target_update();
+            case ELEC_WRENCH -> weapon_1_update();
+            case THROW_ELEC_WRENCH -> weapon_2_update();
+        };
+
+
         //Reference to current position of the projectile
         Vector2 position = entity.getPosition();
-        float xMovement = 0;
-        float yMovement = 0;
-        double radians;
-
-        //switch statement to define weapon movement based on type (a projectile
-        switch (this.weaponType) {
-            case ELEC_WRENCH:
-                this.currentRotation -= this.rotationSpeed;
-                radians = Math.toRadians(currentRotation);
-                xMovement = (float) Math.cos(radians) * 0.015f * this.speed;
-                yMovement = (float) Math.sin(radians) * 0.015f * this.speed;
-                break;
-            case THROW_ELEC_WRENCH:
-                radians = Math.toRadians(currentRotation);
-                xMovement = (float) Math.cos(radians) * 0.015f * this.speed;
-                yMovement = (float) Math.sin(radians) * 0.015f * this.speed;
-        }
-
         //Update position and rotation of projectile
+        entity.setPosition(new Vector2(position.x + movement.x, position.y + movement.y));
         entity.setRotation(this.currentRotation - this.imageRotationOffset);
-        entity.setPosition(new Vector2(position.x + xMovement, position.y + yMovement));
+        if (--this.remainingDuration == 0) {this.despawn();}
+    }
 
-        //Function to despawn Projectile after left is zero
-        //Todo this needs to be changed to actually work
-        if (--this.remainingDuration == 0) {
-            //Gdx.app.postRunnable();
-            var animator = entity.getComponent(AnimationRenderComponent.class); // todo: daniel plz
-            animator.stopAnimation();
-            ServiceLocator.getEntityService().unregister(entity);
-            //entity.dispose();
-        }
+    private void despawn() {
+        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
+        animator.stopAnimation();
+        ServiceLocator.getEntityService().unregister(entity);
+    }
+
+    //TODO fix this forbidden code
+    private Vector2 weapon_x_update() {
+        //Edit this.currentRotation and return movement vector
+        Vector2 movement = new Vector2(0,0);
+        //double radians = Math.toRadians(currentRotation);
+        return movement;
+    }
+
+    private Vector2 weapon_1_update() {
+        Vector2 movement = new Vector2(0,0);
+        this.currentRotation -= this.rotationSpeed;
+        double radians = Math.toRadians(currentRotation);
+        movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
+        movement.y = (float) Math.sin(radians) * 0.015f * this.speed;
+        return movement;
+    }
+
+    private Vector2 weapon_2_update() {
+        Vector2 movement = new Vector2(0,0);
+        double radians = Math.toRadians(currentRotation);
+        movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
+        movement.y = (float) Math.sin(radians) * 0.015f * this.speed;
+        return movement;
+    }
+
+    private Vector2 weapon_target_update() {
+        Vector2 movement = new Vector2(0,0);
+        WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
+        Vector2 target_pos = weaponTargetComponent.get_pos_of_target();
+        Vector2 weapon_pos = entity.getPosition();
+
+        double radians = Math.atan2(target_pos.y - weapon_pos.y, target_pos.x - weapon_pos.x);
+        movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
+        movement.y = (float) Math.sin(radians) * 0.015f * this.speed;
+        return movement;
     }
 }
 

@@ -12,6 +12,7 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
+import com.csse3200.game.components.Weapons.WeaponTargetComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.tasks.ChaseTask;
@@ -79,6 +80,13 @@ public class AttackFactory {
 
     //TODO animations to control rotational apperance
     animator.startAnimation("attack");
+    attack.scaleWidth(config.imageScale);
+
+    switch (weaponType) {
+      case SLING_SHOT:
+        attack.addComponent(new WeaponTargetComponent(weaponType, player));
+    }
+
     return attack;
   }
 

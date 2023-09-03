@@ -83,7 +83,8 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_lights.png",
             "images/playerSS_6.png",
             "images/upgradetree/exit.png",
-            "images/upgradetree/background.png"
+            "images/upgradetree/background.png",
+            "images/upgradetree/upgradebench.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",

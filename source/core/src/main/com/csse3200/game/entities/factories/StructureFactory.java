@@ -112,21 +112,23 @@ public class StructureFactory {
         return ship;
     }
 
-
+    /**
+     * Creates an upgrade bench entity
+     */
     public static Entity createUpgradeBench() {
         Entity upgradeBench = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent())
-                .addComponent(new TextureRenderComponent("images/heart.png"));
+                .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"));
 
         //For testing start at 0 so you can repair
         upgradeBench.addComponent(new InteractableComponent(entity -> {
             UpgradeDisplay minigame = UpgradeDisplay.MakeNewMinigame(upgradeBench);
             ServiceLocator.getRenderService().getStage().addActor(minigame);
-        }, 5f));
+        }, 0.5f));
 
-        upgradeBench.setScale(1f, 1f);
+        upgradeBench.setScale(0.5f, 0.5f);
 
         return upgradeBench;
     }

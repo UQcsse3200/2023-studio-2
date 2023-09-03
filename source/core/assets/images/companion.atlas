@@ -1,0 +1,32 @@
+companion_spritesheet.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Companion1
+  rotate: false
+  xy: 1, 1
+  size: 112, 128
+  orig: 112, 128
+  offset: 0, 0
+  index: -1
+Companion2
+  rotate: false
+  xy: 113, 1
+  size: 112, 128
+  orig: 112, 128
+  offset: 0, 0
+  index: -1
+Companion3
+  rotate: false
+  xy: 225, 1
+  size: 112, 128
+  orig: 112, 128
+  offset: 0, 0
+  index: -1
+Companion4
+  rotate: false
+  xy: 337, 1
+  size: 112, 128
+  orig: 112, 128
+  offset: 0, 0
+  index: -1

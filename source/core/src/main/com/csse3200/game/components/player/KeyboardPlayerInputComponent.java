@@ -268,27 +268,26 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//    if(button == Input.Buttons.LEFT){
-//      if (leftCtrlFlag) {
-//        entity.getEvents().trigger("ctrl_place", screenX, screenY);
-//      } else {
-//        entity.getEvents().trigger("place", screenX, screenY);
-//      }
-//      return true;
-//    }
-//    if (button == Input.Buttons.RIGHT) {
-//      entity.getEvents().trigger("remove", screenX, screenY);
-//      return true;
-//    }
+    if (button == Input.Buttons.RIGHT) {
+      entity.getEvents().trigger("remove", screenX, screenY);
+      return true;
+    }
+
+    if (button != Input.Buttons.LEFT) {return false;}
+    if(is_pressed(Keys.CONTROL_LEFT)) {
+      entity.getEvents().trigger("ctrl_place", screenX, screenY);
+    }
+    if(is_pressed(Keys.SHIFT_LEFT)) {
+      entity.getEvents().trigger("place", screenX, screenY);
+    }
+
 
     Vector2 position = mouseToGamePos(screenX, screenY);
     this.lastMousePos = position.cpy();
-
     PlayerActions playerActions = entity.getComponent(PlayerActions.class);
     int cooldown = playerActions.getAttackCooldown();
 
-
-    if (cooldown != 0 || button != Input.Buttons.LEFT) {return false;}
+    if (cooldown != 0) {return false;}
     double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
     if(is_pressed(Keys.R)){
       entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.SLING_SHOT, (float) initRot);

@@ -43,11 +43,6 @@ public class AttackFactory {
    * @return A reference to the created weapon entity
    */
   public static Entity createAttack(WeaponType weaponType, float initRot, Entity player) {
-    //TODO make this based on an enum/configs
-    //-> WeaponControllerComponent values will be based on config
-    //-> Assest will be based on config if possible
-    //-> CombatStatsComponent values will be based on confit and combatStat values
-    //Tomporary test for changing weapon
     WeaponConfig config = configs.GetWeaponConfig(weaponType);
 
     PlayerActions playerActions = player.getComponent(PlayerActions.class);
@@ -65,7 +60,8 @@ public class AttackFactory {
             new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WEAPON))
-                    .addComponent(new TouchAttackComponent(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent((short)
+                            (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.NPC)))
                     .addComponent(weaponController);
 
     AnimationRenderComponent animator = new AnimationRenderComponent(
@@ -76,7 +72,7 @@ public class AttackFactory {
     //TODO make this use player
     attack
             .addComponent(animator)
-            .addComponent(new CombatStatsComponent(1, 5, 1, false));
+            .addComponent(new CombatStatsComponent(1, 10, 1, true));
 
     //TODO animations to control rotational apperance
     animator.startAnimation("attack");

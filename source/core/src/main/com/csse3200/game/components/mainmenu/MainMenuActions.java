@@ -1,11 +1,17 @@
 package com.csse3200.game.components.mainmenu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.screens.MainGameScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.csse3200.game.ui.AlertBox;
+
+import static com.csse3200.game.screens.MainMenuScreen.logger;
 import com.csse3200.game.ui.TitleBox;
 
 
@@ -15,6 +21,7 @@ import com.csse3200.game.ui.TitleBox;
  */
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
+
   public static GdxGame game;
   private Stage stage; // Add the stage
   private Skin skin;   // Add the skin
@@ -25,6 +32,7 @@ public class MainMenuActions extends Component {
     this.skin = skin;   // Initialize skin
   }
 
+
   @Override
   public void create() {
     entity.getEvents().addListener("start", this::onStart);
@@ -33,6 +41,7 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
+    entity.getEvents().addListener("space map", this::onSpaceMap);
 
   }
 
@@ -40,6 +49,10 @@ public class MainMenuActions extends Component {
    * Swaps to the Main Game screen.
    */
   private void onStart() {
+    logger.info("Start game");
+    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    AlertBox alertBox = new AlertBox(game," Alert Box", skin);
+    alertBox.showDialog(stage);
     logger.info("Loading Story");
     TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
     titleBox.showDialog(stage);
@@ -78,4 +91,13 @@ public class MainMenuActions extends Component {
     logger.info("starting extractor");
     game.setScreen(GdxGame.ScreenType.EXTRACTOR_GAME);
   }
+
+  private void onSpaceMap() {
+    logger.info("Launching Space Map in Screen");
+    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    ((MainGameScreen)game.getScreen()).loadSpaceMap();
+  }
+
 }
+
+

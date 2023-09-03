@@ -2,7 +2,6 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -48,6 +47,16 @@ public class DeathComponent extends Component {
             animator.stopAnimation();
             entity.getComponent(HitboxComponent.class).setLayer((short) 0);
             ServiceLocator.getEntityService().unregister(entity);
+
+//            entity.getEvents().trigger("dispose");
+//            // Schedule a task to execute entity::dispose after a delay
+//            Timer timer = new Timer();
+//            timer.schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    Gdx.app.postRunnable(entity::dispose);
+//                }
+//            }, 1500); // 10 milliseconds delay
         }
     }
 }

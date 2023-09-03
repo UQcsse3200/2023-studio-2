@@ -7,15 +7,25 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+/**
+ * When this entity (usually killable entities) has health = 0, it disposes the enemy form the field of play.
+ */
 public class DeathComponent extends Component {
-    private short targetLayer;
     private CombatStatsComponent combatStats;
     private HitboxComponent hitboxComponent;
 
-
+    /**
+     * The Death Component holding Physical Interaction Stats, and facilitates listeners for entity death
+     */
     public DeathComponent() {
     }
 
+    /**
+     * Creates a new listener on an entity to wait for kill condition
+     */
     @Override
     public void create() {
         entity.getEvents().addListener("collisionEnd", this::kill);
@@ -23,6 +33,11 @@ public class DeathComponent extends Component {
         hitboxComponent = entity.getComponent(HitboxComponent.class);
     }
 
+    /**
+     * When kill condition met, target entity will be disposed.
+     * @param me The current Entity's Fixture
+     * @param other The targeted Entity's Fixture
+     */
     private void kill(Fixture me, Fixture other) {
         if (hitboxComponent.getFixture() != me) {
             // Not triggered by hitbox, ignore
@@ -31,6 +46,7 @@ public class DeathComponent extends Component {
         if (combatStats.isDead()) {
             AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
             animator.stopAnimation();
+            entity.getComponent(HitboxComponent.class).setLayer((short) 0);
             ServiceLocator.getEntityService().unregister(entity);
         }
     }

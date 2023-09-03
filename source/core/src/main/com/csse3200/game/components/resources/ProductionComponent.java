@@ -4,10 +4,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.security.Provider;
-import java.util.HashMap;
-import java.util.Map;
+import com.csse3200.game.services.GameStateObserver;
 
 public class ProductionComponent extends Component {
 

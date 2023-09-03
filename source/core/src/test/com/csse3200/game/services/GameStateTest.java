@@ -19,7 +19,9 @@ class GameStateTest {
     }
 
     @Test
+
     void testPutAndGet() {
+
         gameState.put("planet", "Mars");
 
         assertEquals("Mars", gameState.get("planet"), "The state data should match the set data.");

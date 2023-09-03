@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 
@@ -40,6 +41,9 @@ public class StructurePlacementService {
         placedStructures.put(tilePos, entity);
         handler.trigger("placeStructureAt", new PlaceStructureAtArgs(entity, tilePos, centerX, centerY));
     }
+    public void SpawnEntityAtVector(Entity entity, Vector2 worldPos) {
+        handler.trigger("fireBullet", new SpawnEntityAtVectorArgs(entity, worldPos));
+    }
 
     public void removeStructureAt(GridPoint2 tilePos) {
         placedStructures.remove(tilePos);
@@ -59,6 +63,16 @@ public class StructurePlacementService {
             this.tilePos = tilePos;
             this.centerX = centerX;
             this.centerY = centerY;
+        }
+    }
+
+    public static class SpawnEntityAtVectorArgs {
+        public Entity entity;
+        public Vector2 worldPos;
+
+        public SpawnEntityAtVectorArgs(Entity entity, Vector2 worldPos) {
+            this.entity = entity;
+            this.worldPos = worldPos;
         }
     }
 }

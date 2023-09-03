@@ -100,8 +100,8 @@ public class MainMenuScreen extends ScreenAdapter {
     Stage stage = ServiceLocator.getRenderService().getStage();
     Entity ui = new Entity();
     ui.addComponent(new MainMenuDisplay())
-            .addComponent(new InputDecorator(stage, 10))
-            .addComponent(new MainMenuActions(game,stage,skin));
+        .addComponent(new InputDecorator(stage, 10))
+        .addComponent(new MainMenuActions(game, stage, skin));
     ServiceLocator.getEntityService().register(ui);
   }
 }

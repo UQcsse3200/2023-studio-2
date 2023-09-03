@@ -56,7 +56,7 @@ public class ForestGameArea extends GameArea {
   private static final float ASTEROID_SIZE = 0.9f;
   private static final String[] forestTextures = {
     "images/SpaceMiniGameBackground.png",
-    "images/extractor.png",
+    "images/refinedExtractor2.png",
     "images/broken_extractor.png",
     "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
     "images/box_boy_leaf.png",

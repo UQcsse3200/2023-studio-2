@@ -106,11 +106,7 @@ public class TouchAttackComponent extends Component {
     DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
     leftContact = false;
-
-<<<<<<< HEAD
-
-=======
->>>>>>> main
+    
     // Targeting STRUCTURE entity type
     if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
       // Damage Structure while still in contact

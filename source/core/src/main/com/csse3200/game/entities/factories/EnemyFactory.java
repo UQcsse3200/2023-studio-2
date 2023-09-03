@@ -65,6 +65,7 @@ public class EnemyFactory {
     }
 
     TextureAtlas atlas = new TextureAtlas(config.atlas);
+
     animator = new AnimationRenderComponent(atlas);
 
     // Create enemy with basic functionalities seen in components
@@ -97,6 +98,8 @@ public class EnemyFactory {
     animator.addAnimation("stand",0.3f,Animation.PlayMode.LOOP);
     animator.addAnimation("attack",0.05f,Animation.PlayMode.LOOP);
     animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("chaseLeft",0.3f,Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("attackLeft",0.05f,Animation.PlayMode.LOOP_REVERSED);
 
     // Adding in animation controllers into the new enemy
     enemy
@@ -145,9 +148,9 @@ public class EnemyFactory {
       // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 2f, 2f));
         } else {
-          aiTaskComponent.addTask(new ChaseTask(target, 5, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 5, 2f, 2f));
         }
       }
       // Destructible Targeting
@@ -164,9 +167,9 @@ public class EnemyFactory {
       // Player Targetting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 2f));
         } else {
-          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 2f));
         }
       }
       // Destructible Targetting

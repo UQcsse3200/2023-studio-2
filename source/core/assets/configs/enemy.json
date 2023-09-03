@@ -4,7 +4,7 @@
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
-    "atlas": "images/base_enemy.atlas"
+    "atlas": "images/enemy/base_enemy.atlas"
   },
 
   "meleeEnemyDTE": {
@@ -12,7 +12,7 @@
     "baseAttack": 5,
     "speed": 5,
     "behaviour": "DTE",
-    "atlas": "images/troll_enemy.atlas"
+    "atlas": "images/enemy/bull.atlas"
 
   },
 
@@ -37,7 +37,7 @@
     "baseAttack": 25,
     "speed": 8,
     "specialAttack": 40,
-    "atlas": "images/boss_enemy.atlas"
+    "atlas": "images/enemy/bull.atlas"
   },
 
   "rangeBossPTE": {

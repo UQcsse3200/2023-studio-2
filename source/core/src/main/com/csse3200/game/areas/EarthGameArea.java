@@ -38,8 +38,8 @@ public class EarthGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     //private DialogueBox dialogueBox;
     private static final int NUM_TREES = 7;
-    private static final int NUM_MELEE_PTE = 2;
-    private static final int NUM_MELEE_DTE = 2;
+    private static final int NUM_MELEE_PTE = 5;
+    private static final int NUM_MELEE_DTE = 5;
     private static final int NUM_RANGE_PTE = 2;
     private static final int NUM_POWERUPS = 3;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
@@ -55,8 +55,8 @@ public class EarthGameArea extends GameArea {
             "images/RightShip.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
-            "images/base_enemy.png",
-            "images/Troll.png",
+            "images/enemy/base_enemy.png",
+            "images/enemy/Troll.png",
             "images/rangeEnemy.png",
             "images/stone_wall.png",
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
@@ -76,14 +76,15 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
-            "images/playerSS_6.png"
+            "images/playerSS_6.png",
+        "images/enemy/Bull.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
             "images/ghost.atlas",
             "images/ghostKing.atlas",
-            "images/base_enemy.atlas",
-            "images/troll_enemy.atlas",
+            "images/enemy/base_enemy.atlas",
+            "images/enemy/troll_enemy.atlas",
             "images/rangeEnemy.atlas",
             "images/stone_wall.atlas",
             "images/dirt_wall.atlas",
@@ -94,7 +95,8 @@ public class EarthGameArea extends GameArea {
             "images/wrench.atlas",
             "images/open_gate.atlas",
             "images/closed_gate.atlas",
-            "images/botanist.atlas"
+            "images/botanist.atlas",
+        "images/enemy/bull.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};
@@ -137,7 +139,7 @@ public class EarthGameArea extends GameArea {
         spawnPlayer();
 
         spawnEnemies();
-        spawnBoss();
+        //spawnBoss();
         spawnAsteroids();
         spawnBotanist();
 
@@ -322,12 +324,12 @@ public class EarthGameArea extends GameArea {
             Entity meleeDTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(meleeDTE, randomPos2, true, true);
         }
-
-        for (int i = 0; i < NUM_RANGE_PTE; i++) {
-            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
-            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
-            spawnEntityAt(rangePTE, randomPos3, true, true);
-        }
+//
+//        for (int i = 0; i < NUM_RANGE_PTE; i++) {
+//            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
+//            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+//            spawnEntityAt(rangePTE, randomPos3, true, true);
+//        }
     }
 
     /**

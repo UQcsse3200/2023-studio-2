@@ -1,5 +1,5 @@
 baseEnemyMelee.png
-size: 1600, 200
+size: 6000, 200
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -283,5 +283,135 @@ attack
   orig: 100, 200
   offset: 0, 0
   index: 0
+attackLeft
+  rotate: false
+  xy: 4000, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 4100, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 4200, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 4300, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 4400, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 4500, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 4600, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 4700, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 4800, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 4900, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 5000, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 5100, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 5200, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 5300, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 5400, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 5500, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+standLeft
+  rotate: false
+  xy: 5400, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+standLeft
+  rotate: false
+  xy: 5500, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+
+
+
+
 
 

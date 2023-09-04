@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.upgradetree.UpgradeDisplay;
+import com.csse3200.game.upgradetree.UpgradeTree;
 
 /**
  * Factory to create structure entities - such as extractors or ships.
@@ -120,9 +121,9 @@ public class StructureFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent())
-                .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"));
+                .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"))
+                .addComponent(new UpgradeTree());
 
-        //For testing start at 0 so you can repair
         upgradeBench.addComponent(new InteractableComponent(entity -> {
             UpgradeDisplay minigame = UpgradeDisplay.MakeNewMinigame(upgradeBench);
             ServiceLocator.getRenderService().getStage().addActor(minigame);

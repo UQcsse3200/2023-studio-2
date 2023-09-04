@@ -1,5 +1,6 @@
 package com.csse3200.game.upgradetree;
 
+import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.services.ServiceLocator;
@@ -7,7 +8,7 @@ import com.csse3200.game.services.ServiceLocator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpgradeTree {
+public class UpgradeTree extends Component {
 
     private final List<WeaponType> unlockedWeapons;
     private int materials = 100; // todo: increase brain cells because i cant find a way to get ship extractor resources
@@ -28,6 +29,10 @@ public class UpgradeTree {
 
     public boolean isWeaponUnlocked(WeaponType weapon) {
         return unlockedWeapons.contains(weapon);
+    }
+
+    public int getMaterials() {
+        return materials;
     }
 
 }

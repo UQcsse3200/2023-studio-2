@@ -51,22 +51,44 @@ public class UpgradeDisplay extends Window {
         setPosition(stage.getWidth()/2 - getWidth()/2 * getScaleX(), stage.getHeight()/2 - getHeight()/2 * getScaleY());
 
         Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
-        TextureRegionDrawable slingshotImage = new TextureRegionDrawable(new Texture("images/sling_shot.png"));
-        TextureRegionDrawable wrenchImage = new TextureRegionDrawable(new Texture("images/sling_shot.png"));
+        TextureRegionDrawable image = new TextureRegionDrawable(new Texture("images/upgradetree/sword.png"));
 
         TextButton button = new TextButton("Slingshot", skin);
         TextButton button2 = new TextButton("Wrench", skin);
 
-        // Create tree branch tables
-        Table leftBranch = new Table();
-        Table rightBranch = new Table();
-        Table middleBranch = new Table();
+        String materials = String.format("Materials: %d", upgradeBench.getComponent(UpgradeTree.class).getMaterials());
+        Label materialsLabel = new Label(materials, skin);
+        materialsLabel.setPosition(1150, 600);
 
-        // Add it to the window
-        leftBranch.add(new Image(slingshotImage)).row();
-        leftBranch.add(button);
-        rightBranch.add(new Image(wrenchImage)).row();
-        rightBranch.add(button2);
+        // Create tree branch tables
+        Table table = new Table();
+        table.top().left();
+        table.setFillParent(true);
+
+        // Add stuff to the branch tables
+        Image img = new Image(image);
+
+        Label a = new Label("Left", skin);
+        Label c = new Label("Middle", skin);
+        Label b = new Label("Right", skin);
+
+        Label aa = new Label("BL", skin);
+        Label bb = new Label("BR", skin);
+
+        table.add(a).pad(10);
+        table.add(b).pad(10);
+        table.row();
+        table.add(aa).pad(10);
+        table.add(bb).pad(10);
+        table.row();
+        table.add(c).colspan(2);
+
+
+        table.padLeft(650);
+        table.padTop(160);
+        addActor(table);
+        addActor(materialsLabel);
+
 
         button.addListener(new ChangeListener() {
             @Override
@@ -82,8 +104,10 @@ public class UpgradeDisplay extends Window {
             }
         });
 
-        add(leftBranch);
-        add(rightBranch);
+
+
+
+        debugAll();
 
         // Override all normal user input
         inputOverrideComponent = new InputOverrideComponent();
@@ -91,7 +115,7 @@ public class UpgradeDisplay extends Window {
     }
 
     /**
-     * Call this method to exit the minigame without repairing the extractor.
+     * Call this method to exit the upgrade tree menu.
      */
     private void exitUpgradeTree() {
         remove();

@@ -68,8 +68,8 @@ public class EarthGameArea extends GameArea {
             "images/gate_open.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
-            "images/base_enemy.png",
-            "images/Troll.png",
+            "images/enemy/base_enemy.png",
+            "images/enemy/Troll.png",
             "images/rangeEnemy.png",
             "images/stone_wall.png",
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
@@ -90,6 +90,8 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
             "images/playerSS_6.png",
+            "images/enemy/Bull.png",
+            "images/playerSS_6.png",
             "images/upgradetree/exit.png",
             "images/upgradetree/background.png",
             "images/upgradetree/upgradebench.png"
@@ -98,8 +100,8 @@ public class EarthGameArea extends GameArea {
             "images/terrain_iso_grass.atlas",
             "images/ghost.atlas",
             "images/ghostKing.atlas",
-            "images/base_enemy.atlas",
-            "images/troll_enemy.atlas",
+            "images/enemy/base_enemy.atlas",
+            "images/enemy/troll_enemy.atlas",
             "images/rangeEnemy.atlas",
             "images/stone_wall.atlas",
             "images/dirt_wall.atlas",
@@ -112,7 +114,9 @@ public class EarthGameArea extends GameArea {
             "images/open_gate.atlas",
             "images/closed_gate.atlas",
             "images/botanist.atlas",
-            "images/sling_shot.atlas"
+            "images/sling_shot.atlas",
+            "images/botanist.atlas",
+            "images/enemy/bull.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};
@@ -157,7 +161,7 @@ public class EarthGameArea extends GameArea {
         spawnCompanion(playerEntity);
 
         spawnEnemies();
-        spawnBoss();
+        //spawnBoss();
         spawnAsteroids();
         spawnBotanist();
 
@@ -356,12 +360,12 @@ public class EarthGameArea extends GameArea {
             Entity meleeDTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(meleeDTE, randomPos2, true, true);
         }
-
-        for (int i = 0; i < NUM_RANGE_PTE; i++) {
-            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
-            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
-            spawnEntityAt(rangePTE, randomPos3, true, true);
-        }
+//
+//        for (int i = 0; i < NUM_RANGE_PTE; i++) {
+//            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
+//            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+//            spawnEntityAt(rangePTE, randomPos3, true, true);
+//        }
     }
 
     /**

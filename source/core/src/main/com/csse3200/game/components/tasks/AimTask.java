@@ -28,6 +28,7 @@ public class AimTask extends DefaultTask implements PriorityTask {
    *
    * @param waitTime How long in seconds to wait between firing a projectile.
    * @param target The target for
+   * @param range The range before entity stops chasing and starts shooting.
    */
   public AimTask(float waitTime, Entity target, float range) {
     this.waitTime = waitTime;
@@ -50,6 +51,7 @@ public class AimTask extends DefaultTask implements PriorityTask {
 
     waitTask = new WaitTask(waitTime);
     waitTask.create(owner);
+
     aimTask = new ShootTask(target);
     aimTask.create(owner);
 

@@ -139,7 +139,13 @@ public class TouchAttackComponent extends Component {
       //targetStats.hit(combatStats);
 
       // Valid damage dealt
-      entity.getEvents().trigger("enemyAttack");
+      char direction = getDirection(target.getPosition());
+      if(direction == '<'){
+        entity.getEvents().trigger("attackLeft");
+      }
+      if(direction == '>'||direction == '='){
+        entity.getEvents().trigger("enemyAttack");
+      }
       targetStats.hit(combatStats);
 
 
@@ -178,5 +184,14 @@ public class TouchAttackComponent extends Component {
   private void onCollisionEnd(Fixture me, Fixture other) {
     // Stop dealing tick damage
     leftContact = true;
+  }public char getDirection(Vector2 destination) {
+    if (entity.getPosition().x - destination.x < 0) {
+      return '>';
+    }
+    if (entity.getPosition().x - destination.x > 0) {
+      return '<';
+    }
+    return '=';
   }
+
 }

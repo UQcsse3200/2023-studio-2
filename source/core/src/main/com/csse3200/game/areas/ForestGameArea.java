@@ -57,7 +57,7 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestTextures = {
     "images/SpaceMiniGameBackground.png",
     "images/refinedExtractor2.png",
-    "images/broken_extractor.png",
+    "images/refinedBrokenExtractor.png",
     "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
     "images/box_boy_leaf.png",
     "images/RightShip.png",

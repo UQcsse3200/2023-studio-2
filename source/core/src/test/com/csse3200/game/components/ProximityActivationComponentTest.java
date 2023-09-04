@@ -9,8 +9,14 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Unit tests for the {@link ProximityActivationComponent} class.
+ */
 public class ProximityActivationComponentTest {
 
+    /**
+     * Test the update method of ProximityActivationComponent.
+     */
     @Test
     public void updateTest() {
 
@@ -37,6 +43,9 @@ public class ProximityActivationComponentTest {
         verify(exitedFunc, never()).call(targetEntityMock);
     }
 
+    /**
+     * Test the entityIsInProximity method of ProximityActivationComponent.
+     */
     @Test
     public void entityIsInProximityTest() {
         Entity entityMock = mock(Entity.class);
@@ -54,6 +63,5 @@ public class ProximityActivationComponentTest {
         component.setEntity(entityMock);
 
         assertTrue(component.entityIsInProximity(targetEntityMock));
-
     }
 }

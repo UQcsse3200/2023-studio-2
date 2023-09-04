@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.upgradetree.UpgradeDisplay;
 
 /**
  * Factory to create structure entities - such as extractors or ships.
@@ -50,10 +51,6 @@ public class StructureFactory {
      * @param tickSize the amount of the resource produced at each tick
      * @return a new extractor Entity
      */
-
-
-
-
     public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         Entity extractor = new Entity()
                 .addComponent(new DamageTextureComponent("images/extractor.png")
@@ -116,6 +113,27 @@ public class StructureFactory {
     }
 
     /**
+     * Creates an upgrade bench entity
+     */
+    public static Entity createUpgradeBench() {
+        Entity upgradeBench = new Entity()
+                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
+                .addComponent(new HitboxComponent())
+                .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"));
+
+        //For testing start at 0 so you can repair
+        upgradeBench.addComponent(new InteractableComponent(entity -> {
+            UpgradeDisplay minigame = UpgradeDisplay.MakeNewMinigame(upgradeBench);
+            ServiceLocator.getRenderService().getStage().addActor(minigame);
+        }, 0.5f));
+
+        upgradeBench.setScale(0.5f, 0.5f);
+
+        return upgradeBench;
+    }
+    /**
+
      * Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map
      *
      * @param targets the targets the entities that spawn will target

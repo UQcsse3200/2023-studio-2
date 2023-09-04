@@ -6,6 +6,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 
 import java.util.*;
 
@@ -16,9 +17,9 @@ public class WeaponControllerComponent extends Component {
     /* Weapon Type to be controlled*/
     WeaponType weaponType;
     /* Variable to hold the remaining life (in game ticks) of a weapon) */
-    int remainigLife;
+    int remainingDuration;
     /* Variable to hold the speed at which the projectile moves */
-    int speed;
+    float speed;
     /* The rotational speed of the weapon*/
     int rotationSpeed;
     /* The rotation of the weapon*/
@@ -29,10 +30,14 @@ public class WeaponControllerComponent extends Component {
     /**
      * Class to store variables of a spawned weapon
      */
-    public WeaponControllerComponent(WeaponType weaponType, float currentRotation,
-                                     int remainigLife,int speed, int rotationSpeed, int imageRotationOffset) {
+    public WeaponControllerComponent(WeaponType weaponType,
+                                     float currentRotation,
+                                     float speed,
+                                     int remainingDuration,
+                                     int rotationSpeed,
+                                     int imageRotationOffset) {
         this.weaponType = weaponType;
-        this.remainigLife = remainigLife;
+        this.remainingDuration = remainingDuration;
         this.speed = speed;
         this.rotationSpeed = rotationSpeed;
         this.currentRotation = currentRotation;
@@ -44,35 +49,63 @@ public class WeaponControllerComponent extends Component {
      */
     @Override
     public void update() {
+        //switch statement to define weapon movement based on type (a projectile
+        Vector2 movement = switch (this.weaponType) {
+            case SLING_SHOT -> weapon_target_update();
+            case ELEC_WRENCH -> weapon_1_update();
+            case THROW_ELEC_WRENCH -> weapon_2_update();
+        };
+
+
         //Reference to current position of the projectile
         Vector2 position = entity.getPosition();
-        float xMovement = 0;
-        float yMovement = 0;
-        double radians;
-
-        //switch statement to define weapon movement based on type (a projectile
-        switch (this.weaponType) {
-            case ELEC_WRENCH:
-                this.currentRotation -= this.rotationSpeed;
-                radians = Math.toRadians(currentRotation);
-                xMovement = (float) Math.cos(radians) * 0.015f * this.speed;
-                yMovement = (float) Math.sin(radians) * 0.015f * this.speed;
-                break;
-            case THROW_ELEC_WRENCH:
-                radians = Math.toRadians(currentRotation);
-                xMovement = (float) Math.cos(radians) * 0.015f * this.speed;
-                yMovement = (float) Math.sin(radians) * 0.015f * this.speed;
-        }
-
         //Update position and rotation of projectile
+        entity.setPosition(new Vector2(position.x + movement.x, position.y + movement.y));
         entity.setRotation(this.currentRotation - this.imageRotationOffset);
-        entity.setPosition(new Vector2(position.x + xMovement, position.y + yMovement));
+        if (--this.remainingDuration == 0) {this.despawn();}
+    }
 
-        //Function to despawn Projectile after left is zero
-        //Todo this needs to be changed to actually work
-        if (--this.remainigLife == 0) {
-            Gdx.app.postRunnable(entity::dispose);
-        }
+    private void despawn() {
+        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
+        animator.stopAnimation();
+        Gdx.app.postRunnable(entity::dispose);
+    }
+
+    //TODO fix this forbidden code
+    private Vector2 weapon_x_update() {
+        //Edit this.currentRotation and return movement vector
+        Vector2 movement = new Vector2(0,0);
+        //double radians = Math.toRadians(currentRotation);
+        return movement;
+    }
+
+    private Vector2 weapon_1_update() {
+        Vector2 movement = new Vector2(0,0);
+        this.currentRotation -= this.rotationSpeed;
+        double radians = Math.toRadians(currentRotation);
+        movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
+        movement.y = (float) Math.sin(radians) * 0.015f * this.speed;
+        return movement;
+    }
+
+    private Vector2 weapon_2_update() {
+        Vector2 movement = new Vector2(0,0);
+        double radians = Math.toRadians(currentRotation);
+        movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
+        movement.y = (float) Math.sin(radians) * 0.015f * this.speed;
+        return movement;
+    }
+
+    private Vector2 weapon_target_update() {
+        Vector2 movement = new Vector2(0,0);
+        WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
+        Vector2 target_pos = weaponTargetComponent.get_pos_of_target();
+        Vector2 weapon_pos = entity.getPosition();
+
+        double radians = Math.atan2(target_pos.y - weapon_pos.y, target_pos.x - weapon_pos.x);
+        movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
+        movement.y = (float) Math.sin(radians) * 0.015f * this.speed;
+        return movement;
     }
 }
 

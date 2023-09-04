@@ -7,8 +7,6 @@ import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.NPCConfigs;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -36,7 +34,7 @@ public class NPCFactory {
   public static DialogueBox dialogueBox;
 
   /** Configuration class for NPC properties. */
-  private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+  //private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
   /** Asset manager to load and manage assets. */
   public AssetManager assetManager;
@@ -109,7 +107,7 @@ public class NPCFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE));
-       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+       //FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
     botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     botanist.getComponent(TextureRenderComponent.class).scaleEntity();

@@ -99,30 +99,29 @@ public class TouchAttackComponent extends Component {
       // Doesn't match our target layer, ignore
       return;
     }
-    // Has come into contact
 
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     Entity source = ((BodyUserData) me.getBody().getUserData()).entity;
     DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+    CombatStatsComponent sourceStats = source.getComponent(CombatStatsComponent.class);
     leftContact = false;
 
     // Targeting STRUCTURE entity type
     if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-      // Damage Structure while still in contact
       triggerTimer = new Timer();
       // Schedule the trigger every 2 seconds
       triggerTimer.scheduleAtFixedRate(new TimerTask() {
         @Override
         public void run() {
           if (!leftContact) {
-            hitOnce(target, targetStats);
+            hitOnce(target, source, sourceStats, targetStats);
           }
         }
       }, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
     } else {
       //hit once, push away
-      hitOnce(target, targetStats);
+      hitOnce(target, source, sourceStats, targetStats);
     }
   }
 
@@ -131,22 +130,24 @@ public class TouchAttackComponent extends Component {
    * @param target The Targeted Entity, usually the Player Entity
    * @param targetStats The Targeted Entity's stats
    */
-  private void hitOnce(Entity target, CombatStatsComponent targetStats){
-    if (targetStats != null) {
+  private void hitOnce(Entity target, Entity source, CombatStatsComponent sourceStats, CombatStatsComponent targetStats){
+    if (targetStats != null && sourceStats != null) {
 //      if(dialogue != null) {
 //        dialogue.showdialogue("You hit a Ghost");
 //      }
       //targetStats.hit(combatStats);
 
       // Valid damage dealt
-      char direction = getDirection(target.getPosition());
-      if(direction == '<'){
-        entity.getEvents().trigger("attackLeft");
+      if (source.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.ENEMY_MELEE ||
+              source.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.ENEMY_RANGE) {
+        char attackDirection = getDirection(target.getPosition());
+        if(attackDirection == '<'){
+          entity.getEvents().trigger("attackLeft");
+        }
+        if(attackDirection == '>'||attackDirection == '='){
+          entity.getEvents().trigger("enemyAttack");
+        }
       }
-      if(direction == '>'||direction == '='){
-        entity.getEvents().trigger("enemyAttack");
-      }
-      targetStats.hit(combatStats);
 
       // Gives a delay every time there is a collision for the
       // attack animation to complete
@@ -157,15 +158,24 @@ public class TouchAttackComponent extends Component {
 
         }
       }, 2000);
-    }
 
-    // Apply knockback
-    PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
-    if (physicsComponent != null && knockbackForce > 0f) {
-      Body targetBody = physicsComponent.getBody();
-      Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
-      Vector2 impulse = direction.setLength(knockbackForce);
-      targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
+      targetStats.hit(combatStats);
+
+//      if (entity.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.WEAPON) {
+//        System.out.println("Hit");
+//        return;
+//      }
+
+      // Apply knockback
+      PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
+      if (physicsComponent != null && knockbackForce > 0f) {
+        Body targetBody = physicsComponent.getBody();
+        Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
+        Vector2 impulse = direction.setLength(knockbackForce);
+        targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
+      }
+      System.out.print(source.getComponent(CombatStatsComponent.class).getHealth());
+      System.out.println(target.getComponent(CombatStatsComponent.class).getHealth());
     }
   }
 
@@ -177,7 +187,9 @@ public class TouchAttackComponent extends Component {
   private void onCollisionEnd(Fixture me, Fixture other) {
     // Stop dealing tick damage
     leftContact = true;
-  }public char getDirection(Vector2 destination) {
+  }
+
+  public char getDirection(Vector2 destination) {
     if (entity.getPosition().x - destination.x < 0) {
       return '>';
     }

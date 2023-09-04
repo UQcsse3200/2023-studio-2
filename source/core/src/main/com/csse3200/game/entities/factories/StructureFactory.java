@@ -37,7 +37,7 @@ public class StructureFactory {
     public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         Entity extractor = new Entity()
                 .addComponent(new DamageTextureComponent("images/refinedExtractor2.png")
-                        .addTexture(0, "images/broken_extractor.png"))
+                        .addTexture(0, "images/refinedBrokenExtractor.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new CombatStatsComponent(health, 0, 0, false))

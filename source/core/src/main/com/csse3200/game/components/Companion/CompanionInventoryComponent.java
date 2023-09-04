@@ -46,7 +46,7 @@ public class CompanionInventoryComponent extends Component {
      * @param gold The new gold amount.
      */
     public void setGold(int gold) {
-        this.gold = Math.max(gold, 0);
+        this.gold = Math.max(gold, 100);
         logger.debug("Setting gold to {}", this.gold);
     }
 

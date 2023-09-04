@@ -53,16 +53,18 @@ public class CompanionFactory {
                         .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
                         .addComponent(new CompanionInventoryComponent(stats.gold))
                         .addComponent(inputComponent)
-                        .addComponent(new FollowComponent(playerEntity, 4.f))
+                        .addComponent(new FollowComponent(playerEntity, 3.f))
                         .addComponent(new CompanionInteractionControllerComponent());
 
-        int health = playerEntity.getComponent(CombatStatsComponent.class).getHealth();
+        int health = companion.getComponent(CombatStatsComponent.class).getHealth();
         CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(true, 0, health);
+        //CompanionInventoryComponent companionInventoryComponent = new CompanionInventoryComponent(10);
         companion.addComponent(companionStatsDisplay);
-
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
         companion.getComponent(TextureRenderComponent.class).scaleEntity();
+        companion.scaleHeight(1.5f);
+        companion.scaleWidth(1.5f);
         companion.getComponent(CompanionActions.class).setBulletTexturePath(stats.bulletTexturePath);
         return companion;
     }

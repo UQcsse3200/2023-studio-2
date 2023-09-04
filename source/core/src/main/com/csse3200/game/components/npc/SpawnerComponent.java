@@ -71,4 +71,66 @@ public class SpawnerComponent extends Component {
                 this.lastTime += this.tickRate;
         }
     }
+
+    /*        long currentTime = timer.getTime();
+
+        // to know when to start new wave
+        if (spawnedAmount < count && currentTime - lastTime >= tickRate) {
+            // Spawn enemies for the current wave
+            switch (currentWave) {
+                case 0:
+                    spawnMeleeEnemies(10);
+                    break;
+                case 1:
+                    spawnMeleeEnemies(10);
+                    spawnRangedEnemies(5);
+                    break;
+                case 2:
+                    spawnMeleeEnemies(10);
+                    spawnRangedEnemies(10);
+                    spawnBoss();
+                    break;
+            }
+
+            //  last wave start time upDate and increasing the wave counter
+            lastTime = currentTime;
+            currentWave++;
+
+            //  wave delay
+            if (currentWave < 3) {
+                lastTime += spawnDelay; // Convert seconds to milliseconds
+            }
+        }
+    }
+
+    private void spawnMeleeEnemies(int count) {
+        for (int i = 0; i < count && spawnedAmount < this.count; i++) {
+            spawnEnemy(EnemyType.Melee);
+        }
+    }
+
+    private void spawnRangedEnemies(int count) {
+        for (int i = 0; i < count && spawnedAmount < this.count; i++) {
+            spawnEnemy(EnemyType.Ranged);
+        }
+    }
+
+    private void spawnBoss() {
+        switch (currentWave) {
+            case 2:
+                spawnEnemy(EnemyType.BossMelee);
+                break;
+            case 3:
+                spawnEnemy(EnemyType.BossRanged);
+                break;
+        }
+    }
+
+    private void spawnEnemy(EnemyType enemyType) {
+        Vector2 worldPos = entity.getCenterPosition();
+        Entity enemy = EnemyFactory.createEnemy(targets, enemyType, behaviour);
+        ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
+        spawnedAmount++;
+    }
+}*/
 }

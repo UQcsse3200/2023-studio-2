@@ -138,12 +138,15 @@ public class TouchAttackComponent extends Component {
       //targetStats.hit(combatStats);
 
       // Valid damage dealt
-      char attackDirection = getDirection(target.getPosition());
-      if(attackDirection == '<'){
-        entity.getEvents().trigger("attackLeft");
-      }
-      if(attackDirection == '>'||attackDirection == '='){
-        entity.getEvents().trigger("enemyAttack");
+      if (source.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.ENEMY_MELEE ||
+              source.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.ENEMY_RANGE) {
+        char attackDirection = getDirection(target.getPosition());
+        if(attackDirection == '<'){
+          entity.getEvents().trigger("attackLeft");
+        }
+        if(attackDirection == '>'||attackDirection == '='){
+          entity.getEvents().trigger("enemyAttack");
+        }
       }
 
       // Gives a delay every time there is a collision for the
@@ -171,7 +174,7 @@ public class TouchAttackComponent extends Component {
         Vector2 impulse = direction.setLength(knockbackForce);
         targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
       }
-      System.out.println(source.getComponent(CombatStatsComponent.class).getHealth());
+      System.out.print(source.getComponent(CombatStatsComponent.class).getHealth());
       System.out.println(target.getComponent(CombatStatsComponent.class).getHealth());
     }
   }

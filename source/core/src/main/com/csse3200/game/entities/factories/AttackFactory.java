@@ -61,11 +61,11 @@ public class AttackFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WEAPON))
                     .addComponent(new TouchAttackComponent((short)
-                            (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.NPC)))
+                            (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE)))
                     .addComponent(weaponController);
 
-    AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset(config.textureAtlas, TextureAtlas.class));
+    TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
+    AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
 
     animator.addAnimation("attack", 0.1f, Animation.PlayMode.LOOP_PINGPONG);
 

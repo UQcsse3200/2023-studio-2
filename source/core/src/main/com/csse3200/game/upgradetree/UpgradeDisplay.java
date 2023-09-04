@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -25,16 +26,23 @@ import com.csse3200.game.ui.UIComponent;
 
 import java.util.HashMap;
 
-// todo: make this a somewhat functional upgrade tree, lol.
+// todo: refactor and reduce hardcode
 /**
 * A GUI component for the UpgradeTree
 */
 public class UpgradeDisplay extends Window {
+    private static final float WINDOW_WIDTH_SCALE = 0.8f;
+    private static final float WINDOW_HEIGHT_SCALE = 0.65f;
+    private static final int MATERIAL_LABEL_X = 50;
+    private static final int MATERIAL_LABEL_Y = 650;
+    private static final int EXIT_BUTTON_X = 1450;
+    private static final int EXIT_BUTTON_Y = 620;
     private final InputOverrideComponent inputOverrideComponent;
     private final Entity upgradeBench;
 
     public static UpgradeDisplay MakeNewMinigame(Entity upgradeBench) {
-        Texture background = ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
+        Texture background =
+                ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new UpgradeDisplay(background, upgradeBench);
     }
@@ -44,74 +52,84 @@ public class UpgradeDisplay extends Window {
 
         this.upgradeBench = upgradeBench;
 
-        //Here setup window to be centered on the stage with 80% width and 65% height.
-        Stage stage = ServiceLocator.getRenderService().getStage();
-        setWidth((float) (stage.getWidth()*0.8));
-        setHeight((float) (stage.getHeight()*0.65));
-        setPosition(stage.getWidth()/2 - getWidth()/2 * getScaleX(), stage.getHeight()/2 - getHeight()/2 * getScaleY());
-
+        setupWindowDimensions();
         Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
-        TextureRegionDrawable image = new TextureRegionDrawable(new Texture("images/upgradetree/sword.png"));
 
-        TextButton button = new TextButton("Slingshot", skin);
-        TextButton button2 = new TextButton("Wrench", skin);
+        Label materialsLabel = createMaterialsLabel(skin);
+        Button exitButton = createExitButton();
+        Group group = createUpgradeButtons();
 
-        String materials = String.format("Materials: %d", upgradeBench.getComponent(UpgradeTree.class).getMaterials());
-        Label materialsLabel = new Label(materials, skin);
-        materialsLabel.setPosition(1150, 600);
-
-        // Create tree branch tables
-        Table table = new Table();
-        table.top().left();
-        table.setFillParent(true);
-
-        // Add stuff to the branch tables
-        Image img = new Image(image);
-
-        Label a = new Label("Left", skin);
-        Label c = new Label("Middle", skin);
-        Label b = new Label("Right", skin);
-
-        Label aa = new Label("BL", skin);
-        Label bb = new Label("BR", skin);
-
-        table.add(a).pad(10);
-        table.add(b).pad(10);
-        table.row();
-        table.add(aa).pad(10);
-        table.add(bb).pad(10);
-        table.row();
-        table.add(c).colspan(2);
-
-
-        table.padLeft(650);
-        table.padTop(160);
-        addActor(table);
+        addActor(group);
         addActor(materialsLabel);
-
-
-        button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                exitUpgradeTree();
-            }
-        });
-
-        button2.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                exitUpgradeTree();
-            }
-        });
-
-
-
-
-        debugAll();
+        addActor(exitButton);
 
         // Override all normal user input
         inputOverrideComponent = new InputOverrideComponent();
         ServiceLocator.getInputService().register(inputOverrideComponent);
+    }
+
+    private void setupWindowDimensions() {
+        Stage stage = ServiceLocator.getRenderService().getStage();
+        setWidth(stage.getWidth() * WINDOW_WIDTH_SCALE);
+        setHeight(stage.getHeight() * WINDOW_HEIGHT_SCALE);
+        setPosition(
+                stage.getWidth() / 2 - getWidth() / 2 * getScaleX(),
+                stage.getHeight() / 2 - getHeight() / 2 * getScaleY());
+    }
+
+    private Button createExitButton() {
+        TextureRegionDrawable exitTexture = createTextureRegionDrawable("images/upgradetree/exit.png", 100f);
+        Button exitButton = new Button(exitTexture);
+        exitButton.setPosition(EXIT_BUTTON_X, EXIT_BUTTON_Y);
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                exitUpgradeTree();
+            }
+        });
+        return exitButton;
+    }
+
+    private Label createMaterialsLabel(Skin skin) {
+        String materials = String.format("Materials: %d", upgradeBench.getComponent(UpgradeTree.class).getMaterials());
+        Label materialsLabel = new Label(materials, skin);
+        materialsLabel.setPosition(MATERIAL_LABEL_X, MATERIAL_LABEL_Y);
+        return materialsLabel;
+    }
+
+    private Group createUpgradeButtons() {
+        Group group = new Group();
+
+        ImageButton meleeOne = createImageButton("images/upgradetree/stick.png", 64f, 534, 512);
+        ImageButton rangedOne = createImageButton("images/wrench.png", 64f, 534 + 204, 512);
+        ImageButton meleeTwo = createImageButton("images/upgradetree/sword.png", 64f, 534, 512 - 154);
+        ImageButton rangedTwo = createImageButton("images/wrench.png", 64f, 534 + 204, 512 - 154);
+        ImageButton tierThree = createImageButton("images/upgradetree/sword.png", 64f, 534 + 102, 512 - 385);
+        ImageButton hammerOne = createImageButton("images/upgradetree/hammer1.png", 64f, 534 + 2 * 204, 512);
+        ImageButton hammerTwo = createImageButton("images/upgradetree/hammer2.png", 64f, 534 + 2 * 204, 512 - 154);
+
+        group.addActor(meleeOne);
+        group.addActor(meleeTwo);
+        group.addActor(rangedOne);
+        group.addActor(rangedTwo);
+        group.addActor(tierThree);
+        group.addActor(hammerOne);
+        group.addActor(hammerTwo);
+
+        return group;
+    }
+
+    private ImageButton createImageButton(String imagePath, float size, float posX, float posY) {
+        TextureRegionDrawable drawable = createTextureRegionDrawable(imagePath, size);
+        ImageButton button = new ImageButton(drawable);
+        button.setPosition(posX, posY);
+        return button;
+    }
+
+    private TextureRegionDrawable createTextureRegionDrawable(String path, float size) {
+        TextureRegionDrawable drawable = new TextureRegionDrawable(new Texture(path));
+        drawable.setMinSize(size, size);
+        return drawable;
     }
 
     /**

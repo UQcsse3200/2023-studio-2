@@ -158,7 +158,7 @@ public class EarthGameArea extends GameArea {
 
         spawnShip();
         Entity playerEntity = spawnPlayer();
-        spawnCompanion(playerEntity);
+        //spawnCompanion(playerEntity);
 
         spawnEnemies();
         //spawnBoss();

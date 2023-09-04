@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Timer;
 
 
-/**
+/**d
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
  */

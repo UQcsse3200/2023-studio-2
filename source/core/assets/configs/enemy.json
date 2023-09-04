@@ -3,7 +3,7 @@
     "health": 20,
     "baseAttack": 10,
     "speed": 5,
-    "behaviour": "PTE",
+    "specialAttack": 0,
     "atlas": "images/enemy/base_enemy.atlas"
   },
 
@@ -11,7 +11,7 @@
     "health": 50,
     "baseAttack": 5,
     "speed": 5,
-    "behaviour": "DTE",
+    "specialAttack": 0,
     "atlas": "images/enemy/bull.atlas"
 
   },
@@ -20,7 +20,7 @@
     "health": 40,
     "baseAttack": 10,
     "speed": 5,
-    "behaviour": "PTE",
+    "specialAttack": 0,
     "atlas": "images/rangeEnemy.atlas"
   },
 
@@ -28,7 +28,7 @@
     "health": 40,
     "baseAttack": 10,
     "speed": 5,
-    "behaviour": "DTE",
+    "specialAttack": 0,
     "atlas": "images/rangeEnemy.atlas"
   },
 

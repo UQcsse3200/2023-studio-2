@@ -105,6 +105,7 @@ public class TouchAttackComponent extends Component {
     Entity source = ((BodyUserData) me.getBody().getUserData()).entity;
     DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+    CombatStatsComponent sourceStats = source.getComponent(CombatStatsComponent.class);
     leftContact = false;
     
     // Targeting STRUCTURE entity type
@@ -116,13 +117,13 @@ public class TouchAttackComponent extends Component {
         @Override
         public void run() {
           if (!leftContact) {
-            hitOnce(target, targetStats);
+            hitOnce(target, source, sourceStats, targetStats);
           }
         }
       }, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
     } else {
       //hit once, push away
-      hitOnce(target, targetStats);
+      hitOnce(target, source, sourceStats, targetStats);
     }
   }
 
@@ -131,7 +132,7 @@ public class TouchAttackComponent extends Component {
    * @param target The Targeted Entity, usually the Player Entity
    * @param targetStats The Targeted Entity's stats
    */
-  private void hitOnce(Entity target, CombatStatsComponent targetStats){
+  private void hitOnce(Entity target, Entity source, CombatStatsComponent sourceStats, CombatStatsComponent targetStats){
     if (targetStats != null) {
 //      if(dialogue != null) {
 //        dialogue.showdialogue("You hit a Ghost");
@@ -174,6 +175,8 @@ public class TouchAttackComponent extends Component {
       Vector2 impulse = direction.setLength(knockbackForce);
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
+    System.out.println(source.getComponent(CombatStatsComponent.class).getHealth());
+    System.out.println(target.getComponent(CombatStatsComponent.class).getHealth());
   }
 
   /**

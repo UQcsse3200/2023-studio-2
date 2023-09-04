@@ -44,6 +44,7 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_MELEE_DTE = 2;
     private static final int NUM_RANGE_PTE = 2;
     private static final int NUM_POWERUPS = 3;
+    private static final int NUM_GoldMines = 4;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
     /*private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);*/
@@ -85,7 +86,8 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
-            "images/playerSS_6.png"
+            "images/playerSS_6.png",
+            "images/goldmine.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -141,7 +143,7 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
-
+        spawnGoldMines();
         spawnShip();
         Entity playerEntity = spawnPlayer();
         spawnCompanion(playerEntity);
@@ -275,6 +277,17 @@ public class EarthGameArea extends GameArea {
                 ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
     }
+    private void spawnGoldMines(){
+        GridPoint2 minPos = new GridPoint2(1,1);
+        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+        for(int i=0; i<NUM_GoldMines;i++)
+        {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity GoldMine = GoldMineFactory.createGoldMine();
+            spawnEntityAt(GoldMine, randomPos, true,false);
+        }
+    }
 
     private void spawnTrees() {
         GridPoint2 minPos = new GridPoint2(0, 0);
@@ -299,7 +312,6 @@ public class EarthGameArea extends GameArea {
         PhysicsComponent playerPhysics = playerEntity.getComponent(PhysicsComponent.class);
         //calculate the player position
         Vector2 playerPosition = playerPhysics.getBody().getPosition();
-
         spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
         targetables.add(newCompanion);
         return newCompanion;

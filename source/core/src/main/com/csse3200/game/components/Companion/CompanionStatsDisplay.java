@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.math.Matrix4;
@@ -53,6 +54,7 @@ public class CompanionStatsDisplay extends UIComponent {
         super.create();
         addActors();
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
+        //entity.getEvents().addListener("updateGold", this::updateCompanionGoldUI);
     }
 
     /**
@@ -70,9 +72,12 @@ public class CompanionStatsDisplay extends UIComponent {
 
         // Health text
         int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+        //int gold = entity.getComponent(InventoryComponent.class).getGold();
         CharSequence healthText = String.format("Companion Health: %d", health);
         messageLabel = new Label(healthText, skin, "large");
-
+       /* CharSequence goldText = String.format("Companion Gold: %d", gold);
+        messageLabel = new Label(goldText, skin, "large");
+*/
         table.add(messageLabel);
         stage.addActor(table);
     }
@@ -121,6 +126,10 @@ public class CompanionStatsDisplay extends UIComponent {
         CharSequence text = String.format("Companion Health: %d", health);
         messageLabel.setText(text);
     }
+    /*public void updateCompanionGoldUI(int gold) {
+        CharSequence text = String.format("Companion Gold: %d", gold);
+        messageLabel.setText(text);
+    }*/
 
     @Override
     public void dispose() {

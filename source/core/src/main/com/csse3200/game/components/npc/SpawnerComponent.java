@@ -56,14 +56,22 @@ public class SpawnerComponent extends Component {
         super.create();
     }
 
-    // red ghosts
+    /**
+     * Spawns a specified number of melee enemies.
+     *
+     * @param count The number of melee enemies to spawn.
+     */
     private void spawnMeleeEnemies(int count) {
         for (int i = 0; i < count; i++) {
             spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
         }
     }
 
-    //trolls
+    /**
+     * Spawns a specified number of ranged enemies.
+     *
+     * @param count The number of ranged enemies to spawn.
+     */
     private void spawnRangedEnemies(int count) {
         for (int i = 0; i < count; i++) {
             spawnEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
@@ -80,6 +88,13 @@ public class SpawnerComponent extends Component {
 //                break;
 //        }
 //    }
+    
+    /**
+     * Spawns an enemy with the specified type and behavior.
+     *
+     * @param enemyType  The type of enemy to spawn.
+     * @param behaviour  The behavior of the enemy.
+     */
 
     private void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {
         Vector2 worldPos = entity.getCenterPosition();
@@ -101,24 +116,10 @@ public class SpawnerComponent extends Component {
         }
     }*/
 
-        /*if(currentTime >= 0 && currentTime <= 20000) {
-            spawnMeleeEnemies(10);
-        } else if(currentTime > 20000 && currentTime <= 30000) {
-            spawnMeleeEnemies(10);
-            spawnRangedEnemies(5);
-        } else if(currentTime > 40000 && currentTime <= 50000) {
-            spawnMeleeEnemies(10);
-            spawnRangedEnemies(10);
-            spawnBoss();
-        }*/
-
-        // to know when to start new wave
-        // Spawn enemies for the current wave
-        //long timeSinceLastWave = currentTime - lastTime;
-
-        // Check if the time since the last wave started is greater than or equal to the wave delay
+       
+        
         if (this.timer.getTimeSince(this.lastTime) >= waveDelay) {
-            // Reset the wave-specific timers
+            
 
             switch (currentWave) {
                 case 0:
@@ -133,17 +134,12 @@ public class SpawnerComponent extends Component {
                     spawnRangedEnemies(10);
                     break;
             }
-            // lastTime = currentTime;
+            
             currentWave++;
             this.lastTime += waveDelay;
-            //  last wave start time upDate and increasing the wave counter
-            //lastTime = currentTime;
-            //currentWave++;
+            
 
-            //  wave delay
-            //if (currentWave < 3) {
-            //    lastTime += waveDelay; // Convert seconds to milliseconds
-            //}
+          
         }
     }
 }

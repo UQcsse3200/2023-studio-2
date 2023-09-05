@@ -28,7 +28,9 @@ public class ProductionComponent extends Component {
     // The resource type this produces
     Resource produces;
 
-    boolean alive;
+    // Does not effect production, that scales by raw health, this is downstream of that
+    // used to notify state observer of extractor count changes
+    boolean damaged;
 
     /**
      * ProductionComponent allows an entity to produce resources on some real time interval and send them to
@@ -44,7 +46,7 @@ public class ProductionComponent extends Component {
         this.tickRate = tickRate;
         this.tickSize = tickSize;
         this.lastTime = timer.getTime();
-        this.alive = false;
+        this.damaged = true;
     }
 
     @Override
@@ -69,7 +71,19 @@ public class ProductionComponent extends Component {
 
     @Override
     public void update() {
+        // Grab useful services and components:
         GameStateObserver gameStateObserver = ServiceLocator.getGameStateObserverService();
+        CombatStatsComponent combatStats = this.getEntity().getComponent(CombatStatsComponent.class);
+
+        // If our health JUST crossed a threshold, we notify the observer
+        if (combatStats != null && combatStats.getHealth() <= 0 && !this.damaged) {
+            this.damaged = true;
+            gameStateObserver.trigger("extractorsAdd", this.produces.toString(), -1);
+        } else if (combatStats != null && combatStats.getHealth() > 0 && this.damaged) {
+            gameStateObserver.trigger("extractorsAdd", this.produces.toString(), 1);
+            this.damaged = false;
+        }
+
         super.update();
         while (this.timer.getTime() - this.lastTime >= this.tickRate ) {
             this.getEntity().getEvents().trigger("produceResource", this.produces, this.tickSize);

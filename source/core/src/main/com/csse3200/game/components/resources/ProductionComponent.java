@@ -2,6 +2,8 @@ package com.csse3200.game.components.resources;
 
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.services.GameState;
+import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -26,6 +28,8 @@ public class ProductionComponent extends Component {
     // The resource type this produces
     Resource produces;
 
+    boolean alive;
+
     /**
      * ProductionComponent allows an entity to produce resources on some real time interval and send them to
      * the gameState and event handler.
@@ -40,6 +44,7 @@ public class ProductionComponent extends Component {
         this.tickRate = tickRate;
         this.tickSize = tickSize;
         this.lastTime = timer.getTime();
+        this.alive = false;
     }
 
     @Override
@@ -64,11 +69,12 @@ public class ProductionComponent extends Component {
 
     @Override
     public void update() {
+        GameStateObserver gameStateObserver = ServiceLocator.getGameStateObserverService();
         super.update();
         while (this.timer.getTime() - this.lastTime >= this.tickRate ) {
             this.getEntity().getEvents().trigger("produceResource", this.produces, this.tickSize);
             int produced = (int) ((long) this.tickSize * this.getProductionModifier());
-            ServiceLocator.getGameStateObserverService().trigger("resourceAdd", this.produces.toString(), produced);
+            gameStateObserver.trigger("resourceAdd", this.produces.toString(), produced);
             this.lastTime += this.tickRate;
         }
     }

@@ -77,6 +77,8 @@ public class GdxGame extends Game {
         return new SpaceMapScreen(this);
       case EXTRACTOR_GAME:
         return new ExtractorMiniGameScreen(this);
+      case PLAYER_DEATH:
+        return new PlayerDeathScreen(this);
       default:
         return null;
     }
@@ -84,7 +86,7 @@ public class GdxGame extends Game {
 
   public enum ScreenType {
 
-    MAIN_MENU, MAIN_GAME, SETTINGS, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME, GAME_STORY
+    MAIN_MENU, MAIN_GAME, SETTINGS, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME, GAME_STORY, PLAYER_DEATH
 
   }
 

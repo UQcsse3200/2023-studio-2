@@ -11,6 +11,10 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
 public class ShipFactory {
     //private static final ShipConfig stats =
      //       FileLoader.readClass(ShipConfig.class, "configs/ship.json");
@@ -37,6 +41,13 @@ public class ShipFactory {
         PhysicsUtils.setScaledCollider(ship, 0.6f, 0.3f);
         ship.getComponent(ColliderComponent.class).setDensity(1.5f);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();
+
+        //Edited by Foref, changes physics to reflect space environment
+        //With fixed rotation off, ship will spin without additional customization of shipactions
+        //ship.getComponent(PhysicsComponent.class).getBody().setFixedRotation(false);
+        //Will disable fixed rotation once movement in a straight line is solved
+        ship.getComponent(PhysicsComponent.class).getBody().setGravityScale(0);
+
         return ship;
     }
 

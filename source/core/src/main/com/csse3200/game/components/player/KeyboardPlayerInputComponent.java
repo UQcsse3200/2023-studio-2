@@ -369,9 +369,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     entity.getEvents().trigger("walk", walkDirection);
     entity.getEvents().trigger("dodged");
 
-    System.out.println(Vector2Utils.DODGE_RIGHT);
-    System.out.println(walkDirection);
-
     if (walkDirection.epsilonEquals(Vector2Utils.DODGE_UP)) {
       entity.getEvents().trigger("dodgeUp");
     }

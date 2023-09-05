@@ -1,54 +1,91 @@
 package com.csse3200.game.components.npc;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
-/**
- * This class represents a component responsible for controlling the animation of a botanist NPC entity.
- * It listens to relevant events and triggers animations accordingly.
- */
 public class BotanistAnimationController extends Component {
+    private final AssetManager assetManager;
     private AnimationRenderComponent animator;
-    private String direction = "right";
+    private TextureAtlas atlas;
 
-    /**
-     * Called when the component is created. Initializes the animator and sets up event listeners.
-     */
+    private Animation<TextureAtlas.AtlasRegion> leftAnimation;
+    private Animation<TextureAtlas.AtlasRegion> rightAnimation;
+    private Animation<TextureAtlas.AtlasRegion> bottomAnimation;
+    private Animation<TextureAtlas.AtlasRegion> upAnimation;
+
+    private float animationTimer = 0f;
+    private float animationDuration = 10f; // Adjust this to control animation speed.
+
+    public BotanistAnimationController() {
+        this.assetManager = new AssetManager();
+    }
+
     @Override
     public void create() {
         super.create();
-        animator = this.entity.getComponent(AnimationRenderComponent.class);
 
-        // Listen for the "changeDirection" event and update the direction.
-        entity.getEvents().addListener("changeDirection", this::setDirection);
+        // Initialize your animator and load the atlas.
+        animator = entity.getComponent(AnimationRenderComponent.class);
+        assetManager.load("images/botanist.atlas", TextureAtlas.class);
+        assetManager.finishLoading();
+        atlas = assetManager.get("images/botanist.atlas");
 
-        // Listen for the "wanderStart" event and trigger the wander animation.
-        entity.getEvents().addListener("wanderStart", this::animateWander);
+        TextureAtlas.AtlasRegion left1 = atlas.findRegion("oldman_left_1");
+        TextureAtlas.AtlasRegion  left2 = atlas.findRegion("oldman_left_2");
 
-        // Listen for the "idle" event and trigger the idle animation.
-        entity.getEvents().addListener("idle", this::animateIdle);
+        TextureAtlas.AtlasRegion right1 = atlas.findRegion("oldman_right_1");
+        TextureAtlas.AtlasRegion right2 = atlas.findRegion("oldman_right_2");
+
+        TextureAtlas.AtlasRegion bottom1 = atlas.findRegion("oldman_down_1");
+        TextureAtlas.AtlasRegion bottom2 = atlas.findRegion("oldman_down_2");
+
+        TextureAtlas.AtlasRegion top1 = atlas.findRegion("oldman_up_1");
+        TextureAtlas.AtlasRegion top2 = atlas.findRegion("oldman_up_2");
+
+
+        // Initialize the animation sequences.
+        leftAnimation = new Animation<TextureAtlas.AtlasRegion>(1f , left1,left2);
+        rightAnimation = new Animation<TextureAtlas.AtlasRegion>(1f , right1, right2);
+        bottomAnimation = new Animation<TextureAtlas.AtlasRegion>(1f , bottom1,bottom2);
+        upAnimation = new Animation<TextureAtlas.AtlasRegion>(1f ,top1,top2 );
+
+        // Start with the default animation.
+        animator.startAnimation("oldman_down_1");
+    }
+    @Override
+    public void update() {
+        super.update();
+
+//         Update the animation based on a timer.
+        animationTimer += 0.1f;
+
+        if (animationTimer >= animationDuration) {
+            animationTimer = 0f; // Reset the timer.
+
+            // Switch between animations.
+            switch (animator.getCurrentAnimation()) {
+                case "oldman_left_1":
+                    animator.startAnimation("oldman_up_1");
+                    break;
+                case "oldman_right_1":
+                    animator.startAnimation("oldman_down_1");
+                    break;
+                case "oldman_down_1":
+                    animator.startAnimation("oldman_left_1");
+                    break;
+                case "oldman_up_1":
+                    animator.startAnimation("oldman_right_1");
+                    break;
+                default:
+                    // Default to the bottom animation if not in any specific state.
+                    animator.startAnimation("oldman_down_1");
+                    break;
+            }
+        }
     }
 
-    /**
-     * Triggers the animation for wandering in the current direction.
-     */
-    void animateWander() {
-        animator.startAnimation("wanderStart_" + direction);
-    }
-
-    /**
-     * Triggers the animation for being idle in the current direction.
-     */
-    void animateIdle() {
-        animator.startAnimation("idle_" + direction);
-    }
-
-    /**
-     * Sets the direction for animation.
-     *
-     * @param direction The new direction for animation ("left" or "right").
-     */
-    void setDirection(String direction) {
-        this.direction = direction;
-    }
 }

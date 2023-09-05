@@ -50,7 +50,8 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_POWERUPS = 3;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
-    /*private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);*/
+    private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(30, 2);
+    private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
@@ -91,14 +92,11 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_lights.png",
             "images/playerSS_6.png",
             "images/enemy/Bull.png",
-
             "images/playerSS_6.png",
             "images/upgradetree/exit.png",
             "images/upgradetree/background.png",
             "images/upgradetree/upgradebench.png",
-
             "images/Spawner.png"
-
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -162,13 +160,13 @@ public class EarthGameArea extends GameArea {
 
         spawnShip();
         Entity playerEntity = spawnPlayer();
-        //spawnCompanion(playerEntity);
+        spawnCompanion(playerEntity);
 
+        spawnSpawner();
         spawnEnemies();
         //spawnBoss();
         spawnAsteroids();
         spawnBotanist();
-        spawnSpawner();
 
         playMusic();
     }
@@ -219,11 +217,6 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(botanist, spawnPosition, true, false);
     }
 
-    private void spawnSpawner() {
-        Entity spawner = StructureFactory.createSpawner(targetables, 3000, EnemyType.Melee, EnemyBehaviour.PTE, 10);
-        spawnEntityAt(spawner, new GridPoint2(30, 2) , true, true);
-    }
-
     private void spawnAsteroids() {
         //Extra Spicy Asteroids
         GridPoint2 posAs = new GridPoint2(8, 8);
@@ -266,6 +259,11 @@ public class EarthGameArea extends GameArea {
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
         Entity ship = StructureFactory.createShip(game);
         spawnEntityAt(ship, spawnPosition, false, false);
+    }
+
+    private void spawnSpawner() {
+        Entity spawner = StructureFactory.createSpawner(targetables);
+        spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
     }
 
     private void displayUI() {
@@ -433,5 +431,5 @@ public class EarthGameArea extends GameArea {
 
     public Entity getPlayer() {
         return player;
-  }
+    }
 }

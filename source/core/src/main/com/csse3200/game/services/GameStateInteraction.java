@@ -71,6 +71,21 @@ public class GameStateInteraction {
         int amount = value == null ? 0 : (int) value;
         this.put(resourceKey, amount + changeAmount);
     }
+
+    /**
+     * Increases the specified extractor count by a given amount.
+     * Retrieves the current amount stored and adds the given amount.
+     * Note: the game state key is "extractors/{resourceName}" not just the resource's name.
+     *
+     * @param resourceName  The name of the resource produced by the extractor.
+     * @param changeAmount  The amount the count should change by.
+     */
+    public void updateExtractors(String resourceName, int changeAmount){
+        String resourceKey = "extractors/" + resourceName;
+        Object value = gameState.get(resourceKey);
+        int amount = value == null ? 0 : (int) value;
+        this.put(resourceKey, amount + changeAmount);
+    }
 }
 
 

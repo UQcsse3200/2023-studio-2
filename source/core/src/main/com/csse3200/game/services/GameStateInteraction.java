@@ -49,6 +49,13 @@ public class GameStateInteraction {
     }
 
     /**
+     * Clears the game state data.
+     */
+    public void clear() {
+        gameState.clear();
+    }
+
+    /**
      * Returns a copy of the current entire game state data.
      *
      * @return  A map of game state data at the current moment.

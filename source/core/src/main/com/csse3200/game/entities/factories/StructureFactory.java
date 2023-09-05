@@ -2,19 +2,23 @@ package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.ExtractorMiniGameArea;
+import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.ExtractorRepairPartComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.input.ExtinguisherInputComponent;
+import com.csse3200.game.input.FireInputComponent;
+import com.csse3200.game.input.HoleInputComponent;
+import com.csse3200.game.input.SpannerInputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.components.ExtractorRepairPartComponent;
-import com.csse3200.game.components.ExtractorHolePartComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
@@ -76,21 +80,63 @@ public class StructureFactory {
         return extractor;
     }
 
-    public static Entity createExtractorRepairPart() {
-        Entity extractorRepairPart = new Entity()
-                .addComponent(new TextureRenderComponent("images/fire.png"))
-                .addComponent(new ExtractorRepairPartComponent());
-        extractorRepairPart.setScale(1.8f, 2f);
-        return extractorRepairPart;
+    public static Entity createExtractorRepair() {
+        Entity extractorRepair = new Entity()
+                .addComponent(new TextureRenderComponent("images/elixir_collector.png"));
+        extractorRepair.setScale(2.2f, 2.6f);
+        return extractorRepair;
     }
 
 
-    public static Entity createExtractorHolePart() {
+    public static Entity createExtinguisher(TerrainComponent terrain, ExtractorMiniGameArea area) {
+        Entity extinguisher = new Entity()
+                .addComponent(new TextureRenderComponent("images/extinguisher.png"));
+        ExtinguisherInputComponent extinguisherComponent = new ExtinguisherInputComponent(terrain, area);
+        ServiceLocator.getInputService().register(extinguisherComponent);
+        extinguisher.addComponent(extinguisherComponent);
+        extinguisher.setScale(2f, 2f);
+        return extinguisher;
+    }
+
+    public static Entity createSpanner(TerrainComponent terrain, ExtractorMiniGameArea area) {
+        Entity spanner = new Entity()
+                .addComponent(new TextureRenderComponent("images/spanner.png"));
+        SpannerInputComponent spannerComponent = new SpannerInputComponent(terrain, area);
+        ServiceLocator.getInputService().register(spannerComponent);
+        spanner.addComponent(spannerComponent);
+        spanner.setScale(2f, 2f);
+        return spanner;
+    }
+
+    public static Entity createExtractorFirePart(TerrainComponent terrain, ExtractorMiniGameArea area) {
+        Entity extractorFirePart = new Entity()
+                .addComponent(new TextureRenderComponent("images/fire.png"));
+        FireInputComponent fireComponent = new FireInputComponent(terrain, area);
+        ServiceLocator.getInputService().register(fireComponent);
+
+        extractorFirePart.addComponent(fireComponent);
+
+        extractorFirePart.setScale(1.2f, 1.4f);
+
+        return extractorFirePart;
+    }
+
+    public static Entity createExtractorHolePart(TerrainComponent terrain, ExtractorMiniGameArea area) {
         Entity extractorHolePart = new Entity()
-                .addComponent(new TextureRenderComponent("images/Hole.png"))
-                .addComponent(new ExtractorHolePartComponent());
-        extractorHolePart.setScale(1.8f, 2f);
+                .addComponent(new TextureRenderComponent("images/Hole.png"));
+        HoleInputComponent holeComponent = new HoleInputComponent(terrain, area);
+        ServiceLocator.getInputService().register(holeComponent);
+
+        extractorHolePart.addComponent(holeComponent);
+
+        extractorHolePart.setScale(1.4f, 1.6f);
         return extractorHolePart;
+    }
+
+    public static Entity createExtractorBang() {
+        Entity extractorBang = new Entity().addComponent(new TextureRenderComponent("images/bang.png"));
+        extractorBang.setScale(2.2f, 2.4f);
+        return extractorBang;
     }
 
 

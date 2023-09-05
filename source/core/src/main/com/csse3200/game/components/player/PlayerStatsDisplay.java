@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
 
 /**
  * A ui component for displaying player stats, e.g. health.
@@ -64,6 +66,12 @@ public class PlayerStatsDisplay extends UIComponent {
   public void updatePlayerHealthUI(int health) {
     CharSequence text = String.format("Health: %d", health);
     healthLabel.setText(text);
+    DialogComponent dialogue = entity.getComponent(DialogComponent.class);
+    if(health==0){
+      if(dialogue != null) {
+        dialogue.showdialogue("You Died!");
+      }
+    }
   }
 
   @Override

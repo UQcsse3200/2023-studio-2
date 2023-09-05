@@ -172,13 +172,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.SPACE:
         if (dodge_available) {
           if (flagW == 1) {
-            walkDirection.add(Vector2Utils.DODGE_UP);
+            walkDirection.set(Vector2Utils.DODGE_UP);
           } else if (flagA == 1) {
-            walkDirection.add(Vector2Utils.DODGE_LEFT);
+            walkDirection.set(Vector2Utils.DODGE_LEFT);
           } else if (flagS == 1) {
-            walkDirection.add(Vector2Utils.DODGE_DOWN);
+            walkDirection.set(Vector2Utils.DODGE_DOWN);
           } else {
-            walkDirection.add(Vector2Utils.DODGE_RIGHT);
+            walkDirection.set(Vector2Utils.DODGE_RIGHT);
           }
           triggerDodgeEvent();
           dodge();
@@ -382,6 +382,20 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     final Timer timer = new Timer();
     entity.getEvents().trigger("walk", walkDirection);
     entity.getEvents().trigger("dodged");
+
+    if (walkDirection.epsilonEquals(Vector2Utils.DODGE_UP)) {
+      entity.getEvents().trigger("dodgeUp");
+    }
+    else if (walkDirection.epsilonEquals(Vector2Utils.DODGE_DOWN)) {
+      entity.getEvents().trigger("dodgeDown");
+    }
+    else if (walkDirection.epsilonEquals(Vector2Utils.DODGE_LEFT)) {
+      entity.getEvents().trigger("dodgeLeft");
+    }
+    else if (walkDirection.epsilonEquals(Vector2Utils.DODGE_RIGHT)) {
+      entity.getEvents().trigger("dodgeRight");
+    }
+
     java.util.TimerTask stopDodge = new java.util.TimerTask() {
       @Override
       public void run() {
@@ -391,7 +405,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         timer.purge();
       }
     };
-    timer.schedule(stopDodge, 150);
+    timer.schedule(stopDodge, 300);
   }
 
   private void triggerInventoryEvent(int i) {

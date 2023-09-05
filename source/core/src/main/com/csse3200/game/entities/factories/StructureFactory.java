@@ -125,11 +125,11 @@ public class StructureFactory {
                 .addComponent(new UpgradeTree());
 
         upgradeBench.addComponent(new InteractableComponent(entity -> {
-            UpgradeDisplay minigame = UpgradeDisplay.MakeNewMinigame(upgradeBench);
+            UpgradeDisplay minigame = UpgradeDisplay.createUpgradeDisplay(upgradeBench);
             ServiceLocator.getRenderService().getStage().addActor(minigame);
         }, 0.5f));
 
-        upgradeBench.setScale(0.5f, 0.5f);
+        upgradeBench.setScale(0.6f, 0.6f);
 
         return upgradeBench;
     }

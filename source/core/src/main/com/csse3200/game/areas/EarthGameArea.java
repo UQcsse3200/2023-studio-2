@@ -193,6 +193,10 @@ public class EarthGameArea extends GameArea {
     }
 
     private void spawnExtractors() {
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) 100);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) 500);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) 1000);
+
         GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(0, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
         Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 100.0, 1);
         spawnEntityAt(extractor, pos, true, false);

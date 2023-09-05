@@ -80,6 +80,13 @@ public class StructureFactory {
         return extractor;
     }
 
+    public static Entity createExtractorRepair() {
+        Entity extractorRepair = new Entity()
+                .addComponent(new TextureRenderComponent("images/elixir_collector.png"));
+        extractorRepair.setScale(2.2f, 2.6f);
+        return extractorRepair;
+    }
+
 
     public static Entity createExtinguisher(TerrainComponent terrain, ExtractorMiniGameArea area) {
         Entity extinguisher = new Entity()

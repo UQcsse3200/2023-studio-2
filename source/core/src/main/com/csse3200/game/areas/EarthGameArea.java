@@ -50,6 +50,7 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_POWERUPS = 3;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
+    private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(30, 2);
     /*private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);*/
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
@@ -94,7 +95,8 @@ public class EarthGameArea extends GameArea {
             "images/playerSS_6.png",
             "images/upgradetree/exit.png",
             "images/upgradetree/background.png",
-            "images/upgradetree/upgradebench.png"
+            "images/upgradetree/upgradebench.png",
+            "images/Spawner.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -151,21 +153,22 @@ public class EarthGameArea extends GameArea {
         displayUI();
 
         spawnTerrain();
-        spawnEnvironment();
-        spawnPowerups();
-        spawnExtractors();
-        spawnUpgradeBench();
+//        spawnEnvironment();
+//        spawnPowerups();
+//        spawnExtractors();
+//        spawnUpgradeBench();
 
-        spawnShip();
+//        spawnShip();
         Entity playerEntity = spawnPlayer();
         //spawnCompanion(playerEntity);
 
-        spawnEnemies();
+        spawnSpawner();
+//        spawnEnemies();
         //spawnBoss();
-        spawnAsteroids();
-        spawnBotanist();
+//        spawnAsteroids();
+//        spawnBotanist();
 
-        playMusic();
+//        playMusic();
     }
 
     private void spawnEnvironment() {
@@ -256,6 +259,11 @@ public class EarthGameArea extends GameArea {
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
         Entity ship = StructureFactory.createShip(game);
         spawnEntityAt(ship, spawnPosition, false, false);
+    }
+
+    private void spawnSpawner() {
+        Entity spawner = StructureFactory.createSpawner(targetables);
+        spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
     }
 
     private void displayUI() {

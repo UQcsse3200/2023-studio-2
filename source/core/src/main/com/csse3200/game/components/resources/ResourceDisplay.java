@@ -24,16 +24,20 @@ public class ResourceDisplay extends UIComponent {
     HashMap<String, Image> resourceBarImages;
     int scale = 5;
     int maxResource = 1000; // TODO make this a reference to gamestate and actually work
+    int steps = 64; // The number of intervals on the progress bar (rounds the percentages to this amount of steps)
 
     /**
      * Constructor for the ResourceDisplay.
      * Initializes the table and maps used for storing resource bar data.
      */
-    public ResourceDisplay() {
+    public ResourceDisplay(int scale, int steps, int maxResource) {
         this.table = new Table();
         this.resourceBars = new HashMap<>();
         this.barWidths = new HashMap<>();
         this.resourceBarImages = new HashMap<>();
+        this.scale = scale;
+        this.steps = steps;
+        this.maxResource = maxResource;
     }
 
     /**
@@ -120,7 +124,7 @@ public class ResourceDisplay extends UIComponent {
             Object quantity = ServiceLocator.getGameStateObserverService().getStateData("resource/" + resource.toString());
             if (quantity != null) {
                 int value = (int) quantity;
-                setWidth(resource, Math.min((float) value / (float) maxResource, maxResource));
+                setWidth(resource, Math.min((double) Math.round((float) value / (float) maxResource * this.steps) / this.steps, 1.0));
             } else {
                 setWidth(resource, 0.0);
             }

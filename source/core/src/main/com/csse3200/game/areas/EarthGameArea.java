@@ -208,7 +208,7 @@ public class EarthGameArea extends GameArea {
         targetables.add(extractor);
         spawnEntityAt(extractor, pos, true, false);
 
-        ResourceDisplay resourceDisplayComponent = new ResourceDisplay()
+        ResourceDisplay resourceDisplayComponent = new ResourceDisplay(5, 32, 1000)
                 .withResource(Resource.Durasteel)
                 .withResource(Resource.Solstite)
                 .withResource(Resource.Nebulite);

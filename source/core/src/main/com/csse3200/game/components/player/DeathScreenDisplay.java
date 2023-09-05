@@ -27,7 +27,8 @@ public class DeathScreenDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(DeathScreenDisplay.class);
     private static final float Z_INDEX = 2f;
-    private Table table;
+    private Table tableImage;
+    private Table tableButtons;
 
     @Override
     public void create() {
@@ -39,8 +40,11 @@ public class DeathScreenDisplay extends UIComponent {
      * Adds UI elements such as buttons and title to the main menu display.
      */
     private void addActors() {
-        table = new Table();
-        table.setFillParent(true);
+        tableImage = new Table();
+        tableButtons = new Table();
+        tableButtons.bottom();
+        tableImage.setFillParent(true);
+        tableButtons.setFillParent(true);
 
         // Display game title image
         Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/deathscreen.png", Texture.class));
@@ -49,24 +53,35 @@ public class DeathScreenDisplay extends UIComponent {
         titleImage.setPosition(0, 0);
 
         // Create button for exit options
-        TextButton exitBtn = new TextButton("Exit", skin);
+        TextButton exitBtn = new TextButton("Exit to Main Menu", skin);
+        TextButton restartBtn = new TextButton("Restart Level", skin);
 
         exitBtn.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Exit button clicked");
-                        entity.getEvents().trigger("exitBtn");
+                        entity.getEvents().trigger("exit");
                     }
+                });
+        restartBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                    logger.debug("Restart button clicked");
+                    entity.getEvents().trigger("restart");
+                     }
                 });
 
         // Arrange UI elements in a table layout
-        table.add(titleImage);
-        table.row();
-        table.add(exitBtn).padTop(15f).padLeft(1200f);
+        tableImage.add(titleImage);
+        tableButtons.add(restartBtn).padBottom(100f);
+        tableButtons.row();
+        tableButtons.add(exitBtn).padBottom(300f);
 
         stage.addActor(titleImage);
-        stage.addActor(table);
+        stage.addActor(tableImage);
+        stage.addActor(tableButtons);
     }
 
     @Override
@@ -81,7 +96,8 @@ public class DeathScreenDisplay extends UIComponent {
 
     @Override
     public void dispose() {
-        table.clear();
+        tableImage.clear();
+        tableButtons.clear();
         super.dispose();
     }
 }

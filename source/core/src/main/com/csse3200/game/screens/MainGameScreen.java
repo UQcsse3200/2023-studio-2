@@ -42,6 +42,7 @@ import static com.csse3200.game.ui.UIComponent.skin;
  */
 public class MainGameScreen extends ScreenAdapter {
   private TitleBox titleBox;
+private static boolean alive = true;
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -57,6 +58,7 @@ public class MainGameScreen extends ScreenAdapter {
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
+    this.alive = true;
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -86,6 +88,7 @@ public class MainGameScreen extends ScreenAdapter {
     gameArea = new EarthGameArea(terrainFactory, game);
     gameArea.create();
     player = ((EarthGameArea) gameArea).getPlayer();
+    player.getEvents().addListener("death", this::initiateDeathScreen);
     titleBox = new TitleBox(game, "Title", skin);
 
   }
@@ -99,12 +102,22 @@ public class MainGameScreen extends ScreenAdapter {
     navArea.create();
   }
 
+  /**
+   * When player dies, the PlayerDeath screen is launched.
+   */
+  public void initiateDeathScreen() {
+    alive = false;
+  }
   @Override
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
     followPlayer();
     renderer.render();
+    if (alive == false) {
+      logger.info("Launching player death screen");
+      game.setScreen(GdxGame.ScreenType.PLAYER_DEATH);
+    }
   }
 
   @Override
@@ -193,4 +206,5 @@ public class MainGameScreen extends ScreenAdapter {
     //Set new position
     renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
   }
+
 }

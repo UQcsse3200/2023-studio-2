@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
+import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.w3c.dom.css.Rect;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -18,6 +20,7 @@ import java.util.Map;
  */
 public class ResourceDisplay extends UIComponent {
     Table table;
+    HashSet<Resource> resources;
     HashMap<String, TextureRegion> resourceBars;
     HashMap<String, Float> barWidths;
     HashMap<String, Image> resourceBarImages;
@@ -34,6 +37,7 @@ public class ResourceDisplay extends UIComponent {
      * Initializes the table and maps used for storing resource bar data.
      */
     public ResourceDisplay(int scale, int steps, int maxResource) {
+        this.resources = new HashSet<>();
         this.table = new Table();
         this.resourceBars = new HashMap<>();
         this.extractorBars = new HashMap<>();
@@ -53,6 +57,11 @@ public class ResourceDisplay extends UIComponent {
     public void create() {
         super.create();
         addActors();
+    }
+
+    @Override
+    public void update() {
+        super.update();
     }
 
     /**
@@ -84,6 +93,8 @@ public class ResourceDisplay extends UIComponent {
      * @return Returns the updated ResourceDisplay object.
      */
     public ResourceDisplay withResource(Resource resource) {
+        this.resources.add(resource);
+
         Image barForegroundImage= new Image(ServiceLocator.getResourceService().getAsset("images/resourcebar_foreground.png", Texture.class));
         Image barBackgroundImage= new Image(ServiceLocator.getResourceService().getAsset("images/resourcebar_background.png", Texture.class));
 
@@ -139,12 +150,18 @@ public class ResourceDisplay extends UIComponent {
     @Override
     public void draw(SpriteBatch batch)  {
         // draw is handled by the stage
-        for (Resource resource : new Resource[]{Resource.Durasteel, Resource.Nebulite, Resource.Solstite}) {
+        for (Resource resource : this.resources) {
+            Object count = ServiceLocator.getGameStateObserverService().getStateData("extractors/" + resource.toString());
+            if (count != null) {
+                this.setExtractorCount(resource, (Integer) count);
+            } else {
+                this.setExtractorCount(resource, 0);
+            }
+
             Object quantity = ServiceLocator.getGameStateObserverService().getStateData("resource/" + resource.toString());
             if (quantity != null) {
                 int value = (int) quantity;
                 setWidth(resource, Math.min((double) Math.round((float) value / (float) maxResource * this.steps) / this.steps, 1.0));
-                setExtractorCount(resource, 1);
             } else {
                 setWidth(resource, 0.0);
             }

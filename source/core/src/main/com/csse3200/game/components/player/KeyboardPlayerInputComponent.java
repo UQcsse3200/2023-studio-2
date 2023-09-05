@@ -410,7 +410,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   private void triggerInventoryEvent(int i) {
     entity.getEvents().trigger("inventory", i);
-    this.equiped = entity.getComponent(InventoryComponent.class).getEquiped();
+    this.equiped = entity.getComponent(InventoryComponent.class).getEquipped();
   }
 
   /**

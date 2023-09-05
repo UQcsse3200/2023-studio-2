@@ -12,14 +12,12 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 import com.csse3200.game.services.ServiceLocator;
 
-
 //Testing:
 import com.csse3200.game.components.Weapons.WeaponType;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
-
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -34,11 +32,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private int flagS = 0;
   private int flagD = 0;
   private int flagMul = 0;
+  private int equiped = 1;
 
   private int testing = 0;
 
   HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
-  Vector2 lastMousePos = new Vector2(0,0);
+  Vector2 lastMousePos = new Vector2(0, 0);
 
   /**
    *
@@ -47,16 +46,18 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     return this.lastMousePos.cpy();
   }
 
-  /** 
+  /**
    * Returns value for testing.
+   * 
    * @return int
    */
   public int getTesting() {
     return testing;
   }
 
-  /** 
+  /**
    * Sets value for testing.
+   * 
    * @param testing
    */
   public void setTesting(int testing) {
@@ -78,7 +79,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   private void diagonal() {
     int movFlagSum = getMovFlagSum();
-    if (movFlagSum >= 3){
+    if (movFlagSum >= 3) {
       walkDirection.set(Vector2.Zero);
     }
     if (movFlagSum == 2) {
@@ -113,8 +114,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
-    keyFlags.put(keycode, 1);
-
+    keyFlags.put(keycode, 1);    
     diagonal();
     switch (keycode) {
       case Keys.W:
@@ -163,7 +163,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.P:
         entity.getEvents().trigger("attack");
-        if (flagW == 1) {  
+        if (flagW == 1) {
         }
         return true;
       case Keys.CONTROL_LEFT:
@@ -185,10 +185,23 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         return true;
       case Keys.F:
-        InteractionControllerComponent interactionController = entity.getComponent(InteractionControllerComponent.class);
+        InteractionControllerComponent interactionController = entity
+            .getComponent(InteractionControllerComponent.class);
         if (interactionController != null) {
           interactionController.interact();
         }
+        return true;
+      case Keys.NUM_1:
+        triggerInventoryEvent(1);
+        return true;
+      case Keys.NUM_2:
+        triggerInventoryEvent(2);
+        return true;
+      case Keys.NUM_3:
+        triggerInventoryEvent(3);
+        return true;
+      case Keys.TAB:
+        triggerInventoryEvent(0);
         return true;
       default:
         return false;
@@ -258,8 +271,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
   }
 
-  /** TODO this is barely works
+  /**
+   * TODO this is barely works
    * Function to repond to player mouse press
+   * 
    * @param screenX - X position on screen that mouse was pressed
    * @param screenY - Y position on screen that mouse was pressed
    * @param pointer -
@@ -267,59 +282,65 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * @return - True or false based on if an acction occured
    */
   @Override
-  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    if (button == Input.Buttons.RIGHT) {
-      entity.getEvents().trigger("remove", screenX, screenY);
-      return true;
-    }
+  public boolean touchDown(int screenX, int screenY, int pointer, int button) {        
+    if (equiped == 3) {      
+      if (button == Input.Buttons.RIGHT) {
+        entity.getEvents().trigger("remove", screenX, screenY);
+        return true;
+      }
 
-    if (button != Input.Buttons.LEFT) {return false;}
-    if(is_pressed(Keys.CONTROL_LEFT)) {
-      entity.getEvents().trigger("ctrl_place", screenX, screenY);
+      if (button != Input.Buttons.LEFT) {
+        return false;
+      }
+      if (is_pressed(Keys.CONTROL_LEFT)) {
+        entity.getEvents().trigger("ctrl_place", screenX, screenY);
+      }
+      if (is_pressed(Keys.SHIFT_LEFT)) {
+        entity.getEvents().trigger("place", screenX, screenY);
+      }
     }
-    if(is_pressed(Keys.SHIFT_LEFT)) {
-      entity.getEvents().trigger("place", screenX, screenY);
-    }
-
 
     Vector2 position = mouseToGamePos(screenX, screenY);
     this.lastMousePos = position.cpy();
     PlayerActions playerActions = entity.getComponent(PlayerActions.class);
     int cooldown = playerActions.getAttackCooldown();
 
-    if (cooldown != 0) {return false;}
+    if (cooldown != 0) {
+      return false;
+    }
     double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
-    if(is_pressed(Keys.R)){
+    if (is_pressed(Keys.R) && equiped == 2) {      
       entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.SLING_SHOT, (float) initRot);
     }
-    if(is_pressed(Keys.T)){
-      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
+    if (equiped == 1) {      
+      if (is_pressed(Keys.T)) {
+        entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
+      }
+      if (is_pressed(Keys.Y)) {
+        entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
+      }
     }
-    if(is_pressed(Keys.Y)){
-      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
-    }
-
     return true;
   }
 
-  public boolean touchDragged (int screenX, int screenY, int pointer) {
+  public boolean touchDragged(int screenX, int screenY, int pointer) {
     Vector2 position = mouseToGamePos(screenX, screenY);
     this.lastMousePos = position.cpy();
     return false;
   }
 
-  public boolean mouseMoved (int screenX, int screenY) {
+  public boolean mouseMoved(int screenX, int screenY) {
     Vector2 position = mouseToGamePos(screenX, screenY);
     this.lastMousePos = position.cpy();
     return false;
   }
 
-  
-  /** 
+  /**
    * Returns the direction of the player.
+   * 
    * @return Vector2
    */
-  public Vector2 getDirection(){
+  public Vector2 getDirection() {
     return this.walkDirection;
   }
 
@@ -327,33 +348,26 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * Triggers walk event
    */
   private void triggerWalkEvent() {
-    if (this.getTesting() == 0){
+    if (this.getTesting() == 0) {
       if (walkDirection.epsilonEquals(Vector2.Zero)) {
         entity.getEvents().trigger("walkStop");
       } else {
         if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
-          entity.getEvents().trigger("walkUpLeft");  
-        }
-        else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
+          entity.getEvents().trigger("walkUpLeft");
+        } else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
           entity.getEvents().trigger("walkUpRight");
-        }
-        else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
+        } else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
           entity.getEvents().trigger("walkUp");
-        }
-        else if (walkDirection.epsilonEquals(Vector2Utils.DOWN)) {
+        } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN)) {
           entity.getEvents().trigger("walkDown");
-        }
-        else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_LEFT)) {
+        } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_LEFT)) {
           entity.getEvents().trigger("walkDownLeft");
-        }
-        else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_RIGHT)) {
+        } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_RIGHT)) {
           entity.getEvents().trigger("walkDownRight");
-        }
-        else if (walkDirection.epsilonEquals(Vector2Utils.LEFT)) {
+        } else if (walkDirection.epsilonEquals(Vector2Utils.LEFT)) {
           entity.getEvents().trigger("walkLeft");
-        }
-        else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
-          entity.getEvents().trigger("walkRight");  
+        } else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
+          entity.getEvents().trigger("walkRight");
         }
         entity.getEvents().trigger("walk", walkDirection);
       }
@@ -394,6 +408,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     timer.schedule(stopDodge, 300);
   }
 
+  private void triggerInventoryEvent(int i) {
+    entity.getEvents().trigger("inventory", i);
+    this.equiped = entity.getComponent(InventoryComponent.class).getEquiped();
+  }
+
   /**
    * Responsible for dodge action
    * Triggers when the spacebar is clicked.
@@ -414,29 +433,33 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   /**
-   * Calcuate angle between 2 points from the center point to the target point, angle is
-   * in degrees with 0degrees being in the direction of the positive x-axis going counter clockwise
+   * Calcuate angle between 2 points from the center point to the target point,
+   * angle is
+   * in degrees with 0degrees being in the direction of the positive x-axis going
+   * counter clockwise
    * up to 359.9... until wrapping back around
+   * 
    * @param centerPt - point from where angle is calculated from
    * @param targetPt - Tart point to where angle is calculated to
    * @return return angle between points in degrees from the positive x-axis
    */
-  //https://stackoverflow.com/questions/9970281/java-calculating-the-angle-between-two-points-in-degrees
-  private double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt)  {
+  // https://stackoverflow.com/questions/9970281/java-calculating-the-angle-between-two-points-in-degrees
+  private double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt) {
     double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
     if (angle < 0) {
       angle += 360;
     }
     return angle;
   }
+
   private boolean is_pressed(int keycode) {
     return keyFlags.getOrDefault(keycode, 0) == 1;
   }
 
-  //TODO this code needs to be looked over
+  // TODO this code needs to be looked over
   private Vector2 mouseToGamePos(int screenX, int screenY) {
     Vector2 entityScale = entity.getScale();
     Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-    return new Vector2(mouse.x/2 - entityScale.x/2, (mouse.y) / 2 - entityScale.y/2);
+    return new Vector2(mouse.x / 2 - entityScale.x / 2, (mouse.y) / 2 - entityScale.y / 2);
   }
 }

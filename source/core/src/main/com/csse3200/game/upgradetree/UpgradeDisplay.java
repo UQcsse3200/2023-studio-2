@@ -37,10 +37,14 @@ public class UpgradeDisplay extends Window {
     private static final int MATERIAL_LABEL_Y = 650;
     private static final int EXIT_BUTTON_X = 1450;
     private static final int EXIT_BUTTON_Y = 620;
+    private static final String SKIN_PATH = "flat-earth/skin/flat-earth-ui.json";
+    private static final String MATERIALS_FORMAT = "Materials: %d";
     private final InputOverrideComponent inputOverrideComponent;
     private final Entity upgradeBench;
 
-    public static UpgradeDisplay MakeNewMinigame(Entity upgradeBench) {
+    private Label materialsLabel;
+
+    public static UpgradeDisplay createUpgradeDisplay(Entity upgradeBench) {
         Texture background =
                 ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
@@ -53,9 +57,8 @@ public class UpgradeDisplay extends Window {
         this.upgradeBench = upgradeBench;
 
         setupWindowDimensions();
-        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
 
-        Label materialsLabel = createMaterialsLabel(skin);
+        Label materialsLabel = createMaterialsLabel();
         Button exitButton = createExitButton();
         Group group = createUpgradeButtons();
 
@@ -77,6 +80,12 @@ public class UpgradeDisplay extends Window {
                 stage.getHeight() / 2 - getHeight() / 2 * getScaleY());
     }
 
+    private TextureRegionDrawable createTextureRegionDrawable(String path, float size) {
+        TextureRegionDrawable drawable = new TextureRegionDrawable(new Texture(path));
+        drawable.setMinSize(size, size);
+        return drawable;
+    }
+
     private Button createExitButton() {
         TextureRegionDrawable exitTexture = createTextureRegionDrawable("images/upgradetree/exit.png", 100f);
         Button exitButton = new Button(exitTexture);
@@ -90,9 +99,10 @@ public class UpgradeDisplay extends Window {
         return exitButton;
     }
 
-    private Label createMaterialsLabel(Skin skin) {
-        String materials = String.format("Materials: %d", upgradeBench.getComponent(UpgradeTree.class).getMaterials());
-        Label materialsLabel = new Label(materials, skin);
+    private Label createMaterialsLabel() {
+        Skin skin = new Skin(Gdx.files.internal(SKIN_PATH));
+        String materials = String.format(MATERIALS_FORMAT, upgradeBench.getComponent(UpgradeTree.class).getMaterials());
+        this.materialsLabel = new Label(materials, skin);
         materialsLabel.setPosition(MATERIAL_LABEL_X, MATERIAL_LABEL_Y);
         return materialsLabel;
     }
@@ -100,13 +110,14 @@ public class UpgradeDisplay extends Window {
     private Group createUpgradeButtons() {
         Group group = new Group();
 
-        ImageButton meleeOne = createImageButton("images/upgradetree/stick.png", 64f, 534, 512);
-        ImageButton rangedOne = createImageButton("images/wrench.png", 64f, 534 + 204, 512);
-        ImageButton meleeTwo = createImageButton("images/upgradetree/sword.png", 64f, 534, 512 - 154);
-        ImageButton rangedTwo = createImageButton("images/wrench.png", 64f, 534 + 204, 512 - 154);
-        ImageButton tierThree = createImageButton("images/upgradetree/sword.png", 64f, 534 + 102, 512 - 385);
-        ImageButton hammerOne = createImageButton("images/upgradetree/hammer1.png", 64f, 534 + 2 * 204, 512);
-        ImageButton hammerTwo = createImageButton("images/upgradetree/hammer2.png", 64f, 534 + 2 * 204, 512 - 154);
+        // sorry
+        ImageButton meleeOne = createImageButton("images/upgradetree/stick.png", 64f, 534, 512, WeaponType.STICK);
+        ImageButton rangedOne = createImageButton("images/wrench.png", 64f, 534 + 204, 512, WeaponType.ELEC_WRENCH);
+        ImageButton meleeTwo = createImageButton("images/upgradetree/sword.png", 64f, 534, 512 - 154, WeaponType.KATANA);
+        ImageButton rangedTwo = createImageButton("images/wrench.png", 64f, 534 + 204, 512 - 154, WeaponType.THROW_ELEC_WRENCH);
+        ImageButton tierThree = createImageButton("images/upgradetree/sword.png", 64f, 534 + 102, 512 - 385, WeaponType.LASERGUN);
+        ImageButton hammerOne = createImageButton("images/upgradetree/hammer1.png", 64f, 534 + 2 * 204, 512, WeaponType.WOODHAMMER);
+        ImageButton hammerTwo = createImageButton("images/upgradetree/hammer2.png", 64f, 534 + 2 * 204, 512 - 154, WeaponType.STONEHAMMER);
 
         group.addActor(meleeOne);
         group.addActor(meleeTwo);
@@ -119,21 +130,47 @@ public class UpgradeDisplay extends Window {
         return group;
     }
 
-    private ImageButton createImageButton(String imagePath, float size, float posX, float posY) {
+    private ImageButton createImageButton(String imagePath, float size, float posX, float posY, WeaponType weaponType) {
         TextureRegionDrawable drawable = createTextureRegionDrawable(imagePath, size);
         ImageButton button = new ImageButton(drawable);
+
+        UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
+        Image lock = null;
+
+        if (!stats.isWeaponUnlocked(weaponType)) {
+            lock = new Image(new Texture("images/upgradetree/lock.png"));
+            lock.setSize(size, size);
+            button.addActor(lock);
+        }
         button.setPosition(posX, posY);
+
+        final Image finalLockImage = lock;
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                int requiredMaterials = 50;
+
+                // Try to unlock a new weapon
+                if (!stats.isWeaponUnlocked(weaponType)) {
+                    if (stats.getMaterials() >= requiredMaterials) {
+                        stats.subtractMaterials(requiredMaterials);
+                        stats.unlockWeapon(weaponType);
+
+                        materialsLabel.setText(String.format("Materials: %d", stats.getMaterials()));
+
+                        if (finalLockImage != null) {
+                            finalLockImage.remove();
+                        }
+                    }
+                }
+            }
+        });
+
         return button;
     }
 
-    private TextureRegionDrawable createTextureRegionDrawable(String path, float size) {
-        TextureRegionDrawable drawable = new TextureRegionDrawable(new Texture(path));
-        drawable.setMinSize(size, size);
-        return drawable;
-    }
-
     /**
-     * Call this method to exit the upgrade tree menu.
+     * Exit the upgrade tree menu.
      */
     private void exitUpgradeTree() {
         remove();

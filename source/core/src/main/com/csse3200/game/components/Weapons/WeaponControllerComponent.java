@@ -54,6 +54,11 @@ public class WeaponControllerComponent extends Component {
             case SLING_SHOT -> weapon_target_update();
             case ELEC_WRENCH -> weapon_1_update();
             case THROW_ELEC_WRENCH -> weapon_2_update();
+            case STICK -> null; // todo
+            case LASERGUN -> null;
+            case KATANA -> null;
+            case WOODHAMMER -> null;
+            case STONEHAMMER -> null;
         };
 
 

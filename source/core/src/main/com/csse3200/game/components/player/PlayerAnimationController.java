@@ -25,27 +25,27 @@ public class PlayerAnimationController extends Component {
     }
 
     void animateLeft() {
-        animator.startAnimation("LEFT");
+        animator.startAnimation("Character_Left");
     }
     void animateRight() {
-        animator.startAnimation("RIGHT");
+        animator.startAnimation("Character_Right");
     }
     void animateUp() {
-        animator.startAnimation("UP");
+        animator.startAnimation("Character_Up");
     }
     void animateDown() {
-        animator.startAnimation("DOWN");
+        animator.startAnimation("Character_Down");
     }
     void animateUpLeft() {
-        animator.startAnimation("UP_LEFT");
+        animator.startAnimation("Character_UpLeft");
     }
     void animateUpRight() {
-        animator.startAnimation("UP_RIGHT");
+        animator.startAnimation("Character_UpRight");
     }
     void animateDownLeft() {
-        animator.startAnimation("DOWN_LEFT");
+        animator.startAnimation("Character_DownLeft");
     }
     void animateDownRight() {
-        animator.startAnimation("DOWN_RIGHT");
+        animator.startAnimation("Character_DownRight");
     }
 }

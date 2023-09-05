@@ -9,9 +9,15 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
+import java.util.Timer;
 
 public class KeyboardCompanionInputComponent extends InputComponent {
     private final Vector2 walkDirection = Vector2.Zero.cpy();
+    private boolean dodge_available = true;
+    private int flagW = 0;
+    private int flagA = 0;
+    private int flagS = 0;
+    private int flagD = 0;
 
     /**
      * Constructs a new KeyboardCompanionInputComponent with a priority of 5.
@@ -54,6 +60,22 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                 triggerWalkEvent();
                 return true;
             }
+            case Keys.O -> {
+                if (dodge_available) {
+                    if (flagW == 1) {
+                        walkDirection.add(Vector2Utils.DODGE_UP);
+                    } else if (flagA == 1) {
+                        walkDirection.add(Vector2Utils.DODGE_LEFT);
+                    } else if (flagS == 1) {
+                        walkDirection.add(Vector2Utils.DODGE_DOWN);
+                    } else {
+                        walkDirection.add(Vector2Utils.DODGE_RIGHT);
+                    }
+                    triggerDodgeEvent();
+                    dodge();
+                }
+                return true;
+            }
             default -> {
                 return false;
             }
@@ -90,6 +112,7 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                 triggerWalkEvent();
                 return true;
             }
+
             default -> {
                 return false;
             }
@@ -107,4 +130,43 @@ public class KeyboardCompanionInputComponent extends InputComponent {
             entity.getEvents().trigger("walk", walkDirection);
         }
     }
+    /**
+     * Triggers dodge event.
+     * Immunity is applied for 200 milliseconds whilst player moves.
+     */
+    private void triggerDodgeEvent() {
+        final Timer timer = new Timer();
+        entity.getEvents().trigger("walk", walkDirection);
+        entity.getEvents().trigger("dodged");
+        java.util.TimerTask stopDodge = new java.util.TimerTask() {
+            @Override
+            public void run() {
+                entity.getEvents().trigger("walkStop");
+                entity.getEvents().trigger("dodged");
+                timer.cancel();
+                timer.purge();
+            }
+        };
+        timer.schedule(stopDodge, 150);
+    }
+
+    /**
+     * Responsible for dodge action
+     * Triggers when the spacebar is clicked.
+     * Cooldown of 3000 ms.
+     */
+    private void dodge() {
+        dodge_available = false;
+        final Timer timer = new Timer();
+        java.util.TimerTask makeDodgeAvailable = new java.util.TimerTask() {
+            @Override
+            public void run() {
+                dodge_available = true;
+                timer.cancel();
+                timer.purge();
+            }
+        };
+        timer.schedule(makeDodgeAvailable, 3000);
+    }
 }
+

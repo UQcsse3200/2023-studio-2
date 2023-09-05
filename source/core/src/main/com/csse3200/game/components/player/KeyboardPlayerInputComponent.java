@@ -391,7 +391,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         timer.purge();
       }
     };
-    timer.schedule(stopDodge, 150);
+    timer.schedule(stopDodge, 300);
   }
 
   /**

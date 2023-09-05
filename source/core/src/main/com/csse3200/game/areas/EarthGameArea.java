@@ -91,10 +91,14 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_lights.png",
             "images/playerSS_6.png",
             "images/enemy/Bull.png",
+
             "images/playerSS_6.png",
             "images/upgradetree/exit.png",
             "images/upgradetree/background.png",
-            "images/upgradetree/upgradebench.png"
+            "images/upgradetree/upgradebench.png",
+
+            "images/Spawner.png"
+
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -164,6 +168,7 @@ public class EarthGameArea extends GameArea {
         //spawnBoss();
         spawnAsteroids();
         spawnBotanist();
+        spawnSpawner();
 
         playMusic();
     }
@@ -212,6 +217,11 @@ public class EarthGameArea extends GameArea {
         // Spawn the entity at the calculated position
         // Arguments: entity, position, isCentered, isLocal
         spawnEntityAt(botanist, spawnPosition, true, false);
+    }
+
+    private void spawnSpawner() {
+        Entity spawner = StructureFactory.createSpawner(targetables, 3000, EnemyType.Melee, EnemyBehaviour.PTE, 10);
+        spawnEntityAt(spawner, new GridPoint2(30, 2) , true, true);
     }
 
     private void spawnAsteroids() {

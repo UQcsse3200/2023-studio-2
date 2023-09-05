@@ -33,7 +33,8 @@ public class SpawnerComponent extends Component {
     int count;
 
     int spawnedAmount = 0;
-
+    private int currentWave = 0;
+    private long spawnDelay = 0;
     /**
      * SpawnerComponent allows an entity to spawn enemies on some real time interval and send them to
      * the gameState and event handler.
@@ -56,51 +57,6 @@ public class SpawnerComponent extends Component {
     @Override
     public void create() {
         super.create();
-    }
-
-    @Override
-    public void update() {
-        super.update();
-        Vector2 worldPos;
-        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate && spawnedAmount < count) {
-                worldPos = entity.getCenterPosition();
-                Entity enemy = EnemyFactory.createEnemy(targets, type, behaviour);
-                ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
-                spawnedAmount += 1;
-                System.out.println(spawnedAmount);
-                this.lastTime += this.tickRate;
-        }
-    }
-
-    /*        long currentTime = timer.getTime();
-
-        // to know when to start new wave
-        if (spawnedAmount < count && currentTime - lastTime >= tickRate) {
-            // Spawn enemies for the current wave
-            switch (currentWave) {
-                case 0:
-                    spawnMeleeEnemies(10);
-                    break;
-                case 1:
-                    spawnMeleeEnemies(10);
-                    spawnRangedEnemies(5);
-                    break;
-                case 2:
-                    spawnMeleeEnemies(10);
-                    spawnRangedEnemies(10);
-                    spawnBoss();
-                    break;
-            }
-
-            //  last wave start time upDate and increasing the wave counter
-            lastTime = currentTime;
-            currentWave++;
-
-            //  wave delay
-            if (currentWave < 3) {
-                lastTime += spawnDelay; // Convert seconds to milliseconds
-            }
-        }
     }
 
     private void spawnMeleeEnemies(int count) {
@@ -132,5 +88,70 @@ public class SpawnerComponent extends Component {
         ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
         spawnedAmount++;
     }
-}*/
+
+    @Override
+    public void update() {
+        super.update();
+        /*      Vector2 worldPos;
+        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate && spawnedAmount < count) {
+                worldPos = entity.getCenterPosition();
+                Entity enemy = EnemyFactory.createEnemy(targets, type, behaviour);
+                ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
+                spawnedAmount += 1;
+                System.out.println(spawnedAmount);
+                this.lastTime += this.tickRate;
+        }
+    }*/
+
+        long currentTime = timer.getTime();
+        long waveDelay = 10000;
+
+        /*if(currentTime >= 0 && currentTime <= 20000) {
+            spawnMeleeEnemies(10);
+        } else if(currentTime > 20000 && currentTime <= 30000) {
+            spawnMeleeEnemies(10);
+            spawnRangedEnemies(5);
+        } else if(currentTime > 40000 && currentTime <= 50000) {
+            spawnMeleeEnemies(10);
+            spawnRangedEnemies(10);
+            spawnBoss();
+        }*/
+
+        // to know when to start new wave
+        if (spawnedAmount < count) {
+            // Spawn enemies for the current wave
+            //long timeSinceLastWave = currentTime - lastTime;
+
+            // Check if the time since the last wave started is greater than or equal to the wave delay
+            if (currentTime >= waveDelay) {
+                // Reset the wave-specific timers
+
+                switch (currentWave) {
+                    case 0:
+                        spawnMeleeEnemies(10);
+                        break;
+                    case 1:
+                        spawnMeleeEnemies(10);
+                        spawnRangedEnemies(5);
+                        break;
+                    case 2:
+                        spawnMeleeEnemies(10);
+                        spawnRangedEnemies(10);
+                        spawnBoss();
+                        break;
+                }
+               // lastTime = currentTime;
+                currentWave++;
+                waveDelay += 10000;
+                //  last wave start time upDate and increasing the wave counter
+                //lastTime = currentTime;
+                //currentWave++;
+
+                //  wave delay
+                //if (currentWave < 3) {
+                //    lastTime += waveDelay; // Convert seconds to milliseconds
+                //}
+            }}
+    }
 }
+

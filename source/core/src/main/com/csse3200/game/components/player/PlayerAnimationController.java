@@ -22,6 +22,17 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener("walkUpRight", this::animateUpRight);
         entity.getEvents().addListener("walkDownLeft", this::animateDownLeft);
         entity.getEvents().addListener("walkDownRight", this::animateDownRight);
+
+        entity.getEvents().addListener("walkStop", this::animateStandDown);
+        /*
+        entity.getEvents().addListener("standDown", this::animateStandDown);
+        entity.getEvents().addListener("standLeft", this::animateStandLeft);
+        entity.getEvents().addListener("standRight", this::animateStandRight);
+        entity.getEvents().addListener("standUp", this::animateStandUp);*/
+        entity.getEvents().addListener("dodgeDown", this::animateDodgeDown);
+        entity.getEvents().addListener("dodgeLeft", this::animateDodgeLeft);
+        entity.getEvents().addListener("dodgeRight", this::animateDodgeRight);
+        entity.getEvents().addListener("dodgeUp", this::animateDodgeUp);
     }
 
     void animateLeft() {
@@ -47,5 +58,31 @@ public class PlayerAnimationController extends Component {
     }
     void animateDownRight() {
         animator.startAnimation("Character_DownRight");
+    }
+
+    void animateStandDown() {
+        animator.startAnimation("Character_StandDown");
+    }
+    void animateStandLeft() {
+        animator.startAnimation("Character_StandLeft");
+    }
+    void animateStandRight() {
+        animator.startAnimation("Character_StandRight");
+    }
+    void animateStandUp() {
+        animator.startAnimation("Character_StandUp");
+    }
+
+    void animateDodgeDown() {
+        animator.startAnimation("Character_RollDown");
+    }
+    void animateDodgeLeft() {
+        animator.startAnimation("Character_RollLeft");
+    }
+    void animateDodgeRight() {
+        animator.startAnimation("Character_RollRight");
+    }
+    void animateDodgeUp() {
+        animator.startAnimation("Character_RollUp");
     }
 }

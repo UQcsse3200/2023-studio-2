@@ -2,6 +2,9 @@ package com.csse3200.game.services;
 
 import java.util.Map;
 
+import static java.lang.Math.max;
+
+
 /**
  * A utility interaction class to manage and modify game state
  */
@@ -69,7 +72,26 @@ public class GameStateInteraction {
         String resourceKey = "resource/" + resourceName;
         Object value = gameState.get(resourceKey);
         int amount = value == null ? 0 : (int) value;
+        value = this.get("resourceMax/" + resourceName);
+        if (value != null) {
+            int max = (int) value;
+            if (amount + changeAmount > max) {
+                changeAmount = max - amount;
+            }
+        }
         this.put(resourceKey, amount + changeAmount);
+    }
+
+    /**
+     * Sets the maximum amount of a resource
+     * Note: the game state key is "resourceMax/{resourceName}" not just the resource's name.
+     *
+     * @param resourceName  The name of the resource produced by the extractor.
+     * @param amount The amount to cap the resource by
+     */
+    public void updateMaxResources(String resourceName, int amount){
+        String resourceKey = "resourceMax/" + resourceName;
+        this.put(resourceKey, amount);
     }
 
     /**

@@ -23,7 +23,8 @@ public class DeathScreenActions extends Component {
 
     @Override
     public void create() {
-        entity.getEvents().addListener("exitBtn", this::onExit);
+        entity.getEvents().addListener("exit", this::onExit);
+        entity.getEvents().addListener("restart", this::onRestart);
     }
     /**
      * Exits to Main Menu game.
@@ -34,7 +35,8 @@ public class DeathScreenActions extends Component {
     }
 
 
-    void playerDeath() {
-        game.setScreen(GdxGame.ScreenType.PLAYER_DEATH);
+    private void onRestart() {
+        logger.info("Relaunching main game screen");
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 }

@@ -3,6 +3,10 @@ package com.csse3200.game.components;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Time;
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
  * which engage it combat should have an instance of this class registered. This class can be
@@ -54,6 +58,7 @@ public class CombatStatsComponent extends Component {
 
   /**
    * Sets the entity's health. Health has a minimum bound of 0.
+   * If health reaches 0, player dies after 500ms.
    *
    * @param health health
    */
@@ -65,6 +70,20 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       entity.getEvents().trigger("updateHealth", this.health);
+    }
+    if (entity != null) {
+      if (isDead() && entity.getEntityType().equals("player")) {
+        final Timer timer = new Timer();
+        java.util.TimerTask killPlayer = new java.util.TimerTask() {
+          @Override
+          public void run() {
+            entity.getEvents().trigger("death");
+            timer.cancel();
+            timer.purge();
+          }
+        };
+        timer.schedule(killPlayer, 500);
+      }
     }
   }
 

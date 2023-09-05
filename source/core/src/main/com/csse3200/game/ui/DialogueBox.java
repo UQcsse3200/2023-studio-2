@@ -1,5 +1,7 @@
 package com.csse3200.game.ui;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -36,7 +38,24 @@ public class DialogueBox extends Dialog {
         this.game = game;
         this.dialogueBox = dialogueBox;
         this.dialogueLabel = new Label("", skin);
-        this.getContentTable().add(dialogueLabel).align(Align.left);
+
+
+        Label titleLabel = getTitleLabel();
+        titleLabel.setAlignment(Align.center);
+        titleLabel.setFontScale(1.8f); // Adjust font scale as needed
+        titleLabel.setColor(Color.WHITE); // TitleBox Title Colour can be changed here
+
+
+        this.getContentTable().add(titleLabel).padTop(20f).row();
+        this.getContentTable().add(dialogueLabel).width(800f).height(350f).pad(20f).center(); // Adjust width and height as needed
+
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("large", Label.LabelStyle.class));
+        labelStyle.font.getData().setScale(1.6f); // Set the font scale to make it larger
+
+
+
+
         TextButton startButton = new TextButton("OK", skin);
         button(startButton, true);
         Entity entity = new Entity();
@@ -49,9 +68,21 @@ public class DialogueBox extends Dialog {
                         entity.getEvents().trigger("ok");
                     }
                 });
-//        inputOverrideComponent = new InputOverrideComponent();
-//
-//        ServiceLocator.getInputService().register(inputOverrideComponent);
+
+        Table customButtonTable = new Table();
+        customButtonTable.add(startButton).pad(20f); // Add padding as needed
+
+
+        // Add the custom button table to the dialog
+        this.getContentTable().row();
+        this.getContentTable().add(customButtonTable).center();
+
+
+        // Size and positioning of the dialog
+        setSize(1200f, 600f); // Adjust the size as needed
+        setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, Gdx.graphics.getHeight() - getHeight() - 60); // Adjust the Y position as needed
+
+
     }
 
     /**

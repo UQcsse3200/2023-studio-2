@@ -15,6 +15,11 @@ public class UpgradeTree extends Component {
 
     public UpgradeTree() {
         unlockedWeapons = new ArrayList<WeaponType>();
+
+        // Base weapons
+        unlockedWeapons.add(WeaponType.WOODHAMMER);
+        unlockedWeapons.add(WeaponType.ELEC_WRENCH);
+        unlockedWeapons.add(WeaponType.STICK);
     }
 
     public List<WeaponType> getUnlockedWeapons() {
@@ -35,4 +40,9 @@ public class UpgradeTree extends Component {
         return materials;
     }
 
+    public void subtractMaterials(int amount) {
+        if (materials >= amount) {
+            materials -= amount;
+        }
+    }
 }

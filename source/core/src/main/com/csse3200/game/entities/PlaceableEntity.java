@@ -22,9 +22,8 @@ public class PlaceableEntity extends Entity {
      * when placed.
      */
     public void placed() {
+        GameStateObserver stateObserver = ServiceLocator.getGameStateObserverService();
         for (var elementCost : cost.entrySet()) {
-            GameStateObserver stateObserver = ServiceLocator.getGameStateObserverService();
-
             stateObserver.trigger("resourceAdd", elementCost.getKey(), -elementCost.getValue());
         }
     }

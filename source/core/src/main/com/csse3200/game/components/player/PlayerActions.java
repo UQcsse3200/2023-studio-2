@@ -106,19 +106,19 @@ public class PlayerActions extends Component {
         System.out.println("here");
         switch (i) {
             case 1:
-                entity.getComponent(InventoryComponent.class).setEquiped(1);
+                entity.getComponent(InventoryComponent.class).setEquipped(1);
                 break;
             case 2:
-                entity.getComponent(InventoryComponent.class).setEquiped(2);
+                entity.getComponent(InventoryComponent.class).setEquipped(2);
                 break;
             case 3:
-                entity.getComponent(InventoryComponent.class).setEquiped(3);
+                entity.getComponent(InventoryComponent.class).setEquipped(3);
                 break;
             default:
-                entity.getComponent(InventoryComponent.class).cycleEquiped();
+                entity.getComponent(InventoryComponent.class).cycleEquipped();
                 break;
         }
-        System.out.println(entity.getComponent(InventoryComponent.class).getEquiped());
+        System.out.println(entity.getComponent(InventoryComponent.class).getEquipped());
     }
 
     /**

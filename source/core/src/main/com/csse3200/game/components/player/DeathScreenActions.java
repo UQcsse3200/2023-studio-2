@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * This class listens to events relevant to the Main Menu Screen and does something when one of the
+ * This class listens to events relevant to the Death Screen and does something when one of the
  * events is triggered.
  */
 public class DeathScreenActions extends Component {
@@ -20,7 +20,9 @@ public class DeathScreenActions extends Component {
         this.game = game;
     }
 
-
+    /**
+     * Overrides create() function to add Listeners.
+     */
     @Override
     public void create() {
         entity.getEvents().addListener("exit", this::onExit);
@@ -34,7 +36,9 @@ public class DeathScreenActions extends Component {
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 
-
+    /**
+     * Restarts level by relaunching main game.
+     */
     private void onRestart() {
         logger.info("Relaunching main game screen");
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);

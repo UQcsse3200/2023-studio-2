@@ -17,10 +17,8 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.csse3200.game.ui.UIComponent.skin;
-
 /**
- * The game screen containing the main menu.
+ * The game screen indicating a player's death and options to either restart or exit game.
  */
 public class PlayerDeathScreen extends ScreenAdapter {
     public static final Logger logger = LoggerFactory.getLogger(PlayerDeathScreen.class);
@@ -31,7 +29,7 @@ public class PlayerDeathScreen extends ScreenAdapter {
     public PlayerDeathScreen(GdxGame game) {
         this.game = game;
 
-        logger.debug("Initialising main menu screen services");
+        logger.debug("Initialising death screen services");
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerEntityService(new EntityService());
@@ -67,7 +65,7 @@ public class PlayerDeathScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        logger.debug("Disposing main menu screen");
+        logger.debug("Disposing death screen");
 
         renderer.dispose();
         unloadAssets();
@@ -91,7 +89,7 @@ public class PlayerDeathScreen extends ScreenAdapter {
     }
 
     /**
-     * Creates the main menu's ui including components for rendering ui elements to the screen and
+     * Creates the death screen's ui including components for rendering ui elements to the screen and
      * capturing and handling ui input.
      */
     private void createUI() {

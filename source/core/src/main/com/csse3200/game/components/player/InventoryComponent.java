@@ -13,22 +13,22 @@ import org.slf4j.LoggerFactory;
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private int equiped = 1;
+  private int equipped = 1;
 
-  public int getEquiped() {
-    return equiped;
+  public int getEquipped() {
+    return equipped;
   }
 
-  public void setEquiped(int i) {
-    this.equiped = i;
+  public void setEquipped(int i) {
+    this.equipped = i;
   }
 
-  public void cycleEquiped() {
-    int equiped = getEquiped();
+  public void cycleEquipped() {
+    int equiped = getEquipped();
     if (equiped == 3) {
-      this.equiped = 1;
+      this.equipped = 1;
     } else
-      this.equiped++;
+      this.equipped++;
   }
 
 }

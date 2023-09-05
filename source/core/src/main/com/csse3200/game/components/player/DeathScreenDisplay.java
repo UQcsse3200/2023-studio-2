@@ -1,7 +1,6 @@
 /**
- * MainMenuDisplay is a UI component responsible for displaying the main menu of the game.
- * It provides buttons for starting the game, loading a saved game, accessing settings,
- * and exiting the game. Additionally, it offers options to access space and extractor mini-games.
+ * DeathScreenDisplay is a UI component responsible for displaying the death screen of the game.
+ * It provides buttons for restarting the game and exiting the game.
  */
 package com.csse3200.game.components.player;
 
@@ -19,9 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The UI component responsible for rendering and managing the main menu interface.
- * It provides options for starting, loading, configuring settings, and exiting the game.
- * It also includes options to access space and extractor mini-games.
+ * The UI component responsible for rendering and managing the death screen interface.
+ * It provides options for restarting and exiting the game.
  */
 public class DeathScreenDisplay extends UIComponent {
 
@@ -37,7 +35,7 @@ public class DeathScreenDisplay extends UIComponent {
     }
 
     /**
-     * Adds UI elements such as buttons and title to the main menu display.
+     * Adds UI elements such as buttons and title to the death screen display.
      */
     private void addActors() {
         tableImage = new Table();
@@ -52,7 +50,7 @@ public class DeathScreenDisplay extends UIComponent {
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);
 
-        // Create button for exit options
+        // Create buttons for restart and exit options
         TextButton exitBtn = new TextButton("Exit to Main Menu", skin);
         TextButton restartBtn = new TextButton("Restart Level", skin);
 
@@ -75,7 +73,7 @@ public class DeathScreenDisplay extends UIComponent {
 
         // Arrange UI elements in a table layout
         tableImage.add(titleImage);
-        tableButtons.add(restartBtn).padBottom(100f);
+        tableButtons.add(restartBtn).padBottom(50f);
         tableButtons.row();
         tableButtons.add(exitBtn).padBottom(300f);
 

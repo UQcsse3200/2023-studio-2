@@ -1,5 +1,4 @@
 package com.csse3200.game.components.npc;
-
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
@@ -105,23 +104,8 @@ public class SpawnerComponent extends Component {
     @Override
     public void update() {
         super.update();
-        /*      Vector2 worldPos;
-        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate && spawnedAmount < count) {
-                worldPos = entity.getCenterPosition();
-                Entity enemy = EnemyFactory.createEnemy(targets, type, behaviour);
-                ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
-                spawnedAmount += 1;
-                System.out.println(spawnedAmount);
-                this.lastTime += this.tickRate;
-        }
-    }*/
-
-       
-        
         if (this.timer.getTimeSince(this.lastTime) >= waveDelay) {
-            
-
-            switch (currentWave) {
+               switch (currentWave) {
                 case 0:
                     spawnMeleeEnemies(10);
                     break;

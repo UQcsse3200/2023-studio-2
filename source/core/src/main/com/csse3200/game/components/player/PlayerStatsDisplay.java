@@ -6,10 +6,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.screens.EndGameScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
+import com.csse3200.game.GdxGame;
+
+import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
+
 
 /**
  * A ui component for displaying player stats, e.g. health.
@@ -27,7 +32,7 @@ public class PlayerStatsDisplay extends UIComponent {
     super.create();
     addActors();
 
-    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+   entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
   }
 
   /**
@@ -67,12 +72,18 @@ public class PlayerStatsDisplay extends UIComponent {
     CharSequence text = String.format("Health: %d", health);
     healthLabel.setText(text);
     DialogComponent dialogue = entity.getComponent(DialogComponent.class);
-    if(health==0){
-      if(dialogue != null) {
+
+    // Check if health is zero
+    if (health == 0) {
+      if (dialogue != null) {
         dialogue.showdialogue("You Died!");
       }
+
+      // Transition to the EndGameScreen
+      //game.setScreen(new EndGameScreen(game));
     }
   }
+
 
   @Override
   public void dispose() {

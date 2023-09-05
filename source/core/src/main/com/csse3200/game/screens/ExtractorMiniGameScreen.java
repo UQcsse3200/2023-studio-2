@@ -79,20 +79,19 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(fireTexture);
-        resourceService.loadTextures(HoleTexture);
+        resourceService.loadTextures(textures);
         ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(fireTexture);
-        resourceService.unloadAssets(HoleTexture);
+        resourceService.unloadAssets(textures);
     }
 
     @Override
     public void dispose() {
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
         super.dispose();
         this.unloadAssets();
     }

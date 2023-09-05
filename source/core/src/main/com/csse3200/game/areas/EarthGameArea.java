@@ -95,8 +95,7 @@ public class EarthGameArea extends GameArea {
             "images/playerSS_6.png",
             "images/upgradetree/exit.png",
             "images/upgradetree/background.png",
-            "images/upgradetree/upgradebench.png",
-            "images/Spawner.png"
+            "images/upgradetree/upgradebench.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -160,9 +159,8 @@ public class EarthGameArea extends GameArea {
 
         spawnShip();
         Entity playerEntity = spawnPlayer();
-        spawnCompanion(playerEntity);
+        //spawnCompanion(playerEntity);
 
-        spawnSpawner();
         spawnEnemies();
         //spawnBoss();
         spawnAsteroids();
@@ -259,11 +257,6 @@ public class EarthGameArea extends GameArea {
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
         Entity ship = StructureFactory.createShip(game);
         spawnEntityAt(ship, spawnPosition, false, false);
-    }
-
-    private void spawnSpawner() {
-        Entity spawner = StructureFactory.createSpawner(targetables);
-        spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
     }
 
     private void displayUI() {
@@ -431,5 +424,5 @@ public class EarthGameArea extends GameArea {
 
     public Entity getPlayer() {
         return player;
-    }
+  }
 }

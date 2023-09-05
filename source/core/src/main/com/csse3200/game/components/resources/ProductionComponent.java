@@ -4,16 +4,14 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.security.Provider;
-import java.util.HashMap;
-import java.util.Map;
+import com.csse3200.game.services.GameStateObserver;
 
 public class ProductionComponent extends Component {
+
     // Timer used to track time since last tick
     GameTime timer;
 
-    // The desired amount of time (seconds) between each tick
+    // The desired amount of time (miliseconds) between each tic
     long tickRate;
 
     // The amount of resource produced on each tick
@@ -30,7 +28,7 @@ public class ProductionComponent extends Component {
      * the gameState and event handler.
      *
      * @param produces the resource type this should produce
-     * @param tickRate the amount of seconds between ticks (not guaranteed but catchup is performed if a tick is missed)
+     * @param tickRate the amount of miliseconds between ticks (not guaranteed but catchup is performed if a tick is missed)
      * @param tickSize the amount of the resource to produce on each tick
      */
     public ProductionComponent(Resource produces, long tickRate, int tickSize) {
@@ -64,11 +62,15 @@ public class ProductionComponent extends Component {
     @Override
     public void update() {
         super.update();
-        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate ) {
+        while (this.timer.getTime() - this.lastTime >= this.tickRate ) {
             this.getEntity().getEvents().trigger("produceResource", this.produces, this.tickSize);
             int produced = (int) ((long) this.tickSize * this.getProductionModifier());
             ServiceLocator.getGameStateObserverService().trigger("resourceAdd", this.produces.toString(), produced);
             this.lastTime += this.tickRate;
         }
+    }
+
+    public void setTimer(GameTime timer) {
+        this.timer = timer;
     }
 }

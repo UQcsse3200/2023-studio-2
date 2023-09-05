@@ -1,0 +1,6 @@
+{
+  "bullet": {
+    "speed": 12,
+    "atlas": "images/bullet.atlas"
+  }
+}

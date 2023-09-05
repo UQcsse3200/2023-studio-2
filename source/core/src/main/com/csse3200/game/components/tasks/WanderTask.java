@@ -70,7 +70,6 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     logger.debug("Starting waiting");
     this.owner.getEntity().getEvents().trigger("standing");
     swapTask(waitTask);
-    this.owner.getEntity().getEvents().trigger("idle");
   }
 
   private void startMoving() {
@@ -89,7 +88,6 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     }
     movementTask.setTarget(newPosition);
     swapTask(movementTask);
-    this.owner.getEntity().getEvents().trigger("wanderStart");
   }
 
   private void swapTask(Task newTask) {
@@ -111,7 +109,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
    * Determines the direction from the entity's current position to the destination position.
    *
    * @param destination The destination position to which the direction is calculated.
-   * @return A character representing the direction ('<', '>', or '=') relative to the current position.
+   * @return A character representing the direction ('&lt;', '&gt;', or '=') relative to the current position.
    */
   public char getDirection(Vector2 destination) {
     if (owner.getEntity().getPosition().x - destination.x < 0) {

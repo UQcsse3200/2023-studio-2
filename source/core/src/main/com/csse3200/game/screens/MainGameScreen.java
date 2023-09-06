@@ -4,10 +4,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.EarthGameArea;
-import com.csse3200.game.areas.ForestGameArea;
-import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.NavigationArea;
+import com.csse3200.game.areas.*;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
@@ -83,9 +80,11 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     terrainFactory = new TerrainFactory(renderer.getCamera());
-    gameArea = new EarthGameArea(terrainFactory, game);
+//    gameArea = new EarthGameArea(terrainFactory, game);
+    gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
     gameArea.create();
-    player = ((EarthGameArea) gameArea).getPlayer();
+    //TODO: BAD CODE - need to fix
+    player = ((MapGameArea) gameArea).getPlayer();
     titleBox = new TitleBox(game, "Title", skin);
 
   }

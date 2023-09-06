@@ -28,6 +28,7 @@ public class ServiceLocator {
   private static TerrainService terrainService;
   private static EntityPlacementService entityPlacementService;
   private static GameStateObserver gameStateObserverService;
+  private static TimingService timingService;
 
   private static StructurePlacementService structurePlacementService;
 
@@ -41,6 +42,10 @@ public class ServiceLocator {
 
   public static PhysicsService getPhysicsService() {
     return physicsService;
+  }
+
+  public static TimingService getTimingService() {
+    return timingService;
   }
 
 
@@ -90,6 +95,10 @@ public class ServiceLocator {
   public static void registerPhysicsService(PhysicsService service) {
     logger.debug("Registering physics service {}", service);
     physicsService = service;
+  }
+  public static void registerTimeService(TimingService service) {
+    logger.debug("Registering time service {}", service);
+    timingService = service;
   }
 
   public static void registerTimeSource(GameTime source) {

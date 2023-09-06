@@ -44,7 +44,7 @@ public class InitialScreenDisplay extends UIComponent {
         background =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/2.png", Texture.class));
+                                .getAsset("images/InitialScreenImage.png", Texture.class));
         background.setPosition(0, 0);
         // Scale the height of the background to maintain the original aspect ratio of the image
         // This prevents distortion of the image.
@@ -55,7 +55,7 @@ public class InitialScreenDisplay extends UIComponent {
         planet =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/2.png", Texture.class));
+                                .getAsset("images/InitialScreenBG.png", Texture.class));
         planet.setSize(200, 200); // Set to a reasonable fixed size
 
         // The planet moves at a constant speed, so to make it appear at the right time,
@@ -67,22 +67,21 @@ public class InitialScreenDisplay extends UIComponent {
         // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
         String story = """
             {WAIT=0.5}
-            Earth as we know it has been ravaged by war and plague.
+            Earth has become a desolate wasteland ravaged by a deadly virus. Civilisation as we know  has crumbled, and humanity's last hope lies among the stars.
             
             {WAIT}
-            A tapestry of battlefields and massacres are all that remain.
+            You are one of the few survivors who have managed to secure a spot on a spaceship built with the hopes of finding a cure or a new home on distant planets.
             {WAIT=0.5}
             
-            Humanity though... {WAIT=1} perseveres.
+            The spaceship belongs to Dr Emily Carter, a brilliant scientist determined to find a cure for the virus and make the earth habitable again.
             {WAIT}
             
-            We now look to the stars for hope, {WAIT=1} a new place to call home.
+            But the cosmos is a vast and dangerous place, filled with unknown challenges and mysteries, from alien encounters to unexpected phenomena.
             {WAIT}
             
-            We will find our salvation in Alpha Centauri.
-            {WAIT=1}
+            {WAIT=0.1}
             
-            {COLOR=green}Your objective, great farmlord, is to tame this wild planet we now call home.{WAIT=1}
+            {COLOR=red}Your journey begins now as you board the spaceship \"Aurora\" and venture into the unknown."{WAIT=1}
             """;
         storyLabel = new TypingLabel(story, skin); // Create the TypingLabel with the formatted story
         // Reduce the animation speed of all text in the story.
@@ -97,7 +96,7 @@ public class InitialScreenDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Continue button clicked");
-                startGame();
+                game.setScreen(ScreenType.GAME_STORY);
             }
         });
 
@@ -114,10 +113,6 @@ public class InitialScreenDisplay extends UIComponent {
         stage.addActor(background);
         stage.addActor(planet);
         stage.addActor(rootTable);
-    }
-
-    private void startGame() {
-        game.setScreen(ScreenType.MAIN_GAME);
     }
 
     @Override

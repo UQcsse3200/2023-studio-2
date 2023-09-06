@@ -51,8 +51,9 @@ public class MainMenuActions extends Component {
    */
   private void onStart() {
     logger.info("Loading Story");
-    TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
-    titleBox.showDialog(stage);
+//    TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
+//    titleBox.showDialog(stage);
+    game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN);
   }
 
   /**

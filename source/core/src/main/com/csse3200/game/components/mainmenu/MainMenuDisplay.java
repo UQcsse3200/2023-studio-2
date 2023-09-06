@@ -17,6 +17,9 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.csse3200.game.screens.MainMenuScreen;
 
 /**
  * The UI component responsible for rendering and managing the main menu interface.
@@ -29,9 +32,17 @@ public class MainMenuDisplay extends UIComponent {
     private static final float Z_INDEX = 2f;
     private Table table;
 
+    public static int frame;
+    private Image transitionFrames;
+    private long lastFrameTime;
+    private int fps = 15;
+    private final long frameDuration =  (long)(800 / fps);
+
     @Override
     public void create() {
+        frame=1;
         super.create();
+        transitionFrames = new Image();
         addActors();
     }
 
@@ -139,7 +150,30 @@ public class MainMenuDisplay extends UIComponent {
         table.add(exitBtn).padTop(15f).padLeft(1200f);
 
         stage.addActor(titleImage);
+        updateAnimation();
+
+        stage.addActor(transitionFrames);
         stage.addActor(table);
+    }
+
+    private void updateAnimation() {
+        if (frame < MainMenuScreen.frameCount) {
+            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
+            transitionFrames.setWidth(Gdx.graphics.getWidth());
+            transitionFrames.setHeight(Gdx.graphics.getHeight() / (float)2); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
+            transitionFrames.setPosition(0, Gdx.graphics.getHeight() / (float)2 + 15); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
+            frame++;
+            lastFrameTime = System.currentTimeMillis();
+        } else {
+            frame = 1;
+        }
+    }
+
+    public void update() {
+        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+            updateAnimation();
+        }
     }
 
     @Override

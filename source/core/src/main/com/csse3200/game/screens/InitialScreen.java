@@ -23,7 +23,7 @@ public class InitialScreen extends ScreenAdapter {
     /**
      * An array of paths to image textures needed for this screen
      */
-    private static final String[] introScreenAssets = {"images/2.png", "images/1.png"};
+    private static final String[] introScreenAssets = {"images/InitialScreenBG.png", "images/InitialScreenImage.png"};
     private final GdxGame game;
     private final Renderer renderer;
 

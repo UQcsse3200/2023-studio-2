@@ -17,8 +17,12 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import com.badlogic.gdx.graphics.Texture;
 import static com.csse3200.game.ui.UIComponent.skin;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TimingService;
+import com.csse3200.game.services.GameTime;
 
 /**
  * The game screen containing the main menu.
@@ -27,16 +31,21 @@ public class MainMenuScreen extends ScreenAdapter {
   public static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
+  public static final int frameCount = 5;
   private static final String[] mainMenuTextures = {"images/escape-earth2.png"};
+  public static String[] transitionTextures = new String[frameCount];
+  private static final String animationPrefix = "images/menu_animations/menu_animations";
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
 
     logger.debug("Initialising main menu screen services");
+    ServiceLocator.registerTimeSource(new GameTime());
     ServiceLocator.registerInputService(new InputService());
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerTimeService(new TimingService());
 
     renderer = RenderFactory.createRenderer();
 
@@ -47,6 +56,7 @@ public class MainMenuScreen extends ScreenAdapter {
   @Override
   public void render(float delta) {
     ServiceLocator.getEntityService().update();
+    ServiceLocator.getTimingService().update();
     renderer.render();
   }
 
@@ -82,6 +92,17 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainMenuTextures);
+    loadFrames();
+    ServiceLocator.getResourceService().loadAll();
+  }
+  private void loadFrames() {
+    logger.debug("Loading assets");
+    ResourceService resourceService = ServiceLocator.getResourceService();
+
+    for (int i = 0; i < frameCount; i++) {
+      transitionTextures[i] = animationPrefix + i + ".png";
+    }
+    resourceService.loadTextures(transitionTextures);
     ServiceLocator.getResourceService().loadAll();
   }
 

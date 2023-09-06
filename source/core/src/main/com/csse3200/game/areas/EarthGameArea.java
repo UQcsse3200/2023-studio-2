@@ -44,7 +44,7 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_MELEE_DTE = 2;
     private static final int NUM_RANGE_PTE = 2;
     private static final int NUM_POWERUPS = 3;
-    private static final int NUM_GoldMines = 4;
+    private static final int NUM_Laboratory = 4;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
     /*private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);*/
@@ -87,7 +87,8 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
             "images/playerSS_6.png",
-            "images/goldmine.png"
+            "images/laboratory.png",
+            "images/Potion.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -143,10 +144,11 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
-        spawnGoldMines();
+        Entity laboratoryEntity = spawnLaboratory();
         spawnShip();
         Entity playerEntity = spawnPlayer();
-        spawnCompanion(playerEntity);
+        Entity companionEntity = spawnCompanion(playerEntity);
+        spawnPotion(companionEntity,laboratoryEntity);
 
         spawnEnemies();
         spawnBoss();
@@ -277,16 +279,11 @@ public class EarthGameArea extends GameArea {
                 ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
     }
-    private void spawnGoldMines(){
-        GridPoint2 minPos = new GridPoint2(1,1);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        for(int i=0; i<NUM_GoldMines;i++)
-        {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity GoldMine = GoldMineFactory.createGoldMine();
-            spawnEntityAt(GoldMine, randomPos, true,false);
-        }
+    private Entity spawnLaboratory(){
+        GridPoint2 randomPos = new GridPoint2(34,19);
+        Entity newLaboratory = LaboratoryFactory.createLaboratory();
+        spawnEntityAt(newLaboratory, randomPos, true,false);
+        return newLaboratory;
     }
 
     private void spawnTrees() {
@@ -335,6 +332,11 @@ public class EarthGameArea extends GameArea {
             // Test
             // System.out.println(ServiceLocator.getEntityService().getEntitiesByComponent(PowerupComponent.class).toString());
         }
+    }
+    private void spawnPotion(Entity companionEntity ,Entity laboratoryEntity){
+        Entity newPotion = PotionFactory.createDeathPotion(companionEntity, laboratoryEntity);
+        GridPoint2 pos = new GridPoint2(34, 18);
+        spawnEntityAt(newPotion, pos, true, false);
     }
 
     /**
@@ -386,6 +388,7 @@ public class EarthGameArea extends GameArea {
         music.setVolume(settings.musicVolume);
         music.play();
     }
+
 
     private void loadAssets() {
         logger.debug("Loading assets");

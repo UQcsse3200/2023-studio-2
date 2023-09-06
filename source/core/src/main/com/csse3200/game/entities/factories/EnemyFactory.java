@@ -1,5 +1,6 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -27,8 +28,6 @@ import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
-
 /**
  * Factory to create non-playable enemies entities with predefined components.
  *
@@ -47,11 +46,10 @@ public class EnemyFactory {
   /**
    * Creates a melee enemy entity.
    *
-   * @param targets entity to chase
    * @param type type of enemy - melee or ranged
    * @return entity
    */
-  public static Entity createEnemy(ArrayList<Entity> targets, EnemyType type, EnemyBehaviour behaviour) {
+  public static Entity createEnemy(EnemyType type, EnemyBehaviour behaviour) {
 
     EnemyConfig config = configs.GetEnemyConfig(type, behaviour);
     AnimationRenderComponent animator;
@@ -59,6 +57,9 @@ public class EnemyFactory {
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
     // Cycles through all targets
+    //TODO: This should probably be contained in its own AITask -
+    // this doesn't allow for new entities after enemy creation
+    Array<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
     for (Entity target : targets) {
       // Adds the specific behaviour to entity
       EnemyBehaviourSelector(target, type, behaviour, aiComponent);

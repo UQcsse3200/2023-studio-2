@@ -335,19 +335,19 @@ public class EarthGameArea extends GameArea {
         // Spawning enemies based on set number of each type
         for (int i = 0; i < NUM_MELEE_PTE; i++) {
             GridPoint2 randomPos1 = RandomUtils.random(minPos, maxPos);
-            Entity meleePTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.PTE);
+            Entity meleePTE = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
             spawnEntityAt(meleePTE, randomPos1, true, true);
         }
 
         for (int i = 0; i < NUM_MELEE_DTE; i++) {
             GridPoint2 randomPos2 = RandomUtils.random(minPos, maxPos);
-            Entity meleeDTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+            Entity meleeDTE = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(meleeDTE, randomPos2, true, true);
         }
 
         for (int i = 0; i < NUM_RANGE_PTE; i++) {
             GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
-            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+            Entity rangePTE = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
             spawnEntityAt(rangePTE, randomPos3, true, true);
         }
     }
@@ -360,7 +360,7 @@ public class EarthGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
+        Entity boss = EnemyFactory.createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
         spawnEntityAt(boss, randomPos, true, true);
         //boss.addComponent(new DialogComponent(dialogueBox));
 

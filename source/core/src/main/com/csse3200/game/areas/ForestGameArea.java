@@ -303,25 +303,25 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+      Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
     for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+      Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
     for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
+      Entity melee = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
     for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+      Entity ranged = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
       spawnEntityAt(ranged, randomPos, true, true);
     }
   }
@@ -339,7 +339,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
+    Entity boss = EnemyFactory.createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
     //boss.addComponent(new DialogComponent(dialogueBox));
   }

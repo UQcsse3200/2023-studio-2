@@ -85,9 +85,9 @@ public class StructureFactory {
             int currentResourceCount = (int) gameStateOb.getStateData(resourceKey);
             if (currentResourceCount > 1000) {
                 game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-            } else {  //code added by abhi
-                ShipInteractionPopup minigame = new ShipInteractionPopup();
-                ServiceLocator.getRenderService().getStage().addActor(minigame);
+            } else {
+                ShipInteractionPopup shipPopup = new ShipInteractionPopup();
+                ServiceLocator.getRenderService().getStage().addActor(shipPopup);
             }
         }, 5));
         return ship;

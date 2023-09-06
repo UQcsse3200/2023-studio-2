@@ -1,4 +1,4 @@
-package com.csse3200.game.components.joinable;
+package com.csse3200.game.components.structures;
 
 /**
  * Used by JoinableComponent to pass around the direction of

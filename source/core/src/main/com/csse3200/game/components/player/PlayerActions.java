@@ -6,10 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.joinable.JoinableComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.buildables.Wall;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.BuildablesFactory;
@@ -133,17 +133,16 @@ public class PlayerActions extends Component {
 
         // if structure doesn't exist at position, adds wall.
         if (structure == null) {
-            Entity wall = BuildablesFactory.createCustomWall(WallType.basic, entity);
+            PlaceableEntity wall = BuildablesFactory.createWall(WallType.basic, entity);
             updateResources(-2);
             ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, gridPosition, false, false);
-            wall.getComponent(JoinableComponent.class).notifyNeighbours(true);
             // if the existing structure is a wall, attempt upgrade.
         } else if (structure instanceof Wall existingWall) {
             if (existingWall.getWallType() == WallType.basic) {
                 updateResources(-2);
                 structure.dispose();
                 this.entityService.unregister(structure);
-                Entity wall = BuildablesFactory.createCustomWall(WallType.intermediate, entity);
+                PlaceableEntity wall = BuildablesFactory.createWall(WallType.intermediate, entity);
                 ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, gridPosition, false, false);
             }
         }
@@ -170,9 +169,8 @@ public class PlayerActions extends Component {
         // if structure doesn't exist at position, adds wall.
         if (structure == null) {
             updateResources(-2);
-            Entity gate = BuildablesFactory.createGate(entity);
+            PlaceableEntity gate = BuildablesFactory.createGate(entity);
             ServiceLocator.getStructurePlacementService().PlaceStructureAt(gate, gridPosition, false, false);
-            gate.getComponent(JoinableComponent.class).notifyNeighbours(true);
         }
     }
 
@@ -188,16 +186,9 @@ public class PlayerActions extends Component {
         Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
 
         if (existingWall != null) {
-            var joinableComponent = existingWall.getComponent(JoinableComponent.class);
-
-            if (joinableComponent != null) {
-                joinableComponent.notifyNeighbours(false);
-            }
-
-            existingWall.dispose();
             updateResources(1);
             ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
-            this.entityService.unregister(existingWall);
+            existingWall.dispose();
         }
     }
 

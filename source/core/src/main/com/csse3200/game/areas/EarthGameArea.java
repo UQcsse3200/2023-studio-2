@@ -122,8 +122,8 @@ public class EarthGameArea extends GameArea {
             "images/player.atlas"
 
     };
-    private static final String[] earthSounds = {"sounds/Impact4.ogg"};
-    private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+    private static final String[] earthSounds = {"sounds/Impact4.wav"};
+    private static final String backgroundMusic = "sounds/BGM_03_mp3.wav";
     private static final String[] earthMusic = {backgroundMusic};
 
     private final TerrainFactory terrainFactory;

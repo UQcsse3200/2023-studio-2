@@ -1,13 +1,19 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.components.InteractableComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -23,6 +29,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private int flagD = 0;
   private int flagMul = 0;
   private boolean leftCtrlFlag = false;
+  private static final float INTERACTION_DISTANCE = 5.0f; // This is just a placeholder. Set appropriate distance.
 
   /**
    * @return int
@@ -298,4 +305,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     };
     new java.util.Timer().schedule(makeDodgeAvailable, 3000);
   }
+
+
 }

@@ -5,9 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.EarthGameArea;
-import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.NavigationArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
@@ -94,20 +92,12 @@ private static boolean alive = true;
   }
 
   /**
-   * Loads the space map game area onto the screen to allow transitions to new planets (GameAreas)
-   */
-  public void loadSpaceMap(){
-    gameArea.dispose();
-    NavigationArea navArea = new NavigationArea(game, terrainFactory);
-    navArea.create();
-  }
-
-  /**
    * When player dies, the PlayerDeath screen is launched.
    */
   public void initiateDeathScreen() {
     alive = false;
   }
+
   @Override
   public void render(float delta) {
     physicsEngine.update();
@@ -176,7 +166,7 @@ private static boolean alive = true;
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
-        .addComponent(new MainGameActions(this.game))
+        .addComponent(new MainGameActions(this.game,stage))
         .addComponent(new MainGameExitDisplay())
         .addComponent(new Terminal())
         .addComponent(inputComponent)

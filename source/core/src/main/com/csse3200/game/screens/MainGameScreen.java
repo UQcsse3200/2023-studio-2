@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.EarthGameArea;
-import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
@@ -49,6 +48,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
 
   private Entity player;
+
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -158,6 +158,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
+
   }
 
   private void followPlayer() {
@@ -181,4 +182,6 @@ public class MainGameScreen extends ScreenAdapter {
     //Set new position
     renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
   }
+
+
 }

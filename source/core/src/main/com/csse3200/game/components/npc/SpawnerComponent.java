@@ -1,15 +1,15 @@
 package com.csse3200.game.components.npc;
 
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
-import com.csse3200.game.entities.factories.EnemyFactory;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ServiceLocator;
+        import com.badlogic.gdx.math.Vector2;
+        import com.csse3200.game.components.Component;
+        import com.csse3200.game.entities.Entity;
+        import com.csse3200.game.entities.enemies.EnemyBehaviour;
+        import com.csse3200.game.entities.enemies.EnemyType;
+        import com.csse3200.game.entities.factories.EnemyFactory;
+        import com.csse3200.game.services.GameTime;
+        import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
+        import java.util.ArrayList;
 
 public class SpawnerComponent extends Component {
     private GameTime timer;
@@ -21,6 +21,10 @@ public class SpawnerComponent extends Component {
     private long spawnDelay = 1000; // 1 second delay between enemy spawns
     private int enemiesToSpawn;
     private int enemiesSpawned;
+
+    private int meleeEnemiesToSpawn;
+
+    private int rangedEnemiesToSpawn;
 
     public SpawnerComponent(ArrayList<Entity> targets) {
         this.timer = new GameTime();
@@ -37,6 +41,8 @@ public class SpawnerComponent extends Component {
         isSpawning = true;
         enemiesToSpawn = meleeCount + rangedCount;
         enemiesSpawned = 0;
+        meleeEnemiesToSpawn = meleeCount;
+        rangedEnemiesToSpawn = rangedCount;
     }
 
     private void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {
@@ -68,7 +74,13 @@ public class SpawnerComponent extends Component {
         }
 
         if (isSpawning && enemiesSpawned < enemiesToSpawn && currentTime - lastTime >= spawnDelay) {
-            spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
+            if (meleeEnemiesToSpawn > 0) {
+                spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
+                meleeEnemiesToSpawn--;
+            } else if (rangedEnemiesToSpawn > 0) {
+                spawnEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
+                rangedEnemiesToSpawn--;
+            }
             enemiesSpawned++;
             lastTime = currentTime;
         }

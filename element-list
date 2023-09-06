@@ -9,12 +9,12 @@ com.csse3200.game.components.gamearea
 com.csse3200.game.components.joinable
 com.csse3200.game.components.maingame
 com.csse3200.game.components.mainmenu
-com.csse3200.game.components.navigation
 com.csse3200.game.components.npc
 com.csse3200.game.components.player
 com.csse3200.game.components.resources
 com.csse3200.game.components.settingsmenu
 com.csse3200.game.components.ships
+com.csse3200.game.components.spacenavigation
 com.csse3200.game.components.story
 com.csse3200.game.components.tasks
 com.csse3200.game.components.Weapons

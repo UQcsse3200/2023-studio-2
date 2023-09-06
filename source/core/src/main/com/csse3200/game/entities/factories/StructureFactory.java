@@ -1,6 +1,8 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -18,6 +20,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.ShipInteractionPopup;
 
 /**
  * Factory to create structure entities - such as extractors or ships.
@@ -68,22 +71,27 @@ public class StructureFactory {
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/refinedShip.png"))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                        .addComponent(new InteractableComponent(entity -> {
-                            //Exit to main menu if resource > 1000
-                            GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
-                            String resourceKey = "resource/" + Resource.Solstite;
-                            int currentResourceCount = (int) gameStateOb.getStateData(resourceKey);
-                            if (currentResourceCount > 1000) {
-                                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-                            }
-                        }, 5));
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE));
 
         ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();
         ship.setScale(5f, 4.5f);
         PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
+
+        ship.addComponent(new InteractableComponent(entity -> {
+            //Exit to main menu if resource > 1000
+            GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
+            String resourceKey = "resource/" + Resource.Solstite;
+            int currentResourceCount = (int) gameStateOb.getStateData(resourceKey);
+            if (currentResourceCount > 1000) {
+                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+            } else {  //code added by abhi
+                ShipInteractionPopup minigame = new ShipInteractionPopup();
+                ServiceLocator.getRenderService().getStage().addActor(minigame);
+            }
+        }, 5));
         return ship;
+
     }
 
 }

@@ -7,7 +7,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.screens.MainGameScreen;
-import com.csse3200.game.ui.MainAlert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.AlertBox;
@@ -85,12 +84,9 @@ public class MainMenuActions extends Component {
   }
   private void onMini(){
     logger.info("starting space minigame");
-    MainAlert mainAlertBox = new MainAlert(game, "Start game", skin, "Ready to play the game");
-    mainAlertBox.showDialog(stage, () -> {
-      game.setScreen(GdxGame.ScreenType.SPACE_MAP);
-    });
-
+    game.setScreen(GdxGame.ScreenType.SPACE_MAP);
   }
+
   private void onExtractor(){
     logger.info("starting extractor");
     game.setScreen(GdxGame.ScreenType.EXTRACTOR_GAME);

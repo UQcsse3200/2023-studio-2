@@ -88,6 +88,8 @@ public class StructureFactory {
         return extractorRepairPart;
     }
 
+
+
     /**
      * Creates a ship entity
      */

@@ -1,9 +1,7 @@
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.buildables.Gate;
-import com.csse3200.game.entities.buildables.Wall;
-import com.csse3200.game.entities.buildables.WallType;
+import com.csse3200.game.entities.buildables.*;
 import com.csse3200.game.entities.configs.WallConfigs;
 import com.csse3200.game.files.FileLoader;
 
@@ -16,6 +14,9 @@ public class BuildablesFactory {
      */
     public static Entity createCustomWall(WallType type, Entity player) {
       return new Wall(type, player);
+    }
+    public static Entity createCustomTurret(TurretType type, Entity player) {
+        return new Turret(type, new Entity());
     }
 
     /**

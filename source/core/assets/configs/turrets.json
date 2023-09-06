@@ -1,6 +1,10 @@
 {
-  "name": "$name$",
-  "version": "$version$",
-  "dependencies": {$END$
+  "levelOne": {
+    "health": 200,
+    "texture": "images/TurretOne.png"
+  },
+  "levelTwo": {
+    "health": 500,
+    "texture": "images/TurretTwo.png"
   }
 }

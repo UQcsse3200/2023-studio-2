@@ -13,22 +13,22 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
 
-public class GoldMineFactory {
-    public static Entity createGoldMine(){
-        Entity GoldMine =
+public class LaboratoryFactory {
+    public static Entity createLaboratory(){
+        Entity Laboratory =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/goldmine.png"))
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.GoldMine))
+                        .addComponent(new TextureRenderComponent("images/laboratory.png"))
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.LABORATORY))
                         .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.GoldMine));
-        GoldMine.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        GoldMine.getComponent(TextureRenderComponent.class).scaleEntity();
-        GoldMine.setScale(4f, 4.5f);
-        PhysicsUtils.setScaledCollider(GoldMine, 0.9f, 0.7f);
-        GoldMine.scaleHeight(2.0f);
-        return GoldMine;
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.LABORATORY));
+        Laboratory.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+        Laboratory.getComponent(TextureRenderComponent.class).scaleEntity();
+        Laboratory.setScale(4f, 4.0f);
+        PhysicsUtils.setScaledCollider(Laboratory, 0.6f, 0.4f);
+        Laboratory.scaleHeight(2.0f);
+        return Laboratory;
     }
-    private GoldMineFactory() {
+    private LaboratoryFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }
 }

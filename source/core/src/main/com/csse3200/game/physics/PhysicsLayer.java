@@ -7,7 +7,7 @@ public class PhysicsLayer {
 
   public static final short COMPANION = (1 << 1);
   public static final short SHIP = (1<<1);
-  public static final short GoldMine = (1<<5);
+  public static final short LABORATORY = (1<<5);
 
   // Terrain obstacle, e.g. trees
   public static final short BOX = ~0;

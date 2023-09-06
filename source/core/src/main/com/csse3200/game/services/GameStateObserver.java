@@ -38,7 +38,9 @@ public class GameStateObserver extends EventHandler {
      */
     private void generateStateListeners() {
         this.addListener("resourceAdd", stateInteraction::updateResource);
-        this.addListener("setCurrentPlanet",stateInteraction::put);
+        this.addListener("setCurrentPlanet", stateInteraction::put);
+        this.addListener("extractorsAdd", stateInteraction::updateExtractors);
+        this.addListener("resourceMax", stateInteraction::updateMaxResources);
     }
 
     /**

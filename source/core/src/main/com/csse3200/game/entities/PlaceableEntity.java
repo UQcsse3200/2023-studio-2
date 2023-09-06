@@ -1,5 +1,6 @@
 package com.csse3200.game.entities;
 
+import com.csse3200.game.components.structures.Placeable;
 import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
@@ -8,23 +9,16 @@ import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.util.Map;
 
 public class PlaceableEntity extends Entity {
-    private final Map<String, Integer> cost;
-
-    public PlaceableEntity(Map<String, Integer> cost) {
-        super();
-
-        this.cost = cost;
-    }
-
     /**
      * This function is called when a PlaceableEntity is placed via the structure
      * placement service. Override this method to implement specific functionality
      * when placed.
      */
     public void placed() {
-        GameStateObserver stateObserver = ServiceLocator.getGameStateObserverService();
-        for (var elementCost : cost.entrySet()) {
-            stateObserver.trigger("resourceAdd", elementCost.getKey(), -elementCost.getValue());
+        for (var component : components.values()) {
+            if (component instanceof Placeable) {
+                ((Placeable) component).placed();
+            }
         }
     }
 
@@ -34,13 +28,36 @@ public class PlaceableEntity extends Entity {
      * when removed.
      */
     public void removed() {
-
+        for (var component : components.values()) {
+            if (component instanceof Placeable) {
+                ((Placeable) component).removed();
+            }
+        }
     }
 
     /**
-     * @return the cost of the entity.
+     * This function is called when a PlaceableEntity is going to be placed via the structure
+     * placement service. Override this method to implement specific functionality
+     * when the entity is about to be placed.
      */
-    public Map<String, Integer> getCost() {
-        return cost;
+    public void willPlace() {
+        for (var component : components.values()) {
+            if (component instanceof Placeable) {
+                ((Placeable) component).willPlace();
+            }
+        }
+    }
+
+    /**
+     * This function is called when a PlaceableEntity is going to be removed via the structure
+     * placement service. Override this method to implement specific functionality
+     * when the entity is about to be removed.
+     */
+    public void willRemove() {
+        for (var component : components.values()) {
+            if (component instanceof Placeable) {
+                ((Placeable) component).willRemove();
+            }
+        }
     }
 }

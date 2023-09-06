@@ -82,6 +82,10 @@ public class NPCFactory {
    * @return The created Botanist NPC entity.
    */
   public static Entity createBotanist() {
+
+    AITaskComponent aiComponent = new AITaskComponent();
+    aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+
     AnimationRenderComponent animator =
        new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/botanist.atlas", TextureAtlas.class));
@@ -89,12 +93,19 @@ public class NPCFactory {
             animator.addAnimation("oldman_right_1", 0.1f, Animation.PlayMode.LOOP);
             animator.addAnimation("oldman_up_1", 0.1f, Animation.PlayMode.LOOP);
             animator.addAnimation("oldman_left_1", 0.1f, Animation.PlayMode.LOOP);
+
     Entity botanist =
             new Entity()
                     .addComponent(animator)
                     .addComponent(new BotanistAnimationController())
-                    .addComponent(new DialogComponent(dialogueBox));
-       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                    .addComponent(new DialogComponent(dialogueBox))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(aiComponent);
+
+    NPCConfigs configs =
+            FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
    // botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
    // botanist.getComponent(TextureRenderComponent.class).scaleEntity();

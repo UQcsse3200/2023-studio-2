@@ -68,22 +68,13 @@ public class BotanistAnimationController extends Component {
 
             // Switch between animations.
             switch (animator.getCurrentAnimation()) {
-                case "oldman_left_1":
-                    animator.startAnimation("oldman_up_1");
-                    break;
-                case "oldman_right_1":
-                    animator.startAnimation("oldman_down_1");
-                    break;
-                case "oldman_down_1":
-                    animator.startAnimation("oldman_left_1");
-                    break;
-                case "oldman_up_1":
-                    animator.startAnimation("oldman_right_1");
-                    break;
-                default:
+                case "oldman_left_1" -> animator.startAnimation("oldman_up_1");
+                case "oldman_right_1" -> animator.startAnimation("oldman_down_1");
+                case "oldman_down_1" -> animator.startAnimation("oldman_left_1");
+                case "oldman_up_1" -> animator.startAnimation("oldman_right_1");
+                default ->
                     // Default to the bottom animation if not in any specific state.
-                    animator.startAnimation("oldman_down_1");
-                    break;
+                        animator.startAnimation("oldman_left_1");
             }
         }
     }

@@ -120,7 +120,7 @@ public class StructureFactory {
         Entity upgradeBench = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new HitboxComponent())
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"))
                 .addComponent(new UpgradeTree());
 

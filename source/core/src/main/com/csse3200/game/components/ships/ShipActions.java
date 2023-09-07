@@ -13,10 +13,19 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public class ShipActions extends Component {
     private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
+    private int maxHealth;
+    private int maxFuel;
+    private int currentAcceleration;
 
     private PhysicsComponent physicsComponent;
     private Vector2 flyDirection = Vector2.Zero.cpy();
     private boolean moving = false;
+
+    public ShipActions(int health, int fuel, int acceleration) {
+        this.maxHealth = health;
+        this.maxFuel = fuel;
+        this.currentAcceleration = acceleration;
+    }
 
     @Override
     public void create() {

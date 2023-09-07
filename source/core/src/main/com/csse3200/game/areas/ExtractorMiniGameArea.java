@@ -30,6 +30,7 @@ public class ExtractorMiniGameArea extends GameArea {
     };
 
     private final TerrainFactory terrainFactory;
+
     public final ArrayList<int[]> firePositions;
 
     public final ArrayList<int[]> holePositions;
@@ -147,11 +148,9 @@ public class ExtractorMiniGameArea extends GameArea {
         spawnEntity(ui);
     }
 
-    private void displayUI() {
-        Entity ui = new Entity();
-        ui.addComponent(new GameAreaDisplay("Extractor Repair minigame"));
-        spawnEntity(ui);
+    public enum MouseState {
+        DEFAULT,
+        EXTINGUISHER,
+        SPANNER
     }
-
-
 }

@@ -42,7 +42,7 @@ public class ShipInteractionPopup extends Window {
         add(titleLabel).padTop(20).center().top().expandX();
         row();
 
-        descriptionLabel = new Label("This is the interaction popup for the ship entity", labelStyle);
+        descriptionLabel = new Label("The ship is not ready yet for takeoff", labelStyle);
         descriptionLabel.setWidth(popupWidth * 0.9f);  // Using 90% of the popup width
         descriptionLabel.setWrap(true); //helps the text to stay within the bounds of the popup
         add(descriptionLabel).width(popupWidth * 0.9f).padTop(20).padLeft(popupWidth * 0.05f).expand().fill();

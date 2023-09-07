@@ -185,3 +185,103 @@ stand
   orig: 100, 200
   offset: 0, 0
   index: 0
+death
+  rotate: false
+  xy: 2600, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 2700, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 2800, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 2900, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 3000, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 3100, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 3200, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 3300, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 3400, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 3500, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 3600, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 3700, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 3800, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 3900, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+
+

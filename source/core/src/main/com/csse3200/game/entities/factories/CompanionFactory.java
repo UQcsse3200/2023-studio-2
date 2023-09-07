@@ -63,7 +63,7 @@ public class CompanionFactory {
                         .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
                         .addComponent(new CompanionInventoryComponent(stats.gold))
                         .addComponent(inputComponent)
-                        .addComponent(new FollowComponent(playerEntity, 3.f))
+                        .addComponent(new FollowComponent(playerEntity, 1.5f))
                         .addComponent(new CompanionInteractionControllerComponent())
                         .addComponent(new CompanionStatsDisplay(playerEntity))
                         .addComponent(animator)
@@ -76,6 +76,7 @@ public class CompanionFactory {
        // companion.addComponent(companionStatsDisplay);
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
+        companion.scaleHeight(0.9f);
 
         companion.getComponent(CompanionActions.class).setBulletTexturePath(stats.bulletTexturePath);
         return companion;

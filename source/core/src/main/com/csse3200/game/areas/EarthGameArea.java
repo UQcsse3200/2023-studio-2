@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
+import com.badlogic.gdx.Gdx;
+import java.util.List;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.factories.CompanionFactory;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 public class EarthGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     //private DialogueBox dialogueBox;
+    private static List<Entity> itemsOnMap = new ArrayList<>();
     private static final int NUM_TREES = 7;
     private static final int NUM_MELEE_PTE = 2;
     private static final int NUM_MELEE_DTE = 2;
@@ -159,7 +162,11 @@ public class EarthGameArea extends GameArea {
 
         playMusic();
     }
-
+    public static void removeItemOnMap(Entity entityToRemove) {
+        entityToRemove.setEnabled(false);
+        itemsOnMap.remove(entityToRemove);
+        Gdx.app.postRunnable(entityToRemove::dispose);
+    }
     private void spawnEnvironment() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
         Entity environment;
@@ -337,6 +344,7 @@ public class EarthGameArea extends GameArea {
     }
     private void spawnPotion(Entity companionEntity ,Entity laboratoryEntity){
         Entity newPotion = PotionFactory.createDeathPotion(companionEntity, laboratoryEntity);
+        itemsOnMap.add(newPotion);
         GridPoint2 pos = new GridPoint2(34, 18);
         spawnEntityAt(newPotion, pos, true, false);
     }

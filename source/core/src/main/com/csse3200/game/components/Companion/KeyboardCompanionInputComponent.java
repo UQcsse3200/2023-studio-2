@@ -3,7 +3,7 @@
  * It implements the InputProcessor interface to handle keyboard input events.
  */
 package com.csse3200.game.components.Companion;
-
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -11,6 +11,8 @@ import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 
 public class KeyboardCompanionInputComponent extends InputComponent {
+
+  AnimationRenderComponent animator;
     private final Vector2 walkDirection = Vector2.Zero.cpy();
 
     /**
@@ -36,21 +38,25 @@ public class KeyboardCompanionInputComponent extends InputComponent {
             }
             case Keys.I -> {
                 walkDirection.add(Vector2Utils.UP);
+                entity.getEvents().trigger("walkUp");
                 triggerWalkEvent();
                 return true;
             }
             case Keys.J -> {
                 walkDirection.add(Vector2Utils.LEFT);
+                entity.getEvents().trigger("walkLeft");
                 triggerWalkEvent();
                 return true;
             }
             case Keys.K -> {
                 walkDirection.add(Vector2Utils.DOWN);
+                entity.getEvents().trigger("walkDown");;
                 triggerWalkEvent();
                 return true;
             }
             case Keys.L -> {
                 walkDirection.add(Vector2Utils.RIGHT);
+                entity.getEvents().trigger("walkRight");
                 triggerWalkEvent();
                 return true;
             }

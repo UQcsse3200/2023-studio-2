@@ -4,20 +4,21 @@
  */
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.components.Companion.CompanionAnimationController;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.Companion.CompanionInteractionControllerComponent;
-import com.csse3200.game.components.Companion.CompanionInventoryComponent;
+import com.csse3200.game.components.Companion.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.entities.configs.CompanionConfig;
-import com.csse3200.game.components.Companion.CompanionStatsDisplay;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.FollowComponent;
@@ -43,9 +44,18 @@ public class CompanionFactory {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForCompanion();
 
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/companionSS.atlas", TextureAtlas.class));
+
+                            animator.addAnimation("UP", 1f);
+                            animator.addAnimation("DOWN", 1f);
+                            animator.addAnimation("LEFT", 1f);
+                            animator.addAnimation("RIGHT", 1f);
+
+
         Entity companion =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/Companion1.png"))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
                         .addComponent(new ColliderComponent())
@@ -54,17 +64,18 @@ public class CompanionFactory {
                         .addComponent(new CompanionInventoryComponent(stats.gold))
                         .addComponent(inputComponent)
                         .addComponent(new FollowComponent(playerEntity, 3.f))
-                        .addComponent(new CompanionInteractionControllerComponent());
+                        .addComponent(new CompanionInteractionControllerComponent())
+                        .addComponent(animator)
+                        .addComponent(new CompanionAnimationController());
 
         int health = companion.getComponent(CombatStatsComponent.class).getHealth();
         CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(true, 0, health);
         //CompanionInventoryComponent companionInventoryComponent = new CompanionInventoryComponent(10);
+        animator.startAnimation("DOWN");
         companion.addComponent(companionStatsDisplay);
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
-        companion.getComponent(TextureRenderComponent.class).scaleEntity();
-        companion.scaleHeight(1.5f);
-        companion.scaleWidth(1.5f);
+
         companion.getComponent(CompanionActions.class).setBulletTexturePath(stats.bulletTexturePath);
         return companion;
     }

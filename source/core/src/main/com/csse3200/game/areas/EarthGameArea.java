@@ -1,7 +1,6 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -22,8 +21,6 @@ import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.TerrainService;
-import com.csse3200.game.ui.DialogComponent;
-import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -59,7 +56,10 @@ public class EarthGameArea extends GameArea {
             "images/box_boy_leaf.png",
             "images/RightShip.png",
             "images/wall.png",
-            "images/Companion1.png",
+            "images/companionSS_0.png",
+            "images/companionSS_1.png",
+            "images/companionSS_2.png",
+            "images/companionSS.png",
             "images/wall2.png",
             "images/gate_close.png",
             "images/gate_open.png",
@@ -106,7 +106,8 @@ public class EarthGameArea extends GameArea {
             "images/wrench.atlas",
             "images/open_gate.atlas",
             "images/closed_gate.atlas",
-            "images/botanist.atlas"
+            "images/botanist.atlas",
+            "images/companionSS.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};

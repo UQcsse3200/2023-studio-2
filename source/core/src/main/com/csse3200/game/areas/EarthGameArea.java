@@ -56,14 +56,15 @@ public class EarthGameArea extends GameArea {
             "images/box_boy_leaf.png",
             "images/RightShip.png",
             "images/wall.png",
-            "images/companionSS_0.png",
-            "images/companionSS_1.png",
-            "images/companionSS_2.png",
-            "images/companionSS.png",
+//            "images/companionSS_0.png",
+//            "images/companionSS_1.png",
+//            "images/companionSS_2.png",
+//            "images/companionSS.png",
             "images/wall2.png",
             "images/gate_close.png",
             "images/gate_open.png",
             "images/ghost_king.png",
+            "images/companion_DOWN.png",
             "images/ghost_1.png",
             "images/base_enemy.png",
             "images/Troll.png",
@@ -107,7 +108,7 @@ public class EarthGameArea extends GameArea {
             "images/open_gate.atlas",
             "images/closed_gate.atlas",
             "images/botanist.atlas",
-            "images/companionSS.atlas"
+            "images/comp_spritesheet.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};

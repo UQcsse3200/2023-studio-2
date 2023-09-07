@@ -1,7 +1,3 @@
-/**
- * This class serves as a factory for creating companion entities in the game.
- * It defines methods for creating companion entities with predefined properties loaded from a JSON config file.
- */
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -22,6 +18,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.FollowComponent;
+
 
 /**
  * Factory to create a companion entity.
@@ -46,12 +43,15 @@ public class CompanionFactory {
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/companionSS.atlas", TextureAtlas.class));
-
-                            animator.addAnimation("UP", 1f);
-                            animator.addAnimation("DOWN", 1f);
-                            animator.addAnimation("LEFT", 1f);
-                            animator.addAnimation("RIGHT", 1f);
+                        ServiceLocator.getResourceService().getAsset("images/comp_spritesheet.atlas", TextureAtlas.class));
+        animator.addAnimation("UP", 1f);
+        animator.addAnimation("DOWN", 1f);
+        animator.addAnimation("LEFT", 1f);
+        animator.addAnimation("RIGHT", 1f);
+        animator.addAnimation("UP_RIGHT", 1f);
+        animator.addAnimation("UP_LEFT", 1f);
+        animator.addAnimation("DOWN_RIGHT", 1f);
+        animator.addAnimation("DOWN_LEFT", 1f);
 
 
         Entity companion =

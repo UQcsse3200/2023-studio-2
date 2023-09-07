@@ -30,8 +30,6 @@ import com.csse3200.game.services.ServiceLocator;
  * </pre>
  */
 public class Wall extends PlaceableEntity {
-
-    private boolean showHealthBar = true;
     private static final JoinableComponentShapes shapes =
             FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
 

@@ -77,6 +77,7 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
+            "map/treetop.png",
             "images/playerSS_6.png"
     };
     private static final String[] earthTextureAtlases = {
@@ -138,6 +139,7 @@ public class EarthGameArea extends GameArea {
         spawnEnemies();
         spawnBoss();
         spawnAsteroids();
+        spawnTreeTopLayer();
         spawnBotanist();
 
         playMusic();
@@ -169,6 +171,13 @@ public class EarthGameArea extends GameArea {
             }
         }
     }
+    private void spawnTreeTopLayer() {
+        GridPoint2 spawnTreeTop = new GridPoint2(0,0);
+                    Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
+                    spawnEntityAt(treeTop, spawnTreeTop, false, false);
+                }
+
+
     /**
      * Spawns a Botanist NPC entity at a predefined spawn position on the terrain.
      * The Botanist entity is created using the NPCFactory.createBotanist() method.

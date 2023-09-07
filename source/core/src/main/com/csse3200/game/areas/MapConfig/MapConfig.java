@@ -1,7 +1,6 @@
-package com.csse3200.game.areas;
+package com.csse3200.game.areas.MapConfig;
 
 import com.badlogic.gdx.math.GridPoint2;
-import net.dermetfan.utils.Pair;
 
 import java.util.List;
 
@@ -15,18 +14,20 @@ public class MapConfig {
     //Map Properties
     public String mapName = "Planet";
     public String terrainPath = "map/base.tmx";
-
-    //Wall Properties
-    public float wallSize = 0.1f;
+    public List<ResourceCondition> winConditions = null;
 
     //Powerup Properties
     public List<GridPoint2> healthPowerups = null;
     public List<GridPoint2> speedPowerups = null;
 
     //Extractor Properties
+    public int extractorStartHealth = 0;
     public List<GridPoint2> solstitePositions = null;
     public List<GridPoint2> durasteelPositions = null;
     public List<GridPoint2> nebulitePositions = null;
+    public long solstiteProduction = 0;
+    public long durasteelProduction = 0;
+    public long nebuliteProduction = 0;
 
     //Ship Properties
     public GridPoint2 shipPosition = null;

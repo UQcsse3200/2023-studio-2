@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.MapConfig.MapConfig;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
@@ -41,6 +42,7 @@ public class MapGameArea extends GameArea{
     private Entity playerEntity;
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
+        //TODO: Check if this causes an error from diff run locations
         mapConfig = FileLoader.readClass(MapConfig.class, configPath, FileLoader.Location.INTERNAL);
         this.game = game;
         this.terrainFactory = terrainFactory;
@@ -124,25 +126,24 @@ public class MapGameArea extends GameArea{
         GridPoint2 tileBounds = terrain.getMapBounds(0);
         Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
-        float wallSize = mapConfig.wallSize;
         // Left
         spawnEntityAt(
-                ObstacleFactory.createWall(wallSize, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+                ObstacleFactory.createWall(ObstacleFactory.WALL_SIZE, worldBounds.y), GridPoint2Utils.ZERO, false, false);
         // Right
         spawnEntityAt(
-                ObstacleFactory.createWall(wallSize, worldBounds.y),
+                ObstacleFactory.createWall(ObstacleFactory.WALL_SIZE, worldBounds.y),
                 new GridPoint2(tileBounds.x, 0),
                 false,
                 false);
         // Top
         spawnEntityAt(
-                ObstacleFactory.createWall(worldBounds.x, wallSize),
+                ObstacleFactory.createWall(worldBounds.x, ObstacleFactory.WALL_SIZE),
                 new GridPoint2(0, tileBounds.y),
                 false,
                 false);
         // Bottom
         spawnEntityAt(
-                ObstacleFactory.createWall(worldBounds.x, wallSize), GridPoint2Utils.ZERO, false, false);
+                ObstacleFactory.createWall(worldBounds.x, ObstacleFactory.WALL_SIZE), GridPoint2Utils.ZERO, false, false);
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
     }
 
@@ -200,10 +201,10 @@ public class MapGameArea extends GameArea{
      * @param resource - Type of extractor to create
      * @param positions - List of positions to place the extractors at
      */
-    private void spawnResourceExtractors(Resource resource, List<GridPoint2> positions) {
+    private void spawnResourceExtractors(Resource resource, List<GridPoint2> positions, long production) {
         if (positions != null) {
             for (GridPoint2 pos: positions) {
-                Entity extractor = StructureFactory.createExtractor(30, resource, (long) 100.0, 1);
+                Entity extractor = StructureFactory.createExtractor(mapConfig.extractorStartHealth, resource, production, 1);
                 spawnEntityAt(extractor, pos, true, false);
             }
         }
@@ -215,9 +216,9 @@ public class MapGameArea extends GameArea{
      */
     private void spawnExtractors() {
         //Spawn Extractors
-        spawnResourceExtractors(Resource.Solstite, mapConfig.solstitePositions);
-        spawnResourceExtractors(Resource.Durasteel, mapConfig.durasteelPositions);
-        spawnResourceExtractors(Resource.Nebulite, mapConfig.nebulitePositions);
+        spawnResourceExtractors(Resource.Solstite, mapConfig.solstitePositions, mapConfig.solstiteProduction);
+        spawnResourceExtractors(Resource.Durasteel, mapConfig.durasteelPositions, mapConfig.durasteelProduction);
+        spawnResourceExtractors(Resource.Nebulite, mapConfig.nebulitePositions, mapConfig.nebuliteProduction);
         
         //Spawn Display
         ResourceDisplay resourceDisplayComponent = new ResourceDisplay()
@@ -233,7 +234,7 @@ public class MapGameArea extends GameArea{
      */
     private void spawnShip() {
         if (mapConfig.shipPosition != null) {
-            Entity ship = StructureFactory.createShip(game);
+            Entity ship = StructureFactory.createShip(game, mapConfig.winConditions);
             spawnEntityAt(ship, mapConfig.shipPosition, false, false);
         }
     }
@@ -273,7 +274,7 @@ public class MapGameArea extends GameArea{
     private void spawnEnemies() {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-        //TODO: Stop these being random
+        //TODO: Stop these being random?
 
         // Spawning enemies based on set number of each type
         for (int i = 0; i < mapConfig.numMeleePTE; i++) {

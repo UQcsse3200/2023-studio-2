@@ -20,6 +20,8 @@ import com.csse3200.game.entities.buildables.Wall;
  */
 public class ObstacleFactory {
 
+  public static float WALL_SIZE = 0.1f;
+
   private static final WallConfigs configs =
           FileLoader.readClass(WallConfigs.class, "configs/walls.json");
 

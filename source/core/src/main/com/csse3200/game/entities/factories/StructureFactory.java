@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.MapConfig.ResourceCondition;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.ExtractorRepairPartComponent;
 import com.csse3200.game.components.InteractableComponent;
@@ -16,12 +17,12 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.GameStateObserver;
@@ -50,10 +51,6 @@ public class StructureFactory {
      * @param tickSize the amount of the resource produced at each tick
      * @return a new extractor Entity
      */
-
-
-
-
     public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         Entity extractor = new Entity()
                 .addComponent(new DamageTextureComponent("images/extractor.png")
@@ -88,10 +85,26 @@ public class StructureFactory {
         return extractorRepairPart;
     }
 
+    private static boolean checkWinCondition(List<ResourceCondition>  requirements) {
+        if (requirements == null) {
+            return true;
+        }
+
+        GameStateObserver stateObserver = ServiceLocator.getGameStateObserverService();
+        for (ResourceCondition condition: requirements) {
+            String resourceKey = "resource/" + condition.getResource();
+            int resourceCount = (int) stateObserver.getStateData(resourceKey);
+            if (resourceCount < condition.getThreshold()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Creates a ship entity
      */
-    public static Entity createShip(GdxGame game) {
+    public static Entity createShip(GdxGame game, List<ResourceCondition> requirements) {
         Entity ship =
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/Ship.png"))
@@ -99,11 +112,7 @@ public class StructureFactory {
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                         .addComponent(new InteractableComponent(entity -> {
-                            //Exit to main menu if resource > 1000
-                            GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
-                            String resourceKey = "resource/" + Resource.Solstite;
-                            int currentResourceCount = (int) gameStateOb.getStateData(resourceKey);
-                            if (currentResourceCount > 1000) {
+                            if (checkWinCondition(requirements)) {
                                 game.setScreen(GdxGame.ScreenType.MAIN_MENU);
                             }
                         }, 5));

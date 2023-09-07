@@ -61,9 +61,13 @@
 
   "mapName": "Planet Earth",
   "terrainPath": "map/base.tmx",
-
-  "wallSize": 0.1,
-
+  "winConditions": [
+    {
+      "resource": "solstite",
+      "threshold": 100
+    }
+  ],
+  
   "healthPowerups": [
     {
       "x": 10,
@@ -80,14 +84,9 @@
       "y": 25
     }
   ],
-
+  
+  "extractorStartHealth": 0,
   "solstitePositions": [
-    {
-      "x": 24,
-      "y": 28
-    }
-  ],
-  "durasteelPositions": [
     {
       "x": 20,
       "y": 28
@@ -95,10 +94,19 @@
   ],
   "nebulitePositions": [
     {
+      "x": 24,
+      "y": 28
+    }
+  ],
+  "durasteelPositions": [
+    {
       "x": 28,
       "y": 28
     }
   ],
+  "solstiteProduction": 100,
+  "nebuliteProduction": 100,
+  "durasteelProduction": 100,
   
   "shipPosition": {
     "x": 40,

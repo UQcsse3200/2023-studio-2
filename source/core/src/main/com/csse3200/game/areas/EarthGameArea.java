@@ -234,7 +234,7 @@ public class EarthGameArea extends GameArea {
     private void spawnShip() {
         GridPoint2 spawnPosition = new GridPoint2(7*terrain.getMapBounds(0).sub(1, 1).x/12,
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
-        Entity ship = StructureFactory.createShip(game);
+        Entity ship = StructureFactory.createShip(game, null); //Doesn't implement winconditions
         spawnEntityAt(ship, spawnPosition, false, false);
     }
 

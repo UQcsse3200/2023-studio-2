@@ -1,0 +1,18 @@
+{
+  "structureOptions":[
+    {
+      "name": "wall",
+      "cost": {
+        "unobtanium": 50
+      },
+      "texture": "images/structure-icons/wall.png"
+    },
+    {
+      "name": "turret",
+      "cost": {
+        "unobtanium": 50
+      },
+      "texture": "images/structure-icons/turret.png"
+    }
+  ]
+}

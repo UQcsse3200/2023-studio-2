@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.*;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.TurretConfig;
 import com.csse3200.game.entities.configs.TurretConfigs;
 import com.csse3200.game.files.FileLoader;
@@ -15,7 +16,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-public class Turret extends Entity {
+public class Turret extends PlaceableEntity {
 
     private final boolean showHealthBar = true;
 

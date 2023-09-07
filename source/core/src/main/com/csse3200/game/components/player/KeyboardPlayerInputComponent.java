@@ -174,6 +174,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           interactionController.interact();
         }
         return true;
+      case Keys.T:
+        entity.getEvents().trigger("change_structure");
       default:
         return false;
     }

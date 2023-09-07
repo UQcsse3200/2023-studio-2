@@ -14,6 +14,59 @@ public class KeyboardCompanionInputComponent extends InputComponent {
 
   AnimationRenderComponent animator;
     private final Vector2 walkDirection = Vector2.Zero.cpy();
+    private int flagW = 0;
+    private int flagA = 0;
+    private int flagS = 0;
+    private int flagD = 0;
+    private int flagMul = 0;
+
+    private int testing = 0;
+
+
+    /**
+     * Returns value for testing.
+     * @return int
+     */
+    public int getTesting() {
+        return testing;
+    }
+    public void setTesting(int testing) {
+        this.testing = testing;
+    }
+
+    private boolean leftCtrlFlag = false;
+
+    /**
+     * @return int
+     */
+    private int getMovFlagSum() {
+        return flagW + flagA + flagS + flagD;
+    }
+
+    private void diagonal() {
+        int movFlagSum = getMovFlagSum();
+        if (movFlagSum >= 3){
+            walkDirection.set(Vector2.Zero);
+        }
+        if (movFlagSum == 2) {
+            flagMul = 1;
+            walkDirection.scl(new Vector2(0.707f, 0.707f));
+        } else if (movFlagSum == 1) {
+            if (flagW == 1) {
+                walkDirection.set(Vector2Utils.UP);
+            } else if (flagA == 1) {
+                walkDirection.set(Vector2Utils.LEFT);
+            } else if (flagS == 1) {
+                walkDirection.set(Vector2Utils.DOWN);
+            } else if (flagD == 1) {
+                walkDirection.set(Vector2Utils.RIGHT);
+            }
+            triggerWalkEvent();
+        } else if (movFlagSum == 0) {
+            flagMul = 0;
+            walkDirection.scl(0);
+        }
+    }
 
     /**
      * Constructs a new KeyboardCompanionInputComponent with a priority of 5.
@@ -37,26 +90,68 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                 return true;
             }
             case Keys.I -> {
-                walkDirection.add(Vector2Utils.UP);
-                entity.getEvents().trigger("walkUp");
+//                walkDirection.add(Vector2Utils.UP);
+//                entity.getEvents().trigger("walkUp");
+//                triggerWalkEvent();
+//                return true;
+                flagW = 1;
+                if (getMovFlagSum() == 1) {
+                    walkDirection.scl(0);
+                    walkDirection.add(Vector2Utils.UP);
+                } else {
+                    walkDirection.add(Vector2Utils.UP);
+                    diagonal();
+                }
                 triggerWalkEvent();
                 return true;
             }
             case Keys.J -> {
-                walkDirection.add(Vector2Utils.LEFT);
-                entity.getEvents().trigger("walkLeft");
+//                walkDirection.add(Vector2Utils.LEFT);
+//                entity.getEvents().trigger("walkLeft");
+//                triggerWalkEvent();
+//                return true;
+                flagA = 1;
+                if (getMovFlagSum() == 1) {
+                    walkDirection.scl(0);
+                    walkDirection.add(Vector2Utils.LEFT);
+                } else {
+                    walkDirection.add(Vector2Utils.LEFT);
+                    diagonal();
+                }
                 triggerWalkEvent();
                 return true;
             }
             case Keys.K -> {
-                walkDirection.add(Vector2Utils.DOWN);
-                entity.getEvents().trigger("walkDown");;
+//                walkDirection.add(Vector2Utils.DOWN);
+//                entity.getEvents().trigger("walkDown");;
+//                triggerWalkEvent();
+//                return true;
+
+                flagS = 1;
+                if (getMovFlagSum() == 1) {
+                    walkDirection.scl(0);
+                    walkDirection.add(Vector2Utils.DOWN);
+                } else {
+                    walkDirection.add(Vector2Utils.DOWN);
+                    diagonal();
+                }
                 triggerWalkEvent();
                 return true;
             }
             case Keys.L -> {
-                walkDirection.add(Vector2Utils.RIGHT);
-                entity.getEvents().trigger("walkRight");
+//                walkDirection.add(Vector2Utils.RIGHT);
+//                entity.getEvents().trigger("walkRight");
+//                triggerWalkEvent();
+//                return true;
+
+                flagD = 1;
+                if (getMovFlagSum() == 1) {
+                    walkDirection.scl(0);
+                    walkDirection.add(Vector2Utils.RIGHT);
+                } else {
+                    walkDirection.add(Vector2Utils.RIGHT);
+                    diagonal();
+                }
                 triggerWalkEvent();
                 return true;
             }
@@ -77,22 +172,62 @@ public class KeyboardCompanionInputComponent extends InputComponent {
     public boolean keyUp(int keycode) {
         switch (keycode) {
             case Keys.I -> {
-                walkDirection.sub(Vector2Utils.UP);
+//                walkDirection.sub(Vector2Utils.UP);
+//                triggerWalkEvent();
+//                return true;
+                flagW = 0;
+                diagonal();
+                if (getMovFlagSum() == 2) {
+                    diagonal();
+                }
+                if (getMovFlagSum() == 0) {
+                    walkDirection.scl(0);
+                }
                 triggerWalkEvent();
                 return true;
             }
             case Keys.J -> {
-                walkDirection.sub(Vector2Utils.LEFT);
+//                walkDirection.sub(Vector2Utils.LEFT);
+//                triggerWalkEvent();
+//                return true;
+                flagA = 0;
+                diagonal();
+                if (getMovFlagSum() == 2) {
+                    diagonal();
+                }
+                if (getMovFlagSum() == 0) {
+                    walkDirection.scl(0);
+                }
                 triggerWalkEvent();
                 return true;
             }
             case Keys.K -> {
-                walkDirection.sub(Vector2Utils.DOWN);
+//                walkDirection.sub(Vector2Utils.DOWN);
+//                triggerWalkEvent();
+//                return true;
+                flagS = 0;
+                diagonal();
+                if (getMovFlagSum() == 2) {
+                    diagonal();
+                }
+                if (getMovFlagSum() == 0) {
+                    walkDirection.scl(0);
+                }
                 triggerWalkEvent();
                 return true;
             }
             case Keys.L -> {
-                walkDirection.sub(Vector2Utils.RIGHT);
+//                walkDirection.sub(Vector2Utils.RIGHT);
+//                triggerWalkEvent();
+//                return true;
+                flagD = 0;
+                diagonal();
+                if (getMovFlagSum() == 2) {
+                    diagonal();
+                }
+                if (getMovFlagSum() == 0) {
+                    walkDirection.scl(0);
+                }
                 triggerWalkEvent();
                 return true;
             }
@@ -102,15 +237,55 @@ public class KeyboardCompanionInputComponent extends InputComponent {
         }
     }
 
+    public Vector2 getDirection(){
+        return this.walkDirection;
+    }
+
     /**
      * Triggers the walk event for the companion based on the current walk direction.
      * If the walk direction is zero, it triggers the walkStop event.
      */
     private void triggerWalkEvent() {
-        if (walkDirection.epsilonEquals(Vector2.Zero)) {
-            entity.getEvents().trigger("walkStop");
-        } else {
-            entity.getEvents().trigger("walk", walkDirection);
+            if (this.getTesting() == 0){
+                if (walkDirection.epsilonEquals(Vector2.Zero)) {
+                    entity.getEvents().trigger("walkStop");
+                } else {
+                    if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
+                        entity.getEvents().trigger("walkUpLeft");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
+                        entity.getEvents().trigger("walkUpRight");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
+                        entity.getEvents().trigger("walkUp");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.DOWN)) {
+                        entity.getEvents().trigger("walkDown");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_LEFT)) {
+                        entity.getEvents().trigger("walkDownLeft");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_RIGHT)) {
+                        entity.getEvents().trigger("walkDownRight");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.LEFT)) {
+                        entity.getEvents().trigger("walkLeft");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
+                        entity.getEvents().trigger("walkRight");
+                    }
+                    entity.getEvents().trigger("walk", walkDirection);
+                }
+            }
+
+
+    }
+
+    private double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt)  {
+        double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
+        if (angle < 0) {
+            angle += 360;
         }
+        return angle;
     }
 }

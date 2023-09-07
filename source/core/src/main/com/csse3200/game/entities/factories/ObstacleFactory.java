@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.configs.TurretConfigs;
 import com.csse3200.game.entities.configs.WallConfigs;
@@ -147,7 +148,7 @@ public class ObstacleFactory {
   }
 
 
-  public static Entity createCustomTurret(TurretType type, Entity player) {
+  public static PlaceableEntity createCustomTurret(TurretType type, Entity player) {
     return new Turret(type,player);
   }
 

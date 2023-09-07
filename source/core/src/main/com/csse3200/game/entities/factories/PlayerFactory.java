@@ -18,10 +18,10 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
+import com.csse3200.game.components.structures.StructurePicker;
 
 /**
  * Factory to create a player entity.
@@ -71,7 +71,8 @@ public class PlayerFactory {
             .addComponent(new PlayerAnimationController())
             .addComponent(new WeaponComponent())
             .addComponent(new DialogComponent(dialogueBox))
-            .addComponent(new InteractionControllerComponent(false));
+            .addComponent(new InteractionControllerComponent(false))
+            .addComponent(new StructurePicker());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

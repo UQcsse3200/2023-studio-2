@@ -2,11 +2,13 @@ package com.csse3200.game.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
@@ -38,6 +40,18 @@ public class DialogueBox extends Dialog {
         this.game = game;
         this.dialogueBox = dialogueBox;
         this.dialogueLabel = new Label("", skin);
+
+
+        Table imageTable = new Table();
+        Image image = new Image(new Texture("images/escape-earth2.png"));
+        imageTable.setBackground(image.getDrawable());
+        image.setScaling(Scaling.stretch);
+
+        imageTable.setBackground(image.getDrawable());
+
+        // Make the image table fill the entire content area of the dialog
+        getContentTable().add(imageTable).pad(20f).width(800f).height(350f).center();
+        getContentTable().row();
 
 
         Label titleLabel = getTitleLabel();
@@ -79,8 +93,8 @@ public class DialogueBox extends Dialog {
 
 
         // Size and positioning of the dialog
-        setSize(1200f, 600f); // Adjust the size as needed
-        setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, Gdx.graphics.getHeight() - getHeight() - 60); // Adjust the Y position as needed
+        setSize(1920f, 1080f); // Adjust the size as needed
+        setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, Gdx.graphics.getHeight() - getHeight()/2); // Adjust the Y position as needed
 
 
     }

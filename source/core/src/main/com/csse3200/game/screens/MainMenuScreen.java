@@ -31,10 +31,10 @@ public class MainMenuScreen extends ScreenAdapter {
   public static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  public static final int frameCount = 5;
+  public static final int frameCount = 105;
   private static final String[] mainMenuTextures = {"images/escape-earth2.png"};
   public static String[] transitionTextures = new String[frameCount];
-  private static final String animationPrefix = "images/menu_animations/menu_animations";
+  private static final String animationPrefix = "images/main_menu_video/menu_animations";
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;

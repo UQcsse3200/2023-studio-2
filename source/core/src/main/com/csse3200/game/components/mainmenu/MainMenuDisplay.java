@@ -35,7 +35,7 @@ public class MainMenuDisplay extends UIComponent {
     public static int frame;
     private Image transitionFrames;
     private long lastFrameTime;
-    private int fps = 15;
+    private int fps = 17;
     private final long frameDuration =  (long)(800 / fps);
 
     @Override
@@ -161,8 +161,8 @@ public class MainMenuDisplay extends UIComponent {
             transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
                     .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
             transitionFrames.setWidth(Gdx.graphics.getWidth());
-            transitionFrames.setHeight(Gdx.graphics.getHeight() / (float)2); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
-            transitionFrames.setPosition(0, Gdx.graphics.getHeight() / (float)2 + 15); //https://rules.sonarsource.com/java/tag/overflow/RSPEC-2184/
+            transitionFrames.setHeight(Gdx.graphics.getHeight());
+            transitionFrames.setPosition(0, 0);
             frame++;
             lastFrameTime = System.currentTimeMillis();
         } else {

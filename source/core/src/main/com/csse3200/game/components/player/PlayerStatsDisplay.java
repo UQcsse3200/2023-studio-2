@@ -80,7 +80,7 @@ public class PlayerStatsDisplay extends UIComponent {
     // Check if health is zero
     if (health == 0) {
       if (dialogue != null) {
-        dialogue.showdialogue("You Died!");
+        dialogue.showdialogue("");
       }
 
 

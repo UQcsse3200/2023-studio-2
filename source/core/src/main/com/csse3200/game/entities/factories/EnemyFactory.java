@@ -172,6 +172,9 @@ public class EnemyFactory {
     if (type == EnemyType.Melee) {
       // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
+        // delete this line when finished with it
+        aiTaskComponent.addTask(new BossTask("Test"));
+        // heheehhehehehehehheehehehheheheh
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         } else {

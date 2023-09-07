@@ -1,49 +1,32 @@
 package com.csse3200.game.components.Companion;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Quaternion;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.physics.components.PhysicsComponent;
+
 
 /**
  * A UI component for displaying Companion stats, e.g. health.
  */
 public class CompanionStatsDisplay extends UIComponent {
     Table table;
+    private boolean update = false;
+    Table table2;
 
-    private static final float SCALE_REDUCTION = 70;
-    private static final float MESSAGE_DISPLAY_TIME = 5.0f; // Time in seconds
+    public Entity playerEntity;
 
-    // Configuration variables for positioning
-    private final int health;
-    private final boolean center;
-    private final float offsetY;
-
-    // UI element for displaying the message
     public Label messageLabel;
+    public Label label;
 
-    // Remaining time for message display
-    public float messageDisplayTimeLeft;
 
-    /**
-     * Constructor for CompanionStatsDisplay.
-     *
-     * @param center  Whether to center the display.
-     * @param offsetY Offset in the Y-axis for positioning.
-     * @param health  The initial health value to display.
-     */
-    public CompanionStatsDisplay(boolean center, float offsetY, int health) {
-        this.center = center;
-        this.offsetY = offsetY;
-        this.health = health;
+    public CompanionStatsDisplay(Entity playerEntitiy){
+        this.playerEntity = playerEntitiy;
+
     }
 
     /**
@@ -55,6 +38,7 @@ public class CompanionStatsDisplay extends UIComponent {
         addActors();
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
         //entity.getEvents().addListener("updateGold", this::updateCompanionGoldUI);
+        playerEntity.getEvents().addListener("updateHealth", this:: updatePlayerHealthUI);
     }
 
     /**
@@ -67,55 +51,60 @@ public class CompanionStatsDisplay extends UIComponent {
         table.setFillParent(true);
         table.padTop(85f).padLeft(5f);
 
-        // Heart image
-        float heartSideLength = 30f;
-
         // Health text
-        int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+        int Chealth = entity.getComponent(CombatStatsComponent.class).getHealth();
         //int gold = entity.getComponent(InventoryComponent.class).getGold();
-        CharSequence healthText = String.format("Companion Health: %d", health);
+        CharSequence healthText = String.format("Companion Health: %d", Chealth);
         messageLabel = new Label(healthText, skin, "large");
        /* CharSequence goldText = String.format("Companion Gold: %d", gold);
         messageLabel = new Label(goldText, skin, "large");
 */
         table.add(messageLabel);
         stage.addActor(table);
+
     }
 
-    private void updateUIPosition() {
-        float yPos = offsetY;
-        if (center) {
-            yPos += entity.getCenterPosition().y;
-        } else {
-            yPos += entity.getPosition().y;
-        }
+    private void addAlert(int health){
+        PhysicsComponent companionPhysics = entity.getComponent(PhysicsComponent.class);
+        //calculate the player position
+        Vector2 compPos = companionPhysics.getBody().getPosition();
+        //compPos = playerEntity.getPosition();
+        System.out.println(compPos);
+        table2 = new Table();
+        table2.top().left();
+        table2.setFillParent(true);
+        table2.setPosition(compPos.x + 550f, compPos.y - 200F);
+        //table2.padTop(comPosy).padLeft(compPosx);
 
-        // Calculate the scaled position for the UI element
-        var position = new Vector3(entity.getCenterPosition().x, yPos, 0);
-        position.scl(SCALE_REDUCTION);
-        messageLabel.setPosition(position.x, position.y);
+        // Health text
+        CharSequence healthText2 = String.format("Low Health: %d", health);
+        label = new Label(healthText2, skin, "large");
+        table2.add(label);
+        stage.addActor(table2);
     }
+
 
     @Override
     public void draw(SpriteBatch batch) {
         // Code for drawing UI elements and updating the projection matrix.
     }
 
-    /**
-     * Updates the UI component based on the elapsed time.
-     *
-     * @param deltaTime The time elapsed since the last frame.
-     */
-    public void update(float deltaTime) {
-        super.update();
+    public boolean  updatePlayerHealthUI(int health ){
+        //super.update();
+        if(health<=50 && update==false) {
+            addAlert(health);
+            //comPosy=entity.getPosition().y;
+            //compPosx=entity.getPosition().x;
 
-        if (messageDisplayTimeLeft > 0) {
-            messageDisplayTimeLeft -= deltaTime;
-            if (messageDisplayTimeLeft <= 0) {
-                messageLabel.setText(""); // Clear the message when time expires
-            }
+            update = true;
+            return update;
         }
+        if(update==true){
+            label.remove();
+        }
+        return false;
     }
+
 
     /**
      * Updates the companion's health on the UI.
@@ -135,5 +124,6 @@ public class CompanionStatsDisplay extends UIComponent {
     public void dispose() {
         super.dispose();
         messageLabel.remove();
+        label.remove();
     }
 }

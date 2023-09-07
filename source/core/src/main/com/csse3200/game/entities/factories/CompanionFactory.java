@@ -65,14 +65,15 @@ public class CompanionFactory {
                         .addComponent(inputComponent)
                         .addComponent(new FollowComponent(playerEntity, 3.f))
                         .addComponent(new CompanionInteractionControllerComponent())
+                        .addComponent(new CompanionStatsDisplay(playerEntity))
                         .addComponent(animator)
                         .addComponent(new CompanionAnimationController());
 
-        int health = companion.getComponent(CombatStatsComponent.class).getHealth();
-        CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(true, 0, health);
+//        int health = companion.getComponent(CombatStatsComponent.class).getHealth();
+//        CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(true, 0, health);
         //CompanionInventoryComponent companionInventoryComponent = new CompanionInventoryComponent(10);
         animator.startAnimation("DOWN");
-        companion.addComponent(companionStatsDisplay);
+       // companion.addComponent(companionStatsDisplay);
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
 

@@ -99,7 +99,7 @@ public class ExtractorMiniGameArea extends GameArea {
         spawnEntity(extractorFirePart);
         this.firePositions.remove(randomIndex);
     }
-    private void spawnExtractorsHolePart() {
+    public void spawnExtractorsHolePart() {
 
         Entity extractorHolePart = StructureFactory.createExtractorHolePart(terrain, this);
         int randomIndex = MathUtils.random(0, holePositions.size() - 1);

@@ -209,6 +209,7 @@ public class ExtractorMinigameWindow extends Window {
     public boolean remove() {
         //Stop overriding input when exiting minigame
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
         return super.remove();
     }
 

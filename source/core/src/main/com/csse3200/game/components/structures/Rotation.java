@@ -15,4 +15,13 @@ public enum Rotation {
             case WEST -> "west";
         };
     }
+
+    public Rotation getRotationPos() {
+        return switch (this) {
+            case NORTH -> NORTH;
+            case SOUTH -> SOUTH;
+            case EAST -> EAST;
+            case WEST -> WEST;
+        };
+    }
 }

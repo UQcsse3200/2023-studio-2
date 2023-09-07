@@ -63,8 +63,8 @@ public class ExtractorMiniGameArea extends GameArea {
         spawnExtractorsRepairs();
         spawnExtinguisher();
         spawnSpanner();
-        spawnExtractorsRepairPart();
-        spawnExtractorsRepairPart();
+        spawnExtractorsFirePart();
+        spawnExtractorsFirePart();
         spawnExtractorsHolePart();
         spawnExtractorsHolePart();
     }

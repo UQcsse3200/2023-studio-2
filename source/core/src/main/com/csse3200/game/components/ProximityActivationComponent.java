@@ -10,11 +10,10 @@ import java.util.*;
  */
 public class ProximityActivationComponent extends Component {
     private final float radius;
-    private final ProximityFunc entered;
-    private final ProximityFunc exited;
+    protected final ProximityFunc entered;
+    protected final ProximityFunc exited;
     private final List<Entity> entities;
     private final Map<Entity, Boolean> entityWithinRadiusMap = new HashMap<>();
-    private boolean isWithinRadius;
 
     public ProximityActivationComponent(float radius, Entity entity,
                                         ProximityFunc entered, ProximityFunc exited) {

@@ -48,7 +48,7 @@ public class ExtractorMinigameWindow extends Window {
      * @return New extractor minigame window
      */
     public static ExtractorMinigameWindow MakeNewMinigame(Entity extractor) {
-        Texture background = ServiceLocator.getResourceService().getAsset("images/ExtractorMiniGameBackground.png", Texture.class);
+        Texture background = ServiceLocator.getResourceService().getAsset("images/SpaceMiniGameBackground.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new ExtractorMinigameWindow(background, extractor);
     }

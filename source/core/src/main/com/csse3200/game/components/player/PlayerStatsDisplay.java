@@ -1,7 +1,9 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -56,6 +58,8 @@ public class PlayerStatsDisplay extends UIComponent {
 
     table.add(heartImage).size(heartSideLength).pad(5);
     table.add(healthLabel);
+
+
     stage.addActor(table);
   }
 
@@ -78,6 +82,7 @@ public class PlayerStatsDisplay extends UIComponent {
       if (dialogue != null) {
         dialogue.showdialogue("You Died!");
       }
+
 
       // Transition to the EndGameScreen
       //game.setScreen(new EndGameScreen(game));

@@ -109,6 +109,6 @@ public class DialogueBox extends Dialog {
     }
     private void onOK() {
         logger.info("Start game");
-        remove();
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 }

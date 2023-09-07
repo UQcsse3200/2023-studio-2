@@ -1,0 +1,9 @@
+
+{
+  "health": 150,
+  "baseAttack": 5,
+  "attackMultiplier": 1,
+  "isImmune": false,
+  "gold": 10,
+  "favouriteColour": "peach"
+}

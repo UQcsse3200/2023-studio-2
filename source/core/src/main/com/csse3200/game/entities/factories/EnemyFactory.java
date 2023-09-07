@@ -109,7 +109,13 @@ public class EnemyFactory {
     // UI adjustments
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
-    enemy.scaleHeight(2f);
+    float scale = 2.0f;
+    if (type == EnemyType.BossRanged){
+      scale = 1.5f;
+    } else if (type == EnemyType.Ranged) {
+      scale = 1.0f;
+    }
+    enemy.scaleHeight(scale);
     return enemy;
   }
 
@@ -166,6 +172,9 @@ public class EnemyFactory {
     if (type == EnemyType.Melee) {
       // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
+        // delete this line when finished with it
+        aiTaskComponent.addTask(new BossTask("Test"));
+        // heheehhehehehehehheehehehheheheh
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
         } else {

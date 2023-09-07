@@ -16,9 +16,9 @@ public class SpawnerComponent extends Component {
     private long lastTime;
     private ArrayList<Entity> targets;
     private int currentWave;
-    private long waveDelay = 10000;
+    private long waveDelay = 20000; // 20 second delay between enemy waves
     private boolean isSpawning;
-    private long spawnDelay = 1000; // 1 second delay between enemy spawns
+    private long spawnDelay = 3000; // 3 second delay between enemy spawns
     private int enemiesToSpawn;
     private int enemiesSpawned;
 

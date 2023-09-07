@@ -148,7 +148,7 @@ public class EnemyFactory {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 6f, 6f, 3f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f, 3f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
@@ -167,7 +167,7 @@ public class EnemyFactory {
       // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 5, 3f, 4f));
         }
@@ -175,7 +175,7 @@ public class EnemyFactory {
       // Troll
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
@@ -186,7 +186,7 @@ public class EnemyFactory {
       // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
@@ -194,7 +194,7 @@ public class EnemyFactory {
       // B.U.L.L
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }

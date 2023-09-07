@@ -109,7 +109,13 @@ public class EnemyFactory {
     // UI adjustments
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
-    enemy.scaleHeight(2f);
+    float scale = 2.0f;
+    if (type == EnemyType.BossRanged){
+      scale = 1.5f;
+    } else if (type == EnemyType.Ranged) {
+      scale = 1.0f;
+    }
+    enemy.scaleHeight(scale);
     return enemy;
   }
 

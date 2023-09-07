@@ -360,12 +360,12 @@ public class EarthGameArea extends GameArea {
             Entity meleeDTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(meleeDTE, randomPos2, true, true);
         }
-//
-//        for (int i = 0; i < NUM_RANGE_PTE; i++) {
-//            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
-//            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
-//            spawnEntityAt(rangePTE, randomPos3, true, true);
-//        }
+
+        for (int i = 0; i < NUM_RANGE_PTE; i++) {
+            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
+            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+            spawnEntityAt(rangePTE, randomPos3, true, true);
+        }
     }
 
     /**

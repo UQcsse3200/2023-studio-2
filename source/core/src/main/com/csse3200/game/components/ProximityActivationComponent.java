@@ -9,10 +9,10 @@ import java.util.*;
  * entities enters or exits a proximity.
  */
 public class ProximityActivationComponent extends Component {
-    private final float radius;
+    protected final float radius;
     protected final ProximityFunc entered;
     protected final ProximityFunc exited;
-    private final List<Entity> entities;
+    private List<Entity> entities = new ArrayList<>();
     private final Map<Entity, Boolean> entityWithinRadiusMap = new HashMap<>();
 
     public ProximityActivationComponent(float radius, Entity entity,
@@ -20,7 +20,6 @@ public class ProximityActivationComponent extends Component {
         this.radius = radius;
         this.entered = entered;
         this.exited = exited;
-        this.entities = new ArrayList<>();
         this.entities.add(entity);
         entityWithinRadiusMap.put(entity, false);
     }
@@ -32,6 +31,12 @@ public class ProximityActivationComponent extends Component {
         this.exited = exited;
         this.entities = entities;
         entities.forEach(entity -> entityWithinRadiusMap.put(entity, false));
+    }
+
+    public ProximityActivationComponent(float radius, ProximityFunc entered, ProximityFunc exited) {
+        this.radius = radius;
+        this.entered = entered;
+        this.exited = exited;
     }
 
     /**

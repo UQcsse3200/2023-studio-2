@@ -17,15 +17,17 @@ public class FOVComponent extends ProximityActivationComponent {
     private final Map<Entity, Boolean> entityIsInFOV = new HashMap<>();
 
     public FOVComponent(float radius, List<Entity> enemies, ProximityFunc entered, ProximityFunc exited, FOVFunc shoot, FOVFunc stopShoot, RotationRenderComponent renderComponent) {
-        super(radius, enemies, entered, exited);
+        super(radius, entered, exited);
         this.renderComponent = renderComponent;
+        this.enemies = enemies;
         this.shoot = shoot;
         this.stopShoot = stopShoot;
     }
 
     public FOVComponent(float radius, Entity enemy, ProximityFunc entered, ProximityFunc exited, FOVFunc shoot, FOVFunc stopShoot, RotationRenderComponent renderComponent) {
-        super(radius, enemy, entered, exited);
+        super(radius, entered, exited);
         this.renderComponent = renderComponent;
+        this.enemies.add(enemy);
         this.shoot = shoot;
         this.stopShoot = stopShoot;
     }

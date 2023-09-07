@@ -10,6 +10,9 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 public class PlayerAnimationController extends Component {
     AnimationRenderComponent animator;
 
+    /**
+     * Adds event listener to the entity to change the animations
+     */
     @Override
     public void create() {
         super.create();
@@ -24,64 +27,121 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener("walkDownRight", this::animateDownRight);
 
         entity.getEvents().addListener("walkStop", this::animateStandDown);
-        /*
-        entity.getEvents().addListener("standDown", this::animateStandDown);
-        entity.getEvents().addListener("standLeft", this::animateStandLeft);
-        entity.getEvents().addListener("standRight", this::animateStandRight);
-        entity.getEvents().addListener("standUp", this::animateStandUp);*/
+
         entity.getEvents().addListener("dodgeDown", this::animateDodgeDown);
         entity.getEvents().addListener("dodgeLeft", this::animateDodgeLeft);
         entity.getEvents().addListener("dodgeRight", this::animateDodgeRight);
         entity.getEvents().addListener("dodgeUp", this::animateDodgeUp);
     }
 
+    /**
+     * Initialise walk left animation
+     */
     void animateLeft() {
         animator.startAnimation("Character_Left");
     }
+
+    /**
+     * Initialise walk right animation
+     */
     void animateRight() {
         animator.startAnimation("Character_Right");
     }
+
+    /**
+     * Initialise walk up animation
+     */
     void animateUp() {
         animator.startAnimation("Character_Up");
     }
+
+    /**
+     * Initialise walk down animation
+     */
     void animateDown() {
         animator.startAnimation("Character_Down");
     }
+
+    /**
+     * Initialise walk up-left animation
+     */
     void animateUpLeft() {
         animator.startAnimation("Character_UpLeft");
     }
+
+    /**
+     * Initialise walk up-right animation
+     */
     void animateUpRight() {
         animator.startAnimation("Character_UpRight");
     }
+
+    /**
+     * Initialise walk down-left animation
+     */
     void animateDownLeft() {
         animator.startAnimation("Character_DownLeft");
     }
+
+    /**
+     * Initialise walk down-right animation
+     */
     void animateDownRight() {
         animator.startAnimation("Character_DownRight");
     }
 
+    /**
+     * Initialise stand facing down animation
+     */
     void animateStandDown() {
         animator.startAnimation("Character_StandDown");
     }
+
+    /**
+     * Initialise stand facing left animation
+     */
     void animateStandLeft() {
         animator.startAnimation("Character_StandLeft");
     }
+
+    /**
+     * Initialise stand facing right animation
+     */
     void animateStandRight() {
         animator.startAnimation("Character_StandRight");
     }
+
+    /**
+     * Initialise stand facing up animation
+     */
     void animateStandUp() {
         animator.startAnimation("Character_StandUp");
     }
 
+    /**
+     * Initialise dodge down animation
+     */
     void animateDodgeDown() {
         animator.startAnimation("Character_RollDown");
     }
+
+    /**
+     * Initialise dodge left animation
+     */
     void animateDodgeLeft() {
         animator.startAnimation("Character_RollLeft");
     }
+
+    /**
+     * Initialise dodge right animation
+     */
     void animateDodgeRight() {
         animator.startAnimation("Character_RollRight");
     }
+
+    /**
+     * Initialise dodge up animation
+     */
     void animateDodgeUp() {
         animator.startAnimation("Character_RollUp");
     }

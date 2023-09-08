@@ -1,5 +1,6 @@
 package com.csse3200.game.components;
 
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.structures.Rotation;
 import com.csse3200.game.components.structures.RotationRenderComponent;
 import com.csse3200.game.entities.Entity;
@@ -11,25 +12,19 @@ import java.util.Map;
 public class FOVComponent extends ProximityActivationComponent {
 
     private RotationRenderComponent renderComponent;
-    private final FOVFunc shoot;
-    private final FOVFunc stopShoot;
     private List<Entity> enemies;
     private final Map<Entity, Boolean> entityIsInFOV = new HashMap<>();
 
-    public FOVComponent(float radius, List<Entity> enemies, ProximityFunc entered, ProximityFunc exited, FOVFunc shoot, FOVFunc stopShoot, RotationRenderComponent renderComponent) {
+    public FOVComponent(float radius, List<Entity> enemies, ProximityFunc entered, ProximityFunc exited, RotationRenderComponent renderComponent) {
         super(radius, entered, exited);
         this.renderComponent = renderComponent;
         this.enemies = enemies;
-        this.shoot = shoot;
-        this.stopShoot = stopShoot;
     }
 
-    public FOVComponent(float radius, Entity enemy, ProximityFunc entered, ProximityFunc exited, FOVFunc shoot, FOVFunc stopShoot, RotationRenderComponent renderComponent) {
+    public FOVComponent(float radius, Entity enemy, ProximityFunc entered, ProximityFunc exited, RotationRenderComponent renderComponent) {
         super(radius, entered, exited);
         this.renderComponent = renderComponent;
         this.enemies.add(enemy);
-        this.shoot = shoot;
-        this.stopShoot = stopShoot;
     }
 
     @Override
@@ -40,26 +35,30 @@ public class FOVComponent extends ProximityActivationComponent {
 
             if (!isInFOV && enemyIsInFOV(enemy)) {
                 entityIsInFOV.put(enemy, true);
-                shoot.call(enemy);
+                // override the existing entry method to enable shooting
+                entered.call(enemy);
 
             } else if (isInFOV && !enemyIsInFOV(enemy)) {
                 entityIsInFOV.put(enemy, false);
                 startAtlasRotation();
-                stopShoot.call(enemy);
+                // override the existing exit method to disable shooting
+                exited.call(enemy);
             }
         }
     }
 
     public boolean enemyIsInFOV(Entity enemy) {
 
+        Vector2 angleToEnemy = new Vector2(enemy.getPosition().x - entity.getPosition().x, enemy.getPosition().y - entity.getPosition().y);
+
         if (this.entityIsInProximity(enemy)) {
-            if (renderComponent.getRotation() == Rotation.NORTH && enemy.getPosition().angleDeg() < 90) {
+            if (renderComponent.getRotation() == Rotation.NORTH && 45 < angleToEnemy.angleDeg() && enemy.getPosition().angleDeg() < 135) {
                 return true;
-            } else if (renderComponent.getRotation() == Rotation.SOUTH && enemy.getPosition().angleDeg() > 90) {
+            } else if (renderComponent.getRotation() == Rotation.EAST && 135 < angleToEnemy.angleDeg() && enemy.getPosition().angleDeg() < 225) {
                 return true;
-            } else if (renderComponent.getRotation() == Rotation.EAST && enemy.getPosition().angleDeg() < 180) {
+            } else if (renderComponent.getRotation() == Rotation.SOUTH && 225 < angleToEnemy.angleDeg() && enemy.getPosition().angleDeg() < 315) {
                 return true;
-            } else if (renderComponent.getRotation() == Rotation.WEST && enemy.getPosition().angleDeg() > 180) {
+            } else if (renderComponent.getRotation() == Rotation.WEST && 315 < angleToEnemy.angleDeg() && enemy.getPosition().angleDeg() < 45) {
                 return true;
             }
         }

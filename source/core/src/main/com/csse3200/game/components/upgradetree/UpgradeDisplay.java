@@ -1,4 +1,4 @@
-package com.csse3200.game.upgradetree;
+package com.csse3200.game.components.upgradetree;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -14,18 +14,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
-* A GUI component for the UpgradeTree
-*/
+ * The UpgradeDisplay class represents a GUI component for displaying upgrades.
+ * The display visualizes upgrade trees where each item can be upgraded based on available materials.
+ * <p>
+ * The class extends the Window class from libGDX to represent a pop-up or overlay menu in the game.
+ */
 public class UpgradeDisplay extends Window {
     private static final float WINDOW_WIDTH_SCALE = 0.8f;
     private static final float WINDOW_HEIGHT_SCALE = 0.65f;
@@ -46,7 +46,12 @@ public class UpgradeDisplay extends Window {
     private static final float VERTICAL_SPACING = 200f;
     private static final float HORIZONTAL_SPACING = 150f;
 
-
+    /**
+     * Factory method for creating an instance of UpgradeDisplay.
+     *
+     * @param upgradeBench The entity representing the upgrade bench in the game.
+     * @return A new instance of UpgradeDisplay.
+     */
     public static UpgradeDisplay createUpgradeDisplay(Entity upgradeBench) {
         Texture background =
                 ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
@@ -54,6 +59,12 @@ public class UpgradeDisplay extends Window {
         return new UpgradeDisplay(background, upgradeBench);
     }
 
+    /**
+     * Constructor for UpgradeDisplay.
+     *
+     * @param background    The texture to be used for the background of the upgrade display.
+     * @param upgradeBench  The entity representing the upgrade bench in the game.
+     */
     public UpgradeDisplay(Texture background, Entity upgradeBench) {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
 
@@ -76,7 +87,8 @@ public class UpgradeDisplay extends Window {
     }
 
     /**
-     * Stores melee, ranged, and building trees inside a tree data structure :)
+     * Builds the predefined trees for the melee, ranged, and building items.
+     * These trees dictate the progression of weapons that can be unlocked.
      */
     private void buildTrees() {
         // todo: reduce imagePath hardcode
@@ -107,6 +119,11 @@ public class UpgradeDisplay extends Window {
         trees.add(buildRoot);
     }
 
+    /**
+     * Creates and organizes the upgrade buttons based on the built upgrade trees.
+     *
+     * @return A group containing all the upgrade buttons.
+     */
     private Group createUpgradeButtons() {
         Group group = new Group();
 
@@ -121,6 +138,14 @@ public class UpgradeDisplay extends Window {
         return group;
     }
 
+    /**
+     *  Positions nodes and creates buttons for them.
+     *
+     * @param node The current node to position.
+     * @param x    The x-coordinate of the node.
+     * @param y    The y-coordinate of the node.
+     * @param group The group where the buttons will be added.
+     */
     private void createAndPositionNodes(UpgradeNode node, float x, float y, Group group) {
 
         // base case
@@ -128,18 +153,17 @@ public class UpgradeDisplay extends Window {
             return;
         }
 
-        node.x = x;
-        node.y = y;
-
+        node.setX(x);
+        node.setY(y);
 
         ImageButton button = createWeaponButtons(node, SIZE, x, y);
         group.addActor(button);
 
-        int childCount = node.children.size();
+        int childCount = node.getChildren().size();
         float totalWidth = childCount * HORIZONTAL_SPACING;
         float currentX = x - totalWidth / 2 + HORIZONTAL_SPACING / 2;
 
-        for (UpgradeNode child : node.children) {
+        for (UpgradeNode child : node.getChildren()) {
             float childX = currentX;
             float childY = y - VERTICAL_SPACING;
 
@@ -148,6 +172,11 @@ public class UpgradeDisplay extends Window {
         }
     }
 
+    /**
+     * Draws a background box around each upgrade node.
+     *
+     * @param node The node around which the background will be drawn.
+     */
     private void drawBoxBackground(UpgradeNode node) {
         if (node == null) {
             return;
@@ -160,28 +189,37 @@ public class UpgradeDisplay extends Window {
         float offsetY = this.getY() - (dx / 2);
 
         shapeRenderer.setColor(Color.GRAY);
-        shapeRenderer.rect(node.x + offsetX, node.y + offsetY, rectSize, rectSize);
+        shapeRenderer.rect(node.getX() + offsetX, node.getY() + offsetY, rectSize, rectSize);
 
-        for (UpgradeNode child : node.children) {
+        for (UpgradeNode child : node.getChildren()) {
             drawBoxBackground(child);
         }
     }
 
+    /**
+     * Draws lines connecting parent nodes to their child nodes.
+     *
+     * @param node The current node from which lines will be drawn to its children.
+     * @param batch The batch used for rendering.
+     */
     private void drawLines(UpgradeNode node, Batch batch) {
-        if (node == null || node.children.isEmpty()) {
+        if (node == null || node.getChildren().isEmpty()) {
             return;
         }
 
-        Vector2 parentPos = localToStageCoordinates(new Vector2(node.x + SIZE/2, node.y + SIZE/2));
+        Vector2 parentPos = localToStageCoordinates(new Vector2(node.getX() + SIZE/2, node.getY() + SIZE/2));
 
-        for (UpgradeNode child : node.children) {
-            Vector2 childPos = localToStageCoordinates(new Vector2(child.x + SIZE/2, child.y + SIZE/2));
+        for (UpgradeNode child : node.getChildren()) {
+            Vector2 childPos = localToStageCoordinates(new Vector2(child.getX() + SIZE/2, child.getY() + SIZE/2));
             shapeRenderer.rectLine(parentPos, childPos, 5);
 
             drawLines(child, batch);
         }
     }
 
+    /**
+     * Sets up the window dimensions.
+     */
     private void setupWindowDimensions() {
         Stage stage = ServiceLocator.getRenderService().getStage();
         setWidth(stage.getWidth() * WINDOW_WIDTH_SCALE);
@@ -191,12 +229,24 @@ public class UpgradeDisplay extends Window {
                 stage.getHeight() / 2 - getHeight() / 2 * getScaleY());
     }
 
+    /**
+     * Creates a TextureRegionDrawable
+     *
+     * @param path The path of the texture.
+     * @param size The size of the resulting drawable.
+     * @return The TextureRegionDrawable instance.
+     */
     private TextureRegionDrawable createTextureRegionDrawable(String path, float size) {
         TextureRegionDrawable drawable = new TextureRegionDrawable(new Texture(path));
         drawable.setMinSize(size, size);
         return drawable;
     }
 
+    /**
+     * Creates an exit button for the upgrade tree display.
+     *
+     * @return The created exit button.
+     */
     private Button createExitButton() {
         TextureRegionDrawable exitTexture = createTextureRegionDrawable("images/upgradetree/exit.png", 100f);
         Button exitButton = new Button(exitTexture);
@@ -210,6 +260,11 @@ public class UpgradeDisplay extends Window {
         return exitButton;
     }
 
+    /**
+     * Creates a label showing the available materials for upgrades.
+     *
+     * @return The created materials label.
+     */
     private Label createMaterialsLabel() {
         Skin skin = new Skin(Gdx.files.internal(SKIN_PATH));
         int materials = upgradeBench.getComponent(UpgradeTree.class).getMaterials();
@@ -220,15 +275,23 @@ public class UpgradeDisplay extends Window {
         return materialsLabel;
     }
 
-    // todo: make this less gross
+    /**
+     * Creates a button for a given weapon node.
+     *
+     * @param node The upgrade node for which the button is being created.
+     * @param size The size of the button.
+     * @param posX The x-coordinate for the button's position.
+     * @param posY The y-coordinate for the button's position.
+     * @return The created ImageButton.
+     */
     private ImageButton createWeaponButtons(UpgradeNode node, float size, float posX, float posY) {
-        TextureRegionDrawable drawable = createTextureRegionDrawable(node.imagePath, size);
+        TextureRegionDrawable drawable = createTextureRegionDrawable(node.getImagePath(), size);
         ImageButton button = new ImageButton(drawable);
 
         UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
 
         Image lock = null;
-        if (!stats.isWeaponUnlocked(node.weaponType)) {
+        if (!stats.isWeaponUnlocked(node.getWeaponType())) {
             lock = new Image(new Texture("images/upgradetree/lock.png"));
             lock.setSize(size, size);
             button.addActor(lock);
@@ -243,10 +306,10 @@ public class UpgradeDisplay extends Window {
                 int requiredMaterials = 50;  // todo: make each level cost more
 
                 // Try to unlock a new weapon if the node is locked
-                if (!stats.isWeaponUnlocked(node.weaponType)) {
+                if (!stats.isWeaponUnlocked(node.getWeaponType())) {
                     if (stats.getMaterials() >= requiredMaterials) {
                         stats.subtractMaterials(requiredMaterials);
-                        stats.unlockWeapon(node.weaponType);
+                        stats.unlockWeapon(node.getWeaponType());
                         button.setColor(1f,1f,1f,1f);
 
                         materialsLabel.setText(String.format("Materials: %d", stats.getMaterials()));
@@ -269,6 +332,11 @@ public class UpgradeDisplay extends Window {
         remove();
     }
 
+    /**
+     * Override the removal process to unregister input overrides.
+     *
+     * @return Returns true if the actor was removed.
+     */
     @Override
     public boolean remove() {
         //Stop overriding input when exiting minigame
@@ -276,6 +344,14 @@ public class UpgradeDisplay extends Window {
         return super.remove();
     }
 
+    /**
+     * Renders the background, the connection lines, and the ImageButtons for the upgrade tree.
+     *
+     * @param batch       The batch used for rendering.
+     * @param parentAlpha The parent alpha value, for transparency.
+     * @param x           The x-coordinate of the bottom left corner of the background.
+     * @param y           The y-coordinate of the bottom left corner of the background.
+     */
     @Override
     protected void drawBackground(Batch batch, float parentAlpha, float x, float y) {
         // Draw order: Window -> Lines -> ImageButtons
@@ -302,6 +378,12 @@ public class UpgradeDisplay extends Window {
         batch.begin();
     }
 
+    /**
+     * Draws the UpgradeDisplay and its children.
+     *
+     * @param batch       The batch used for rendering.
+     * @param parentAlpha The parent alpha value, for transparency.
+     */
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);

@@ -13,9 +13,6 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
@@ -148,6 +145,10 @@ public class EarthGameArea extends GameArea {
         spawnBotanist();
 
         playMusic();
+
+        GridPoint2 portalPosition = new GridPoint2(5, 5);
+        Entity portal = PortalFactory.createPortal();
+        ServiceLocator.getStructurePlacementService().PlaceStructureAt(portal, portalPosition, false, false);
     }
 
     private void spawnPortal() {

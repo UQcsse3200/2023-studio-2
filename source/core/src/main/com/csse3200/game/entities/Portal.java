@@ -22,7 +22,6 @@ public class Portal extends Entity {
     public Portal(Entity player) {
         addComponent(new ProximityActivationComponent(1.5f, player, this::teleport, null));
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
-        //addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
     }
 
     /**

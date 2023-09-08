@@ -32,16 +32,16 @@ class InventoryComponentTest {
 
     @Test
     void testGetEquippedType() {
-        InventoryComponent inventory = new InventoryComponent();
-        inventory.setEquipped(3);
-        assertEquals(WeaponType.WOODHAMMER, inventory.getEquippedType());
+    InventoryComponent inventory = new InventoryComponent();
+    inventory.setEquipped(3);
+    assertEquals(WeaponType.WOODHAMMER, inventory.getEquippedType());
     }
 
     @Test
     void testChangeEquippedType() {
-        InventoryComponent inventory = new InventoryComponent();
-        inventory.setEquipped(3);
-        inventory.changeEquipped(WeaponType.KATANA);
-        assertEquals(WeaponType.KATANA, inventory.getEquippedType());
+    InventoryComponent inventory = new InventoryComponent();
+    inventory.setEquipped(3);
+    inventory.changeEquipped(WeaponType.KATANA);
+    assertEquals(WeaponType.KATANA, inventory.getEquippedType());
     }
 }

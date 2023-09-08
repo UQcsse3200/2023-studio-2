@@ -49,13 +49,18 @@ public class DeathComponent extends Component {
 
             entity.getEvents().trigger("dispose");
             // Schedule a task to execute entity::dispose after a delay
+            // Get the duration of the death animation
+            float deathAnimationDuration = animator.getAnimationDuration("death");
+            // Convert the duration from seconds to milliseconds for the Timer
+            long delay = (long) (deathAnimationDuration * 1000);
             Timer timer = new Timer();
+
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     Gdx.app.postRunnable(entity::dispose);
                 }
-            }, 1500); // 10 milliseconds delay
+            }, delay); // Delay based on the death animation duration
         }
     }
 }

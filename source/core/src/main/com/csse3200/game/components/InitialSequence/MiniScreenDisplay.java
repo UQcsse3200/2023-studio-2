@@ -66,20 +66,14 @@ public class MiniScreenDisplay extends UIComponent {
 
         // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
         String story = """
-             {WAIT=0.2}
+             {WAIT=0.02}
              READY
-             {WAIT=0.2}
+             {WAIT=0.02}
              TO
-             {WAIT=0.2}
+             {WAIT=0.02}
              PLAY?
              {WAIT}
-             
-            
-             {WAIT}
-             
-           
-             {WAIT=1}
-             
+         
              {WAIT=1}
              """;
         storyLabel = new TypingLabel(story, skin); // Create the TypingLabel with the formatted story

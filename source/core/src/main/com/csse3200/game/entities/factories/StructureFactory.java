@@ -16,7 +16,6 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -25,8 +24,8 @@ import java.util.ArrayList;
 
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.GameStateObserver;
-import com.csse3200.game.upgradetree.UpgradeDisplay;
-import com.csse3200.game.upgradetree.UpgradeTree;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 
 /**
  * Factory to create structure entities - such as extractors or ships.

@@ -1,4 +1,4 @@
-package com.csse3200.game.upgradetree;
+package com.csse3200.game.components.upgradetree;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;

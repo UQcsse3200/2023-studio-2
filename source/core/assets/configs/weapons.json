@@ -15,7 +15,7 @@
     "rotationSpeed": 6,
     "initialRotationOffset": 90,
     "imageRotationOffset": 45,
-    "attackCooldown": 50,
+    "attackCooldown": 10,
     "textureAtlas": "images/baseballbat.atlas",
     "imageScale" : 1
   },

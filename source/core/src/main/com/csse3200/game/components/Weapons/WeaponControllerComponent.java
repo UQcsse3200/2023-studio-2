@@ -1,10 +1,12 @@
 package com.csse3200.game.components.Weapons;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
@@ -44,6 +46,15 @@ public class WeaponControllerComponent extends Component {
         this.imageRotationOffset = imageRotationOffset;
     }
 
+    @Override
+    public void create() {
+        this.entity.getEvents().addListener("death", this::setDuration);
+    }
+
+    private void setDuration(int duration) {
+        this.remainingDuration = duration;
+    }
+
     /**
      * Function to control projectile movement once it has spawned
      */
@@ -52,7 +63,7 @@ public class WeaponControllerComponent extends Component {
         //switch statement to define weapon movement based on type (a projectile
         Vector2 movement = switch (this.weaponType) {
             case SLING_SHOT -> weapon_target_update();
-            case ELEC_WRENCH -> weapon_1_update();
+            case ELEC_WRENCH -> weapon_meleeswing_update();
             case THROW_ELEC_WRENCH -> weapon_2_update();
             case STICK -> null; // todo
             case LASERGUN -> null;
@@ -67,12 +78,13 @@ public class WeaponControllerComponent extends Component {
         //Update position and rotation of projectile
         entity.setPosition(new Vector2(position.x + movement.x, position.y + movement.y));
         entity.setRotation(this.currentRotation - this.imageRotationOffset);
-        if (--this.remainingDuration == 0) {this.despawn();}
+        if (--this.remainingDuration <= 0) {this.despawn();}
     }
 
     private void despawn() {
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
         animator.stopAnimation();
+        entity.getComponent(HitboxComponent.class).setLayer((short) 0);
         Gdx.app.postRunnable(entity::dispose);
     }
 
@@ -84,12 +96,15 @@ public class WeaponControllerComponent extends Component {
         return movement;
     }
 
-    private Vector2 weapon_1_update() {
-        Vector2 movement = new Vector2(0,0);
+    private Vector2 weapon_meleeswing_update() {
+        WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
+        Vector2 movement = weaponTargetComponent.get_pos_of_target();
+
+        //Vector2 movement = new Vector2(0,0);
         this.currentRotation -= this.rotationSpeed;
         double radians = Math.toRadians(currentRotation);
-        movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
-        movement.y = (float) Math.sin(radians) * 0.015f * this.speed;
+        movement.x += (float) Math.cos(radians) * 0.015f * this.speed;
+        movement.y += (float) Math.sin(radians) * 0.015f * this.speed;
         return movement;
     }
 

@@ -28,9 +28,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
   private static final float DODGE_SPEED = 3f;
   private static final float WALK_SPEED = 1f;
+  private static final int DODGE_COOLDOWN = 300;
+  private static final int DODGE_DURATION = 300;
 
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean dodge_available = true;
+  private boolean interacting = false;
 
   private int equiped = 1;
   private int testing = 0;
@@ -78,7 +81,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     keyFlags.put(keycode, 1);
 
-    triggerWalkEvent();
+
     switch (keycode) {
       case Keys.SPACE:
         if (!dodge_available ||
@@ -107,6 +110,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerInventoryEvent(0);
         return true;
       case Keys.W, Keys.S, Keys.A, Keys.D:
+        triggerWalkEvent();
         return true;
 
       default:
@@ -264,7 +268,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         timer.purge();
       }
     };
-    timer.schedule(stopDodge, 300);
+    timer.schedule(stopDodge, DODGE_DURATION);
   }
 
   private void triggerInventoryEvent(int i) {
@@ -288,7 +292,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         timer.purge();
       }
     };
-    timer.schedule(makeDodgeAvailable, 3000);
+    timer.schedule(makeDodgeAvailable, DODGE_COOLDOWN);
   }
 
   /**

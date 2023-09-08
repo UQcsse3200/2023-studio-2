@@ -70,6 +70,9 @@ public class WeaponControllerComponent extends Component {
             case KATANA -> null;
             case WOODHAMMER -> null;
             case STONEHAMMER -> null;
+            case TEMP1 -> null;
+            case TEMP2 -> null;
+            case TEMP3 -> null;
         };
 
 

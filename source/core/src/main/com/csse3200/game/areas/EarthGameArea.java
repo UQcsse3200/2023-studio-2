@@ -19,6 +19,7 @@ import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
@@ -47,6 +48,8 @@ public class EarthGameArea extends GameArea {
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
+
+    private static final float PORTAL_SIZE = 1.0f;
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
             "images/extractor.png",
@@ -78,6 +81,7 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
             "map/treetop.png",
+            "map/portal.png",
             "images/playerSS_6.png"
     };
     private static final String[] earthTextureAtlases = {
@@ -132,6 +136,7 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
+        spawnPortal();
 
         spawnShip();
         spawnPlayer();
@@ -145,9 +150,16 @@ public class EarthGameArea extends GameArea {
         playMusic();
     }
 
+    private void spawnPortal() {
+        GridPoint2 pos = new GridPoint2(15, 15);
+        Entity portal = PortalFactory.createPortal(PORTAL_SIZE, PORTAL_SIZE);
+        spawnEntityAt(portal, pos, false, false);
+    }
+
     private void spawnEnvironment() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
         Entity environment;
+        StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
         for (int y = 0; y < collisionLayer.getHeight(); y++) {
             for (int x = 0; x < collisionLayer.getWidth(); x++) {
                 TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, collisionLayer.getHeight() - 1 - y);
@@ -166,7 +178,7 @@ public class EarthGameArea extends GameArea {
                     else {
                         environment = ObstacleFactory.createEnvironment();
                     }
-                    spawnEntityAt(environment, tilePosition, false, false);
+                    placementService.PlaceStructureAt(environment, tilePosition, false, false);
                 }
             }
         }

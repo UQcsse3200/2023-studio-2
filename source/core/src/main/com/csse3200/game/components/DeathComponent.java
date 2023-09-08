@@ -45,18 +45,17 @@ public class DeathComponent extends Component {
         if (combatStats.isDead()) {
             AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
             animator.stopAnimation();
-            entity.getComponent(HitboxComponent.class).setLayer((short) 0);
-            ServiceLocator.getEntityService().unregister(entity);
 
-//            entity.getEvents().trigger("dispose");
-//            // Schedule a task to execute entity::dispose after a delay
-//            Timer timer = new Timer();
-//            timer.schedule(new TimerTask() {
-//                @Override
-//                public void run() {
-//                    Gdx.app.postRunnable(entity::dispose);
-//                }
-//            }, 1500); // 10 milliseconds delay
+
+            entity.getEvents().trigger("dispose");
+            // Schedule a task to execute entity::dispose after a delay
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Gdx.app.postRunnable(entity::dispose);
+                }
+            }, 1500); // 10 milliseconds delay
         }
     }
 }

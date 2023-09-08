@@ -64,8 +64,8 @@ public class AttackFactory {
                             (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.NPC)))
                     .addComponent(weaponController);
 
-    AnimationRenderComponent animator = new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset(config.textureAtlas, TextureAtlas.class));
+    TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
+    AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
 
     animator.addAnimation("attack", 0.1f, Animation.PlayMode.LOOP_PINGPONG);
 

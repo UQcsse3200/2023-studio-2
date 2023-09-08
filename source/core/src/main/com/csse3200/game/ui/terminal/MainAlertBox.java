@@ -1,4 +1,4 @@
-package com.csse3200.game.ui;
+package com.csse3200.game.ui.terminal;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;

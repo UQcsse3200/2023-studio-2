@@ -83,6 +83,8 @@ public class CombatStatsComponent extends Component {
           }
         };
         timer.schedule(killPlayer, 500);
+      } else if (isDead() && entity.getEntityType().equals("playerWeapon")) {
+            entity.getEvents().trigger("death", 0);
       }
     }
   }

@@ -63,6 +63,7 @@ public class AttackFactory {
                     .addComponent(new TouchAttackComponent((short)
                             (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.NPC)))
                     .addComponent(weaponController);
+    attack.setEntityType("playerWeapon");
 
     TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
     AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
@@ -72,15 +73,16 @@ public class AttackFactory {
     //TODO make this use player
     attack
             .addComponent(animator)
-            .addComponent(new CombatStatsComponent(1, 10, 1, true));
+            .addComponent(new CombatStatsComponent(1, 10, 1, false));
 
     //TODO animations to control rotational apperance
     animator.startAnimation("attack");
     attack.scaleWidth(config.imageScale);
 
     switch (weaponType) {
-      case SLING_SHOT:
+      case SLING_SHOT, ELEC_WRENCH:
         attack.addComponent(new WeaponTargetComponent(weaponType, player));
+        break;
     }
 
     return attack;

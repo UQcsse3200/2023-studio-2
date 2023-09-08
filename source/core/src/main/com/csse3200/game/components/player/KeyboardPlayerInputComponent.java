@@ -6,6 +6,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.ai.tasks.TaskRunner;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
@@ -38,8 +42,23 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private int equiped = 1;
   private int testing = 0;
 
-  HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
+  static HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
   Vector2 lastMousePos = new Vector2(0, 0);
+
+  /**
+   * Checks if any Window is currently open and visible on the stage.
+   * @return true if any window is open and visible; false otherwise.
+   */
+  public boolean isWindowOpen() {
+    for (Actor actor : ServiceLocator.getRenderService().getStage().getActors()) {
+      if (actor instanceof Window && actor.isVisible()) {
+        System.out.println("Found");
+        return true;
+      }
+    }
+    System.out.println("Not found");
+    return false;
+  }
 
   /**
    *
@@ -93,8 +112,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.F:
         InteractionControllerComponent interactionController = entity
             .getComponent(InteractionControllerComponent.class);
+
         if (interactionController != null) {
           interactionController.interact();
+        }
+
+        // Stop movement if a menu is open
+        if (isWindowOpen()) {
+          keyFlags.clear();
+          triggerWalkEvent();
         }
         return true;
       case Keys.NUM_1:

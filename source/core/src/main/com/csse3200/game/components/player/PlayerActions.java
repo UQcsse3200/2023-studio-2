@@ -103,7 +103,6 @@ public class PlayerActions extends Component {
     }
 
     void updateInventory(int i) {
-        System.out.println("here");
         switch (i) {
             case 1:
                 entity.getComponent(InventoryComponent.class).setEquipped(1);
@@ -118,7 +117,6 @@ public class PlayerActions extends Component {
                 entity.getComponent(InventoryComponent.class).cycleEquipped();
                 break;
         }
-        System.out.println(entity.getComponent(InventoryComponent.class).getEquipped());
     }
 
     /**

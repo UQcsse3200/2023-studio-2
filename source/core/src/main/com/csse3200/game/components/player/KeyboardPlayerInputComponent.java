@@ -3,25 +3,17 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.ai.tasks.TaskRunner;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
-import com.csse3200.game.services.ServiceLocator;
 
 //Testing:
 import com.csse3200.game.components.Weapons.WeaponType;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Timer;
 
 /**
@@ -38,7 +30,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean dodge_available = true;
 
-  private int equiped = 1;
+  private int equippedItem = 1;
   private int testing = 0;
 
   static HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
@@ -171,22 +163,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    if (equiped == 3) {
-      if (button == Input.Buttons.RIGHT) {
-        entity.getEvents().trigger("remove", screenX, screenY);
-        return true;
-      }
-      if (button != Input.Buttons.LEFT) {
-        return false;
-      }
-      if (is_pressed(Keys.CONTROL_LEFT)) {
-        entity.getEvents().trigger("ctrl_place", screenX, screenY);
-      }
-      if (is_pressed(Keys.SHIFT_LEFT)) {
-        entity.getEvents().trigger("place", screenX, screenY);
-      }
-    }
-
     Vector2 position = mouseToGamePos(screenX, screenY);
     this.lastMousePos = position.cpy();
     PlayerActions playerActions = entity.getComponent(PlayerActions.class);
@@ -195,17 +171,35 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     if (cooldown != 0) {
       return false;
     }
+
     double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
-    if (is_pressed(Keys.R) && equiped == 1) {
-      entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.SLING_SHOT, (float) initRot);
-    }
-    if (equiped == 1) {
-      if (is_pressed(Keys.T)) {
-        entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
-      }
-      if (is_pressed(Keys.Y)) {
-        entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
-      }
+
+    switch (equippedItem) {
+      // melee
+      case 1:
+        if (button == Input.Buttons.LEFT) {
+          entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
+        }
+        break;
+
+      // ranged
+      case 2:
+        if (button == Input.Buttons.LEFT) {
+          entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
+        }
+        break;
+
+      // building
+      case 3:
+        if (button == Input.Buttons.LEFT) {
+          entity.getEvents().trigger("place", screenX, screenY);
+        } else if (button == Input.Buttons.RIGHT) {
+          entity.getEvents().trigger("remove", screenX, screenY);
+        }
+        break;
+
+      default:
+        return false;
     }
     return true;
   }
@@ -296,7 +290,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   private void triggerInventoryEvent(int i) {
     entity.getEvents().trigger("inventory", i);
-    this.equiped = entity.getComponent(InventoryComponent.class).getEquipped();
+    this.equippedItem = entity.getComponent(InventoryComponent.class).getEquipped();
   }
 
   /**

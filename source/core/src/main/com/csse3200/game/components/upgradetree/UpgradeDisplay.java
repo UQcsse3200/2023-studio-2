@@ -91,7 +91,7 @@ public class UpgradeDisplay extends Window {
      * These trees dictate the progression of weapons that can be unlocked.
      */
     private void buildTrees() {
-        // todo: reduce imagePath hardcode
+        // todo: possibly create config file
         // Melee Tree
         UpgradeNode meleeRoot = new UpgradeNode(WeaponType.STICK, "images/upgradetree/stick.png");
         UpgradeNode swordNode = new UpgradeNode(WeaponType.KATANA, "images/upgradetree/sword.png");

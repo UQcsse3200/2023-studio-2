@@ -114,7 +114,7 @@ public class EarthGameArea extends GameArea {
             "images/player.atlas"
 
     };
-    private static final String[] earthSounds = {"sounds/Impact4.wav"};
+    private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.wav";
     private static final String[] earthMusic = {backgroundMusic};
 
@@ -219,7 +219,7 @@ public class EarthGameArea extends GameArea {
 
     private void spawnUpgradeBench() {
         Entity upgradeBench = StructureFactory.createUpgradeBench();
-        spawnEntityAt(upgradeBench, new GridPoint2(12, 12), true, true);
+        spawnEntityAt(upgradeBench, new GridPoint2(20, 40), true, true);
     }
 
     private void spawnExtractors() {

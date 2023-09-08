@@ -28,7 +28,7 @@ public class UpgradeTree extends Component {
 
         // Base weapons
         unlockedWeapons.add(WeaponType.WOODHAMMER);
-        unlockedWeapons.add(WeaponType.ELEC_WRENCH);
+        unlockedWeapons.add(WeaponType.THROW_ELEC_WRENCH);
         unlockedWeapons.add(WeaponType.STICK);
     }
 
@@ -79,6 +79,7 @@ public class UpgradeTree extends Component {
      * @param amount The amount of materials to subtract.
      */
     public void subtractMaterials(int amount) {
+        // todo: find a way to subtract from game state resources
         if (materials >= amount) {
             materials -= amount;
         }

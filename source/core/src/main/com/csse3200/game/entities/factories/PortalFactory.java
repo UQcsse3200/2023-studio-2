@@ -6,16 +6,13 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.entities.Portal;
 
 public class PortalFactory {
 
-    public static Entity createPortal(float width, float height) {
+    public static Entity createPortal(float width, float height, Entity player) {
 
-        Entity portal = new Entity()
-                .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new TextureRenderComponent("map/portal.png"));
-
+        Entity portal = new Portal(player);
         portal.setScale(width, height);
         return portal;
     }

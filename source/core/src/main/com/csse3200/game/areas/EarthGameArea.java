@@ -133,7 +133,6 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
-        spawnPortal();
 
         spawnShip();
         spawnPlayer();
@@ -146,14 +145,16 @@ public class EarthGameArea extends GameArea {
 
         playMusic();
 
-        GridPoint2 portalPosition = new GridPoint2(5, 5);
-        Entity portal = PortalFactory.createPortal();
-        ServiceLocator.getStructurePlacementService().PlaceStructureAt(portal, portalPosition, false, false);
+        spawnPortal();
+
+        //GridPoint2 portalPosition = new GridPoint2(5, 5);
+        //Entity portal = PortalFactory.createPortal(2,2);
+        //ServiceLocator.getStructurePlacementService().PlaceStructureAt(portal, portalPosition, false, false);
     }
 
     private void spawnPortal() {
-        GridPoint2 pos = new GridPoint2(15, 15);
-        Entity portal = PortalFactory.createPortal(PORTAL_SIZE, PORTAL_SIZE);
+        GridPoint2 pos = new GridPoint2(45, 45);
+        Entity portal = PortalFactory.createPortal(PORTAL_SIZE, PORTAL_SIZE, player);
         spawnEntityAt(portal, pos, false, false);
     }
 

@@ -1,5 +1,4 @@
-
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+package com.csse3200.game.entities;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.HealthBarComponent;
@@ -16,12 +15,16 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AtlasRenderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 public class Portal extends Entity {
     public Portal(Entity player) {
-        addComponent(new ProximityActivationComponent(1.5f, player, this::teleport, null));
+        super();
+        
+        addComponent(new ProximityActivationComponent(1.5f, player, this::teleport, this::teleport));
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
+        addComponent(new TextureRenderComponent("map/portal.png"));
     }
 
     /**

@@ -97,9 +97,8 @@ public class MainMenuActions extends Component {
   }
 
   private void onSpaceMap() {
-    logger.info("Launching Space Map in Screen");
-    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-    ((MainGameScreen)game.getScreen()).loadSpaceMap();
+    logger.info("Launching space map screen");
+    game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
   }
 
 }

@@ -76,7 +76,7 @@ public class WeaponControllerComponent extends Component {
     private void despawn() {
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
         animator.stopAnimation();
-        ServiceLocator.getEntityService().unregister(entity);
+        Gdx.app.postRunnable(entity::dispose);
     }
 
     //TODO fix this forbidden code

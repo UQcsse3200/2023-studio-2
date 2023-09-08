@@ -56,7 +56,7 @@ public class MiniScreenDisplay extends UIComponent {
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/earth_design.png", Texture.class));
-        planet.setSize(0, 0); // Set to a reasonable fixed size
+        planet.setSize(200, 200); // Set to a reasonable fixed size
 
         // The planet moves at a constant speed, so to make it appear at the right time,
         // it is to be placed at the right y coordinate above the screen.

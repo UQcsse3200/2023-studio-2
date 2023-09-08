@@ -18,7 +18,7 @@ public class UpgradeTree extends Component {
     private final List<WeaponType> unlockedWeapons;
 
     /** The starting number of materials available to the player for upgrades. */
-    private int materials = 0;
+    private int materials;
 
     /**
      * Constructs a new UpgradeTree with default weapons unlocked.
@@ -70,7 +70,7 @@ public class UpgradeTree extends Component {
         if (gameStateOb != null) {
             materials = (int) gameStateOb.getStateData(resourceKey);
         }
-        return materials;
+        return 0;
     }
 
     /**
@@ -80,7 +80,9 @@ public class UpgradeTree extends Component {
      */
     public void subtractMaterials(int amount) {
         // todo: find a way to subtract from game state resources
+
         if (materials >= amount) {
+            ServiceLocator.getGameStateObserverService().trigger("resourceAdd", -amount);
             materials -= amount;
         }
     }

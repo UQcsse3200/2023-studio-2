@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,5 +28,20 @@ class InventoryComponentTest {
         inventory.setEquipped(3);
         inventory.cycleEquipped();
         assertEquals(1, inventory.getEquipped());
+    }
+
+    @Test
+    void testGetEquippedType() {
+    InventoryComponent inventory = new InventoryComponent();
+    inventory.setEquipped(3);
+    assertEquals(WeaponType.WOODHAMMER, inventory.getEquippedType());
+    }
+
+    @Test
+    void testChangeEquippedType() {
+    InventoryComponent inventory = new InventoryComponent();
+    inventory.setEquipped(3);
+    inventory.changeEquipped(WeaponType.KATANA);
+    assertEquals(WeaponType.KATANA, inventory.getEquippedType());
     }
 }

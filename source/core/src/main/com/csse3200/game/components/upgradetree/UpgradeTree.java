@@ -18,9 +18,6 @@ public class UpgradeTree extends Component {
     /** List of unlocked weapons for the player. */
     private final List<WeaponType> unlockedWeapons;
 
-    /** The starting number of materials available to the player for upgrades. */
-    private int materials;
-
     /**
      * Constructs a new UpgradeTree with default weapons unlocked.
      */
@@ -69,8 +66,8 @@ public class UpgradeTree extends Component {
         GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
         String resourceKey = "resource/" + Resource.Nebulite;
         if (gameStateOb != null) {
-            materials = (int) gameStateOb.getStateData(resourceKey);
-            return materials;
+            /** The starting number of materials available to the player for upgrades. */
+            return (int) gameStateOb.getStateData(resourceKey);
         }
         return 0;
     }

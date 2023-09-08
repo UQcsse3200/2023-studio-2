@@ -3,6 +3,7 @@ package com.csse3200.game.components.upgradetree;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -69,21 +70,20 @@ public class UpgradeTree extends Component {
         String resourceKey = "resource/" + Resource.Nebulite;
         if (gameStateOb != null) {
             materials = (int) gameStateOb.getStateData(resourceKey);
+            return materials;
         }
         return 0;
     }
 
     /**
-     * Subtracts a given amount from the available materials.
-     * The subtraction only happens if the materials available are more than or equal to the given amount.
+     * Subtracts a given amount from the available extractor resources.
+     *
      * @param amount The amount of materials to subtract.
      */
     public void subtractMaterials(int amount) {
-        // todo: find a way to subtract from game state resources
-
-        if (materials >= amount) {
-            ServiceLocator.getGameStateObserverService().trigger("resourceAdd", -amount);
-            materials -= amount;
+        if (getMaterials() >= amount) {
+            ServiceLocator.getGameStateObserverService()
+                    .trigger("resourceAdd", Resource.Nebulite.toString(), -amount);
         }
     }
 }

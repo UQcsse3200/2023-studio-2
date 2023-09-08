@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.csse3200.game.ai.tasks.TaskRunner;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -24,16 +25,14 @@ import java.util.Timer;
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
+  private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
+  private static final float DODGE_SPEED = 3f;
+  private static final float WALK_SPEED = 1f;
 
-  private final Vector2 walkDirection = Vector2.Zero.cpy();
+  private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean dodge_available = true;
-  private int flagW = 0;
-  private int flagA = 0;
-  private int flagS = 0;
-  private int flagD = 0;
-  private int flagMul = 0;
-  private int equiped = 1;
 
+  private int equiped = 1;
   private int testing = 0;
 
   HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
@@ -64,43 +63,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     this.testing = testing;
   }
 
-  private boolean leftCtrlFlag = false;
-
-  /**
-   * @return int
-   */
-  private int getMovFlagSum() {
-    return flagW + flagA + flagS + flagD;
-  }
-
-  /**
-   * Triggers when keys are pressed or released.
-   * Responsible for Diagonal movement when specific keys are pressed
-   */
-  private void diagonal() {
-    int movFlagSum = getMovFlagSum();
-    if (movFlagSum >= 3) {
-      walkDirection.set(Vector2.Zero);
-    }
-    if (movFlagSum == 2) {
-      flagMul = 1;
-      walkDirection.scl(new Vector2(0.707f, 0.707f));
-    } else if (movFlagSum == 1) {
-      if (flagW == 1) {
-        walkDirection.set(Vector2Utils.UP);
-      } else if (flagA == 1) {
-        walkDirection.set(Vector2Utils.LEFT);
-      } else if (flagS == 1) {
-        walkDirection.set(Vector2Utils.DOWN);
-      } else if (flagD == 1) {
-        walkDirection.set(Vector2Utils.RIGHT);
-      }
-      triggerWalkEvent();
-    } else if (movFlagSum == 0) {
-      flagMul = 0;
-      walkDirection.scl(0);
-    }
-  }
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -114,76 +76,17 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
-    keyFlags.put(keycode, 1);    
-    diagonal();
+    keyFlags.put(keycode, 1);
+
+    triggerWalkEvent();
     switch (keycode) {
-      case Keys.W:
-        flagW = 1;
-        if (getMovFlagSum() == 1) {
-          walkDirection.scl(0);
-          walkDirection.add(Vector2Utils.UP);
-        } else {
-          walkDirection.add(Vector2Utils.UP);
-          diagonal();
-        }
-        triggerWalkEvent();
-        return true;
-      case Keys.A:
-        flagA = 1;
-        if (getMovFlagSum() == 1) {
-          walkDirection.scl(0);
-          walkDirection.add(Vector2Utils.LEFT);
-        } else {
-          walkDirection.add(Vector2Utils.LEFT);
-          diagonal();
-        }
-        triggerWalkEvent();
-        return true;
-      case Keys.S:
-        flagS = 1;
-        if (getMovFlagSum() == 1) {
-          walkDirection.scl(0);
-          walkDirection.add(Vector2Utils.DOWN);
-        } else {
-          walkDirection.add(Vector2Utils.DOWN);
-          diagonal();
-        }
-        triggerWalkEvent();
-        return true;
-      case Keys.D:
-        flagD = 1;
-        if (getMovFlagSum() == 1) {
-          walkDirection.scl(0);
-          walkDirection.add(Vector2Utils.RIGHT);
-        } else {
-          walkDirection.add(Vector2Utils.RIGHT);
-          diagonal();
-        }
-        triggerWalkEvent();
-        return true;
-      case Keys.P:
-        entity.getEvents().trigger("attack");
-        if (flagW == 1) {
-        }
-        return true;
-      case Keys.CONTROL_LEFT:
-        leftCtrlFlag = true;
-        return true;
       case Keys.SPACE:
-        if (dodge_available) {
-          if (flagW == 1) {
-            walkDirection.set(Vector2Utils.DODGE_UP);
-          } else if (flagA == 1) {
-            walkDirection.set(Vector2Utils.DODGE_LEFT);
-          } else if (flagS == 1) {
-            walkDirection.set(Vector2Utils.DODGE_DOWN);
-          } else {
-            walkDirection.set(Vector2Utils.DODGE_RIGHT);
-          }
-          triggerDodgeEvent();
-          dodge();
-        }
+        if (!dodge_available ||
+                walkDirection.epsilonEquals(Vector2.Zero)) { return false; }
+        triggerDodgeEvent();
+        dodge();
         return true;
+
       case Keys.F:
         InteractionControllerComponent interactionController = entity
             .getComponent(InteractionControllerComponent.class);
@@ -203,6 +106,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.TAB:
         triggerInventoryEvent(0);
         return true;
+      case Keys.W, Keys.S, Keys.A, Keys.D:
+        return true;
+
       default:
         return false;
     }
@@ -217,54 +123,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyUp(int keycode) {
     keyFlags.put(keycode, 0);
-
     switch (keycode) {
-      case Keys.W:
-        flagW = 0;
-        diagonal();
-        if (getMovFlagSum() == 2) {
-          diagonal();
-        }
-        if (getMovFlagSum() == 0) {
-          walkDirection.scl(0);
-        }
+      case Keys.W, Keys.S, Keys.A, Keys.D:
         triggerWalkEvent();
-        return true;
-      case Keys.A:
-        flagA = 0;
-        diagonal();
-        if (getMovFlagSum() == 2) {
-          diagonal();
-        }
-        if (getMovFlagSum() == 0) {
-          walkDirection.scl(0);
-        }
-        triggerWalkEvent();
-        return true;
-      case Keys.S:
-        flagS = 0;
-        diagonal();
-        if (getMovFlagSum() == 2) {
-          diagonal();
-        }
-        if (getMovFlagSum() == 0) {
-          walkDirection.scl(0);
-        }
-        triggerWalkEvent();
-        return true;
-      case Keys.D:
-        flagD = 0;
-        diagonal();
-        if (getMovFlagSum() == 2) {
-          diagonal();
-        }
-        if (getMovFlagSum() == 0) {
-          walkDirection.scl(0);
-        }
-        triggerWalkEvent();
-        return true;
-      case Keys.CONTROL_LEFT:
-        leftCtrlFlag = false;
         return true;
       default:
         return false;
@@ -274,7 +135,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   /**
    * TODO this is barely works
    * Function to repond to player mouse press
-   * 
+   *
    * @param screenX - X position on screen that mouse was pressed
    * @param screenY - Y position on screen that mouse was pressed
    * @param pointer -
@@ -282,13 +143,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * @return - True or false based on if an acction occured
    */
   @Override
-  public boolean touchDown(int screenX, int screenY, int pointer, int button) {        
-    if (equiped == 3) {      
+  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    if (equiped == 3) {
       if (button == Input.Buttons.RIGHT) {
         entity.getEvents().trigger("remove", screenX, screenY);
         return true;
       }
-
       if (button != Input.Buttons.LEFT) {
         return false;
       }
@@ -309,10 +169,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       return false;
     }
     double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
-    if (is_pressed(Keys.R) && equiped == 2) {      
+    if (is_pressed(Keys.R) && equiped == 1) {
       entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.SLING_SHOT, (float) initRot);
     }
-    if (equiped == 1) {      
+    if (equiped == 1) {
       if (is_pressed(Keys.T)) {
         entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
       }
@@ -348,29 +208,27 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * Triggers walk event
    */
   private void triggerWalkEvent() {
+    Vector2 lastDir = this.walkDirection.cpy();
+    this.walkDirection = keysToVector().scl(WALK_SPEED);
     if (this.getTesting() == 0) {
-      if (walkDirection.epsilonEquals(Vector2.Zero)) {
+      directions dir = keysToDirection();
+      if (dir == directions.None) {
         entity.getEvents().trigger("walkStop");
-      } else {
-        if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
-          entity.getEvents().trigger("walkUpLeft");
-        } else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
-          entity.getEvents().trigger("walkUpRight");
-        } else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
-          entity.getEvents().trigger("walkUp");
-        } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN)) {
-          entity.getEvents().trigger("walkDown");
-        } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_LEFT)) {
-          entity.getEvents().trigger("walkDownLeft");
-        } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_RIGHT)) {
-          entity.getEvents().trigger("walkDownRight");
-        } else if (walkDirection.epsilonEquals(Vector2Utils.LEFT)) {
-          entity.getEvents().trigger("walkLeft");
-        } else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
-          entity.getEvents().trigger("walkRight");
-        }
-        entity.getEvents().trigger("walk", walkDirection);
+        entity.getEvents().trigger("walkStopAnimation", lastDir);
+        return;
       }
+
+      switch (dir) {
+        case Up -> entity.getEvents().trigger("walkUp");
+        case Down -> entity.getEvents().trigger("walkDown");
+        case Left -> entity.getEvents().trigger("walkLeft");
+        case Right -> entity.getEvents().trigger("walkRight");
+        case UpLeft -> entity.getEvents().trigger("walkUpLeft");
+        case UpRight -> entity.getEvents().trigger("walkUpRight");
+        case DownLeft -> entity.getEvents().trigger("walkDownLeft");
+        case DownRight -> entity.getEvents().trigger("walkDownRight");
+      }
+      entity.getEvents().trigger("walk", walkDirection);
     }
   }
 
@@ -380,26 +238,27 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   private void triggerDodgeEvent() {
     final Timer timer = new Timer();
+    this.walkDirection = keysToVector().scl(DODGE_SPEED);
+    directions dir = keysToDirection();
+
+    if (dir == directions.None) {
+      entity.getEvents().trigger("walkStop");
+      return;
+    }
+    switch (dir) {
+      case Up -> entity.getEvents().trigger("dodgeUp");
+      case Down -> entity.getEvents().trigger("dodgeDown");
+      case Left, DownLeft, UpLeft -> entity.getEvents().trigger("dodgeLeft");
+      case Right, DownRight, UpRight -> entity.getEvents().trigger("dodgeRight");
+    }
+
     entity.getEvents().trigger("walk", walkDirection);
     entity.getEvents().trigger("dodged");
-
-    if (walkDirection.epsilonEquals(Vector2Utils.DODGE_UP)) {
-      entity.getEvents().trigger("dodgeUp");
-    }
-    else if (walkDirection.epsilonEquals(Vector2Utils.DODGE_DOWN)) {
-      entity.getEvents().trigger("dodgeDown");
-    }
-    else if (walkDirection.epsilonEquals(Vector2Utils.DODGE_LEFT)) {
-      entity.getEvents().trigger("dodgeLeft");
-    }
-    else if (walkDirection.epsilonEquals(Vector2Utils.DODGE_RIGHT)) {
-      entity.getEvents().trigger("dodgeRight");
-    }
 
     java.util.TimerTask stopDodge = new java.util.TimerTask() {
       @Override
       public void run() {
-        entity.getEvents().trigger("walkStop");
+        triggerWalkEvent();
         entity.getEvents().trigger("dodged");
         timer.cancel();
         timer.purge();
@@ -461,5 +320,41 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     Vector2 entityScale = entity.getScale();
     Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
     return new Vector2(mouse.x / 2 - entityScale.x / 2, (mouse.y) / 2 - entityScale.y / 2);
+  }
+
+  private Vector2 keysToVector() {
+    float xCom = (is_pressed(Keys.D) ? Vector2Utils.RIGHT.x : 0f) + (is_pressed(Keys.A) ? Vector2Utils.LEFT.x : 0f);
+    float yCom = (is_pressed(Keys.W) ? Vector2Utils.UP.y : 0f) + (is_pressed(Keys.S) ? Vector2Utils.DOWN.y : 0f);
+    float mag = (Math.abs(Math.abs(xCom) - Math.abs(yCom)) < 0.1f ? ROOT2INV : 1f);
+    return new Vector2(xCom, yCom).scl(mag);
+  }
+
+  private directions keysToDirection() {
+    int dirFlags =  0b0101 +
+            ((is_pressed(Keys.W) ? 1 : 0) << 2) - ((is_pressed(Keys.S) ? 1 : 0) << 2) +
+            ((is_pressed(Keys.D) ? 1 : 0))      - ((is_pressed(Keys.A) ? 1 : 0));
+      return switch (dirFlags) {
+          case 0b1001 -> directions.Up;
+          case 0b1010 -> directions.UpRight;
+          case 0b1000 -> directions.UpLeft;
+          case 0b0001 -> directions.Down;
+          case 0b0010 -> directions.DownRight;
+          case 0b0000 -> directions.DownLeft;
+          case 0b0110 -> directions.Right;
+          case 0b0100 -> directions.Left;
+          default -> directions.None;
+      };
+  }
+
+  private enum directions {
+    None,
+    Up,
+    Down,
+    Left,
+    Right,
+    UpLeft,
+    UpRight,
+    DownLeft,
+    DownRight
   }
 }

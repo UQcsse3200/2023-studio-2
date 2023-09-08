@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
@@ -25,9 +26,7 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener("walkUpRight", this::animateUpRight);
         entity.getEvents().addListener("walkDownLeft", this::animateDownLeft);
         entity.getEvents().addListener("walkDownRight", this::animateDownRight);
-
-        entity.getEvents().addListener("walkStop", this::animateStandDown);
-
+        entity.getEvents().addListener("walkStopAnimation", this::animateStop);
         entity.getEvents().addListener("dodgeDown", this::animateDodgeDown);
         entity.getEvents().addListener("dodgeLeft", this::animateDodgeLeft);
         entity.getEvents().addListener("dodgeRight", this::animateDodgeRight);
@@ -93,8 +92,16 @@ public class PlayerAnimationController extends Component {
     /**
      * Initialise stand facing down animation
      */
-    void animateStandDown() {
-        animator.startAnimation("Character_StandDown");
+    void animateStop(Vector2 lastDirection) {
+        if (lastDirection.x < -0.1) {
+            animator.startAnimation("Character_StandLeft");
+        } else if (lastDirection.x > 0.1) {
+            animator.startAnimation("Character_StandRight");
+        } else if (lastDirection.y > 0.1) {
+            animator.startAnimation("Character_StandUp");
+        } else {
+            animator.startAnimation("Character_StandDown");
+        }
     }
 
     /**

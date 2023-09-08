@@ -1,13 +1,17 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+
+import javax.swing.*;
 
 /**
  * A ui component for displaying player stats, e.g. health.
@@ -16,7 +20,9 @@ public class PlayerStatsDisplay extends UIComponent {
   Table table;
   private Image heartImage;
   private Label healthLabel;
+  private ProgressBar healthBar;
 
+  private float healthWidth = 300f;
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -38,17 +44,28 @@ public class PlayerStatsDisplay extends UIComponent {
     table.setFillParent(true);
     table.padTop(45f).padLeft(5f);
 
+    //health Bar
+    int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+    healthBar = new ProgressBar(0, 100, 1, false, skin);
+
+    //setting initial value of health Bar
+    healthBar.setValue(100);
+
+    //setting the position of health Bar
+    healthBar.setPosition(10, Gdx.graphics.getHeight()  - healthBar.getHeight());
+    healthBar.setWidth(healthWidth);
+
     // Heart image
     float heartSideLength = 30f;
     heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
 
     // Health text
-    int health = entity.getComponent(CombatStatsComponent.class).getHealth();
     CharSequence healthText = String.format("Health: %d", health);
     healthLabel = new Label(healthText, skin, "large");
 
     table.add(heartImage).size(heartSideLength).pad(5);
     table.add(healthLabel);
+    table.add(healthBar);
     stage.addActor(table);
   }
 
@@ -64,6 +81,7 @@ public class PlayerStatsDisplay extends UIComponent {
   public void updatePlayerHealthUI(int health) {
     CharSequence text = String.format("Health: %d", health);
     healthLabel.setText(text);
+    healthBar.setValue(health);
   }
 
   @Override
@@ -71,5 +89,6 @@ public class PlayerStatsDisplay extends UIComponent {
     super.dispose();
     heartImage.remove();
     healthLabel.remove();
+    healthBar.remove();
   }
 }

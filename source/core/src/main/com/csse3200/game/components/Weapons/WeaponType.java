@@ -8,5 +8,8 @@ public enum WeaponType {
     LASERGUN,
     KATANA,
     WOODHAMMER,
-    STONEHAMMER
+    STONEHAMMER,
+    TEMP1,
+    TEMP2,
+    TEMP3
 }

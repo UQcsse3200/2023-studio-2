@@ -99,23 +99,19 @@ public class UpgradeDisplay extends Window {
         trees.add(meleeRoot);
 
         // Ranged Tree
-        UpgradeNode rangedRoot = new UpgradeNode(WeaponType.ELEC_WRENCH, "images/wrench.png");
-        UpgradeNode wrenchNode = new UpgradeNode(WeaponType.THROW_ELEC_WRENCH, "images/speedpowerup.png");
-        UpgradeNode wrenchNode2 = new UpgradeNode(WeaponType.LASERGUN, "images/meteor.png");
+        UpgradeNode rangedRoot = new UpgradeNode(WeaponType.THROW_ELEC_WRENCH, "images/wrench.png");
+        UpgradeNode wrenchNode = new UpgradeNode(WeaponType.TEMP1, "images/speedpowerup.png");
+        UpgradeNode wrenchNode2 = new UpgradeNode(WeaponType.TEMP2, "images/meteor.png");
         rangedRoot.addChild(wrenchNode);
         rangedRoot.addChild(wrenchNode2);
         wrenchNode2.addChild((new UpgradeNode(WeaponType.SLING_SHOT, "images/meteor.png")));
-        wrenchNode2.addChild((new UpgradeNode(WeaponType.SLING_SHOT, "images/meteor.png")));
+        wrenchNode2.addChild((new UpgradeNode(WeaponType.TEMP3, "images/meteor.png")));
         trees.add(rangedRoot);
 
         // Build Tree
         UpgradeNode buildRoot = new UpgradeNode(WeaponType.WOODHAMMER, "images/upgradetree/hammer1.png");
         UpgradeNode hammer2 = new UpgradeNode(WeaponType.STONEHAMMER, "images/upgradetree/hammer2.png");
-        UpgradeNode hammer3 = new UpgradeNode(WeaponType.LASERGUN, "images/upgradetree/hammer2.png");
-        UpgradeNode x = new UpgradeNode(WeaponType.THROW_ELEC_WRENCH, "images/upgradetree/hammer2.png");
         buildRoot.addChild(hammer2);
-        buildRoot.addChild(hammer3);
-        hammer2.addChild(x);
         trees.add(buildRoot);
     }
 

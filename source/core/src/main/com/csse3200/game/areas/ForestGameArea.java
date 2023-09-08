@@ -68,52 +68,57 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
 
   private static final float WALL_WIDTH = 0.1f;
-  private static final float ASTEROID_SIZE = 0.9f;
   private static final String[] forestTextures = {
 
 
 
-    "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
-    "images/broken_elixir_collector.png",
 
-    "images/SpaceMiniGameBackground.png",
-    "images/extractor.png",
-    "images/broken_extractor.png",
-
-    "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-    "images/box_boy_leaf.png",
-    "images/RightShip.png",
-    "images/tree.png",
-    "images/wall.png",
-    "images/wall2.png",
-    "images/gate_close.png",
-    "images/gate_open.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
-    "images/base_enemy.png",
-    "images/Troll.png",
-    "images/rangeEnemy.png",
-    "images/stone_wall.png",
-    "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-    "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-    "images/Ship.png",
-    "images/stone_wall.png",
-
-
-
-
-    "images/oldman_down_1.png"
-
-
+      "images/SpaceMiniGameBackground.png",
+      "images/extractor.png",
+      "images/broken_extractor.png",
+            "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
+      "images/box_boy_leaf.png",
+      "images/RightShip.png",
+          "images/Companion1.png",
+      "images/tree.png",
+      "images/wall.png",
+      "images/wall2.png",
+      "images/gate_close.png",
+      "images/gate_open.png",
+      "images/ghost_king.png",
+      "images/ghost_1.png",
+      "images/grass_1.png",
+      "images/grass_2.png",
+      "images/grass_3.png",
+      "images/hex_grass_1.png",
+      "images/hex_grass_2.png",
+      "images/hex_grass_3.png",
+      "images/iso_grass_1.png",
+      "images/iso_grass_2.png",
+      "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+      "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+      "images/iso_grass_3.png",
+      "images/playerSS_2.png",
+      "images/playerSS_4.png",
+      "images/playerSS_0.png",
+      "images/playerSS_1.png",
+      "images/playerSS_3.png",
+      "images/playerSS_5.png",
+      "images/playerSS_7.png",
+      "images/playerSS_6.png",
+      "images/player_blank.png",
+      "images/Ship.png",
+      "images/stone_wall.png",
+      "images/oldman_down_1.png",
+      "images/base_enemy.png",
+      "images/Troll.png",
+      "images/rangeEnemy.png",
+      "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+      "images/broken_elixir_collector.png",
+      "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+      "images/speedpowerup.png" // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+      //Resolved merge conflicts that loads multiple copies of the same images
+>>>>>>> f373e4dd6747708705bb45a90c18381c3efa85be
 
   };
   private static final String[] forestTextureAtlases = {
@@ -178,21 +183,12 @@ public class ForestGameArea extends GameArea {
     spawnCompanion(playerEntity);
     spawnEnemies();
     spawnBoss();
-    spawnAsteroids();
     player = spawnPlayer();
     spawnBotanist();
 
     playMusic();
 
   }
-  private void spawnAsteroids() {
-    //Extra Spicy Asteroids
-    GridPoint2 posAs = new GridPoint2(8, 8);
-    spawnEntityAt(
-            ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
-
-  }
-
 
   private void spawnExtractors() {
     GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);

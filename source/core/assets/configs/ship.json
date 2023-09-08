@@ -1,3 +1,5 @@
 {
-  "health": "100"
+  "health": 100,
+  "fuel": 100,
+  "acceleration": 1
 }

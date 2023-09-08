@@ -11,8 +11,7 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 class PhysicsUtilsTest {
@@ -42,6 +41,18 @@ class PhysicsUtilsTest {
     setAndCheckScale(new Vector2(0.5f, 0.5f), new Vector2(2f, 2f));
   }
 
+  @Test
+  void testSetCustomCollider(){
+
+    ColliderComponent colliderComponentMock = mock(ColliderComponent.class);
+    Entity entity = new Entity().addComponent(colliderComponentMock);
+
+    PhysicsUtils.setCustomCollider(entity, 2.0f, 3.0f, 0.5f, 0.5f);
+    verify(entity.getComponent(ColliderComponent.class)).setAsBox(
+            new Vector2(2.0f, 3.0f), new Vector2(0.5f, 0.5f));
+
+  }
+
   private void setAndCheckScale(Vector2 entityScale, Vector2 colliderScale) {
     entity.setScale(entityScale);
     PhysicsUtils.setScaledCollider(entity, colliderScale.x, colliderScale.y);
@@ -50,4 +61,8 @@ class PhysicsUtilsTest {
     PhysicsTestUtils.checkPolygonCollider(
         entity.getComponent(ColliderComponent.class), entityScale.cpy().scl(colliderScale));
   }
+
+
+
+
 }

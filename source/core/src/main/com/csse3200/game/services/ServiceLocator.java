@@ -43,6 +43,7 @@ public class ServiceLocator {
     return physicsService;
   }
 
+
   public static GameTime getTimeSource() {
     return timeSource;
   }
@@ -54,6 +55,7 @@ public class ServiceLocator {
   public static ResourceService getResourceService() {
     return resourceService;
   }
+  public static GameState getGameStateService(){return gameStateService;}
 
 
   public static GameStateObserver getGameStateObserverService() { return gameStateObserverService; }

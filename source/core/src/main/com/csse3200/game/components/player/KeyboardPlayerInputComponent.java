@@ -37,7 +37,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean dodge_available = true;
-  private boolean interacting = false;
 
   private int equiped = 1;
   private int testing = 0;
@@ -52,11 +51,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean isWindowOpen() {
     for (Actor actor : ServiceLocator.getRenderService().getStage().getActors()) {
       if (actor instanceof Window && actor.isVisible()) {
-        System.out.println("Found");
         return true;
       }
     }
-    System.out.println("Not found");
     return false;
   }
 

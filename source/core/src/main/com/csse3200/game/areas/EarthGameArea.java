@@ -164,7 +164,7 @@ public class EarthGameArea extends GameArea {
 
         //spawnSpawner();
         spawnEnemies();
-        //spawnBoss();
+        spawnBoss();
         spawnAsteroids();
         spawnBotanist();
 

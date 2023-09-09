@@ -1,15 +1,15 @@
 package com.csse3200.game.components.npc;
 
-        import com.badlogic.gdx.math.Vector2;
-        import com.csse3200.game.components.Component;
-        import com.csse3200.game.entities.Entity;
-        import com.csse3200.game.entities.enemies.EnemyBehaviour;
-        import com.csse3200.game.entities.enemies.EnemyType;
-        import com.csse3200.game.entities.factories.EnemyFactory;
-        import com.csse3200.game.services.GameTime;
-        import com.csse3200.game.services.ServiceLocator;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyType;
+import com.csse3200.game.entities.factories.EnemyFactory;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ServiceLocator;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class SpawnerComponent extends Component {
     private GameTime timer;
@@ -31,6 +31,45 @@ public class SpawnerComponent extends Component {
         this.lastTime = timer.getTime();
         this.targets = targets;
     }
+    public boolean isSpawning() {
+        return isSpawning;
+    }
+
+    public void setSpawning(boolean spawning) {
+        isSpawning = spawning;
+    }
+
+    public int getEnemiesSpawned() {
+        return enemiesSpawned;
+    }
+
+    public void setEnemiesSpawned(int enemiesSpawned) {
+        this.enemiesSpawned = enemiesSpawned;
+    }
+
+    public int getEnemiesToSpawn() {
+        return enemiesToSpawn;
+    }
+
+    public void setEnemiesToSpawn(int enemiesToSpawn) {
+        this.enemiesToSpawn = enemiesToSpawn;
+    }
+
+    public int getMeleeEnemiesToSpawn() {
+        return meleeEnemiesToSpawn;
+    }
+
+    public void setMeleeEnemiesToSpawn(int meleeEnemiesToSpawn) {
+        this.meleeEnemiesToSpawn = meleeEnemiesToSpawn;
+    }
+
+    public int getRangedEnemiesToSpawn() {
+        return rangedEnemiesToSpawn;
+    }
+
+    public void setRangedEnemiesToSpawn(int rangedEnemiesToSpawn) {
+        this.rangedEnemiesToSpawn = rangedEnemiesToSpawn;
+    }
 
     @Override
     public void create() {
@@ -39,10 +78,10 @@ public class SpawnerComponent extends Component {
 
     private void spawnEnemies(int meleeCount, int rangedCount) {
         isSpawning = true;
-        enemiesToSpawn = meleeCount + rangedCount;
+        setEnemiesToSpawn(meleeCount + rangedCount);
         enemiesSpawned = 0;
-        meleeEnemiesToSpawn = meleeCount;
-        rangedEnemiesToSpawn = rangedCount;
+        setMeleeEnemiesToSpawn(meleeCount);
+        setRangedEnemiesToSpawn(rangedCount);
     }
 
     private void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {
@@ -73,21 +112,21 @@ public class SpawnerComponent extends Component {
             lastTime = currentTime;
         }
 
-        if (isSpawning && enemiesSpawned < enemiesToSpawn && currentTime - lastTime >= spawnDelay) {
-            if (meleeEnemiesToSpawn > 0) {
+        if (isSpawning && enemiesSpawned < getEnemiesToSpawn() && currentTime - lastTime >= spawnDelay) {
+            if (getMeleeEnemiesToSpawn() > 0) {
                 spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
-                meleeEnemiesToSpawn--;
-            } else if (rangedEnemiesToSpawn > 0) {
+                setMeleeEnemiesToSpawn(getMeleeEnemiesToSpawn() - 1);
+            } else if (getRangedEnemiesToSpawn() > 0) {
                 spawnEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
-                rangedEnemiesToSpawn--;
+                setRangedEnemiesToSpawn(getRangedEnemiesToSpawn() - 1);
             }
             enemiesSpawned++;
             lastTime = currentTime;
         }
 
-        if (enemiesSpawned >= enemiesToSpawn) {
+        if (enemiesSpawned >= getEnemiesToSpawn()) {
             isSpawning = false;
-            enemiesToSpawn = 0;
+            setEnemiesToSpawn(0);
             enemiesSpawned = 0;
         }
     }

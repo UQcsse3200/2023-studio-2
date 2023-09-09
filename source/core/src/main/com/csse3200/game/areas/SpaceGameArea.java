@@ -61,7 +61,6 @@ public class SpaceGameArea extends GameArea {
         spawnShip();
         spawnAsteroids();
         spawnGoal();
-        createMaze();
         createBoundary();
         spawnEnemy(21,15);
         spawnEnemy(11,9);
@@ -127,56 +126,56 @@ public class SpaceGameArea extends GameArea {
     /**
      * Method for creating maze layout of the obstacle minigame
      */
-    private void createMaze(){
-        spawnStaticAsteroidsRight(7,new GridPoint2(5,15));
-        spawnStaticAsteroidsRight(6,new GridPoint2(23,15));
-
-        spawnStaticAsteroidsRight(7,new GridPoint2(5,14));
-        spawnStaticAsteroidsRight(7,new GridPoint2(13,14));
-        spawnStaticAsteroidsRight(1,new GridPoint2(21,14));
-        spawnStaticAsteroidsRight(3,new GridPoint2(22,14));
-
-        spawnStaticAsteroidsRight(3,new GridPoint2(5,13));
-        spawnStaticAsteroidsRight(1,new GridPoint2(11,13));
-        spawnStaticAsteroidsRight(2,new GridPoint2(13,13));
-        spawnStaticAsteroidsRight(2,new GridPoint2(22,13));
-
-        spawnStaticAsteroidsRight(3,new GridPoint2(5,12));
-        spawnStaticAsteroidsRight(1,new GridPoint2(9,12));
-        spawnStaticAsteroidsRight(2,new GridPoint2(13,12));
-        spawnStaticAsteroidsRight(8,new GridPoint2(16,12));
-
-
-        spawnStaticAsteroidsRight(3,new GridPoint2(5,11));
-        spawnStaticAsteroidsRight(6,new GridPoint2(9,11));
-        spawnStaticAsteroidsRight(9,new GridPoint2(16,11));
-
-        spawnStaticAsteroidsRight(6,new GridPoint2(9,10));
-        spawnStaticAsteroidsRight(6,new GridPoint2(16,10));
-
-        spawnStaticAsteroidsRight(5,new GridPoint2(5,9));
-        spawnStaticAsteroidsRight(3,new GridPoint2(16,9));
-
-        spawnStaticAsteroidsRight(5,new GridPoint2(5,8));
-        spawnStaticAsteroidsRight(2,new GridPoint2(15,8));
-        spawnStaticAsteroidsRight(5,new GridPoint2(20,8));
-
-        spawnStaticAsteroidsRight(9,new GridPoint2(5,7));
-        spawnStaticAsteroidsRight(2,new GridPoint2(15,7));
-        spawnStaticAsteroidsRight(7,new GridPoint2(18,7));
-
-        spawnStaticAsteroidsRight(7,new GridPoint2(5,6));
-        spawnStaticAsteroidsRight(1,new GridPoint2(15,6));
-        spawnStaticAsteroidsRight(7,new GridPoint2(18,6));
-
-        spawnStaticAsteroidsRight(7,new GridPoint2(5,5));
-        spawnStaticAsteroidsRight(3,new GridPoint2(13,5));
-        spawnStaticAsteroidsRight(8,new GridPoint2(17,5));
-
-        spawnStaticAsteroidsRight(7,new GridPoint2(5,4));
-        spawnStaticAsteroidsRight(12,new GridPoint2(17,4));
-
-    }
+//    private void createMaze(){
+//        spawnStaticAsteroidsRight(7,new GridPoint2(5,15));
+//        spawnStaticAsteroidsRight(6,new GridPoint2(23,15));
+//
+//        spawnStaticAsteroidsRight(7,new GridPoint2(5,14));
+//        spawnStaticAsteroidsRight(7,new GridPoint2(13,14));
+//        spawnStaticAsteroidsRight(1,new GridPoint2(21,14));
+//        spawnStaticAsteroidsRight(3,new GridPoint2(22,14));
+//
+//        spawnStaticAsteroidsRight(3,new GridPoint2(5,13));
+//        spawnStaticAsteroidsRight(1,new GridPoint2(11,13));
+//        spawnStaticAsteroidsRight(2,new GridPoint2(13,13));
+//        spawnStaticAsteroidsRight(2,new GridPoint2(22,13));
+//
+//        spawnStaticAsteroidsRight(3,new GridPoint2(5,12));
+//        spawnStaticAsteroidsRight(1,new GridPoint2(9,12));
+//        spawnStaticAsteroidsRight(2,new GridPoint2(13,12));
+//        spawnStaticAsteroidsRight(8,new GridPoint2(16,12));
+//
+//
+//        spawnStaticAsteroidsRight(3,new GridPoint2(5,11));
+//        spawnStaticAsteroidsRight(6,new GridPoint2(9,11));
+//        spawnStaticAsteroidsRight(9,new GridPoint2(16,11));
+//
+//        spawnStaticAsteroidsRight(6,new GridPoint2(9,10));
+//        spawnStaticAsteroidsRight(6,new GridPoint2(16,10));
+//
+//        spawnStaticAsteroidsRight(5,new GridPoint2(5,9));
+//        spawnStaticAsteroidsRight(3,new GridPoint2(16,9));
+//
+//        spawnStaticAsteroidsRight(5,new GridPoint2(5,8));
+//        spawnStaticAsteroidsRight(2,new GridPoint2(15,8));
+//        spawnStaticAsteroidsRight(5,new GridPoint2(20,8));
+//
+//        spawnStaticAsteroidsRight(9,new GridPoint2(5,7));
+//        spawnStaticAsteroidsRight(2,new GridPoint2(15,7));
+//        spawnStaticAsteroidsRight(7,new GridPoint2(18,7));
+//
+//        spawnStaticAsteroidsRight(7,new GridPoint2(5,6));
+//        spawnStaticAsteroidsRight(1,new GridPoint2(15,6));
+//        spawnStaticAsteroidsRight(7,new GridPoint2(18,6));
+//
+//        spawnStaticAsteroidsRight(7,new GridPoint2(5,5));
+//        spawnStaticAsteroidsRight(3,new GridPoint2(13,5));
+//        spawnStaticAsteroidsRight(8,new GridPoint2(17,5));
+//
+//        spawnStaticAsteroidsRight(7,new GridPoint2(5,4));
+//        spawnStaticAsteroidsRight(12,new GridPoint2(17,4));
+//
+//    }
 
     /**
      * Method for spawning enemy on the minigame map

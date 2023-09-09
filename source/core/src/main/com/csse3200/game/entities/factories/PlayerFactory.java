@@ -1,5 +1,6 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
@@ -47,15 +48,26 @@ public class PlayerFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/playerSS.atlas", TextureAtlas.class));
-    animator.addAnimation("UP", 1f);
-    animator.addAnimation("DOWN", 1f);
-    animator.addAnimation("LEFT", 1f);
-    animator.addAnimation("RIGHT", 1f);
-    animator.addAnimation("UP_RIGHT", 1f);
-    animator.addAnimation("UP_LEFT", 1f);
-    animator.addAnimation("DOWN_RIGHT", 1f);
-    animator.addAnimation("DOWN_LEFT", 1f);
+                    ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class));
+    animator.addAnimation("Character_StandDown", 0.2f);
+    animator.addAnimation("Character_StandUp", 0.2f);
+    animator.addAnimation("Character_StandLeft", 0.2f);
+    animator.addAnimation("Character_StandRight", 0.2f);
+
+    animator.addAnimation("Character_DownLeft", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_UpRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_Up", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_Left", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_DownRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_Down", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_UpLeft", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_Right", 0.2f, Animation.PlayMode.LOOP);
+
+    animator.addAnimation("Character_RollDown", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Character_RollRight", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Character_RollLeft", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Character_RollUp", 0.1f, Animation.PlayMode.NORMAL);
+
 
     Entity player =
         new Entity()
@@ -64,7 +76,7 @@ public class PlayerFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
             .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
-            .addComponent(new InventoryComponent(stats.gold))
+            .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())
             .addComponent(animator)
@@ -75,7 +87,8 @@ public class PlayerFactory {
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
-    animator.startAnimation("DOWN");
+    animator.startAnimation("Character_StandDown");
+    player.setEntityType("player");
     return player;
   }
 

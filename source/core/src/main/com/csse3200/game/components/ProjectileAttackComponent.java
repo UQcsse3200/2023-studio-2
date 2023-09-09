@@ -75,10 +75,15 @@ public class ProjectileAttackComponent extends Component {
       // Doesn't match our target layer, ignore
       return;
     }
+
     // Has come into contact
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
     leftContact = false;
+    // If No Hitbox
+    if (target.getComponent(HitboxComponent.class) == null) {
+      return;
+    }
     if (target.getComponent(HitboxComponent.class).getLayer() != PhysicsLayer.PLAYER && target.getComponent(HitboxComponent.class).getLayer() != PhysicsLayer.STRUCTURE) {
       // Do nothing
       logger.debug("Non-target");

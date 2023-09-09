@@ -107,7 +107,10 @@ public class TouchAttackComponent extends Component {
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
     CombatStatsComponent sourceStats = source.getComponent(CombatStatsComponent.class);
     leftContact = false;
-
+    // If No Hitbox
+    if (target.getComponent(HitboxComponent.class) == null) {
+      return;
+    }
     // Targeting STRUCTURE entity type
     if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
       triggerTimer = new Timer();

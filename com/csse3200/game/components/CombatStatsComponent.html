@@ -263,7 +263,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setHealth(int)">
 <h3>setHealth</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setHealth</span><wbr><span class="parameters">(int&nbsp;health)</span></div>
-<div class="block">Sets the entity's health. Health has a minimum bound of 0.</div>
+<div class="block">Sets the entity's health. Health has a minimum bound of 0.
+ If health reaches 0, player dies after 500ms.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>health</code> - health</dd>

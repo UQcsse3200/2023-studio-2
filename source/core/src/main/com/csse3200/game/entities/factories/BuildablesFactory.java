@@ -19,7 +19,7 @@ public class BuildablesFactory {
     public static PlaceableEntity createWall(WallType type, Entity player) {
       return new Wall(type, player);
     }
-    public static Entity createCustomTurret(TurretType type, Entity player) {
+    public static PlaceableEntity createCustomTurret(TurretType type, Entity player) {
         return new Turret(type, new Entity());
     }
 

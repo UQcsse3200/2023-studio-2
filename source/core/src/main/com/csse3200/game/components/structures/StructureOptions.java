@@ -1,5 +1,7 @@
 package com.csse3200.game.components.structures;
 
+import com.badlogic.gdx.utils.ObjectMap;
+
 public class StructureOptions {
-    public StructureOption[] structureOptions;
+    public ObjectMap<String, StructureOption> structureOptions;
 }

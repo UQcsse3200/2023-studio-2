@@ -131,32 +131,6 @@ public class PlayerActions extends Component {
 
         var structurePicker = getEntity().getComponent(StructurePicker.class);
         structurePicker.interact(entity, gridPosition);
-
-//        // gets the structure at that position if it exists.
-//        Entity structure = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
-//
-//        // if structure doesn't exist at position, adds new structure.
-//        if (structure == null) {
-//            var structurePicker = getEntity().getComponent(StructurePicker.class);
-//
-//            PlaceableEntity newStructure = structurePicker.createStructure(entity);
-//
-//            if (newStructure == null) {
-//                return;
-//            }
-//
-//            ServiceLocator.getStructurePlacementService().PlaceStructureAt(newStructure, gridPosition, false, false);
-//            // if the existing structure is a wall, attempt upgrade.
-//        } else if (structure instanceof Wall existingWall) {
-//            if (existingWall.getWallType() == WallType.basic) {
-//                structure.dispose();
-//                this.entityService.unregister(structure);
-//                PlaceableEntity wall = BuildablesFactory.createWall(WallType.intermediate, entity);
-//                ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, gridPosition, false, false);
-//            }
-//        }
-//
-//        // does nothing if the existing structure is not a wall.
     }
 
     /**

@@ -11,6 +11,7 @@ import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class SpaceGameArea extends GameArea {
     private static final float ASTEROID_SIZE = 0.9f;
     private static final float STATIC_ASTEROID_SIZE =0.9f;
     private static final float WORMHOLE_SIZE = 0.9f;
+    private static final int NUM_ENEMIES = 10;
     GridPoint2 startingPosition = new GridPoint2(0, 0);
     int numberOfAsteroids = 10; // Change this to the desired number of asteroids
 
@@ -62,8 +64,7 @@ public class SpaceGameArea extends GameArea {
         spawnAsteroids();
         spawnGoal();
         createBoundary();
-        spawnEnemy(21,15);
-        spawnEnemy(11,9);
+        spawnEnemy();
     }
 
     private void playMusic() {
@@ -178,14 +179,16 @@ public class SpaceGameArea extends GameArea {
 //    }
 
     /**
-     * Method for spawning enemy on the minigame map
-     * @param x X-Coordinate of the enemy
-     * @param y Y-Coordinate of the enemy
+     * Method for spawning enemies randomly
      */
-    private void spawnEnemy(int x , int y){
-        GridPoint2 position = new GridPoint2(x,y);
-        spawnEntityAt(
-                ObstacleFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE), position,false,false);
+    private void spawnEnemy(){
+        GridPoint2 minPos = new GridPoint2(0, 0);
+        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+        for (int i = 0; i < NUM_ENEMIES; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity rand_enemy = ObstacleFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE);
+            spawnEntityAt(rand_enemy, randomPos,true,false);
+        }
     }
 
     /**

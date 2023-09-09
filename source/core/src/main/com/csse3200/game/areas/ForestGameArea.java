@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
@@ -115,9 +114,7 @@ public class ForestGameArea extends GameArea {
       "images/rangeEnemy.png",
       "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
       "images/broken_elixir_collector.png",
-      "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-      "images/speedpowerup.png" // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-      //Resolved merge conflicts that loads multiple copies of the same images
+      "images/player.png"
 
   };
   private static final String[] forestTextureAtlases = {
@@ -135,7 +132,8 @@ public class ForestGameArea extends GameArea {
       "images/stone_wall.atlas",
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
-      "images/playerSS.atlas"
+      "images/playerSS.atlas",
+      "images/player.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};

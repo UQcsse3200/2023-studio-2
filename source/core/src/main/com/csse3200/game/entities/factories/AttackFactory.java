@@ -7,10 +7,20 @@ package com.csse3200.game.entities.factories;
 */
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
+import com.csse3200.game.components.Weapons.WeaponTargetComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.tasks.ChaseTask;
+import com.csse3200.game.components.tasks.WanderTask;
+import com.csse3200.game.entities.configs.*;
+import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyType;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -24,42 +34,57 @@ import com.csse3200.game.services.ServiceLocator;
  * Class to create weapons when the player attacks
  */
 public class AttackFactory {
+  private static final WeaponConfigs configs =
+          FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
   /**
    * Static function to create a new weapon entity
    * @param weaponType - the type of weapon entity to be made
    * @param initRot - the initial rotation of the player
    * @return A reference to the created weapon entity
    */
-  public static Entity createAttack(WeaponType weaponType, float initRot) {
-    //TODO make this based on an enum/configs
-    //-> WeaponControllerComponent values will be based on config
-    //-> Assest will be based on config if possible
-    //-> CombatStatsComponent values will be based on confit and combatStat values
-    //Tomporary test for changing weapon
-    WeaponControllerComponent change = new WeaponControllerComponent(weaponType, initRot, 25, 10, 10, 45-90);
-    switch (weaponType) {
-      case ELEC_WRENCH:
-        change = new WeaponControllerComponent(weaponType, initRot + 45 + 45, 25, 10, 10, 45-90);
-        break;
-      case THROW_ELEC_WRENCH:
-        change = new WeaponControllerComponent(weaponType, initRot, 25, 10, 10, 45);
-        break;
-    }
+  public static Entity createAttack(WeaponType weaponType, float initRot, Entity player) {
+    WeaponConfig config = configs.GetWeaponConfig(weaponType);
+
+    PlayerActions playerActions = player.getComponent(PlayerActions.class);
+    playerActions.setAttackCooldown(config.attackCooldown);
+
+    WeaponControllerComponent weaponController = new WeaponControllerComponent(
+            weaponType,
+            initRot + config.initialRotationOffset,
+            config.weaponSpeed,
+            config.weaponDuration,
+            config.rotationSpeed,
+            config.imageRotationOffset);
 
     Entity attack =
             new Entity()
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                    .addComponent(new TouchAttackComponent(PhysicsLayer.NPC, 1f))
-                    .addComponent(new TextureRenderComponent("images/wrench.png"))
-                    .addComponent(change);
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WEAPON))
+                    .addComponent(new TouchAttackComponent((short)
+                            (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.NPC)))
+                    .addComponent(weaponController);
+    attack.setEntityType("playerWeapon");
 
-    //AnimationRenderComponent animator =
-            // new AnimationRenderComponent(     ServiceLocator.getResourceService().getAsset("images/wrench.atlas", TextureAtlas.class));
-    //animator.addAnimation("attack", 0.1f, Animation.PlayMode.LOOP);
-      attack
-        .addComponent(new CombatStatsComponent(1, 5, 1, false));
-        //.addComponent(animator);
+    TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
+    AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
+
+    animator.addAnimation("attack", 0.1f, Animation.PlayMode.LOOP_PINGPONG);
+
+    //TODO make this use player
+    attack
+            .addComponent(animator)
+            .addComponent(new CombatStatsComponent(1, 10, 1, false));
+
+    //TODO animations to control rotational apperance
+    animator.startAnimation("attack");
+    attack.scaleWidth(config.imageScale);
+
+    switch (weaponType) {
+      case SLING_SHOT, ELEC_WRENCH:
+        attack.addComponent(new WeaponTargetComponent(weaponType, player));
+        break;
+    }
+
     return attack;
   }
 

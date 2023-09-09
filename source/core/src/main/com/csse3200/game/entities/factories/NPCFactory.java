@@ -36,7 +36,7 @@ public class NPCFactory {
   public static DialogueBox dialogueBox;
 
   /** Configuration class for NPC properties. */
-  private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+  //private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
   /** Asset manager to load and manage assets. */
   public AssetManager assetManager;
@@ -109,7 +109,7 @@ public class NPCFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE));
-       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+       //FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
     botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     botanist.getComponent(TextureRenderComponent.class).scaleEntity();

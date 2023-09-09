@@ -1,32 +1,22 @@
 package com.csse3200.game.components.structures;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Scaling;
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.structures.tools.Tool;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.entities.buildables.TurretType;
-import com.csse3200.game.entities.buildables.WallType;
-import com.csse3200.game.entities.configs.GateConfig;
-import com.csse3200.game.entities.factories.BuildablesFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-
-import static com.csse3200.game.screens.MainMenuScreen.logger;
 
 public class StructurePicker extends UIComponent {
     Table table;
@@ -36,11 +26,13 @@ public class StructurePicker extends UIComponent {
 
     private StructureOptions structureOptions =
             FileLoader.readClass(StructureOptions.class, "configs/structure_options.json");
-    private StructureOption selectedStructure;
+    private String selectedTool;
+    public ArrayList<Tool> tools;
 
     public StructurePicker() {
         super();
         buttons = new ArrayList<>();
+        tools = new ArrayList<>();
     }
 
     /**
@@ -70,16 +62,18 @@ public class StructurePicker extends UIComponent {
 //        healthLabel = new Label(healthText, skin, "large");
 
         for (var option : structureOptions.structureOptions) {
+            var optionValue = option.value;
             var button = new Button(skin);
-            var image = new Image(ServiceLocator.getResourceService().getAsset(option.texture, Texture.class));
+            var image = new Image(ServiceLocator.getResourceService().getAsset(optionValue.texture, Texture.class));
 
             image.setScaling(Scaling.fill);
             button.add(image);
 
+            var optionKey = option.key;
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    selectedStructure = option;
+                    selectedTool = optionKey;
                     hide();
                 }
             });
@@ -116,16 +110,30 @@ public class StructurePicker extends UIComponent {
         table.setVisible(false);
     }
 
-    public PlaceableEntity createStructure(Entity player) {
-        if (selectedStructure == null) {
-            return null;
+    public void interact(Entity player, GridPoint2 location) {
+        if (selectedTool == null) {
+            return;
         }
 
-        return switch (selectedStructure.name) {
-            case "wall" -> BuildablesFactory.createWall(WallType.basic, player);
-            case "turret" -> ObstacleFactory.createCustomTurret(TurretType.levelOne, player);
-            default -> null;
-        };
+        Tool tool;
 
+        try {
+            Class<?> cls = Class.forName(selectedTool);
+
+            Object obj = cls.getDeclaredConstructor().newInstance();
+
+            if (obj instanceof Tool) {
+                tool = (Tool) obj;
+            } else {
+                return;
+            }
+        } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException
+                | InstantiationException | IllegalAccessException e) {
+            Logger logger = new Logger(this.getClass().getName());
+            logger.error(e.getMessage());
+            return;
+        }
+
+        tool.interact(player, location);
     }
 }

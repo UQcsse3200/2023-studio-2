@@ -3,6 +3,7 @@
  * It implements the InputProcessor interface to handle keyboard input events.
  */
 package com.csse3200.game.components.Companion;
+import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -229,6 +230,14 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                     walkDirection.scl(0);
                 }
                 triggerWalkEvent();
+                return true;
+            }case Keys.M-> {
+                System.out.println("M pressed");
+                InteractionControllerComponent interactionController = entity.getComponent(InteractionControllerComponent.class);
+                if (interactionController != null) {
+                    System.out.println("pressed");
+                    interactionController.interact();
+                }
                 return true;
             }
             default -> {

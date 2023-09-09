@@ -182,7 +182,7 @@ public class SpaceGameArea extends GameArea {
      * Method for spawning enemies randomly
      */
     private void spawnEnemy(){
-        GridPoint2 minPos = new GridPoint2(0, 0);
+        GridPoint2 minPos = new GridPoint2(1, 1);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
         for (int i = 0; i < NUM_ENEMIES; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);

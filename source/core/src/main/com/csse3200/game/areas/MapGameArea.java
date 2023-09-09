@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.MapConfig.MapConfig;
+import com.csse3200.game.areas.MapConfig.GameAreaConfig;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class MapGameArea extends GameArea{
 
-    private final MapConfig mapConfig;
+    private final GameAreaConfig mapConfig;
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
@@ -43,7 +43,7 @@ public class MapGameArea extends GameArea{
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
         //TODO: Check if this causes an error from diff run locations
-        mapConfig = FileLoader.readClass(MapConfig.class, configPath, FileLoader.Location.INTERNAL);
+        mapConfig = FileLoader.readClass(GameAreaConfig.class, configPath, FileLoader.Location.INTERNAL);
         this.game = game;
         this.terrainFactory = terrainFactory;
     }

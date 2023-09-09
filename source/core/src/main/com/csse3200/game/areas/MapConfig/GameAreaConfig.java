@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.GridPoint2;
 
 import java.util.List;
 
-public class MapConfig {
-    //Assets
+public class GameAreaConfig {
+    //Map Assets - all entity specific paths should be defined within the levelConfig file
     public String[] texturePaths = null;
     public String[] textureAtlasPaths = null;
     public String[] soundPaths = null;
@@ -16,6 +16,9 @@ public class MapConfig {
     public String terrainPath = "map/base.tmx";
     public List<ResourceCondition> winConditions = null;
 
+    public AreaEntityConfig entityConfig = null;
+
+    //TODO: EVERYTHING AFTER THIS WILL BE REFACTORED TO AreaEntityConfig
     //Powerup Properties
     public List<GridPoint2> healthPowerups = null;
     public List<GridPoint2> speedPowerups = null;

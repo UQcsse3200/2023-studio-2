@@ -114,6 +114,7 @@ public class ForestGameArea extends GameArea {
       "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
       "images/broken_elixir_collector.png",
       "images/player.png"
+
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",

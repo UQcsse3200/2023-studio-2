@@ -13,6 +13,13 @@
         "unobtanium": 50
       },
       "texture": "images/structure-icons/turret.png"
+    },
+    "com.csse3200.game.components.structures.JoinLayer": {
+      "name": "turret",
+      "cost": {
+        "unobtanium": 50
+      },
+      "texture": "images/structure-icons/turret.png"
     }
   }
 }

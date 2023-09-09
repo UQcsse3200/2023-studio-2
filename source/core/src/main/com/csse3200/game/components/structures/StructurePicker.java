@@ -7,18 +7,20 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Scaling;
 import com.csse3200.game.components.structures.tools.Tool;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class StructurePicker extends UIComponent {
+    Logger logger;
     Table table;
     private Image heartImage;
     //private Label healthLabel;
@@ -26,13 +28,12 @@ public class StructurePicker extends UIComponent {
 
     private StructureOptions structureOptions =
             FileLoader.readClass(StructureOptions.class, "configs/structure_options.json");
-    private String selectedTool;
-    public ArrayList<Tool> tools;
+    private Tool selectedTool;
 
     public StructurePicker() {
         super();
         buttons = new ArrayList<>();
-        tools = new ArrayList<>();
+        logger = LoggerFactory.getLogger(StructurePicker.class);
     }
 
     /**
@@ -53,27 +54,24 @@ public class StructurePicker extends UIComponent {
         table.center();
         table.setFillParent(false);
 
-        // Heart image
-        float heartSideLength = 30f;
-
-        // Health text
-//        int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-//        CharSequence healthText = String.format("Health: %d", health);
-//        healthLabel = new Label(healthText, skin, "large");
-
         for (var option : structureOptions.structureOptions) {
+            var tool = getTool(option.key);
+
+            if (tool == null) {
+                continue;
+            }
+
+
             var optionValue = option.value;
             var button = new Button(skin);
             var image = new Image(ServiceLocator.getResourceService().getAsset(optionValue.texture, Texture.class));
 
             image.setScaling(Scaling.fill);
             button.add(image);
-
-            var optionKey = option.key;
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    selectedTool = optionKey;
+                    selectedTool = tool;
                     hide();
                 }
             });
@@ -89,6 +87,25 @@ public class StructurePicker extends UIComponent {
         stage.addActor(table);
 
         table.setVisible(false);
+    }
+
+    private Tool getTool(String key) {
+        try {
+            Class<?> cls = Class.forName(key);
+
+            Object obj = cls.getDeclaredConstructor().newInstance();
+
+            if (obj instanceof Tool) {
+                return (Tool) obj;
+            } else {
+                logger.error(key + " is not an instance of Tool");
+                return null;
+            }
+        } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException
+                 | InstantiationException | IllegalAccessException e) {
+            logger.error(key + " cannot be instantiated");
+            return null;
+        }
     }
 
     @Override
@@ -115,25 +132,6 @@ public class StructurePicker extends UIComponent {
             return;
         }
 
-        Tool tool;
-
-        try {
-            Class<?> cls = Class.forName(selectedTool);
-
-            Object obj = cls.getDeclaredConstructor().newInstance();
-
-            if (obj instanceof Tool) {
-                tool = (Tool) obj;
-            } else {
-                return;
-            }
-        } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException
-                | InstantiationException | IllegalAccessException e) {
-            Logger logger = new Logger(this.getClass().getName());
-            logger.error(e.getMessage());
-            return;
-        }
-
-        tool.interact(player, location);
+        selectedTool.interact(player, location);
     }
 }

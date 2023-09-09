@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 public class TouchAttackComponent extends Component {
 
   private short targetLayer;
-  private float knockbackForce = 0f;
+  private float knockbackForce = 1f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
   private boolean leftContact;
@@ -99,6 +99,7 @@ public class TouchAttackComponent extends Component {
       // Doesn't match our target layer, ignore
       return;
     }
+    // Has come into contact
 
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     Entity source = ((BodyUserData) me.getBody().getUserData()).entity;

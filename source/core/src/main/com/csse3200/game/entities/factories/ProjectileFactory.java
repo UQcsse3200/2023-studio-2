@@ -55,6 +55,7 @@ public class ProjectileFactory {
         animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("explode",0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("stand",0.3f, Animation.PlayMode.LOOP);
 
 
         enemy

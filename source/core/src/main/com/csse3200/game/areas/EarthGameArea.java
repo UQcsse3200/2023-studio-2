@@ -46,7 +46,7 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_TREES = 7;
     private static final int NUM_MELEE_PTE = 2;
     private static final int NUM_MELEE_DTE = 2;
-    private static final int NUM_RANGE_PTE = 2;
+    private static final int NUM_RANGE_PTE = 5;
     private static final int NUM_POWERUPS = 3;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
@@ -162,7 +162,7 @@ public class EarthGameArea extends GameArea {
         Entity playerEntity = spawnPlayer();
         //spawnCompanion(playerEntity);
 
-        spawnSpawner();
+        //spawnSpawner();
         spawnEnemies();
         //spawnBoss();
         spawnAsteroids();
@@ -369,11 +369,11 @@ public class EarthGameArea extends GameArea {
             spawnEntityAt(meleeDTE, randomPos2, true, true);
         }
 
-//        for (int i = 0; i < NUM_RANGE_PTE; i++) {
-//            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
-//            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
-//            spawnEntityAt(rangePTE, randomPos3, true, true);
-//        }
+        for (int i = 0; i < NUM_RANGE_PTE; i++) {
+            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
+            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+            spawnEntityAt(rangePTE, randomPos3, true, true);
+        }
     }
 
     /**

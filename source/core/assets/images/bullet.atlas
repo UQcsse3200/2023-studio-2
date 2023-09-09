@@ -52,4 +52,18 @@ explode
   orig: 500, 500
   offset: 0, 0
   index: 0
+stand
+  rotate: false
+  xy: 0, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+stand
+  rotate: false
+  xy: 0, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
 

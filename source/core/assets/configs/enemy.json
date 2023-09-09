@@ -21,7 +21,7 @@
     "baseAttack": 10,
     "speed": 5,
     "specialAttack": 0,
-    "atlas": "images/rangeEnemy.atlas"
+    "atlas": "images/enemy/necromancer.atlas"
   },
 
   "rangeEnemyDTE": {

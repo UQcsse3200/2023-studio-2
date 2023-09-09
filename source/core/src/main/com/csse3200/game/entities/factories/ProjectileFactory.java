@@ -66,6 +66,7 @@ public class ProjectileFactory {
 
         enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 
+
         return enemy;
     }
 

@@ -159,7 +159,7 @@ public class TouchAttackComponent extends Component {
       timer.schedule(new TimerTask() {
         @Override
         public void run() {
-          int a = 0;
+          targetStats.hit(combatStats);
         }
       }, 2000);
       targetStats.hit(combatStats);

@@ -26,7 +26,7 @@ import java.util.List;
  * <p>Support for enabling/disabling game areas could be added by making this a Component instead.
  */
 public abstract class GameArea implements Disposable {
-  protected TerrainComponent terrain;
+  protected static TerrainComponent terrain;
   protected List<Entity> areaEntities;
   protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;

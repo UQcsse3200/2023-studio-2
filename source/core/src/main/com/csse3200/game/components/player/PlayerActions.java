@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.joinable.JoinableComponent;
@@ -62,7 +63,9 @@ public class PlayerActions extends Component {
     private void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
-        Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_SPEED);
+        float speedMult = EarthGameArea.getSpeedMult();
+        System.out.println(speedMult);
+        Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(MAX_SPEED.x * speedMult, MAX_SPEED.y * speedMult));
         // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);

@@ -120,7 +120,7 @@ public class EarthGameArea extends GameArea {
 
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
-    private Entity player;
+    private static Entity player;
     private GdxGame game;
 
     /**
@@ -189,6 +189,21 @@ public class EarthGameArea extends GameArea {
             }
         }
     }
+
+    /**
+     * Retrieves the speedMult property defined in the terrain's .tsx file
+     * @return Multiplier to modify the player's speed
+     */
+    public static float getSpeedMult() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) playerPos.x * 2, (int) playerPos.y * 2);
+        Object speedMult = cell.getTile().getProperties().get("speedMult");
+
+        return speedMult != null ? (float)speedMult : 1f;
+    }
+
+
     /**
      * Spawns a Botanist NPC entity at a predefined spawn position on the terrain.
      * The Botanist entity is created using the NPCFactory.createBotanist() method.
@@ -416,7 +431,7 @@ public class EarthGameArea extends GameArea {
         this.unloadAssets();
     }
 
-    public Entity getPlayer() {
+    public static Entity getPlayer() {
         return player;
   }
 }

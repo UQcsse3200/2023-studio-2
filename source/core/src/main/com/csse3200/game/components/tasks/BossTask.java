@@ -1,5 +1,6 @@
 package com.csse3200.game.components.tasks;
 
+import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
@@ -13,20 +14,25 @@ import org.slf4j.LoggerFactory;
 public class BossTask extends DefaultTask implements PriorityTask {
 
   private final int priority = 5;
-  private static final Logger logger = LoggerFactory.getLogger(BossTask.class);
+  private static final Logger logger = LoggerFactory.getLogger(AimTask.class);
+  private final float waitTime;
+  private WaitTask waitTask;
   private Task currentTask;
   private SpecialAttackTask specialAttackTask;
-  private WaitTask waitTask;
-  private String attackType;
+  private final float radius;
+  private Entity target;
 
 
   /**
    * creates an aim task.
    *
-   * @param attackType Type of boss attack
+   * @param waitTime How long in seconds to wait between firing a projectile.
+   * @param radius Radius of the special attack
    */
-  public BossTask(String attackType) {
-    this.attackType = attackType;
+  public BossTask(float waitTime, float radius, Entity target) {
+    this.target = target;
+    this.waitTime = waitTime;
+    this.radius = radius;
   }
 
   @Override
@@ -34,21 +40,23 @@ public class BossTask extends DefaultTask implements PriorityTask {
     if (status == Status.ACTIVE) {
       return getActivePriority();
     }
+
     return getInactivePriority();
   }
 
   @Override
   public void start() {
-    System.out.println("Working!!!!! yipeee");
     super.start();
-    waitTask = new WaitTask(3); //  Can change wait time as long as needed later
+
+    waitTask = new WaitTask(waitTime);
     waitTask.create(owner);
 
-    specialAttackTask = new SpecialAttackTask(50f);
+    specialAttackTask = new SpecialAttackTask(this.radius);
     specialAttackTask.create(owner);
 
     waitTask.start();
     currentTask = waitTask;
+
     this.owner.getEntity().getEvents().trigger("standing");
   }
 
@@ -56,12 +64,23 @@ public class BossTask extends DefaultTask implements PriorityTask {
   public void update() {
     if (currentTask.getStatus() != Status.ACTIVE) {
       if (currentTask == waitTask) {
+        System.out.println("End Wait!");
         startSpecialAttack();
       } else {
+        System.out.println("Start Waiting");
         startWaiting();
       }
     }
     currentTask.update();
+  }
+
+  /**
+   * Returns the distance between the current entity and the target location.
+   *
+   * @return The distance between the owner's entity and the target location.
+   */
+  private float getDistanceToTarget() {
+    return owner.getEntity().getPosition().dst(target.getPosition());
   }
 
   /**
@@ -70,7 +89,24 @@ public class BossTask extends DefaultTask implements PriorityTask {
    * @return The current priority.
    */
   private int getActivePriority() {
+    float dst = getDistanceToTarget();
+    if (dst > 3) {
+      return -1; // Too far, stop chasing
+    }
     return priority;
+  }
+
+  /**
+   * Returns the priority if task is currently inactive.
+   *
+   * @return The current priority.
+   */
+  private int getInactivePriority() {
+    float dst = getDistanceToTarget();
+    if (dst <= 3) {
+      return priority;
+    }
+    return -1;
   }
 
   /**
@@ -80,15 +116,6 @@ public class BossTask extends DefaultTask implements PriorityTask {
     logger.debug("Starting waiting");
     this.owner.getEntity().getEvents().trigger("standing");
     swapTask(waitTask);
-  }
-
-  /**
-   * Returns the priority if task is currently inactive.
-   *
-   * @return The current priority.
-   */
-  private int getInactivePriority() {
-    return -1;
   }
 
   /**

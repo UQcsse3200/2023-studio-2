@@ -9,6 +9,8 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Random;
+
 
 /**
  * Shoots a projectile at a target in game.
@@ -47,8 +49,6 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
     public void specialAttack() {
         Vector2 center = owner.getEntity().getPosition();
 
-        // Define the radius of the circle
-
         // Define the number of positions you want
         int numPositions = 10;
 
@@ -57,6 +57,8 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
 
         // Create an array to store the positions
         Vector2[] positions = new Vector2[numPositions];
+        // Create an array to store the spawn positions
+        Vector2[] spawns = new Vector2[numPositions];
 
         // Calculate the positions
         for (int i = 0; i < numPositions; i++) {
@@ -67,13 +69,17 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
             float x = center.x + this.radius * (float) Math.cos(angle);
             float y = center.y + this.radius * (float) Math.sin(angle);
 
+            // Calculate where to spawn attack
+            float spawnX = center.x + 0.25f * (float) Math.cos(angle);
+            float spawnY = center.y + 0.25f * (float) Math.sin(angle);
+
             // Create a Vector2 for the position
             positions[i] = new Vector2(x, y);
+            spawns[i] = new Vector2(spawnX, spawnY);
         }
-
         for (int i = 0; i < numPositions; i++) {
             Entity bullet = ProjectileFactory.createEnemyBullet(positions[i], owner.getEntity());
-            ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawn);
+            ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawns[i]);
         }
     }
 
@@ -81,7 +87,7 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
     public void update() {
         if (hasShot) {
             status = Status.FINISHED;
-            logger.debug("Finished aiming");
+            logger.debug("Finished Attack");
         }
     }
 

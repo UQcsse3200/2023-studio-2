@@ -9,6 +9,7 @@ import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -74,27 +75,18 @@ public class ProjectileAttackComponent extends Component {
       // Doesn't match our target layer, ignore
       return;
     }
+    System.out.println("Interacting with projectile");
     // Has come into contact
-
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
+    System.out.println("Got target: " + target.getClass().toString());
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+    System.out.println("Got stats");
     leftContact = false;
-
-    // Targeting STRUCTURE entity type
-    if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-      // Damage Structure while still in contact
-      triggerTimer = new Timer();
-      // Schedule the trigger every 2 seconds
-      triggerTimer.scheduleAtFixedRate(new TimerTask() {
-        @Override
-        public void run() {
-          if (!leftContact) {
-            hitOnce(target, targetStats);
-          }
-        }
-      }, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
-    } else {
-      //hit once, push away
+    if (target.getComponent(HitboxComponent.class).getLayer() != PhysicsLayer.PLAYER && target.getComponent(HitboxComponent.class).getLayer() != PhysicsLayer.STRUCTURE) {
+      // Do nothing
+      logger.debug("Non-target");
+    } else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER || target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+      //Damage Structure while still in contact
       hitOnce(target, targetStats);
     }
   }
@@ -120,17 +112,25 @@ public class ProjectileAttackComponent extends Component {
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
 
-    // despawn
+    AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
+    animator.stopAnimation();
+    entity.getComponent(HitboxComponent.class).setLayer((short) 0);
+
+    // Dispose Entity with animation
     entity.getEvents().trigger("explode");
     // Schedule a task to execute entity::dispose after a delay
+    // Get the duration of the projectile explosion animation
+    float deathAnimationDuration = animator.getAnimationDuration("explode");
+    // Convert the duration from seconds to milliseconds for the Timer
+    long delay = (long) (deathAnimationDuration * 1000);
     Timer timer = new Timer();
+
     timer.schedule(new TimerTask() {
       @Override
       public void run() {
         Gdx.app.postRunnable(entity::dispose);
       }
-    }, 2000);
-
+    }, delay); // Delay based on the dispose animation duration
 
   }
 

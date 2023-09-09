@@ -170,11 +170,7 @@ public class EnemyFactory {
     }
     // Red Ghost
     if (type == EnemyType.Melee) {
-      // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
-        // delete this line when finished with it
-        aiTaskComponent.addTask(new BossTask("Test"));
-        // heheehhehehehehehheehehehheheheh
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
         } else {
@@ -192,6 +188,9 @@ public class EnemyFactory {
     }
     // M.E.C.H
     if (type == EnemyType.BossMelee) {
+      // delete this line when finished with it
+      aiTaskComponent.addTask(new BossTask(2f, 10f, target));
+      // heheehhehehehehehheehehehheheheh
       // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {

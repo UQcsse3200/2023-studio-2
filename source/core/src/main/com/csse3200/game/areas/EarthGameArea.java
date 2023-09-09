@@ -118,7 +118,8 @@ public class EarthGameArea extends GameArea {
             "images/botanist.atlas",
             "images/sling_shot.atlas",
             "images/botanist.atlas",
-            "images/enemy/bull.atlas"
+            "images/enemy/bull.atlas",
+        "images/enemy/Night.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.ogg"};
@@ -164,7 +165,7 @@ public class EarthGameArea extends GameArea {
 
         //spawnSpawner();
         spawnEnemies();
-        //spawnBoss();
+        spawnBoss();
         spawnAsteroids();
         spawnBotanist();
 

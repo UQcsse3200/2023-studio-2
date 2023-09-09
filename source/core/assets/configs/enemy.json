@@ -37,7 +37,7 @@
     "baseAttack": 25,
     "speed": 8,
     "specialAttack": 40,
-    "atlas": "images/enemy/bull.atlas"
+    "atlas": "images/enemy/Night.atlas"
   },
 
   "rangeBossPTE": {

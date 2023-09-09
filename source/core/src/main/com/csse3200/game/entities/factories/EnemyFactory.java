@@ -112,8 +112,12 @@ public class EnemyFactory {
     float scale = 2.0f;
     if (type == EnemyType.BossRanged){
       scale = 1.5f;
-    } else if (type == EnemyType.Ranged) {
-      scale = 1.0f;
+    }
+    if (type == EnemyType.BossMelee){
+      scale = 3.5f;
+    }
+    else if (type == EnemyType.Ranged) {
+      scale = 2.0f;
     }
     enemy.scaleHeight(scale);
     return enemy;

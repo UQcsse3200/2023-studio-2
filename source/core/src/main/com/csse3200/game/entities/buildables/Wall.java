@@ -59,7 +59,8 @@ public class Wall extends PlaceableEntity {
         addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));
         addComponent(new ProximityActivationComponent(1.5f, player, this::onPlayerEnter, this::onPlayerExit));
 
-        getComponent(JoinableComponent.class).scaleEntity();
+        setScale(0.5f, 0.5f);
+        getComponent(JoinableComponent.class);
     }
 
     public WallType getWallType() {

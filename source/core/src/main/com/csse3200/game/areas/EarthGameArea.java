@@ -104,7 +104,7 @@ public class EarthGameArea extends GameArea {
 
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
-    private Entity player;
+    private static Entity player;
     private GdxGame game;
 
     /**
@@ -182,11 +182,25 @@ public class EarthGameArea extends GameArea {
             }
         }
     }
+
     private void spawnTreeTopLayer() {
         GridPoint2 spawnTreeTop = new GridPoint2(0,0);
                     Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
                     spawnEntityAt(treeTop, spawnTreeTop, false, false);
                 }
+
+    /**
+     * Retrieves the speedMult property defined in the terrain's .tsx file
+     * @return Multiplier to modify the player's speed
+     */
+    public static float getSpeedMult() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) playerPos.x * 2, (int) playerPos.y * 2);
+        Object speedMult = cell.getTile().getProperties().get("speedMult");
+
+        return speedMult != null ? (float)speedMult : 1f;
+    }
 
 
     /**
@@ -406,7 +420,7 @@ public class EarthGameArea extends GameArea {
         this.unloadAssets();
     }
 
-    public Entity getPlayer() {
+    public static Entity getPlayer() {
         return player;
   }
 }

@@ -219,9 +219,13 @@ public class MapGameArea extends GameArea{
         spawnResourceExtractors(Resource.Solstite, mapConfig.solstitePositions, mapConfig.solstiteProduction);
         spawnResourceExtractors(Resource.Durasteel, mapConfig.durasteelPositions, mapConfig.durasteelProduction);
         spawnResourceExtractors(Resource.Nebulite, mapConfig.nebulitePositions, mapConfig.nebuliteProduction);
-        
+
+        int scale = 5;
+        int steps = 64;
+        int maxResource = 1000;
+
         //Spawn Display
-        ResourceDisplay resourceDisplayComponent = new ResourceDisplay()
+        ResourceDisplay resourceDisplayComponent = new ResourceDisplay(scale, steps, maxResource)
                 .withResource(Resource.Durasteel)
                 .withResource(Resource.Solstite)
                 .withResource(Resource.Nebulite);

@@ -159,10 +159,10 @@ public class TouchAttackComponent extends Component {
       timer.schedule(new TimerTask() {
         @Override
         public void run() {
-          targetStats.hit(combatStats);
+          int a = 0;
         }
       }, 2000);
-
+      targetStats.hit(combatStats);
 
 
 //      if (entity.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.WEAPON) {

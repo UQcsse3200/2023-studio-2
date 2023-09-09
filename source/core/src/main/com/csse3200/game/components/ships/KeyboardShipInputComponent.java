@@ -43,6 +43,7 @@ public class KeyboardShipInputComponent extends InputComponent {
                 triggerFlyEvent();
                 return true;
             }
+
             default -> {
                 return false;
             }
@@ -78,6 +79,18 @@ public class KeyboardShipInputComponent extends InputComponent {
                 triggerFlyEvent();
                 return true;
             }
+
+            case Keys.B -> {
+                triggerBrakeOnEvent();
+                return true;
+            }
+
+            case Keys.V -> {
+                triggerBrakeOffEvent();
+                return true;
+            }
+
+
             default -> {
                 return false;
             }
@@ -90,6 +103,14 @@ public class KeyboardShipInputComponent extends InputComponent {
         } else {
             entity.getEvents().trigger("fly", flyDirection);
         }
+    }
+
+    private void triggerBrakeOnEvent() {
+        entity.getEvents().trigger("brakeOn");
+    }
+
+    private void triggerBrakeOffEvent() {
+        entity.getEvents().trigger("brakeOff");
     }
 }
 

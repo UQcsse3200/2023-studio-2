@@ -75,12 +75,9 @@ public class ProjectileAttackComponent extends Component {
       // Doesn't match our target layer, ignore
       return;
     }
-    System.out.println("Interacting with projectile");
     // Has come into contact
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-    System.out.println("Got target: " + target.getClass().toString());
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-    System.out.println("Got stats");
     leftContact = false;
     if (target.getComponent(HitboxComponent.class).getLayer() != PhysicsLayer.PLAYER && target.getComponent(HitboxComponent.class).getLayer() != PhysicsLayer.STRUCTURE) {
       // Do nothing

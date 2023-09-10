@@ -64,7 +64,7 @@ public class CompanionFactory {
                         .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
-                        .addComponent(new FollowComponent(playerEntity, 1.9f))
+                        .addComponent(new FollowComponent(playerEntity, 2f))
                         .addComponent(new CompanionInteractionControllerComponent())
                         .addComponent(new CompanionStatsDisplay(playerEntity))
                         .addComponent(animator)

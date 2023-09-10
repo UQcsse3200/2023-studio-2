@@ -22,7 +22,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label healthLabel;
   private ProgressBar healthBar;
 
-  private float healthWidth = 300f;
+  private float healthWidth = 5000f;
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -54,6 +54,7 @@ public class PlayerStatsDisplay extends UIComponent {
     //setting the position of health Bar
     healthBar.setPosition(10, Gdx.graphics.getHeight()  - healthBar.getHeight());
     healthBar.setWidth(healthWidth);
+    healthBar.setDebug(true);
 
     // Heart image
     float heartSideLength = 30f;

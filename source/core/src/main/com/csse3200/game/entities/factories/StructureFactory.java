@@ -2,7 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.MapConfig.ResourceCondition;
+import com.csse3200.game.areas.map_config.ResourceCondition;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.ExtractorRepairPartComponent;
 import com.csse3200.game.components.InteractableComponent;

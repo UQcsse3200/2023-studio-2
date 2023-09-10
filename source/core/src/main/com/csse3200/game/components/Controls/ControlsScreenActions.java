@@ -1,4 +1,4 @@
-package com.csse3200.game.components.EndGame;
+package com.csse3200.game.components.Controls;
 
 
 
@@ -7,10 +7,10 @@ import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EndGameActions extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(EndGameActions.class);
+public class ControlsScreenActions extends Component {
+    private static final Logger logger = LoggerFactory.getLogger(ControlsScreenActions.class);
     private GdxGame game;
-    public EndGameActions(GdxGame game) {
+    public ControlsScreenActions(GdxGame game) {
         this.game = game;
     }
     @Override

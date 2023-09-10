@@ -4,8 +4,8 @@ package com.csse3200.game.screens;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.EndGame.EndGameActions;
-import com.csse3200.game.components.EndGame.EndGameDisplay;
+import com.csse3200.game.components.Controls.ControlsScreenActions;
+import com.csse3200.game.components.Controls.ControlsScreenDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -80,9 +80,9 @@ public class ControlsScreen extends ScreenAdapter {
                 ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
         Entity ui = new Entity();
-        ui.addComponent(new EndGameDisplay())
+        ui.addComponent(new ControlsScreenDisplay())
                 .addComponent(new InputDecorator(stage, 10))
-                .addComponent(new EndGameActions(game));;
+                .addComponent(new ControlsScreenActions(game));;
         ServiceLocator.getEntityService().register(ui);
     }
 }

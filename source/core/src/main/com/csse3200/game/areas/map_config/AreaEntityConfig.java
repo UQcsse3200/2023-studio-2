@@ -9,7 +9,7 @@ public class AreaEntityConfig {
     //TODO: Update these to specific types
     public List<EnemyDAO> enemyDAOs = new ArrayList<>();
     public List<NPCDAO> NPCDAOs = new ArrayList<>();
-    public List<Wall> wallDAOs = new ArrayList<>();
+    public List<WallDAO> wallDAOs = new ArrayList<>();
     public List<EntityDAO> bulletDAOs = new ArrayList<>();
     //TODO: Add all types here
 

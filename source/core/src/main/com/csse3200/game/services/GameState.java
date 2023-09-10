@@ -13,7 +13,6 @@ public class GameState {
     // Holds the current state's information.
     private final ConcurrentHashMap<String, Object> stateData = new ConcurrentHashMap<>();
 
-
     // Callback list of state changes' listeners.
     private final CopyOnWriteArrayList<StateChangeListener> stateChangeListeners = new CopyOnWriteArrayList<>();
 
@@ -45,6 +44,7 @@ public class GameState {
      */
     public Map<String, Object> getStateData() {
         return new ConcurrentHashMap<>(stateData);
+
     }
 
     /**

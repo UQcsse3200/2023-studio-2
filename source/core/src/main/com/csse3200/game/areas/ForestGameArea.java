@@ -8,10 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
@@ -99,8 +99,23 @@ public class ForestGameArea extends GameArea {
     "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
     "images/refinedShip.png",
-    "images/stone_wall.png",
-    "images/oldman_down_1.png"
+    "images/oldman_down_1.png",
+    "images/extractor.png",
+    "images/broken_extractor.png",
+    "images/Companion1.png",
+    "images/playerSS_2.png",
+    "images/playerSS_4.png",
+    "images/playerSS_0.png",
+    "images/playerSS_1.png",
+    "images/playerSS_3.png",
+    "images/playerSS_5.png",
+    "images/playerSS_7.png",
+    "images/playerSS_6.png",
+    "images/player_blank.png",
+    "images/Ship.png",
+    "images/player.png",
+    "images/TurretOne.png",
+    "images/TurretTwo.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
@@ -117,7 +132,8 @@ public class ForestGameArea extends GameArea {
       "images/stone_wall.atlas",
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
-      "images/playerSS.atlas"
+      "images/playerSS.atlas",
+      "images/player.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -166,6 +182,7 @@ public class ForestGameArea extends GameArea {
     spawnBoss();
     spawnAsteroids();
     player = spawnPlayer();
+    spawnTurret();
     spawnBotanist();
 
     playMusic();
@@ -332,6 +349,13 @@ public class ForestGameArea extends GameArea {
     Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
     //boss.addComponent(new DialogComponent(dialogueBox));
+  }
+
+  public void spawnTurret() {
+    Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
+    Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
+    spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
+    spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
   }
 
   private void playMusic() {

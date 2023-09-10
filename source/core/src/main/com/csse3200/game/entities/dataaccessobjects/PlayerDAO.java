@@ -1,4 +1,4 @@
-package c0m.csse3200.game.entities.dataaccessobjects;
+package com.csse3200.game.entities.dataaccessobjects;
 
 
 public class PlayerDAO extends EntityDAO {

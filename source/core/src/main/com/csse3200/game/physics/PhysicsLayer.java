@@ -18,6 +18,7 @@ public class PhysicsLayer {
   public static final short ENEMY_RANGE = (1 << 6);
   public static final short STRUCTURE = (1 << 5);
   public static final short WALL = (1 << 4);
+  public static final short TURRET = (1<<4);
 
   public static final short WEAPON = (1 << 7);
 

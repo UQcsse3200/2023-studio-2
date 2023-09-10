@@ -2,6 +2,7 @@ package com.csse3200.game.components.InitialSequence;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -14,20 +15,18 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.rafaskoberg.gdx.typinglabel.TypingAdapter;
-import com.rafaskoberg.gdx.typinglabel.TypingLabel;
+import com.badlogic.gdx.graphics.Color;
 
 public class InitialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(InitialScreenDisplay.class);
     private final GdxGame game;
-
+    private BitmapFont font;
     private static float textAnimationDuration = 18;
     private float spaceSpeed = 1;
     private float planetToTextPadding = 150;
     private Image background;
     private Image planet;
     private Table rootTable;
-    private TypingLabel storyLabel;
 
     public InitialScreenDisplay(GdxGame game) {
         super();
@@ -37,6 +36,8 @@ public class InitialScreenDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
+        // Load the BitmapFont
+        font = new BitmapFont();
         addUIElements();
     }
 
@@ -65,32 +66,28 @@ public class InitialScreenDisplay extends UIComponent {
         float planetOffset = textAnimationDuration * UserSettings.get().fps;
         planet.setPosition((float) Gdx.graphics.getWidth() / 2, planetOffset, Align.center);
 
-        // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
-        String story = """
-            {FADE}
-            Earth has become a desolate wasteland ravaged by a deadly virus. Civilisation as we know  has crumbled, and humanity's last hope lies among the stars.
-            {WAIT}
-            
-            You are one of the few survivors who have managed to secure a spot on a spaceship built with the hopes of finding a cure or a new home on distant planets.
-            {WAIT}
-            
-            The spaceship belongs to Dr Emily Carter, a brilliant scientist determined to find a cure for the virus and make the earth habitable again.
-            {WAIT}
-            
-            But the cosmos is a vast and dangerous place, filled with unknown challenges and mysteries, from alien encounters to unexpected phenomena.
-            {WAIT}
-            
-            {COLOR=red} Your journey begins now as you board the spaceship \"Aurora\" and venture into the unknown.
-            {WAIT}
-            """;
-        storyLabel = new TypingLabel(story, skin); // Create the TypingLabel with the formatted story
-        storyLabel.setAlignment(Align.center);
-        storyLabel.setTypingListener(new TypingAdapter() {
-            @Override
-            public void end() {
-                // The typing has ended, you can add any additional logic here.
-            }
-        });
+        String storyText = """
+    Earth has become a desolate wasteland ravaged by a deadly virus. Civilisation as we know has crumbled, and humanity's last hope lies among the stars.
+    
+    You are one of the few survivors who have managed to secure a spot on a spaceship built with the hopes of finding a cure or a new home on distant planets.
+    
+    The spaceship belongs to Dr. Emily Carter, a brilliant scientist determined to find a cure for the virus and make the earth habitable again.
+    
+    But the cosmos is a vast and dangerous place, filled with unknown challenges and mysteries, from alien encounters to unexpected phenomena.
+    
+    Your journey begins now as you board the spaceship "Aurora" and venture into the unknown.
+    """;
+
+
+        // Define the style for the Label (font and color)
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE); // You can customize the color
+
+        // Create the Label widget with your text and style
+        Label storyLabel = new Label(storyText, labelStyle);
+
+        // Configure the Label appearance
+        storyLabel.setAlignment(Align.center); // Center-align the text
+        storyLabel.setWrap(false); // Wrap text to fit the screen width if needed
 
         TextButton continueButton = new TextButton("Continue", skin);
 
@@ -126,7 +123,7 @@ public class InitialScreenDisplay extends UIComponent {
     @Override
     public void update() {
         // This movement logic is triggered on every frame until the middle of the planet hits its target position on the screen.
-        if (planet.getY(Align.center) >= storyLabel.getY(Align.top) + planetToTextPadding) {
+        if (planet.getY(Align.center) >= rootTable.getY() + planetToTextPadding) {
             planet.setY(planet.getY() - spaceSpeed); // Move the planet
             background.setY(background.getY() - spaceSpeed); // Move the background
         }
@@ -135,10 +132,10 @@ public class InitialScreenDisplay extends UIComponent {
 
     @Override
     public void dispose() {
+        font.dispose(); // Dispose of the BitmapFont when done
         rootTable.clear();
         planet.clear();
         background.clear();
-        storyLabel.clear();
         super.dispose();
     }
 }

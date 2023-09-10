@@ -30,7 +30,7 @@ public class MainAlertBox extends Actor {
             isExit =true;
         startTransition();
         // Load your transition image (replace with the actual image path)
-        transitionImage = new Texture(Gdx.files.internal("2023-studio-2/source/core/assets/images/spaceshipp.png"));
+        transitionImage = new Texture(Gdx.files.internal("/Users/shaivika/Desktop/2023-studio-2/source/core/assets/images/spaceshipp.png.jpeg"));
 
         // Create a SpriteBatch for rendering the transition image
         spriteBatch = new SpriteBatch();

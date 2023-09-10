@@ -34,7 +34,7 @@ public class EndGameDisplay extends UIComponent {
         table.setFillParent(true);
 
         storyImages = new ArrayList<>();
-        storyImages.add("images/GameOver.png");
+        storyImages.add("images/Controls.png");
         int start = 0;
 
         Texture storyLine = new Texture(Gdx.files.internal(storyImages.get(start)));
@@ -45,25 +45,16 @@ public class EndGameDisplay extends UIComponent {
 
         InsertButtons bothButtons = new InsertButtons();
 
-        String playAgainTexture = "images/playAgain.PNG";
-        String playAgainTextureHover = "images/playAgainHover.PNG";
-        ImageButton playAgainBtn;
-        playAgainBtn = bothButtons.draw(playAgainTextureHover, playAgainTexture);
+//        String playAgainTexture = "images/playAgain.PNG";
+//        String playAgainTextureHover = "images/playAgainHover.PNG";
+//        ImageButton playAgainBtn;
+//        playAgainBtn = bothButtons.draw(playAgainTextureHover, playAgainTexture);
 
         String exitTexture = "images/on_exit.png";
         String exitTextureHover = "images/on_exit_hover.PNG";
         ImageButton exitBtn;
         exitBtn = bothButtons.draw(exitTexture, exitTextureHover);
 
-        playAgainBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-
-                        logger.debug("Play Again button clicked");
-                        entity.getEvents().trigger("playAgain");
-                    }
-                });
 
         exitBtn.addListener(
                 new ChangeListener() {
@@ -75,12 +66,9 @@ public class EndGameDisplay extends UIComponent {
                     }
                 });
 
-        playAgainBtn.setPosition(510f, 80f);
-        playAgainBtn.setSize(250, 100);
         exitBtn.setPosition(810f, 80f);
         exitBtn.setSize(250, 100);
         stage.addActor(table);
-        stage.addActor(playAgainBtn);
         stage.addActor(exitBtn);
 
     }

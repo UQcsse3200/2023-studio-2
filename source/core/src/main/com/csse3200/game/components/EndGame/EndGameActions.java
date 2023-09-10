@@ -15,17 +15,11 @@ public class EndGameActions extends Component {
     }
     @Override
     public void create() {
-       entity.getEvents().addListener("playAgain", this::playAgain);
         entity.getEvents().addListener("exit", this::onExit);
-    }
-
-    private void playAgain() {
-        logger.info("Skipping to game");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 
     private void onExit() {
         logger.info("Game returned to the main menu ");
-        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+        game.setScreen(GdxGame.ScreenType.SETTINGS);
     }
 }

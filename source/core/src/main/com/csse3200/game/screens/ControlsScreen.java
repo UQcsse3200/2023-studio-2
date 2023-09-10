@@ -24,7 +24,7 @@ public class ControlsScreen extends ScreenAdapter {
     private final GdxGame game;
     private final Renderer renderer;
     private static final String[] storyTextures = {
-            "images/GameOver.png"
+            "images/Controls.png"
     };
     public ControlsScreen(GdxGame game) {
         this.game = game;

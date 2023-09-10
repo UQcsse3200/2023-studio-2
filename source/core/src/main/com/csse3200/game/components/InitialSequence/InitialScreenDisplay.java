@@ -14,6 +14,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.rafaskoberg.gdx.typinglabel.TypingAdapter;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
 public class InitialScreenDisplay extends UIComponent {
@@ -66,12 +67,12 @@ public class InitialScreenDisplay extends UIComponent {
 
         // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
         String story = """
-            {WAIT=0.5}
+            {FADE}
             Earth has become a desolate wasteland ravaged by a deadly virus. Civilisation as we know  has crumbled, and humanity's last hope lies among the stars.
-            
             {WAIT}
+            
             You are one of the few survivors who have managed to secure a spot on a spaceship built with the hopes of finding a cure or a new home on distant planets.
-            {WAIT=0.5}
+            {WAIT}
             
             The spaceship belongs to Dr Emily Carter, a brilliant scientist determined to find a cure for the virus and make the earth habitable again.
             {WAIT}
@@ -79,15 +80,17 @@ public class InitialScreenDisplay extends UIComponent {
             But the cosmos is a vast and dangerous place, filled with unknown challenges and mysteries, from alien encounters to unexpected phenomena.
             {WAIT}
             
-            {WAIT=0.1}
-            
-            {COLOR=red}Your journey begins now as you board the spaceship \"Aurora\" and venture into the unknown."{WAIT=1}
+            {COLOR=red} Your journey begins now as you board the spaceship \"Aurora\" and venture into the unknown.
+            {WAIT}
             """;
         storyLabel = new TypingLabel(story, skin); // Create the TypingLabel with the formatted story
-        // Reduce the animation speed of all text in the story.
-        String defaultTokens = "{SLOWER}";
-        storyLabel.setDefaultToken(defaultTokens);
-        storyLabel.setAlignment(Align.center); // Center align the text
+        storyLabel.setAlignment(Align.center);
+        storyLabel.setTypingListener(new TypingAdapter() {
+            @Override
+            public void end() {
+                // The typing has ended, you can add any additional logic here.
+            }
+        });
 
         TextButton continueButton = new TextButton("Continue", skin);
 
@@ -129,7 +132,6 @@ public class InitialScreenDisplay extends UIComponent {
         }
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
     }
-
 
     @Override
     public void dispose() {

@@ -106,7 +106,7 @@ public class TouchAttackComponent extends Component {
     DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
     leftContact = false;
-
+    
     // Targeting STRUCTURE entity type
     if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
       // Damage Structure while still in contact
@@ -141,6 +141,13 @@ public class TouchAttackComponent extends Component {
       // Valid damage dealt
       entity.getEvents().trigger("enemyAttack");
       targetStats.hit(combatStats);
+
+
+//      if (entity.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.WEAPON) {
+//        System.out.println("Hit");
+//        return;
+//      }
+
 
       // Gives a delay every time there is a collision for the
       // attack animation to complete

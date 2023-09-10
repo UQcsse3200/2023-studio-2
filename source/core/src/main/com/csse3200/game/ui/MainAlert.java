@@ -41,7 +41,7 @@ public class MainAlert extends Dialog {
         getContentTable().add(startButton).pad(20f).center();
 
         // Size and positioning of the dialog
-        setSize(500f, 500f); // Adjust the size as needed
+        setSize(1080f, 1200); // Adjust the size as needed
         setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, (Gdx.graphics.getHeight() - getHeight()) / 2);
     }
 

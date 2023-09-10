@@ -20,7 +20,8 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.structures.StructurePicker;
 
 /**
- * Action component for interacting with the player. Player events should be initialised in create()
+ * Action component for interacting with the player. Player events should be
+ * initialised in create()
  * and when triggered should call methods within this class.
  */
 public class PlayerActions extends Component {
@@ -31,6 +32,7 @@ public class PlayerActions extends Component {
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
     private GameStateInteraction gameStateInteraction;
+    private int attackCooldown;
 
     @Override
     public void create() {
@@ -43,12 +45,16 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("dodged", this::dodged);
         entity.getEvents().addListener("repair", this::repairWall);
         entity.getEvents().addListener("change_structure", this::changeStructure);
+        entity.getEvents().addListener("inventory", this::updateInventory);
         gameStateInteraction = new GameStateInteraction();
+        attackCooldown = 0;
     }
-
 
     @Override
     public void update() {
+        if (attackCooldown > 0) {
+            attackCooldown--;
+        }
         if (moving) {
             updateSpeed();
         }
@@ -90,12 +96,28 @@ public class PlayerActions extends Component {
         attackSound.play();
     }
 
-
     /**
      * Changes player's immunity status while dodging.
      */
     void dodged() {
         entity.getComponent(CombatStatsComponent.class).changeImmunityStatus();
+    }
+
+    void updateInventory(int i) {
+        switch (i) {
+            case 1:
+                entity.getComponent(InventoryComponent.class).setEquipped(1);
+                break;
+            case 2:
+                entity.getComponent(InventoryComponent.class).setEquipped(2);
+                break;
+            case 3:
+                entity.getComponent(InventoryComponent.class).setEquipped(3);
+                break;
+            default:
+                entity.getComponent(InventoryComponent.class).cycleEquipped();
+                break;
+        }
     }
 
     /**
@@ -118,8 +140,14 @@ public class PlayerActions extends Component {
     }
 
     /**
+<<<<<<< HEAD
      * Converts the screen coords to a grid position and then places the selected structure
      * doesn't exist at the grid position, otherwise upgrades the existing structure.
+=======
+     * Converts the screen coords to a grid position and then places a wall if a
+     * wall
+     * doesn't exist at the grid position, otherwise upgrades the wall.
+>>>>>>> feature/player
      *
      * @param screenX - the x coord of the screen
      * @param screenY - the y coord of teh screen
@@ -151,7 +179,8 @@ public class PlayerActions extends Component {
     }
 
     /**
-     * Converts screen coords to grid coords and then repairs the wall at the grid position.
+     * Converts screen coords to grid coords and then repairs the wall at the grid
+     * position.
      *
      * @param screenX - the x coord of the screen
      * @param screenY - the y coord of teh screen
@@ -178,4 +207,12 @@ public class PlayerActions extends Component {
 
         picker.show();
     }
- }
+
+    public void setAttackCooldown(int cooldown) {
+        this.attackCooldown = cooldown;
+    }
+
+    public int getAttackCooldown() {
+        return this.attackCooldown;
+    }
+}

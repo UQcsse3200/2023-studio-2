@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.files.UserSettings.DisplaySettings;
 import com.csse3200.game.services.ServiceLocator;
@@ -182,6 +183,21 @@ public class SettingsMenuDisplay extends UIComponent {
     TextButton exitBtn = new TextButton("Exit", skin);
     TextButton applyBtn = new TextButton("Apply", skin);
 
+    TextButton okButton = new TextButton("CONTROLS", skin); // Use the skin you have
+    Entity entity = new Entity();
+    entity.getEvents().addListener("ok", this::onOK);
+    okButton.addListener(
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("OK button clicked");
+                entity.getEvents().trigger("ok");
+              }
+            });
+    // Add the OK button to the stage
+    stage.addActor(okButton);
+
+
     exitBtn.addListener(
         new ChangeListener() {
           @Override
@@ -202,6 +218,7 @@ public class SettingsMenuDisplay extends UIComponent {
 
     Table table = new Table();
     table.add(exitBtn).expandX().left().pad(0f, 15f, 15f, 0f);
+    table.add(okButton).expandX().center();
     table.add(applyBtn).expandX().right().pad(0f, 0f, 15f, 15f);
     return table;
   }
@@ -226,6 +243,11 @@ public class SettingsMenuDisplay extends UIComponent {
     game.setScreen(ScreenType.MAIN_MENU);
   }
 
+  private void onOK() {
+    logger.info("Start game");
+    //game.setScreen(ScreenType.CONTROLS_SCREEN);
+  }
+
   private Integer parseOrNull(String num) {
     try {
       return Integer.parseInt(num, 10);
@@ -235,8 +257,8 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   @Override
-  protected void draw(SpriteBatch batch) {
-    // draw is handled by the stage
+  protected void draw(SpriteBatch batch)
+  {
   }
 
   @Override

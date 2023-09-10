@@ -19,14 +19,14 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EndGameScreen extends ScreenAdapter {
+public class ControlsScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(StoryScreen.class);
     private final GdxGame game;
     private final Renderer renderer;
     private static final String[] storyTextures = {
             "images/GameOver.png"
     };
-    public EndGameScreen(GdxGame game) {
+    public ControlsScreen(GdxGame game) {
         this.game = game;
 
         ServiceLocator.registerInputService(new InputService());

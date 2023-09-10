@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class InitialScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(EndGameScreen.class);
+    private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
 
     /**
      * An array of paths to image textures needed for this screen

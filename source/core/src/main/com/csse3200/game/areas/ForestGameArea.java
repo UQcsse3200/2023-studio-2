@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
@@ -113,7 +112,8 @@ public class ForestGameArea extends GameArea {
           "images/TurretOne.png",
           "images/TurretTwo.png",
       "images/rangeEnemy.png",
-      "images/stone_wall.png"
+      "images/stone_wall.png",
+      "images/player.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
@@ -130,7 +130,8 @@ public class ForestGameArea extends GameArea {
       "images/stone_wall.atlas",
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
-      "images/playerSS.atlas"
+      "images/playerSS.atlas",
+      "images/player.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};

@@ -22,13 +22,12 @@ import java.util.ArrayList;
 public class StructurePicker extends UIComponent {
     Logger logger;
     Table table;
-    private Image heartImage;
-    //private Label healthLabel;
     private ArrayList<Button> buttons;
 
     private StructureOptions structureOptions =
             FileLoader.readClass(StructureOptions.class, "configs/structure_options.json");
     private Tool selectedTool;
+    private int level = 0;
 
     public StructurePicker() {
         super();
@@ -42,6 +41,8 @@ public class StructurePicker extends UIComponent {
     @Override
     public void create() {
         super.create();
+
+        table = new Table();
         addActors();
     }
 
@@ -50,19 +51,24 @@ public class StructurePicker extends UIComponent {
      * @see Table for positioning options
      */
     private void addActors() {
-        table = new Table();
+        table.clear();
+
         table.center();
         table.setFillParent(false);
 
         for (var option : structureOptions.structureOptions) {
+            var optionValue = option.value;
+
+            // skip items which are above the current level
+            if (optionValue.level > level) {
+                continue;
+            }
+
             var tool = getTool(option.key);
 
             if (tool == null) {
                 continue;
             }
-
-
-            var optionValue = option.value;
             var button = new Button(skin);
             var image = new Image(ServiceLocator.getResourceService().getAsset(optionValue.texture, Texture.class));
 
@@ -108,6 +114,15 @@ public class StructurePicker extends UIComponent {
         }
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+        addActors();
+    }
+
+    public int getLevel(int level) {
+        return level;
+    }
+
     @Override
     public void draw(SpriteBatch batch)  {
         // draw is handled by the stage
@@ -116,7 +131,6 @@ public class StructurePicker extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-        heartImage.remove();
     }
 
     public void show() {

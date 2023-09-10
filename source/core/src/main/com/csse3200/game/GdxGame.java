@@ -96,6 +96,8 @@ public class GdxGame extends Game {
         return new EndGame(this);
       case INITIAL_SCREEN:
         return new MiniScreen(this);
+      case CONTROLS_SCREEN:
+        return new ControlsScreen(this);
       case NAVIGATION_SCREEN:
         return new SpaceNavigationScreen(this);
       default:
@@ -105,7 +107,7 @@ public class GdxGame extends Game {
 
   public enum ScreenType {
 
-    MAIN_MENU, MAIN_GAME, SETTINGS, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME, GAME_STORY, ENDGAME, NAVIGATION_SCREEN,INITIAL_SCREEN, PLAYER_DEATH
+    MAIN_MENU, MAIN_GAME, SETTINGS,CONTROLS_SCREEN, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME, GAME_STORY, ENDGAME, NAVIGATION_SCREEN,INITIAL_SCREEN, PLAYER_DEATH
 
 
 

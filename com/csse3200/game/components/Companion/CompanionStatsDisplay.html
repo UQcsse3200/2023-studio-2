@@ -100,12 +100,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>float</code></div>
-<div class="col-second even-row-color"><code><a href="#messageDisplayTimeLeft" class="member-name-link">messageDisplayTimeLeft</a></code></div>
+<div class="col-first even-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
+<div class="col-second even-row-color"><code><a href="#label" class="member-name-link">label</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
 <div class="col-second odd-row-color"><code><a href="#messageLabel" class="member-name-link">messageLabel</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color"><code><a href="#playerEntity" class="member-name-link">playerEntity</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.ui.UIComponent">Fields inherited from class&nbsp;com.csse3200.game.ui.<a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></h3>
@@ -123,12 +126,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(boolean,float,int)" class="member-name-link">CompanionStatsDisplay</a><wbr>(boolean&nbsp;center,
- float&nbsp;offsetY,
- int&nbsp;health)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Constructor for CompanionStatsDisplay.</div>
-</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.Entity)" class="member-name-link">CompanionStatsDisplay</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;playerEntitiy)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -159,13 +158,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Draw the renderable.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update(float)" class="member-name-link">update</a><wbr>(float&nbsp;deltaTime)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateCompanionHealthUI(int)" class="member-name-link">updateCompanionHealthUI</a><wbr>(int&nbsp;health)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Updates the UI component based on the elapsed time.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateCompanionHealthUI(int)" class="member-name-link">updateCompanionHealthUI</a><wbr>(int&nbsp;health)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the companion's health on the UI.</div>
 </div>
 </div>
@@ -201,15 +195,21 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="playerEntity">
+<h3>playerEntity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">playerEntity</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="messageLabel">
 <h3>messageLabel</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Label</span>&nbsp;<span class="element-name">messageLabel</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="messageDisplayTimeLeft">
-<h3>messageDisplayTimeLeft</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">messageDisplayTimeLeft</span></div>
+<section class="detail" id="label">
+<h3>label</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Label</span>&nbsp;<span class="element-name">label</span></div>
 </section>
 </li>
 </ul>
@@ -221,18 +221,9 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(boolean,float,int)">
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.entities.Entity)">
 <h3>CompanionStatsDisplay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CompanionStatsDisplay</span><wbr><span class="parameters">(boolean&nbsp;center,
- float&nbsp;offsetY,
- int&nbsp;health)</span></div>
-<div class="block">Constructor for CompanionStatsDisplay.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>center</code> - Whether to center the display.</dd>
-<dd><code>offsetY</code> - Offset in the Y-axis for positioning.</dd>
-<dd><code>health</code> - The initial health value to display.</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CompanionStatsDisplay</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;playerEntitiy)</span></div>
 </section>
 </li>
 </ul>
@@ -265,17 +256,6 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>batch</code> - Batch to render to.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="update(float)">
-<h3>update</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(float&nbsp;deltaTime)</span></div>
-<div class="block">Updates the UI component based on the elapsed time.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>deltaTime</code> - The time elapsed since the last frame.</dd>
 </dl>
 </section>
 </li>

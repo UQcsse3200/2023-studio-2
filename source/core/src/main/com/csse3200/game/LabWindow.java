@@ -77,8 +77,8 @@ public class LabWindow extends Window {
      * Call this method to exit the Laboratory and repair the extractor's health.
      */
     private void succeedLaboratory() {
-        CombatStatsComponent extractorHealth = deathpotion.getComponent(CombatStatsComponent.class);
-        extractorHealth.setHealth(extractorHealth.getMaxHealth());
+        CombatStatsComponent getHealth = deathpotion.getComponent(CombatStatsComponent.class);
+        getHealth.setHealth(getHealth.getMaxHealth());
         remove();
     }
 

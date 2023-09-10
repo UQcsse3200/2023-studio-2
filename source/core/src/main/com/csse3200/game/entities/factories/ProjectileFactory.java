@@ -42,6 +42,7 @@ public class ProjectileFactory {
 
         AITaskComponent aiComponent = new AITaskComponent();
 
+        //TODO: Change this to a vector?
         aiComponent.addTask(new ProjectileMovementTask(targetLocation, 10, 100f, 100f));
 
         EnemyBulletConfig config = configs.GetProjectileConfig();

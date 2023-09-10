@@ -31,7 +31,7 @@ public class ItemPickupComponent extends Component{
         Entity entityOfComponent = getEntity();
         EarthGameArea.removeItemOnMap(entityOfComponent);
         logger.info("Item picked up");
-
+        ServiceLocator.getGameArea().getCompanion().getComponent(CompanionInventoryComponent.class).addItem(entityOfComponent);
 
     }
 }

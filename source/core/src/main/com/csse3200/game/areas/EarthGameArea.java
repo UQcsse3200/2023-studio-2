@@ -149,6 +149,7 @@ public class EarthGameArea extends GameArea {
         this.game = game;
         this.terrainFactory = terrainFactory;
         this.targetables = new ArrayList<>();
+        ServiceLocator.registerGameArea(this);
     }
 
     /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -165,12 +166,12 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
-        /*laboratory = spawnLaboratory();*/
+        laboratory = spawnLaboratory();
         spawnUpgradeBench();
         spawnShip();
         player = spawnPlayer();
         companion = spawnCompanion(player);
-        /*spawnPotion(companion,laboratory);*/
+        spawnPotion(companion,laboratory);
         spawnTurret();
         spawnEnemies();
         spawnBoss();
@@ -353,6 +354,7 @@ public class EarthGameArea extends GameArea {
     }
 
 
+
     private void spawnPowerups() {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -459,4 +461,8 @@ public class EarthGameArea extends GameArea {
     public Entity getPlayer() {
         return player;
   }
+  public void setCompanion(Entity Companion){companion=Companion;}
+    public Entity getCompanion() {
+        return companion;
+    }
 }

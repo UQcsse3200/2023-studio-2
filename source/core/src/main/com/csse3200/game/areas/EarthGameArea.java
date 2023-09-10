@@ -12,6 +12,7 @@ import com.badlogic.gdx.Gdx;
 import java.util.List;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
@@ -90,6 +91,8 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
+            "images/TurretOne.png",
+            "images/TurretTwo.png",
             "images/playerSS_6.png",
             "images/laboratory.png",
             "images/Potion.png",
@@ -168,7 +171,7 @@ public class EarthGameArea extends GameArea {
         player = spawnPlayer();
         companion = spawnCompanion(player);
         /*spawnPotion(companion,laboratory);*/
-
+        spawnTurret();
         spawnEnemies();
         spawnBoss();
         spawnAsteroids();
@@ -270,12 +273,19 @@ public class EarthGameArea extends GameArea {
         Entity ship = StructureFactory.createShip(game);
         spawnEntityAt(ship, spawnPosition, false, false);
     }
+    public void spawnTurret() {
+        Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
+        Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
+        spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
+        spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
+    }
 
     private void displayUI() {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Planet Earth"));
         spawnEntity(ui);
     }
+
 
     private void spawnTerrain() {
         // Background terrain

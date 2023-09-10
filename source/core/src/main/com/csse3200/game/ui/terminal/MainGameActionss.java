@@ -3,6 +3,7 @@ package com.csse3200.game.ui.terminal;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.ui.MainAlertBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

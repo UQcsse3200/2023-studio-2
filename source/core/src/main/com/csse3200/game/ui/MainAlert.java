@@ -49,6 +49,4 @@ public class MainAlert extends Dialog {
         this.callback = callback;
         stage.addActor(this);
     }
-
-
 }

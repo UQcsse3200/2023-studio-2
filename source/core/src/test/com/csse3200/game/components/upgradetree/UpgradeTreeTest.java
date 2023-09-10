@@ -29,9 +29,9 @@ public class UpgradeTreeTest {
 
     @Test
     public void testUnlockWeapon() {
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.LASERGUN));
-        upgradeTree.unlockWeapon(WeaponType.LASERGUN);
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.LASERGUN));
+        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STICK));
+        upgradeTree.unlockWeapon(WeaponType.STICK);
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STICK));
     }
 
     @Test

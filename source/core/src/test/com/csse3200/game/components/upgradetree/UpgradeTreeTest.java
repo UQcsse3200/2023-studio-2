@@ -23,15 +23,15 @@ public class UpgradeTreeTest {
     @Test
     public void testDefaultWeapons() {
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.THROW_ELEC_WRENCH));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.SLING_SHOT));
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STICK));
     }
 
     @Test
     public void testUnlockWeapon() {
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STICK));
-        upgradeTree.unlockWeapon(WeaponType.STICK);
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STICK));
+        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER));
+        upgradeTree.unlockWeapon(WeaponType.STONEHAMMER);
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER));
     }
 
     @Test

@@ -44,7 +44,7 @@ public class MiniScreenDisplay extends UIComponent {
         background =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/earth_design.png", Texture.class));
+                                .getAsset("images/start.png", Texture.class));
         background.setPosition(0, 0);
         // Scale the height of the background to maintain the original aspect ratio of the image
         // This prevents distortion of the image.
@@ -55,7 +55,7 @@ public class MiniScreenDisplay extends UIComponent {
         picture =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/earth_design.png", Texture.class));
+                                .getAsset("images/start.png", Texture.class));
         picture.setSize(200, 200); // Set to a reasonable fixed size
 
 

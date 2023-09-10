@@ -132,6 +132,8 @@ public class EarthGameArea extends GameArea {
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
     private Entity player;
+    private Entity companion;
+    private Entity laboratory;
     private GdxGame game;
 
     /**
@@ -160,12 +162,12 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
-        Entity laboratoryEntity = spawnLaboratory();
+        /*laboratory = spawnLaboratory();*/
         spawnUpgradeBench();
         spawnShip();
-        Entity playerEntity = spawnPlayer();
-        Entity companionEntity = spawnCompanion(playerEntity);
-        spawnPotion(companionEntity,laboratoryEntity);
+        player = spawnPlayer();
+        companion = spawnCompanion(player);
+        /*spawnPotion(companion,laboratory);*/
 
         spawnEnemies();
         spawnBoss();

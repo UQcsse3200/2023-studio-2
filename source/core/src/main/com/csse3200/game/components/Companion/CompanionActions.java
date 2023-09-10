@@ -20,10 +20,8 @@ public class CompanionActions extends Component {
 
     private static Vector2 MAX_NORMAL_SPEED = new Vector2(4f, 4f); // Metres per second
 
-    private static final float ROTATION_SPEED = 10.0f; // Adjust the rotation speed as needed
-    private float followRadius = 10.0f;
+    private static final float ROTATION_SPEED = 10.0f;
     private float currentRotation = 5.0f;
-    private float minDistance = 50.0f; // Define the minimum distance
 
     private PhysicsComponent physicsComponent;
     public Vector2 walkDirection = Vector2.Zero.cpy();
@@ -93,8 +91,6 @@ public class CompanionActions extends Component {
         if (!isMovementKeyPressed) {
             // Calculate direction vector towards the player
             walkDirection = playerPosition.cpy().sub(companionPosition).nor();
-
-            if (walkDirection.len() >= followRadius) {
                 // Move the companion towards the player
                 walkDirection.nor();
                 updateSpeed();
@@ -107,15 +103,7 @@ public class CompanionActions extends Component {
 
                 // Set the new rotation for the companion
                 physicsComponent.getBody().setTransform(companionPosition, currentRotation * MathUtils.degreesToRadians);
-            } else {
-                // Stop the companion from walking
-                stopWalking();
-            }
-            // Ensure minimum distance
-            if (distanceToPlayer < minDistance) {
-                Vector2 newPosition = companionPosition.cpy().add(directionToPlayer.nor().scl(minDistance));
-                physicsComponent.getBody().setTransform(newPosition, physicsComponent.getBody().getAngle());
-            }
+
         } else {
             // Stop the companion from walking when movement keys are pressed
             stopWalking();

@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.EnemyFactory;
@@ -93,7 +95,8 @@ public class ForestGameArea extends GameArea {
           "images/companionSS_0.png",
           "images/companionSS_1.png",
           "images/companionSS_2.png",
-          "images/companionSS_03.png"
+          "images/companionSS_03.png",
+      "images/player.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
@@ -111,7 +114,8 @@ public class ForestGameArea extends GameArea {
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
       "images/playerSS.atlas",
-          "images/companionSS.atlas"
+          "images/companionSS.atlas",
+      "images/player.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};

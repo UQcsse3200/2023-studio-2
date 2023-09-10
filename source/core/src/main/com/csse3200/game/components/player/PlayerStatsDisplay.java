@@ -22,7 +22,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label healthLabel;
   private ProgressBar healthBar;
 
-  private float healthWidth = 5000f;
+  private float healthWidth = 1000f;
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */

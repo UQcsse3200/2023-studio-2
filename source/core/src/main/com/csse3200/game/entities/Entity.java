@@ -31,7 +31,7 @@ public class Entity {
   private static final Logger logger = LoggerFactory.getLogger(Entity.class);
   private static int nextId = 0;
   private static final String EVT_NAME_POS = "setPosition";
-
+  private String entityType;
   private final int id;
   private final IntMap<Component> components;
   private final EventHandler eventHandler;
@@ -45,6 +45,7 @@ public class Entity {
 
 
   public Entity() {
+    this.entityType = "";
     id = nextId;
     nextId++;
     this.rotation = 0;
@@ -109,6 +110,22 @@ public class Entity {
     this.position.x = x;
     this.position.y = y;
     getEvents().trigger(EVT_NAME_POS, position.cpy());
+  }
+
+  /**
+   * Sets the type of entity
+   * @param type type of entity being created eg. player
+   */
+  public void setEntityType(String type) {
+    this.entityType = type;
+  }
+
+  /**
+   * Returns the type of entityS
+   * @return type of entity eg. player
+   */
+  public String getEntityType() {
+    return this.entityType;
   }
 
   /**

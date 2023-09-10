@@ -41,6 +41,7 @@ public class ShipActions extends Component {
 
         body = physicsComponent.getBody();
         body.setLinearDamping(0); //prevents the ship from stopping for no physical reason
+        //body.setFixedRotation(false);
 
         //entity.getEvents().addListener("attack", this::attack);
     }
@@ -66,9 +67,11 @@ public class ShipActions extends Component {
         //body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
         //body.applyForceToCenter(desiredVelocity.scl(3), true);
 
+        this.currentVelocity = this.flyDirection.cpy();
+
 
         //scl(scalar) basically multiply the Vector2 velocity of body by a scalar. Belongs to Vector2.
-        body.applyForceToCenter(flyDirection.cpy().scl(2), true);
+        body.applyForceToCenter(this.currentVelocity.scl(this.currentAcceleration), true);
     }
 
     /**

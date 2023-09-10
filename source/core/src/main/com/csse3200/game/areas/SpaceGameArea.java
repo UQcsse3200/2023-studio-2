@@ -32,12 +32,15 @@ public class SpaceGameArea extends GameArea {
             "images/LeftShip.png",
             "images/Ship.png",
             "images/wormhole.jpg",
-            "images/obstacle-enemy.png"
+            "images/obstacle-enemy.png",
+            "images/mainship.png"
     };
     private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
     private static final String[] spaceMusic = {backgroundMusic};
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
+
+    private static final String[] spaceTextureAtlases = {"images/ship.atlas"};
 
     /**
      * Constructor for initializing terrain area
@@ -237,6 +240,7 @@ public class SpaceGameArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(spaceMiniGameTextures);
         resourceService.loadMusic(spaceMusic);
+        resourceService.loadTextureAtlases(spaceTextureAtlases);
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
@@ -251,6 +255,7 @@ public class SpaceGameArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(spaceMiniGameTextures);
         resourceService.unloadAssets(spaceMusic);
+        resourceService.unloadAssets(spaceTextureAtlases);
 
     }
 

@@ -17,6 +17,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+
 public class ShipFactory {
     private static final ShipConfig stats =
             FileLoader.readClass(ShipConfig.class, "configs/ship.json");
@@ -24,6 +28,9 @@ public class ShipFactory {
     public static Entity createShip() {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForShip();
+
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset("images/ship.atlas", TextureAtlas.class));
 
         Entity ship =
                 new Entity()

@@ -1,0 +1,61 @@
+mainship.png
+size:256, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Ship_DownStill
+    rotate: false
+    xy: 0, 0
+    size: 64, 64
+    orig: 64, 64
+    offset: 0, 0
+    index: -1
+Ship_RightStill
+    rotate: false
+    xy: 128, 0
+    size: 64, 64
+    orig: 64, 64
+    offset: 0, 0
+    index: -1
+Ship_UpStill
+    rotate: false
+    xy: 0, 64
+    size: 64, 64
+    orig: 64, 64
+    offset: 0, 0
+    index: -1
+Ship_LeftStill
+    rotate: false
+    xy: 128, 64
+    size: 64, 64
+    orig: 64, 64
+    offset: 0, 0
+    index: -1
+Ship_RightDown
+    rotate: false
+    xy: 64, 0
+    size: 64, 64
+    orig: 64, 64
+    offset: 0, 0
+    index: -1
+Ship_RightUp
+    rotate: false
+    xy: 192, 0
+    size: 64, 64
+    orig: 64, 64
+    offset: 0, 0
+    index: -1
+Ship_LeftUp
+    rotate: false
+    xy: 64, 64
+    size: 64, 64
+    orig: 64, 64
+    offset: 0, 0
+    index: -1
+Ship_LeftDown
+    rotate: false
+    xy: 192, 64
+    size: 64, 64
+    orig: 64, 64
+    offset: 0, 0
+    index: -1

@@ -24,7 +24,7 @@ public class MiniScreenDisplay extends UIComponent {
     private float spaceSpeed = 1;
     private float planetToTextPadding = 150;
     private Image background;
-    private Image planet;
+    private Image picture;
     private Table rootTable;
     private TypingLabel spaceLabel;
 
@@ -52,17 +52,15 @@ public class MiniScreenDisplay extends UIComponent {
         background.setHeight(scaledHeight);
 
         // Load the animated planet
-        planet =
+        picture =
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/earth_design.png", Texture.class));
-        planet.setSize(200, 200); // Set to a reasonable fixed size
+        picture.setSize(200, 200); // Set to a reasonable fixed size
 
-        // The planet moves at a constant speed, so to make it appear at the right time,
-        // it is to be placed at the right y coordinate above the screen.
-        // The height is informed by the length of the text animation and the game's target FPS.
+
         float planetOffset = textAnimationDuration * UserSettings.get().fps;
-        planet.setPosition((float) Gdx.graphics.getWidth() / 2, planetOffset, Align.center);
+        picture.setPosition((float) Gdx.graphics.getWidth() / 2, planetOffset, Align.center);
 
         // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
         String space = """
@@ -97,7 +95,7 @@ public class MiniScreenDisplay extends UIComponent {
 
 
         stage.addActor(background);
-        stage.addActor(planet);
+        stage.addActor(picture);
         stage.addActor(rootTable);
     }
 
@@ -113,8 +111,8 @@ public class MiniScreenDisplay extends UIComponent {
     @Override
     public void update() {
         // This movement logic is triggered on every frame until the middle of the planet hits its target position on the screen.
-        if (planet.getY(Align.center) >= spaceLabel.getY(Align.top) + planetToTextPadding) {
-            planet.setY(planet.getY() - spaceSpeed); // Move the planet
+        if (picture.getY(Align.center) >= spaceLabel.getY(Align.top) + planetToTextPadding) {
+            picture.setY(picture.getY() - spaceSpeed); // Move the planet
             background.setY(background.getY() - spaceSpeed); // Move the background
         }
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
@@ -124,7 +122,7 @@ public class MiniScreenDisplay extends UIComponent {
     @Override
     public void dispose() {
         rootTable.clear();
-        planet.clear();
+        picture.clear();
         background.clear();
         spaceLabel.clear();
         super.dispose();

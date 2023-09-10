@@ -66,9 +66,7 @@ public class MiniScreen extends ScreenAdapter {
         ServiceLocator.clear();
     }
 
-    /**
-     * Load all the image textures required for this screen into memory
-     */
+
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -76,25 +74,20 @@ public class MiniScreen extends ScreenAdapter {
         ServiceLocator.getResourceService().loadAll();
     }
 
-    /**
-     * Remove all the loaded image textures from the ResouceService, and thus game memory.
-     */
+
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(introScreenAssets);
     }
 
-    /**
-     * Creates the intro screen's ui including components for rendering ui elements to the screen
-     * and capturing and handling ui input.
-     */
+
     private void createUI() {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
         ui.addComponent(new MiniScreenDisplay(game))
-                .addComponent(new InputDecorator(stage, 10));
+                .addComponent(new InputDecorator(stage, 12));
         ServiceLocator.getEntityService().register(ui);
     }
 }

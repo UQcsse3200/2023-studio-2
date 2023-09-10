@@ -77,8 +77,7 @@ public class GdxGame extends Game {
         return new SpaceMapScreen(this);
       case EXTRACTOR_GAME:
         return new ExtractorMiniGameScreen(this);
-      case ENDGAME:
-        return new EndGame(this);
+
       case INITIAL_SCREEN:
         return new MiniScreen(this);
       case NAVIGATION_SCREEN:

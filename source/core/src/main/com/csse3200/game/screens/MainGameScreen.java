@@ -42,7 +42,9 @@ public class MainGameScreen extends ScreenAdapter {
   private TitleBox titleBox;
 private static boolean alive = true;
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {"images/heart.png"};
+  private static final String[] mainGameTextures = {"images/heart.png",
+          "images/structure-icons/wall.png",
+          "images/structure-icons/turret.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;

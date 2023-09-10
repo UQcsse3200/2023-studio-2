@@ -112,6 +112,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerWalkEvent();
         }
         return true;
+      case Keys.T:
+        if (equippedItem == 3) {
+          entity.getEvents().trigger("change_structure");
+        }
+        return true;
       case Keys.NUM_1:
         triggerInventoryEvent(1);
         return true;
@@ -127,7 +132,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W, Keys.S, Keys.A, Keys.D:
         triggerWalkEvent();
         return true;
-
       default:
         return false;
     }

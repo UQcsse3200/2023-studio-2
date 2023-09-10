@@ -86,7 +86,7 @@ public class KeyboardCompanionInputComponent extends InputComponent {
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
-            case Keys.SPACE -> {
+            case Keys.N -> {
                 entity.getEvents().trigger("attack");
                 return true;
             }

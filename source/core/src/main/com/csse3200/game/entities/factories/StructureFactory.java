@@ -26,6 +26,8 @@ import java.util.List;
 
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 
 /**
  * Factory to create structure entities - such as extractors or ships.
@@ -125,6 +127,27 @@ public class StructureFactory {
     }
 
     /**
+     * Creates an upgrade bench entity
+     */
+    public static Entity createUpgradeBench() {
+        Entity upgradeBench = new Entity()
+                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
+                .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"))
+                .addComponent(new UpgradeTree());
+
+        upgradeBench.addComponent(new InteractableComponent(entity -> {
+            UpgradeDisplay minigame = UpgradeDisplay.createUpgradeDisplay(upgradeBench);
+            ServiceLocator.getRenderService().getStage().addActor(minigame);
+        }, 0.5f));
+
+        upgradeBench.setScale(0.6f, 0.6f);
+
+        return upgradeBench;
+    }
+    /**
+
      * Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map
      *
      * @param targets the targets the entities that spawn will target

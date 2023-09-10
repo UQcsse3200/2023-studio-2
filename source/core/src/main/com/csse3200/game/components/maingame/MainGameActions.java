@@ -21,12 +21,13 @@ public class MainGameActions extends Component {
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
   }
-
   /**
    * Swaps to the Main Menu screen.
    */
   private void onExit() {
     logger.info("Exiting main game screen");
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+
+
   }
 }

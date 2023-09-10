@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
@@ -84,7 +85,17 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
-            "images/playerSS_6.png"
+            "images/TurretOne.png",
+            "images/TurretTwo.png",
+            "images/playerSS_6.png",
+            "images/upgradetree/exit.png",
+            "images/upgradetree/background.png",
+            "images/upgradetree/upgradebench.png",
+            "images/upgradetree/hammer1.png",
+            "images/upgradetree/hammer2.png",
+            "images/upgradetree/stick.png",
+            "images/upgradetree/exit.png",
+            "images/player.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -100,12 +111,15 @@ public class EarthGameArea extends GameArea {
             "images/botanist.atlas",
             "images/playerSS.atlas",
             "images/wrench.atlas",
+            "images/baseballbat.atlas",
             "images/open_gate.atlas",
             "images/closed_gate.atlas",
-            "images/botanist.atlas"
+            "images/botanist.atlas",
+            "images/sling_shot.atlas",
+            "images/player.atlas"
 
     };
-    private static final String[] earthSounds = {"sounds/Impact4.wav"};
+    private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.wav";
     private static final String[] earthMusic = {backgroundMusic};
 
@@ -140,10 +154,13 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
+        spawnUpgradeBench();
 
         spawnShip();
         Entity playerEntity = spawnPlayer();
-        spawnCompanion(playerEntity);
+//        spawnCompanion(playerEntity);
+
+        spawnTurret();
 
         spawnEnemies();
         spawnBoss();
@@ -207,6 +224,11 @@ public class EarthGameArea extends GameArea {
 
     }
 
+    private void spawnUpgradeBench() {
+        Entity upgradeBench = StructureFactory.createUpgradeBench();
+        spawnEntityAt(upgradeBench, new GridPoint2(20, 40), true, true);
+    }
+
     private void spawnExtractors() {
         ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) 100);
         ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) 500);
@@ -241,12 +263,19 @@ public class EarthGameArea extends GameArea {
         Entity ship = StructureFactory.createShip(game, null); //Doesn't implement windconditions
         spawnEntityAt(ship, spawnPosition, false, false);
     }
+    public void spawnTurret() {
+        Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
+        Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
+        spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
+        spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
+    }
 
     private void displayUI() {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Planet Earth"));
         spawnEntity(ui);
     }
+
 
     private void spawnTerrain() {
         // Background terrain
@@ -322,9 +351,6 @@ public class EarthGameArea extends GameArea {
 
             spawnEntityAt(healthPowerup, randomPos, true, false);
             spawnEntityAt(speedPowerup, randomPos2, true, false);
-
-            // Test
-            // System.out.println(ServiceLocator.getEntityService().getEntitiesByComponent(PowerupComponent.class).toString());
         }
     }
 

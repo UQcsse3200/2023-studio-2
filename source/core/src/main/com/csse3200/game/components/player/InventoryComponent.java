@@ -1,56 +1,72 @@
 package com.csse3200.game.components.player;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.Weapons.WeaponType;
+
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A component intended to be used by the player to track their inventory.
- *
- * Currently only stores the gold amount but can be extended for more advanced functionality such as storing items.
+ * Player can switch between weapons and weapons can be updated
  * Can also be used as a more generic component for other entities.
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private int gold;
+  private int equipped = 1;
+  private HashMap<Integer, WeaponType> equippedWMap = new HashMap<Integer, WeaponType>();
 
-  public InventoryComponent(int gold) {
-    setGold(gold);
+  public void create() {
+    equippedWMap.put(1, WeaponType.ELEC_WRENCH);
+    equippedWMap.put(2, WeaponType.SLING_SHOT);
+    equippedWMap.put(3, WeaponType.WOODHAMMER);
+  }
+
+  public InventoryComponent() {
+    create();
   }
 
   /**
-   * Returns the player's gold.
-   *
-   * @return entity's health
+   * @return int - the equipped weapon
    */
-  public int getGold() {
-    return this.gold;
+  public int getEquipped() {
+    return equipped;
   }
 
   /**
-   * Returns if the player has a certain amount of gold.
-   * @param gold required amount of gold
-   * @return player has greater than or equal to the required amount of gold
+   * @param i - the weapon to be equipped
    */
-  public Boolean hasGold(int gold) {
-    return this.gold >= gold;
+  public void setEquipped(int i) {
+    this.equipped = i;
   }
 
   /**
-   * Sets the player's gold. Gold has a minimum bound of 0.
-   *
-   * @param gold gold
+   * Cycles between equiped weapons
    */
-  public void setGold(int gold) {
-    this.gold = Math.max(gold, 0);
-    logger.debug("Setting gold to {}", this.gold);
+  public void cycleEquipped() {
+    int equiped = getEquipped();
+    if (equiped == 3) {
+      this.equipped = 1;
+    } else
+      this.equipped++;
   }
 
   /**
-   * Adds to the player's gold. The amount added can be negative.
-   * @param gold gold to add
+   * @return WeaponType - Type of cureently equiped weapon
    */
-  public void addGold(int gold) {
-    setGold(this.gold + gold);
+  public WeaponType getEquippedType() {
+    return this.equippedWMap.get(getEquipped());
   }
+
+  /**
+   * @param weaponType - Type of the new weapon
+   */
+  public void changeEquipped(WeaponType weaponType) {
+    WeaponType equippedType = getEquippedType();
+    this.equippedWMap.remove(equippedType);
+    this.equippedWMap.put(getEquipped(), weaponType);
+  }
+
 }

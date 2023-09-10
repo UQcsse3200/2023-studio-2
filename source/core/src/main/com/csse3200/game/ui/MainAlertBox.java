@@ -19,7 +19,7 @@ public class MainAlertBox extends Actor {
     private SpriteBatch spriteBatch;
     private Sprite transitionSprite;
     private float transitionX = 0f; // X-axis position for the transition
-    private float transitionSpeed = 1400f; // Adjust the speed of the transition
+    private float transitionSpeed = 1000f; // Adjust the speed of the transition
 
     private boolean isExit=false;
 
@@ -30,7 +30,7 @@ public class MainAlertBox extends Actor {
             isExit =true;
         startTransition();
         // Load your transition image (replace with the actual image path)
-        transitionImage = new Texture(Gdx.files.internal("/Users/shaivika/Desktop/2023-studio-2/source/core/assets/images/spaceshipp.png.jpeg"));
+        transitionImage = new Texture(Gdx.files.internal("images/spaceshipp.png.jpeg"));
 
         // Create a SpriteBatch for rendering the transition image
         spriteBatch = new SpriteBatch();
@@ -63,8 +63,6 @@ public class MainAlertBox extends Actor {
 
         }
     }
-
-
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (isTransitioning) {

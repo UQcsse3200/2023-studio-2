@@ -7,7 +7,6 @@ com.csse3200.game.components
 com.csse3200.game.components.Companion
 com.csse3200.game.components.gamearea
 com.csse3200.game.components.InitialSequence
-com.csse3200.game.components.joinable
 com.csse3200.game.components.maingame
 com.csse3200.game.components.mainmenu
 com.csse3200.game.components.npc
@@ -17,6 +16,8 @@ com.csse3200.game.components.settingsmenu
 com.csse3200.game.components.ships
 com.csse3200.game.components.spacenavigation
 com.csse3200.game.components.story
+com.csse3200.game.components.structures
+com.csse3200.game.components.structures.tools
 com.csse3200.game.components.tasks
 com.csse3200.game.components.upgradetree
 com.csse3200.game.components.Weapons

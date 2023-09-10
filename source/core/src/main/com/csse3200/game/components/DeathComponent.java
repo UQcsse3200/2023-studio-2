@@ -3,6 +3,8 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,6 +15,7 @@ import java.util.TimerTask;
 public class DeathComponent extends Component {
     private CombatStatsComponent combatStats;
     private HitboxComponent hitboxComponent;
+    private Boolean notkilled;
 
     /**
      * The Death Component holding Physical Interaction Stats, and facilitates listeners for entity death
@@ -28,6 +31,7 @@ public class DeathComponent extends Component {
         entity.getEvents().addListener("collisionEnd", this::kill);
         combatStats = entity.getComponent(CombatStatsComponent.class);
         hitboxComponent = entity.getComponent(HitboxComponent.class);
+        this.notkilled = true;
     }
 
     /**
@@ -40,7 +44,12 @@ public class DeathComponent extends Component {
             // Not triggered by hitbox, ignore
             return;
         }
-        if (combatStats.isDead()) {
+        if (combatStats.isDead() && this.notkilled) {
+            this.notkilled = false;
+            AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
+            animator.stopAnimation();
+
+
             entity.getEvents().trigger("dispose");
             // Schedule a task to execute entity::dispose after a delay
             Timer timer = new Timer();

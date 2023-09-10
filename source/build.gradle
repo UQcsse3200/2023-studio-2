@@ -39,6 +39,7 @@ allprojects {
         mockitoVersion = '4.6.1'
         gdxUtilsVersion = '0.13.4'
         slf4jVersion = '1.7.36'
+        typingLabelVersion = '1.3.0'
     }
 
     repositories {
@@ -67,6 +68,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
+
     }
 }
 
@@ -92,6 +94,7 @@ project(":core") {
         // Logging
         api "org.slf4j:slf4j-api:$slf4jVersion"
         api "org.slf4j:slf4j-jdk14:$slf4jVersion"
+        api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion"
 
         // Unit Testing
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5Version"

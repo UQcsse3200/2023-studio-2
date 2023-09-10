@@ -1,0 +1,20 @@
+{
+  "structureOptions":{
+    "com.csse3200.game.components.structures.tools.WallTool": {
+      "level": 0,
+      "name": "wall",
+      "cost": {
+        "unobtanium": 50
+      },
+      "texture": "images/structure-icons/wall.png"
+    },
+    "com.csse3200.game.components.structures.tools.TurretTool": {
+      "level": 1,
+      "name": "turret",
+      "cost": {
+        "unobtanium": 50
+      },
+      "texture": "images/structure-icons/turret.png"
+    }
+  }
+}

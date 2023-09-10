@@ -15,30 +15,27 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.entities.factories.PotionFactory;
 
 /**
  * This is a window that can be added to a stage to pop up for the extractor Laboratory.
  */
 public class LabWindow extends Window {
     private final InputOverrideComponent inputOverrideComponent;
-    private final Entity extractor;
+    private final Entity deathpotion;
 
-    /**
-     * Returns a new Laboratory window initialized with appropriate background.
-     * @param extractor This extractor will be repaired to max health if the Laboratory is finished correctly.
-     * @return New extractor Laboratory window
-     */
-    public static LabWindow MakeNewLaboratory(Entity extractor) {
+
+    public static LabWindow MakeNewLaboratory(Entity deathpotion) {
 
         Texture background = new Texture("images/lab.png");
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
-        return new LabWindow(background, extractor);
+        return new LabWindow(background, deathpotion);
     }
 
-    public LabWindow(Texture background, Entity extractor) {
+    public LabWindow(Texture background, Entity deathpotion) {
         super("", new WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
 
-        this.extractor = extractor;
+        this.deathpotion = deathpotion;
 
         // Here set up the window to be centered on the stage with 80% width and 65% height.
         Stage stage = ServiceLocator.getRenderService().getStage();
@@ -80,7 +77,7 @@ public class LabWindow extends Window {
      * Call this method to exit the Laboratory and repair the extractor's health.
      */
     private void succeedLaboratory() {
-        CombatStatsComponent extractorHealth = extractor.getComponent(CombatStatsComponent.class);
+        CombatStatsComponent extractorHealth = deathpotion.getComponent(CombatStatsComponent.class);
         extractorHealth.setHealth(extractorHealth.getMaxHealth());
         remove();
     }

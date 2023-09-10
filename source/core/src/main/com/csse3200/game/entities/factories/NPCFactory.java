@@ -41,7 +41,7 @@ public class NPCFactory {
   public static DialogueBox dialogueBox;
 
   /** Configuration class for NPC properties. */
-  private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+  //private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
   /** Asset manager to load and manage assets. */
   public AssetManager assetManager;

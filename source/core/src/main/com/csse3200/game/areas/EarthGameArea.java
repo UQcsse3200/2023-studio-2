@@ -1,7 +1,6 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -22,8 +21,6 @@ import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.TerrainService;
-import com.csse3200.game.ui.DialogComponent;
-import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -85,7 +82,15 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
-            "images/playerSS_6.png"
+            "images/playerSS_6.png",
+            "images/upgradetree/exit.png",
+            "images/upgradetree/background.png",
+            "images/upgradetree/upgradebench.png",
+            "images/upgradetree/hammer1.png",
+            "images/upgradetree/hammer2.png",
+            "images/upgradetree/stick.png",
+            "images/upgradetree/exit.png",
+            "images/player.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -101,12 +106,15 @@ public class EarthGameArea extends GameArea {
             "images/botanist.atlas",
             "images/playerSS.atlas",
             "images/wrench.atlas",
+            "images/baseballbat.atlas",
             "images/open_gate.atlas",
             "images/closed_gate.atlas",
-            "images/botanist.atlas"
+            "images/botanist.atlas",
+            "images/sling_shot.atlas",
+            "images/player.atlas"
 
     };
-    private static final String[] earthSounds = {"sounds/Impact4.wav"};
+    private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.wav";
     private static final String[] earthMusic = {backgroundMusic};
 
@@ -141,6 +149,7 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
+        spawnUpgradeBench();
 
         spawnShip();
         Entity playerEntity = spawnPlayer();
@@ -206,6 +215,11 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(
                 ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
 
+    }
+
+    private void spawnUpgradeBench() {
+        Entity upgradeBench = StructureFactory.createUpgradeBench();
+        spawnEntityAt(upgradeBench, new GridPoint2(20, 40), true, true);
     }
 
     private void spawnExtractors() {
@@ -319,9 +333,6 @@ public class EarthGameArea extends GameArea {
 
             spawnEntityAt(healthPowerup, randomPos, true, false);
             spawnEntityAt(speedPowerup, randomPos2, true, false);
-
-            // Test
-            // System.out.println(ServiceLocator.getEntityService().getEntitiesByComponent(PowerupComponent.class).toString());
         }
     }
 

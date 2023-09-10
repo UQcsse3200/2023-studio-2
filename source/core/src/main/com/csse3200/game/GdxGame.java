@@ -17,6 +17,7 @@ import static com.badlogic.gdx.Gdx.app;
  */
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
+  private ScreenType screenType;
 
   @Override
   public void create() {
@@ -27,6 +28,8 @@ public class GdxGame extends Game {
     Gdx.gl.glClearColor(248f/255f, 249/255f, 178/255f, 1);
 
     setScreen(ScreenType.MAIN_MENU);
+    this.screenType = ScreenType.MAIN_MENU;
+
 
   }
 
@@ -50,7 +53,17 @@ public class GdxGame extends Game {
       currentScreen.dispose();
     }
     setScreen(newScreen(screenType));
+    this.screenType = screenType;
   }
+
+  /**
+   * Returns current screen that game is displaying.
+   * @return ScreenType
+   */
+  public ScreenType getScreenType() {
+    return this.screenType;
+  }
+
 
   @Override
   public void dispose() {
@@ -77,12 +90,14 @@ public class GdxGame extends Game {
         return new SpaceMapScreen(this);
       case EXTRACTOR_GAME:
         return new ExtractorMiniGameScreen(this);
+      case PLAYER_DEATH:
+        return new PlayerDeathScreen(this);
       case ENDGAME:
-        return new EndGameScreen(this);
+        return new EndGame(this);
+      case INITIAL_SCREEN:
+        return new MiniScreen(this);
       case NAVIGATION_SCREEN:
         return new SpaceNavigationScreen(this);
-      case INITIAL_SCREEN:
-      return new InitialScreen(this);
       default:
         return null;
     }
@@ -90,12 +105,11 @@ public class GdxGame extends Game {
 
   public enum ScreenType {
 
+    MAIN_MENU, MAIN_GAME, SETTINGS, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME, GAME_STORY, ENDGAME, NAVIGATION_SCREEN,INITIAL_SCREEN, PLAYER_DEATH
 
-    MAIN_MENU, MAIN_GAME, SETTINGS, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME, GAME_STORY, ENDGAME, NAVIGATION_SCREEN,INITIAL_SCREEN
 
 
   }
-
   /**
    * Exit the game.
    */

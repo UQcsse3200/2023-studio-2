@@ -5,8 +5,9 @@ public class PhysicsLayer {
   public static final short DEFAULT = (1 << 0);
   public static final short PLAYER = (1 << 1);
 
-  public static final short COMPANION = (1 << 2);
+  public static final short COMPANION = (1 << 1);
   public static final short SHIP = (1<<1);
+  public static final short LABORATORY = (1<<5);
 
   // Terrain obstacle, e.g. trees
   public static final short BOX = ~0;

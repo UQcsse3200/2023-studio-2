@@ -1,7 +1,6 @@
-package com.csse3200.game.areas.MapConfig;
+package com.csse3200.game.areas.map_config;
 
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.dataaccessobjects.EntityDAO;
+import com.csse3200.game.entities.data_access_objects.EntityDAO;
 
 import java.util.List;
 import java.util.stream.Collectors;

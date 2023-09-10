@@ -1,4 +1,4 @@
-package com.csse3200.game.entities.dataaccessobjects;
+package com.csse3200.game.entities.data_access_objects;
 
 import com.badlogic.gdx.math.GridPoint2;
 public class EntityDAO {

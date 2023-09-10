@@ -1,15 +1,15 @@
-package com.csse3200.game.areas.MapConfig;
+package com.csse3200.game.areas.map_config;
 
-import com.csse3200.game.entities.dataaccessobjects.EntityDAO;
+import com.csse3200.game.entities.data_access_objects.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AreaEntityConfig {
     //TODO: Update these to specific types
-    public List<EntityDAO> enemyDAOs = new ArrayList<>();
-    public List<EntityDAO> NPCDAOs = new ArrayList<>();
-    public List<EntityDAO> wallDAOs = new ArrayList<>();
+    public List<EnemyDAO> enemyDAOs = new ArrayList<>();
+    public List<NPCDAO> NPCDAOs = new ArrayList<>();
+    public List<Wall> wallDAOs = new ArrayList<>();
     public List<EntityDAO> bulletDAOs = new ArrayList<>();
     //TODO: Add all types here
 

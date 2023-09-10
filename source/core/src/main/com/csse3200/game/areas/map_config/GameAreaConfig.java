@@ -1,4 +1,4 @@
-package com.csse3200.game.areas.MapConfig;
+package com.csse3200.game.areas.map_config;
 
 import com.badlogic.gdx.math.GridPoint2;
 

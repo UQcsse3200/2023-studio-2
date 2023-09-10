@@ -1,7 +1,6 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -11,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
@@ -22,8 +22,6 @@ import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.TerrainService;
-import com.csse3200.game.ui.DialogComponent;
-import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -85,7 +83,17 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
-            "images/playerSS_6.png"
+            "images/TurretOne.png",
+            "images/TurretTwo.png",
+            "images/playerSS_6.png",
+            "images/upgradetree/exit.png",
+            "images/upgradetree/background.png",
+            "images/upgradetree/upgradebench.png",
+            "images/upgradetree/hammer1.png",
+            "images/upgradetree/hammer2.png",
+            "images/upgradetree/stick.png",
+            "images/upgradetree/exit.png",
+            "images/player.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -101,12 +109,15 @@ public class EarthGameArea extends GameArea {
             "images/botanist.atlas",
             "images/playerSS.atlas",
             "images/wrench.atlas",
+            "images/baseballbat.atlas",
             "images/open_gate.atlas",
             "images/closed_gate.atlas",
-            "images/botanist.atlas"
+            "images/botanist.atlas",
+            "images/sling_shot.atlas",
+            "images/player.atlas"
 
     };
-    private static final String[] earthSounds = {"sounds/Impact4.wav"};
+    private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.wav";
     private static final String[] earthMusic = {backgroundMusic};
 
@@ -141,10 +152,13 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
+        spawnUpgradeBench();
 
         spawnShip();
         Entity playerEntity = spawnPlayer();
-        spawnCompanion(playerEntity);
+//        spawnCompanion(playerEntity);
+
+        spawnTurret();
 
         spawnEnemies();
         spawnBoss();
@@ -208,6 +222,11 @@ public class EarthGameArea extends GameArea {
 
     }
 
+    private void spawnUpgradeBench() {
+        Entity upgradeBench = StructureFactory.createUpgradeBench();
+        spawnEntityAt(upgradeBench, new GridPoint2(20, 40), true, true);
+    }
+
     private void spawnExtractors() {
         GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(0, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
         Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 100.0, 1);
@@ -238,12 +257,19 @@ public class EarthGameArea extends GameArea {
         Entity ship = StructureFactory.createShip(game);
         spawnEntityAt(ship, spawnPosition, false, false);
     }
+    public void spawnTurret() {
+        Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
+        Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
+        spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
+        spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
+    }
 
     private void displayUI() {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Planet Earth"));
         spawnEntity(ui);
     }
+
 
     private void spawnTerrain() {
         // Background terrain
@@ -319,9 +345,6 @@ public class EarthGameArea extends GameArea {
 
             spawnEntityAt(healthPowerup, randomPos, true, false);
             spawnEntityAt(speedPowerup, randomPos2, true, false);
-
-            // Test
-            // System.out.println(ServiceLocator.getEntityService().getEntitiesByComponent(PowerupComponent.class).toString());
         }
     }
 

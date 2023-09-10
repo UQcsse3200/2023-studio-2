@@ -16,7 +16,6 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -25,6 +24,8 @@ import java.util.ArrayList;
 
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 
 /**
  * Factory to create structure entities - such as extractors or ships.
@@ -50,10 +51,6 @@ public class StructureFactory {
      * @param tickSize the amount of the resource produced at each tick
      * @return a new extractor Entity
      */
-
-
-
-
     public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         Entity extractor = new Entity()
                 .addComponent(new DamageTextureComponent("images/extractor.png")
@@ -88,6 +85,8 @@ public class StructureFactory {
         return extractorRepairPart;
     }
 
+
+
     /**
      * Creates a ship entity
      */
@@ -116,6 +115,27 @@ public class StructureFactory {
     }
 
     /**
+     * Creates an upgrade bench entity
+     */
+    public static Entity createUpgradeBench() {
+        Entity upgradeBench = new Entity()
+                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
+                .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"))
+                .addComponent(new UpgradeTree());
+
+        upgradeBench.addComponent(new InteractableComponent(entity -> {
+            UpgradeDisplay minigame = UpgradeDisplay.createUpgradeDisplay(upgradeBench);
+            ServiceLocator.getRenderService().getStage().addActor(minigame);
+        }, 0.5f));
+
+        upgradeBench.setScale(0.6f, 0.6f);
+
+        return upgradeBench;
+    }
+    /**
+
      * Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map
      *
      * @param targets the targets the entities that spawn will target

@@ -1,4 +1,4 @@
-package com.csse3200.game.components.joinable;
+package com.csse3200.game.components.structures;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
@@ -18,7 +18,7 @@ import java.util.Map;
  * This component is used to change the texture and collision bounds of an entity
  * depending on its neighbours.
  */
-public class JoinableComponent extends AtlasRenderComponent {
+public class JoinableComponent extends AtlasRenderComponent implements Placeable {
     private final Map<JoinDirection, Boolean> JoinedInDirectionMap = new HashMap<>() {
         {
             put(JoinDirection.UP, false);
@@ -37,33 +37,6 @@ public class JoinableComponent extends AtlasRenderComponent {
             put(JoinDirection.RIGHT, new GridPoint2(-2,0));
         }
     };
-    @Override
-    public void create() {
-        super.create();
-
-        // finds current position.
-        StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
-        GridPoint2 centrePosition = structurePlacementService.getStructurePosition(entity);
-
-        if (centrePosition == null) {
-            return;
-        }
-
-        // calculates tile over in each direction
-        Entity up = structurePlacementService.getStructureAt(centrePosition.cpy().add(0,2));
-        Entity down = structurePlacementService.getStructureAt(centrePosition.cpy().add(0,-2));
-        Entity left = structurePlacementService.getStructureAt(centrePosition.cpy().add(-2,0));
-        Entity right = structurePlacementService.getStructureAt(centrePosition.cpy().add(2,0));
-
-        // adds whether there is a wall in each direction to the JoinDirection array.
-        JoinedInDirectionMap.put(JoinDirection.UP, isEntityJoinable(up));
-        JoinedInDirectionMap.put(JoinDirection.DOWN, isEntityJoinable(down));
-        JoinedInDirectionMap.put(JoinDirection.LEFT, isEntityJoinable(left));
-        JoinedInDirectionMap.put(JoinDirection.RIGHT, isEntityJoinable(right));
-
-        updateAtlasTexture();
-        updateShape();
-    }
 
     /**
      * Helper function to check if the entity is joinable.
@@ -223,6 +196,39 @@ public class JoinableComponent extends AtlasRenderComponent {
      */
     public void updateTextureAtlas(TextureAtlas atlas) {
         updateTextureAtlas(atlas, deriveCardinalityId());
+    }
+
+    @Override
+    public void placed() {
+        // finds current position.
+        StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
+        GridPoint2 centrePosition = structurePlacementService.getStructurePosition(entity);
+
+        if (centrePosition == null) {
+            return;
+        }
+
+        // calculates tile over in each direction
+        Entity up = structurePlacementService.getStructureAt(centrePosition.cpy().add(0,2));
+        Entity down = structurePlacementService.getStructureAt(centrePosition.cpy().add(0,-2));
+        Entity left = structurePlacementService.getStructureAt(centrePosition.cpy().add(-2,0));
+        Entity right = structurePlacementService.getStructureAt(centrePosition.cpy().add(2,0));
+
+        // adds whether there is a wall in each direction to the JoinDirection array.
+        JoinedInDirectionMap.put(JoinDirection.UP, isEntityJoinable(up));
+        JoinedInDirectionMap.put(JoinDirection.DOWN, isEntityJoinable(down));
+        JoinedInDirectionMap.put(JoinDirection.LEFT, isEntityJoinable(left));
+        JoinedInDirectionMap.put(JoinDirection.RIGHT, isEntityJoinable(right));
+
+        updateAtlasTexture();
+        updateShape();
+
+        notifyNeighbours(true);
+    }
+
+    @Override
+    public void willRemove() {
+        notifyNeighbours(false);
     }
 }
 

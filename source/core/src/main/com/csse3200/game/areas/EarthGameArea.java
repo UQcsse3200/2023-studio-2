@@ -140,7 +140,7 @@ public class EarthGameArea extends GameArea {
         spawnEnemies();
         spawnBoss();
         spawnAsteroids();
-        spawnTreeTopLayer();
+        //spawnTreeTopLayer();
         spawnBotanist();
 
         playMusic();

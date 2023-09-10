@@ -23,10 +23,8 @@ import org.slf4j.LoggerFactory;
 public class EndGame extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(StoryScreen.class);
 
-
-
-
-
+    public EndGame(GdxGame gdxGame) {
+    }
 
 
     private void createUI() {

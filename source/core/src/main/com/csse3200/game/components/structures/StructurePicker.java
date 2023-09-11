@@ -119,7 +119,7 @@ public class StructurePicker extends UIComponent {
         addActors();
     }
 
-    public int getLevel(int level) {
+    public int getLevel() {
         return level;
     }
 

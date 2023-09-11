@@ -1,5 +1,7 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
+import java.util.List;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -54,8 +56,8 @@ public class EarthGameArea extends GameArea {
     private static final float ASTEROID_SIZE = 0.9f;
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
-            "images/extractor.png",
-            "images/broken_extractor.png",
+            "images/refinedExtractor2.png",
+            "images/refinedBrokenExtractor.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
             "images/RightShip.png",
@@ -76,7 +78,7 @@ public class EarthGameArea extends GameArea {
             "images/stone_wall.png",
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-            "images/Ship.png",
+            "images/refinedShip.png",
             "images/stone_wall.png",
             "images/oldman_down_1.png",
             "images/player_blank.png",
@@ -103,7 +105,10 @@ public class EarthGameArea extends GameArea {
             "images/upgradetree/hammer2.png",
             "images/upgradetree/stick.png",
             "images/upgradetree/exit.png",
-            "images/player.png"
+            "images/player.png",
+            "images/Nebulite.png",
+            "images/Solstite.png",
+            "images/Durasteel.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -245,27 +250,55 @@ public class EarthGameArea extends GameArea {
     }
 
     private void spawnExtractors() {
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) 100);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) 500);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) 1000);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Nebulite.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Durasteel.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Solstite.toString(),  (int) 4);
+
         GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(0, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 100.0, 1);
+        Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 1000.0, 10);
         spawnEntityAt(extractor, pos, true, false);
         targetables.add(extractor);
 
         pos = new GridPoint2(terrain.getMapBounds(0).sub(8, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        extractor = StructureFactory.createExtractor(30, Resource.Solstite, (long) 100.0, 1);
+        extractor = StructureFactory.createExtractor(30, Resource.Solstite, (long) 1000.0, 10);
         targetables.add(extractor);
         spawnEntityAt(extractor, pos, true, false);
 
         pos = new GridPoint2(terrain.getMapBounds(0).sub(16, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
+        extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 1000.0, 10);
         targetables.add(extractor);
         spawnEntityAt(extractor, pos, true, false);
 
-        ResourceDisplay resourceDisplayComponent = new ResourceDisplay()
+        ResourceDisplay resourceDisplayComponent = new ResourceDisplay(5, 32, 1000)
                 .withResource(Resource.Durasteel)
                 .withResource(Resource.Solstite)
                 .withResource(Resource.Nebulite);
         Entity resourceDisplay = new Entity().addComponent(resourceDisplayComponent);
         spawnEntity(resourceDisplay);
+    }
+    public Entity getExtractorIcon(){
+        GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(24, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
+        Entity extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
+        targetables.add(extractor);
+        extractor.setScale(new Vector2(0.5f,0.5f));
+        spawnEntityAt(extractor, pos, true, false);
+        return extractor;
+    }
+    public Entity getExtractor() {
+        GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(24, 2).x / 2, terrain.getMapBounds(0).sub(2, 2).y / 2);
+        Entity extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
+        targetables.add(extractor);
+        spawnEntityAt(extractor, pos, true, false);
+        return extractor;
     }
 
     private void spawnShip() {

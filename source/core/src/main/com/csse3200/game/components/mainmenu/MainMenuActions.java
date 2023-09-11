@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.MainAlert;
 import org.slf4j.Logger;
@@ -99,6 +100,9 @@ public class MainMenuActions extends Component {
 
   private void onSpaceMap() {
     logger.info("Launching space map screen");
+    ServiceLocator.registerGameStateObserverService(new GameStateObserver());
+    ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", new PlanetScreen(game, "Earth"));
+    //TODO: Remove once map button is removed from main menu
     game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
   }
 

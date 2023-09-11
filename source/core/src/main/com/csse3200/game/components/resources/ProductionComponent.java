@@ -91,8 +91,10 @@ public class ProductionComponent extends Component {
             gameStateObserver.trigger("resourceAdd", this.produces.toString(), produced);
             this.lastTime += this.tickRate;
 
-            Entity popup = new PopupFactory().createPopup(this.produces);
-            ServiceLocator.getEntityPlacementService().PlaceEntityAt(popup, this.entity.getPosition().add(this.entity.getScale().scl(0.65F)));
+            if (!this.damaged) {
+                Entity popup = new PopupFactory().createPopup(this.produces);
+                ServiceLocator.getEntityPlacementService().PlaceEntityAt(popup, this.entity.getPosition().add(this.entity.getScale().scl(0.65F)));
+            }
         }
     }
 

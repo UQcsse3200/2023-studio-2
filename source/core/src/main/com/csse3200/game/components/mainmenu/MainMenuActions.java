@@ -1,18 +1,16 @@
 package com.csse3200.game.components.mainmenu;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.screens.MainGameScreen;
+import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.MainAlert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.AlertBox;
 
-import static com.csse3200.game.screens.MainMenuScreen.logger;
 import com.csse3200.game.ui.TitleBox;
 
 
@@ -50,10 +48,15 @@ public class MainMenuActions extends Component {
    * Swaps to the Main Game screen.
    */
   private void onStart() {
-    logger.info("Start game");
-    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    String startPlanetName = "Earth";
+    logger.info(String.format("Start game, go to %s", startPlanetName));
+    PlanetScreen planetScreen = new PlanetScreen(game, startPlanetName);
+    ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", planetScreen);
+    game.setScreen(planetScreen);
+
     AlertBox alertBox = new AlertBox(game," Alert Box", skin);
     alertBox.showDialog(stage);
+
     logger.info("Loading Story");
     TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
     titleBox.showDialog(stage);
@@ -86,9 +89,7 @@ public class MainMenuActions extends Component {
   private void onMini(){
     logger.info("starting space minigame");
     MainAlert mainAlertBox = new MainAlert(game, "Start game", skin, "Ready to play the game");
-    mainAlertBox.showDialog(stage, () -> {
-      game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN);
-    });
+    mainAlertBox.showDialog(stage, () -> game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN));
 
   }
   private void onExtractor(){

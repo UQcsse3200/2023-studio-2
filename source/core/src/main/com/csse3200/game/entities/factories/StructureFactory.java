@@ -107,6 +107,7 @@ public class StructureFactory {
         return true;
     }
 
+    //TODO: REMOVE - LEGACY
     /**
      * Creates a ship entity that uses the default package
      */
@@ -137,6 +138,7 @@ public class StructureFactory {
         return ship;
     }
 
+    //TODO: REMOVE - LEGACY
     /**
      * Creates an upgrade bench entity using the default config
      */

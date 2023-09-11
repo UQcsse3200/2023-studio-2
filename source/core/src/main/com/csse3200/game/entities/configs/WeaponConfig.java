@@ -1,5 +1,7 @@
 package com.csse3200.game.entities.configs;
 
+import com.csse3200.game.components.Weapons.WeaponType;
+
 /**
  * Defines each entries properties stored in wall config file to be loaded by the Wall Factory.
  */
@@ -18,4 +20,6 @@ public class WeaponConfig extends BaseEntityConfig {
     public int attackCooldown = 0;
 
     public float imageScale = 1;
+
+    public WeaponType type;
 }

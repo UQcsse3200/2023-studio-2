@@ -17,6 +17,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.FollowComponent;
 
+//TODO: REMOVE?
 public class BoxFactory {
 
 

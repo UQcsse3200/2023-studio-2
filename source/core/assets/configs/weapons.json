@@ -6,7 +6,8 @@
     "initialRotationOffset": 0,
     "imageRotationOffset": 45,
     "textureAtlas": "images/sling_shot.atlas",
-    "imageScale" : 0.2
+    "imageScale" : 0.2,
+    "type": "SLING_SHOT"
   },
 
   "ELEC_WRENCH": {
@@ -17,7 +18,8 @@
     "imageRotationOffset": 45,
     "attackCooldown": 10,
     "textureAtlas": "images/baseballbat.atlas",
-    "imageScale" : 1
+    "imageScale" : 1,
+    "type": "ELEC_WRENCH"
   },
 
   "THROW_ELEC_WRENCH": {
@@ -27,6 +29,7 @@
     "initialRotationOffset": 0,
     "imageRotationOffset": 45,
     "textureAtlas": "images/wrench.atlas",
-    "imageScale" : 1
+    "imageScale" : 1,
+    "type": "THROW_ELEC_WRENCH"
   }
 }

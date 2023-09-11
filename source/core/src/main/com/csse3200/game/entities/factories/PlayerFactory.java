@@ -37,12 +37,21 @@ public class PlayerFactory {
   private static final PlayerConfig config =
       FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
-
+  //TODO: REMOVE - LEGACY
   /**
    * Create a player entity.
    * @return entity
    */
   public static Entity createPlayer() {
+    return createPlayer(config);
+  }
+
+  /**
+   * Create a player entity.
+   * @param config - configuration file to match player to
+   * @return entity
+   */
+  public static Entity createPlayer(PlayerConfig config) {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForPlayer();
 

@@ -28,11 +28,18 @@ public class Turret extends PlaceableEntity {
     int maxAmmo;
     int damage;
 
+    //TODO: REMOVE - LEGACY
     public Turret(TurretType type, Entity player) {
-        super();
-        this.type = type;
+        this(turretConfigs.GetTurretConfig(type));
+    }
 
-        TurretConfig turretConfig = turretConfigs.GetTurretConfig(type);
+    /**
+     * Create a new turret placeable entity to match the provided config file
+     * @param turretConfig Configuration file to match turret to
+     */
+    public Turret(TurretConfig turretConfig ) {
+        super();
+
         maxAmmo = turretConfig.maxAmmo;
         damage = turretConfig.damage;
         var texture = ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, Texture.class);
@@ -40,7 +47,7 @@ public class Turret extends PlaceableEntity {
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.TURRET));
         addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
-        addComponent(new CombatStatsComponent(turretConfig.health, 0, 0, false));
+        addComponent(new CombatStatsComponent(turretConfig.health, turretConfig.damage, turretConfig.attackMultiplier, turretConfig.isImmune));
         addComponent(new HealthBarComponent(true));
         addComponent(new TextureRenderComponent(texture));
     }

@@ -29,9 +29,10 @@ import com.csse3200.game.components.FollowComponent;
  * the properties stored in 'CompanionConfig'.
  */
 public class CompanionFactory {
-    private static final CompanionConfig stats =
+    private static final CompanionConfig companionConfig =
             FileLoader.readClass(CompanionConfig.class, "configs/companion.json");
 
+    //TODO: REMOVE - LEGACY
     /**
      * Create a Companion entity.
      *
@@ -40,18 +41,29 @@ public class CompanionFactory {
      */
     // Added a player reference for basic player tracking
     public static Entity createCompanion(Entity playerEntity) {
+        return createCompanion(playerEntity, companionConfig);
+    }
+
+    /**
+     * Create a Companion entity matching the config file
+     * @param playerEntity The player entity to which the companion is associated.
+     * @param config Configuration file to match companion to
+     * @return The created companion entity.
+     */
+    // Added a player reference for basic player tracking
+    public static Entity createCompanion(Entity playerEntity, CompanionConfig config) {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForCompanion();
 
         Entity companion =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/Companion1.png"))
+                        .addComponent(new TextureRenderComponent(config.spritePath))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
                         .addComponent(new ColliderComponent())
                         .addComponent(new CompanionActions())
-                        .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
-                        .addComponent(new CompanionInventoryComponent(stats.gold))
+                        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
+                        .addComponent(new CompanionInventoryComponent(config.gold))
                         .addComponent(inputComponent)
                         .addComponent(new FollowComponent(playerEntity, 4.f))
                         .addComponent(new CompanionInteractionControllerComponent());
@@ -63,7 +75,7 @@ public class CompanionFactory {
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
         companion.getComponent(TextureRenderComponent.class).scaleEntity();
-        companion.getComponent(CompanionActions.class).setBulletTexturePath(stats.bulletTexturePath);
+        companion.getComponent(CompanionActions.class).setBulletTexturePath(config.bulletTexturePath);
         return companion;
     }
 

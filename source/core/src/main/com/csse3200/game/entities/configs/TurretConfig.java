@@ -4,5 +4,7 @@ public class TurretConfig extends BaseEntityConfig {
     public int health = 0;
     public int maxAmmo = 0;
     public int damage = 0;
+    public int attackMultiplier = 1;
+    public boolean isImmune = false;
 }
 

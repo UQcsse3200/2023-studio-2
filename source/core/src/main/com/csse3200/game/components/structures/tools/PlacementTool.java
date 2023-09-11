@@ -20,8 +20,8 @@ public abstract class PlacementTool extends Tool {
     public abstract PlaceableEntity createEntity(Entity player);
 
     public boolean isPositionValid(GridPoint2 position) {
-        ServiceLocator.getStructurePlacementService().getStructureAt(position);
+        var existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
 
-        return position != null;
+        return existingStructure == null;
     }
 }

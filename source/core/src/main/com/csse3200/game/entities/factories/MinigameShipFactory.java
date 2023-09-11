@@ -11,11 +11,11 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-public class ShipFactory {
+public class MinigameShipFactory {
     //private static final ShipConfig stats =
      //       FileLoader.readClass(ShipConfig.class, "configs/ship.json");
 
-    public static Entity createShip() {
+    public static Entity createMinigameShip() {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForShip();
 
@@ -40,7 +40,7 @@ public class ShipFactory {
         return ship;
     }
 
-    private ShipFactory() {
+    private MinigameShipFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }
 }

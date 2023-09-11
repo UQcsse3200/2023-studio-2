@@ -4,7 +4,7 @@
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
-    "atlas": "images/base_enemy.atlas"
+    "spritePath": "images/base_enemy.atlas"
   },
 
   "meleeEnemyDTE": {
@@ -12,8 +12,7 @@
     "baseAttack": 5,
     "speed": 5,
     "behaviour": "DTE",
-    "atlas": "images/troll_enemy.atlas"
-
+    "spritePath": "images/troll_enemy.atlas"
   },
 
   "rangeEnemyPTE": {
@@ -21,7 +20,7 @@
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
-    "atlas": "images/rangeEnemy.atlas"
+    "spritePath": "images/rangeEnemy.atlas"
   },
 
   "rangeEnemyDTE": {
@@ -29,7 +28,7 @@
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "DTE",
-    "atlas": "images/rangeEnemy.atlas"
+    "spritePath": "images/rangeEnemy.atlas"
   },
 
   "meleeBossPTE": {
@@ -37,7 +36,8 @@
     "baseAttack": 25,
     "speed": 8,
     "specialAttack": 40,
-    "atlas": "images/boss_enemy.atlas"
+    "spritePath": "images/boss_enemy.atlas",
+    "isBoss": true
   },
 
   "rangeBossPTE": {
@@ -45,6 +45,7 @@
     "baseAttack": 25,
     "speed": 8,
     "specialAttack": 40,
-    "atlas": "images/boss_enemy.atlas"
+    "spritePath": "images/boss_enemy.atlas",
+    "isBoss": true
   }
 }

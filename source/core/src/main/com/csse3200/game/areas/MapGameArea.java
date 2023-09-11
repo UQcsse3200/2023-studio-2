@@ -8,12 +8,14 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.map_config.GameAreaConfig;
+import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.ShipConfig;
+import com.csse3200.game.entities.configs.UpgradeBenchConfig;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.entities.factories.*;
@@ -62,6 +64,7 @@ public class MapGameArea extends GameArea{
         spawnTerrain();
         spawnEnvironment();
         spawnPowerups();
+        spawnUpgradeBench();
         spawnExtractors();
         spawnShip();
         playerEntity = spawnPlayer();
@@ -197,6 +200,15 @@ public class MapGameArea extends GameArea{
     }
 
     /**
+     * Spawns the upgrade bench to correspond to the config file provided
+     */
+    private void spawnUpgradeBench() {
+        //TODO: Update to upgradeBenchConfig
+        Entity upgradeBench = StructureFactory.createUpgradeBench();
+        spawnEntityAt(upgradeBench, new GridPoint2(20, 40), true, true);
+    }
+
+    /**
      * Helper method to spawn all the extractors of a given resource type
      * @param resource - Type of extractor to create
      * @param positions - List of positions to place the extractors at
@@ -237,6 +249,7 @@ public class MapGameArea extends GameArea{
      * Spawns the ship at the position given by the config file
      */
     private void spawnShip() {
+        //TODO: Swap to ship config
         if (mapConfig.shipPosition != null) {
             Entity ship = StructureFactory.createShip(game, mapConfig.winConditions);
             spawnEntityAt(ship, mapConfig.shipPosition, false, false);

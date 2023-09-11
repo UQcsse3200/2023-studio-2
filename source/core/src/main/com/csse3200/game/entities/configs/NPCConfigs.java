@@ -14,10 +14,10 @@ public class NPCConfigs { //TODO: Remove
   public EnemyConfig meleeEnemyDTE = new EnemyConfig();
   public EnemyConfig rangeEnemyPTE = new EnemyConfig();
   public EnemyConfig rangeEnemyDTE = new EnemyConfig();
-  public BossConfig meleeBossPTE = new BossConfig();
-  public BossConfig meleeBossDTE = new BossConfig();
-  public BossConfig rangeBossPTE = new BossConfig();
-  public BossConfig rangeBossDTE = new BossConfig();
+  public EnemyConfig meleeBossPTE = new EnemyConfig();
+  public EnemyConfig meleeBossDTE = new EnemyConfig();
+  public EnemyConfig rangeBossPTE = new EnemyConfig();
+  public EnemyConfig rangeBossDTE = new EnemyConfig();
 
   public EnemyConfig GetEnemyConfig(EnemyType type, EnemyBehaviour behaviour) {
     EnemyConfig config = null;

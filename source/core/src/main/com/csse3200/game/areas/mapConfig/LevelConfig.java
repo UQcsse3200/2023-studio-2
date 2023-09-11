@@ -1,13 +1,13 @@
-package com.csse3200.game.areas.map_config;
+package com.csse3200.game.areas.mapConfig;
 
-import com.csse3200.game.entities.data_access_objects.EntityDAO;
+import com.csse3200.game.entities.configs.PlayerConfig;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class LevelConfig {
     public List<GameAreaConfig> gameAreas;
-    public EntityDAO player;    //TODO: Update to playerDAO
+    public PlayerConfig player;    //TODO: Update to playerDAO
 
     public String[] GetTextures() {
         //Get all entities from all game areas and get each of their sprite paths, then collect to an array

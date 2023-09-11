@@ -1,4 +1,4 @@
-package com.csse3200.game.areas.map_config;
+package com.csse3200.game.areas.mapConfig;
 
 public class ResourceCondition {
     public String resource;

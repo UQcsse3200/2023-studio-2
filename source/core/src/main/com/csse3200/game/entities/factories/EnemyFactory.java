@@ -39,19 +39,27 @@ import com.csse3200.game.services.ServiceLocator;
  * similar characteristics.
  */
 public class EnemyFactory {
-  //TODO: Remove
-//  private static final NPCConfigs configs =
-//      FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
+  public static final NPCConfigs configs =
+      FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
   public static DialogueBox dialogueBox;
+
+  /**
+   * Creates an enemy - using the default config as defined by the type and behaviour
+   * @param type - enemy type
+   * @param behaviour - Targeting behaviour of enemy
+   * @return new enemy entity
+   */
+  public static Entity createEnemy(EnemyType type, EnemyBehaviour behaviour) {
+    return createEnemy(configs.GetEnemyConfig(type, behaviour));
+  }
 
   /**
    * Creates a melee enemy entity.
    *
-   * @param type type of enemy - melee or ranged
+   * @param config - config file to replicate entity from
    * @return entity
    */
-  public static Entity createEnemy(EnemyType type, EnemyBehaviour behaviour) {
-    EnemyConfig config = new EnemyConfig(type == EnemyType.BossMelee || type == EnemyType.BossRanged); //TODO: Refactor this when we use DAO
+  public static Entity createEnemy(EnemyConfig config) {
     AnimationRenderComponent animator;
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -62,10 +70,10 @@ public class EnemyFactory {
     Array<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
     for (Entity target : targets) {
       // Adds the specific behaviour to entity
-      EnemyBehaviourSelector(target, type, behaviour, aiComponent);
+      EnemyBehaviourSelector(target, config.type, config.behaviour, aiComponent);
     }
 
-    TextureAtlas atlas = new TextureAtlas(config.atlas);
+    TextureAtlas atlas = new TextureAtlas(config.spritePath);
     animator = new AnimationRenderComponent(atlas);
 
     // Create enemy with basic functionalities seen in components
@@ -86,7 +94,7 @@ public class EnemyFactory {
                     1.5f))
             .addComponent(new DialogComponent(dialogueBox));
 
-    if (type == EnemyType.Ranged) {
+    if (config.type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     } else {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.NPC);

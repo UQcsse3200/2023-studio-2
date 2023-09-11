@@ -47,7 +47,7 @@ public class ProjectileFactory {
 
         EnemyBulletConfig config = configs.GetProjectileConfig();
 
-        TextureAtlas atlas = new TextureAtlas(config.atlas);
+        TextureAtlas atlas = new TextureAtlas(config.spritePath);
 
         // Animations for the bullet
         AnimationRenderComponent animator =

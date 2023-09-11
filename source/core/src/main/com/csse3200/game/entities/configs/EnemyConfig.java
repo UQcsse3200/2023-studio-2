@@ -1,17 +1,25 @@
 package com.csse3200.game.entities.configs;
 
+import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyType;
+
 /**
  * Defines the properties stored in Enemy config files to be loaded by the NPC Factory.
  */
 public class EnemyConfig extends BaseEntityConfig {
   // Load enemy information here
   public int speed = 1;
-//  public String behaviour = "default"; //TODO: Remove
-  public String atlas = ".atlas";
-  public boolean isBoss;
+  public EnemyBehaviour behaviour;
+  public EnemyType type;
+  public int health;
+  public int baseAttack;
+  public int attackMultiplier = 1;
+  public boolean isImmune = false;
+  public boolean isBoss = false;
+  public int specialAttack;
 
   public EnemyConfig() {
-    this.isBoss = false;
+
   }
 
   public EnemyConfig(boolean isBoss) {

@@ -2,7 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.map_config.ResourceCondition;
+import com.csse3200.game.areas.mapConfig.ResourceCondition;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.ExtractorRepairPartComponent;
 import com.csse3200.game.components.InteractableComponent;
@@ -10,8 +10,11 @@ import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.ShipConfig;
+import com.csse3200.game.entities.configs.UpgradeBenchConfig;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -36,11 +39,12 @@ import com.csse3200.game.components.upgradetree.UpgradeTree;
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
 public class StructureFactory {
+    //Default configs
+    public static final UpgradeBenchConfig defaultUpgradeBench =
+            FileLoader.readClass(UpgradeBenchConfig.class, "configs/upgradeBench.json");
+    public static final ShipConfig defaultShip =
+            FileLoader.readClass(ShipConfig.class, "configs/ship.json");
 
-    // * @param health the max and initial health of the extractor
-    // * @param producedResource the resource type produced by the extractor
-    // * @param tickRate the frequency at which the extractor ticks (produces resources)
-    // * @param tickSize the amount of the resource produced at each tick
 
     /**
      * Creates an extractor entity
@@ -104,12 +108,19 @@ public class StructureFactory {
     }
 
     /**
-     * Creates a ship entity
+     * Creates a ship entity that uses the default package
      */
     public static Entity createShip(GdxGame game, List<ResourceCondition> requirements) {
+        return createShip(game, requirements, defaultShip);
+    }
+
+    /**
+     * Creates a ship entity that matches the config file
+     */
+    public static Entity createShip(GdxGame game, List<ResourceCondition> requirements, ShipConfig config) {
         Entity ship =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/Ship.png"))
+                        .addComponent(new TextureRenderComponent(config.spritePath))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
@@ -127,14 +138,21 @@ public class StructureFactory {
     }
 
     /**
-     * Creates an upgrade bench entity
+     * Creates an upgrade bench entity using the default config
      */
     public static Entity createUpgradeBench() {
+        return createUpgradeBench(defaultUpgradeBench);
+    }
+
+    /**
+     * Creates an upgrade bench entity that matches the config file
+     */
+    public static Entity createUpgradeBench(UpgradeBenchConfig config) {
         Entity upgradeBench = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"))
+                .addComponent(new TextureRenderComponent(config.spritePath))
                 .addComponent(new UpgradeTree());
 
         upgradeBench.addComponent(new InteractableComponent(entity -> {

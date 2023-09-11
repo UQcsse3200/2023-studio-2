@@ -1,7 +1,8 @@
-package com.csse3200.game.entities.data_access_objects;
+package com.csse3200.game.entities.configs;
 
 import com.csse3200.game.components.resources.Resource;
-public class ExtractorDAO extends EntityDAO {
+
+public class ExtractorConfig extends BaseEntityConfig {
     public Resource resource;
     public int health;
     public long tickRate;

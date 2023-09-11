@@ -4,5 +4,6 @@
   "attackMultiplier": 1,
   "isImmune": false,
   "gold": 50,
-  "favouriteColour": "peach"
+  "favouriteColour": "peach",
+  "spritePath": "images/player.atlas"
 }

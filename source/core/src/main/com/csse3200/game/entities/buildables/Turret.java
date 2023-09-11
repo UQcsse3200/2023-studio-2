@@ -35,7 +35,7 @@ public class Turret extends PlaceableEntity {
         TurretConfig turretConfig = turretConfigs.GetTurretConfig(type);
         maxAmmo = turretConfig.maxAmmo;
         damage = turretConfig.damage;
-        var texture = ServiceLocator.getResourceService().getAsset(turretConfig.texture, Texture.class);
+        var texture = ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, Texture.class);
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.TURRET));

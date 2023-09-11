@@ -39,8 +39,9 @@ public class PlanetTravel {
 
         // Finally, go to planet.
 //        PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
-//        game.setScreen(currentPlanet.getNextPlanet());
-//        System.out.println("SLAYER");
+//        PlanetScreen nextPlanet = currentPlanet.getNextPlanet();
+//        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
+//        game.setScreen(nextPlanet);
     }
 
     /**

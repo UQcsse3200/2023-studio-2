@@ -20,6 +20,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.csse3200.game.components.ships.ShipAnimationController;
+import com.badlogic.gdx.graphics.g2d.Animation;
 
 public class ShipFactory {
     private static final ShipConfig stats =
@@ -32,30 +34,47 @@ public class ShipFactory {
         AnimationRenderComponent animator = new AnimationRenderComponent(
                 ServiceLocator.getResourceService().getAsset("images/ship.atlas", TextureAtlas.class));
 
+        animator.addAnimation("Ship_LeftStill", 0.1f);
+        animator.addAnimation("Ship_UpStill", 0.1f);
+        animator.addAnimation("Ship_DownStill", 0.1f);
+        animator.addAnimation("Ship_RightStill", 0.1f);
+        animator.addAnimation("Ship_RightUp", 0.1f);
+        animator.addAnimation("Ship_RightDown", 0.1f);
+        animator.addAnimation("Ship_LeftDown", 0.1f);
+        animator.addAnimation("Ship_LeftUp", 0.1f);
+        animator.addAnimation("Ship_RotateUpLeft", 0.3f, Animation.PlayMode.NORMAL);
+
         Entity ship =
                 new Entity()
 
-                        .addComponent(new TextureRenderComponent("images/Ship.png"))
+                        //.addComponent(new TextureRenderComponent("images/Ship.png"))
                         //.addComponent(new TextureRenderComponent("images/LeftShip.png"))Dont add 2 of the same component class
 
+                        .addComponent(animator)
+                        .addComponent(new ShipAnimationController())
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SHIP))
                         .addComponent(new ShipActions(stats.health, stats.fuel, stats.acceleration))
                         //.addComponent(new ShipStatsComponent(stats.health))
                         //.addComponent(new InventoryComponent(stats.gold))
+
+
                         .addComponent(inputComponent);
                         //.addComponent(new PlayerStatsDisplay());
 
         PhysicsUtils.setScaledCollider(ship, 0.6f, 0.3f);
         ship.getComponent(ColliderComponent.class).setDensity(1.5f);
-        ship.getComponent(TextureRenderComponent.class).scaleEntity();
+        //ship.getComponent(TextureRenderComponent.class).scaleEntity();
 
         //Edited by Foref, changes physics to reflect space environment
         //With fixed rotation off, ship will spin without additional customization of shipactions
         //ship.getComponent(PhysicsComponent.class).getBody().setFixedRotation(false);
         //Will disable fixed rotation once movement in a straight line is solved
         ship.getComponent(PhysicsComponent.class).getBody().setGravityScale(0);
+
+        animator.startAnimation("Ship_UpStill");
+        ship.setEntityType("ship");
 
         return ship;
     }

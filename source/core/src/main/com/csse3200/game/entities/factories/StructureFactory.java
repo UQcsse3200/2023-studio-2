@@ -64,6 +64,10 @@ public class StructureFactory {
                 .addComponent(new CombatStatsComponent(health, 0, 0, false))
                 .addComponent(new ProductionComponent(producedResource, tickRate, tickSize));
 
+        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
+        extractor.addComponent(new DistanceCheckComponent(5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
+
         //For testing start at 0 so you can repair
         extractor.getComponent(CombatStatsComponent.class).setHealth(0);
         extractor.addComponent(new InteractableComponent(entity -> {
@@ -106,8 +110,7 @@ public class StructureFactory {
         ship.setScale(5f, 4.5f);
         PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
 
-        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
-        InteractLabel interactLabel = new InteractLabel(skin);
+        InteractLabel interactLabel = new InteractLabel(); //code for interaction prompt
         ship.addComponent(new DistanceCheckComponent(5f, interactLabel));
         ServiceLocator.getRenderService().getStage().addActor(interactLabel);
 
@@ -138,6 +141,10 @@ public class StructureFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"))
                 .addComponent(new UpgradeTree());
+
+        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
+        upgradeBench.addComponent(new DistanceCheckComponent(0.5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
 
         upgradeBench.addComponent(new InteractableComponent(entity -> {
             UpgradeDisplay minigame = UpgradeDisplay.createUpgradeDisplay(upgradeBench);

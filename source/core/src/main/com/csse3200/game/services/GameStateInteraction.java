@@ -108,6 +108,27 @@ public class GameStateInteraction {
         int amount = value == null ? 0 : (int) value;
         this.put(resourceKey, amount + changeAmount);
     }
+
+    /**
+     *  Sets the maximum amount of extractors for a resource
+     *
+     * @param resourceName  The name of the resource produced by the extractor.
+     * @param amount The amount to set the max to
+     */
+    public void updateMaxExtractors(String resourceName, int amount){
+        String resourceKey = "extractorsMax/" + resourceName;
+        this.put(resourceKey, amount);
+    }
+
+    /**
+     * Sets the total amount of tracked extractors of the resource name to amount
+     * @param resourceName The name of the resource produced by the extractor/s
+     * @param amount The amount of extractors producing the resource
+     */
+    public void updateTotalExtractors(String resourceName, int amount) {
+        String resourceKey = "extractorsTotal/" + resourceName;
+        this.put(resourceKey, amount);
+    }
 }
 
 

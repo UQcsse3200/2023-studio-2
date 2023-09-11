@@ -2,6 +2,9 @@ package com.csse3200.game.components.resources;
 
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PopupFactory;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameState;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.GameTime;
@@ -87,6 +90,9 @@ public class ProductionComponent extends Component {
             int produced = (int) ((long) this.tickSize * this.getProductionModifier());
             gameStateObserver.trigger("resourceAdd", this.produces.toString(), produced);
             this.lastTime += this.tickRate;
+
+            Entity popup = new PopupFactory().createPopup(this.produces);
+            ServiceLocator.getEntityPlacementService().PlaceEntityAt(popup, this.entity.getPosition().add(this.entity.getScale().scl(0.65F)));
         }
     }
 

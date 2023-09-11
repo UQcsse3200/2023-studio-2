@@ -93,7 +93,10 @@ public class EarthGameArea extends GameArea {
             "images/upgradetree/hammer2.png",
             "images/upgradetree/stick.png",
             "images/upgradetree/exit.png",
-            "images/player.png"
+            "images/player.png",
+            "images/Nebulite.png",
+            "images/Solstite.png",
+            "images/Durasteel.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -231,19 +234,28 @@ public class EarthGameArea extends GameArea {
         ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) 100);
         ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) 500);
         ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) 1000);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Nebulite.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Durasteel.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Solstite.toString(),  (int) 4);
 
         GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(0, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 100.0, 1);
+        Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 1000.0, 10);
         spawnEntityAt(extractor, pos, true, false);
         targetables.add(extractor);
 
         pos = new GridPoint2(terrain.getMapBounds(0).sub(8, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        extractor = StructureFactory.createExtractor(30, Resource.Solstite, (long) 100.0, 1);
+        extractor = StructureFactory.createExtractor(30, Resource.Solstite, (long) 1000.0, 10);
         targetables.add(extractor);
         spawnEntityAt(extractor, pos, true, false);
 
         pos = new GridPoint2(terrain.getMapBounds(0).sub(16, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
+        extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 1000.0, 10);
         targetables.add(extractor);
         spawnEntityAt(extractor, pos, true, false);
 

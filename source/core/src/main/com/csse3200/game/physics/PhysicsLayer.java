@@ -5,8 +5,9 @@ public class PhysicsLayer {
   public static final short DEFAULT = (1 << 0);
   public static final short PLAYER = (1 << 1);
 
-  public static final short COMPANION = (1 << 2);
+  public static final short COMPANION = (1 << 1);
   public static final short SHIP = (1<<1);
+  public static final short LABORATORY = (1<<5);
 
   // Terrain obstacle, e.g. trees
   public static final short BOX = ~0;
@@ -18,6 +19,10 @@ public class PhysicsLayer {
   public static final short ENEMY_RANGE = (1 << 6);
   public static final short STRUCTURE = (1 << 5);
   public static final short WALL = (1 << 4);
+  public static final short TURRET = (1<<4);
+
+  public static final short WEAPON = (1 << 7);
+
   public static final short ALL = ~0;
 
   public static boolean contains(short filterBits, short layer) {

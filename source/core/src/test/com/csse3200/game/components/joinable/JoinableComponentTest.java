@@ -2,24 +2,21 @@ package com.csse3200.game.components.joinable;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ChainShape;
-import com.badlogic.gdx.physics.box2d.Shape;
-import com.csse3200.game.components.Component;
+import com.csse3200.game.components.structures.JoinDirection;
+import com.csse3200.game.components.structures.JoinLayer;
+import com.csse3200.game.components.structures.JoinableComponent;
+import com.csse3200.game.components.structures.JoinableComponentShapes;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
-import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.MockitoRule;
 import org.mockito.junit.jupiter.MockitoSettings;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,13 +40,13 @@ class JoinableComponentTest {
     TextureAtlas.AtlasRegion atlasRegion;
 
     @Test
-    void create() {
+    void placedTest() {
         ChainShape shape = mock(ChainShape.class);
 
         ServiceLocator.registerStructurePlacementService(placementService);
         ServiceLocator.registerRenderService(mock(RenderService.class));
 
-        Entity joinableEntity = mock(Entity.class);
+        PlaceableEntity joinableEntity = mock(PlaceableEntity.class);
         JoinableComponent neighbourComponent = mock(JoinableComponent.class);
         when(joinableEntity.getComponent(JoinableComponent.class)).thenReturn(neighbourComponent);
         when(neighbourComponent.getJoinLayer()).thenReturn(JoinLayer.WALLS);
@@ -68,7 +65,7 @@ class JoinableComponentTest {
         JoinableComponent component = new JoinableComponent(textureAtlas, JoinLayer.WALLS, shapes);
 
         component.setEntity(entity);
-        component.create();
+        component.placed();
 
         verify(colliderComponent).setShape(shape);
 
@@ -107,7 +104,7 @@ class JoinableComponentTest {
         ServiceLocator.registerStructurePlacementService(placementService);
         ServiceLocator.registerRenderService(mock(RenderService.class));
 
-        Entity joinableEntity = mock(Entity.class);
+        PlaceableEntity joinableEntity = mock(PlaceableEntity.class);
         JoinableComponent neighbourComponent = mock(JoinableComponent.class);
         when(joinableEntity.getComponent(JoinableComponent.class)).thenReturn(neighbourComponent);
         when(neighbourComponent.getJoinLayer()).thenReturn(JoinLayer.WALLS);

@@ -3,6 +3,7 @@ package com.csse3200.game.services;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.events.EventHandler;
 
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 public class StructurePlacementService {
     EventHandler handler;
-    private final Map<GridPoint2, Entity> placedStructures = new HashMap<>();
+    private final Map<GridPoint2, PlaceableEntity> placedStructures = new HashMap<>();
 
 
     public StructurePlacementService(EventHandler handler) {
@@ -37,18 +38,30 @@ public class StructurePlacementService {
         return null;
     }
 
-    public void PlaceStructureAt(Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+    public void PlaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+        entity.willPlace();
         placedStructures.put(tilePos, entity);
         handler.trigger("placeStructureAt", new PlaceStructureAtArgs(entity, tilePos, centerX, centerY));
+        entity.placed();
     }
     public void SpawnEntityAtVector(Entity entity, Vector2 worldPos) {
         handler.trigger("fireBullet", new SpawnEntityAtVectorArgs(entity, worldPos));
     }
 
     public void removeStructureAt(GridPoint2 tilePos) {
+        var entity = placedStructures.get(tilePos);
+
+        if (entity == null) {
+            return;
+        }
+
+        entity.willRemove();
         placedStructures.remove(tilePos);
+
+        ServiceLocator.getEntityService().unregister(entity);
+        entity.removed();
     }
-    public Entity getStructureAt(GridPoint2 position) {
+    public PlaceableEntity getStructureAt(GridPoint2 position) {
         return placedStructures.get(position);
     }
 

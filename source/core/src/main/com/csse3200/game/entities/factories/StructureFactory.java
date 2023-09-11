@@ -1,10 +1,12 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.ExtractorRepairPartComponent;
-import com.csse3200.game.components.InteractableComponent;
+import com.csse3200.game.areas.EarthGameArea;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
@@ -24,7 +26,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import java.util.ArrayList;
 
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.ShipInteractionPopup;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
@@ -105,6 +106,12 @@ public class StructureFactory {
         ship.setScale(5f, 4.5f);
         PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
 
+        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+        InteractLabel interactLabel = new InteractLabel(skin);
+        ship.addComponent(new DistanceCheckComponent(5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
+
+
         ship.addComponent(new InteractableComponent(entity -> {
             //Exit to main menu if resource > 1000
             GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
@@ -116,7 +123,7 @@ public class StructureFactory {
                 ShipInteractionPopup shipPopup = new ShipInteractionPopup();
                 ServiceLocator.getRenderService().getStage().addActor(shipPopup);
             }
-        }, 5));
+        }, 5f));
         return ship;
 
     }

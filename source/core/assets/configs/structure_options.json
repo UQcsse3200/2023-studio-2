@@ -15,6 +15,14 @@
         "unobtanium": 50
       },
       "texture": "images/structure-icons/turret.png"
+    },
+    "com.csse3200.game.components.structures.tools.ExtractorTool": {
+      "level": 0,
+      "name": "extractor",
+      "cost": {
+        "durasteel": 50
+      },
+      "texture": "images/structure-icons/turret.png"
     }
   }
 }

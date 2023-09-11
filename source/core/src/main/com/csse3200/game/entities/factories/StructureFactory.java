@@ -98,16 +98,7 @@ public class StructureFactory {
                         .addComponent(new TextureRenderComponent("images/refinedShip.png"))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
-                        .addComponent(new InteractableComponent(entity -> {
-                            //Exit to main menu if resource > 1000
-                            GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
-                            String resourceKey = "resource/" + Resource.Solstite;
-                            int currentResourceCount = (int) gameStateOb.getStateData(resourceKey);
-                            if (currentResourceCount > 1000) {
-                                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-                            }
-                        }, 5));
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
 
         ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();

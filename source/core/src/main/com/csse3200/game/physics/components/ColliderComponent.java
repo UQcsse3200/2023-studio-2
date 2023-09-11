@@ -222,7 +222,6 @@ public class ColliderComponent extends Component {
     PolygonShape bbox = new PolygonShape();
     Vector2 center = entity.getScale().scl(0.5f);
     bbox.setAsBox(center.x, center.y, center, 0f);
-
     return bbox;
   }
 }

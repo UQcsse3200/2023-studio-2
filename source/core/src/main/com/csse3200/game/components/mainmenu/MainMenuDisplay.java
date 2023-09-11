@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -34,6 +35,8 @@ public class MainMenuDisplay extends UIComponent {
         super.create();
         addActors();
     }
+    //created a checkbox group for single/multi player functionality
+    ButtonGroup<CheckBox> checkBoxGroup = new ButtonGroup<>();
 
     /**
      * Adds UI elements such as buttons and title to the main menu display.
@@ -66,7 +69,6 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("start");
                     }
                 });
-
         loadBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -75,7 +77,6 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("load");
                     }
                 });
-
         settingsBtn.addListener(
                 new ChangeListener() {
                     @Override

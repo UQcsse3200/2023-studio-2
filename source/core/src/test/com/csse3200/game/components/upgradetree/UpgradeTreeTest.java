@@ -31,7 +31,7 @@ public class UpgradeTreeTest {
         ServiceLocator.registerGameStateObserverService(gameStateObserver);
         defaultWeapons.add(WeaponType.WOODHAMMER);
         defaultWeapons.add(WeaponType.SLING_SHOT);
-        defaultWeapons.add(WeaponType.STICK);
+        defaultWeapons.add(WeaponType.ELEC_WRENCH);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class UpgradeTreeTest {
     public void testIsUnlocked() {
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER));
         assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STEELHAMMER));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STICK));;
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.ELEC_WRENCH));
         assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.THROW_ELEC_WRENCH));
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.SLING_SHOT));
     }

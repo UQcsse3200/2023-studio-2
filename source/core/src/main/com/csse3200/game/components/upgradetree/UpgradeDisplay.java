@@ -309,7 +309,7 @@ public class UpgradeDisplay extends Window {
         UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
 
         Image lockImage = lockItem(node, stats, size, weaponButton);
-        TextButton costButton = createCostButtons(node, stats, weaponButton);
+        TextButton costButton = createCostButtons(node, weaponButton);
 
         // Create unlock listener for unlock button
         if (costButton != null) {
@@ -319,20 +319,21 @@ public class UpgradeDisplay extends Window {
         return weaponButton;
     }
 
-    public TextButton createCostButtons(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton) {
+    public TextButton createCostButtons(UpgradeNode node, ImageButton weaponButton) {
 
+        UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
         // Dont draw cost buttons for unlocked nodes
         if (stats.isWeaponUnlocked(node.getWeaponType())) {
             return null;
         }
 
         TextButton costButton = new TextButton(String.valueOf(node.getNodeCost()), skin);
-        weaponButton.addActor(costButton);
         costButton.setSize(SIZE, SIZE / 2);
-
-        float costButtonX = (float) (weaponButton.getWidth() * 0.9);
-        float costButtonY = (float) (weaponButton.getHeight() * 0.9);
-        costButton.setPosition(costButtonX, costButtonY);
+        costButton.setColor(Color.WHITE);
+        costButton.setPosition(
+                weaponButton.getX() + weaponButton.getWidth(),
+                weaponButton.getY() + weaponButton.getWidth());
+        addActor(costButton);
 
         return costButton;
     }

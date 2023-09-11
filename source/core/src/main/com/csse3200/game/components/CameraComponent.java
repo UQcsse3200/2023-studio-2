@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class CameraComponent extends Component {
   private final Camera camera;
@@ -72,5 +73,9 @@ public class CameraComponent extends Component {
     camera.viewportWidth = currentZoom;
     camera.viewportHeight = currentZoom * screenratio;
     camera.update();
+  }
+  public Vector2 getWorldPositionFromScreen(Vector2 v){
+    Vector3 vc = camera.unproject(new Vector3(v.x, v.y,0));
+    return new Vector2(vc.x, vc.y);
   }
 }

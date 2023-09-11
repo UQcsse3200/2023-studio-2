@@ -12,23 +12,68 @@ import com.badlogic.gdx.InputProcessor;
 
 public class TouchCompanionInputComponent extends InputComponent {
 
-    /**
-     * Constructs a new TouchCompanionInputComponent with a priority of 5.
-     */
+    private final Vector2 walkDirection = Vector2.Zero.cpy();
     public TouchCompanionInputComponent() {
         super(5);
     }
 
-    /**
-     * Handles touch input events and triggers the Companion's attack.
-     *
-     * @param screenX The x-coordinate of the touch event on the screen.
-     * @param screenY The y-coordinate of the touch event on the screen.
-     * @param pointer The pointer ID for the touch event.
-     * @param button  The button ID for the touch event.
-     * @return True if the input was processed, false otherwise.
-     * @see InputProcessor#touchDown(int, int, int, int)
-     */
+    @Override
+    public boolean keyDown(int keycode) {
+        switch (keycode) {
+            case Input.Keys.I:
+                walkDirection.add(Vector2Utils.UP);
+                triggerWalkEvent();
+                return true;
+            case Input.Keys.J:
+                walkDirection.add(Vector2Utils.LEFT);
+                triggerWalkEvent();
+                return true;
+            case Input.Keys.K:
+                walkDirection.add(Vector2Utils.DOWN);
+                triggerWalkEvent();
+                return true;
+            case Input.Keys.L:
+                walkDirection.add(Vector2Utils.RIGHT);
+                triggerWalkEvent();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        switch (keycode) {
+            case Input.Keys.I:
+                walkDirection.sub(Vector2Utils.UP);
+                triggerWalkEvent();
+                return true;
+            case Input.Keys.J:
+                walkDirection.sub(Vector2Utils.LEFT);
+                triggerWalkEvent();
+                return true;
+            case Input.Keys.K:
+                walkDirection.sub(Vector2Utils.DOWN);
+                triggerWalkEvent();
+                return true;
+            case Input.Keys.L:
+                walkDirection.sub(Vector2Utils.RIGHT);
+                triggerWalkEvent();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void triggerWalkEvent() {
+        if (walkDirection.epsilonEquals(Vector2.Zero)) {
+            entity.getEvents().trigger("walkStop");
+        } else {
+            entity.getEvents().trigger("walk", walkDirection);
+        }
+    }
+
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         entity.getEvents().trigger("attack");

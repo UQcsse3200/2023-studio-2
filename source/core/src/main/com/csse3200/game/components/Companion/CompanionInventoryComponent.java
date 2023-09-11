@@ -5,57 +5,28 @@
 package com.csse3200.game.components.Companion;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CompanionInventoryComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(CompanionInventoryComponent.class);
-    private int gold;
+    private static final  int INVENTORY_SIZE = 7;
+    private List<Entity> inventory = new ArrayList<>(INVENTORY_SIZE);
+    private int[] itemQuantity = new int[INVENTORY_SIZE];
 
-    /**
-     * Constructs a new CompanionInventoryComponent with the specified initial gold amount.
-     *
-     * @param gold The initial amount of gold for the companion.
-     */
-    public CompanionInventoryComponent(int gold) {
-        setGold(gold);
+    public void addItem(Entity item){
+        inventory.add(item);
+        ++itemQuantity[inventory.indexOf(item)];
     }
-
-    /**
-     * Gets the current amount of gold the companion has.
-     *
-     * @return The current gold amount.
-     */
-    public int getGold() {
-        return this.gold;
-    }
-
-    /**
-     * Checks if the companion has at least the specified amount of gold.
-     *
-     * @param gold The amount of gold to check for.
-     * @return True if the companion has at least the specified gold amount, false otherwise.
-     */
-    public Boolean hasGold(int gold) {
-        return this.gold >= gold;
-    }
-
-    /**
-     * Sets the companion's gold to the specified amount.
-     *
-     * @param gold The new gold amount.
-     */
-    public void setGold(int gold) {
-        this.gold = Math.max(gold, 0);
-        logger.debug("Setting gold to {}", this.gold);
-    }
-
-    /**
-     * Adds the specified amount of gold to the companion's current gold.
-     *
-     * @param gold The amount of gold to add.
-     */
-    public void addGold(int gold) {
-        setGold(this.gold + gold);
+    public int getItemIndex(Entity item, List<Entity> storage) {
+        int index = -1;
+        for (int i = 0; i < storage.size(); ++i) {
+                return i;
+        }
+        return index;
     }
 }

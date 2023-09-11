@@ -56,8 +56,8 @@ public class UpgradeDisplay extends Window {
     // Tree stuff
     private final List<UpgradeNode> trees = new ArrayList<>();
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private static final float VERTICAL_SPACING = 150f;
-    private static final float HORIZONTAL_SPACING = 100f;
+    private static final float VERTICAL_SPACING = 175;
+    private static final float HORIZONTAL_SPACING = 150f;
 
     /**
      * Factory method for creating an instance of UpgradeDisplay.
@@ -108,7 +108,7 @@ public class UpgradeDisplay extends Window {
      * These trees dictate the progression of weapons that can be unlocked.
      */
     private void buildTrees() {
-        WeaponConfig stickConfig = weaponConfigs.GetWeaponConfig(WeaponType.STICK);
+        WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.ELEC_WRENCH); // todo: edit config png
         WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.KATANA);
         WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.SLING_SHOT);
         WeaponConfig rangedWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.THROW_ELEC_WRENCH);
@@ -116,7 +116,7 @@ public class UpgradeDisplay extends Window {
         WeaponConfig stonehammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.STONEHAMMER);
 
         // Melee Tree
-        meleeRoot = new UpgradeNode(stickConfig, WeaponType.STICK);
+        meleeRoot = new UpgradeNode(meleeWrench, WeaponType.ELEC_WRENCH);
         UpgradeNode swordNode = new UpgradeNode(katanaConfig, WeaponType.KATANA);
         meleeRoot.addChild(swordNode);
         trees.add(meleeRoot);
@@ -132,7 +132,7 @@ public class UpgradeDisplay extends Window {
         UpgradeNode hammer2 = new UpgradeNode(stonehammerConfig, WeaponType.STONEHAMMER);
         UpgradeNode hammer3 = new UpgradeNode(stonehammerConfig, WeaponType.STEELHAMMER);
         buildRoot.addChild(hammer2);
-        hammer2.addChild(hammer3);
+        buildRoot.addChild(hammer3);
         trees.add(buildRoot);
     }
 

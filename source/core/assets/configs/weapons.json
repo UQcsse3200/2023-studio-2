@@ -19,7 +19,7 @@
     "attackCooldown": 10,
     "textureAtlas": "images/baseballbat.atlas",
     "imageScale" : 1,
-    "imagePath" : "images/wrench.png"
+    "imagePath" : "images/upgradetree/stick.png"
   },
 
   "THROW_ELEC_WRENCH": {

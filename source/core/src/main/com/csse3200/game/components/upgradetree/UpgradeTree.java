@@ -27,7 +27,7 @@ public class UpgradeTree extends Component {
         // Base weapons
         unlockedWeapons.add(WeaponType.WOODHAMMER);
         unlockedWeapons.add(WeaponType.SLING_SHOT);
-        unlockedWeapons.add(WeaponType.STICK);
+        unlockedWeapons.add(WeaponType.ELEC_WRENCH);
     }
 
     /**
@@ -67,7 +67,7 @@ public class UpgradeTree extends Component {
         String resourceKey = "resource/" + Resource.Nebulite;
         if (gameStateOb != null) {
             /** The starting number of materials available to the player for upgrades. */
-            return (int) gameStateOb.getStateData(resourceKey) + 1000; //todo remove testing 1000
+            return (int) gameStateOb.getStateData(resourceKey);
         }
         return 0;
     }

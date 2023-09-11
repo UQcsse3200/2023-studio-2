@@ -12,7 +12,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class PotionFactory {
 
-    public static Entity createPotion(PotionType type, Entity companionEntity ,Entity laboratoryEntity){
+    public static Entity createPotion(PotionType type){
         Entity Potion = new Entity()
                         .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
@@ -26,8 +26,8 @@ public class PotionFactory {
         }
         return Potion;
     }
-    public static Entity createDeathPotion(Entity companionEntity, Entity laboratoryEntity) {
-        return createPotion(PotionType.DEATH_POTION, companionEntity, laboratoryEntity);
+    public static Entity createDeathPotion() {
+        return createPotion(PotionType.DEATH_POTION);
     }
     public static boolean companionTouchesLaboratory( Vector2 companionPosition, Vector2 laboratoryPosition) {
 

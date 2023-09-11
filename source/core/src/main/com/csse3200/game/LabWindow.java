@@ -5,11 +5,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.csse3200.game.areas.EarthGameArea;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.PotionType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -20,6 +25,7 @@ import com.csse3200.game.entities.factories.PotionFactory;
  */
 public class LabWindow extends Window {
     private final InputOverrideComponent inputOverrideComponent;
+    /*private final EarthGameArea earthGameArea;*/
     private final Entity deathpotion;
     Table buttonTable;
     Table exit;
@@ -36,7 +42,6 @@ public class LabWindow extends Window {
         super("", new WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
 
         this.deathpotion = deathpotion;
-
         // Here set up the window to be centered on the stage with 80% width and 65% height.
         Stage stage = ServiceLocator.getRenderService().getStage();
         setWidth((float) (stage.getWidth() * 0.8));
@@ -49,34 +54,58 @@ public class LabWindow extends Window {
 
 
         Table exit = new Table();
-        TextButton potion1 = new TextButton("Potion1", skin);
-        TextButton potion2 = new TextButton("Potion2", skin);
-        TextButton potion3 = new TextButton("Potion3", skin);
-        TextButton potion4 = new TextButton("Potion4", skin);
+        Texture potion1Image = new Texture("images/deathpotion.png");
+        Texture potion2Image = new Texture("images/potion2.png");
+        Texture potion3Image = new Texture("images/potion3.png");
+        Texture potion4Image = new Texture("images/potion4.png");
+        Image potion1ImageWidget = new Image(potion1Image);
+        Image potion2ImageWidget = new Image(potion2Image);
+        Image potion3ImageWidget = new Image(potion3Image);
+        Image potion4ImageWidget = new Image(potion4Image);
+        TextButton potion1 = new TextButton("Death", skin);
+        TextButton potion2 = new TextButton("Speed", skin);
+        TextButton potion3 = new TextButton("Health", skin);
+        TextButton potion4 = new TextButton("Potion", skin);
         TextButton button = new TextButton("Exit", skin);
+        float buttonWidth = 200f; // Adjust as needed
+        float buttonHeight = 200f;
+        potion1.setWidth(buttonWidth);
+        potion1.setHeight(buttonHeight);
 
+        potion2.setWidth(buttonWidth);
+        potion2.setHeight(buttonHeight);
+
+        potion3.setWidth(buttonWidth);
+        potion3.setHeight(buttonHeight);
+
+        potion4.setWidth(buttonWidth);
+        potion4.setHeight(buttonHeight);
+        potion1.add(potion1ImageWidget).width(60).height(64);
+        potion2.add(potion2ImageWidget).width(60).height(64);
+        potion3.add(potion3ImageWidget).width(60).height(64);
+        potion4.add(potion4ImageWidget).width(60).height(64);
         buttonTable.top().left();
-        buttonTable.add(potion1).padLeft(50).padTop(100);
-        buttonTable.add(potion2).padLeft(20).padTop(100);
-        buttonTable.add(potion3).padLeft(20).padTop(100);
-        buttonTable.add(potion4).padLeft(20).padTop(100);
+        buttonTable.add(potion1).padTop(100).padLeft(150);
+        buttonTable.add(potion2).padTop(100).padLeft(190);
+        buttonTable.add(potion3).padTop(100).padLeft(165);
+        buttonTable.add(potion4).padTop(100).padLeft(180);
         buttonTable.row(); //Move to the next row
         buttonTable.row();
         exit.add(button).bottom().right().padBottom(70).padLeft(2400);
         addActor(buttonTable);
         addActor(exit);
 
-        button.addListener(new ChangeListener() {
+        /*button.addListener(new ChangeListener() {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 failLaboratory();
             }
-        });
-        potion1.addListener(new ChangeListener() {
+        });*/
+        potion1.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                failLaboratory();
+            public void clicked(InputEvent event,float x, float y){
+                /*triggerPotionSpawn(PotionType.DEATH_POTION);*/
             }
         });
 
@@ -131,4 +160,7 @@ public class LabWindow extends Window {
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
         return super.remove();
     }
+    /*private void triggerPotionSpawn(PotionType potionType) {
+        earthGameArea.spawnPotion(potionType);
+    }*/
 }

@@ -11,6 +11,7 @@ import com.csse3200.game.GdxGame;
 import com.badlogic.gdx.Gdx;
 import java.util.List;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.PotionType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.CompanionFactory;
@@ -60,10 +61,6 @@ public class EarthGameArea extends GameArea {
             "images/box_boy_leaf.png",
             "images/RightShip.png",
             "images/wall.png",
-//            "images/companionSS_0.png",
-//            "images/companionSS_1.png",
-//            "images/companionSS_2.png",
-//            "images/companionSS.png",
             "images/wall2.png",
             "images/gate_close.png",
             "images/gate_open.png",
@@ -166,12 +163,12 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
-        laboratory = spawnLaboratory();
+        spawnLaboratory();
         spawnUpgradeBench();
         spawnShip();
         player = spawnPlayer();
         companion = spawnCompanion(player);
-        spawnPotion(companion,laboratory);
+        spawnPotion(PotionType.DEATH_POTION);
         spawnTurret();
         spawnEnemies();
         spawnBoss();
@@ -370,11 +367,17 @@ public class EarthGameArea extends GameArea {
             spawnEntityAt(speedPowerup, randomPos2, true, false);
         }
     }
-    private void spawnPotion(Entity companionEntity ,Entity laboratoryEntity){
-        Entity newPotion = PotionFactory.createDeathPotion(companionEntity, laboratoryEntity);
-        itemsOnMap.add(newPotion);
-        GridPoint2 pos = new GridPoint2(34, 18);
-        spawnEntityAt(newPotion, pos, true, false);
+    public void spawnPotion(PotionType potionType){
+        switch (potionType){
+            case DEATH_POTION:
+               Entity newPotion = PotionFactory.createDeathPotion();
+               itemsOnMap.add(newPotion);
+               GridPoint2 pos = new GridPoint2(34, 18);
+               spawnEntityAt(newPotion, pos, true, false);
+            /*case SPEED_POTION:
+            case HEALTH_POTION:
+            */
+    }
     }
 
     /**

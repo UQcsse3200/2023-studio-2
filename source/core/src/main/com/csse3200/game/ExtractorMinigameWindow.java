@@ -44,7 +44,7 @@ public class ExtractorMinigameWindow extends Window {
         setWidth((float) (stage.getWidth()*0.8));
         setHeight((float) (stage.getHeight()*0.65));
         setPosition(stage.getWidth()/2 - getWidth()/2 * getScaleX(), stage.getHeight()/2 - getHeight()/2 * getScaleY());
-        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         TextButton button = new TextButton("Complete Minigame", skin);
         TextButton button2 = new TextButton("Exit Minigame", skin);
         button.addListener(new ChangeListener() {

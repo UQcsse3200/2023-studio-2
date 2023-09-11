@@ -14,14 +14,15 @@ import com.csse3200.game.ui.UIComponent;
 import javax.swing.*;
 
 /**
- * A ui component for displaying player stats, e.g. health.
+ * A ui component for displaying player stats, e.g. health, healthBar, Dodge Cooldown Bar.
  */
 public class PlayerStatsDisplay extends UIComponent {
   Table table;
   private Image heartImage;
   private Label healthLabel;
   private ProgressBar healthBar;
-
+  private ProgressBar DodgeBar;
+  private Label DodgeLabel;
   private float healthWidth = 1000f;
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -32,6 +33,7 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
 
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+    entity.getEvents().addListener("updateDodgeCooldown", this::updateDodgeBarUI);
   }
 
   /**
@@ -64,9 +66,28 @@ public class PlayerStatsDisplay extends UIComponent {
     CharSequence healthText = String.format("Health: %d", health);
     healthLabel = new Label(healthText, skin, "large");
 
+    // Dodge Text for cool down
+    int dodge = entity.getComponent(KeyboardPlayerInputComponent.class).triggerDodgeEvent();
+    CharSequence dodgeText = String.format("Dodge Cooldown : %d" , dodge);
+    DodgeLabel = new Label(dodgeText, skin, "large");
+
+
+    // Dodge Cool down Bar
+    DodgeBar = new ProgressBar(0, 100, 1, false, skin);
+
+    //Setting initial value of Dodge Cool down  bar
+    DodgeBar.setValue(100);
+
+    // setting the position of Dodge Cool down Bar
+    DodgeBar.setPosition(0, Gdx.graphics.getHeight() - healthBar.getHeight());
+    DodgeBar.setWidth(200f);
+    DodgeBar.setDebug(true);
+
     table.add(heartImage).size(heartSideLength).pad(5);
     table.add(healthLabel);
     table.add(healthBar);
+    table.add(DodgeLabel);
+    table.add(DodgeBar);
     stage.addActor(table);
   }
 
@@ -85,11 +106,23 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.setValue(health);
   }
 
+  /**
+   * Updates the Player's Dodge on the UI
+   * @param dodge player Dodge
+   */
+  public void updateDodgeBarUI (int dodge) {
+    CharSequence text = String.format("Dodge Cooldown : %d", dodge);
+    DodgeLabel.setText(text);
+    DodgeBar.setValue(dodge);
+  }
+
   @Override
   public void dispose() {
     super.dispose();
     heartImage.remove();
     healthLabel.remove();
     healthBar.remove();
+    DodgeLabel.remove();
+    DodgeBar.remove();
   }
 }

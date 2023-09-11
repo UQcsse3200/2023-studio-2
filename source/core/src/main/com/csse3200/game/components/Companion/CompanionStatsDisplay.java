@@ -55,7 +55,7 @@ public class CompanionStatsDisplay extends UIComponent {
         int Chealth = entity.getComponent(CombatStatsComponent.class).getHealth();
         //int gold = entity.getComponent(InventoryComponent.class).getGold();
         CharSequence healthText = String.format("Companion Health: %d", Chealth);
-        messageLabel = new Label(healthText, skin, "large");
+        messageLabel = new Label(healthText, skin, "small");
         table.add(messageLabel);
         stage.addActor(table);
 

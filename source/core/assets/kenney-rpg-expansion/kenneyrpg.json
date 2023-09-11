@@ -1,38 +1,38 @@
 {
   "BitmapFont": {
     "thick_black": {
-      "file": "kenvector_future.fnt",
-      "scaledSize": -1,
+      "file": "Jura-Bold.fnt",
+      "scaledSize": 12,
       "markupEnabled": false,
       "flip": false
     },
     "thick_white": {
-      "file": "kenvector_future(1).fnt",
+      "file": "Jura-Bold-white.fnt",
       "scaledSize": 12,
       "markupEnabled": false,
       "flip": false
     },
     "thin_black": {
-      "file": "kenvector_future_thin.fnt",
-      "scaledSize": -1,
+      "file": "Jura-Light.fnt",
+      "scaledSize": 15,
       "markupEnabled": true,
       "flip": false
     },
     "thin_white": {
-      "file": "kenvector_future_thin_white.fnt",
-      "scaledSize": 12,
+      "file": "Jura-Light-white.fnt",
+      "scaledSize": 15,
       "markupEnabled": false,
       "flip": false
     },
     "title_black": {
-      "file": "kenvector_future_title.fnt",
-      "scaledSize": -1,
+      "file": "Jura-Regular.fnt",
+      "scaledSize": 18,
       "markupEnabled": false,
       "flip": false
     },
     "title_white": {
-      "file": "kenvector_future_title_white.fnt",
-      "scaledSize": -1,
+      "file": "Jura-Regular-white.fnt",
+      "scaledSize": 18,
       "markupEnabled": false,
       "flip": false
     }
@@ -83,12 +83,12 @@
   "CheckBoxStyle": {
     "default": {
       "checkboxOn": "iconCheck_beige.png",
-      "checkboxOff": "iconCross_grey.png",
+      "checkboxOff": "grey_box",
       "font": "thin_white",
       "fontColor": "white"
     }
     "cross_default": {
-      "checkboxOn": "iconCross_grey.png",
+      "checkboxOn": "iconCross_beige.png",
       "checkboxOff": "grey_box",
       "font": "thin_white"
     }
@@ -164,7 +164,7 @@
   },
   "TextButtonStyle": {
     "default": {
-      "font": "thin_white",
+      "font": "thick_white",
       "fontColor": "black",
       "downFontColor": "red",
       "overFontColor": "darkGrey",
@@ -195,7 +195,7 @@
   },
   "WindowStyle": {
     "default": {
-      "background": "panel_beige.png",
+      "background": "metalPanel_red",
       "titleFont": "thick_white"
     }
   }

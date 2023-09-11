@@ -273,6 +273,8 @@ buttonLong_beige.png
   rotate: false
   xy: 0, 282
   size: 190, 49
+  split: 6, 6, 5, 5
+  pad: 10, 10, 10, 10
   orig: 190, 49
   offset: 0, 0
   index: -1
@@ -280,6 +282,8 @@ buttonLong_beige_pressed.png
   rotate: false
   xy: 0, 237
   size: 190, 45
+  split: 6, 6, 6, 10
+  pad: 12, 12, 12, 12
   orig: 190, 45
   offset: 0, 0
   index: -1
@@ -287,6 +291,8 @@ buttonLong_blue.png
   rotate: false
   xy: 0, 188
   size: 190, 49
+  split: 6, 6, 5, 5
+  pad: 10, 10, 10, 10
   orig: 190, 49
   offset: 0, 0
   index: -1
@@ -294,6 +300,8 @@ buttonLong_blue_pressed.png
   rotate: false
   xy: 0, 143
   size: 190, 45
+  split: 6, 6, 6, 10
+  pad: 12, 12, 12, 12
   orig: 190, 45
   offset: 0, 0
   index: -1
@@ -301,6 +309,8 @@ buttonLong_brown.png
   rotate: false
   xy: 0, 49
   size: 190, 49
+  split: 6, 6, 5, 5
+  pad: 10, 10, 10, 10
   orig: 190, 49
   offset: 0, 0
   index: -1
@@ -308,6 +318,8 @@ buttonLong_brown_pressed.png
   rotate: false
   xy: 0, 98
   size: 190, 45
+  split: 6, 6, 6, 10
+  pad: 12, 12, 12, 12
   orig: 190, 45
   offset: 0, 0
   index: -1
@@ -315,6 +327,8 @@ buttonLong_grey.png
   rotate: false
   xy: 0, 0
   size: 190, 49
+  split: 6, 6, 5, 5
+  pad: 10, 10, 10, 10
   orig: 190, 49
   offset: 0, 0
   index: -1
@@ -322,6 +336,8 @@ buttonLong_grey_pressed.png
   rotate: false
   xy: 0, 331
   size: 190, 45
+  split: 6, 6, 6, 10
+  pad: 12, 12, 12, 12
   orig: 190, 45
   offset: 0, 0
   index: -1
@@ -619,48 +635,6 @@ size: 1024, 1024
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
-kenvector_future
-  rotate: false
-  xy: 509, 961
-  size: 505, 57
-  orig: 505, 57
-  offset: 0, 0
-  index: -1
-kenvector_future(1)
-  rotate: false
-  xy: 1, 487
-  size: 505, 57
-  orig: 505, 57
-  offset: 0, 0
-  index: -1
-kenvector_future_thin
-  rotate: false
-  xy: 509, 904
-  size: 505, 55
-  orig: 505, 55
-  offset: 0, 0
-  index: -1
-kenvector_future_thin_white
-  rotate: false
-  xy: 1, 430
-  size: 505, 55
-  orig: 505, 55
-  offset: 0, 0
-  index: -1
-kenvector_future_title
-  rotate: false
-  xy: 1, 783
-  size: 506, 235
-  orig: 506, 235
-  offset: 0, 0
-  index: -1
-kenvector_future_title_white
-  rotate: false
-  xy: 1, 546
-  size: 506, 235
-  orig: 506, 235
-  offset: 0, 0
-  index: -1
 blue_boxCheckmark
   rotate: false
   xy: 893, 866
@@ -756,5 +730,14 @@ grey_sliderVertical
   split: 3, 5, 0, 0
   pad: 2, 0, 0, 0
   orig: 4, 100
+  offset: 0, 0
+  index: -1
+metalPanel_red
+  rotate: false
+  xy: 509, 682
+  size: 100, 100
+  split: 10, 10, 31, 10
+  pad: 20, 20, 40, 20
+  orig: 100, 100
   offset: 0, 0
   index: -1

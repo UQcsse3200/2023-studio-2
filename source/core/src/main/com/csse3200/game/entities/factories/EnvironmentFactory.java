@@ -25,12 +25,12 @@ public class EnvironmentFactory {
         StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
         Entity environment;
 
-        for (int y = 0; y < tileNumber; y++) {
-            for (int x = 0; x < tileNumber; x++) {
-                TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, tileNumber - 1 - y);
+        for (int y = 0; y < collisionLayer.getHeight(); y++) {
+            for (int x = 0; x < collisionLayer.getWidth(); x++) {
+                TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, collisionLayer.getHeight() - 1 - y);
                 if (cell != null) {
                     MapObjects objects = cell.getTile().getObjects();
-                    GridPoint2 tilePosition = new GridPoint2(x, tileNumber - 1 - y);
+                    GridPoint2 tilePosition = new GridPoint2(x, collisionLayer.getHeight() - 1 - y);
                     if (objects.getCount() >= 1) {
                         RectangleMapObject object = (RectangleMapObject) objects.get(0);
                         Rectangle collisionBox = object.getRectangle();

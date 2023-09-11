@@ -30,6 +30,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
+import static com.csse3200.game.entities.factories.EnvironmentFactory.createEnvironment;
+import static com.csse3200.game.entities.factories.EnvironmentFactory.createSecretEnvironment;
+
 
 /** Planet Earth area for the demo game with trees, a player, and some enemies. */
 public class EarthGameArea extends GameArea {
@@ -157,7 +160,6 @@ public class EarthGameArea extends GameArea {
      */
     private void spawnPortal(GridPoint2 position, float x, float y) {
         StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
-        GridPoint2 pos = new GridPoint2(20, 20);
         Entity portal = PortalFactory.createPortal(PORTAL_SIZE, PORTAL_SIZE, x, y, player);
         placementService.PlaceStructureAt(portal, position, false, false);
     }
@@ -168,30 +170,10 @@ public class EarthGameArea extends GameArea {
      */
     private void spawnEnvironment() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
-        Entity environment;
-        StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
-        for (int y = 0; y < collisionLayer.getHeight(); y++) {
-            for (int x = 0; x < collisionLayer.getWidth(); x++) {
-                TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, collisionLayer.getHeight() - 1 - y);
-                if (cell != null) {
-                    MapObjects objects = cell.getTile().getObjects();
-                    GridPoint2 tilePosition = new GridPoint2(x, collisionLayer.getHeight() - 1 - y);
-                    if (objects.getCount() >= 1) {
-                        RectangleMapObject object = (RectangleMapObject) objects.get(0);
-                        Rectangle collisionBox = object.getRectangle();
-                        float collisionX = 0.5f-collisionBox.x / 16;
-                        float collisionY = 0.5f-collisionBox.y / 16;
-                        float collisionWidth = collisionBox.width / 32;
-                        float collisionHeight = collisionBox.height / 32;
-                        environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
-                    }
-                    else {
-                        environment = ObstacleFactory.createEnvironment();
-                    }
-                    placementService.PlaceStructureAt(environment, tilePosition, false, false);
-                }
-            }
-        }
+        TiledMapTileLayer boundaryLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Boundary");
+        createEnvironment(collisionLayer);
+        createEnvironment(boundaryLayer);
+
     }
 
     /**

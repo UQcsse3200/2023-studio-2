@@ -141,7 +141,7 @@ public class SpaceMapScreen extends ScreenAdapter {
     }
 
     private void followShip() {
-        float maxX = 29 * 1f - renderer.getCamera().getCamera().viewportWidth * 0.5f;
+        float maxX = 59 * 1f - renderer.getCamera().getCamera().viewportWidth * 0.5f;
         float maxY = 29 * 1f - renderer.getCamera().getCamera().viewportHeight * 0.5f;
         float cameraX = Math.min(maxX, Math.max(renderer.getCamera().getCamera().viewportWidth * 0.5f, ship.getPosition().x));
         float cameraY = Math.min(maxY, Math.max(renderer.getCamera().getCamera().viewportHeight * 0.5f, ship.getPosition().y));

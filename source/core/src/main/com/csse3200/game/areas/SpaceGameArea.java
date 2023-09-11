@@ -107,10 +107,10 @@ public class SpaceGameArea extends GameArea {
 
 
     private void createBoundary(){
-        spawnStaticAsteroidsRight(30,new GridPoint2(0,-1));
-        spawnStaticAsteroidsRight(30,new GridPoint2(0,29));
+        spawnStaticAsteroidsRight(60,new GridPoint2(0,-1));
+        spawnStaticAsteroidsRight(60,new GridPoint2(0,29));
         spawnStaticAsteroidsUp(30,new GridPoint2(-1,0));
-        spawnStaticAsteroidsUp(30,new GridPoint2(29,0));
+        spawnStaticAsteroidsUp(30,new GridPoint2(59,0));
     }
 
 

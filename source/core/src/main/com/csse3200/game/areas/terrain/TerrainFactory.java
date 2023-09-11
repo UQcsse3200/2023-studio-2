@@ -21,6 +21,7 @@ import com.csse3200.game.services.ServiceLocator;
 /** Factory for creating game terrains. */
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
+  private static final GridPoint2 SPACE_MAP_SIZE = new GridPoint2(60,30);
 
   private static final int tileSize = 16;
   private final OrthographicCamera camera;
@@ -130,13 +131,11 @@ public class TerrainFactory {
       };
   }
 
-  private TiledMap createSpaceDemoTiles(
-          GridPoint2 tileSize, TextureRegion spaceVoid) {
+  private TiledMap createSpaceDemoTiles(GridPoint2 tileSize, TextureRegion spaceVoid) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile spaceTile = new TerrainTile(spaceVoid);
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
-
-    fillTiles(layer,MAP_SIZE,spaceTile);
+    TiledMapTileLayer layer = new TiledMapTileLayer(SPACE_MAP_SIZE.x, SPACE_MAP_SIZE.y, tileSize.x, tileSize.y);
+    fillTiles(layer,SPACE_MAP_SIZE,spaceTile);
     tiledMap.getLayers().add(layer);
     return tiledMap;
 

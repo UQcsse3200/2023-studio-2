@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.ships.ShipActions;
+import com.csse3200.game.components.ships.ShipStatDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -24,6 +25,7 @@ public class ShipFactory {
 
                         .addComponent(new TextureRenderComponent("images/Ship.png"))
                         //.addComponent(new TextureRenderComponent("images/LeftShip.png"))Dont add 2 of the same component class
+                        .addComponent(new ShipStatDisplay())
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SHIP))

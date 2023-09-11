@@ -41,8 +41,10 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_RANGE_ENEMIES_PTE = 1;
     private static final int NUM_RANGE_ENEMIES_DTE = 1;
     private static final int NUM_POWERUPS = 3;
-    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 40);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 PORTAL_ONE = new GridPoint2(30, 40);
+    private static final GridPoint2 PORTAL_TWO = new GridPoint2(78, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
 
@@ -145,17 +147,19 @@ public class EarthGameArea extends GameArea {
 
         playMusic();
 
-        spawnPortal();
+        spawnPortal(PORTAL_ONE, 40, 5);
+        spawnPortal(PORTAL_TWO, 16, 20);
 
     }
 
     /**
      * Spawns a portal that sends the player to a new location
      */
-    private void spawnPortal() {
+    private void spawnPortal(GridPoint2 position, float x, float y) {
+        StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
         GridPoint2 pos = new GridPoint2(20, 20);
-        Entity portal = PortalFactory.createPortal(PORTAL_SIZE, PORTAL_SIZE, player);
-        spawnEntityAt(portal, pos, false, false);
+        Entity portal = PortalFactory.createPortal(PORTAL_SIZE, PORTAL_SIZE, x, y, player);
+        placementService.PlaceStructureAt(portal, position, false, false);
     }
 
     /**
@@ -195,7 +199,7 @@ public class EarthGameArea extends GameArea {
      * tree when walking over it
      */
     private void spawnTreeTopLayer() {
-        GridPoint2 spawnTreeTop = new GridPoint2(0,0);
+        GridPoint2 spawnTreeTop = new GridPoint2(0,30);
                     Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
                     spawnEntityAt(treeTop, spawnTreeTop, false, false);
                 }

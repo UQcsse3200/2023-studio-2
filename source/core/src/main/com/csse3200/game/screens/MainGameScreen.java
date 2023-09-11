@@ -170,9 +170,9 @@ public class MainGameScreen extends ScreenAdapter {
 
     // Define the minimum and maximum allowed camera positions based on map boundaries
     float minX = halfViewportWidth;
-    float maxX = 60 * 0.5f - halfViewportWidth;
+    float maxX = 90 * 0.5f - halfViewportWidth;
     float minY = halfViewportHeight;
-    float maxY = 60 * 0.5f - halfViewportHeight;
+    float maxY = 90 * 0.5f - halfViewportHeight;
 
     // Calculate the camera's new X and Y positions within map boundaries
     float cameraX = Math.min(maxX, Math.max(minX, playerX));

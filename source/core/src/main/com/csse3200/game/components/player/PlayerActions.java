@@ -61,7 +61,6 @@ public class PlayerActions extends Component {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
         float speedMult = EarthGameArea.getSpeedMult();
-        System.out.println(speedMult);
         Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(MAX_SPEED.x * speedMult, MAX_SPEED.y * speedMult));
         // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());

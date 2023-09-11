@@ -175,7 +175,7 @@ public class EarthGameArea extends GameArea {
                     if (objects.getCount() >= 1) {
                         RectangleMapObject object = (RectangleMapObject) objects.get(0);
                         Rectangle collisionBox = object.getRectangle();
-                        float collisionX = 0.5f-collisionBox.x / 16;
+                        float collisionX = 0.4f-collisionBox.x / 16;
                         float collisionY = 0.5f-collisionBox.y / 16;
                         float collisionWidth = collisionBox.width / 32;
                         float collisionHeight = collisionBox.height / 32;
@@ -207,7 +207,7 @@ public class EarthGameArea extends GameArea {
     public static float getSpeedMult() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
         Vector2 playerPos = getPlayer().getPosition();
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) playerPos.x * 2, (int) playerPos.y * 2);
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
         Object speedMult = cell.getTile().getProperties().get("speedMult");
 
         return speedMult != null ? (float)speedMult : 1f;

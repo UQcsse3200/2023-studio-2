@@ -1,5 +1,6 @@
 package com.csse3200.game.components;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -8,8 +9,8 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class InteractLabel extends Label {
 
-    public InteractLabel(Skin skin) {
-        super("Press 'F' to interact", skin);
+    public InteractLabel() {
+        super("Press 'F' to interact", new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json")));
         this.setColor(Color.WHITE);
 
         Stage stage = ServiceLocator.getRenderService().getStage();

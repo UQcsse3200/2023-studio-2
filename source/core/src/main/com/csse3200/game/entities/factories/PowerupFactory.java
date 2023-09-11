@@ -1,13 +1,12 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.components.InteractableComponent;
-import com.csse3200.game.components.PowerupComponent;
-import com.csse3200.game.components.PowerupType;
+import com.csse3200.game.components.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 public class PowerupFactory {
 
@@ -27,6 +26,10 @@ public class PowerupFactory {
         Entity powerup = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new PowerupComponent(type, PhysicsLayer.PLAYER));
+
+        InteractLabel interactLabel = new InteractLabel(); //code for interaction prompt
+        powerup.addComponent(new DistanceCheckComponent(0.6f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
 
         powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));
         powerup.setScale(0.6f, 0.6f);

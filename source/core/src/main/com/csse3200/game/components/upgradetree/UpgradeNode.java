@@ -30,6 +30,8 @@ public class UpgradeNode {
     /** Depth of the tree */
     private int depth;
 
+    private static final int BASE_COST = 50;
+
     /**
      * Constructs a new UpgradeNode with the given weapon type and image path.
      * @param config - The weapons config file
@@ -111,5 +113,14 @@ public class UpgradeNode {
      */
     public String getImagePath() {
         return imagePath;
+    }
+
+    /**
+     * Gets the selected nodes upgrade cost
+     *
+     * @return int: the nodes cost
+     */
+    public int getNodeCost() {
+        return BASE_COST * (this.getDepth() + 1);
     }
 }

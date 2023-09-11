@@ -1,12 +1,9 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
+
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -18,8 +15,6 @@ import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.services.TerrainService;
-import com.csse3200.game.ui.DialogComponent;
-import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
 import com.csse3200.game.utils.math.RandomUtils;
 import com.csse3200.game.services.ResourceService;
@@ -29,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+
+import static com.csse3200.game.entities.factories.EnvironmentFactory.createEnvironment;
 
 
 /** Planet Earth area for the demo game with trees, a player, and some enemies. */
@@ -41,8 +38,10 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_RANGE_ENEMIES_PTE = 1;
     private static final int NUM_RANGE_ENEMIES_DTE = 1;
     private static final int NUM_POWERUPS = 3;
-    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 40);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 PORTAL_ONE = new GridPoint2(30, 40);
+    private static final GridPoint2 PORTAL_TWO = new GridPoint2(78, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
 
@@ -105,7 +104,7 @@ public class EarthGameArea extends GameArea {
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
     private static Entity player;
-    private GdxGame game;
+    private final GdxGame game;
 
     /**
      * Initialise this EarthGameArea to use the provided TerrainFactory.
@@ -145,17 +144,18 @@ public class EarthGameArea extends GameArea {
 
         playMusic();
 
-        spawnPortal();
+        spawnPortal(PORTAL_ONE, 40, 5);
+        spawnPortal(PORTAL_TWO, 16, 20);
 
     }
 
     /**
      * Spawns a portal that sends the player to a new location
      */
-    private void spawnPortal() {
-        GridPoint2 pos = new GridPoint2(20, 20);
-        Entity portal = PortalFactory.createPortal(PORTAL_SIZE, PORTAL_SIZE, player);
-        spawnEntityAt(portal, pos, false, false);
+    private void spawnPortal(GridPoint2 position, float x, float y) {
+        StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
+        Entity portal = PortalFactory.createPortal(PORTAL_SIZE, PORTAL_SIZE, x, y, player);
+        placementService.PlaceStructureAt(portal, position, false, false);
     }
 
     /**
@@ -164,30 +164,7 @@ public class EarthGameArea extends GameArea {
      */
     private void spawnEnvironment() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
-        Entity environment;
-        StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
-        for (int y = 0; y < collisionLayer.getHeight(); y++) {
-            for (int x = 0; x < collisionLayer.getWidth(); x++) {
-                TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, collisionLayer.getHeight() - 1 - y);
-                if (cell != null) {
-                    MapObjects objects = cell.getTile().getObjects();
-                    GridPoint2 tilePosition = new GridPoint2(x, collisionLayer.getHeight() - 1 - y);
-                    if (objects.getCount() >= 1) {
-                        RectangleMapObject object = (RectangleMapObject) objects.get(0);
-                        Rectangle collisionBox = object.getRectangle();
-                        float collisionX = 0.4f-collisionBox.x / 16;
-                        float collisionY = 0.5f-collisionBox.y / 16;
-                        float collisionWidth = collisionBox.width / 32;
-                        float collisionHeight = collisionBox.height / 32;
-                        environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
-                    }
-                    else {
-                        environment = ObstacleFactory.createEnvironment();
-                    }
-                    placementService.PlaceStructureAt(environment, tilePosition, false, false);
-                }
-            }
-        }
+        createEnvironment(collisionLayer);
     }
 
     /**
@@ -195,10 +172,10 @@ public class EarthGameArea extends GameArea {
      * tree when walking over it
      */
     private void spawnTreeTopLayer() {
-        GridPoint2 spawnTreeTop = new GridPoint2(0,0);
+        GridPoint2 spawnTreeTop = new GridPoint2(0,30);
                     Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
                     spawnEntityAt(treeTop, spawnTreeTop, false, false);
-                }
+    }
 
     /**
      * Retrieves the speedMult property defined in the terrain's .tsx file
@@ -324,17 +301,6 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(
                 ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
-    }
-
-    private void spawnTrees() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        for (int i = 0; i < NUM_TREES; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity tree = ObstacleFactory.createTree();
-            spawnEntityAt(tree, randomPos, true, false);
-        }
     }
 
     /**

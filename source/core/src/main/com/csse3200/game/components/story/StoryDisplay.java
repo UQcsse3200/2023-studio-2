@@ -28,6 +28,7 @@ import java.util.ArrayList;
 public class StoryDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(StoryDisplay.class);
+    private ArrayList<String> storyTexts;
     private static final float Z_INDEX = 2f;
     private Table table;
     private Label storyTextLabel;
@@ -45,6 +46,13 @@ public class StoryDisplay extends UIComponent {
         entity.getEvents().addListener("next", this::nextScene);
         entity.getEvents().addListener("previous", this::prevScene);
         font = new BitmapFont();
+        storyTexts = new ArrayList<>();
+        storyTexts.add("Text for Image 1");
+        storyTexts.add("Text for Image 2");
+        storyTexts.add("Text for Image 3");
+        storyTexts.add("Text for Image 4");
+        storyTexts.add("Text for Image 5");
+        storyTexts.add("Text for Image 6");
     }
 
     /**
@@ -67,9 +75,11 @@ public class StoryDisplay extends UIComponent {
 
 
         // Load the first image
-        Drawable storyBackground = loadStoryImage(storyImages.get(start));
-        table.setBackground(storyBackground);
 
+
+//        Texture storyLine = new Texture(Gdx.files.internal(storyImages.get(start)));
+//        TextureRegionDrawable storyBackgroundd = new TextureRegionDrawable(storyLine);
+//        table.setBackground(storyBackgroundd);
 
         start += 1;
         stage.addActor(table);
@@ -80,7 +90,7 @@ public class StoryDisplay extends UIComponent {
 
 
         // Create and configure the Label for displaying text
-        storyTextLabel = new Label("Your story text goes here", skin); // Adjust the skin file path as needed
+        storyTextLabel = new Label("", skin); // Adjust the skin file path as needed
         storyTextLabel.setWrap(true); // Enable text wrapping
         storyTextLabel.setColor(Color.WHITE); // Set text color to white
 
@@ -98,6 +108,10 @@ public class StoryDisplay extends UIComponent {
 
         // Add the Label to the stage
         stage.addActor(storyTextLabel);
+
+
+        Drawable storyBackground = loadStoryImage(storyImages.get(start));
+        table.setBackground(storyBackground);
 
 
 //        Texture storyLine = new Texture(Gdx.files.internal(storyImages.get(start)));
@@ -176,6 +190,7 @@ public class StoryDisplay extends UIComponent {
         if (start < end) {
             Drawable next = new TextureRegionDrawable(new Texture(Gdx.files.internal(storyImages.get(start))));
             table.setBackground(next);
+            storyTextLabel.setText(storyTexts.get(start)); // Set the text based on the current image index
             start += 1;
         } else {
             entity.getEvents().trigger("skip");
@@ -189,6 +204,7 @@ public class StoryDisplay extends UIComponent {
         if (end - start > 0 && start > 0) {
             Drawable prev = new TextureRegionDrawable(new Texture(Gdx.files.internal(storyImages.get(start - 1))));
             table.setBackground(prev);
+            storyTextLabel.setText(storyTexts.get(start - 1)); // Set the text based on the current image index
             start -= 1;
         }
     }

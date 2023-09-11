@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Scaling;
 import com.csse3200.game.components.structures.tools.Tool;
 import com.csse3200.game.entities.Entity;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class StructurePicker extends UIComponent {
     Logger logger;
@@ -64,7 +66,7 @@ public class StructurePicker extends UIComponent {
                 continue;
             }
 
-            var tool = getTool(option.key);
+            var tool = getTool(option.key, optionValue.cost);
 
             if (tool == null) {
                 continue;
@@ -95,11 +97,11 @@ public class StructurePicker extends UIComponent {
         table.setVisible(false);
     }
 
-    private Tool getTool(String key) {
+    private Tool getTool(String key, ObjectMap<String, Integer> cost) {
         try {
             Class<?> cls = Class.forName(key);
 
-            Object obj = cls.getDeclaredConstructor().newInstance();
+            Object obj = cls.getDeclaredConstructor(ObjectMap.class).newInstance(cost);
 
             if (obj instanceof Tool) {
                 return (Tool) obj;

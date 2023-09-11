@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 import static com.csse3200.game.entities.factories.EnvironmentFactory.createEnvironment;
-import static com.csse3200.game.entities.factories.EnvironmentFactory.createSecretEnvironment;
 
 
 /** Planet Earth area for the demo game with trees, a player, and some enemies. */
@@ -170,9 +169,7 @@ public class EarthGameArea extends GameArea {
      */
     private void spawnEnvironment() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
-        TiledMapTileLayer boundaryLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Boundary");
         createEnvironment(collisionLayer);
-        createEnvironment(boundaryLayer);
 
     }
 
@@ -184,7 +181,7 @@ public class EarthGameArea extends GameArea {
         GridPoint2 spawnTreeTop = new GridPoint2(0,30);
                     Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
                     spawnEntityAt(treeTop, spawnTreeTop, false, false);
-                }
+    }
 
     /**
      * Retrieves the speedMult property defined in the terrain's .tsx file

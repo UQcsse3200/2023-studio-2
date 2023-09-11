@@ -118,10 +118,8 @@ public class ServiceLocator {
   }
 
   public static void registerGameStateObserverService(GameStateObserver source) {
-    if (gameStateObserverService == null) {
-      logger.debug("Registering game state observer service {}", source);
-      gameStateObserverService = source;
-    }
+    logger.debug("Registering game state observer service {}", source);
+    gameStateObserverService = source;
   }
 
   public static void clear() {
@@ -132,6 +130,7 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     terrainService = null;
+    gameStateObserverService = null;
   }
 
   private ServiceLocator() {

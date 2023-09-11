@@ -1,5 +1,7 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
+import java.util.List;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -265,6 +267,21 @@ public class EarthGameArea extends GameArea {
                 .withResource(Resource.Nebulite);
         Entity resourceDisplay = new Entity().addComponent(resourceDisplayComponent);
         spawnEntity(resourceDisplay);
+    }
+    public Entity getExtractorIcon(){
+        GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(24, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
+        Entity extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
+        targetables.add(extractor);
+        extractor.setScale(new Vector2(0.5f,0.5f));
+        spawnEntityAt(extractor, pos, true, false);
+        return extractor;
+    }
+    public Entity getExtractor() {
+        GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(24, 2).x / 2, terrain.getMapBounds(0).sub(2, 2).y / 2);
+        Entity extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
+        targetables.add(extractor);
+        spawnEntityAt(extractor, pos, true, false);
+        return extractor;
     }
 
     private void spawnShip() {

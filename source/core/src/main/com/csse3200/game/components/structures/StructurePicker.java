@@ -55,8 +55,9 @@ public class StructurePicker extends UIComponent {
     private void addActors() {
         table.clear();
 
+        table.align(Align.center);
         table.center();
-        table.setFillParent(false);
+        table.setFillParent(true);
 
         for (var option : structureOptions.structureOptions) {
             var optionValue = option.value;
@@ -87,10 +88,6 @@ public class StructurePicker extends UIComponent {
             buttons.add(button);
             table.add(button).size(50, 50).pad(5);
         }
-
-
-
-        table.setPosition(stage.getWidth()/2, stage.getHeight()/2, Align.center);
 
         stage.addActor(table);
 

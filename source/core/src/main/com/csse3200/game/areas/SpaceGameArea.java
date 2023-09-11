@@ -26,8 +26,7 @@ public class SpaceGameArea extends GameArea {
     private static final float WORMHOLE_SIZE = 0.9f;
     private static final int NUM_ENEMIES = 10;
     private Entity newShip;
-    GridPoint2 startingPosition = new GridPoint2(0, 0);
-    int numberOfAsteroids = 10; // Change this to the desired number of asteroids
+    private static final int NUM_ASTEROIDS = 168; // Change this to the desired number of asteroids
 
     private static final String[] spaceMiniGameTextures = {
             "images/SpaceMiniGameBackground.png",
@@ -76,17 +75,6 @@ public class SpaceGameArea extends GameArea {
         music.play();
     }
 
-    /**
-     * Spawn Asteroids of a given size and position
-     * @requires ASTEROID_SIZE != null
-     */
-    private void spawnAsteroids() {
-        //Extra Spicy Asteroids
-        GridPoint2 posAs = new GridPoint2(22, 10);
-        spawnEntityAt(
-                ObstacleFactory.createAsteroid(ASTEROID_SIZE,ASTEROID_SIZE), posAs, false, false);
-
-    }
 
     /**
      * Recursively calls n number of asteroids starting from position to the right
@@ -94,30 +82,29 @@ public class SpaceGameArea extends GameArea {
      * @param pos Starting position for asteroid spawning
      */
     private void spawnStaticAsteroidsRight(int n, GridPoint2 pos){
+        Entity asteroid_length = ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
         if (n <= 0) {
             return;
         }
-
-        spawnEntityAt(
-                ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE), pos, false, false);
-
+        spawnEntityAt(asteroid_length, pos, false, false);
         // Increment the position for the next asteroid
         pos.x += 1;
         pos.y += 0;
         spawnStaticAsteroidsRight(n - 1, pos); // Recursive call
     }
+
+
     private void spawnStaticAsteroidsUp(int n, GridPoint2 pos){
+        Entity asteroid_width = ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
         if (n <= 0) {
             return;
         }
-
-        spawnEntityAt(
-                ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE), pos, false, false);
-
+        spawnEntityAt(asteroid_width, pos, false, false);
         // Increment the position for the next asteroid
         pos.y += 1;
         spawnStaticAsteroidsUp(n - 1, pos); // Recursive call
     }
+
 
     private void createBoundary(){
         spawnStaticAsteroidsRight(30,new GridPoint2(0,0));
@@ -125,6 +112,7 @@ public class SpaceGameArea extends GameArea {
         spawnStaticAsteroidsUp(28,new GridPoint2(0,1));
         spawnStaticAsteroidsUp(28,new GridPoint2(29,1));
     }
+
 
     /**
      * Method for spawning enemies randomly
@@ -140,12 +128,26 @@ public class SpaceGameArea extends GameArea {
     }
 
     /**
+     * Spawn Asteroids of a given size and position
+     * @requires ASTEROID_SIZE != null
+     */
+    private void spawnAsteroids() {
+        GridPoint2 minPos = new GridPoint2(1, 1);
+        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+        for (int i = 0; i < NUM_ASTEROIDS; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity asteroid = ObstacleFactory.createAsteroid(ASTEROID_SIZE,ASTEROID_SIZE);
+            spawnEntityAt(asteroid, randomPos, false, false);
+        }
+    }
+
+    /**
      * Method for placing the exit point from the obstacle minigame
      */
     private void spawnGoal(){
         GridPoint2 position = new GridPoint2(24,10);
-        spawnEntityAt(
-                ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE,WORMHOLE_SIZE), position,false,false);
+        Entity goal = ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE,WORMHOLE_SIZE);
+        spawnEntityAt(goal, position,false,false);
     }
 
 
@@ -154,6 +156,7 @@ public class SpaceGameArea extends GameArea {
         ui.addComponent(new GameAreaDisplay("Space Game"));
         spawnEntity(ui);
     }
+
 
     /**
      * Method for spawning terrain for background of obstacle minigame
@@ -170,6 +173,7 @@ public class SpaceGameArea extends GameArea {
 
     }
 
+
     /**
      * Method for spawning ship on the obstacle minigame map
      */
@@ -180,6 +184,7 @@ public class SpaceGameArea extends GameArea {
         targetables.add(newShip);
     }
 
+
     /**
      * Getter method for ship
      * @return Ship Entity
@@ -187,6 +192,7 @@ public class SpaceGameArea extends GameArea {
     public Entity getShip(){
         return newShip;
     }
+
 
     /**
      * Method for loading the texture and the music of the map
@@ -202,6 +208,7 @@ public class SpaceGameArea extends GameArea {
         }
     }
 
+
     /**
      * Method for unloading the texture and the music of the map
      */
@@ -213,10 +220,10 @@ public class SpaceGameArea extends GameArea {
 
     }
 
+
     @Override
     public void dispose() {
         super.dispose();
         this.unloadAssets();
     }
-
 }

@@ -28,6 +28,7 @@ import java.util.List;
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
   protected List<Entity> areaEntities;
+  private Entity companion;
   protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;
 
@@ -133,4 +134,5 @@ public abstract class GameArea implements Disposable {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }
+ public Entity getCompanion(){return companion;}
 }

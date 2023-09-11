@@ -1,5 +1,7 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.areas.EarthGameArea;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.input.InputService;
@@ -7,6 +9,8 @@ import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 
 /**
  * A simplified implementation of the Service Locator pattern:
@@ -28,6 +32,12 @@ public class ServiceLocator {
   private static TerrainService terrainService;
   private static EntityPlacementService entityPlacementService;
   private static GameStateObserver gameStateObserverService;
+  private static GameArea GameArea;
+  public static GameArea getGameArea(){return GameArea;}
+
+  public static void registerGameArea(GameArea area){
+    GameArea=area;
+  }
 
   private static StructurePlacementService structurePlacementService;
 

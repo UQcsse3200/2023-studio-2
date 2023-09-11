@@ -91,6 +91,7 @@ public class StructureFactory {
     }
 
 
+
     public static Entity createExtinguisher(TerrainComponent terrain, ExtractorMiniGameArea area) {
         Entity extinguisher = new Entity()
                 .addComponent(new TextureRenderComponent("images/extinguisher.png"));
@@ -141,7 +142,6 @@ public class StructureFactory {
         extractorBang.setScale(2.2f, 2.4f);
         return extractorBang;
     }
-
 
     /**
      * Creates a ship entity

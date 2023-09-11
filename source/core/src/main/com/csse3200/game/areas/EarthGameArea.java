@@ -370,11 +370,15 @@ public class EarthGameArea extends GameArea {
     }
 
     private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer();
-        spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-        targetables.add(newPlayer);
-        player = newPlayer;
-        return newPlayer;
+        this.player = (Entity) ServiceLocator.getGameStateObserverService().getStateData("player");
+        if (this.player == null) {
+            this.player = PlayerFactory.createPlayer();
+            this.player.getEvents().addListener("death", () -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH));
+                ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", this.player);
+        }
+        spawnEntityAt(this.player, PLAYER_SPAWN, true, true);
+        targetables.add(this.player);
+        return this.player;
     }
     private Entity spawnCompanion(Entity playerEntity) {
         Entity newCompanion = CompanionFactory.createCompanion(playerEntity);

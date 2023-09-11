@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class StructurePicker extends UIComponent {
     Logger logger;
@@ -35,6 +34,7 @@ public class StructurePicker extends UIComponent {
         super();
         buttons = new ArrayList<>();
         logger = LoggerFactory.getLogger(StructurePicker.class);
+        table = new Table();
     }
 
     /**
@@ -43,8 +43,6 @@ public class StructurePicker extends UIComponent {
     @Override
     public void create() {
         super.create();
-
-        table = new Table();
         addActors();
     }
 
@@ -113,6 +111,14 @@ public class StructurePicker extends UIComponent {
         }
     }
 
+    public void setSelectedTool(Tool tool) {
+        this.selectedTool = tool;
+    }
+
+    public Tool getSelectedTool() {
+        return selectedTool;
+    }
+
     public void setLevel(int level) {
         this.level = level;
         addActors();
@@ -138,6 +144,9 @@ public class StructurePicker extends UIComponent {
 
     public void hide() {
         table.setVisible(false);
+    }
+    public boolean isVisible() {
+        return table.isVisible();
     }
 
     public void interact(Entity player, GridPoint2 location) {

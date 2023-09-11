@@ -9,6 +9,7 @@ import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -23,6 +24,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import java.util.ArrayList;
 
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.ShipInteractionPopup;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
@@ -51,10 +53,10 @@ public class StructureFactory {
      * @param tickSize the amount of the resource produced at each tick
      * @return a new extractor Entity
      */
-    public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
-        Entity extractor = new Entity()
-                .addComponent(new DamageTextureComponent("images/extractor.png")
-                        .addTexture(0, "images/broken_extractor.png"))
+    public static PlaceableEntity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
+        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity()
+                .addComponent(new DamageTextureComponent("images/refinedExtractor2.png")
+                        .addTexture(0, "images/refinedBrokenExtractor.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
@@ -93,25 +95,30 @@ public class StructureFactory {
     public static Entity createShip(GdxGame game) {
         Entity ship =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/Ship.png"))
+                        .addComponent(new TextureRenderComponent("images/refinedShip.png"))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
-                        .addComponent(new InteractableComponent(entity -> {
-                            //Exit to main menu if resource > 1000
-                            GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
-                            String resourceKey = "resource/" + Resource.Solstite;
-                            int currentResourceCount = (int) gameStateOb.getStateData(resourceKey);
-                            if (currentResourceCount > 1000) {
-                                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-                            }
-                        }, 5));
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
 
         ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();
-        ship.setScale(4f, 4.5f);
+        ship.setScale(5f, 4.5f);
         PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
+
+        ship.addComponent(new InteractableComponent(entity -> {
+            //Exit to main menu if resource > 1000
+            GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
+            String resourceKey = "resource/" + Resource.Solstite;
+            int currentResourceCount = (int) gameStateOb.getStateData(resourceKey);
+            if (currentResourceCount > 1000) {
+                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+            } else {
+                ShipInteractionPopup shipPopup = new ShipInteractionPopup();
+                ServiceLocator.getRenderService().getStage().addActor(shipPopup);
+            }
+        }, 5));
         return ship;
+
     }
 
     /**

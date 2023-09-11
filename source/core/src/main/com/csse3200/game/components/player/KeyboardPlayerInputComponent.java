@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -15,6 +16,7 @@ import com.csse3200.game.components.Weapons.WeaponType;
 
 import java.util.HashMap;
 import java.util.Timer;
+
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -73,7 +75,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public void setTesting(int testing) {
     this.testing = testing;
   }
-
 
   public KeyboardPlayerInputComponent() {
     super(5);

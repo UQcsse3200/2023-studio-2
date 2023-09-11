@@ -419,7 +419,7 @@ public class UpgradeDisplay extends Window {
 
         StructurePicker structurePicker = player.getComponent(StructurePicker.class);
         // Update the StructurePickers level
-        if (node.getDepth() == structurePicker.getLevel() + 1) {
+        if (buildRoot.getChildren().contains(node) && node.getDepth() == structurePicker.getLevel() + 1) {
             structurePicker.setLevel(node.getDepth());
         }
 

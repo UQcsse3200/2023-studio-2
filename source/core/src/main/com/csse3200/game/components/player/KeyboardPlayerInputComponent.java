@@ -94,52 +94,60 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     player = ServiceLocator.getEntityService().getPlayer();
     playerInventory = player.getComponent(InventoryComponent.class);
 
-    switch (keycode) {
-      case Keys.SPACE:
-        if (!dodge_available ||
-                walkDirection.epsilonEquals(Vector2.Zero)) { return false; }
-        triggerDodgeEvent();
-        dodge();
-        return true;
+      switch (keycode) {
+          case Keys.SPACE -> {
+              if (!dodge_available ||
+                      walkDirection.epsilonEquals(Vector2.Zero)) {
+                  return false;
+              }
+              triggerDodgeEvent();
+              dodge();
+              return true;
+          }
+          case Keys.F -> {
+              InteractionControllerComponent interactionController = entity
+                      .getComponent(InteractionControllerComponent.class);
+              if (interactionController != null) {
+                  interactionController.interact();
+              }
 
-      case Keys.F:
-        InteractionControllerComponent interactionController = entity
-            .getComponent(InteractionControllerComponent.class);
-
-        if (interactionController != null) {
-          interactionController.interact();
-        }
-
-        // Stop movement if a menu is open
-        if (isWindowOpen()) {
-          keyFlags.clear();
-          triggerWalkEvent();
-        }
-        return true;
-
-      case Keys.T:
-        if (playerInventory.getEquipped() == 3) {
-          entity.getEvents().trigger("change_structure");
-        }
-        return true;
-      case Keys.NUM_1:
-        triggerInventoryEvent(1);
-        return true;
-      case Keys.NUM_2:
-        triggerInventoryEvent(2);
-        return true;
-      case Keys.NUM_3:
-        triggerInventoryEvent(3);
-        return true;
-      case Keys.TAB:
-        triggerInventoryEvent(0);
-        return true;
-      case Keys.W, Keys.S, Keys.A, Keys.D:
-        triggerWalkEvent();
-        return true;
-      default:
-        return false;
-    }
+              // Stop movement if a menu is open
+              if (isWindowOpen()) {
+                  keyFlags.clear();
+                  triggerWalkEvent();
+              }
+              return true;
+          }
+          case Keys.T -> {
+              if (playerInventory.getEquipped() == 3) {
+                  entity.getEvents().trigger("change_structure");
+              }
+              return true;
+          }
+          case Keys.NUM_1 -> {
+              triggerInventoryEvent(1);
+              return true;
+          }
+          case Keys.NUM_2 -> {
+              triggerInventoryEvent(2);
+              return true;
+          }
+          case Keys.NUM_3 -> {
+              triggerInventoryEvent(3);
+              return true;
+          }
+          case Keys.TAB -> {
+              triggerInventoryEvent(0);
+              return true;
+          }
+          case Keys.W, Keys.S, Keys.A, Keys.D -> {
+              triggerWalkEvent();
+              return true;
+          }
+          default -> {
+              return false;
+          }
+      }
   }
 
   /**
@@ -174,6 +182,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     Vector2 position = mouseToGamePos(screenX, screenY);
     this.lastMousePos = position.cpy();
+    player = ServiceLocator.getEntityService().getPlayer();
+    playerInventory = player.getComponent(InventoryComponent.class);
     PlayerActions playerActions = entity.getComponent(PlayerActions.class);
     int cooldown = playerActions.getAttackCooldown();
 
@@ -189,6 +199,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (button == Input.Buttons.LEFT) {
           entity.getEvents().trigger("weaponAttack", entity.getPosition(), playerInventory.getEquippedType(), (float) initRot);
         }
+        break;
       // building
       case 3:
         if (button == Input.Buttons.LEFT) {
@@ -289,8 +300,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   private void triggerInventoryEvent(int i) {
-    entity.getEvents().trigger("inventory", i);
-    playerInventory.setEquipped(i);
+      entity.getEvents().trigger("inventory", i);
   }
 
   /**

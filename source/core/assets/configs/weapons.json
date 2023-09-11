@@ -1,0 +1,77 @@
+{
+  "SLING_SHOT": {
+    "weaponSpeed": 3,
+    "weaponDuration": 2500,
+    "rotationSpeed": 0,
+    "initialRotationOffset": 0,
+    "imageRotationOffset": 45,
+    "textureAtlas": "images/sling_shot.atlas",
+    "imageScale" : 0.2,
+    "imagePath" : "images/sling_shot.png"
+  },
+
+  "ELEC_WRENCH": {
+    "weaponSpeed": 0.75,
+    "weaponDuration": 50,
+    "rotationSpeed": 6,
+    "initialRotationOffset": 90,
+    "imageRotationOffset": 45,
+    "attackCooldown": 10,
+    "textureAtlas": "images/baseballbat.atlas",
+    "imageScale" : 1,
+    "imagePath" : "images/wrench.png"
+  },
+
+  "THROW_ELEC_WRENCH": {
+    "weaponSpeed": 10,
+    "weaponDuration": 50,
+    "rotationSpeed": 0,
+    "initialRotationOffset": 0,
+    "imageRotationOffset": 45,
+    "textureAtlas": "images/wrench.atlas",
+    "imageScale" : 1,
+    "imagePath" : "images/wrench.png"
+  },
+
+  "STICK": {
+    "weaponSpeed": 0.75,
+    "weaponDuration": 50,
+    "rotationSpeed": 6,
+    "initialRotationOffset": 90,
+    "imageRotationOffset": 45,
+    "attackCooldown": 10,
+    "textureAtlas": "images/upgradetree/stick.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/stick.png"
+  },
+
+  "KATANA": {
+    "weaponSpeed": 0.75,
+    "weaponDuration": 50,
+    "rotationSpeed": 6,
+    "initialRotationOffset": 90,
+    "imageRotationOffset": 45,
+    "attackCooldown": 10,
+    "textureAtlas": "images/upgradetree/sword.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/sword.png"
+  },
+
+  "WOODHAMMER": {
+    "textureAtlas": "images/upgradetree/hammer1.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer1.png"
+  },
+
+  "STONEHAMMER": {
+    "textureAtlas": "images/upgradetree/hammer2.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer2.png"
+  },
+
+  "STEELHAMMER": {
+    "textureAtlas": "images/upgradetree/hammer2.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer2.png"
+  }
+}

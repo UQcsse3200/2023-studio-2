@@ -17,4 +17,6 @@ public class InteractableComponent extends Component {
             interactFunction.accept(target);
         }
     }
+
 }
+

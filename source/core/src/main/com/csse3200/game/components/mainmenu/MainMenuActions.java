@@ -87,7 +87,7 @@ public class MainMenuActions extends Component {
     logger.info("starting space minigame");
     MainAlert mainAlertBox = new MainAlert(game, "Start game", skin, "Ready to play the game");
     mainAlertBox.showDialog(stage, () -> {
-      game.setScreen(GdxGame.ScreenType.SPACE_MAP);
+      game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN);
     });
 
   }

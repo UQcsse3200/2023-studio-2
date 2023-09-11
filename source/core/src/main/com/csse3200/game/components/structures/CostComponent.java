@@ -2,6 +2,7 @@ package com.csse3200.game.components.structures;
 
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.CameraComponent;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
@@ -25,6 +26,19 @@ public class CostComponent extends Component implements Placeable {
 
     @Override
     public void removed() {
+        var combatStatsComponent = entity.getComponent(CombatStatsComponent.class);
+        GameStateObserver stateObserver = ServiceLocator.getGameStateObserverService();
 
+        if (combatStatsComponent == null) {
+            for (var elementCost : cost.entries()) {
+                stateObserver.trigger("resourceAdd", elementCost.key, elementCost.value);
+            }
+        } else {
+            // if there is a health component, returns the cost in proportion to the health
+            for (var elementCost : cost.entries()) {
+                var healthPercentage = combatStatsComponent.getHealth() / combatStatsComponent.getMaxHealth();
+                stateObserver.trigger("resourceAdd", elementCost.key, elementCost.value * healthPercentage);
+            }
+        }
     }
 }

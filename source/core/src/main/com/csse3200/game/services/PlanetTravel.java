@@ -18,7 +18,7 @@ public class PlanetTravel {
      * Constructor to set the current game state for using
      */
     public PlanetTravel(GdxGame game) {
-        this.game = game; // Set the game object
+        this.game = game;
         ServiceLocator.registerGameStateObserverService(new GameStateObserver()); // TODO: Can be removed once map button is removed from main menu
         this.state = ServiceLocator.getGameStateObserverService();
     }
@@ -31,14 +31,16 @@ public class PlanetTravel {
      */
     public void beginPlanetTransition(String targetPlanetName) {
         // Begin the transition.
+        game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN);
 
         // Play mini-game.
 
         // End transition period.
 
         // Finally, go to planet.
-        PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
-        game.setScreen(currentPlanet.getNextPlanet());
+//        PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
+//        game.setScreen(currentPlanet.getNextPlanet());
+//        System.out.println("SLAYER");
     }
 
     /**

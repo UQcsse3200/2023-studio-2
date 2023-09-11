@@ -2,6 +2,8 @@ package com.csse3200.game.story;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.story.StoryActions;
+import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -33,7 +35,7 @@ public class StoryActionsTest {
         onNextMethod.invoke(storyActions);
 
         // Verify that the appropriate action was taken
-        verify(game).setScreen(GdxGame.ScreenType.MAIN_GAME);
+        verify(game).setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
     }
 
     @Test
@@ -42,10 +44,9 @@ public class StoryActionsTest {
         Method onSkipMethod = StoryActions.class.getDeclaredMethod("onSkip");
         onSkipMethod.setAccessible(true);
 
-
         onSkipMethod.invoke(storyActions);
 
-        verify(game).setScreen(GdxGame.ScreenType.MAIN_GAME);
+        verify(game).setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
     }
 
 }

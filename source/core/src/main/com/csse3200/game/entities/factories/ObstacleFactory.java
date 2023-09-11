@@ -138,7 +138,7 @@ public class ObstacleFactory {
     Entity goal = new Entity()
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-            .addComponent(new TextureRenderComponent("images/wormhole.jpg"));
+            .addComponent(new TextureRenderComponent("images/wormhole.png"));
     goal.setScale(width, height);
     return goal;
   }

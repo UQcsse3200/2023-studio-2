@@ -33,7 +33,7 @@ public class SpaceGameArea extends GameArea {
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/LeftShip.png",
             "images/Ship.png",
-            "images/wormhole.jpg",
+            "images/wormhole.png",
             "images/obstacle-enemy.png"
     };
     private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i

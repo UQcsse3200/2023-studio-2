@@ -128,10 +128,35 @@ loadScripts(document, 'script');</script>
 <div class="block">Updates or adds the given key-value pair in the game state data.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateResource(java.lang.String,int)" class="member-name-link">updateResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateExtractors(java.lang.String,int)" class="member-name-link">updateExtractors</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
  int&nbsp;changeAmount)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Increases the specified extractor count by a given amount.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateMaxExtractors(java.lang.String,int)" class="member-name-link">updateMaxExtractors</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
+ int&nbsp;amount)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the maximum amount of extractors for a resource</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateMaxResources(java.lang.String,int)" class="member-name-link">updateMaxResources</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
+ int&nbsp;amount)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the maximum amount of a resource
+ Note: the game state key is "resourceMax/{resourceName}" not just the resource's name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateResource(java.lang.String,int)" class="member-name-link">updateResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
+ int&nbsp;changeAmount)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Increases the specified resource name by a given amount.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateTotalExtractors(java.lang.String,int)" class="member-name-link">updateTotalExtractors</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
+ int&nbsp;amount)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the total amount of tracked extractors of the resource name to amount</div>
 </div>
 </div>
 </div>
@@ -227,6 +252,61 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>resourceName</code> - The name of the resource to be saved.</dd>
 <dd><code>changeAmount</code> - The amount the resource should increase by.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateMaxResources(java.lang.String,int)">
+<h3>updateMaxResources</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateMaxResources</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
+ int&nbsp;amount)</span></div>
+<div class="block">Sets the maximum amount of a resource
+ Note: the game state key is "resourceMax/{resourceName}" not just the resource's name.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>resourceName</code> - The name of the resource produced by the extractor.</dd>
+<dd><code>amount</code> - The amount to cap the resource by</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateExtractors(java.lang.String,int)">
+<h3>updateExtractors</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateExtractors</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
+ int&nbsp;changeAmount)</span></div>
+<div class="block">Increases the specified extractor count by a given amount.
+ Retrieves the current amount stored and adds the given amount.
+ Note: the game state key is "extractors/{resourceName}" not just the resource's name.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>resourceName</code> - The name of the resource produced by the extractor.</dd>
+<dd><code>changeAmount</code> - The amount the count should change by.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateMaxExtractors(java.lang.String,int)">
+<h3>updateMaxExtractors</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateMaxExtractors</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
+ int&nbsp;amount)</span></div>
+<div class="block">Sets the maximum amount of extractors for a resource</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>resourceName</code> - The name of the resource produced by the extractor.</dd>
+<dd><code>amount</code> - The amount to set the max to</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateTotalExtractors(java.lang.String,int)">
+<h3>updateTotalExtractors</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateTotalExtractors</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;resourceName,
+ int&nbsp;amount)</span></div>
+<div class="block">Sets the total amount of tracked extractors of the resource name to amount</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>resourceName</code> - The name of the resource produced by the extractor/s</dd>
+<dd><code>amount</code> - The amount of extractors producing the resource</dd>
 </dl>
 </section>
 </li>

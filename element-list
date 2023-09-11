@@ -7,6 +7,7 @@ com.csse3200.game.components
 com.csse3200.game.components.Companion
 com.csse3200.game.components.gamearea
 com.csse3200.game.components.InitialSequence
+com.csse3200.game.components.joinable
 com.csse3200.game.components.maingame
 com.csse3200.game.components.mainmenu
 com.csse3200.game.components.npc

@@ -149,12 +149,19 @@ public class EarthGameArea extends GameArea {
 
     }
 
+    /**
+     * Spawns a portal that sends the player to a new location
+     */
     private void spawnPortal() {
         GridPoint2 pos = new GridPoint2(20, 20);
         Entity portal = PortalFactory.createPortal(PORTAL_SIZE, PORTAL_SIZE, player);
         spawnEntityAt(portal, pos, false, false);
     }
 
+    /**
+     * Spawns objects defined on the collision layer with a custom sized collision box determined
+     * based on the dimensions defined in the .tsx file
+     */
     private void spawnEnvironment() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
         Entity environment;
@@ -183,6 +190,10 @@ public class EarthGameArea extends GameArea {
         }
     }
 
+    /**
+     * Places the sprite for the top of a tree on a higher layer so that the player appears behind
+     * tree when walking over it
+     */
     private void spawnTreeTopLayer() {
         GridPoint2 spawnTreeTop = new GridPoint2(0,0);
                     Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
@@ -223,6 +234,9 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(botanist, spawnPosition, true, false);
     }
 
+    /**
+     * Spawns a movable asteroid entity which the player can push
+     */
     private void spawnAsteroids() {
         //Extra Spicy Asteroids
         GridPoint2 posAs = new GridPoint2(8, 8);
@@ -231,6 +245,10 @@ public class EarthGameArea extends GameArea {
 
     }
 
+    /**
+     * Spawns three extractors next to each other in the world and adds them to the list of
+     * targetable entities
+     */
     private void spawnExtractors() {
         GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(0, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
         Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 100.0, 1);
@@ -255,6 +273,9 @@ public class EarthGameArea extends GameArea {
         spawnEntity(resourceDisplay);
     }
 
+    /**
+     * Spawns the player's ship, which will act as the exit point of the map
+     */
     private void spawnShip() {
         GridPoint2 spawnPosition = new GridPoint2(7*terrain.getMapBounds(0).sub(1, 1).x/12,
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
@@ -262,12 +283,18 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(ship, spawnPosition, false, false);
     }
 
+    /**
+     * Display the UI elements for the current level
+     */
     private void displayUI() {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Planet Earth"));
         spawnEntity(ui);
     }
 
+    /**
+     * Creates the background graphics and invisible walls for the edges of the map
+     */
     private void spawnTerrain() {
         // Background terrain
         terrain = terrainFactory.createTerrain();
@@ -310,6 +337,9 @@ public class EarthGameArea extends GameArea {
         }
     }
 
+    /**
+     * Spawns the player entity and adds them to the list of targetable entities
+     */
     private void spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer();
         spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
@@ -317,6 +347,9 @@ public class EarthGameArea extends GameArea {
         player = newPlayer;
     }
 
+    /**
+     * Spawns a set number of health and speed powerups at random locations
+     */
     private void spawnPowerups() {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -336,6 +369,9 @@ public class EarthGameArea extends GameArea {
         }
     }
 
+    /**
+     * Spawns enemy entities randomly throughout the map
+     */
     private void spawnEnemies() {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -370,6 +406,9 @@ public class EarthGameArea extends GameArea {
         }
     }
 
+    /**
+     * Spawns a single boss enemy at a random location
+     */
     private void spawnBoss() {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);

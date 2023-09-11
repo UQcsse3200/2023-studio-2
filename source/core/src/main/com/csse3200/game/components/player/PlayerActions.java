@@ -54,6 +54,9 @@ public class PlayerActions extends Component {
         }
     }
 
+    /**
+     * Updates the player's velocity in the direction they are walking
+     */
     private void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();

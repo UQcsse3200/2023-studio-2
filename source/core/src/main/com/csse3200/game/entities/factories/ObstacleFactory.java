@@ -78,6 +78,7 @@ public class ObstacleFactory {
     PhysicsUtils.setCustomCollider(environment, sizeX, sizeY, posX, posY);
     return environment;
   }
+
   /**
    * Creates a tree top entity.
    * @return entity
@@ -126,6 +127,13 @@ public class ObstacleFactory {
     asteroid.setScale(width, height);
     return asteroid;
   }
+
+  /**
+   * Creates an asteroid that does not move
+   * @param width asteroid width in world units
+   * @param height asteroid height in world units
+   * @return asteroid entity of given width and height
+   */
   public static Entity createStaticAsteroid(float width, float height) {
     Entity asteroid = new Entity()
             .addComponent(new TextureRenderComponent("images/meteor.png"))

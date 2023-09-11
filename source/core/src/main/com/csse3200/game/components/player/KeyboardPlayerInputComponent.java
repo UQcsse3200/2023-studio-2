@@ -25,7 +25,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
   private static final float DODGE_SPEED = 3f;
   private static final float WALK_SPEED = 1f;
-  private static final int DODGE_COOLDOWN = 300;
+  private static final int DODGE_COOLDOWN = 3000;
   private static final int DODGE_DURATION = 300;
 
   private Vector2 walkDirection = Vector2.Zero.cpy();

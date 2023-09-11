@@ -4,39 +4,24 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.entities.factories.StructureFactory;
-import com.csse3200.game.entities.factories.BoxFactory;
 
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.PowerupFactory;
-import com.csse3200.game.entities.buildables.WallType;
-import com.csse3200.game.entities.factories.*;
-import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.entities.enemies.*;
-import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.services.StructurePlacementService;
-import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -47,8 +32,6 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
-import java.util.List;
-import static com.csse3200.game.ui.UIComponent.skin;
 
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -75,7 +58,6 @@ public class ForestGameArea extends GameArea {
       "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
       "images/box_boy_leaf.png",
       "images/RightShip.png",
-          "images/Companion1.png",
       "images/tree.png",
       "images/wall.png",
       "images/wall2.png",
@@ -108,8 +90,15 @@ public class ForestGameArea extends GameArea {
       "images/oldman_down_1.png",
       "images/base_enemy.png",
       "images/Troll.png",
+          "images/TurretOne.png",
+          "images/TurretTwo.png",
       "images/rangeEnemy.png",
       "images/stone_wall.png",
+       "images/companionSS.png",
+          "images/companionSS_0.png",
+          "images/companionSS_1.png",
+          "images/companionSS_2.png",
+          "images/companionSS_03.png",
       "images/player.png"
   };
   private static final String[] forestTextureAtlases = {
@@ -128,6 +117,7 @@ public class ForestGameArea extends GameArea {
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
       "images/playerSS.atlas",
+          "images/companionSS.atlas",
       "images/player.atlas"
   };
 
@@ -177,6 +167,7 @@ public class ForestGameArea extends GameArea {
     spawnBoss();
     spawnAsteroids();
     player = spawnPlayer();
+    spawnTurret();
     spawnBotanist();
 
     playMusic();
@@ -343,6 +334,13 @@ public class ForestGameArea extends GameArea {
     Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
     //boss.addComponent(new DialogComponent(dialogueBox));
+  }
+
+  public void spawnTurret() {
+    Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
+    Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
+    spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
+    spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
   }
 
   private void playMusic() {

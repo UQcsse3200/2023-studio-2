@@ -95,7 +95,7 @@ public class GdxGame extends Game {
       case ENDGAME:
         return new EndGame(this);
       case INITIAL_SCREEN:
-        return new MiniScreen(this);
+        return new InitialScreen(this);
       case CONTROLS_SCREEN:
         return new ControlsScreen(this);
       case NAVIGATION_SCREEN:

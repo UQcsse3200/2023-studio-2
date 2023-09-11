@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -15,6 +16,7 @@ import com.csse3200.game.components.Weapons.WeaponType;
 
 import java.util.HashMap;
 import java.util.Timer;
+
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -74,7 +76,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     this.testing = testing;
   }
 
-
   public KeyboardPlayerInputComponent() {
     super(5);
   }
@@ -112,6 +113,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerWalkEvent();
         }
         return true;
+      case Keys.T:
+        if (equippedItem == 3) {
+          entity.getEvents().trigger("change_structure");
+        }
+        return true;
       case Keys.NUM_1:
         triggerInventoryEvent(1);
         return true;
@@ -127,7 +133,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W, Keys.S, Keys.A, Keys.D:
         triggerWalkEvent();
         return true;
-
       default:
         return false;
     }

@@ -52,35 +52,18 @@ public class InventoryComponent extends Component {
     if (slot > 3 || slot < 1) {
       throw new IllegalArgumentException("Slot must be in range 1-3");
     }
+    equippedWMap.remove(slot);
     equippedWMap.put(slot, weaponType);
   }
 
   public void placeInSlot(WeaponType weaponType) {
-    int slot;
-
-    switch (weaponType) {
-      case STICK:
-      case KATANA:
-        slot = 1;
-        break;
-
-      case SLING_SHOT:
-      case ELEC_WRENCH:
-      case THROW_ELEC_WRENCH:
-        slot = 2;  // ranged weapons
-        break;
-
-      case WOODHAMMER:
-      case STONEHAMMER:
-      case STEELHAMMER:
-        slot = 3;  // building hammers
-        break;
-
-      default:
-        throw new IllegalArgumentException("Slot not assigned: " + weaponType);
-    }
-
-    replaceSlotWithWeapon(slot, weaponType);
+    int slot = switch (weaponType) {
+        case STICK, KATANA, ELEC_WRENCH -> 1;           // melee
+        case SLING_SHOT, THROW_ELEC_WRENCH -> 2;        // ranged
+        case WOODHAMMER, STONEHAMMER, STEELHAMMER -> 3; // building
+        default -> throw new IllegalArgumentException("Slot not assigned: " + weaponType);
+    };
+      replaceSlotWithWeapon(slot, weaponType);
   }
 
   /**

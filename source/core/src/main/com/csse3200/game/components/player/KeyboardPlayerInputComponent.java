@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
@@ -30,7 +31,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean dodge_available = true;
 
-  private int equippedItem = 1;
+  private Entity player;
+  private InventoryComponent playerInventory;
   private int testing = 0;
 
   static HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
@@ -89,6 +91,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     keyFlags.put(keycode, 1);
 
+    player = ServiceLocator.getEntityService().getPlayer();
+    playerInventory = player.getComponent(InventoryComponent.class);
 
     switch (keycode) {
       case Keys.SPACE:
@@ -112,8 +116,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerWalkEvent();
         }
         return true;
+
       case Keys.T:
-        if (equippedItem == 3) {
+        if (playerInventory.getEquipped() == 3) {
           entity.getEvents().trigger("change_structure");
         }
         return true;
@@ -178,21 +183,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
     double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
 
-    switch (equippedItem) {
-      // melee
-      case 1:
+    switch (playerInventory.getEquipped()) {
+      // melee/ranged
+      case 1, 2:
         if (button == Input.Buttons.LEFT) {
-          entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
+          entity.getEvents().trigger("weaponAttack", entity.getPosition(), playerInventory.getEquippedType(), (float) initRot);
         }
-        break;
-
-      // ranged
-      case 2:
-        if (button == Input.Buttons.LEFT) {
-          entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
-        }
-        break;
-
       // building
       case 3:
         if (button == Input.Buttons.LEFT) {
@@ -294,7 +290,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   private void triggerInventoryEvent(int i) {
     entity.getEvents().trigger("inventory", i);
-    this.equippedItem = entity.getComponent(InventoryComponent.class).getEquipped();
+    playerInventory.setEquipped(i);
   }
 
   /**

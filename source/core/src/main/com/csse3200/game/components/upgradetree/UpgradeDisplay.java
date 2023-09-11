@@ -374,9 +374,7 @@ public class UpgradeDisplay extends Window {
                 System.out.println("Button press detected");
                 if (stats.isWeaponUnlocked(node.getWeaponType())) {
                     InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
-                    System.out.println("Before: " + playerInventory.getEquippedType());
                     playerInventory.placeInSlot(node.getWeaponType());
-                    System.out.println("After : " + playerInventory.getEquippedType());
                 }
             }
         };

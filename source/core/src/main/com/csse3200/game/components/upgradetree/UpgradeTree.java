@@ -67,7 +67,7 @@ public class UpgradeTree extends Component {
         String resourceKey = "resource/" + Resource.Nebulite;
         if (gameStateOb != null) {
             /** The starting number of materials available to the player for upgrades. */
-            return (int) gameStateOb.getStateData(resourceKey);
+            return (int) gameStateOb.getStateData(resourceKey) + 1000; //todo remove testing 1000
         }
         return 0;
     }

@@ -125,6 +125,14 @@ public class ObstacleFactory {
     return asteroid;
   }
 
+  public static Entity createBorder(float width, float height) {
+    Entity asteroid = new Entity()
+            .addComponent(new TextureRenderComponent("images/stone.png"))
+            .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+    asteroid.setScale(width, height);
+    return asteroid;
+  }
   public static Entity createObstacleEnemy(float width, float height){
     Entity enemy = new Entity()
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))

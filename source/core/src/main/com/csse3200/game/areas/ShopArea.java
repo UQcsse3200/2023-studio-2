@@ -25,11 +25,11 @@ import java.util.ArrayList;
 public class ShopArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ShopArea.class);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(7, 10);
-    private static final float STATIC_ASTEROID_SIZE =0.9f;
+    private static final float STATIC_ASTEROID_SIZE = 1f;
 
     private static final String[] spaceMiniGameTextures = {
             "images/SpaceMiniGameBackground.png",
-            "images/stone.png", // https://axassets.itch.io/spaceship-simple-assets
+            "images/stone.png",
             "images/Ship.png"
     };
     private final TerrainFactory terrainFactory;
@@ -67,7 +67,7 @@ public class ShopArea extends GameArea {
         }
 
         spawnEntityAt(
-                ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE), pos, false, false);
+                ObstacleFactory.createBorder(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE), pos, false, false);
 
         // Increment the position for the next asteroid
         pos.x += 1;
@@ -80,7 +80,7 @@ public class ShopArea extends GameArea {
         }
 
         spawnEntityAt(
-                ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE), pos, false, false);
+                ObstacleFactory.createBorder(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE), pos, false, false);
 
         // Increment the position for the next asteroid
         pos.y += 1;

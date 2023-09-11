@@ -34,9 +34,9 @@ public class CostComponent extends Component implements Placeable {
                 stateObserver.trigger("resourceAdd", elementCost.key, elementCost.value);
             }
         } else {
+            var healthPercentage = combatStatsComponent.getHealth() / combatStatsComponent.getMaxHealth();
             // if there is a health component, returns the cost in proportion to the health
             for (var elementCost : cost.entries()) {
-                var healthPercentage = combatStatsComponent.getHealth() / combatStatsComponent.getMaxHealth();
                 stateObserver.trigger("resourceAdd", elementCost.key, elementCost.value * healthPercentage);
             }
         }

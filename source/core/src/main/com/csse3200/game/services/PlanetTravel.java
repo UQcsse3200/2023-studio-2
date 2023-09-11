@@ -13,14 +13,13 @@ public class PlanetTravel {
      * The variable to set screen for the minigame
      */
     private final GdxGame game;
-    private final GameStateObserver state;
+
     /**
      * Constructor to set the current game state for using
      */
     public PlanetTravel(GdxGame game) {
         this.game = game;
         ServiceLocator.registerGameStateObserverService(new GameStateObserver()); // TODO: Can be removed once map button is removed from main menu
-        this.state = ServiceLocator.getGameStateObserverService();
     }
 
     /**
@@ -50,7 +49,7 @@ public class PlanetTravel {
      */
     public void moveToNextPlanet(Object planet) {
         game.setScreen(GdxGame.ScreenType.SPACE_MAP);
-        state.trigger("setCurrentPlanet", "planet", planet);
+        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", planet);
     }
 
     /**
@@ -58,6 +57,6 @@ public class PlanetTravel {
      * @return current planet
      */
     public Object returnCurrent() {
-        return state.getStateData("currentPlanet");
+        return ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
     }
 }

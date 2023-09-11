@@ -26,7 +26,7 @@ public class UpgradeTree extends Component {
 
         // Base weapons
         unlockedWeapons.add(WeaponType.WOODHAMMER);
-        unlockedWeapons.add(WeaponType.THROW_ELEC_WRENCH);
+        unlockedWeapons.add(WeaponType.SLING_SHOT);
         unlockedWeapons.add(WeaponType.STICK);
     }
 

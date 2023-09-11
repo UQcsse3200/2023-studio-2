@@ -10,6 +10,7 @@ import com.csse3200.game.components.structures.JoinLayer;
 import com.csse3200.game.components.structures.JoinableComponent;
 import com.csse3200.game.components.structures.JoinableComponentShapes;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ServiceLocator;
@@ -45,7 +46,7 @@ class JoinableComponentTest {
         ServiceLocator.registerStructurePlacementService(placementService);
         ServiceLocator.registerRenderService(mock(RenderService.class));
 
-        Entity joinableEntity = mock(Entity.class);
+        PlaceableEntity joinableEntity = mock(PlaceableEntity.class);
         JoinableComponent neighbourComponent = mock(JoinableComponent.class);
         when(joinableEntity.getComponent(JoinableComponent.class)).thenReturn(neighbourComponent);
         when(neighbourComponent.getJoinLayer()).thenReturn(JoinLayer.WALLS);
@@ -103,7 +104,7 @@ class JoinableComponentTest {
         ServiceLocator.registerStructurePlacementService(placementService);
         ServiceLocator.registerRenderService(mock(RenderService.class));
 
-        Entity joinableEntity = mock(Entity.class);
+        PlaceableEntity joinableEntity = mock(PlaceableEntity.class);
         JoinableComponent neighbourComponent = mock(JoinableComponent.class);
         when(joinableEntity.getComponent(JoinableComponent.class)).thenReturn(neighbourComponent);
         when(neighbourComponent.getJoinLayer()).thenReturn(JoinLayer.WALLS);

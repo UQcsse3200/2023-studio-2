@@ -4,8 +4,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -17,27 +15,13 @@ import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.entities.factories.StructureFactory;
-import com.csse3200.game.entities.factories.BoxFactory;
 
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.PowerupFactory;
-import com.csse3200.game.entities.buildables.WallType;
-import com.csse3200.game.entities.factories.*;
-import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.entities.enemies.*;
-import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.services.StructurePlacementService;
-import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -48,8 +32,6 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
-import java.util.List;
-import static com.csse3200.game.ui.UIComponent.skin;
 
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -70,52 +52,54 @@ public class ForestGameArea extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final float ASTEROID_SIZE = 0.9f;
   private static final String[] forestTextures = {
-    "images/SpaceMiniGameBackground.png",
-    "images/refinedExtractor2.png",
-    "images/refinedBrokenExtractor.png",
-    "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-    "images/box_boy_leaf.png",
-    "images/RightShip.png",
-    "images/tree.png",
-    "images/wall.png",
-    "images/wall2.png",
-    "images/gate_close.png",
-    "images/gate_open.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png",
-    "images/base_enemy.png",
-    "images/Troll.png",
-    "images/rangeEnemy.png",
-    "images/stone_wall.png",
-    "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-    "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-    "images/refinedShip.png",
-    "images/oldman_down_1.png",
-    "images/extractor.png",
-    "images/broken_extractor.png",
-    "images/Companion1.png",
-    "images/playerSS_2.png",
-    "images/playerSS_4.png",
-    "images/playerSS_0.png",
-    "images/playerSS_1.png",
-    "images/playerSS_3.png",
-    "images/playerSS_5.png",
-    "images/playerSS_7.png",
-    "images/playerSS_6.png",
-    "images/player_blank.png",
-    "images/Ship.png",
-    "images/player.png",
-    "images/TurretOne.png",
-    "images/TurretTwo.png"
+      "images/SpaceMiniGameBackground.png",
+      "images/extractor.png",
+      "images/broken_extractor.png",
+      "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
+      "images/box_boy_leaf.png",
+      "images/RightShip.png",
+      "images/tree.png",
+      "images/wall.png",
+      "images/wall2.png",
+      "images/gate_close.png",
+      "images/gate_open.png",
+      "images/ghost_king.png",
+      "images/ghost_1.png",
+      "images/grass_1.png",
+      "images/grass_2.png",
+      "images/grass_3.png",
+      "images/hex_grass_1.png",
+      "images/hex_grass_2.png",
+      "images/hex_grass_3.png",
+      "images/iso_grass_1.png",
+      "images/iso_grass_2.png",
+      "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+      "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+      "images/iso_grass_3.png",
+      "images/playerSS_2.png",
+      "images/playerSS_4.png",
+      "images/playerSS_0.png",
+      "images/playerSS_1.png",
+      "images/playerSS_3.png",
+      "images/playerSS_5.png",
+      "images/playerSS_7.png",
+      "images/playerSS_6.png",
+      "images/player_blank.png",
+      "images/Ship.png",
+      "images/stone_wall.png",
+      "images/oldman_down_1.png",
+      "images/base_enemy.png",
+      "images/Troll.png",
+          "images/TurretOne.png",
+          "images/TurretTwo.png",
+      "images/rangeEnemy.png",
+      "images/stone_wall.png",
+       "images/companionSS.png",
+          "images/companionSS_0.png",
+          "images/companionSS_1.png",
+          "images/companionSS_2.png",
+          "images/companionSS_03.png",
+      "images/player.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
@@ -133,6 +117,7 @@ public class ForestGameArea extends GameArea {
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
       "images/playerSS.atlas",
+          "images/companionSS.atlas",
       "images/player.atlas"
   };
 

@@ -5,13 +5,17 @@
 package com.csse3200.game.components.story;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.mainmenu.InsertButtons;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -26,10 +30,11 @@ public class StoryDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(StoryDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
-
+    private Label storyTextLabel;
     private ArrayList<String> storyImages;
     private int start;
     private int end;
+    private BitmapFont font;
 
     private static final String[] buttonImages = {"images/next_cut.png", "images/prev-cut.png"};
 
@@ -39,6 +44,7 @@ public class StoryDisplay extends UIComponent {
         addActors();
         entity.getEvents().addListener("next", this::nextScene);
         entity.getEvents().addListener("previous", this::prevScene);
+        font = new BitmapFont();
     }
 
     /**
@@ -59,12 +65,47 @@ public class StoryDisplay extends UIComponent {
         start = 0;
         end = 6;
 
-        Texture storyLine = new Texture(Gdx.files.internal(storyImages.get(start)));
-        TextureRegionDrawable storyBackground = new TextureRegionDrawable(storyLine);
+
+        // Load the first image
+        Drawable storyBackground = loadStoryImage(storyImages.get(start));
         table.setBackground(storyBackground);
+
 
         start += 1;
         stage.addActor(table);
+
+        // Define your custom label style
+        Label.LabelStyle customLabelStyle = new Label.LabelStyle();
+        customLabelStyle.font = font; // 'font' is your custom font, replace it with your font instance
+
+
+        // Create and configure the Label for displaying text
+        storyTextLabel = new Label("Your story text goes here", skin); // Adjust the skin file path as needed
+        storyTextLabel.setWrap(true); // Enable text wrapping
+        storyTextLabel.setColor(Color.WHITE); // Set text color to white
+
+        storyTextLabel.setWidth(Gdx.graphics.getWidth());
+        // Center align the text horizontally
+        storyTextLabel.setAlignment(Align.center);
+
+        // Position the text at the bottom of the screen
+        float textY = 0; // Adjust this value to fine-tune the vertical position
+        textY += storyTextLabel.getHeight(); // Adjust for text height
+        storyTextLabel.setPosition(
+                (Gdx.graphics.getWidth() - storyTextLabel.getWidth()) / 2,
+                textY
+        );
+
+        // Add the Label to the stage
+        stage.addActor(storyTextLabel);
+
+
+//        Texture storyLine = new Texture(Gdx.files.internal(storyImages.get(start)));
+//        TextureRegionDrawable storyBackground = new TextureRegionDrawable(storyLine);
+//        table.setBackground(storyBackground);
+//
+//        start += 1;
+//        stage.addActor(table);
         InsertButtons bothButtons = new InsertButtons();
 
         // Create next button
@@ -122,6 +163,12 @@ public class StoryDisplay extends UIComponent {
         // Drawing is handled by the stage
     }
 
+    private Drawable loadStoryImage(String imagePath) {
+        Texture storyLine = new Texture(Gdx.files.internal(imagePath));
+        return new TextureRegionDrawable(new TextureRegion(storyLine));
+    }
+
+
     /**
      * Advances to the next scene of the story.
      */
@@ -153,6 +200,7 @@ public class StoryDisplay extends UIComponent {
 
     @Override
     public void dispose() {
+        font.dispose();
         table.clear();
         stage.clear();
         super.dispose();

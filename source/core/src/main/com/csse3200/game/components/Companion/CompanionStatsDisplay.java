@@ -8,6 +8,8 @@ import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 
 
 /**
@@ -38,7 +40,7 @@ public class CompanionStatsDisplay extends UIComponent {
         addActors();
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
         //entity.getEvents().addListener("updateGold", this::updateCompanionGoldUI);
-        /*playerEntity.getEvents().addListener("updateHealth", this:: updatePlayerHealthUI);*/
+        playerEntity.getEvents().addListener("updateHealth", this:: updatePlayerHealthUI);
     }
 
     /**
@@ -61,7 +63,7 @@ public class CompanionStatsDisplay extends UIComponent {
 
     }
 
-    /*private void addAlert(int health){
+    private void addAlert(int health){
         PhysicsComponent companionPhysics = entity.getComponent(PhysicsComponent.class);
         //calculate the player position
         Vector2 compPos = companionPhysics.getBody().getPosition();
@@ -78,7 +80,7 @@ public class CompanionStatsDisplay extends UIComponent {
         label = new Label(healthText2, skin, "large");
         table2.add(label);
         stage.addActor(table2);
-    }*/
+    }
 
 
     @Override
@@ -86,21 +88,28 @@ public class CompanionStatsDisplay extends UIComponent {
         // Code for drawing UI elements and updating the projection matrix.
     }
 
-    /*public boolean  updatePlayerHealthUI(int health ){
-        //super.update();
-        if(health<=50 && update==false) {
-            addAlert(health);
-            //comPosy=entity.getPosition().y;
-            //compPosx=entity.getPosition().x;
 
+    public boolean updatePlayerHealthUI(int health) {
+        // super.update();
+        if (health <= 50 && !update) {
+            addAlert(health);
             update = true;
-            return update;
+            return true;
         }
-        if(update==true){
-            label.remove();
+
+        if (update) {
+            // Schedule a task to remove the label after a delay (e.g., 3 seconds)
+            Timer.schedule(new Task() {
+                @Override
+                public void run() {
+                    label.remove();
+                    update = false; // Reset the update flag
+                }
+            }, 3.0f); // Adjust the delay as needed (3.0f is 3 seconds)
         }
+
         return false;
-    }*/
+    }
 
 
     /**

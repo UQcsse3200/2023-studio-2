@@ -25,7 +25,7 @@ public class SpaceGameArea extends GameArea {
     private static final float STATIC_ASTEROID_SIZE =0.9f;
     private static final float WORMHOLE_SIZE = 0.9f;
     private static final int NUM_ENEMIES = 10;
-    private Entity newShip;
+    private Entity ship;
     private static final int NUM_ASTEROIDS = 168; // Change this to the desired number of asteroids
 
     private static final String[] spaceMiniGameTextures = {
@@ -60,7 +60,7 @@ public class SpaceGameArea extends GameArea {
         displayUI();
         playMusic();
         spawnTerrain();
-        spawnShip();
+        ship = spawnShip();
         spawnAsteroids();
         spawnGoal();
         createBoundary();
@@ -107,10 +107,10 @@ public class SpaceGameArea extends GameArea {
 
 
     private void createBoundary(){
-        spawnStaticAsteroidsRight(30,new GridPoint2(0,0));
+        spawnStaticAsteroidsRight(30,new GridPoint2(0,-1));
         spawnStaticAsteroidsRight(30,new GridPoint2(0,29));
-        spawnStaticAsteroidsUp(28,new GridPoint2(0,1));
-        spawnStaticAsteroidsUp(28,new GridPoint2(29,1));
+        spawnStaticAsteroidsUp(30,new GridPoint2(-1,0));
+        spawnStaticAsteroidsUp(30,new GridPoint2(29,0));
     }
 
 
@@ -177,11 +177,13 @@ public class SpaceGameArea extends GameArea {
     /**
      * Method for spawning ship on the obstacle minigame map
      */
-    private void spawnShip()
+    private Entity spawnShip()
     {
         Entity newShip = ShipFactory.createShip();
         spawnEntityAt(newShip, SHIP_SPAWN, true, true);
         targetables.add(newShip);
+        ship = newShip;
+        return newShip;
     }
 
 
@@ -190,7 +192,7 @@ public class SpaceGameArea extends GameArea {
      * @return Ship Entity
      */
     public Entity getShip(){
-        return newShip;
+        return ship;
     }
 
 

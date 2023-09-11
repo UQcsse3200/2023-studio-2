@@ -12,29 +12,30 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class PotionFactory {
 
-    public static Entity createPotion(PotionType type){
+    public static Entity createPotion(PotionType type,Entity player, Entity companion){
         Entity Potion = new Entity()
                         .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
                         .addComponent(new ItemPickupComponent(PhysicsLayer.COMPANION))
-                        .addComponent(new PotionComponent(type))
-                        .addComponent(new CombatStatsComponent(1000,10,2,true));
+                        .addComponent(new CombatStatsComponent(80,10,2,true));
         Potion.setScale(0.4f,0.4f);
         switch (type){
-            case DEATH_POTION -> Potion.addComponent(new TextureRenderComponent("images/Potion.png"));
+            case DEATH_POTION -> {
+                Potion.addComponent(new TextureRenderComponent("images/deathpotion.png"))
+                        /*.addComponent(new PotionComponent(PotionType.DEATH_POTION).applyEffect();)*/;}
+            case HEALTH_POTION -> {
+                Potion.addComponent(new TextureRenderComponent("images/potion2.png"))
+                        .addComponent(new PotionComponent(PotionType.DEATH_POTION))
+                        .getComponent(PotionComponent.class).applyEffect(player,companion);}
+            case SPEED_POTION -> {
+                Potion.addComponent(new TextureRenderComponent("images/potion3.png"))
+                        .addComponent(new PotionComponent(PotionType.SPEED_POTION))
+                        .getComponent(PotionComponent.class).applyEffect(player,companion);}
             default -> throw new IllegalArgumentException("You must assign a valid PotionType");
         }
         return Potion;
     }
-    public static Entity createDeathPotion() {
-        return createPotion(PotionType.DEATH_POTION);
-    }
-    public static boolean companionTouchesLaboratory( Vector2 companionPosition, Vector2 laboratoryPosition) {
 
-        float distance = companionPosition.dst(laboratoryPosition);
-        float touchDistanceThreshold = 8.0f;
-        return distance < touchDistanceThreshold;
-    }
 
 
 }

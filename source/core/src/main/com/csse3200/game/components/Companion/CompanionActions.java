@@ -65,7 +65,7 @@ public class CompanionActions extends Component {
             MAX_NORMAL_SPEED.set(8f,8f);
         } else {
             speedBoostActive = false;
-            MAX_NORMAL_SPEED.set(4f, 4f);
+            MAX_NORMAL_SPEED.set(5f, 5f);
         }
     }
     //functionality for basic player tracking
@@ -150,6 +150,9 @@ public class CompanionActions extends Component {
     void attack() {
         Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
         attackSound.play();
+    }
+    public void setSpeed(float x, float y) {
+        MAX_NORMAL_SPEED = new Vector2(x, y);
     }
 
 

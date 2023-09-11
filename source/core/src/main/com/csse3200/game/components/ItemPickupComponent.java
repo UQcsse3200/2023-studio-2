@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.components.Companion.CompanionInventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PotionFactory;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -32,6 +33,5 @@ public class ItemPickupComponent extends Component{
         EarthGameArea.removeItemOnMap(entityOfComponent);
         logger.info("Item picked up");
         ServiceLocator.getGameArea().getCompanion().getComponent(CompanionInventoryComponent.class).addItem(entityOfComponent);
-
-    }
+        }
 }

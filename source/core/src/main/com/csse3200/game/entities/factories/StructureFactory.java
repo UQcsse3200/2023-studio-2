@@ -9,6 +9,7 @@ import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -52,8 +53,8 @@ public class StructureFactory {
      * @param tickSize the amount of the resource produced at each tick
      * @return a new extractor Entity
      */
-    public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
-        Entity extractor = new Entity()
+    public static PlaceableEntity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
+        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity()
                 .addComponent(new DamageTextureComponent("images/refinedExtractor2.png")
                         .addTexture(0, "images/refinedBrokenExtractor.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))

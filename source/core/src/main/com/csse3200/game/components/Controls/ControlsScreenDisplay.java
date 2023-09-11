@@ -62,6 +62,7 @@ public class ControlsScreenDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("W button clicked");
+                entity.getEvents().trigger("w");
 
             }
         });
@@ -70,6 +71,7 @@ public class ControlsScreenDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("A button clicked");
+                entity.getEvents().trigger("a");
 
             }
         });
@@ -78,6 +80,7 @@ public class ControlsScreenDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("S button clicked");
+                entity.getEvents().trigger("s");
 
             }
         });
@@ -86,6 +89,7 @@ public class ControlsScreenDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("D button clicked");
+                entity.getEvents().trigger("d");
 
             }
         });

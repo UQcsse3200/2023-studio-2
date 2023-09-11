@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.structures.StructureOptions;
 import com.csse3200.game.components.structures.StructurePicker;
 import com.csse3200.game.entities.Entity;
@@ -316,6 +317,8 @@ public class UpgradeDisplay extends Window {
             costButton.addListener(unlockWeapon(node, stats, weaponButton, lockImage, costButton));
         }
 
+        weaponButton.addListener(equipItem(node));
+
         return weaponButton;
     }
 
@@ -355,6 +358,28 @@ public class UpgradeDisplay extends Window {
         weaponButton.setColor(0.5f, 0.5f, 0.5f, 0.5f); // grey out the image
 
         return lock;
+    }
+
+    /**
+     * Equips the node item into the players inventory if it is unlocked
+     *
+     * @param node the node selected
+     * @return a change listener
+     */
+    private ChangeListener equipItem(UpgradeNode node) {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
+                System.out.println("Button press detected");
+                if (stats.isWeaponUnlocked(node.getWeaponType())) {
+                    InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
+                    System.out.println("Before: " + playerInventory.getEquippedType());
+                    playerInventory.changeEquipped(node.getWeaponType());
+                    System.out.println("After : " + playerInventory.getEquippedType());
+                }
+            }
+        };
     }
 
     /**

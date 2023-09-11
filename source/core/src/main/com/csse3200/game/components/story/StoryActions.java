@@ -37,7 +37,7 @@ public class StoryActions extends Component {
      */
     private void onNext() {
         logger.info("Load next");
-        game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 
     /**
@@ -45,6 +45,6 @@ public class StoryActions extends Component {
      */
     private void onSkip() {
         logger.info("Skipping to game");
-        game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 }

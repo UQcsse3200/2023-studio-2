@@ -66,8 +66,5 @@ public class PopupComponentTest {
             when(gameTime.getTimeSince(0)).thenReturn((long) (duration ));
             entity.update();
             assertEquals(new Vector2((float) 0, (float) ((duration) * speed)), entity.getPosition());
-
-            // Check the entity was disposed of?
-
         }
 }

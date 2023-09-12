@@ -30,7 +30,7 @@ public class PlanetTravel {
      */
     public void beginPlanetTransition(String targetPlanetName) {
         // Begin the transition.
-        game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN);
+        game.setScreen(GdxGame.ScreenType.SPACEMINI_SCREEN);
 
         // Play mini-game.
 

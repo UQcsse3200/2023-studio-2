@@ -90,7 +90,7 @@ public class MainMenuActions extends Component {
   private void onMini(){
     logger.info("starting space minigame");
     MainAlert mainAlertBox = new MainAlert(game, "Start game", skin, "Ready to play the game");
-    mainAlertBox.showDialog(stage, () -> game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN));
+    mainAlertBox.showDialog(stage, () -> game.setScreen(GdxGame.ScreenType.SPACEMINI_SCREEN));
 
   }
   private void onExtractor(){

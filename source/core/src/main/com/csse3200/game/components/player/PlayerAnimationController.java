@@ -31,6 +31,7 @@ public class PlayerAnimationController extends Component {
         entity.getEvents().addListener("dodgeLeft", this::animateDodgeLeft);
         entity.getEvents().addListener("dodgeRight", this::animateDodgeRight);
         entity.getEvents().addListener("dodgeUp", this::animateDodgeUp);
+        entity.getEvents().addListener("playerDeath", this::animateDeath);
     }
 
     /**
@@ -151,5 +152,9 @@ public class PlayerAnimationController extends Component {
      */
     void animateDodgeUp() {
         animator.startAnimation("Character_RollUp");
+    }
+    void animateDeath() {
+        animator.startAnimation("Character_Death");
+        System.out.println("death");
     }
 }

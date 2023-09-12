@@ -73,6 +73,7 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       if (isDead() && entity.getEntityType().equals("player")) {
+        entity.getEvents().trigger("playerDeath");
         final Timer timer = new Timer();
         java.util.TimerTask killPlayer = new java.util.TimerTask() {
           @Override
@@ -82,9 +83,9 @@ public class CombatStatsComponent extends Component {
             timer.purge();
           }
         };
-        timer.schedule(killPlayer, 500);
+        timer.schedule(killPlayer, 1000);
       } else if (isDead() && entity.getEntityType().equals("playerWeapon")) {
-            entity.getEvents().trigger("death", 0);
+        entity.getEvents().trigger("death", 0);
       }
     }
   }

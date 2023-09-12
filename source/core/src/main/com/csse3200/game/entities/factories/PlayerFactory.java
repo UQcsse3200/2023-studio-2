@@ -24,6 +24,8 @@ import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.components.structures.StructurePicker;
 
+import java.util.ArrayList;
+
 /**
  * Factory to create a player entity.
  *
@@ -37,6 +39,7 @@ public class PlayerFactory {
   private static final origiPlayerConfig stats =
       FileLoader.readClass(origiPlayerConfig.class, "configs/player.json");
 
+  static String[] playerAtlases = {"images/player.atlas", "images/skeleton.atlas"};
 
   /**
    * Create a player entity.
@@ -67,6 +70,7 @@ public class PlayerFactory {
     animator.addAnimation("Character_RollRight", 0.1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("Character_RollLeft", 0.1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("Character_RollUp", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Character_Death", 0.2f, Animation.PlayMode.NORMAL);
 
 
     Entity player =

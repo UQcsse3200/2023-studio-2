@@ -32,7 +32,7 @@ public class MainGameActions extends Component {
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 
-  private void onReturnPlanet() {
+  protected void onReturnPlanet() {
     logger.info("Exiting to current planet screen");
     game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
   }

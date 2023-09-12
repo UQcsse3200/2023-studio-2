@@ -130,7 +130,6 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     terrainService = null;
-    gameStateObserverService = null;
   }
 
   private ServiceLocator() {

@@ -54,9 +54,6 @@ public class ProximityActivationComponent extends Component {
                 entityWithinRadiusMap.put(entity, false);
                 exited.call(entity);
             }
-            else if (isInProximity) {
-                entered.call(entity);
-            }
         }
     }
 

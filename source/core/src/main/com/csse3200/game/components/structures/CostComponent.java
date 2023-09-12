@@ -1,13 +1,10 @@
 package com.csse3200.game.components.structures;
 
 import com.badlogic.gdx.utils.ObjectMap;
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.Map;
 
 public class CostComponent extends Component implements Placeable {
 

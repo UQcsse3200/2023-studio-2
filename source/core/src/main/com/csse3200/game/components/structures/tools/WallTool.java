@@ -1,6 +1,5 @@
 package com.csse3200.game.components.structures.tools;
 
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;

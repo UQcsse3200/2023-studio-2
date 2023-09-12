@@ -9,10 +9,13 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputDecorator;
+import com.csse3200.game.input.InputFactory;
 import com.csse3200.game.input.InputService;
+import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -33,16 +36,23 @@ public class MainMenuScreen extends ScreenAdapter {
     this.game = game;
 
     logger.debug("Initialising main menu screen services");
-    ServiceLocator.registerInputService(new InputService());
-    ServiceLocator.registerResourceService(new ResourceService());
-    ServiceLocator.registerEntityService(new EntityService());
-    ServiceLocator.registerRenderService(new RenderService());
-    ServiceLocator.registerGameStateObserverService(new GameStateObserver());
+    initialiseServices();
 
     renderer = RenderFactory.createRenderer();
 
     loadAssets();
     createUI();
+  }
+
+  private void initialiseServices() {
+    ServiceLocator.registerInputService(
+            new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
+    ServiceLocator.registerResourceService(new ResourceService());
+    ServiceLocator.registerEntityService(new EntityService());
+    ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerTimeSource(new GameTime());
+    ServiceLocator.registerPhysicsService(new PhysicsService());
+    ServiceLocator.registerGameStateObserverService(new GameStateObserver());
   }
 
   @Override
@@ -73,10 +83,6 @@ public class MainMenuScreen extends ScreenAdapter {
 
     renderer.dispose();
     unloadAssets();
-    ServiceLocator.getRenderService().dispose();
-    ServiceLocator.getEntityService().dispose();
-
-    ServiceLocator.clear();
   }
 
   private void loadAssets() {

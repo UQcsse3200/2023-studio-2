@@ -62,7 +62,7 @@ public class SpawnerComponent extends Component {
         Vector2 worldPos;
         while (this.timer.getTimeSince(this.lastTime) >= this.tickRate && spawnedAmount < count) {
                 worldPos = entity.getCenterPosition();
-                Entity enemy = EnemyFactory.createEnemy(targets, type, behaviour);
+                Entity enemy = EnemyFactory.createEnemy(type, behaviour);
                 ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
                 spawnedAmount += 1;
                 System.out.println(spawnedAmount);

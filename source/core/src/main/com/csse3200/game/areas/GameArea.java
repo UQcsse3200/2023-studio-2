@@ -22,12 +22,17 @@ import java.util.List;
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
   protected List<Entity> areaEntities;
-  private Entity companion;
+  protected Entity companion;
+  protected Entity player;
   protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
+  }
+
+  public Entity getPlayer() {
+    return player;
   }
 
   /** Create the game area in the world. */

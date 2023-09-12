@@ -29,20 +29,35 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 public class AttackFactory {
   private static final WeaponConfigs configs =
           FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
+
+  //TODO: REMOVE - LEGACY
   /**
    * Static function to create a new weapon entity
    * @param weaponType - the type of weapon entity to be made
    * @param initRot - the initial rotation of the player
+   * @param player - the player using this attack
    * @return A reference to the created weapon entity
    */
   public static Entity createAttack(WeaponType weaponType, float initRot, Entity player) {
     WeaponConfig config = configs.GetWeaponConfig(weaponType);
 
+    return createAttack(config, initRot, player);
+  }
+
+  //TODO: Refactor this better so it can be saved/loaded
+  /**
+   * Static function to create a new weapon entity
+   * @param config - the configuration to match the attack entity to
+   * @param initRot - the initial rotation of the player
+   * @param player - the player using this attack
+   * @return A reference to the created weapon entity
+   */
+  public static Entity createAttack(WeaponConfig config, float initRot, Entity player) {
     PlayerActions playerActions = player.getComponent(PlayerActions.class);
     playerActions.setAttackCooldown(config.attackCooldown);
 
     WeaponControllerComponent weaponController = new WeaponControllerComponent(
-            weaponType,
+            config.type,
             initRot + config.initialRotationOffset,
             config.weaponSpeed,
             config.weaponDuration,
@@ -58,7 +73,7 @@ public class AttackFactory {
                     .addComponent(weaponController);
     attack.setEntityType("playerWeapon");
 
-    TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
+    TextureAtlas atlas = new TextureAtlas(config.spritePath);
     AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
 
     animator.addAnimation("attack", 0.1f, Animation.PlayMode.LOOP_PINGPONG);
@@ -72,9 +87,9 @@ public class AttackFactory {
     animator.startAnimation("attack");
     attack.scaleWidth(config.imageScale);
 
-    switch (weaponType) {
+    switch (config.type) {
       case SLING_SHOT, ELEC_WRENCH:
-        attack.addComponent(new WeaponTargetComponent(weaponType, player));
+        attack.addComponent(new WeaponTargetComponent(config.type, player));
         break;
     }
 

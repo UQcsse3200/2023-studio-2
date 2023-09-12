@@ -40,8 +40,6 @@ public class Entity {
   private Vector2 scale = new Vector2(1, 1);
   private float rotation = 0;
   private Array<Component> createdComponents;
-  private WallType wallType;
-
 
   public Entity() {
     this.entityType = "";

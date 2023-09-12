@@ -52,7 +52,7 @@ public class Wall extends PlaceableEntity {
         this.type = type;
 
         WallConfig config = configs.GetWallConfig(type);
-        var textures = ServiceLocator.getResourceService().getAsset(config.textureAtlas, TextureAtlas.class);
+        var textures = ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class);
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));

@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.EarthGameArea;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
@@ -45,7 +47,7 @@ public class PlanetScreen extends ScreenAdapter {
     private String nextPlanetName;
 
     private Entity player;
-    private EarthGameArea gameArea; //TODO: Extend with new MapArea
+    private GameArea gameArea; //TODO: Extend with new MapArea
 
     /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -53,9 +55,6 @@ public class PlanetScreen extends ScreenAdapter {
     /** Service Instances */
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
-
-    private ItemBox itemBox;
-    Entity currentExtractor = null;
 
     /** file paths of textures for screen to load. */
     private static final String[] planetTextures = {
@@ -96,7 +95,6 @@ public class PlanetScreen extends ScreenAdapter {
         this.gameArea.create();
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
-        createItemBox();
         this.player = this.gameArea.getPlayer();
     }
 
@@ -117,12 +115,12 @@ public class PlanetScreen extends ScreenAdapter {
 
         if ("Earth".equals(name)) {
             this.gameArea = new EarthGameArea(terrainFactory, game);
-            this.nextPlanetName = "Earth"; //TODO: Extend
+            this.nextPlanetName = "Not Earth"; //TODO: Extend
             // Only on game area, needs to be extended to go to other areas
         } else {
             // TODO: Extend
             // Only one planet game area atm, needs to be extended for further planets
-            gameArea = new EarthGameArea(terrainFactory, game);
+            this.gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
             this.nextPlanetName = "Earth";
         }
     }
@@ -132,11 +130,6 @@ public class PlanetScreen extends ScreenAdapter {
      */
     private void registerServices() {
         logger.debug(String.format("Initialising %s screen services", this.name));
-        ServiceLocator.registerTimeSource(new GameTime());
-
-        PhysicsService physicsService = new PhysicsService();
-        ServiceLocator.registerPhysicsService(physicsService);
-        physicsEngine = physicsService.getPhysics();
 
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerInputService(new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
@@ -144,6 +137,8 @@ public class PlanetScreen extends ScreenAdapter {
 
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
 
         ServiceLocator.registerGameStateObserverService(new GameStateObserver());
 
@@ -152,45 +147,12 @@ public class PlanetScreen extends ScreenAdapter {
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
     }
 
-    /**
-     * Create the extractor item box.
-     */
-    private void createItemBox() {
-        itemBox = new ItemBox(gameArea.getExtractorIcon(), renderer);
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(ServiceLocator.getInputService());
-        inputMultiplexer.addProcessor(new InputComponent() {
-            @Override
-            public boolean keyDown(int keycode) {
-                if (keycode == Input.Keys.O) {
-                    itemBox.triggerShow();
-                }
-                return false;
-            }
-            @Override
-            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-                currentExtractor = null;
-                return super.touchUp(screenX, screenY, pointer, button);
-            }
-        });
-        Gdx.input.setInputProcessor(inputMultiplexer);
-    }
-
     @Override
     public void render(float delta) {
         physicsEngine.update();
         ServiceLocator.getEntityService().update();
         followPlayer();
         renderer.render();
-
-        itemBox.render();
-        if(itemBox.itemContainMouse() && currentExtractor == null){
-            currentExtractor = gameArea.getExtractor();
-        }
-        if(currentExtractor != null){
-            Vector2 mousePos = renderer.getCamera().getWorldPositionFromScreen(new Vector2(Gdx.input.getX() - 200,Gdx.input.getY() + 200));
-            currentExtractor.setPosition(mousePos.x,mousePos.y);
-        }
     }
 
     @Override
@@ -213,7 +175,8 @@ public class PlanetScreen extends ScreenAdapter {
      * Do not dispose of all services and renderers on screen switch. Preserve state
      */
     @Override
-    public void dispose() { }
+    public void dispose() {
+    }
 
     /**
      * Dispose of the entire game screen.
@@ -223,12 +186,6 @@ public class PlanetScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
-
-        ServiceLocator.getEntityService().dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getResourceService().dispose();
-
-        ServiceLocator.clear();
     }
 
     /**

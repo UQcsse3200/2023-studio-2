@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
 public class UpgradeShopScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(UpgradeShopScreen.class);
 
-    /** Reference to the main game instance */
     private final GdxGame game;
 
     private static final Vector2 CAMERA_POSITION = new Vector2(10, 11);
@@ -45,7 +44,7 @@ public class UpgradeShopScreen extends ScreenAdapter {
     private final PhysicsEngine physicsEngine;
 
     /**
-     * Constructs a new SpaceNavigationScreen with a reference to the main game.
+     * Constructs a new UpgradeShopScreen with a reference to the main game.
      * @param game The main game instance.
      */
     public UpgradeShopScreen(GdxGame game) {

@@ -1,20 +1,23 @@
 package com.csse3200.game.components.ships;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+/**
+ * A ui component for displaying the ship stats, e.g. speed.
+ */
 public class ShipStatDisplay extends UIComponent {
     Table table;
     private Label speedLabel;
 
     private Label healthLabel;
     private Label attackLabel;
+
+    /**
+     * Creates reusable ui styles and adds actors to the stage.
+     */
     @Override
     public void create() {
         super.create();
@@ -31,6 +34,7 @@ public class ShipStatDisplay extends UIComponent {
         table.setFillParent(true);
         table.padTop(45f).padLeft(45f);
 
+        //currently leave them here for the UI, may adjust after further implementation
         CharSequence speedText = "Speed: 100";
         CharSequence healthText = "Health: 100";
         CharSequence attackText = "Attack: 100";

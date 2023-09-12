@@ -19,17 +19,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Text;
 
+/**
+ * Exit button but specified for the Shop implementation only
+ */
 public class ExitShopDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ExitShopDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
 
+    /**
+     * Main method for calling all the methods in the class
+     */
     @Override
     public void create() {
         super.create();
         addActors();
     }
 
+    /**
+     * Customize button, instead of exit directly to the main menu the button will spawn a miniframe at the center
+     * The miniframe currently has two buttons, one is main menu button that lead to the main men
+     * Other button is resume, which remain stay in the shop
+     * Intend to implement a button that can back to the current minigame, which will be implemented after the
+     * minigames are completed.
+     */
     private void addActors() {
         table = new Table();
         table.top().right();

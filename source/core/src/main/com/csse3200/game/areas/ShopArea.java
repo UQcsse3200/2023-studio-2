@@ -1,20 +1,11 @@
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
-import com.csse3200.game.components.spacenavigation.NavigationBackground;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.ShipFactory;
-import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.input.InputService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -22,6 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
+/**
+ * Shop Area for spawning items and stats about the ship
+ */
 public class ShopArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ShopArea.class);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(7, 10);
@@ -46,7 +40,7 @@ public class ShopArea extends GameArea {
     }
 
     /**
-     * Main method for calling all the methods in the obstacle minigame into the SpaceMapScreen class
+     * Main method for calling all the methods in the ShopArea into the UpgradeShopScreen class
      */
     @Override
     public void create() {
@@ -57,9 +51,9 @@ public class ShopArea extends GameArea {
     }
 
     /**
-     * Recursively calls n number of asteroids starting from position to the right
-     * @param n Number of asteroids
-     * @param pos Starting position for asteroid spawning
+     * Recursively calls n number of stones starting from position to the right
+     * @param n Number of stones
+     * @param pos Starting position for stone spawning
      */
     private void spawnStaticAsteroidsRight(int n, GridPoint2 pos){
         if (n <= 0) {
@@ -74,6 +68,12 @@ public class ShopArea extends GameArea {
         pos.y += 0;
         spawnStaticAsteroidsRight(n - 1, pos); // Recursive call
     }
+
+    /**
+     * Recursively calls n number of stones starting from position to up
+     * @param n Number of stones
+     * @param pos Starting position for stone spawning
+     */
     private void spawnStaticAsteroidsUp(int n, GridPoint2 pos){
         if (n <= 0) {
             return;
@@ -87,6 +87,10 @@ public class ShopArea extends GameArea {
         spawnStaticAsteroidsUp(n - 1, pos); // Recursive call
     }
 
+    /**
+     * Create the boundary for the shop made from stone
+     */
+
     private void createBoundary(){
         spawnStaticAsteroidsRight(16,new GridPoint2(2,5));
         spawnStaticAsteroidsRight(16,new GridPoint2(2,13));
@@ -94,11 +98,7 @@ public class ShopArea extends GameArea {
         spawnStaticAsteroidsUp(8,new GridPoint2(17,6));
     }
     /**
-     * Method for creating maze layout of the obstacle minigame
-     */
-
-    /**
-     * Method for spawning terrain for background of obstacle minigame
+     * Method for spawning terrain for background of the shop
      */
     private void spawnTerrain() {
         // Background terrain
@@ -113,7 +113,7 @@ public class ShopArea extends GameArea {
     }
 
     /**
-     * Method for spawning ship on the obstacle minigame map
+     * Method for spawning ship on the shop
      */
     private void spawnShip()
     {
@@ -123,7 +123,7 @@ public class ShopArea extends GameArea {
     }
 
     /**
-     * Method for loading the texture and the music of the map
+     * Method for loading the texture
      */
     private void loadAssets() {
         logger.debug("Loading assets");
@@ -136,7 +136,7 @@ public class ShopArea extends GameArea {
     }
 
     /**
-     * Method for unloading the texture and the music of the map
+     * Method for unloading the texture
      */
     private void unloadAssets() {
         logger.debug("Unloading assets");

@@ -458,6 +458,103 @@ death
   orig: 80, 80
   offset: 0, 0
   index: 0
-
+death
+  rotate: false
+  xy: 640, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 720, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 800, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 880, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 960, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 1040, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 1120, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 1200, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 1360, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 1440, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 1520, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 1600, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 1680, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 1760, 480
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
 
 

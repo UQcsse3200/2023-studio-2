@@ -119,10 +119,6 @@ public class EarthGameArea extends GameArea {
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
-            "images/ghost.atlas",
-            "images/ghostKing.atlas",
-            "images/base_enemy.atlas",
-            "images/troll_enemy.atlas",
             "images/rangeEnemy.atlas",
             "images/stone_wall.atlas",
             "images/dirt_wall.atlas",
@@ -138,7 +134,7 @@ public class EarthGameArea extends GameArea {
             "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
             "images/player.atlas",
-            "images/bull.atlas",
+            "images/enemy/bull.atlas",
             "images/enemy/Night.atlas"
 
     };

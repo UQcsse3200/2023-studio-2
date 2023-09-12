@@ -87,14 +87,14 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
     public void update() {
         if (hasShot) {
             status = Status.FINISHED;
-            logger.debug("Finished Attack");
+            //logger.debug("Finished Attack");
         }
     }
 
     @Override
     public void stop() {
         super.stop();
-        logger.debug("Stopping aim");
+        //logger.debug("Stopping aim");
     }
 
     @Override

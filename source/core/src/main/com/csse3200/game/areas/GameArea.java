@@ -17,7 +17,9 @@ import com.csse3200.game.services.StructurePlacementService;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents an area in the game, such as a level, indoor area, etc. An area has a terrain and
@@ -27,13 +29,13 @@ import java.util.List;
  */
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
-  protected List<Entity> areaEntities;
   private Entity companion;
+  protected Map<GridPoint2, Entity> areaEntities;
   protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;
 
-  protected GameArea() {
-    areaEntities = new ArrayList<>();
+  public GameArea() {
+    areaEntities = new HashMap<>();
   }
 
   /** Create the game area in the world. */
@@ -41,9 +43,17 @@ public abstract class GameArea implements Disposable {
 
   /** Dispose of all internal entities in the area */
   public void dispose() {
-    for (Entity entity : areaEntities) {
-      entity.dispose();
+    for (var entity : areaEntities.entrySet()) {
+      entity.getValue().dispose();
     }
+  }
+
+  public TerrainComponent getTerrain(){
+    return terrain;
+  }
+
+  public Map<GridPoint2, Entity> getAreaEntities() {
+    return areaEntities;
   }
 
   protected void registerStructurePlacementService() {
@@ -102,7 +112,7 @@ public abstract class GameArea implements Disposable {
    * @param entity Entity (not yet registered)
    */
   protected void spawnEntity(Entity entity) {
-    areaEntities.add(entity);
+    areaEntities.put(entity.getGridPosition(), entity);
     ServiceLocator.getEntityService().register(entity);
   }
 

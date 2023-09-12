@@ -2,6 +2,11 @@ package com.csse3200.game.components.resources;
 
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PopupFactory;
+import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.GameState;
+import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.GameStateObserver;
@@ -23,6 +28,10 @@ public class ProductionComponent extends Component {
     // The resource type this produces
     Resource produces;
 
+    // Does not effect production, that scales by raw health, this is downstream of that
+    // used to notify state observer of extractor count changes
+    boolean damaged;
+
     /**
      * ProductionComponent allows an entity to produce resources on some real time interval and send them to
      * the gameState and event handler.
@@ -37,6 +46,7 @@ public class ProductionComponent extends Component {
         this.tickRate = tickRate;
         this.tickSize = tickSize;
         this.lastTime = timer.getTime();
+        this.damaged = true;
     }
 
     @Override
@@ -61,12 +71,30 @@ public class ProductionComponent extends Component {
 
     @Override
     public void update() {
+        // Grab useful services and components:
+        GameStateObserver gameStateObserver = ServiceLocator.getGameStateObserverService();
+        CombatStatsComponent combatStats = this.getEntity().getComponent(CombatStatsComponent.class);
+
+        // If our health JUST crossed a threshold, we notify the observer
+        if (combatStats != null && combatStats.getHealth() <= 0 && !this.damaged) {
+            this.damaged = true;
+            gameStateObserver.trigger("extractorsAdd", this.produces.toString(), -1);
+        } else if (combatStats != null && combatStats.getHealth() > 0 && this.damaged) {
+            gameStateObserver.trigger("extractorsAdd", this.produces.toString(), 1);
+            this.damaged = false;
+        }
+
         super.update();
         while (this.timer.getTime() - this.lastTime >= this.tickRate ) {
             this.getEntity().getEvents().trigger("produceResource", this.produces, this.tickSize);
             int produced = (int) ((long) this.tickSize * this.getProductionModifier());
-            ServiceLocator.getGameStateObserverService().trigger("resourceAdd", this.produces.toString(), produced);
+            gameStateObserver.trigger("resourceAdd", this.produces.toString(), produced);
             this.lastTime += this.tickRate;
+
+            if (!this.damaged) {
+                Entity popup = new PopupFactory().createPopup(this.produces);
+                ServiceLocator.getEntityPlacementService().PlaceEntityAt(popup, this.entity.getPosition().add(this.entity.getScale().scl(0.65F)));
+            }
         }
     }
 

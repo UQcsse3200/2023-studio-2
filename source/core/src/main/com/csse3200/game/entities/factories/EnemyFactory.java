@@ -79,7 +79,7 @@ public class EnemyFactory {
             .addComponent(animator)
             .addComponent(new HealthBarComponent(false))
             .addComponent(new TouchAttackComponent((short) (
-                    PhysicsLayer.PLAYER |
+                    PhysicsLayer.PLAYER |PhysicsLayer.COMPANION |
                     PhysicsLayer.WALL |
                     PhysicsLayer.STRUCTURE |
                     PhysicsLayer.WEAPON),
@@ -129,10 +129,14 @@ public class EnemyFactory {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
           aiTaskComponent.addTask(new ChaseTask(target, 10, 6f, 6f, 3f));
+        } else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
+          aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 6f, 6f,3f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
+
       // Destructible Targeting
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
@@ -148,7 +152,10 @@ public class EnemyFactory {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
-        } else {
+        } else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+        }
+        else {
           aiTaskComponent.addTask(new ChaseTask(target, 5, 3f, 4f));
         }
       }
@@ -167,7 +174,11 @@ public class EnemyFactory {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
-        } else {
+        } else if
+        (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+        }
+        else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
@@ -186,7 +197,11 @@ public class EnemyFactory {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
-        } else {
+        } else if
+        (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+        }
+        else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }

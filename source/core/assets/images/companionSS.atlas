@@ -1,29 +1,29 @@
-companion_spritesheet.png
+companionSS.png
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
-Companion1
+DOWN
   rotate: false
   xy: 1, 1
   size: 112, 128
   orig: 112, 128
   offset: 0, 0
   index: -1
-Companion2
+RIGHT
   rotate: false
   xy: 113, 1
   size: 112, 128
   orig: 112, 128
   offset: 0, 0
   index: -1
-Companion3
+LEFT
   rotate: false
   xy: 225, 1
   size: 112, 128
   orig: 112, 128
   offset: 0, 0
   index: -1
-Companion4
+UP
   rotate: false
   xy: 337, 1
   size: 112, 128

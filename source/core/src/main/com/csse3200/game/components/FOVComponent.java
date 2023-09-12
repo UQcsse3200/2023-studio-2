@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.structures.Rotation;
 import com.csse3200.game.components.structures.RotationRenderComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.EnemyFactory;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class FOVComponent extends ProximityActivationComponent {
     private RotationRenderComponent renderComponent;
     private List<Entity> enemies =  new ArrayList<>();
     private final Map<Entity, Boolean> enemyIsInFOV = new HashMap<>();
+    EntityService entityService = new EntityService();
 
     public FOVComponent(float radius, List<Entity> enemies, ProximityFunc entered, ProximityFunc exited) {
         super(radius, entered, exited);
@@ -66,6 +68,7 @@ public class FOVComponent extends ProximityActivationComponent {
         }*/
         float distance = this.entity.getCenterPosition().dst(enemy.getCenterPosition());
         return distance <= this.radius;
+
     }
 
     public interface FOVFunc {

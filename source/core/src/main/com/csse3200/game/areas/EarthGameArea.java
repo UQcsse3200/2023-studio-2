@@ -257,9 +257,10 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(ship, spawnPosition, false, false);
     }
     public void spawnTurret() {
-        Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
+        /*Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
         Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
-        spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
+        spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
+        spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);*/
     }
 
     private void displayUI() {
@@ -316,7 +317,6 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
         targetables.add(newPlayer);
         player = newPlayer;
-        EnemyFactory.enemies.add(newPlayer);
         return newPlayer;
     }
     private Entity spawnCompanion(Entity playerEntity) {

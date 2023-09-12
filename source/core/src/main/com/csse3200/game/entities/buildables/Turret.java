@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Transform;
 import com.csse3200.game.components.*;
+import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.PlaceableEntity;
@@ -56,6 +57,7 @@ public class Turret extends PlaceableEntity{
         addComponent(new HealthBarComponent(true));
         addComponent(new TextureRenderComponent(texture));
         addComponent(new FOVComponent(4f, EnemyFactory.enemies, this::startDamage, this::stopDamage));
+        addComponent(new StructureDestroyComponent());
     }
 
     @Override

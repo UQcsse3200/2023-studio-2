@@ -70,12 +70,9 @@ public class CompanionFactory {
                         .addComponent(animator)
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new InteractionControllerComponent(false));
-
-//        int health = companion.getComponent(CombatStatsComponent.class).getHealth();
-//        CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(true, 0, health);
-        //CompanionInventoryComponent companionInventoryComponent = new CompanionInventoryComponent(10);
+        //Initialise the companion to be facing down
         animator.startAnimation("DOWN");
-       // companion.addComponent(companionStatsDisplay);
+        //set the scale of the companion
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
         companion.scaleHeight(0.9f);

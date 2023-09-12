@@ -109,7 +109,8 @@ public class EarthGameArea extends GameArea {
             "images/nebulite.png",
             "images/solstite.png",
             "images/durasteel.png",
-            "images/f_button.png"
+            "images/f_button.png",
+            "images/ExtractorAnimation.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -131,7 +132,8 @@ public class EarthGameArea extends GameArea {
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
-            "images/player.atlas"
+            "images/player.atlas",
+            "images/ExtractorAnimation.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};

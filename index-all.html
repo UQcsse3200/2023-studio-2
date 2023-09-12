@@ -652,6 +652,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/story/StoryDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.story.<a href="com/csse3200/game/components/story/StoryDisplay.html" title="class in com.csse3200.game.components.story">StoryDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/structures/ExtractorAnimationController.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.structures.<a href="com/csse3200/game/components/structures/ExtractorAnimationController.html" title="class in com.csse3200.game.components.structures">ExtractorAnimationController</a></dt>
+<dd>
+<div class="block">Adds action listener to the extractor</div>
+</dd>
 <dt><a href="com/csse3200/game/components/structures/StructurePicker.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.structures.<a href="com/csse3200/game/components/structures/StructurePicker.html" title="class in com.csse3200.game.components.structures">StructurePicker</a></dt>
 <dd>
 <div class="block">Creates reusable ui styles and adds actors to the stage.</div>
@@ -1343,6 +1347,18 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/files/FileLoader.Location.html#EXTERNAL" class="member-name-link">EXTERNAL</a> - Enum constant in enum class com.csse3200.game.files.<a href="com/csse3200/game/files/FileLoader.Location.html" title="enum class in com.csse3200.game.files">FileLoader.Location</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/GdxGame.ScreenType.html#EXTRACTOR_GAME" class="member-name-link">EXTRACTOR_GAME</a> - Enum constant in enum class com.csse3200.game.<a href="com/csse3200/game/GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/structures/ExtractorAnimationController.html" class="type-name-link" title="class in com.csse3200.game.components.structures">ExtractorAnimationController</a> - Class in <a href="com/csse3200/game/components/structures/package-summary.html">com.csse3200.game.components.structures</a></dt>
+<dd>
+<div class="block">This class listens to events relating to the state of the extractor and plays
+  the extracting animation when the broken extractor is fixed, otherwise the broken
+  extractor remains 'un-animated'.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/structures/ExtractorAnimationController.html#%3Cinit%3E()" class="member-name-link">ExtractorAnimationController()</a> - Constructor for class com.csse3200.game.components.structures.<a href="com/csse3200/game/components/structures/ExtractorAnimationController.html" title="class in com.csse3200.game.components.structures">ExtractorAnimationController</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/ExtractorConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">ExtractorConfig</a> - Class in <a href="com/csse3200/game/entities/configs/package-summary.html">com.csse3200.game.entities.configs</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/ExtractorConfig.html#%3Cinit%3E()" class="member-name-link">ExtractorConfig()</a> - Constructor for class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/ExtractorConfig.html" title="class in com.csse3200.game.entities.configs">ExtractorConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/ExtractorMiniGameArea.html" class="type-name-link" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a> - Class in <a href="com/csse3200/game/areas/package-summary.html">com.csse3200.game.areas</a></dt>
 <dd>&nbsp;</dd>
@@ -2882,7 +2898,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/resources/PopupComponent.html" class="type-name-link" title="class in com.csse3200.game.components.resources">PopupComponent</a> - Class in <a href="com/csse3200/game/components/resources/package-summary.html">com.csse3200.game.components.resources</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/resources/PopupComponent.html#%3Cinit%3E(int,double)" class="member-name-link">PopupComponent(int, double)</a> - Constructor for class com.csse3200.game.components.resources.<a href="com/csse3200/game/components/resources/PopupComponent.html" title="class in com.csse3200.game.components.resources">PopupComponent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Popup Component
+ a component which can be attached to an existing entity to delete it in a fancy way!
+ The entity MUST have a RenderTextureComponent.</div>
+</dd>
 <dt><a href="com/csse3200/game/entities/factories/PopupFactory.html" class="type-name-link" title="class in com.csse3200.game.entities.factories">PopupFactory</a> - Class in <a href="com/csse3200/game/entities/factories/package-summary.html">com.csse3200.game.entities.factories</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/PopupFactory.html#%3Cinit%3E()" class="member-name-link">PopupFactory()</a> - Constructor for class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/PopupFactory.html" title="class in com.csse3200.game.entities.factories">PopupFactory</a></dt>
@@ -3557,6 +3577,11 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/areas/terrain/TerrainTile.html#setTextureRegion(com.badlogic.gdx.graphics.g2d.TextureRegion)" class="member-name-link">setTextureRegion(TextureRegion)</a> - Method in class com.csse3200.game.areas.terrain.<a href="com/csse3200/game/areas/terrain/TerrainTile.html" title="class in com.csse3200.game.areas.terrain">TerrainTile</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/resources/PopupComponent.html#setTimer(com.csse3200.game.services.GameTime)" class="member-name-link">setTimer(GameTime)</a> - Method in class com.csse3200.game.components.resources.<a href="com/csse3200/game/components/resources/PopupComponent.html" title="class in com.csse3200.game.components.resources">PopupComponent</a></dt>
+<dd>
+<div class="block">Overrides the generated timer, in case you want to prolong the life, pause the popup, etc
+ (useful for testing)</div>
+</dd>
 <dt><a href="com/csse3200/game/components/resources/ProductionComponent.html#setTimer(com.csse3200.game.services.GameTime)" class="member-name-link">setTimer(GameTime)</a> - Method in class com.csse3200.game.components.resources.<a href="com/csse3200/game/components/resources/ProductionComponent.html" title="class in com.csse3200.game.components.resources">ProductionComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/GameTime.html#setTimeScale(float)" class="member-name-link">setTimeScale(float)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTime.html" title="class in com.csse3200.game.services">GameTime</a></dt>

@@ -8,6 +8,7 @@ import com.csse3200.game.components.ProximityActivationComponent;
 import com.csse3200.game.components.structures.JoinLayer;
 import com.csse3200.game.components.structures.JoinableComponent;
 import com.csse3200.game.components.structures.JoinableComponentShapes;
+import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.WallConfig;
@@ -60,6 +61,7 @@ public class Wall extends PlaceableEntity {
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));
         addComponent(new ProximityActivationComponent(1.5f, player, this::onPlayerEnter, this::onPlayerExit));
+        addComponent(new StructureDestroyComponent());
 
         getComponent(JoinableComponent.class).scaleEntity();
     }

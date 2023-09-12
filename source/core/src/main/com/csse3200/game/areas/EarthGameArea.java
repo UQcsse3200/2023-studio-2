@@ -117,16 +117,16 @@ public class EarthGameArea extends GameArea {
             "images/base_enemy.atlas",
             "images/troll_enemy.atlas",
             "images/rangeEnemy.atlas",
-            "images/stone_wall.atlas",
-            "images/dirt_wall.atlas",
             "images/botanist.atlas",
             "images/boss_enemy.atlas",
             "images/botanist.atlas",
             "images/playerSS.atlas",
             "images/wrench.atlas",
             "images/baseballbat.atlas",
-            "images/open_gate.atlas",
-            "images/closed_gate.atlas",
+            "images/structures/closed_gate.atlas",
+            "images/structures/open_gate.atlas",
+            "images/structures/dirt_wall.atlas",
+            "images/structures/stone_wall.atlas",
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
@@ -365,11 +365,13 @@ public class EarthGameArea extends GameArea {
     }
 
     private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer();
-        spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-        targetables.add(newPlayer);
-        player = newPlayer;
-        return newPlayer;
+        //TODO: Think of solution for sharing player between screens (Currently it keeps getting disposed!!)
+        this.player = PlayerFactory.createPlayer();
+        this.player.getEvents().addListener("death", () -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH));
+        ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", this.player);
+        spawnEntityAt(this.player, PLAYER_SPAWN, true, true);
+        targetables.add(this.player);
+        return this.player;
     }
     private Entity spawnCompanion(Entity playerEntity) {
         Entity newCompanion = CompanionFactory.createCompanion(playerEntity);

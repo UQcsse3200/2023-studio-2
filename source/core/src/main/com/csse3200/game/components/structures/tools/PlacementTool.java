@@ -16,15 +16,17 @@ public abstract class PlacementTool extends Tool {
     }
 
     @Override
-    public void interact(Entity player, GridPoint2 position) {
+    public boolean interact(Entity player, GridPoint2 position) {
         if (!isPositionValid(position)) {
-            return;
+            return false;
         }
 
         PlaceableEntity newStructure = createEntity(player);
         newStructure.addComponent(new CostComponent(cost));
 
         ServiceLocator.getStructurePlacementService().PlaceStructureAt(newStructure, position, false, false);
+
+        return true;
     }
 
     public abstract PlaceableEntity createEntity(Entity player);

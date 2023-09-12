@@ -35,7 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-
+import com.csse3200.game.components.ships.DistanceDisplay;
 
 
 
@@ -54,6 +54,7 @@ public class SpaceMapScreen extends ScreenAdapter {
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
     private Label distanceLabel;
+    private DistanceDisplay distanceDisplay;
 
 
     public SpaceMapScreen(GdxGame game) {
@@ -85,7 +86,9 @@ public class SpaceMapScreen extends ScreenAdapter {
         spaceGameArea.create();
         ship = ((SpaceGameArea) spaceGameArea).getShip();
         goal = ((SpaceGameArea) spaceGameArea).getGoal();
-
+        distanceDisplay = new DistanceDisplay();
+        distanceDisplay.create();
+        distanceDisplay.updateDistanceUI(0);
     }
 
     @Override
@@ -95,10 +98,7 @@ public class SpaceMapScreen extends ScreenAdapter {
         followShip();
         // Calculate the distance between the ship and the goal
         float distance = SpaceGameArea.calculateDistance(ship, goal);
-
-        // Print the distance to the console
-        System.out.println("Distance to goal: " + distance);
-
+        distanceDisplay.updateDistanceUI(distance);
         renderer.render();
 
     }

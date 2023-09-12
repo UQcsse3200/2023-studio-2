@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.csse3200.game.components.ships.DistanceDisplay;
 
 
 
@@ -68,8 +69,7 @@ public class SpaceGameArea extends GameArea {
         Entity goal = spawnGoal();
         createBoundary();
         spawnEnemy();
-        float distance = calculateDistance(newShip, goal);
-        System.out.println("Distance between Ship and Goal: " + distance);
+
     }
 
     private void playMusic() {

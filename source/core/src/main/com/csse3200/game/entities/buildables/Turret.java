@@ -21,19 +21,16 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-public class Turret extends PlaceableEntity{
-
-    private long start = System.currentTimeMillis();
-    private Vector2 position;
-    private Vector2 target;
+public class Turret extends PlaceableEntity {
 
     private static final TurretConfigs turretConfigs =
             FileLoader.readClass(TurretConfigs.class, "configs/turrets.json");
-
     TurretType type;
-
     int maxAmmo;
     int damage;
+    private long start = System.currentTimeMillis();
+    private Vector2 position;
+    private Vector2 target;
 
     public Turret(TurretType type, Entity player) {
         super();
@@ -61,13 +58,11 @@ public class Turret extends PlaceableEntity{
 
     public void startDamage(Entity focus) {
 
-        if(this.getComponent(CombatStatsComponent.class).getHealth() < this.getComponent(CombatStatsComponent.class).getMaxHealth()) {
+        if (this.getComponent(CombatStatsComponent.class).getHealth() < this.getComponent(CombatStatsComponent.class).getMaxHealth()) {
             this.getComponent(HealthBarComponent.class).setEnabled(true);
-        }
-        else if(this.getComponent(CombatStatsComponent.class).getHealth() == this.getComponent(CombatStatsComponent.class).getMaxHealth()) {
+        } else if (this.getComponent(CombatStatsComponent.class).getHealth() == this.getComponent(CombatStatsComponent.class).getMaxHealth()) {
             this.getComponent(HealthBarComponent.class).setEnabled(false);
-        }
-        else {
+        } else {
             this.getComponent(HealthBarComponent.class).setEnabled(false);
         }
         if (focus.getComponent(CombatStatsComponent.class) != null && focus.getComponent(CombatStatsComponent.class).getHealth() > 0) {

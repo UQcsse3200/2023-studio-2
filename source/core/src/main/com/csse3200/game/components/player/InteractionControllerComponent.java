@@ -7,7 +7,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
 public class InteractionControllerComponent extends Component {
-    private boolean effectAll;
+    private final boolean effectAll;
+
     public InteractionControllerComponent(boolean effectAll) {
         this.effectAll = effectAll;
     }

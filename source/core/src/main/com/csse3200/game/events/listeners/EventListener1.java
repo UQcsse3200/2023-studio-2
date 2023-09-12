@@ -5,5 +5,5 @@ package com.csse3200.game.events.listeners;
  */
 @FunctionalInterface
 public interface EventListener1<T> extends EventListener {
-  void handle(T arg);
+    void handle(T arg);
 }

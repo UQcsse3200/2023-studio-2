@@ -5,5 +5,5 @@ package com.csse3200.game.ai.tasks;
  * decide which task to run.
  */
 public interface PriorityTask extends Task {
-  int getPriority();
+    int getPriority();
 }

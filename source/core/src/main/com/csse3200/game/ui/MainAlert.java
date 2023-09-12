@@ -13,8 +13,9 @@ import static com.csse3200.game.screens.MainMenuScreen.logger;
 
 public class MainAlert extends Dialog {
 
-    private GdxGame game;
+    private final GdxGame game;
     private Runnable callback;
+
     public MainAlert(GdxGame game, String alert, Skin skin, String alertText) {
         super(alert, skin);
         this.game = game;

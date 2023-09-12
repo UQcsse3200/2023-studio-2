@@ -20,7 +20,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class ShipInteractionPopup extends Window {
     private final InputOverrideComponent inputOverrideComponent;
 
-    private Label descriptionLabel;
+    private final Label descriptionLabel;
 
     public ShipInteractionPopup() {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, getBrownBackgroundStatic()));
@@ -60,11 +60,6 @@ public class ShipInteractionPopup extends Window {
         ServiceLocator.getInputService().register(inputOverrideComponent);
     }
 
-    @Override
-    public boolean remove() {
-        ServiceLocator.getInputService().unregister(inputOverrideComponent);
-        return super.remove();
-    }
     private static TextureRegionDrawable getBrownBackgroundStatic() {
         Texture texture = createColoredTextureStatic(1, 1, Color.BROWN);
         return new TextureRegionDrawable(new TextureRegion(texture));
@@ -77,6 +72,12 @@ public class ShipInteractionPopup extends Window {
         Texture texture = new Texture(pixmap);
         pixmap.dispose();
         return texture;
+    }
+
+    @Override
+    public boolean remove() {
+        ServiceLocator.getInputService().unregister(inputOverrideComponent);
+        return super.remove();
     }
 
 }

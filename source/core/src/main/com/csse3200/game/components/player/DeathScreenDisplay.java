@@ -66,9 +66,9 @@ public class DeathScreenDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                    logger.debug("Restart button clicked");
-                    entity.getEvents().trigger("restart");
-                     }
+                        logger.debug("Restart button clicked");
+                        entity.getEvents().trigger("restart");
+                    }
                 });
 
         // Arrange UI elements in a table layout

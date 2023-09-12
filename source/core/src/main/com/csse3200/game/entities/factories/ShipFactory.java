@@ -13,7 +13,11 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class ShipFactory {
     //private static final ShipConfig stats =
-     //       FileLoader.readClass(ShipConfig.class, "configs/ship.json");
+    //       FileLoader.readClass(ShipConfig.class, "configs/ship.json");
+
+    private ShipFactory() {
+        throw new IllegalStateException("Instantiating static util class");
+    }
 
     public static Entity createShip() {
         InputComponent inputComponent =
@@ -32,16 +36,12 @@ public class ShipFactory {
                         //.addComponent(new ShipStatsComponent(stats.health))
                         //.addComponent(new InventoryComponent(stats.gold))
                         .addComponent(inputComponent);
-                        //.addComponent(new PlayerStatsDisplay());
+        //.addComponent(new PlayerStatsDisplay());
 
         PhysicsUtils.setScaledCollider(ship, 0.6f, 0.3f);
         ship.getComponent(ColliderComponent.class).setDensity(1.5f);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();
         return ship;
-    }
-
-    private ShipFactory() {
-        throw new IllegalStateException("Instantiating static util class");
     }
 }
 

@@ -13,27 +13,27 @@ public class NavigationBackground extends Actor {
     /**
      * The texture for the space background of the navigation screen.
      */
-    private Texture spaceBackground;
+    private final Texture spaceBackground;
 
     /**
      * Array of animations for individual star sprites.
      */
-    private Animation<TextureRegion>[] animations;
+    private final Animation<TextureRegion>[] animations;
 
     /**
      * Array of positions for individual star sprites.
      */
-    private Vector2[] spritePositions;
+    private final Vector2[] spritePositions;
 
     /**
      * The number of star sprites in the background.
      */
-    private int numOfSprites = 150;
+    private final int numOfSprites = 150;
 
     /**
      * Array to store the time passed for each sprite's animation.
      */
-    private float[] stateTimes;  // Time passed for each sprite's animation
+    private final float[] stateTimes;  // Time passed for each sprite's animation
 
     /**
      * Constructs a new NavigationBackground instance.
@@ -86,8 +86,8 @@ public class NavigationBackground extends Actor {
      * Called when the actor should be drawn.
      * Draws the black background and the animated star sprites.
      *
-     * @param batch        The batch to draw with.
-     * @param parentAlpha  The parent alpha value.
+     * @param batch       The batch to draw with.
+     * @param parentAlpha The parent alpha value.
      */
     @Override
     public void draw(Batch batch, float parentAlpha) {

@@ -10,29 +10,29 @@ import com.badlogic.gdx.utils.Array;
  * array if no hits occurred.
  */
 public class AllHitCallback implements RayCastCallback {
-  private final Array<RaycastHit> raycastHits;
-  public short layerMask = ~0;
+    private final Array<RaycastHit> raycastHits;
+    public short layerMask = ~0;
 
-  public AllHitCallback() {
-    this.raycastHits = new Array<>(false, 4);
-  }
-
-  public RaycastHit[] getHitsAndClear() {
-    RaycastHit[] hits = raycastHits.toArray();
-    raycastHits.clear();
-    return hits;
-  }
-
-  @Override
-  public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-    if ((fixture.getFilterData().categoryBits & layerMask) != 0) {
-      RaycastHit hit = new RaycastHit();
-      hit.fixture = fixture;
-      hit.normal = normal;
-      hit.point = point;
-      raycastHits.add(hit);
-      return fraction;
+    public AllHitCallback() {
+        this.raycastHits = new Array<>(false, 4);
     }
-    return 1;
-  }
+
+    public RaycastHit[] getHitsAndClear() {
+        RaycastHit[] hits = raycastHits.toArray();
+        raycastHits.clear();
+        return hits;
+    }
+
+    @Override
+    public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+        if ((fixture.getFilterData().categoryBits & layerMask) != 0) {
+            RaycastHit hit = new RaycastHit();
+            hit.fixture = fixture;
+            hit.normal = normal;
+            hit.point = point;
+            raycastHits.add(hit);
+            return fraction;
+        }
+        return 1;
+    }
 }

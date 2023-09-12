@@ -7,19 +7,19 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class RenderFactory {
 
-  public static Entity createCamera() {
-    return new Entity().addComponent(new CameraComponent());
-  }
+    private RenderFactory() {
+        throw new IllegalStateException("Instantiating static util class");
+    }
 
-  public static Renderer createRenderer() {
-    Entity camera = createCamera();
-    ServiceLocator.getEntityService().register(camera);
-    CameraComponent camComponent = camera.getComponent(CameraComponent.class);
+    public static Entity createCamera() {
+        return new Entity().addComponent(new CameraComponent());
+    }
 
-    return new Renderer(camComponent);
-  }
+    public static Renderer createRenderer() {
+        Entity camera = createCamera();
+        ServiceLocator.getEntityService().register(camera);
+        CameraComponent camComponent = camera.getComponent(CameraComponent.class);
 
-  private RenderFactory() {
-    throw new IllegalStateException("Instantiating static util class");
-  }
+        return new Renderer(camComponent);
+    }
 }

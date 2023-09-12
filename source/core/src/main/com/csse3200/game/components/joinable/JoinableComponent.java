@@ -19,6 +19,14 @@ import java.util.Map;
  * depending on its neighbours.
  */
 public class JoinableComponent extends AtlasRenderComponent {
+    private static final Map<JoinDirection, GridPoint2> DirectionMatrices = new HashMap<>() {
+        {
+            put(JoinDirection.UP, new GridPoint2(0, -2));
+            put(JoinDirection.DOWN, new GridPoint2(0, 2));
+            put(JoinDirection.LEFT, new GridPoint2(2, 0));
+            put(JoinDirection.RIGHT, new GridPoint2(-2, 0));
+        }
+    };
     private final Map<JoinDirection, Boolean> JoinedInDirectionMap = new HashMap<>() {
         {
             put(JoinDirection.UP, false);
@@ -29,14 +37,21 @@ public class JoinableComponent extends AtlasRenderComponent {
     };
     private final JoinLayer layer;
     private final JoinableComponentShapes shapes;
-    private static final Map<JoinDirection, GridPoint2> DirectionMatrices = new HashMap<>() {
-        {
-            put(JoinDirection.UP, new GridPoint2(0,-2));
-            put(JoinDirection.DOWN, new GridPoint2(0,2));
-            put(JoinDirection.LEFT, new GridPoint2(2,0));
-            put(JoinDirection.RIGHT, new GridPoint2(-2,0));
-        }
-    };
+
+    /**
+     * Creates a joinable component.
+     *
+     * @param textures - the textures to use for each cardinality
+     * @param layer    - the layer to join on
+     * @param shapes   - the collision shapes to use for each cardinality
+     */
+    public JoinableComponent(TextureAtlas textures, JoinLayer layer, JoinableComponentShapes shapes) {
+        super(textures, "no-connection");
+
+        this.layer = layer;
+        this.shapes = shapes;
+    }
+
     @Override
     public void create() {
         super.create();
@@ -50,10 +65,10 @@ public class JoinableComponent extends AtlasRenderComponent {
         }
 
         // calculates tile over in each direction
-        Entity up = structurePlacementService.getStructureAt(centrePosition.cpy().add(0,2));
-        Entity down = structurePlacementService.getStructureAt(centrePosition.cpy().add(0,-2));
-        Entity left = structurePlacementService.getStructureAt(centrePosition.cpy().add(-2,0));
-        Entity right = structurePlacementService.getStructureAt(centrePosition.cpy().add(2,0));
+        Entity up = structurePlacementService.getStructureAt(centrePosition.cpy().add(0, 2));
+        Entity down = structurePlacementService.getStructureAt(centrePosition.cpy().add(0, -2));
+        Entity left = structurePlacementService.getStructureAt(centrePosition.cpy().add(-2, 0));
+        Entity right = structurePlacementService.getStructureAt(centrePosition.cpy().add(2, 0));
 
         // adds whether there is a wall in each direction to the JoinDirection array.
         JoinedInDirectionMap.put(JoinDirection.UP, isEntityJoinable(up));
@@ -86,25 +101,10 @@ public class JoinableComponent extends AtlasRenderComponent {
     }
 
     /**
-     * Creates a joinable component.
-     *
-     * @param textures - the textures to use for each cardinality
-     * @param layer - the layer to join on
-     * @param shapes - the collision shapes to use for each cardinality
-     */
-    public JoinableComponent(TextureAtlas textures, JoinLayer layer, JoinableComponentShapes shapes) {
-        super(textures, "no-connection");
-
-        this.layer = layer;
-        this.shapes = shapes;
-    }
-
-
-    /**
      * Updates whether the entity should be joining in a given direction.
      *
      * @param direction - the direction the entity should / should not be joined in.
-     * @param isJoined - whether the entity is joined in the given direction.
+     * @param isJoined  - whether the entity is joined in the given direction.
      */
     public void updateJoin(JoinDirection direction, boolean isJoined) {
         JoinedInDirectionMap.put(direction, isJoined);
@@ -162,6 +162,7 @@ public class JoinableComponent extends AtlasRenderComponent {
 
     /**
      * Notifies all the entities neighbours of a change in join status.
+     *
      * @param isJoined - whether the neighbours should or should not be joined.
      */
     public void notifyNeighbours(boolean isJoined) {
@@ -177,9 +178,9 @@ public class JoinableComponent extends AtlasRenderComponent {
     /**
      * Notifies the neighbour in the given direction of a change in join status.
      *
-     * @param direction - the direction of the neighbour to notify.
+     * @param direction      - the direction of the neighbour to notify.
      * @param centrePosition - the centre position of the entity.
-     * @param isJoined - whether the neighbour should or should not be joined.
+     * @param isJoined       - whether the neighbour should or should not be joined.
      */
     private void notifyNeighbour(JoinDirection direction, GridPoint2 centrePosition, boolean isJoined) {
         StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();

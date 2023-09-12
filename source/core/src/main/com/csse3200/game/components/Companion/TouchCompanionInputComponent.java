@@ -12,6 +12,7 @@ import com.csse3200.game.utils.math.Vector2Utils;
 public class TouchCompanionInputComponent extends InputComponent {
 
     private final Vector2 walkDirection = Vector2.Zero.cpy();
+
     public TouchCompanionInputComponent() {
         super(5);
     }
@@ -82,9 +83,22 @@ public class TouchCompanionInputComponent extends InputComponent {
 
 
 /*
-*//**
+ *//**
  * Input handler for the Companion for keyboard and touch (mouse) input.
  * This input handler uses keyboard and touch input.
+ * <p>
+ * Triggers Companion events on specific keycodes.
+ *
+ * @return whether the input was processed
+ * @return whether the input was processed
+ * @return whether the input was processed
+ * @see InputProcessor#keyDown(int)
+ * <p>
+ * Triggers Companion events on specific keycodes.
+ * @see InputProcessor#keyUp(int)
+ * <p>
+ * Triggers the Companionattack.
+ * @see InputProcessor#touchDown(int, int, int, int)
  *//*
 public class TouchCompanionInputComponent extends InputComponent {
     private final Vector2 walkDirection = Vector2.Zero.cpy();
@@ -94,11 +108,11 @@ public class TouchCompanionInputComponent extends InputComponent {
     }
 
     *//**
-     * Triggers Companion events on specific keycodes.
-     *
-     * @return whether the input was processed
-     * @see InputProcessor#keyDown(int)
-     *//*
+ * Triggers Companion events on specific keycodes.
+ *
+ * @return whether the input was processed
+ * @see InputProcessor#keyDown(int)
+ *//*
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
@@ -124,11 +138,11 @@ public class TouchCompanionInputComponent extends InputComponent {
     }
 
     *//**
-     * Triggers Companion events on specific keycodes.
-     *
-     * @return whether the input was processed
-     * @see InputProcessor#keyUp(int)
-     *//*
+ * Triggers Companion events on specific keycodes.
+ *
+ * @return whether the input was processed
+ * @see InputProcessor#keyUp(int)
+ *//*
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
@@ -154,10 +168,10 @@ public class TouchCompanionInputComponent extends InputComponent {
     }
 
     *//**
-     * Triggers the Companionattack.
-     * @return whether the input was processed
-     * @see InputProcessor#touchDown(int, int, int, int)
-     *//*
+ * Triggers the Companionattack.
+ * @return whether the input was processed
+ * @see InputProcessor#touchDown(int, int, int, int)
+ *//*
     @Override
 
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {

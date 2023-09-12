@@ -26,307 +26,312 @@ import org.slf4j.LoggerFactory;
  * </pre>
  */
 public class Entity {
-  private static final Logger logger = LoggerFactory.getLogger(Entity.class);
-  private static int nextId = 0;
-  private static final String EVT_NAME_POS = "setPosition";
-  private String entityType;
-  private final int id;
+    private static final Logger logger = LoggerFactory.getLogger(Entity.class);
+    private static final String EVT_NAME_POS = "setPosition";
+    private static int nextId = 0;
+    protected final IntMap<Component> components;
+    private final int id;
+    private final EventHandler eventHandler;
+    private String entityType;
+    private boolean enabled = true;
+    private boolean created = false;
+    private Vector2 position = Vector2.Zero.cpy();
+    private Vector2 scale = new Vector2(1, 1);
+    private float rotation = 0;
+    private Array<Component> createdComponents;
+    private WallType wallType;
 
-  protected final IntMap<Component> components;
-  private final EventHandler eventHandler;
-  private boolean enabled = true;
-  private boolean created = false;
-  private Vector2 position = Vector2.Zero.cpy();
-  private Vector2 scale = new Vector2(1, 1);
-  private float rotation = 0;
-  private Array<Component> createdComponents;
-  private WallType wallType;
 
+    public Entity() {
+        this.entityType = "";
+        id = nextId;
+        nextId++;
+        this.rotation = 0;
 
-  public Entity() {
-    this.entityType = "";
-    id = nextId;
-    nextId++;
-    this.rotation = 0;
-
-    components = new IntMap<>(4);
-    eventHandler = new EventHandler();
-  }
-
-  /**
-   * Function to set rotation
-   * @param rot - rotation of entity to set to
-   */
-  public void setRotation(float rot) {
-    this.rotation = rot;
-  }
-
-  /**
-   * function to get rotation
-   * @return return rotation of entity
-   */
-  public float getRotation() {
-    return this.rotation;
-  }
-
-  /**
-   * Enable or disable an entity. Disabled entities do not run update() or earlyUpdate() on their
-   * components, but can still be disposed.
-   *
-   * @param enabled true for enable, false for disable.
-   */
-  public void setEnabled(boolean enabled) {
-    logger.debug("Setting enabled={} on entity {}", enabled, this);
-    this.enabled = enabled;
-  }
-
-  /**
-   * Get the entity's game position.
-   *
-   * @return position
-   */
-  public Vector2 getPosition() {
-    return position.cpy(); // Cpy gives us pass-by-value to prevent bugs
-  }
-
-  /**
-   * Set the entity's game position.
-   *
-   * @param position new position.
-   */
-  public void setPosition(Vector2 position) {
-    this.position = position.cpy();
-    getEvents().trigger(EVT_NAME_POS, position.cpy());
-  }
-
-  /**
-   * Set the entity's game position.
-   *
-   * @param x new x position
-   * @param y new y position
-   */
-  public void setPosition(float x, float y) {
-    this.position.x = x;
-    this.position.y = y;
-    getEvents().trigger(EVT_NAME_POS, position.cpy());
-  }
-
-  /**
-   * Sets the type of entity
-   * @param type type of entity being created eg. player
-   */
-  public void setEntityType(String type) {
-    this.entityType = type;
-  }
-
-  /**
-   * Returns the type of entityS
-   * @return type of entity eg. player
-   */
-  public String getEntityType() {
-    return this.entityType;
-  }
-
-  /**
-   * Set the entity's game position and optionally notifies listeners.
-   *
-   * @param position new position.
-   * @param notify true to notify (default), false otherwise
-   */
-  public void setPosition(Vector2 position, boolean notify) {
-    this.position = position;
-    if (notify) {
-      getEvents().trigger(EVT_NAME_POS, position);
+        components = new IntMap<>(4);
+        eventHandler = new EventHandler();
     }
-  }
 
-  /**
-   * Get the entity's scale. Used for rendering and physics bounding box calculations.
-   *
-   * @return Scale in x and y directions. 1 = 1 metre.
-   */
-  public Vector2 getScale() {
-    return scale.cpy(); // Cpy gives us pass-by-value to prevent bugs
-  }
-
-  /**
-   * Set the entity's scale.
-   *
-   * @param scale new scale in metres
-   */
-  public void setScale(Vector2 scale) {
-    this.scale = scale.cpy();
-  }
-
-  /**
-   * Set the entity's scale.
-   *
-   * @param x width in metres
-   * @param y height in metres
-   */
-  public void setScale(float x, float y) {
-    this.scale.x = x;
-    this.scale.y = y;
-  }
-
-  /**
-   * Set the entity's width and scale the height to maintain aspect ratio.
-   *
-   * @param x width in metres
-   */
-  public void scaleWidth(float x) {
-    this.scale.y = this.scale.y / this.scale.x * x;
-    this.scale.x = x;
-  }
-
-  /**
-   * Set the entity's height and scale the width to maintain aspect ratio.
-   *
-   * @param y height in metres
-   */
-  public void scaleHeight(float y) {
-    this.scale.x = this.scale.x / this.scale.y * y;
-    this.scale.y = y;
-  }
-
-  /**
-   * Get the entity's center position
-   *
-   * @return center position
-   */
-  public Vector2 getCenterPosition() {
-    return getPosition().mulAdd(getScale(), 0.5f);
-  }
-
-  /**
-   * Get a component of type T on the entity.
-   *
-   * @param type The component class, e.g. RenderComponent.class
-   * @param <T> The component type, e.g. RenderComponent
-   * @return The entity component, or null if nonexistent.
-   */
-  @SuppressWarnings("unchecked")
-  public <T extends Component> T getComponent(Class<T> type) {
-    ComponentType componentType = ComponentType.getFrom(type);
-    return (T) components.get(componentType.getId());
-  }
-
-  /**
-   * Add a component to the entity. Can only be called before the entity is registered in the world.
-   *
-   * @param component The component to add. Only one component of a type can be added to an entity.
-   * @return Itself
-   */
-  public Entity addComponent(Component component) {
-    if (created) {
-      logger.error(
-              "Adding {} to {} after creation is not supported and will be ignored", component, this);
-      return this;
+    /**
+     * function to get rotation
+     *
+     * @return return rotation of entity
+     */
+    public float getRotation() {
+        return this.rotation;
     }
-    ComponentType componentType = ComponentType.getFrom(component.getClass());
-    if (components.containsKey(componentType.getId())) {
-      logger.error(
-              "Attempted to add multiple components of class {} to {}. Only one component of a class "
-                      + "can be added to an entity, this will be ignored.",
-              component,
-              this);
-      return this;
+
+    /**
+     * Function to set rotation
+     *
+     * @param rot - rotation of entity to set to
+     */
+    public void setRotation(float rot) {
+        this.rotation = rot;
     }
-    components.put(componentType.getId(), component);
-    component.setEntity(this);
 
-    return this;
-  }
-
-  /** Dispose of the entity. This will dispose of all components on this entity. */
-  public void dispose() {
-    for (Component component : createdComponents) {
-      component.dispose();
+    /**
+     * Enable or disable an entity. Disabled entities do not run update() or earlyUpdate() on their
+     * components, but can still be disposed.
+     *
+     * @param enabled true for enable, false for disable.
+     */
+    public void setEnabled(boolean enabled) {
+        logger.debug("Setting enabled={} on entity {}", enabled, this);
+        this.enabled = enabled;
     }
-    ServiceLocator.getEntityService().unregister(this);
-  }
 
-  /**
-   * Create the entity and start running. This is called when the entity is registered in the world,
-   * and should not be called manually.
-   */
-  public void create() {
-    if (created) {
-      logger.error(
-              "{} was created twice. Entity should only be registered with the entity service once.",
-              this);
-      return;
+    /**
+     * Get the entity's game position.
+     *
+     * @return position
+     */
+    public Vector2 getPosition() {
+        return position.cpy(); // Cpy gives us pass-by-value to prevent bugs
     }
-    createdComponents = components.values().toArray();
-    for (Component component : createdComponents) {
-      component.create();
+
+    /**
+     * Set the entity's game position.
+     *
+     * @param position new position.
+     */
+    public void setPosition(Vector2 position) {
+        this.position = position.cpy();
+        getEvents().trigger(EVT_NAME_POS, position.cpy());
     }
-    created = true;
-  }
 
-  /**
-   * Perform an early update on all components. This is called by the entity service and should not
-   * be called manually.
-   */
-  public void earlyUpdate() {
-    if (!enabled) {
-      return;
+    /**
+     * Set the entity's game position.
+     *
+     * @param x new x position
+     * @param y new y position
+     */
+    public void setPosition(float x, float y) {
+        this.position.x = x;
+        this.position.y = y;
+        getEvents().trigger(EVT_NAME_POS, position.cpy());
     }
-    for (Component component : createdComponents) {
-      component.triggerEarlyUpdate();
+
+    /**
+     * Returns the type of entityS
+     *
+     * @return type of entity eg. player
+     */
+    public String getEntityType() {
+        return this.entityType;
     }
-  }
 
-  /**
-   * Perform an update on all components. This is called by the entity service and should not be
-   * called manually.
-   */
-  public void update() {
-    if (!enabled) {
-      return;
+    /**
+     * Sets the type of entity
+     *
+     * @param type type of entity being created eg. player
+     */
+    public void setEntityType(String type) {
+        this.entityType = type;
     }
-    for (Component component : createdComponents) {
-      component.triggerUpdate();
+
+    /**
+     * Set the entity's game position and optionally notifies listeners.
+     *
+     * @param position new position.
+     * @param notify   true to notify (default), false otherwise
+     */
+    public void setPosition(Vector2 position, boolean notify) {
+        this.position = position;
+        if (notify) {
+            getEvents().trigger(EVT_NAME_POS, position);
+        }
     }
-  }
 
-  /**
-   * This entity's unique ID. Used for equality checks
-   *
-   * @return unique ID
-   */
-  public int getId() {
-    return id;
-  }
+    /**
+     * Get the entity's scale. Used for rendering and physics bounding box calculations.
+     *
+     * @return Scale in x and y directions. 1 = 1 metre.
+     */
+    public Vector2 getScale() {
+        return scale.cpy(); // Cpy gives us pass-by-value to prevent bugs
+    }
 
-  public Vector2 getPosition1() {
-    return position;
-  }
+    /**
+     * Set the entity's scale.
+     *
+     * @param scale new scale in metres
+     */
+    public void setScale(Vector2 scale) {
+        this.scale = scale.cpy();
+    }
 
-  /**
-   * Get the event handler attached to this entity. Can be used to trigger events from an attached
-   * component, or listen to events from a component.
-   *
-   * @return entity's event handler
-   */
-  public EventHandler getEvents() {
-    return eventHandler;
-  }
+    /**
+     * Set the entity's scale.
+     *
+     * @param x width in metres
+     * @param y height in metres
+     */
+    public void setScale(float x, float y) {
+        this.scale.x = x;
+        this.scale.y = y;
+    }
 
-  @Override
-  public boolean equals(Object obj) {
-    return (obj instanceof Entity && ((Entity) obj).getId() == this.getId());
-  }
+    /**
+     * Set the entity's width and scale the height to maintain aspect ratio.
+     *
+     * @param x width in metres
+     */
+    public void scaleWidth(float x) {
+        this.scale.y = this.scale.y / this.scale.x * x;
+        this.scale.x = x;
+    }
 
-  @Override
-  public int hashCode() {
-    return super.hashCode();
-  }
+    /**
+     * Set the entity's height and scale the width to maintain aspect ratio.
+     *
+     * @param y height in metres
+     */
+    public void scaleHeight(float y) {
+        this.scale.x = this.scale.x / this.scale.y * y;
+        this.scale.y = y;
+    }
 
-  @Override
-  public String toString() {
-    return String.format("Entity{id=%d}", id);
-  }
+    /**
+     * Get the entity's center position
+     *
+     * @return center position
+     */
+    public Vector2 getCenterPosition() {
+        return getPosition().mulAdd(getScale(), 0.5f);
+    }
+
+    /**
+     * Get a component of type T on the entity.
+     *
+     * @param type The component class, e.g. RenderComponent.class
+     * @param <T>  The component type, e.g. RenderComponent
+     * @return The entity component, or null if nonexistent.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Component> T getComponent(Class<T> type) {
+        ComponentType componentType = ComponentType.getFrom(type);
+        return (T) components.get(componentType.getId());
+    }
+
+    /**
+     * Add a component to the entity. Can only be called before the entity is registered in the world.
+     *
+     * @param component The component to add. Only one component of a type can be added to an entity.
+     * @return Itself
+     */
+    public Entity addComponent(Component component) {
+        if (created) {
+            logger.error(
+                    "Adding {} to {} after creation is not supported and will be ignored", component, this);
+            return this;
+        }
+        ComponentType componentType = ComponentType.getFrom(component.getClass());
+        if (components.containsKey(componentType.getId())) {
+            logger.error(
+                    "Attempted to add multiple components of class {} to {}. Only one component of a class "
+                            + "can be added to an entity, this will be ignored.",
+                    component,
+                    this);
+            return this;
+        }
+        components.put(componentType.getId(), component);
+        component.setEntity(this);
+
+        return this;
+    }
+
+    /**
+     * Dispose of the entity. This will dispose of all components on this entity.
+     */
+    public void dispose() {
+        for (Component component : createdComponents) {
+            component.dispose();
+        }
+        ServiceLocator.getEntityService().unregister(this);
+    }
+
+    /**
+     * Create the entity and start running. This is called when the entity is registered in the world,
+     * and should not be called manually.
+     */
+    public void create() {
+        if (created) {
+            logger.error(
+                    "{} was created twice. Entity should only be registered with the entity service once.",
+                    this);
+            return;
+        }
+        createdComponents = components.values().toArray();
+        for (Component component : createdComponents) {
+            component.create();
+        }
+        created = true;
+    }
+
+    /**
+     * Perform an early update on all components. This is called by the entity service and should not
+     * be called manually.
+     */
+    public void earlyUpdate() {
+        if (!enabled) {
+            return;
+        }
+        for (Component component : createdComponents) {
+            component.triggerEarlyUpdate();
+        }
+    }
+
+    /**
+     * Perform an update on all components. This is called by the entity service and should not be
+     * called manually.
+     */
+    public void update() {
+        if (!enabled) {
+            return;
+        }
+        for (Component component : createdComponents) {
+            component.triggerUpdate();
+        }
+    }
+
+    /**
+     * This entity's unique ID. Used for equality checks
+     *
+     * @return unique ID
+     */
+    public int getId() {
+        return id;
+    }
+
+    public Vector2 getPosition1() {
+        return position;
+    }
+
+    /**
+     * Get the event handler attached to this entity. Can be used to trigger events from an attached
+     * component, or listen to events from a component.
+     *
+     * @return entity's event handler
+     */
+    public EventHandler getEvents() {
+        return eventHandler;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Entity && ((Entity) obj).getId() == this.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Entity{id=%d}", id);
+    }
 }
 
 

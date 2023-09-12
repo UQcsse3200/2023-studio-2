@@ -13,8 +13,8 @@ import static com.csse3200.game.ui.UIComponent.skin;
 
 public class MainGameActionss extends MainGameActions {
     private static final Logger logger = LoggerFactory.getLogger(MainGameActionss.class);
-    private GdxGame game;
-    private Stage stage;
+    private final GdxGame game;
+    private final Stage stage;
 
     public MainGameActionss(GdxGame game, Stage stage) {
         super(game);
@@ -28,6 +28,6 @@ public class MainGameActionss extends MainGameActions {
     protected void onReturnPlanet() {
         logger.info("Exiting main game screen");
         MainAlertBox mainAlertBox = new MainAlertBox(game, "Return to planet", skin, "Game Over");
-        mainAlertBox.showDialog(stage,()-> game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet")));
+        mainAlertBox.showDialog(stage, () -> game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet")));
     }
 }

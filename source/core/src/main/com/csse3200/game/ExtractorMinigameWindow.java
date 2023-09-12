@@ -23,17 +23,6 @@ public class ExtractorMinigameWindow extends Window {
     private final InputOverrideComponent inputOverrideComponent;
     private final Entity extractor;
 
-    /**
-     * Returns a new Minigame window intialised with appropriate background.
-     * @param extractor This extractor will be repaired to max health if the minigame is finished correctly.
-     * @return New extractor minigame window
-     */
-    public static ExtractorMinigameWindow MakeNewMinigame(Entity extractor) {
-        Texture background = ServiceLocator.getResourceService().getAsset("images/SpaceMiniGameBackground.png", Texture.class);
-        background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
-        return new ExtractorMinigameWindow(background, extractor);
-    }
-
     public ExtractorMinigameWindow(Texture background, Entity extractor) {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
 
@@ -41,9 +30,9 @@ public class ExtractorMinigameWindow extends Window {
 
         //Here setup window to be centered on the stage with 80% width and 65% height.
         Stage stage = ServiceLocator.getRenderService().getStage();
-        setWidth((float) (stage.getWidth()*0.8));
-        setHeight((float) (stage.getHeight()*0.65));
-        setPosition(stage.getWidth()/2 - getWidth()/2 * getScaleX(), stage.getHeight()/2 - getHeight()/2 * getScaleY());
+        setWidth((float) (stage.getWidth() * 0.8));
+        setHeight((float) (stage.getHeight() * 0.65));
+        setPosition(stage.getWidth() / 2 - getWidth() / 2 * getScaleX(), stage.getHeight() / 2 - getHeight() / 2 * getScaleY());
         Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
         TextButton button = new TextButton("Complete Minigame", skin);
         TextButton button2 = new TextButton("Exit Minigame", skin);
@@ -66,6 +55,18 @@ public class ExtractorMinigameWindow extends Window {
         inputOverrideComponent = new InputOverrideComponent();
 
         ServiceLocator.getInputService().register(inputOverrideComponent);
+    }
+
+    /**
+     * Returns a new Minigame window intialised with appropriate background.
+     *
+     * @param extractor This extractor will be repaired to max health if the minigame is finished correctly.
+     * @return New extractor minigame window
+     */
+    public static ExtractorMinigameWindow MakeNewMinigame(Entity extractor) {
+        Texture background = ServiceLocator.getResourceService().getAsset("images/SpaceMiniGameBackground.png", Texture.class);
+        background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
+        return new ExtractorMinigameWindow(background, extractor);
     }
 
     /**

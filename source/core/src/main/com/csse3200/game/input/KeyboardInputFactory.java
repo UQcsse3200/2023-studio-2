@@ -1,6 +1,7 @@
 package com.csse3200.game.input;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+
 import com.csse3200.game.components.Companion.KeyboardCompanionInputComponent;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.ships.KeyboardShipInputComponent;
 import com.csse3200.game.ui.terminal.KeyboardTerminalInputComponent;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ public class KeyboardInputFactory extends InputFactory {
 
     /**
      * Creates an input handler for the player.
+     *
      * @return Player input handler
      */
     @Override
@@ -21,8 +23,10 @@ public class KeyboardInputFactory extends InputFactory {
         logger.debug("Creating player input handler");
         return new KeyboardPlayerInputComponent();
     }
+
     /**
      * Creates an input handler for the Companion.
+     *
      * @return Companion input handler
      */
     @Override

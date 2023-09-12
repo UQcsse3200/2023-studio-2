@@ -27,14 +27,12 @@ import org.slf4j.LoggerFactory;
  */
 public class SettingsScreen extends ScreenAdapter {
 
-    private Table table;
-    public AssetManager assetManager = new AssetManager();
     private static final Logger logger = LoggerFactory.getLogger(SettingsScreen.class);
-
+    private static final String[] Mamta = {"images/settings-image1.png"};
     private final GdxGame game;
     private final Renderer renderer;
-    private static final String[] Mamta = {"images/settings-image1.png"};
-
+    public AssetManager assetManager = new AssetManager();
+    private Table table;
     private Stage stage;
 
     /**

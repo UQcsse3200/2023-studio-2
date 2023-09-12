@@ -26,7 +26,7 @@ public class EndGame extends ScreenAdapter {
 
         Entity ui = new Entity();
 
-                ui.addComponent(new InputDecorator(stage, 10));
+        ui.addComponent(new InputDecorator(stage, 10));
 
         ServiceLocator.getEntityService().register(ui);
     }

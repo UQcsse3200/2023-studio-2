@@ -4,25 +4,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.ui.UIComponent;
 
 
 /**
  * A UI component for displaying Companion stats, e.g. health.
  */
 public class CompanionStatsDisplay extends UIComponent {
-    Table table;
-    private boolean update = false;
-    Table table2;
-
     public Entity playerEntity;
-
     public Label messageLabel;
     public Label label;
+    Table table;
+    Table table2;
+    private final boolean update = false;
 
 
-    public CompanionStatsDisplay(Entity playerEntitiy){
+    public CompanionStatsDisplay(Entity playerEntitiy) {
         this.playerEntity = playerEntitiy;
 
     }

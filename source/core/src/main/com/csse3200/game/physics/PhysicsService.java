@@ -5,17 +5,17 @@ package com.csse3200.game.physics;
  * entities to add or remove themselves from the world, as well as update their position each frame.
  */
 public class PhysicsService {
-  private final PhysicsEngine engine;
+    private final PhysicsEngine engine;
 
-  public PhysicsService() {
-    this(new PhysicsEngine());
-  }
+    public PhysicsService() {
+        this(new PhysicsEngine());
+    }
 
-  public PhysicsService(PhysicsEngine engine) {
-    this.engine = engine;
-  }
+    public PhysicsService(PhysicsEngine engine) {
+        this.engine = engine;
+    }
 
-  public PhysicsEngine getPhysics() {
-    return engine;
-  }
+    public PhysicsEngine getPhysics() {
+        return engine;
+    }
 }

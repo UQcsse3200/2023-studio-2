@@ -10,53 +10,54 @@ import com.csse3200.game.services.ServiceLocator;
  * be rendered each frame. Child classes can implement different kinds of rendering behaviour.
  */
 public abstract class RenderComponent extends Component implements Renderable, Disposable {
-  private static final int DEFAULT_LAYER = 1;
-  private Float z_override = null;
+    private static final int DEFAULT_LAYER = 1;
+    private Float z_override = null;
 
-  @Override
-  public void create() {
-    ServiceLocator.getRenderService().register(this);
-  }
+    @Override
+    public void create() {
+        ServiceLocator.getRenderService().register(this);
+    }
 
-  @Override
-  public void dispose() {
-    ServiceLocator.getRenderService().unregister(this);
-  }
+    @Override
+    public void dispose() {
+        ServiceLocator.getRenderService().unregister(this);
+    }
 
-  @Override
-  public void render(SpriteBatch batch) {
-    draw(batch);
-  }
+    @Override
+    public void render(SpriteBatch batch) {
+        draw(batch);
+    }
 
-  @Override
-  public int compareTo(Renderable o) {
-    return Float.compare(getZIndex(), o.getZIndex());
-  }
+    @Override
+    public int compareTo(Renderable o) {
+        return Float.compare(getZIndex(), o.getZIndex());
+    }
 
-  @Override
-  public int getLayer() {
-    return DEFAULT_LAYER;
-  }
+    @Override
+    public int getLayer() {
+        return DEFAULT_LAYER;
+    }
 
-  @Override
-  public float getZIndex() {
-    // The smaller the Y value, the higher the Z index, so that closer entities are drawn in front
-    return this.z_override == null ? -entity.getPosition().y : this.z_override;
-  }
+    @Override
+    public float getZIndex() {
+        // The smaller the Y value, the higher the Z index, so that closer entities are drawn in front
+        return this.z_override == null ? -entity.getPosition().y : this.z_override;
+    }
 
-  /**
-   * Overrides the z index
-   * @param z the new z index
-   */
-  public void overrideZIndex(float z) {
-    // The smaller the Y value, the higher the Z index, so that closer entities are drawn in front
-    this.z_override = z;
-  }
+    /**
+     * Overrides the z index
+     *
+     * @param z the new z index
+     */
+    public void overrideZIndex(float z) {
+        // The smaller the Y value, the higher the Z index, so that closer entities are drawn in front
+        this.z_override = z;
+    }
 
-  /**
-   * Draw the renderable. Should be called only by the renderer, not manually.
-   *
-   * @param batch Batch to render to.
-   */
-  protected abstract void draw(SpriteBatch batch);
+    /**
+     * Draw the renderable. Should be called only by the renderer, not manually.
+     *
+     * @param batch Batch to render to.
+     */
+    protected abstract void draw(SpriteBatch batch);
 }

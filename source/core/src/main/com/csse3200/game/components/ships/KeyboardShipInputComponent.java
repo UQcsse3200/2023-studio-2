@@ -63,7 +63,7 @@ public class KeyboardShipInputComponent extends InputComponent {
                 triggerFlyEvent();
                 return true;
             }
-            case Keys.LEFT-> {
+            case Keys.LEFT -> {
                 flyDirection.sub(Vector2Utils.LEFT);
                 triggerFlyEvent();
                 return true;
@@ -73,7 +73,7 @@ public class KeyboardShipInputComponent extends InputComponent {
                 triggerFlyEvent();
                 return true;
             }
-            case Keys.RIGHT-> {
+            case Keys.RIGHT -> {
                 flyDirection.sub(Vector2Utils.RIGHT);
                 triggerFlyEvent();
                 return true;

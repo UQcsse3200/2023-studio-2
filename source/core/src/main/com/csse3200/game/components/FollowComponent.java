@@ -3,12 +3,13 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
-public class FollowComponent extends Component{
-    private Entity playerEntity;
-    private float followspeed;
-    private float minimumDistance = 0.5f;
 
-    public FollowComponent(Entity playerEntity,float followspeed){
+public class FollowComponent extends Component {
+    private final Entity playerEntity;
+    private final float followspeed;
+    private final float minimumDistance = 0.5f;
+
+    public FollowComponent(Entity playerEntity, float followspeed) {
         this.playerEntity = playerEntity;
         this.followspeed = followspeed;
     }

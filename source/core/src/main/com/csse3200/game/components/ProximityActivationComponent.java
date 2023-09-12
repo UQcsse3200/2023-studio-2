@@ -15,8 +15,8 @@ public class ProximityActivationComponent extends Component {
     protected final float radius;
     protected final ProximityFunc entered;
     protected final ProximityFunc exited;
-    private List<Entity> entities = new ArrayList<>();
     private final Map<Entity, Boolean> entityWithinRadiusMap = new HashMap<>();
+    private List<Entity> entities = new ArrayList<>();
 
     public ProximityActivationComponent(float radius, Entity entity,
                                         ProximityFunc entered, ProximityFunc exited) {

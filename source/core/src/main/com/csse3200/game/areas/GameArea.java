@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -18,6 +19,8 @@ import com.csse3200.game.services.StructurePlacementService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.csse3200.game.areas.EarthGameArea.getPlayer;
 
 /**
  * Represents an area in the game, such as a level, indoor area, etc. An area has a terrain and
@@ -100,6 +103,20 @@ public abstract class GameArea implements Disposable {
     areaEntities.add(entity);
     ServiceLocator.getEntityService().register(entity);
   }
+
+  /**
+   * Retrieves the speedMult property defined in the terrain's .tsx file
+   * @return Multiplier to modify the player's speed
+   */
+  public static float getSpeedMult() {
+    TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+    Vector2 playerPos = getPlayer().getPosition();
+    TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+    Object speedMult = cell.getTile().getProperties().get("speedMult");
+
+    return speedMult != null ? (float)speedMult : 1f;
+  }
+
 
   /**
    * Spawn entity on a given tile. Requires the terrain to be set first.

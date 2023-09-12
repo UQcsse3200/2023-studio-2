@@ -172,22 +172,9 @@ public class EarthGameArea extends GameArea {
      * tree when walking over it
      */
     private void spawnTreeTopLayer() {
-        GridPoint2 spawnTreeTop = new GridPoint2(0,30);
-                    Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
-                    spawnEntityAt(treeTop, spawnTreeTop, false, false);
-    }
-
-    /**
-     * Retrieves the speedMult property defined in the terrain's .tsx file
-     * @return Multiplier to modify the player's speed
-     */
-    public static float getSpeedMult() {
-        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
-        Vector2 playerPos = getPlayer().getPosition();
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
-        Object speedMult = cell.getTile().getProperties().get("speedMult");
-
-        return speedMult != null ? (float)speedMult : 1f;
+        GridPoint2 spawnTreeTop = new GridPoint2(0, 30);
+        Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
+        spawnEntityAt(treeTop, spawnTreeTop, false, false);
     }
 
 
@@ -427,5 +414,5 @@ public class EarthGameArea extends GameArea {
 
     public static Entity getPlayer() {
         return player;
-  }
+    }
 }

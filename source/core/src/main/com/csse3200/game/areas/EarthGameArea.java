@@ -53,12 +53,16 @@ public class EarthGameArea extends GameArea {
     /*private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);*/
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
-    private static final float ASTEROID_SIZE = 0.9f;
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
+
             "images/refinedExtractor2.png",
             "images/refinedBrokenExtractor.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
+
+            "images/extractor.png",
+            "images/broken_extractor.png",
+
             "images/box_boy_leaf.png",
             "images/RightShip.png",
             "images/wall.png",
@@ -81,6 +85,13 @@ public class EarthGameArea extends GameArea {
             "images/refinedShip.png",
             "images/stone_wall.png",
             "images/oldman_down_1.png",
+            "images/fire.png",
+            "images/Hole.png",
+            "images/spanner.png",
+            "images/extinguisherCoursor.png",
+            "images/extinguisher.png",
+            "images/spannerCursor.png",
+            "images/ExtractorminiGameBackground.png",
             "images/player_blank.png",
             "images/wrench.png",
             "images/durastell.png",
@@ -181,7 +192,6 @@ public class EarthGameArea extends GameArea {
 
         spawnEnemies();
         spawnBoss();
-        spawnAsteroids();
         spawnBotanist();
 
         playMusic();
@@ -235,14 +245,6 @@ public class EarthGameArea extends GameArea {
         // Spawn the entity at the calculated position
         // Arguments: entity, position, isCentered, isLocal
         spawnEntityAt(botanist, spawnPosition, true, false);
-    }
-
-    private void spawnAsteroids() {
-        //Extra Spicy Asteroids
-        GridPoint2 posAs = new GridPoint2(8, 8);
-        spawnEntityAt(
-                ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
-
     }
 
     private void spawnUpgradeBench() {

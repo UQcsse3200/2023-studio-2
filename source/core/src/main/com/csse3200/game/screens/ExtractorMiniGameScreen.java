@@ -1,7 +1,9 @@
 package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
@@ -25,6 +27,7 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
@@ -33,7 +36,10 @@ import org.slf4j.LoggerFactory;
 public class ExtractorMiniGameScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ExtractorMiniGameScreen.class);
 
-    private static final String[] fireTexture = {"images/fire.png"};
+    private static final String[] textures =
+            {"images/fire.png", "images/Hole.png", "images/elixir_collector.png", "images/spanner.png",
+                    "images/extinguisher.png", "images/extinguisherCursor.png", "images/spannerCursor.png",
+                    "images/bang.png"};
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
@@ -73,18 +79,19 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(fireTexture);
+        resourceService.loadTextures(textures);
         ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(fireTexture);
+        resourceService.unloadAssets(textures);
     }
 
     @Override
     public void dispose() {
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
         super.dispose();
         this.unloadAssets();
     }

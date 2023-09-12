@@ -27,6 +27,10 @@ import com.csse3200.game.ui.terminal.TerminalDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.csse3200.game.components.ships.DistanceDisplay;
+
+
 
 /**
  * The game screen containing the main game.
@@ -37,10 +41,14 @@ public class SpaceMapScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SpaceMapScreen.class);
 
     private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
-
+    private Entity ship;
+    private Entity goal;
     private final GdxGame game;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
+    private Label distanceLabel;
+    private DistanceDisplay distanceDisplay;
+
 
     public SpaceMapScreen(GdxGame game) {
         this.game = game;
@@ -69,15 +77,23 @@ public class SpaceMapScreen extends ScreenAdapter {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         SpaceGameArea spaceGameArea= new SpaceGameArea(terrainFactory);
         spaceGameArea.create();
+        ship = ((SpaceGameArea) spaceGameArea).getShip();
+        goal = ((SpaceGameArea) spaceGameArea).getGoal();
+        distanceDisplay = new DistanceDisplay();
+        distanceDisplay.create();
+        distanceDisplay.updateDistanceUI(0);
     }
 
     @Override
     public void render(float delta) {
-        Vector2 shipPos = ServiceLocator.getEntityService().getEntitiesByComponent(ShipActions.class).get(0).getPosition();
-        renderer.getCamera().getEntity().setPosition(shipPos);
         physicsEngine.update();
         ServiceLocator.getEntityService().update();
+        followShip();
+        // Calculate the distance between the ship and the goal
+        float distance = SpaceGameArea.calculateDistance(ship, goal);
+        distanceDisplay.updateDistanceUI(distance);
         renderer.render();
+
     }
 
     @Override
@@ -132,5 +148,14 @@ public class SpaceMapScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay());
 
         ServiceLocator.getEntityService().register(ui);
+
+    }
+
+    private void followShip() {
+        float maxX = 59 * 1f - renderer.getCamera().getCamera().viewportWidth * 0.5f;
+        float maxY = 29 * 1f - renderer.getCamera().getCamera().viewportHeight * 0.5f;
+        float cameraX = Math.min(maxX, Math.max(renderer.getCamera().getCamera().viewportWidth * 0.5f, ship.getPosition().x));
+        float cameraY = Math.min(maxY, Math.max(renderer.getCamera().getCamera().viewportHeight * 0.5f, ship.getPosition().y));
+        renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
     }
 }

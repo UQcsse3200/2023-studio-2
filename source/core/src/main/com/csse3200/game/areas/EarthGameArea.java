@@ -106,9 +106,9 @@ public class EarthGameArea extends GameArea {
             "images/upgradetree/stick.png",
             "images/upgradetree/exit.png",
             "images/player.png",
-            "images/Nebulite.png",
-            "images/Solstite.png",
-            "images/Durasteel.png"
+            "images/nebulite.png",
+            "images/solstite.png",
+            "images/durasteel.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -174,10 +174,11 @@ public class EarthGameArea extends GameArea {
         laboratory = spawnLaboratory();
         spawnUpgradeBench();
         spawnShip();
+
         player = spawnPlayer();
         companion = spawnCompanion(player);
         spawnPotion(companion,laboratory);
-        spawnTurret();
+
         spawnEnemies();
         spawnBoss();
         spawnAsteroids();
@@ -306,12 +307,6 @@ public class EarthGameArea extends GameArea {
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
         Entity ship = StructureFactory.createShip(game);
         spawnEntityAt(ship, spawnPosition, false, false);
-    }
-    public void spawnTurret() {
-        Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
-        Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
-        spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
-        spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
     }
 
     private void displayUI() {

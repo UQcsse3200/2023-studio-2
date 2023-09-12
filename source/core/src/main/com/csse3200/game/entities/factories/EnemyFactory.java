@@ -9,6 +9,7 @@ import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.EnemyAnimationController;
+import com.csse3200.game.components.structures.TurretTargetableComponent;
 import com.csse3200.game.components.tasks.AimTask;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
@@ -86,7 +87,8 @@ public class EnemyFactory {
                     PhysicsLayer.STRUCTURE |
                     PhysicsLayer.WEAPON),
                     1.5f))
-            .addComponent(new DialogComponent(dialogueBox));
+            .addComponent(new DialogComponent(dialogueBox))
+            .addComponent(new TurretTargetableComponent());
 
     if (type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);

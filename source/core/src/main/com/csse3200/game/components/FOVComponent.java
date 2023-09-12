@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 public class FOVComponent extends ProximityActivationComponent {
-    private final Map<Entity, Boolean> enemyIsInFOV = new HashMap<>();
-
     public FOVComponent(float radius, ProximityFunc entered, ProximityFunc exited) {
         super(radius, entered, exited);
     }
@@ -25,7 +23,11 @@ public class FOVComponent extends ProximityActivationComponent {
         var entities = ServiceLocator.getEntityService().getEntitiesByComponent(TurretTargetableComponent.class);
 
         for (Entity enemy : entities) {
-            var turretTargetableComponent = entity.getComponent(TurretTargetableComponent.class);
+            var turretTargetableComponent = enemy.getComponent(TurretTargetableComponent.class);
+
+            if (turretTargetableComponent == null) {
+                continue;
+            }
 
             boolean isInFOV = turretTargetableComponent.isInFov();
 

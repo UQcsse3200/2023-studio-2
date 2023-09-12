@@ -184,7 +184,6 @@ public class EarthGameArea extends GameArea {
         spawnBoss();
         spawnAsteroids();
         spawnBotanist();
-        spawnTurret();
 
         playMusic();
     }
@@ -310,12 +309,6 @@ public class EarthGameArea extends GameArea {
         Entity ship = StructureFactory.createShip(game);
         spawnEntityAt(ship, spawnPosition, false, false);
     }
-    public void spawnTurret() {
-        Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.LEVEL_ONE, player);
-        Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.LEVEL_TWO, player);
-        spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
-    }
-
 
     private void displayUI() {
         Entity ui = new Entity();

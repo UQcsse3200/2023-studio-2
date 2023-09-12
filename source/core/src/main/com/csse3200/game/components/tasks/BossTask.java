@@ -4,6 +4,7 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,8 @@ public class BossTask extends DefaultTask implements PriorityTask {
   private SpecialAttackTask specialAttackTask;
   private final float radius;
   private Entity target;
+  private boolean unleashed;
+  private boolean attackReady;
 
 
   /**
@@ -62,12 +65,25 @@ public class BossTask extends DefaultTask implements PriorityTask {
 
   @Override
   public void update() {
+    if (unleashed) {
+      status = Status.FINISHED;
+    }
+    // Check if health is below threshold
+    float currentHealth = owner.getEntity().getComponent(CombatStatsComponent.class).getHealth();
+    float maxHealth = owner.getEntity().getComponent(CombatStatsComponent.class).getMaxHealth();
+    if ((currentHealth / maxHealth) * 100 <= 50.0f && !unleashed) {
+      System.out.println("Special Attack Incoming");
+      attackReady = true;
+    }
+
     if (currentTask.getStatus() != Status.ACTIVE) {
       if (currentTask == waitTask) {
-        System.out.println("End Wait!");
-        startSpecialAttack();
+        if (attackReady && !unleashed) {
+          attackReady = false;
+          unleashed = true;
+          startSpecialAttack();
+        }
       } else {
-        System.out.println("Start Waiting");
         startWaiting();
       }
     }

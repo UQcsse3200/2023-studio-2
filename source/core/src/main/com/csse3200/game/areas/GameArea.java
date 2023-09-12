@@ -10,7 +10,6 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.StructurePlacementService;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

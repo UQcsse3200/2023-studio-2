@@ -1,6 +1,5 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -91,6 +90,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     keyFlags.put(keycode, 1);
 
 
+
     switch (keycode) {
       case Keys.SPACE:
         if (!dodge_available ||
@@ -113,6 +113,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerWalkEvent();
         }
         return true;
+
       case Keys.T:
         if (equippedItem == 3) {
           entity.getEvents().trigger("change_structure");

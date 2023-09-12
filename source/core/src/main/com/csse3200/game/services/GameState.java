@@ -38,6 +38,13 @@ public class GameState {
     }
 
     /**
+     * Clears the state data.
+     */
+    public void clear() {
+        stateData.clear();
+    }
+
+    /**
      * Returns a copy of the current game state data
      *
      * @return The copy of current state data

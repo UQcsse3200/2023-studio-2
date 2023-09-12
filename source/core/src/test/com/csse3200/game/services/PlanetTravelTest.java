@@ -27,17 +27,17 @@ public class PlanetTravelTest {
         Input inputMock = mock(Input.class);
         Gdx.input = inputMock;
         mockGame = mock(GdxGame.class);
-        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
+        ServiceLocator.registerGameStateObserverService(new GameStateObserver(new GameStateInteraction()));
         planetTravel = new PlanetTravel(mockGame);
     }
 
     @AfterEach
-    public void Final(){
+    public void cleanUp(){
         ServiceLocator.clear();
     }
 
     @Test
-    public void PlanetTravelTest() {
+    public void testPlanetTravel() {
         planetTravel.moveToNextPlanet("Earth");
         assertEquals("Earth", planetTravel.returnCurrent(), "The state data should match the set data.");
         //Skip the minigame because we are responsible for testing it.

@@ -22,4 +22,6 @@ public class WeaponConfig extends BaseEntityConfig {
     public float imageScale = 1;
 
     public WeaponType type;
+
+    public String iconPath;
 }

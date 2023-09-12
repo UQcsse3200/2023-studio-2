@@ -7,7 +7,8 @@
     "imageRotationOffset": 45,
     "spritePath": "images/sling_shot.atlas",
     "imageScale" : 0.2,
-    "type": "SLING_SHOT"
+    "type": "SLING_SHOT",
+    "iconPath" : "images/sling_shot.png"
   },
 
   "ELEC_WRENCH": {
@@ -19,7 +20,8 @@
     "attackCooldown": 10,
     "spritePath": "images/wrench.atlas",
     "imageScale" : 1,
-    "type": "ELEC_WRENCH"
+    "type": "ELEC_WRENCH",
+    "iconPath" : "images/wrench.png"
   },
 
   "THROW_ELEC_WRENCH": {
@@ -30,7 +32,8 @@
     "imageRotationOffset": 45,
     "spritePath": "images/wrench.atlas",
     "imageScale" : 1,
-    "type": "THROW_ELEC_WRENCH"
+    "type": "THROW_ELEC_WRENCH",
+    "iconPath" : "images/wrench.png"
   },
 
   "STICK": {

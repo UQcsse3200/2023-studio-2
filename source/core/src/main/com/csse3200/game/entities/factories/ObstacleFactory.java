@@ -205,7 +205,11 @@ public class ObstacleFactory {
     throw new IllegalStateException("Instantiating static util class");
   }
 
+  public static PlaceableEntity createCustomTurret(TurretConfig config) {
+    return new Turret(config);
+  }
 
+  //TODO: REMOVE - LEGACY
   public static PlaceableEntity createCustomTurret(TurretType type, Entity player) {
     return new Turret(type,player);
   }

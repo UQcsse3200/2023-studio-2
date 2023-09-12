@@ -9,26 +9,25 @@ import java.util.Map;
  */
 public class GameStateObserver extends EventHandler {
 
-    // The interaction instance to define corresponding game state and modification.
-    private final GameStateInteraction stateInteraction;
+    // The instance to define game state interaction. Preserved across Observers unless reset.
+    private static GameStateInteraction stateInteraction = new GameStateInteraction();
 
     /**
      * Constructs the GameStateObserver instance.
-     * Initialises the GameStateInteraction and registers event listeners.
+     * Registers event listeners with Observer.
      */
     public GameStateObserver() {
-        this.stateInteraction =  new GameStateInteraction();
-        this.generateStateListeners();
+        generateStateListeners();
     }
 
     /**
      * Constructs the GameStateObserver instance.
-     * Uses the given GameStateInteraction for interactions and registers event listeners.
+     * Overwrites state interactor with given gameStateInteractor and registers event listeners.
      *
-     * @param gameStateInteractor   The chosen GameStateInteraction to interface with.
+     * @param gameStateInteractor  The chosen GameStateInteraction for Observers to interface with.
      */
     public  GameStateObserver(GameStateInteraction gameStateInteractor) {
-        this.stateInteraction = gameStateInteractor;
+        stateInteraction = gameStateInteractor;
         this.generateStateListeners();
     }
 
@@ -38,9 +37,12 @@ public class GameStateObserver extends EventHandler {
      */
     private void generateStateListeners() {
         this.addListener("resourceAdd", stateInteraction::updateResource);
-        this.addListener("setCurrentPlanet", stateInteraction::put);
+        this.addListener("updatePlanet", stateInteraction::put);
         this.addListener("extractorsAdd", stateInteraction::updateExtractors);
+        this.addListener("extractorsTotal", stateInteraction::updateTotalExtractors);
         this.addListener("resourceMax", stateInteraction::updateMaxResources);
+        this.addListener("extractorsMax", stateInteraction::updateMaxExtractors);
+        this.addListener("updatePlayer", stateInteraction::put);
     }
 
     /**

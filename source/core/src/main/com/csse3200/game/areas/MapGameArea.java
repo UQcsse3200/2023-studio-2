@@ -21,6 +21,7 @@ import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TerrainService;
@@ -52,6 +53,7 @@ public class MapGameArea extends GameArea{
         mapConfig = FileLoader.readClass(GameAreaConfig.class, configPath, FileLoader.Location.INTERNAL);
         this.game = game;
         this.terrainFactory = terrainFactory;
+        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
     }
 
     /**

@@ -2,11 +2,8 @@ package com.csse3200.game.entities;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
@@ -23,6 +20,20 @@ public class EntityService {
 
   private Array<Entity> getEntities() {
     return entities;
+  }
+
+  /**
+   * Gets the player entity in the EntityService
+   *
+   * @return Entity - the player entity, or null - no player found in EntityService
+   */
+  public Entity getPlayer() {
+    for (Entity entity : entities) {
+      if (entity.getEntityType().equals("player")) {
+        return entity;
+      }
+    }
+    return null;
   }
 
   /**
@@ -83,4 +94,5 @@ public class EntityService {
       entity.dispose();
     }
   }
+
 }

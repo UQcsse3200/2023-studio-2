@@ -28,12 +28,12 @@ public class StoryScreen extends ScreenAdapter {
     private final GdxGame game;
     private final Renderer renderer;
     private static final String[] storyTextures = {
-            "images/1.png",
-            "images/2.png",
-            "images/3.png",
-            "images/4.png",
-            "images/5.png",
-            "images/6.png"
+            "images/P1_B.png",
+            "images/P2_B.png",
+            "images/P3_B.png",
+            "images/P4_B.png",
+            "images/P5_B.png",
+            "images/P6_B.png"
     };
 
 
@@ -109,7 +109,7 @@ public class StoryScreen extends ScreenAdapter {
         Entity ui = new Entity();
         ui.addComponent(new StoryDisplay())
                 .addComponent(new InputDecorator(stage, 10))
-                .addComponent(new StoryActions(game));;
+                .addComponent(new StoryActions(game));
 
         ServiceLocator.getEntityService().register(ui);
     }

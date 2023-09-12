@@ -6,5 +6,5 @@
   "isImmune": false,
   "gold": 10,
   "favouriteColour": "peach",
-  "spritePath": "images/Companion1.png"
+  "spritePath": "images/comp_spritesheet.atlas"
 }

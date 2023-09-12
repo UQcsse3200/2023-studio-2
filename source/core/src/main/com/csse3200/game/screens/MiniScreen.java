@@ -63,7 +63,6 @@ public class MiniScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().dispose();
 
         unloadAssets();
-        ServiceLocator.clear();
     }
 
 

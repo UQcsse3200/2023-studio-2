@@ -93,7 +93,6 @@ public class CompanionFactory {
         companion.scaleHeight(0.9f);
 
         companion.getComponent(CompanionActions.class).setBulletTexturePath(config.bulletTexturePath);
-        companion.getComponent(TextureRenderComponent.class).scaleEntity();
         return companion;
     }
 

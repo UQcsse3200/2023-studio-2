@@ -131,8 +131,9 @@ public class EnemyFactory {
    * @param behaviour Player or Destructible Targeting
    */
   private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent) {
-    boolean isPlayer = target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER;
-    boolean isStructure = target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE;
+    short layer = target.getComponent(HitboxComponent.class).getLayer();
+    boolean isPlayer = PhysicsLayer.contains(layer, (short) (PhysicsLayer.PLAYER | PhysicsLayer.COMPANION));
+    boolean isStructure = PhysicsLayer.contains(layer, PhysicsLayer.STRUCTURE);
     boolean matchingBehaviour = isPlayer && behaviour == EnemyBehaviour.PTE || isStructure && behaviour == EnemyBehaviour.DTE;
 
     int priority = matchingBehaviour ? 10 : 0; //Matching behaviour and target gives priority 10

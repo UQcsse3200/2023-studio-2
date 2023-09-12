@@ -1,6 +1,8 @@
 package com.csse3200.game.components.upgradetree;
 
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.entities.configs.WeaponConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,15 +27,26 @@ public class UpgradeNode {
     /** Y-coordinate of the node, typically used for UI positioning. */
     private float y;
 
+    /** Depth of the tree */
+    private int depth;
+
     /**
      * Constructs a new UpgradeNode with the given weapon type and image path.
-     * @param weaponType The type of weapon this node represents.
-     * @param imagePath Path to the image representing the weapon.
+     * @param config - The weapons config file
      */
-    UpgradeNode(WeaponType weaponType, String imagePath) {
-        this.imagePath = imagePath;
+    UpgradeNode(WeaponConfig config, WeaponType weaponType) {
+        this.imagePath = config.spritePath;
         this.weaponType = weaponType;
         this.children = new ArrayList<>();
+        this.depth = 0;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
+    public int getDepth() {
+        return depth;
     }
 
     /**

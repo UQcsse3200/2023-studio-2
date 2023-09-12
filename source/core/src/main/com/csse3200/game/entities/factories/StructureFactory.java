@@ -13,6 +13,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.ExtractorConfig;
 import com.csse3200.game.entities.configs.ShipConfig;
 import com.csse3200.game.entities.configs.UpgradeBenchConfig;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.ShipInteractionPopup;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
@@ -91,10 +93,10 @@ public class StructureFactory {
      * @param tickSize the amount of the resource produced at each tick
      * @return a new extractor Entity
      */
-    public static Entity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
-        Entity extractor = new Entity()
-                .addComponent(new DamageTextureComponent("images/extractor.png")
-                        .addTexture(0, "images/broken_extractor.png"))
+    public static PlaceableEntity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
+        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity()
+                .addComponent(new DamageTextureComponent("images/refinedExtractor2.png")
+                        .addTexture(0, "images/refinedBrokenExtractor.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
@@ -161,7 +163,7 @@ public class StructureFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                         .addComponent(new InteractableComponent(entity -> {
                             if (checkWinCondition(requirements)) {
-                                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                                game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
                             }
                         }, 5));
 
@@ -170,6 +172,7 @@ public class StructureFactory {
         ship.setScale(4f, 4.5f);
         PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
         return ship;
+
     }
 
     //TODO: REMOVE - LEGACY

@@ -44,7 +44,7 @@ public class PlanetScreen extends ScreenAdapter {
     private final String name;
     private String nextPlanetName;
 
-    private final Entity player;
+    private Entity player;
     private EarthGameArea gameArea; //TODO: Extend with new MapArea
 
     /** Starting position of the camera */
@@ -72,7 +72,13 @@ public class PlanetScreen extends ScreenAdapter {
     public PlanetScreen(GdxGame game, String name) {
         this.game = game;
         this.name = name;
+    }
 
+    /**
+     * Create the screen services and game areas on show.
+     */
+    @Override
+    public void show() {
         registerServices();
 
         loadAssets();

@@ -28,7 +28,6 @@ public class ServiceLocator {
   private static GameTime timeSource;
   private static InputService inputService;
   private static ResourceService resourceService;
-  private static GameState gameStateService;
   private static TerrainService terrainService;
   private static EntityPlacementService entityPlacementService;
   private static GameStateObserver gameStateObserverService;
@@ -53,7 +52,6 @@ public class ServiceLocator {
     return physicsService;
   }
 
-
   public static GameTime getTimeSource() {
     return timeSource;
   }
@@ -65,8 +63,6 @@ public class ServiceLocator {
   public static ResourceService getResourceService() {
     return resourceService;
   }
-  public static GameState getGameStateService(){return gameStateService;}
-
 
   public static GameStateObserver getGameStateObserverService() { return gameStateObserverService; }
 
@@ -74,13 +70,12 @@ public class ServiceLocator {
 
   public static TerrainService getTerrainService() { return terrainService; }
 
+  public static EntityPlacementService getEntityPlacementService() { return entityPlacementService; }
+
   public static void registerStructurePlacementService(StructurePlacementService service) {
     logger.debug("Registering stucture placement service {}", service);
     structurePlacementService = service;
   }
-
-
-  public static EntityPlacementService getEntityPlacementService() { return entityPlacementService; }
 
   public static void registerEntityPlacementService(EntityPlacementService service) {
     logger.debug("Registering entity placement service {}", service);
@@ -122,7 +117,6 @@ public class ServiceLocator {
     terrainService = source;
   }
 
-
   public static void registerGameStateObserverService(GameStateObserver source) {
     logger.debug("Registering game state observer service {}", source);
     gameStateObserverService = source;
@@ -135,9 +129,8 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
-    gameStateService = null;
-    gameStateObserverService = null;
     terrainService = null;
+    gameStateObserverService = null;
   }
 
   private ServiceLocator() {

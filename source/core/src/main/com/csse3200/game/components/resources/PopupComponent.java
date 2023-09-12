@@ -17,6 +17,16 @@ public class PopupComponent extends Component {
     double speed;
     int duration;
 
+    /**
+     * Popup Component
+     * a component which can be attached to an existing entity to delete it in a fancy way!
+     * The entity MUST have a RenderTextureComponent.
+     * when attached (with a duration and speed) this component will fade the entity upwards and out of sight over
+     * the duration, disposing of it properly afterwards.
+     *
+     * @param duration the amount of time (ms) before cleanup
+     * @param speed the speed of the popups motion
+     */
     public PopupComponent(int duration, double speed) {
         this.timer = new GameTime();
         this.startTime = this.timer.getTime();

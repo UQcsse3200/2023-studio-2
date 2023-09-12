@@ -6,13 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.entities.buildables.Wall;
-import com.csse3200.game.entities.buildables.WallType;
-import com.csse3200.game.entities.factories.BuildablesFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.ServiceLocator;
@@ -41,7 +36,7 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("walkStop", this::stopWalking);
         entity.getEvents().addListener("attack", this::attack);
         entity.getEvents().addListener("place", this::place);
-        entity.getEvents().addListener("remove", this::removeWall);
+        entity.getEvents().addListener("remove", this::remove);
         entity.getEvents().addListener("dodged", this::dodged);
         entity.getEvents().addListener("repair", this::repairWall);
         entity.getEvents().addListener("change_structure", this::changeStructure);
@@ -162,19 +157,18 @@ public class PlayerActions extends Component {
     }
 
     /**
-     * Removes a wall or gate the corresponding grid value from screen coords.
+     * Removes the structure the corresponding grid value from screen coords.
      *
      * @param screenX - the x coord of the screen
      * @param screenY - the y coord of teh screen
      */
-    void removeWall(int screenX, int screenY) {
+    void remove(int screenX, int screenY) {
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
         GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
         Entity structure = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
 
         if (structure != null) {
             ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
-            structure.dispose();
         }
     }
 

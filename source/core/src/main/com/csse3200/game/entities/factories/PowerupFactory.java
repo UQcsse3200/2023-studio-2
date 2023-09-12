@@ -27,10 +27,6 @@ public class PowerupFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new PowerupComponent(type, PhysicsLayer.PLAYER));
 
-        InteractLabel interactLabel = new InteractLabel(); //code for interaction prompt
-        powerup.addComponent(new DistanceCheckComponent(0.6f, interactLabel));
-        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
-
         powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));
         powerup.setScale(0.6f, 0.6f);
 

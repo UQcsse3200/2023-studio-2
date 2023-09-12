@@ -80,7 +80,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CombatStatsComponent</span>
 <span class="extends-implements">extends <a href="Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
 <div class="block">Component used to store information related to combat such as health, attack, etc. Any entities
- which engage it combat should have an instance of this class registered. This class can be
+ which engage in combat should have an instance of this class registered. This class can be
  extended for more specific combat needs.</div>
 </section>
 <section class="summary">
@@ -185,8 +185,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the entity's health.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setImmunity(boolean)" class="member-name-link">setImmunity</a><wbr>(boolean&nbsp;isImmune)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setHealth(int,boolean)" class="member-name-link">setHealth</a><wbr>(int&nbsp;newHealth,
+ boolean&nbsp;isHKeyPressed)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">sets the entity's health to maximum if H-Key is pressed on the keyboard.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setImmunity(boolean)" class="member-name-link">setImmunity</a><wbr>(boolean&nbsp;isImmune)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the entity's immunity status.</div>
 </div>
 </div>
@@ -268,6 +274,19 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>health</code> - health</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setHealth(int,boolean)">
+<h3>setHealth</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setHealth</span><wbr><span class="parameters">(int&nbsp;newHealth,
+ boolean&nbsp;isHKeyPressed)</span></div>
+<div class="block">sets the entity's health to maximum if H-Key is pressed on the keyboard.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>newHealth</code> - </dd>
+<dd><code>isHKeyPressed</code> - </dd>
 </dl>
 </section>
 </li>

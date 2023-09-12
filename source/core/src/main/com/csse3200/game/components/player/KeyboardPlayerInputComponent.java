@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
@@ -91,6 +92,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     keyFlags.put(keycode, 1);
 
 
+
     switch (keycode) {
       case Keys.SPACE:
         if (!dodge_available ||
@@ -113,6 +115,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerWalkEvent();
         }
         return true;
+
       case Keys.T:
         if (equippedItem == 3) {
           entity.getEvents().trigger("change_structure");

@@ -1,15 +1,22 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.ExtractorRepairPartComponent;
-import com.csse3200.game.components.InteractableComponent;
+import com.csse3200.game.areas.EarthGameArea;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.components.structures.ExtractorAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
+import com.csse3200.game.entities.configs.EnemyConfig;
+import com.csse3200.game.entities.configs.ExtractorConfig;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -17,6 +24,7 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -24,7 +32,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import java.util.ArrayList;
 
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.ShipInteractionPopup;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
@@ -42,6 +49,7 @@ public class StructureFactory {
     // * @param tickRate the frequency at which the extractor ticks (produces resources)
     // * @param tickSize the amount of the resource produced at each tick
 
+
     /**
      * Creates an extractor entity
      *
@@ -54,14 +62,27 @@ public class StructureFactory {
      * @return a new extractor Entity
      */
     public static PlaceableEntity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/ExtractorAnimation.atlas", TextureAtlas.class));
+        animator.addAnimation("animateBroken", 0.2f,Animation.PlayMode.LOOP);
+        animator.addAnimation("animateExtracting", 0.2f, Animation.PlayMode.LOOP);
+
         PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity()
-                .addComponent(new DamageTextureComponent("images/refinedExtractor2.png")
-                        .addTexture(0, "images/refinedBrokenExtractor.png"))
+//                .addComponent(new DamageTextureComponent("images/refinedExtractor2.png")
+//                        .addTexture(0, "images/refinedBrokenExtractor.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
+                .addComponent(animator)
                 .addComponent(new CombatStatsComponent(health, 0, 0, false))
-                .addComponent(new ProductionComponent(producedResource, tickRate, tickSize));
+                .addComponent(new ProductionComponent(producedResource, tickRate, tickSize))
+                .addComponent(new ExtractorAnimationController());
+
+        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
+        extractor.addComponent(new DistanceCheckComponent(5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
 
         //For testing start at 0 so you can repair
         extractor.getComponent(CombatStatsComponent.class).setHealth(0);
@@ -105,18 +126,23 @@ public class StructureFactory {
         ship.setScale(5f, 4.5f);
         PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
 
+        InteractLabel interactLabel = new InteractLabel(); //code for interaction prompt
+        ship.addComponent(new DistanceCheckComponent(5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
+
+
         ship.addComponent(new InteractableComponent(entity -> {
             //Exit to main menu if resource > 1000
             GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
             String resourceKey = "resource/" + Resource.Solstite;
             int currentResourceCount = (int) gameStateOb.getStateData(resourceKey);
             if (currentResourceCount > 1000) {
-                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
             } else {
                 ShipInteractionPopup shipPopup = new ShipInteractionPopup();
                 ServiceLocator.getRenderService().getStage().addActor(shipPopup);
             }
-        }, 5));
+        }, 5f));
         return ship;
 
     }
@@ -131,6 +157,10 @@ public class StructureFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"))
                 .addComponent(new UpgradeTree());
+
+        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
+        upgradeBench.addComponent(new DistanceCheckComponent(0.5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
 
         upgradeBench.addComponent(new InteractableComponent(entity -> {
             UpgradeDisplay minigame = UpgradeDisplay.createUpgradeDisplay(upgradeBench);

@@ -3,6 +3,8 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.ProximityControllerComponent;
+import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
@@ -84,7 +86,10 @@ public class PlayerFactory {
             .addComponent(new WeaponComponent())
             .addComponent(new DialogComponent(dialogueBox))
             .addComponent(new InteractionControllerComponent(false))
-            .addComponent(new StructurePicker());
+            .addComponent(new HealthBarComponent(true))
+            .addComponent(new StructurePicker())
+            .addComponent(new ProximityControllerComponent());
+
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

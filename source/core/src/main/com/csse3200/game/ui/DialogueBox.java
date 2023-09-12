@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.ServiceLocator;
 
 import static com.csse3200.game.screens.MainMenuScreen.logger;
 
@@ -68,6 +70,6 @@ public class DialogueBox extends Dialog {
 
     private void onOK() {
         logger.info("Start game");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
     }
 }

@@ -8,14 +8,14 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.ShipConfig;
-import com.csse3200.game.entities.configs.UpgradeBenchConfig;
+import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.entities.factories.*;
@@ -29,7 +29,11 @@ import com.csse3200.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A Base Game Area for any level.
@@ -71,9 +75,6 @@ public class MapGameArea extends GameArea{
         spawnCompanion(playerEntity);
 
         spawnEnemies();
-        spawnBoss();
-        //TODO: Check if needed
-        //spawnAsteroids();
         spawnBotanist();
 
         playMusic();
@@ -90,6 +91,8 @@ public class MapGameArea extends GameArea{
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+
+        resourceService.loadDynamicAssets(mapConfig.getTextures());
         if (mapConfig.texturePaths != null)
             resourceService.loadTextures(mapConfig.texturePaths);
         if (mapConfig.textureAtlasPaths != null)
@@ -184,18 +187,11 @@ public class MapGameArea extends GameArea{
      * Spawns powerups in the map at the positions as outlined by the config file
      */
     private void spawnPowerups() {
-        if (mapConfig.healthPowerups != null) {
-            for (GridPoint2 pos: mapConfig.healthPowerups) {
-                Entity healthPowerup = PowerupFactory.createHealthPowerup();
-                spawnEntityAt(healthPowerup, pos, true, false);
-            }
-        }
+        if (mapConfig.areaEntityConfig == null) return;
 
-        if (mapConfig.speedPowerups != null) {
-            for (GridPoint2 pos: mapConfig.speedPowerups) {
-                Entity speedPowerup = PowerupFactory.createSpeedPowerup();
-                spawnEntityAt(speedPowerup, pos, true, false);
-            }
+        for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.powerups) {
+            Entity powerup = PowerupFactory.createPowerup(powerupConfig);
+            spawnEntityAt(powerup, powerupConfig.position, true, false);
         }
     }
 
@@ -203,22 +199,12 @@ public class MapGameArea extends GameArea{
      * Spawns the upgrade bench to correspond to the config file provided
      */
     private void spawnUpgradeBench() {
-        //TODO: Update to upgradeBenchConfig
-        Entity upgradeBench = StructureFactory.createUpgradeBench();
-        spawnEntityAt(upgradeBench, new GridPoint2(20, 40), true, true);
-    }
+        if (mapConfig.areaEntityConfig == null) return;
 
-    /**
-     * Helper method to spawn all the extractors of a given resource type
-     * @param resource - Type of extractor to create
-     * @param positions - List of positions to place the extractors at
-     */
-    private void spawnResourceExtractors(Resource resource, List<GridPoint2> positions, long production) {
-        if (positions != null) {
-            for (GridPoint2 pos: positions) {
-                Entity extractor = StructureFactory.createExtractor(mapConfig.extractorStartHealth, resource, production, 1);
-                spawnEntityAt(extractor, pos, true, false);
-            }
+        UpgradeBenchConfig upgradeBenchConfig = mapConfig.areaEntityConfig.upgradeBench;
+        if (upgradeBenchConfig != null) {
+            Entity upgradeBench = StructureFactory.createUpgradeBench(upgradeBenchConfig);
+            spawnEntityAt(upgradeBench, upgradeBenchConfig.position, true, true);
         }
     }
 
@@ -227,32 +213,37 @@ public class MapGameArea extends GameArea{
      * Also spawns the resource display for each resource
      */
     private void spawnExtractors() {
-        //Spawn Extractors
-        spawnResourceExtractors(Resource.Solstite, mapConfig.solstitePositions, mapConfig.solstiteProduction);
-        spawnResourceExtractors(Resource.Durasteel, mapConfig.durasteelPositions, mapConfig.durasteelProduction);
-        spawnResourceExtractors(Resource.Nebulite, mapConfig.nebulitePositions, mapConfig.nebuliteProduction);
-
+        //Spawn Display
         int scale = 5;
         int steps = 64;
         int maxResource = 1000;
 
-        //Spawn Display
         ResourceDisplay resourceDisplayComponent = new ResourceDisplay(scale, steps, maxResource)
                 .withResource(Resource.Durasteel)
                 .withResource(Resource.Solstite)
                 .withResource(Resource.Nebulite);
         Entity resourceDisplay = new Entity().addComponent(resourceDisplayComponent);
         spawnEntity(resourceDisplay);
+
+        //Spawn extractors if any in game area
+        if (mapConfig.areaEntityConfig == null) return;
+
+        for (ExtractorConfig extractorConfig : mapConfig.areaEntityConfig.extractors) {
+            Entity extractor = StructureFactory.createExtractor(extractorConfig);
+            spawnEntityAt(extractor, extractorConfig.position, true, false);
+        }
     }
 
     /**
      * Spawns the ship at the position given by the config file
      */
     private void spawnShip() {
-        //TODO: Swap to ship config
-        if (mapConfig.shipPosition != null) {
-            Entity ship = StructureFactory.createShip(game, mapConfig.winConditions);
-            spawnEntityAt(ship, mapConfig.shipPosition, false, false);
+        if (mapConfig.areaEntityConfig == null) return;
+
+        ShipConfig shipConfig = mapConfig.areaEntityConfig.ship;
+        if (shipConfig != null) {
+            Entity ship = StructureFactory.createShip(game, mapConfig.winConditions, shipConfig);
+            spawnEntityAt(ship, shipConfig.position, false, false);
         }
     }
 
@@ -262,9 +253,9 @@ public class MapGameArea extends GameArea{
      * @return The player entity created
      */
     private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer();
-        if (mapConfig.playerPosition != null) {
-            spawnEntityAt(newPlayer, mapConfig.playerPosition, true, true);
+        Entity newPlayer = PlayerFactory.createPlayer(); //TODO: Fix config for player?
+        if (mapConfig.playerSpawn != null) {
+            spawnEntityAt(newPlayer, mapConfig.playerSpawn, true, true);
         } else {
             //If no position specified spawn in middle of map.
             GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);
@@ -278,10 +269,13 @@ public class MapGameArea extends GameArea{
      * @param playerEntity - player that will be accompanied
      */
     private void spawnCompanion(Entity playerEntity) {
+        if (mapConfig.areaEntityConfig == null) return;
+
         //Could spawn companion next to player if no position is specified.
-        if (mapConfig.companionPosition != null) {
-            Entity newCompanion = CompanionFactory.createCompanion(playerEntity);
-            spawnEntityAt(newCompanion, mapConfig.companionPosition, true, true);
+        CompanionConfig companionConfig = mapConfig.areaEntityConfig.companion;
+        if (companionConfig != null) {
+            Entity newCompanion = CompanionFactory.createCompanion(playerEntity, companionConfig);
+            spawnEntityAt(newCompanion, companionConfig.position, true, true);
         }
     }
 
@@ -289,40 +283,11 @@ public class MapGameArea extends GameArea{
      * Spawns all the enemies detailed in the Game Area.
      */
     private void spawnEnemies() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-        //TODO: Stop these being random?
+        if (mapConfig.areaEntityConfig == null) return;
 
-        // Spawning enemies based on set number of each type
-        for (int i = 0; i < mapConfig.numMeleePTE; i++) {
-            GridPoint2 randomPos1 = RandomUtils.random(minPos, maxPos);
-            Entity meleePTE = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
-            spawnEntityAt(meleePTE, randomPos1, true, true);
-        }
-
-        for (int i = 0; i < mapConfig.numMeleeDTE; i++) {
-            GridPoint2 randomPos2 = RandomUtils.random(minPos, maxPos);
-            Entity meleeDTE = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
-            spawnEntityAt(meleeDTE, randomPos2, true, true);
-        }
-
-        for (int i = 0; i < mapConfig.numRangePTE; i++) {
-            GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
-            Entity rangePTE = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
-            spawnEntityAt(rangePTE, randomPos3, true, true);
-        }
-    }
-
-    /**
-     * Spawns the boss for the Game Area's map.
-     */
-    private void spawnBoss() {
-        if (mapConfig.bossPosition != null) {
-            GridPoint2 pos = mapConfig.bossPosition;
-            Entity boss = EnemyFactory.createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
-            spawnEntityAt(boss, pos, true, true);
-            //TODO: Implement this?
-            //boss.addComponent(new DialogComponent(dialogueBox));
+        for (EnemyConfig enemyConfig : mapConfig.areaEntityConfig.enemies) {
+            Entity enemy = EnemyFactory.createEnemy(enemyConfig);
+            spawnEntityAt(enemy, enemyConfig.position, true, true);
         }
     }
 
@@ -330,9 +295,13 @@ public class MapGameArea extends GameArea{
      * Spawns the botanist NPC at the position given in the config file
      */
     private void spawnBotanist() {
-        GridPoint2 pos = mapConfig.botanistPosition;
-        Entity botanist = NPCFactory.createBotanist();
-        spawnEntityAt(botanist, pos, false, false);
+        if (mapConfig.areaEntityConfig == null) return;
+
+        BotanistConfig botanistConfig = mapConfig.areaEntityConfig.botanist;
+        if (botanistConfig != null) {
+            Entity botanist = NPCFactory.createBotanist(botanistConfig);
+            spawnEntityAt(botanist, botanistConfig.position, false, false);
+        }
         //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
     }
@@ -341,6 +310,7 @@ public class MapGameArea extends GameArea{
      * Plays the game music loaded from the config file
      */
     private void playMusic() {
+        if (mapConfig.backgroundMusicPath == null) return;
         UserSettings.Settings settings = UserSettings.get();
 
         Music music = ServiceLocator.getResourceService().getAsset(mapConfig.backgroundMusicPath, Music.class);
@@ -362,6 +332,15 @@ public class MapGameArea extends GameArea{
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+
+        if (mapConfig.areaEntityConfig != null) {
+            String[] textures = mapConfig.areaEntityConfig.getAllConfigs().stream()
+                    .map(BaseEntityConfig::getTextures)
+                    .flatMap(Collection::stream)
+                    .distinct()
+                    .toArray(String[]::new);
+            resourceService.unloadAssets(textures);
+        }
         if (mapConfig.texturePaths != null)
             resourceService.unloadAssets(mapConfig.texturePaths);
         if (mapConfig.textureAtlasPaths != null)

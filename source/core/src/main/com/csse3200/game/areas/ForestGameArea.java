@@ -56,7 +56,6 @@ public class ForestGameArea extends GameArea {
       "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
       "images/box_boy_leaf.png",
       "images/RightShip.png",
-          "images/Companion1.png",
       "images/tree.png",
       "images/wall.png",
       "images/wall2.png",
@@ -93,6 +92,11 @@ public class ForestGameArea extends GameArea {
           "images/TurretTwo.png",
       "images/rangeEnemy.png",
       "images/stone_wall.png",
+       "images/companionSS.png",
+          "images/companionSS_0.png",
+          "images/companionSS_1.png",
+          "images/companionSS_2.png",
+          "images/companionSS_03.png",
       "images/player.png"
   };
   private static final String[] forestTextureAtlases = {
@@ -111,6 +115,7 @@ public class ForestGameArea extends GameArea {
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
       "images/playerSS.atlas",
+          "images/companionSS.atlas",
       "images/player.atlas"
   };
 

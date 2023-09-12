@@ -33,8 +33,7 @@
     "images/resourcebar_foreground.png",
     "images/resourcebar_nebulite.png",
     "images/resourcebar_solstite.png",
-    "images/resourcebar_lights.png",
-    "images/playerSS_6.png"
+    "images/resourcebar_lights.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -48,7 +47,7 @@
     "images/botanist.atlas",
     "images/boss_enemy.atlas",
     "images/botanist.atlas",
-    "images/playerSS.atlas",
+    "images/player.atlas",
     "images/wrench.atlas",
     "images/open_gate.atlas",
     "images/closed_gate.atlas",
@@ -67,65 +66,17 @@
       "threshold": 100
     }
   ],
-  
-  "healthPowerups": [
-    {
-      "x": 10,
-      "y": 20
-    },
-    {
-      "x": 45,
-      "y": 30
-    }
-  ],
-  "speedPowerups": [
-    {
-      "x": 30,
-      "y": 25
-    }
-  ],
-  
-  "extractorStartHealth": 0,
-  "solstitePositions": [
-    {
-      "x": 20,
-      "y": 28
-    }
-  ],
-  "nebulitePositions": [
-    {
-      "x": 24,
-      "y": 28
-    }
-  ],
-  "durasteelPositions": [
-    {
-      "x": 28,
-      "y": 28
-    }
-  ],
-  "solstiteProduction": 100,
-  "nebuliteProduction": 100,
-  "durasteelProduction": 100,
-  
-  "shipPosition": {
-    "x": 40,
+  "playerSpawn": {
+    "x": 35,
     "y": 40
   },
-  "playerPosition": {
-    "x": 10,
-    "y": 10
-  },
-  "companionPosition": null,
-  "numMeleePTE": 2,
-  "numMeleeDTE": 3,
-  "numRangePTE": 1,
-  "bossPosition": {
-    "x": 36,
-    "y": 36
-  },
-  "botanistPosition": {
-    "x": 20,
-    "y": 12
+  "areaEntityConfig": {
+    "ship": {
+      "spritePath": "images/LeftShip.png",
+      "position": {
+        "x": 35,
+        "y": 40
+      }
+    }
   }
 }

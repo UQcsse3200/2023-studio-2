@@ -39,7 +39,7 @@ import com.csse3200.game.services.ServiceLocator;
  * similar characteristics.
  */
 public class EnemyFactory {
-  public static final NPCConfigs configs =
+  private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
   public static DialogueBox dialogueBox;
 
@@ -88,6 +88,7 @@ public class EnemyFactory {
             .addComponent(new HealthBarComponent(false))
             .addComponent(new TouchAttackComponent((short) (
                     PhysicsLayer.PLAYER |
+                    PhysicsLayer.COMPANION |
                     PhysicsLayer.WALL |
                     PhysicsLayer.STRUCTURE |
                     PhysicsLayer.WEAPON),

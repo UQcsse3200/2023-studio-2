@@ -10,6 +10,7 @@ import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.ExtractorConfig;
 import com.csse3200.game.entities.configs.ShipConfig;
 import com.csse3200.game.entities.configs.UpgradeBenchConfig;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
@@ -45,6 +46,39 @@ public class StructureFactory {
     public static final ShipConfig defaultShip =
             FileLoader.readClass(ShipConfig.class, "configs/ship.json");
 
+    /**
+     * Creates an extractor entity
+     *
+     * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
+
+     * @param config Configuration file to match extractor to
+     * @return a new extractor Entity
+     */
+    public static Entity createExtractor(ExtractorConfig config) {
+        Entity extractor = new Entity()
+                .addComponent(new DamageTextureComponent(config.spritePath)
+                        .addTexture(0, "images/broken_extractor.png")) //TODO: Fix this when new animations are implemented
+                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
+                .addComponent(new CombatStatsComponent(config.health, 0, 0, false))
+                .addComponent(new ProductionComponent(config.resource, config.tickRate, config.tickSize));
+
+        //For testing start at 0 so you can repair
+        extractor.getComponent(CombatStatsComponent.class).setHealth(0);
+        extractor.addComponent(new InteractableComponent(entity -> {
+            CombatStatsComponent healthStats = extractor.getComponent(CombatStatsComponent.class);
+
+            if (healthStats.isDead()) {
+                ExtractorMinigameWindow minigame = ExtractorMinigameWindow.MakeNewMinigame(extractor);
+                ServiceLocator.getRenderService().getStage().addActor(minigame);
+            }
+        }, 5f));
+        extractor.setScale(1.8f, 2f);
+        PhysicsUtils.setScaledCollider(extractor, 1f, 0.6f);
+
+        return extractor;
+    }
 
     /**
      * Creates an extractor entity

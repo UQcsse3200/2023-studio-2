@@ -1,8 +1,14 @@
 package com.csse3200.game.areas.mapConfig;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.csse3200.game.entities.configs.BaseEntityConfig;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GameAreaConfig {
     //Map Assets - all entity specific paths should be defined within the levelConfig file
@@ -15,40 +21,20 @@ public class GameAreaConfig {
     public String mapName = "Planet";
     public String terrainPath = "map/base.tmx";
     public List<ResourceCondition> winConditions = null;
+    public GridPoint2 playerSpawn = null;
 
-    public AreaEntityConfig entityConfig = null;
+    public AreaEntityConfig areaEntityConfig = null;
 
-    //TODO: EVERYTHING AFTER THIS WILL BE REFACTORED TO AreaEntityConfig
-    //Powerup Properties
-    public List<GridPoint2> healthPowerups = null;
-    public List<GridPoint2> speedPowerups = null;
+    public String[] getTextures() {
+        List<String> textures = new ArrayList<>();
 
-    //Extractor Properties
-    public int extractorStartHealth = 0;
-    public List<GridPoint2> solstitePositions = null;
-    public List<GridPoint2> durasteelPositions = null;
-    public List<GridPoint2> nebulitePositions = null;
-    public long solstiteProduction = 0;
-    public long durasteelProduction = 0;
-    public long nebuliteProduction = 0;
-
-    //Ship Properties
-    public GridPoint2 shipPosition = null;
-
-    //Player Properties
-    public GridPoint2 playerPosition = null;
-
-    //Companion Properties
-    public GridPoint2 companionPosition = null;
-
-    //Enemies Properties
-    public int numMeleePTE = 0;
-    public int numMeleeDTE = 0;
-    public int numRangePTE = 0;
-
-    //Boss Properties
-    public GridPoint2 bossPosition = null;
-
-    //Botanist Properties
-    public GridPoint2 botanistPosition = null;
+        if (areaEntityConfig != null) {
+            textures = areaEntityConfig.getAllConfigs()
+                    .stream()
+                    .map(BaseEntityConfig::getTextures)
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toList());
+        }
+        return textures.stream().distinct().toArray(String[]::new);
+    }
 }

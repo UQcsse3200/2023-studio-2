@@ -1,26 +1,25 @@
-/**
- * This class serves as a factory for creating companion entities in the game.
- * It defines methods for creating companion entities with predefined properties loaded from a JSON config file.
- */
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.components.Companion.CompanionAnimationController;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.Companion.CompanionInteractionControllerComponent;
-import com.csse3200.game.components.Companion.CompanionInventoryComponent;
+import com.csse3200.game.components.Companion.*;
+import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.entities.configs.CompanionConfig;
-import com.csse3200.game.components.Companion.CompanionStatsDisplay;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.FollowComponent;
+
 
 /**
  * Factory to create a companion entity.
@@ -55,27 +54,46 @@ public class CompanionFactory {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForCompanion();
 
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class));
+        animator.addAnimation("UP", 1f);
+        animator.addAnimation("DOWN", 1f);
+        animator.addAnimation("LEFT", 1f);
+        animator.addAnimation("RIGHT", 1f);
+        animator.addAnimation("UP_RIGHT", 1f);
+        animator.addAnimation("UP_LEFT", 1f);
+        animator.addAnimation("DOWN_RIGHT", 1f);
+        animator.addAnimation("DOWN_LEFT", 1f);
+
+
         Entity companion =
                 new Entity()
-                        .addComponent(new TextureRenderComponent(config.spritePath))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
                         .addComponent(new ColliderComponent())
                         .addComponent(new CompanionActions())
                         .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
-                        .addComponent(new CompanionInventoryComponent(config.gold))
+                        .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
-                        .addComponent(new FollowComponent(playerEntity, 4.f))
-                        .addComponent(new CompanionInteractionControllerComponent());
+                        .addComponent(new FollowComponent(playerEntity, 2f))
+                        .addComponent(new CompanionInteractionControllerComponent())
+                        .addComponent(new CompanionStatsDisplay(playerEntity))
+                        .addComponent(animator)
+                        .addComponent(new CompanionAnimationController())
+                        .addComponent(new InteractionControllerComponent(false));
 
-        int health = playerEntity.getComponent(CombatStatsComponent.class).getHealth();
-        CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(true, 0, health);
-        companion.addComponent(companionStatsDisplay);
-
+        //int health = companion.getComponent(CombatStatsComponent.class).getHealth();
+        //CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(true, 0, health);
+        //CompanionInventoryComponent companionInventoryComponent = new CompanionInventoryComponent(10);
+        animator.startAnimation("DOWN");
+        //companion.addComponent(companionStatsDisplay);
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
-        companion.getComponent(TextureRenderComponent.class).scaleEntity();
+        companion.scaleHeight(0.9f);
+
         companion.getComponent(CompanionActions.class).setBulletTexturePath(config.bulletTexturePath);
+        companion.getComponent(TextureRenderComponent.class).scaleEntity();
         return companion;
     }
 

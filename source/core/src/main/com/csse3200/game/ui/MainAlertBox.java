@@ -9,8 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.screens.PlanetScreen;
-import com.csse3200.game.services.ServiceLocator;
 
 public class MainAlertBox extends Actor {
 
@@ -58,7 +56,7 @@ public class MainAlertBox extends Actor {
                 if(isExit)
                     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
                 else
-                    game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+                    this.callback.run();
             }
 
         }

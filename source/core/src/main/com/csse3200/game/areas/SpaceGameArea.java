@@ -30,7 +30,7 @@ public class SpaceGameArea extends GameArea {
     private static final int NUM_ENEMIES = 10;
     private Entity ship;
     private Entity goal;
-    private static final int NUM_ASTEROIDS = 168; // Change this to the desired number of asteroids
+    private static final int NUM_ASTEROIDS = 100;
     private Label distanceLabel;
     private static final String[] spaceMiniGameTextures = {
             "images/SpaceMiniGameBackground.png",
@@ -150,7 +150,7 @@ public class SpaceGameArea extends GameArea {
      * Method for placing the exit point from the obstacle minigame
      */
     private Entity spawnGoal() {
-        GridPoint2 position = new GridPoint2(24, 10);
+        GridPoint2 position = new GridPoint2(56, 10);
         Entity newGoal = ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
         //goal = ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
         spawnEntityAt(newGoal, position, false, false);

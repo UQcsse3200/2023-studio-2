@@ -4,6 +4,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -42,7 +43,7 @@ public class SpaceMapScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SpaceMapScreen.class);
 
     private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
-
+    private Entity ship;
     private final GdxGame game;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
@@ -74,14 +75,14 @@ public class SpaceMapScreen extends ScreenAdapter {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         SpaceGameArea spaceGameArea= new SpaceGameArea(terrainFactory);
         spaceGameArea.create();
+        ship = ((SpaceGameArea) spaceGameArea).getShip();
     }
 
     @Override
     public void render(float delta) {
-        Vector2 shipPos = ServiceLocator.getEntityService().getEntitiesByComponent(ShipActions.class).get(0).getPosition();
-        renderer.getCamera().getEntity().setPosition(shipPos);
         physicsEngine.update();
         ServiceLocator.getEntityService().update();
+        followShip();
         renderer.render();
     }
 
@@ -137,5 +138,13 @@ public class SpaceMapScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay());
 
         ServiceLocator.getEntityService().register(ui);
+    }
+
+    private void followShip() {
+        float maxX = 59 * 1f - renderer.getCamera().getCamera().viewportWidth * 0.5f;
+        float maxY = 29 * 1f - renderer.getCamera().getCamera().viewportHeight * 0.5f;
+        float cameraX = Math.min(maxX, Math.max(renderer.getCamera().getCamera().viewportWidth * 0.5f, ship.getPosition().x));
+        float cameraY = Math.min(maxY, Math.max(renderer.getCamera().getCamera().viewportHeight * 0.5f, ship.getPosition().y));
+        renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
     }
 }

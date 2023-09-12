@@ -50,12 +50,14 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
 
   private static final float WALL_WIDTH = 0.1f;
-  private static final float ASTEROID_SIZE = 0.9f;
   private static final String[] forestTextures = {
+
+
+
+
       "images/SpaceMiniGameBackground.png",
       "images/extractor.png",
       "images/broken_extractor.png",
-      "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
       "images/box_boy_leaf.png",
       "images/RightShip.png",
       "images/tree.png",
@@ -93,6 +95,8 @@ public class ForestGameArea extends GameArea {
           "images/TurretOne.png",
           "images/TurretTwo.png",
       "images/rangeEnemy.png",
+      "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+      "images/broken_elixir_collector.png",
       "images/stone_wall.png",
        "images/companionSS.png",
           "images/companionSS_0.png",
@@ -100,6 +104,7 @@ public class ForestGameArea extends GameArea {
           "images/companionSS_2.png",
           "images/companionSS_03.png",
       "images/player.png"
+
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
@@ -165,7 +170,6 @@ public class ForestGameArea extends GameArea {
     spawnCompanion(playerEntity);
     spawnEnemies();
     spawnBoss();
-    spawnAsteroids();
     player = spawnPlayer();
     spawnTurret();
     spawnBotanist();
@@ -173,14 +177,6 @@ public class ForestGameArea extends GameArea {
     playMusic();
 
   }
-  private void spawnAsteroids() {
-    //Extra Spicy Asteroids
-    GridPoint2 posAs = new GridPoint2(8, 8);
-    spawnEntityAt(
-            ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
-
-  }
-
 
   private void spawnExtractors() {
     GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(2, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);

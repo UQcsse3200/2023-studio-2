@@ -21,6 +21,7 @@ import com.csse3200.game.services.ServiceLocator;
 /** Factory for creating game terrains. */
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
+  private static final GridPoint2 SPACE_MAP_SIZE = new GridPoint2(60,30);
 
   private static final int tileSize = 16;
   private final OrthographicCamera camera;
@@ -54,6 +55,7 @@ public class TerrainFactory {
    */
   public TerrainComponent createTerrain() {
     TmxMapLoader mapLoader = new TmxMapLoader();
+
     TiledMap tiledMap = null;
     try {
       tiledMap = mapLoader.load(Gdx.files.internal("source/core/assets/map/base.tmx").file().getAbsolutePath());
@@ -73,14 +75,43 @@ public class TerrainFactory {
 
   public TerrainComponent createSpaceTerrain(TerrainType terrainType) {
     ResourceService resourceService = ServiceLocator.getResourceService();
+
     switch (terrainType) {
       case SPACE_DEMO:
         TextureRegion spaceVoid =
                 new TextureRegion(resourceService.getAsset("images/SpaceMiniGameBackground.png", Texture.class));
         return createSpaceDemoTerrain(1f, spaceVoid);
+
+       case REPAIR_DEMO:
+        TextureRegion extractorRepair =
+                new TextureRegion(resourceService.getAsset("images/ExtractorMiniGameBackground.png", Texture.class));
+        return createExtractorDemoTerrain(1f, extractorRepair);
       default:
         return null;
     }
+
+
+
+  }
+
+  private TerrainComponent createExtractorDemoTerrain(
+          float tileWorldSize, TextureRegion extractorRepair) {
+    GridPoint2 tilePixelSize = new GridPoint2(extractorRepair.getRegionWidth(),extractorRepair.getRegionHeight());
+    TiledMap tiledMap = createExtractorDemoTiles(tilePixelSize,extractorRepair);
+    TiledMapRenderer renderer= createRenderer(tiledMap,tileWorldSize/tilePixelSize.x * 20);
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
+  }
+
+  private TiledMap createExtractorDemoTiles(
+          GridPoint2 tileSize, TextureRegion extractorRepair) {
+    TiledMap tiledMap = new TiledMap();
+    TerrainTile spaceTile = new TerrainTile(extractorRepair);
+    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
+
+    fillTiles(layer,MAP_SIZE,spaceTile);
+    tiledMap.getLayers().add(layer);
+    return tiledMap;
+
   }
 
   private TerrainComponent createSpaceDemoTerrain(
@@ -100,13 +131,11 @@ public class TerrainFactory {
       };
   }
 
-  private TiledMap createSpaceDemoTiles(
-          GridPoint2 tileSize, TextureRegion spaceVoid) {
+  private TiledMap createSpaceDemoTiles(GridPoint2 tileSize, TextureRegion spaceVoid) {
     TiledMap tiledMap = new TiledMap();
     TerrainTile spaceTile = new TerrainTile(spaceVoid);
-    TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
-
-    fillTiles(layer,MAP_SIZE,spaceTile);
+    TiledMapTileLayer layer = new TiledMapTileLayer(SPACE_MAP_SIZE.x, SPACE_MAP_SIZE.y, tileSize.x, tileSize.y);
+    fillTiles(layer,SPACE_MAP_SIZE,spaceTile);
     tiledMap.getLayers().add(layer);
     return tiledMap;
 

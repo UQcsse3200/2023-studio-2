@@ -1,10 +1,12 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.ExtractorRepairPartComponent;
-import com.csse3200.game.components.InteractableComponent;
+import com.csse3200.game.areas.EarthGameArea;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
@@ -24,7 +26,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import java.util.ArrayList;
 
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.ShipInteractionPopup;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
@@ -62,6 +63,10 @@ public class StructureFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new CombatStatsComponent(health, 0, 0, false))
                 .addComponent(new ProductionComponent(producedResource, tickRate, tickSize));
+
+        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
+        extractor.addComponent(new DistanceCheckComponent(5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
 
         //For testing start at 0 so you can repair
         extractor.getComponent(CombatStatsComponent.class).setHealth(0);
@@ -105,6 +110,11 @@ public class StructureFactory {
         ship.setScale(5f, 4.5f);
         PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
 
+        InteractLabel interactLabel = new InteractLabel(); //code for interaction prompt
+        ship.addComponent(new DistanceCheckComponent(5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
+
+
         ship.addComponent(new InteractableComponent(entity -> {
             //Exit to main menu if resource > 1000
             GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
@@ -116,7 +126,7 @@ public class StructureFactory {
                 ShipInteractionPopup shipPopup = new ShipInteractionPopup();
                 ServiceLocator.getRenderService().getStage().addActor(shipPopup);
             }
-        }, 5));
+        }, 5f));
         return ship;
 
     }
@@ -131,6 +141,10 @@ public class StructureFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"))
                 .addComponent(new UpgradeTree());
+
+        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
+        upgradeBench.addComponent(new DistanceCheckComponent(0.5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
 
         upgradeBench.addComponent(new InteractableComponent(entity -> {
             UpgradeDisplay minigame = UpgradeDisplay.createUpgradeDisplay(upgradeBench);

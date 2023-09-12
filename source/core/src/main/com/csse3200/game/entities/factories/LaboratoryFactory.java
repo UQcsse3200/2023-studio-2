@@ -4,6 +4,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.LabWindow;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.DistanceCheckComponent;
+import com.csse3200.game.components.InteractLabel;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -33,6 +35,11 @@ public class LaboratoryFactory {
         PhysicsUtils.setScaledCollider(Laboratory, 0.6f, 0.4f);
         Laboratory.scaleHeight(2.0f);
         Laboratory.getComponent(CombatStatsComponent.class).setHealth(0);
+
+        InteractLabel interactLabel = new InteractLabel(); //code for interaction prompt
+        Laboratory.addComponent(new DistanceCheckComponent(5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
+
         Laboratory.addComponent(new InteractableComponent(entity -> {
             CombatStatsComponent healthStats = Laboratory.getComponent(CombatStatsComponent.class);
 

@@ -117,16 +117,16 @@ public class EarthGameArea extends GameArea {
             "images/base_enemy.atlas",
             "images/troll_enemy.atlas",
             "images/rangeEnemy.atlas",
-            "images/stone_wall.atlas",
-            "images/dirt_wall.atlas",
             "images/botanist.atlas",
             "images/boss_enemy.atlas",
             "images/botanist.atlas",
             "images/playerSS.atlas",
             "images/wrench.atlas",
             "images/baseballbat.atlas",
-            "images/open_gate.atlas",
-            "images/closed_gate.atlas",
+            "images/structures/closed_gate.atlas",
+            "images/structures/open_gate.atlas",
+            "images/structures/dirt_wall.atlas",
+            "images/structures/stone_wall.atlas",
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
@@ -183,6 +183,7 @@ public class EarthGameArea extends GameArea {
         spawnBoss();
         spawnAsteroids();
         spawnBotanist();
+        spawnTurret();
 
         playMusic();
     }
@@ -308,6 +309,12 @@ public class EarthGameArea extends GameArea {
         Entity ship = StructureFactory.createShip(game);
         spawnEntityAt(ship, spawnPosition, false, false);
     }
+    public void spawnTurret() {
+        Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
+        Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
+        spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
+    }
+
 
     private void displayUI() {
         Entity ui = new Entity();
@@ -419,18 +426,21 @@ public class EarthGameArea extends GameArea {
             GridPoint2 randomPos1 = RandomUtils.random(minPos, maxPos);
             Entity meleePTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.PTE);
             spawnEntityAt(meleePTE, randomPos1, true, true);
+            EnemyFactory.enemies.add(meleePTE);
         }
 
         for (int i = 0; i < NUM_MELEE_DTE; i++) {
             GridPoint2 randomPos2 = RandomUtils.random(minPos, maxPos);
             Entity meleeDTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(meleeDTE, randomPos2, true, true);
+            EnemyFactory.enemies.add(meleeDTE);
         }
 
         for (int i = 0; i < NUM_RANGE_PTE; i++) {
             GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
             Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
             spawnEntityAt(rangePTE, randomPos3, true, true);
+            EnemyFactory.enemies.add(rangePTE);
         }
     }
 
@@ -444,6 +454,7 @@ public class EarthGameArea extends GameArea {
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
         Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
         spawnEntityAt(boss, randomPos, true, true);
+        EnemyFactory.enemies.add(boss);
         //boss.addComponent(new DialogComponent(dialogueBox));
 
     }

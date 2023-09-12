@@ -58,9 +58,17 @@ public class PlanetScreen extends ScreenAdapter {
     Entity currentExtractor = null;
 
     /** file paths of textures for screen to load. */
-    private static final String[] planetTextures = {"images/heart.png",
+    private static final String[] planetTextures = {
+            "images/heart.png",
             "images/structure-icons/wall.png",
-            "images/structure-icons/turret.png"
+            "images/structure-icons/stone_wall.png",
+            "images/structure-icons/turret.png",
+            "images/structures/closed_gate.png",
+            "images/structures/open_gate.png",
+            "images/structures/dirt_wall.png",
+            "images/structures/stone_wall.png",
+            "images/structures/TurretOne.png",
+            "images/structures/TurretTwo.png"
     };
 
     /**

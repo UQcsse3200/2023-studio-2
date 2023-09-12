@@ -13,5 +13,5 @@ public abstract class Tool {
         this.cost = cost;
     }
 
-    public abstract void interact(Entity player, GridPoint2 position);
+    public abstract boolean interact(Entity player, GridPoint2 position);
 }

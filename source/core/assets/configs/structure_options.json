@@ -32,6 +32,14 @@
         "Durasteel": 0
       },
       "texture": "images/structure-icons/wall.png"
+    },
+    "com.csse3200.game.components.structures.tools.ExtractorTool": {
+      "level": 0,
+      "name": "extractor",
+      "cost": {
+        "unobtanium": 0
+      },
+      "texture": "images/refinedExtractor2.png"
     }
   }
 }

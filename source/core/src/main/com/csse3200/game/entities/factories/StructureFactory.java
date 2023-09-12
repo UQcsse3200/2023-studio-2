@@ -127,7 +127,7 @@ public class StructureFactory {
         return extractorRepairPart;
     }
 
-    private static boolean checkWinCondition(List<ResourceCondition>  requirements) {
+    private static boolean checkWinCondition(List<ResourceCondition> requirements) {
         if (requirements == null) {
             return true;
         }
@@ -135,7 +135,8 @@ public class StructureFactory {
         GameStateObserver stateObserver = ServiceLocator.getGameStateObserverService();
         for (ResourceCondition condition: requirements) {
             String resourceKey = "resource/" + condition.getResource();
-            int resourceCount = (int) stateObserver.getStateData(resourceKey);
+            Object value = stateObserver.getStateData(resourceKey);
+            int resourceCount = value == null ? 0 : (int) value;
             if (resourceCount < condition.getThreshold()) {
                 return false;
             }

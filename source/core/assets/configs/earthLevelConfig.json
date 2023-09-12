@@ -62,7 +62,7 @@
   "terrainPath": "map/base.tmx",
   "winConditions": [
     {
-      "resource": "solstite",
+      "resource": "Solstite",
       "threshold": 100
     }
   ],
@@ -77,6 +77,19 @@
         "x": 35,
         "y": 40
       }
-    }
+    },
+    "enemies": [
+      {
+        "health": 20,
+        "baseAttack": 10,
+        "speed": 5,
+        "behaviour": "PTE",
+        "spritePath": "images/troll_enemy.atlas",
+        "position": {
+          "x": 20,
+          "y": 20
+        }
+      }
+    ]
   }
 }

@@ -44,14 +44,6 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
     public ExtractorMiniGameScreen(GdxGame game) {
         this.game = game;
 
-        logger.debug("Initialising extractor minigame screen services");
-
-        ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
-
-        ServiceLocator.registerEntityService(new EntityService());
-        ServiceLocator.registerRenderService(new RenderService());
-
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
 

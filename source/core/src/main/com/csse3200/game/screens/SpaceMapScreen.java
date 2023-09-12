@@ -45,19 +45,7 @@ public class SpaceMapScreen extends ScreenAdapter {
 
     public SpaceMapScreen(GdxGame game) {
         this.game = game;
-
-        logger.debug("Initialising space mini game screen services");
-        ServiceLocator.registerTimeSource(new GameTime());
-
-        PhysicsService physicsService = new PhysicsService();
-        ServiceLocator.registerPhysicsService(physicsService);
-        physicsEngine = physicsService.getPhysics();
-        ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
-
-        ServiceLocator.registerEntityService(new EntityService());
-        ServiceLocator.registerRenderService(new RenderService());
-        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
+        physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
 
         //Vector2 shipPos = ServiceLocator.getEntityService().getEntitiesByComponent(ShipActions.class).get(0).getPosition();
         renderer = RenderFactory.createRenderer();
@@ -95,12 +83,6 @@ public class SpaceMapScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
-
-        ServiceLocator.getEntityService().dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getResourceService().dispose();
-
-        ServiceLocator.clear();
     }
 
     private void loadAssets() {

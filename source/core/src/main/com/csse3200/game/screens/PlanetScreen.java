@@ -106,13 +106,13 @@ public class PlanetScreen extends ScreenAdapter {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
         if ("Earth".equals(name)) {
-            this.gameArea = new EarthGameArea(terrainFactory, game);
+            this.gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
             this.nextPlanetName = "Not Earth"; //TODO: Extend
             // Only on game area, needs to be extended to go to other areas
         } else {
             // TODO: Extend
             // Only one planet game area atm, needs to be extended for further planets
-            this.gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
+            this.gameArea = new EarthGameArea(terrainFactory, game);
             this.nextPlanetName = "Earth";
         }
     }
@@ -122,11 +122,6 @@ public class PlanetScreen extends ScreenAdapter {
      */
     private void registerServices() {
         logger.debug(String.format("Initialising %s screen services", this.name));
-        ServiceLocator.registerTimeSource(new GameTime());
-
-        PhysicsService physicsService = new PhysicsService();
-        ServiceLocator.registerPhysicsService(physicsService);
-        physicsEngine = physicsService.getPhysics();
 
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerInputService(new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
@@ -134,6 +129,8 @@ public class PlanetScreen extends ScreenAdapter {
 
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
 
         ServiceLocator.registerGameStateObserverService(new GameStateObserver());
 
@@ -181,12 +178,6 @@ public class PlanetScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
-
-        ServiceLocator.getEntityService().dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getResourceService().dispose();
-
-        ServiceLocator.clear();
     }
 
     /**

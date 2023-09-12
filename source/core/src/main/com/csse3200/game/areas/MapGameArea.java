@@ -53,7 +53,6 @@ public class MapGameArea extends GameArea{
         mapConfig = FileLoader.readClass(GameAreaConfig.class, configPath, FileLoader.Location.INTERNAL);
         this.game = game;
         this.terrainFactory = terrainFactory;
-        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
     }
 
     /**

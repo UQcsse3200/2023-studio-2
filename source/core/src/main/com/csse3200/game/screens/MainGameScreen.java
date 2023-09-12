@@ -78,7 +78,6 @@ private static boolean alive = true;
     ServiceLocator.registerPhysicsService(physicsService);
     physicsEngine = physicsService.getPhysics();
 
-    ServiceLocator.registerInputService(new InputService());
     ServiceLocator.registerInputService(new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
     ServiceLocator.registerResourceService(new ResourceService());
 

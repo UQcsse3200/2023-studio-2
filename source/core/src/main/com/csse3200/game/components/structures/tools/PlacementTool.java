@@ -5,6 +5,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.ArrayList;
+
 public abstract class PlacementTool extends Tool {
     @Override
     public void interact(Entity player, GridPoint2 position) {

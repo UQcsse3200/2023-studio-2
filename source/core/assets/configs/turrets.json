@@ -3,12 +3,12 @@
     "health": 200,
     "texture": "images/TurretOne.png",
     "maxAmmo": 50,
-    "damage": 10
+    "damage": 2
   },
   "levelTwo": {
     "health": 500,
     "texture": "images/TurretTwo.png",
     "maxAmmo": 100,
-    "damage": 20
+    "damage": 5
   }
 }

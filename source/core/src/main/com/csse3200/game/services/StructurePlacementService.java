@@ -61,7 +61,7 @@ public class StructurePlacementService {
         ServiceLocator.getEntityService().unregister(entity);
         entity.removed();
     }
-    public Entity getStructureAt(GridPoint2 position) {
+    public PlaceableEntity getStructureAt(GridPoint2 position) {
         return placedStructures.get(position);
     }
 

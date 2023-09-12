@@ -47,7 +47,7 @@ public class Turret extends PlaceableEntity {
         addComponent(new CombatStatsComponent(turretConfig.health, 0, 0, false));
         addComponent(new HealthBarComponent(true));
         addComponent(new TextureRenderComponent(texture));
-        addComponent(new ProximityActivationComponent(4f, player, this::startDamage, this::stopDamage));
+        addComponent(new FOVComponent(4f, player, this::startDamage, this::stopDamage));
     }
 
     public void startDamage(Entity focus) {

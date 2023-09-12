@@ -31,7 +31,7 @@ public class EnvironmentFactory {
                         float collisionX = scaleSize - collisionBox.x / tileSize;
                         float collisionY = scaleSize - collisionBox.y / tileSize;
                         float collisionWidth = scaleSize * (collisionBox.width / tileSize);
-                        float collisionHeight = scaleSize* (collisionBox.height / tileSize);
+                        float collisionHeight = scaleSize * (collisionBox.height / tileSize);
                         environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
                     } else {
                         environment = ObstacleFactory.createEnvironment();

@@ -15,6 +15,8 @@ import com.csse3200.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
 
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -26,8 +28,9 @@ public class SpaceGameArea extends GameArea {
     private static final float WORMHOLE_SIZE = 0.9f;
     private static final int NUM_ENEMIES = 10;
     private Entity ship;
+    private Entity goal;
     private static final int NUM_ASTEROIDS = 168; // Change this to the desired number of asteroids
-
+    private Label distanceLabel;
     private static final String[] spaceMiniGameTextures = {
             "images/SpaceMiniGameBackground.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
@@ -146,12 +149,15 @@ public class SpaceGameArea extends GameArea {
     /**
      * Method for placing the exit point from the obstacle minigame
      */
-    private Entity spawnGoal(){
-        GridPoint2 position = new GridPoint2(24,10);
-        Entity goal = ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE,WORMHOLE_SIZE);
-        spawnEntityAt(goal, position, false, false);
-        return goal; // Return the goal entity
+    private Entity spawnGoal() {
+        GridPoint2 position = new GridPoint2(24, 10);
+        Entity newGoal = ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
+        //goal = ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
+        spawnEntityAt(newGoal, position, false, false);
+        goal = newGoal;
+        return goal; // Return the instance variable
     }
+
 
 
     private void displayUI() {
@@ -159,6 +165,7 @@ public class SpaceGameArea extends GameArea {
         ui.addComponent(new GameAreaDisplay("Space Game"));
         spawnEntity(ui);
     }
+
 
 
     /**
@@ -197,6 +204,11 @@ public class SpaceGameArea extends GameArea {
     public Entity getShip(){
         return ship;
     }
+
+    public Entity getGoal() {
+        return goal;
+    }
+
 
     public static float calculateDistance(Entity entity1, Entity entity2) {
         // Get the center positions of both entities

@@ -33,6 +33,11 @@ import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
+
+
 
 /**
  * The game screen containing the main game.
@@ -44,9 +49,12 @@ public class SpaceMapScreen extends ScreenAdapter {
 
     private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
     private Entity ship;
+    private Entity goal;
     private final GdxGame game;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
+    private Label distanceLabel;
+
 
     public SpaceMapScreen(GdxGame game) {
         this.game = game;
@@ -76,6 +84,8 @@ public class SpaceMapScreen extends ScreenAdapter {
         SpaceGameArea spaceGameArea= new SpaceGameArea(terrainFactory);
         spaceGameArea.create();
         ship = ((SpaceGameArea) spaceGameArea).getShip();
+        goal = ((SpaceGameArea) spaceGameArea).getGoal();
+
     }
 
     @Override
@@ -83,7 +93,14 @@ public class SpaceMapScreen extends ScreenAdapter {
         physicsEngine.update();
         ServiceLocator.getEntityService().update();
         followShip();
+        // Calculate the distance between the ship and the goal
+        float distance = SpaceGameArea.calculateDistance(ship, goal);
+
+        // Print the distance to the console
+        System.out.println("Distance to goal: " + distance);
+
         renderer.render();
+
     }
 
     @Override
@@ -138,6 +155,7 @@ public class SpaceMapScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay());
 
         ServiceLocator.getEntityService().register(ui);
+
     }
 
     private void followShip() {

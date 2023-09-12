@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.structures.StructureOptions;
 import com.csse3200.game.components.structures.StructurePicker;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
@@ -25,7 +24,6 @@ import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The UpgradeDisplay class represents a GUI component for displaying upgrades.
@@ -36,7 +34,7 @@ import java.util.Map;
 public class UpgradeDisplay extends Window {
     private static final float WINDOW_WIDTH_SCALE = 0.8f;
     private static final float WINDOW_HEIGHT_SCALE = 0.65f;
-    private static final int MATERIAL_LABEL_X = 50;
+    private static final int MATERIAL_LABEL_X = 50;  // todo: un-hardcode material / exit labels
     private static final int MATERIAL_LABEL_Y = 650;
     private static final int EXIT_BUTTON_X = 1450;
     private static final int EXIT_BUTTON_Y = 620;
@@ -49,9 +47,7 @@ public class UpgradeDisplay extends Window {
     private final WeaponConfigs weaponConfigs;
     private final Entity player;
     private UpgradeNode buildRoot;
-    private UpgradeNode meleeRoot;
-    private UpgradeNode rangedRoot;
-    private Skin skin;
+    private final Skin skin;
 
     // Tree stuff
     private final List<UpgradeNode> trees = new ArrayList<>();
@@ -108,7 +104,7 @@ public class UpgradeDisplay extends Window {
      * These trees dictate the progression of weapons that can be unlocked.
      */
     private void buildTrees() {
-        WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.ELEC_WRENCH); // todo: edit config png
+        WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.ELEC_WRENCH);
         WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.KATANA);
         WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.SLING_SHOT);
         WeaponConfig rangedWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.THROW_ELEC_WRENCH);
@@ -116,13 +112,13 @@ public class UpgradeDisplay extends Window {
         WeaponConfig stonehammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.STONEHAMMER);
 
         // Melee Tree
-        meleeRoot = new UpgradeNode(meleeWrench, WeaponType.ELEC_WRENCH);
+        UpgradeNode meleeRoot = new UpgradeNode(meleeWrench, WeaponType.ELEC_WRENCH);
         UpgradeNode swordNode = new UpgradeNode(katanaConfig, WeaponType.KATANA);
         meleeRoot.addChild(swordNode);
         trees.add(meleeRoot);
 
         // Ranged Tree
-        rangedRoot = new UpgradeNode(slingshotConfig, WeaponType.SLING_SHOT);
+        UpgradeNode rangedRoot = new UpgradeNode(slingshotConfig, WeaponType.SLING_SHOT);
         UpgradeNode wrenchNode2 = new UpgradeNode(rangedWrenchConfig, WeaponType.THROW_ELEC_WRENCH);
         rangedRoot.addChild(wrenchNode2);
         trees.add(rangedRoot);
@@ -174,7 +170,7 @@ public class UpgradeDisplay extends Window {
         node.setY(y);
         node.setDepth(depth);
 
-        ImageButton button = createWeaponButtons(node, SIZE, x, y);
+        ImageButton button = createWeaponButtons(node, x, y);
         group.addActor(button);
 
         int childCount = node.getChildren().size();
@@ -219,9 +215,8 @@ public class UpgradeDisplay extends Window {
      * Draws lines connecting parent nodes to their child nodes.
      *
      * @param node The current node from which lines will be drawn to its children.
-     * @param batch The batch used for rendering.
      */
-    private void drawLines(UpgradeNode node, Batch batch) {
+    private void drawLines(UpgradeNode node) {
         if (node == null || node.getChildren().isEmpty()) {
             return;
         }
@@ -232,7 +227,7 @@ public class UpgradeDisplay extends Window {
             Vector2 childPos = localToStageCoordinates(new Vector2(child.getX() + SIZE/2, child.getY() + SIZE/2));
             shapeRenderer.rectLine(parentPos, childPos, 5);
 
-            drawLines(child, batch);
+            drawLines(child);
         }
     }
 
@@ -297,19 +292,18 @@ public class UpgradeDisplay extends Window {
      * Creates a button for a given weapon node.
      *
      * @param node The upgrade node for which the button is being created.
-     * @param size The size of the button.
      * @param posX The x-coordinate for the button's position.
      * @param posY The y-coordinate for the button's position.
      * @return The created ImageButton.
      */
-    private ImageButton createWeaponButtons(UpgradeNode node, float size, float posX, float posY) {
-        TextureRegionDrawable buttonDrawable = createTextureRegionDrawable(node.getImagePath(), size);
+    private ImageButton createWeaponButtons(UpgradeNode node, float posX, float posY) {
+        TextureRegionDrawable buttonDrawable = createTextureRegionDrawable(node.getImagePath(), UpgradeDisplay.SIZE);
         ImageButton weaponButton = new ImageButton(buttonDrawable);
         weaponButton.setPosition(posX, posY);
 
         UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
 
-        Image lockImage = lockItem(node, stats, size, weaponButton);
+        Image lockImage = lockItem(node, stats, weaponButton);
         TextButton costButton = createCostButtons(node, weaponButton);
 
         // Create unlock listener for unlock button
@@ -343,17 +337,17 @@ public class UpgradeDisplay extends Window {
 
     /**
      * Draws a lock image on a current node
-     * @param node the current node to lock
-     * @param stats the upgrade tree node statistics
-     * @param size the size of the lock
+     *
+     * @param node         the current node to lock
+     * @param stats        the upgrade tree node statistics
      * @param weaponButton the weapons image button
      * @return the lock image
      */
-    private Image lockItem(UpgradeNode node, UpgradeTree stats, float size, ImageButton weaponButton) {
+    private Image lockItem(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton) {
         if (stats.isWeaponUnlocked(node.getWeaponType())) return null;
 
         Image lock = new Image(new Texture("images/upgradetree/lock.png"));
-        lock.setSize(size, size);
+        lock.setSize(UpgradeDisplay.SIZE, UpgradeDisplay.SIZE);
         weaponButton.addActor(lock);
         weaponButton.setColor(0.5f, 0.5f, 0.5f, 0.5f); // grey out the image
 
@@ -371,7 +365,6 @@ public class UpgradeDisplay extends Window {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
-                System.out.println("Button press detected");
                 if (stats.isWeaponUnlocked(node.getWeaponType())) {
                     InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
                     playerInventory.placeInSlot(node.getWeaponType());
@@ -444,7 +437,7 @@ public class UpgradeDisplay extends Window {
      */
     @Override
     public boolean remove() {
-        //Stop overriding input when exiting minigame
+        //Stop overriding input when exiting
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
         return super.remove();
     }
@@ -469,7 +462,7 @@ public class UpgradeDisplay extends Window {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.BLACK);
         for (UpgradeNode treeRoot : trees) {
-            drawLines(treeRoot, batch);
+            drawLines(treeRoot);
         }
         shapeRenderer.end();
 

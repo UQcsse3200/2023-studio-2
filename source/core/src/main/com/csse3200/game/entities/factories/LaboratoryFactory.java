@@ -17,14 +17,18 @@ import com.csse3200.game.services.ServiceLocator;
 
 
 public class LaboratoryFactory {
-    public static Entity createLaboratory(){
+    private LaboratoryFactory() {
+        throw new IllegalStateException("Instantiating static util class");
+    }
+
+    public static Entity createLaboratory() {
         Entity Laboratory =
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/laboratory.png"))
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.LABORATORY))
                         .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.LABORATORY))
-                        .addComponent( new CombatStatsComponent(4,0,0,false));
+                        .addComponent(new CombatStatsComponent(4, 0, 0, false));
         Laboratory.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         Laboratory.getComponent(TextureRenderComponent.class).scaleEntity();
         Laboratory.setScale(4f, 4.0f);
@@ -46,8 +50,5 @@ public class LaboratoryFactory {
             }
         }, 5f));
         return Laboratory;
-    }
-    private LaboratoryFactory() {
-        throw new IllegalStateException("Instantiating static util class");
     }
 }

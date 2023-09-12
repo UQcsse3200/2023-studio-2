@@ -29,9 +29,10 @@ public class WeaponComponent extends Component {
     /**
      * Core function to respond to weapon attacks takes a position and a rotation and spawn an entity
      * in that direction and begin the animation of the weapon
+     *
      * @param position - position of the player at the time of attack
-     * @param initRot - direction in which mouse is relative to the player in degrees
-     *                  0<=initRot<=360, East:0, North:90: West:180, South:270
+     * @param initRot  - direction in which mouse is relative to the player in degrees
+     *                 0<=initRot<=360, East:0, North:90: West:180, South:270
      */
     private void playerAttacking(Vector2 position, WeaponType weaponType, float initRot) {
         Entity newAttack = AttackFactory.createAttack(weaponType, initRot, entity);
@@ -42,8 +43,8 @@ public class WeaponComponent extends Component {
         Vector2 plySc = entity.getScale();
         Vector2 atkSc = newAttack.getScale();
 
-        var newPos = new Vector2(position.x + xMovement + plySc.x/2 - atkSc.y/2 ,
-                position.y + yMovement + plySc.x/2 - atkSc.y/2 );
+        var newPos = new Vector2(position.x + xMovement + plySc.x / 2 - atkSc.y / 2,
+                position.y + yMovement + plySc.x / 2 - atkSc.y / 2);
 
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
     }

@@ -13,12 +13,9 @@ import org.slf4j.LoggerFactory;
  */
 public class ShootTask extends DefaultTask {
     private static final Logger logger = LoggerFactory.getLogger(ShootTask.class);
-
-    private Vector2 spawn;
-
-    private boolean hasShot;
-
     Entity target;
+    private Vector2 spawn;
+    private boolean hasShot;
 
     /**
      * Creates a new shoot task.

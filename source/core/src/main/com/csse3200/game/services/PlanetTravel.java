@@ -1,4 +1,5 @@
 package com.csse3200.game.services;
+
 import com.csse3200.game.GdxGame;
 
 /**
@@ -22,7 +23,7 @@ public class PlanetTravel {
      * Begin transitioning to the new planet from the current one. Displaying all
      * intermediate gameplay in between
      *
-     * @param targetPlanetName  The name of the planet to transition to.
+     * @param targetPlanetName The name of the planet to transition to.
      */
     public void beginPlanetTransition(String targetPlanetName) {
         // Begin the transition.
@@ -42,6 +43,7 @@ public class PlanetTravel {
 
     /**
      * Move to the next planet and spawn the minigame screen
+     *
      * @param planet - the destination planet
      */
     public void moveToNextPlanet(Object planet) {
@@ -51,6 +53,7 @@ public class PlanetTravel {
 
     /**
      * Return the current planet where player are in
+     *
      * @return current planet
      */
     public Object returnCurrent() {

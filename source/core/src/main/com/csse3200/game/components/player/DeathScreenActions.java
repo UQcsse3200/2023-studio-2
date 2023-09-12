@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
 /**
  * This class listens to events relevant to the Death Screen and does something when one of the
  * events is triggered.
@@ -19,7 +18,7 @@ public class DeathScreenActions extends Component {
     public static GdxGame game;
 
     public DeathScreenActions(GdxGame game) { // Modify the constructor
-        this.game = game;
+        DeathScreenActions.game = game;
     }
 
     /**
@@ -30,6 +29,7 @@ public class DeathScreenActions extends Component {
         entity.getEvents().addListener("exit", this::onExit);
         entity.getEvents().addListener("restart", this::onRestart);
     }
+
     /**
      * Exits to Main Menu game.
      */

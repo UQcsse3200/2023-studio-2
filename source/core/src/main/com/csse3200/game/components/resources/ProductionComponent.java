@@ -82,7 +82,7 @@ public class ProductionComponent extends Component {
         }
 
         super.update();
-        while (this.timer.getTime() - this.lastTime >= this.tickRate ) {
+        while (this.timer.getTime() - this.lastTime >= this.tickRate) {
             this.getEntity().getEvents().trigger("produceResource", this.produces, this.tickSize);
             int produced = (int) ((long) this.tickSize * this.getProductionModifier());
             gameStateObserver.trigger("resourceAdd", this.produces.toString(), produced);

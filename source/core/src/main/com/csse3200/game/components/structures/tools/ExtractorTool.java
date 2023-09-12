@@ -9,6 +9,8 @@ import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.services.ServiceLocator;
 
 public class ExtractorTool extends PlacementTool {
+    Resource produces = Resource.Durasteel; // TODO make this depend on the position
+
     public ExtractorTool(ObjectMap<String, Integer> cost) {
         super(cost);
     }
@@ -16,6 +18,7 @@ public class ExtractorTool extends PlacementTool {
     /**
      * Returns the resource at the location or null, that the extractor will be built to produce
      * TODO right now this just returns durasteel for testing
+     *
      * @param position the position to check for a floor resource
      * @return resource at the location or null
      */
@@ -23,11 +26,10 @@ public class ExtractorTool extends PlacementTool {
         return Resource.Durasteel;
     }
 
-    Resource produces = Resource.Durasteel; // TODO make this depend on the position
-
     /**
      * Creates a new extractor producing the resource of the location it is being placed, and increments the total amount of
      * tracked extractors of this type
+     *
      * @param player The player creating the extractor
      * @return the extractor, fully built
      */
@@ -43,6 +45,7 @@ public class ExtractorTool extends PlacementTool {
      * Checks if the position of the extractor is valid:
      * - There is no collision with other structures (TODO or the map)
      * - The resource type of the extractor doesnt exceed the cap
+     *
      * @param position The position of the extractor
      * @return whether the extractor can be placed
      */
@@ -51,7 +54,7 @@ public class ExtractorTool extends PlacementTool {
         boolean existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position) == null;
         Object max = ServiceLocator.getGameStateObserverService().getStateData("extractorsMax/" + this.getResource(position));
         Object count = ServiceLocator.getGameStateObserverService().getStateData("extractorsTotal/" + this.getResource(position));
-        boolean underCapacity =  ((max != null) ? (int) max : 0) > ((count != null) ? (int) count : 0);
+        boolean underCapacity = ((max != null) ? (int) max : 0) > ((count != null) ? (int) count : 0);
 
         return existingStructure && underCapacity;
     }

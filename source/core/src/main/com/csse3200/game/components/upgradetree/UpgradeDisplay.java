@@ -41,39 +41,25 @@ public class UpgradeDisplay extends Window {
     private static final float SIZE = 64f;
     private static final String SKIN_PATH = "flat-earth/skin/flat-earth-ui.json";
     private static final String MATERIALS_FORMAT = "Materials: %d";
+    private static final float VERTICAL_SPACING = 200f;
+    private static final float HORIZONTAL_SPACING = 150f;
     private final InputOverrideComponent inputOverrideComponent;
     private final Entity upgradeBench;
-    private Label materialsLabel;
     private final WeaponConfigs weaponConfigs;
     private final Entity player;
+    // Tree stuff
+    private final List<UpgradeNode> trees = new ArrayList<>();
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private Label materialsLabel;
     private UpgradeNode buildRoot;
     private UpgradeNode meleeRoot;
     private UpgradeNode rangedRoot;
 
-    // Tree stuff
-    private final List<UpgradeNode> trees = new ArrayList<>();
-    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private static final float VERTICAL_SPACING = 200f;
-    private static final float HORIZONTAL_SPACING = 150f;
-
-    /**
-     * Factory method for creating an instance of UpgradeDisplay.
-     *
-     * @param upgradeBench The entity representing the upgrade bench in the game.
-     * @return A new instance of UpgradeDisplay.
-     */
-    public static UpgradeDisplay createUpgradeDisplay(Entity upgradeBench) {
-        Texture background =
-                ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
-        background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
-        return new UpgradeDisplay(background, upgradeBench);
-    }
-
     /**
      * Constructor for UpgradeDisplay.
      *
-     * @param background    The texture to be used for the background of the upgrade display.
-     * @param upgradeBench  The entity representing the upgrade bench in the game.
+     * @param background   The texture to be used for the background of the upgrade display.
+     * @param upgradeBench The entity representing the upgrade bench in the game.
      */
     public UpgradeDisplay(Texture background, Entity upgradeBench) {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
@@ -97,6 +83,19 @@ public class UpgradeDisplay extends Window {
         inputOverrideComponent = new InputOverrideComponent();
         ServiceLocator.getInputService().register(inputOverrideComponent);
 
+    }
+
+    /**
+     * Factory method for creating an instance of UpgradeDisplay.
+     *
+     * @param upgradeBench The entity representing the upgrade bench in the game.
+     * @return A new instance of UpgradeDisplay.
+     */
+    public static UpgradeDisplay createUpgradeDisplay(Entity upgradeBench) {
+        Texture background =
+                ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
+        background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
+        return new UpgradeDisplay(background, upgradeBench);
     }
 
     /**
@@ -152,11 +151,11 @@ public class UpgradeDisplay extends Window {
     }
 
     /**
-     *  Positions nodes and creates buttons for them.
+     * Positions nodes and creates buttons for them.
      *
-     * @param node The current node to position.
-     * @param x    The x-coordinate of the node.
-     * @param y    The y-coordinate of the node.
+     * @param node  The current node to position.
+     * @param x     The x-coordinate of the node.
+     * @param y     The y-coordinate of the node.
      * @param group The group where the buttons will be added.
      */
     private void createAndPositionNodes(UpgradeNode node, float x, float y, Group group, int depth) {
@@ -214,7 +213,7 @@ public class UpgradeDisplay extends Window {
     /**
      * Draws lines connecting parent nodes to their child nodes.
      *
-     * @param node The current node from which lines will be drawn to its children.
+     * @param node  The current node from which lines will be drawn to its children.
      * @param batch The batch used for rendering.
      */
     private void drawLines(UpgradeNode node, Batch batch) {
@@ -222,10 +221,10 @@ public class UpgradeDisplay extends Window {
             return;
         }
 
-        Vector2 parentPos = localToStageCoordinates(new Vector2(node.getX() + SIZE/2, node.getY() + SIZE/2));
+        Vector2 parentPos = localToStageCoordinates(new Vector2(node.getX() + SIZE / 2, node.getY() + SIZE / 2));
 
         for (UpgradeNode child : node.getChildren()) {
-            Vector2 childPos = localToStageCoordinates(new Vector2(child.getX() + SIZE/2, child.getY() + SIZE/2));
+            Vector2 childPos = localToStageCoordinates(new Vector2(child.getX() + SIZE / 2, child.getY() + SIZE / 2));
             shapeRenderer.rectLine(parentPos, childPos, 5);
 
             drawLines(child, batch);
@@ -315,9 +314,10 @@ public class UpgradeDisplay extends Window {
 
     /**
      * Draws a lock image on a current node
-     * @param node the current node to lock
-     * @param stats the upgrade tree node statistics
-     * @param size the size of the lock
+     *
+     * @param node         the current node to lock
+     * @param stats        the upgrade tree node statistics
+     * @param size         the size of the lock
      * @param weaponButton the weapons image button
      * @return the lock image
      */
@@ -334,10 +334,11 @@ public class UpgradeDisplay extends Window {
 
     /**
      * Unlocks a weapon at a given node
-     * @param node the weapon node to unlock
-     * @param stats the weapons upgradetree stats
+     *
+     * @param node         the weapon node to unlock
+     * @param stats        the weapons upgradetree stats
      * @param weaponButton the weapons image button
-     * @param lockImage the lock image
+     * @param lockImage    the lock image
      * @return a change listener
      */
     private ChangeListener unlockWeapon(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton, Image lockImage) {
@@ -350,11 +351,10 @@ public class UpgradeDisplay extends Window {
     }
 
     /**
-     *
-     * @param node the current weapon node to unlock
-     * @param stats the weapons upgrade tree stats
+     * @param node         the current weapon node to unlock
+     * @param stats        the weapons upgrade tree stats
      * @param weaponButton the weapons image button
-     * @param lockImage the lock image
+     * @param lockImage    the lock image
      */
     private void handleWeaponUnlocking(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton, Image lockImage) {
         int baseMaterialCost = 50;

@@ -18,6 +18,7 @@ public class EntityPlacementService {
 
     /**
      * Function relay place entity call to listeners - passes provided entity
+     *
      * @param entity - entity to be relayed
      */
     public void PlaceEntity(Entity entity) {
@@ -26,7 +27,8 @@ public class EntityPlacementService {
 
     /**
      * FUnction to relay an entity and a position
-     * @param entity - the entity to be relayed
+     *
+     * @param entity   - the entity to be relayed
      * @param position - a Vector 2 indicatoring a position to be relayed
      */
     public void PlaceEntityAt(Entity entity, Vector2 position) {

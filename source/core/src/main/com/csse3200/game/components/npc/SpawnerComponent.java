@@ -36,9 +36,9 @@ public class SpawnerComponent extends Component {
      * SpawnerComponent allows an entity to spawn enemies on some real time interval and send them to
      * the gameState and event handler.
      *
-     * @param targets the list of enemy targets
-     * @param tickRate the amount of seconds between ticks (not guaranteed but catchup is performed if a tick is missed)
-     * @param type the type of enemy e.g.(Melee, Ranged) (Recommend to use for just small enemies)
+     * @param targets   the list of enemy targets
+     * @param tickRate  the amount of seconds between ticks (not guaranteed but catchup is performed if a tick is missed)
+     * @param type      the type of enemy e.g.(Melee, Ranged) (Recommend to use for just small enemies)
      * @param behaviour the behaviour of the enemy, what it will prioritise
      */
     public SpawnerComponent(ArrayList<Entity> targets, long tickRate, EnemyType type, EnemyBehaviour behaviour, int count) {
@@ -61,12 +61,12 @@ public class SpawnerComponent extends Component {
         super.update();
         Vector2 worldPos;
         while (this.timer.getTimeSince(this.lastTime) >= this.tickRate && spawnedAmount < count) {
-                worldPos = entity.getCenterPosition();
-                Entity enemy = EnemyFactory.createEnemy(targets, type, behaviour);
-                ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
-                spawnedAmount += 1;
-                System.out.println(spawnedAmount);
-                this.lastTime += this.tickRate;
+            worldPos = entity.getCenterPosition();
+            Entity enemy = EnemyFactory.createEnemy(targets, type, behaviour);
+            ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
+            spawnedAmount += 1;
+            System.out.println(spawnedAmount);
+            this.lastTime += this.tickRate;
         }
     }
 }

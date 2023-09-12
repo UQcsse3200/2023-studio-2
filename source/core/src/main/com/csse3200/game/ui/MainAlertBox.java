@@ -12,22 +12,22 @@ import com.csse3200.game.GdxGame;
 
 public class MainAlertBox extends Actor {
 
-    private GdxGame game;
+    private final GdxGame game;
     private Runnable callback;
     private boolean isTransitioning = false;
-    private Texture transitionImage;
-    private SpriteBatch spriteBatch;
-    private Sprite transitionSprite;
+    private final Texture transitionImage;
+    private final SpriteBatch spriteBatch;
+    private final Sprite transitionSprite;
     private float transitionX = 50f; // X-axis position for the transition
-    private float transitionSpeed = 450f; // Adjust the speed of the transition
+    private final float transitionSpeed = 450f; // Adjust the speed of the transition
 
-    private boolean isExit=false;
+    private boolean isExit = false;
 
     public MainAlertBox(GdxGame game, String alert, Skin skin, String alertText) {
 
         this.game = game;
-        if("Exit game".equals(alert))
-            isExit =true;
+        if ("Exit game".equals(alert))
+            isExit = true;
         startTransition();
         // Load your transition image (replace with the actual image path)
         transitionImage = new Texture(Gdx.files.internal("images/game-over-final.png"));
@@ -53,7 +53,7 @@ public class MainAlertBox extends Actor {
                 isTransitioning = false;
                 // Change the screen after the transition
                 // Replace with your actual screen class
-                if(isExit)
+                if (isExit)
                     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
                 else
                     this.callback.run();
@@ -61,6 +61,7 @@ public class MainAlertBox extends Actor {
 
         }
     }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (isTransitioning) {

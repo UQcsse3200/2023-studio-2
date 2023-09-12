@@ -2,6 +2,7 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.StructureFactory;
@@ -9,8 +10,6 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType; //Temporary, for extractor minigame
 
 public class ExtractorMiniGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ExtractorMiniGameArea.class);
@@ -40,7 +39,7 @@ public class ExtractorMiniGameArea extends GameArea {
 
         Entity extractorRepairPart = StructureFactory.createExtractorRepairPart();
         int[][] positions = {
-                {5,4}, {5,7}, {5,10}, {9,4}, {9,7}, {9,10}, {12,4}, {12,7}, {12,10}
+                {5, 4}, {5, 7}, {5, 10}, {9, 4}, {9, 7}, {9, 10}, {12, 4}, {12, 7}, {12, 10}
         };
         int randomIndex = MathUtils.random(0, positions.length - 1);
         int[] randomPosition = positions[randomIndex];

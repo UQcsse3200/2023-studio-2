@@ -12,128 +12,128 @@ import org.slf4j.LoggerFactory;
  */
 public class AimTask extends DefaultTask implements PriorityTask {
 
-  private final int priority = 5;
-  private static final Logger logger = LoggerFactory.getLogger(AimTask.class);
-  private final float waitTime;
-  private WaitTask waitTask;
-  private Task currentTask;
-  private ShootTask aimTask;
-  private final Entity target;
-  private final float range;
+    private static final Logger logger = LoggerFactory.getLogger(AimTask.class);
+    private final int priority = 5;
+    private final float waitTime;
+    private final Entity target;
+    private final float range;
+    private WaitTask waitTask;
+    private Task currentTask;
+    private ShootTask aimTask;
 
 
-  /**
-   * creates an aim task.
-   *
-   * @param waitTime How long in seconds to wait between firing a projectile.
-   * @param target The target for
-   */
-  public AimTask(float waitTime, Entity target, float range) {
-    this.waitTime = waitTime;
-    this.target = target;
-    this.range = range;
-  }
-
-  @Override
-  public int getPriority() {
-    if (status == Status.ACTIVE) {
-      return getActivePriority();
+    /**
+     * creates an aim task.
+     *
+     * @param waitTime How long in seconds to wait between firing a projectile.
+     * @param target   The target for
+     */
+    public AimTask(float waitTime, Entity target, float range) {
+        this.waitTime = waitTime;
+        this.target = target;
+        this.range = range;
     }
 
-    return getInactivePriority();
-  }
+    @Override
+    public int getPriority() {
+        if (status == Status.ACTIVE) {
+            return getActivePriority();
+        }
 
-  @Override
-  public void start() {
-    super.start();
-
-    waitTask = new WaitTask(waitTime);
-    waitTask.create(owner);
-    aimTask = new ShootTask(target);
-    aimTask.create(owner);
-
-    waitTask.start();
-    currentTask = waitTask;
-
-    this.owner.getEntity().getEvents().trigger("standing");
-  }
-
-  @Override
-  public void update() {
-    if (currentTask.getStatus() != Status.ACTIVE) {
-      if (currentTask == waitTask) {
-        startAiming();
-      } else {
-        startWaiting();
-      }
+        return getInactivePriority();
     }
-    currentTask.update();
-  }
 
-  /**
-   * Returns the distance between the current entity and the target location.
-   *
-   * @return The distance between the owner's entity and the target location.
-   */
-  private float getDistanceToTarget() {
-    return owner.getEntity().getPosition().dst(target.getPosition());
-  }
+    @Override
+    public void start() {
+        super.start();
 
-  /**
-   * Returns the priority if task is currently active.
-   *
-   * @return The current priority.
-   */
-  private int getActivePriority() {
-    float dst = getDistanceToTarget();
-    if (dst > range) {
-      return -1; // Too far, stop chasing
+        waitTask = new WaitTask(waitTime);
+        waitTask.create(owner);
+        aimTask = new ShootTask(target);
+        aimTask.create(owner);
+
+        waitTask.start();
+        currentTask = waitTask;
+
+        this.owner.getEntity().getEvents().trigger("standing");
     }
-    return priority;
-  }
 
-  /**
-   * Returns the priority if task is currently inactive.
-   *
-   * @return The current priority.
-   */
-  private int getInactivePriority() {
-    float dst = getDistanceToTarget();
-    if (dst <= range) {
-      return priority;
+    @Override
+    public void update() {
+        if (currentTask.getStatus() != Status.ACTIVE) {
+            if (currentTask == waitTask) {
+                startAiming();
+            } else {
+                startWaiting();
+            }
+        }
+        currentTask.update();
     }
-    return -1;
-  }
 
-  /**
-   * Makes the entity wait.
-   */
-  private void startWaiting() {
-    logger.debug("Starting waiting");
-    this.owner.getEntity().getEvents().trigger("standing");
-    swapTask(waitTask);
-  }
-
-  /**
-   * Makes the entity aim.
-   */
-  private void startAiming() {
-    logger.debug("Starting aiming");
-    this.owner.getEntity().getEvents().trigger("standing");
-    swapTask(aimTask);
-  }
-
-  /**
-   * Stops the old task being performed and starts the new one.
-   *
-   * @param newTask The task to be performed.
-   */
-  private void swapTask(Task newTask) {
-    if (currentTask != null) {
-      currentTask.stop();
+    /**
+     * Returns the distance between the current entity and the target location.
+     *
+     * @return The distance between the owner's entity and the target location.
+     */
+    private float getDistanceToTarget() {
+        return owner.getEntity().getPosition().dst(target.getPosition());
     }
-    currentTask = newTask;
-    currentTask.start();
-  }
+
+    /**
+     * Returns the priority if task is currently active.
+     *
+     * @return The current priority.
+     */
+    private int getActivePriority() {
+        float dst = getDistanceToTarget();
+        if (dst > range) {
+            return -1; // Too far, stop chasing
+        }
+        return priority;
+    }
+
+    /**
+     * Returns the priority if task is currently inactive.
+     *
+     * @return The current priority.
+     */
+    private int getInactivePriority() {
+        float dst = getDistanceToTarget();
+        if (dst <= range) {
+            return priority;
+        }
+        return -1;
+    }
+
+    /**
+     * Makes the entity wait.
+     */
+    private void startWaiting() {
+        logger.debug("Starting waiting");
+        this.owner.getEntity().getEvents().trigger("standing");
+        swapTask(waitTask);
+    }
+
+    /**
+     * Makes the entity aim.
+     */
+    private void startAiming() {
+        logger.debug("Starting aiming");
+        this.owner.getEntity().getEvents().trigger("standing");
+        swapTask(aimTask);
+    }
+
+    /**
+     * Stops the old task being performed and starts the new one.
+     *
+     * @param newTask The task to be performed.
+     */
+    private void swapTask(Task newTask) {
+        if (currentTask != null) {
+            currentTask.stop();
+        }
+        currentTask = newTask;
+        currentTask.start();
+    }
 }
 

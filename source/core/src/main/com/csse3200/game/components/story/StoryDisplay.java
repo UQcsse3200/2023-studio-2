@@ -27,13 +27,11 @@ public class StoryDisplay extends UIComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(StoryDisplay.class);
     private static final float Z_INDEX = 2f;
+    private static final String[] buttonImages = {"images/next_cut.png", "images/prev-cut.png"};
     private Table table;
-
     private ArrayList<String> storyImages;
     private int start;
     private int end;
-
-    private static final String[] buttonImages = {"images/next_cut.png", "images/prev-cut.png"};
 
     @Override
     public void create() {

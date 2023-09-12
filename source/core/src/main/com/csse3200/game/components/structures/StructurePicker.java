@@ -25,9 +25,9 @@ import java.util.ArrayList;
 public class StructurePicker extends UIComponent {
     Logger logger;
     Table table;
-    private ArrayList<Button> buttons;
+    private final ArrayList<Button> buttons;
 
-    private StructureOptions structureOptions =
+    private final StructureOptions structureOptions =
             FileLoader.readClass(StructureOptions.class, "configs/structure_options.json");
     private Tool selectedTool;
     private int level = 0;
@@ -50,6 +50,7 @@ public class StructurePicker extends UIComponent {
 
     /**
      * Creates actors and positions them on the stage using a table.
+     *
      * @see Table for positioning options
      */
     private void addActors() {
@@ -113,12 +114,16 @@ public class StructurePicker extends UIComponent {
         }
     }
 
+    public Tool getSelectedTool() {
+        return selectedTool;
+    }
+
     public void setSelectedTool(Tool tool) {
         this.selectedTool = tool;
     }
 
-    public Tool getSelectedTool() {
-        return selectedTool;
+    public int getLevel() {
+        return level;
     }
 
     public void setLevel(int level) {
@@ -126,12 +131,8 @@ public class StructurePicker extends UIComponent {
         addActors();
     }
 
-    public int getLevel() {
-        return level;
-    }
-
     @Override
-    public void draw(SpriteBatch batch)  {
+    public void draw(SpriteBatch batch) {
         // draw is handled by the stage
     }
 
@@ -147,6 +148,7 @@ public class StructurePicker extends UIComponent {
     public void hide() {
         table.setVisible(false);
     }
+
     public boolean isVisible() {
         return table.isVisible();
     }

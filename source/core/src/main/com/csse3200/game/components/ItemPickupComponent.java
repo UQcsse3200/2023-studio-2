@@ -9,11 +9,11 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ItemPickupComponent extends Component{
+public class ItemPickupComponent extends Component {
 
     private static Logger logger;
     private HitboxComponent hitboxComponent;
-    private short targetLayer;
+    private final short targetLayer;
 
     public ItemPickupComponent(short targetLayer) {
         this.targetLayer = targetLayer;
@@ -24,7 +24,7 @@ public class ItemPickupComponent extends Component{
         entity.getEvents().addListener("collisionStart", this::pickUp);
     }
 
-    private void pickUp(Fixture me, Fixture other){
+    private void pickUp(Fixture me, Fixture other) {
 
         hitboxComponent = entity.getComponent(HitboxComponent.class);
 

@@ -70,7 +70,7 @@ public class SpaceMapScreen extends ScreenAdapter {
 
         logger.debug("Initialising space minigame screen entities");
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        SpaceGameArea spaceGameArea= new SpaceGameArea(terrainFactory);
+        SpaceGameArea spaceGameArea = new SpaceGameArea(terrainFactory);
         spaceGameArea.create();
     }
 
@@ -128,7 +128,7 @@ public class SpaceMapScreen extends ScreenAdapter {
         Entity ui = new Entity();
         ui.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
-                .addComponent(new MainGameActionss(this.game,stage))
+                .addComponent(new MainGameActionss(this.game, stage))
                 .addComponent(new ReturnToPlanetDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)

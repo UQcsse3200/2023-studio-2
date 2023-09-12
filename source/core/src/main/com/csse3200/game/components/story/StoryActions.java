@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public class StoryActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(StoryActions.class);
 
-    private GdxGame game;
+    private final GdxGame game;
 
     /**
      * Creates a new instance of StoryActions.

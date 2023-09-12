@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 /**
  * Factory to create structure entities - such as extractors or ships.
-
+ *
  *
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
@@ -46,11 +46,11 @@ public class StructureFactory {
      * Creates an extractor entity
      *
      * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
-
-     * @param health the max and initial health of the extractor
+     *
+     * @param health           the max and initial health of the extractor
      * @param producedResource the resource type produced by the extractor
-     * @param tickRate the frequency at which the extractor ticks (produces resources)
-     * @param tickSize the amount of the resource produced at each tick
+     * @param tickRate         the frequency at which the extractor ticks (produces resources)
+     * @param tickSize         the amount of the resource produced at each tick
      * @return a new extractor Entity
      */
     public static PlaceableEntity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
@@ -58,7 +58,7 @@ public class StructureFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/ExtractorAnimation.atlas", TextureAtlas.class));
-        animator.addAnimation("animateBroken", 0.2f,Animation.PlayMode.LOOP);
+        animator.addAnimation("animateBroken", 0.2f, Animation.PlayMode.LOOP);
         animator.addAnimation("animateExtracting", 0.2f, Animation.PlayMode.LOOP);
 
         PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity()
@@ -99,7 +99,6 @@ public class StructureFactory {
         extractorRepairPart.setScale(1.8f, 2f);
         return extractorRepairPart;
     }
-
 
 
     /**
@@ -163,15 +162,15 @@ public class StructureFactory {
 
         return upgradeBench;
     }
-    /**
 
+    /**
      * Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map
      *
-     * @param targets the targets the entities that spawn will target
+     * @param targets   the targets the entities that spawn will target
      * @param spawnRate the frequency of the enemy spawning
-     * @param type the type of enemy to spawn
+     * @param type      the type of enemy to spawn
      * @param behaviour the behaviour type of the enemy to spawn
-     * @param count the maximum amount of enemies the spawner will spawn
+     * @param count     the maximum amount of enemies the spawner will spawn
      * @return
      */
     public static Entity createSpawner(ArrayList<Entity> targets, long spawnRate, EnemyType type, EnemyBehaviour behaviour, int count) {

@@ -22,9 +22,9 @@ import org.slf4j.LoggerFactory;
  */
 public class PlayerDeathScreen extends ScreenAdapter {
     public static final Logger logger = LoggerFactory.getLogger(PlayerDeathScreen.class);
+    private static final String[] deathScreenTextures = {"images/deathscreen.png"};
     private final GdxGame game;
     private final Renderer renderer;
-    private static final String[] deathScreenTextures = {"images/deathscreen.png"};
 
     public PlayerDeathScreen(GdxGame game) {
         this.game = game;

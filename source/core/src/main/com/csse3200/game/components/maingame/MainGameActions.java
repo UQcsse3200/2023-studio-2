@@ -12,29 +12,30 @@ import org.slf4j.LoggerFactory;
  * events is triggered.
  */
 public class MainGameActions extends Component {
-  private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
-  private GdxGame game;
+    private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
+    private final GdxGame game;
 
-  public MainGameActions(GdxGame game) {
-    this.game = game;
-  }
+    public MainGameActions(GdxGame game) {
+        this.game = game;
+    }
 
-  @Override
-  public void create() {
-    entity.getEvents().addListener("exit", this::onExit);
-    entity.getEvents().addListener("returnPlanet", this::onReturnPlanet);
-  }
-  /**
-   * Swaps to the Main Menu screen.
-   */
-  private void onExit() {
-    logger.info("Exiting main game screen");
-    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-  }
+    @Override
+    public void create() {
+        entity.getEvents().addListener("exit", this::onExit);
+        entity.getEvents().addListener("returnPlanet", this::onReturnPlanet);
+    }
 
-  protected void onReturnPlanet() {
-    logger.info("Exiting to current planet screen");
-    game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
-  }
+    /**
+     * Swaps to the Main Menu screen.
+     */
+    private void onExit() {
+        logger.info("Exiting main game screen");
+        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+    }
+
+    protected void onReturnPlanet() {
+        logger.info("Exiting to current planet screen");
+        game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+    }
 
 }

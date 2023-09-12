@@ -25,8 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class StoryScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(StoryScreen.class);
-    private final GdxGame game;
-    private final Renderer renderer;
     private static final String[] storyTextures = {
             "images/P1_B.png",
             "images/P2_B.png",
@@ -35,6 +33,8 @@ public class StoryScreen extends ScreenAdapter {
             "images/P5_B.png",
             "images/P6_B.png"
     };
+    private final GdxGame game;
+    private final Renderer renderer;
 
 
     public StoryScreen(GdxGame game) {
@@ -47,7 +47,6 @@ public class StoryScreen extends ScreenAdapter {
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
         //ServiceLocator.registerRenderService(new RenderService());
-
 
 
         renderer = RenderFactory.createRenderer();

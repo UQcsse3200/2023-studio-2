@@ -1,10 +1,11 @@
 package com.csse3200.game.entities.factories;
-/**different types of attacks
+/**
+ * different types of attacks
  * Each weapon: melee component: rotation, life, swing speed
- *              Animation:    image atlas
- *              Combat stats: damage, (Health = 1, Is immue = True, attack multiplier = 1)
- *              //Or use player combat stast
-*/
+ * Animation:    image atlas
+ * Combat stats: damage, (Health = 1, Is immue = True, attack multiplier = 1)
+ * //Or use player combat stast
+ */
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -27,61 +28,62 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
  * Class to create weapons when the player attacks
  */
 public class AttackFactory {
-  private static final WeaponConfigs configs =
-          FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
-  /**
-   * Static function to create a new weapon entity
-   * @param weaponType - the type of weapon entity to be made
-   * @param initRot - the initial rotation of the player
-   * @return A reference to the created weapon entity
-   */
-  public static Entity createAttack(WeaponType weaponType, float initRot, Entity player) {
-    WeaponConfig config = configs.GetWeaponConfig(weaponType);
+    private static final WeaponConfigs configs =
+            FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
 
-    PlayerActions playerActions = player.getComponent(PlayerActions.class);
-    playerActions.setAttackCooldown(config.attackCooldown);
-
-    WeaponControllerComponent weaponController = new WeaponControllerComponent(
-            weaponType,
-            initRot + config.initialRotationOffset,
-            config.weaponSpeed,
-            config.weaponDuration,
-            config.rotationSpeed,
-            config.imageRotationOffset);
-
-    Entity attack =
-            new Entity()
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WEAPON))
-                    .addComponent(new TouchAttackComponent((short)
-                            (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.NPC)))
-                    .addComponent(weaponController);
-    attack.setEntityType("playerWeapon");
-
-    TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
-    AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
-
-    animator.addAnimation("attack", 0.1f, Animation.PlayMode.LOOP_PINGPONG);
-
-    //TODO make this use player
-    attack
-            .addComponent(animator)
-            .addComponent(new CombatStatsComponent(1, 10, 1, false));
-
-    //TODO animations to control rotational apperance
-    animator.startAnimation("attack");
-    attack.scaleWidth(config.imageScale);
-
-    switch (weaponType) {
-      case SLING_SHOT, ELEC_WRENCH:
-        attack.addComponent(new WeaponTargetComponent(weaponType, player));
-        break;
+    private AttackFactory() {
+        throw new IllegalStateException("Instantiating static util class");
     }
 
-    return attack;
-  }
+    /**
+     * Static function to create a new weapon entity
+     * @param weaponType - the type of weapon entity to be made
+     * @param initRot - the initial rotation of the player
+     * @return A reference to the created weapon entity
+     */
+    public static Entity createAttack(WeaponType weaponType, float initRot, Entity player) {
+        WeaponConfig config = configs.GetWeaponConfig(weaponType);
 
-  private AttackFactory() {
-    throw new IllegalStateException("Instantiating static util class");
-  }
+        PlayerActions playerActions = player.getComponent(PlayerActions.class);
+        playerActions.setAttackCooldown(config.attackCooldown);
+
+        WeaponControllerComponent weaponController = new WeaponControllerComponent(
+                weaponType,
+                initRot + config.initialRotationOffset,
+                config.weaponSpeed,
+                config.weaponDuration,
+                config.rotationSpeed,
+                config.imageRotationOffset);
+
+        Entity attack =
+                new Entity()
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WEAPON))
+                        .addComponent(new TouchAttackComponent((short)
+                                (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.NPC)))
+                        .addComponent(weaponController);
+        attack.setEntityType("playerWeapon");
+
+        TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
+        AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
+
+        animator.addAnimation("attack", 0.1f, Animation.PlayMode.LOOP_PINGPONG);
+
+        //TODO make this use player
+        attack
+                .addComponent(animator)
+                .addComponent(new CombatStatsComponent(1, 10, 1, false));
+
+        //TODO animations to control rotational apperance
+        animator.startAnimation("attack");
+        attack.scaleWidth(config.imageScale);
+
+        switch (weaponType) {
+            case SLING_SHOT, ELEC_WRENCH:
+                attack.addComponent(new WeaponTargetComponent(weaponType, player));
+                break;
+        }
+
+        return attack;
+    }
 }

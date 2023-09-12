@@ -15,89 +15,89 @@ import com.csse3200.game.rendering.RenderComponent;
  * shows the 'ground' in the game. Enabling/disabling this component will show/hide the terrain.
  */
 public class TerrainComponent extends RenderComponent {
-  private static final int TERRAIN_LAYER = 0;
+    private static final int TERRAIN_LAYER = 0;
 
-  private final TiledMap tiledMap;
-  private final TiledMapRenderer tiledMapRenderer;
-  private final OrthographicCamera camera;
-  private final TerrainOrientation orientation;
-  private final float tileSize;
+    private final TiledMap tiledMap;
+    private final TiledMapRenderer tiledMapRenderer;
+    private final OrthographicCamera camera;
+    private final TerrainOrientation orientation;
+    private final float tileSize;
 
-  public TerrainComponent(
-          OrthographicCamera camera,
-          TiledMap map,
-          TiledMapRenderer renderer,
-          TerrainOrientation orientation,
-          float tileSize) {
-    this.camera = camera;
-    this.tiledMap = map;
-    this.orientation = orientation;
-    this.tileSize = tileSize;
-    this.tiledMapRenderer = renderer;
-  }
-
-  public Vector2 tileToWorldPosition(GridPoint2 tilePos) {
-    return tileToWorldPosition(tilePos.x, tilePos.y);
-  }
-
-  public Vector2 tileToWorldPosition(int x, int y) {
-    switch (orientation) {
-      case HEXAGONAL:
-        float hexLength = tileSize / 2;
-        float yOffset = (x % 2 == 0) ? 0.5f * tileSize : 0f;
-        return new Vector2(x * (tileSize + hexLength) / 2, y + yOffset);
-      case ISOMETRIC:
-        return new Vector2((x + y) * tileSize / 2, (y - x) * tileSize / 2);
-      case ORTHOGONAL:
-        return new Vector2(x * tileSize, y * tileSize);
-      default:
-        return null;
+    public TerrainComponent(
+            OrthographicCamera camera,
+            TiledMap map,
+            TiledMapRenderer renderer,
+            TerrainOrientation orientation,
+            float tileSize) {
+        this.camera = camera;
+        this.tiledMap = map;
+        this.orientation = orientation;
+        this.tileSize = tileSize;
+        this.tiledMapRenderer = renderer;
     }
-  }
 
-  public float getTileSize() {
-    return tileSize;
-  }
+    public Vector2 tileToWorldPosition(GridPoint2 tilePos) {
+        return tileToWorldPosition(tilePos.x, tilePos.y);
+    }
 
-  public GridPoint2 getMapBounds(int layer) {
-    TiledMapTileLayer terrainLayer = (TiledMapTileLayer)tiledMap.getLayers().get(layer);
-    return new GridPoint2(terrainLayer.getWidth(), terrainLayer.getHeight());
-  }
+    public Vector2 tileToWorldPosition(int x, int y) {
+        switch (orientation) {
+            case HEXAGONAL:
+                float hexLength = tileSize / 2;
+                float yOffset = (x % 2 == 0) ? 0.5f * tileSize : 0f;
+                return new Vector2(x * (tileSize + hexLength) / 2, y + yOffset);
+            case ISOMETRIC:
+                return new Vector2((x + y) * tileSize / 2, (y - x) * tileSize / 2);
+            case ORTHOGONAL:
+                return new Vector2(x * tileSize, y * tileSize);
+            default:
+                return null;
+        }
+    }
 
-  public TiledMap getMap() {
-    return tiledMap;
-  }
+    public float getTileSize() {
+        return tileSize;
+    }
 
-  @Override
-  public void draw(SpriteBatch batch) {
-    tiledMapRenderer.setView(camera);
-    tiledMapRenderer.render();
-  }
+    public GridPoint2 getMapBounds(int layer) {
+        TiledMapTileLayer terrainLayer = (TiledMapTileLayer) tiledMap.getLayers().get(layer);
+        return new GridPoint2(terrainLayer.getWidth(), terrainLayer.getHeight());
+    }
 
-  @Override
-  public void dispose() {
-    tiledMap.dispose();
-    super.dispose();
-  }
+    public TiledMap getMap() {
+        return tiledMap;
+    }
 
-  @Override
-  public float getZIndex() {
-    return 0f;
-  }
+    @Override
+    public void draw(SpriteBatch batch) {
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
+    }
 
-  @Override
-  public int getLayer() {
-    return TERRAIN_LAYER;
-  }
+    @Override
+    public void dispose() {
+        tiledMap.dispose();
+        super.dispose();
+    }
 
-  public enum TerrainOrientation {
-    ORTHOGONAL,
-    ISOMETRIC,
-    HEXAGONAL
-  }
+    @Override
+    public float getZIndex() {
+        return 0f;
+    }
 
-  public Vector3 unproject(Vector3 screenCoords) {
-    return camera.unproject(screenCoords).scl(new Vector3(1/tileSize, 1/tileSize, 1/tileSize));
-  }
+    @Override
+    public int getLayer() {
+        return TERRAIN_LAYER;
+    }
+
+    public Vector3 unproject(Vector3 screenCoords) {
+        return camera.unproject(screenCoords).scl(new Vector3(1 / tileSize, 1 / tileSize, 1 / tileSize));
+    }
+
+    public enum TerrainOrientation {
+        ORTHOGONAL,
+        ISOMETRIC,
+        HEXAGONAL
+    }
 }
 

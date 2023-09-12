@@ -195,8 +195,16 @@ public class PlanetScreen extends ScreenAdapter {
         logger.info("Game resumed");
     }
 
+    /**
+     * Do not dispose of all services and renderers on screen switch. Preserve state
+     */
     @Override
-    public void dispose() {
+    public void dispose() { }
+
+    /**
+     * Dispose of the entire game screen.
+     */
+    public void clear() {
         logger.debug(String.format("Disposing %s screen", this.name));
 
         renderer.dispose();

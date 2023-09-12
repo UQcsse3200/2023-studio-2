@@ -90,16 +90,17 @@ public class ForestGameArea extends GameArea {
       "images/oldman_down_1.png",
       "images/base_enemy.png",
       "images/Troll.png",
-          "images/TurretOne.png",
-          "images/TurretTwo.png",
+      "images/TurretOne.png",
+      "images/TurretTwo.png",
       "images/rangeEnemy.png",
       "images/stone_wall.png",
-       "images/companionSS.png",
-          "images/companionSS_0.png",
-          "images/companionSS_1.png",
-          "images/companionSS_2.png",
-          "images/companionSS_03.png",
-      "images/player.png"
+      "images/companionSS.png",
+      "images/companionSS_0.png",
+      "images/companionSS_1.png",
+      "images/companionSS_2.png",
+      "images/companionSS_03.png",
+      "images/player.png",
+      "images/ExtractorAnimation.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
@@ -117,8 +118,9 @@ public class ForestGameArea extends GameArea {
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
       "images/playerSS.atlas",
-          "images/companionSS.atlas",
-      "images/player.atlas"
+      "images/companionSS.atlas",
+      "images/player.atlas",
+      "images/ExtractorAnimation.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};

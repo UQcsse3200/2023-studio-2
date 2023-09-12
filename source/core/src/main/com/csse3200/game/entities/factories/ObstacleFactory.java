@@ -157,7 +157,7 @@ public class ObstacleFactory {
 
 
   public static PlaceableEntity createCustomTurret(TurretType type, Entity player) {
-    return new Turret(type,player);
+    return new Turret(type, player);
   }
 
 }

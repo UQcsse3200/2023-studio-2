@@ -56,9 +56,7 @@ public class MainAlertBox extends Actor {
                 if(isExit)
                     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
                 else
-                    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-
-
+                    this.callback.run();
             }
 
         }

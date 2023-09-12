@@ -4,6 +4,7 @@ package com.csse3200.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
+import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.ui.ItemBox;
 import com.badlogic.gdx.ScreenAdapter;
@@ -147,6 +148,12 @@ private static boolean alive = true;
       logger.info("Launching player death screen");
       game.setScreen(GdxGame.ScreenType.PLAYER_DEATH);
     }
+
+    ProximityControllerComponent proximityController = player.getComponent(ProximityControllerComponent.class);
+    if (proximityController != null) {
+      proximityController.checkAllEntitiesProximity();   //checks whether the player is near an intractable entity to show the prompt
+    }
+
   }
 
   @Override

@@ -13,13 +13,13 @@ import java.util.List;
 public class UpgradeNode {
 
     /** Path to the image that represents the weapon upgrade. */
-    private String imagePath;
+    private final String imagePath;
 
     /** Type of weapon this node represents. */
-    private WeaponType weaponType;
+    private final WeaponType weaponType;
 
     /** List of child nodes, representing subsequent potential upgrades. */
-    private List<UpgradeNode> children;
+    private final List<UpgradeNode> children;
 
     /** X-coordinate of the node, typically used for UI positioning. */
     private float x;

@@ -99,6 +99,9 @@ public class ForestGameArea extends GameArea {
       "images/companionSS_1.png",
       "images/companionSS_2.png",
       "images/companionSS_03.png",
+      "images/nebulite.png",
+      "images/solstite.png",
+      "images/durasteel.png",
       "images/player.png",
       "images/ExtractorAnimation.png"
   };

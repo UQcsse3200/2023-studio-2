@@ -76,7 +76,7 @@ public class SpawnerComponent extends Component {
         super.create();
     }
 
-    private void spawnEnemies(int meleeCount, int rangedCount) {
+    public void spawnEnemies(int meleeCount, int rangedCount) {
         isSpawning = true;
         setEnemiesToSpawn(meleeCount + rangedCount);
         enemiesSpawned = 0;

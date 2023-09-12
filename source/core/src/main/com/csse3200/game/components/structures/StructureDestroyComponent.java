@@ -19,8 +19,8 @@ public class StructureDestroyComponent extends Component {
         var combatStatsComponent = entity.getComponent(CombatStatsComponent.class);
 
         if (combatStatsComponent == null) {
-            logger.warn("There is a StructureDestroyComponent on entity " + entity
-                    + " without a corresponding combat stats component.");
+            logger.warn("There is a StructureDestroyComponent on entity {} " +
+                    "without a corresponding combat stats component.", entity);
             return;
         }
 

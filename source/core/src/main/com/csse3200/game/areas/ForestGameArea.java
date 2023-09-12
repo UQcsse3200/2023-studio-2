@@ -5,8 +5,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.buildables.TurretType;
@@ -337,8 +335,8 @@ public class ForestGameArea extends GameArea {
   }
 
   public void spawnTurret() {
-    Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
-    Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
+    Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.LEVEL_ONE, player);
+    Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.LEVEL_TWO, player);
     spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
     spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
   }

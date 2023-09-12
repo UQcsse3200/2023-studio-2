@@ -25,9 +25,9 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Factory to create non-playable enemies entities with predefined components.
@@ -52,7 +52,7 @@ public class EnemyFactory {
    * @param type type of enemy - melee or ranged
    * @return entity
    */
-  public static Entity createEnemy(ArrayList<Entity> targets, EnemyType type, EnemyBehaviour behaviour) {
+  public static Entity createEnemy(List<Entity> targets, EnemyType type, EnemyBehaviour behaviour) {
 
     EnemyConfig config = configs.GetEnemyConfig(type, behaviour);
     AnimationRenderComponent animator;

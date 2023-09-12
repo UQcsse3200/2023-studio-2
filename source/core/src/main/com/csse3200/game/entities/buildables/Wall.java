@@ -18,6 +18,8 @@ import com.csse3200.game.components.structures.JoinLayer;
 import com.csse3200.game.components.structures.JoinableComponentShapes;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.Objects;
+
 /**
  * Core wall class. Wall inherits entity and adds the required components and functionality for
  * a functional wall within the game. All walls have a static body and a WALL ColliderComponent.
@@ -70,5 +72,19 @@ public class Wall extends PlaceableEntity {
 
     private void onPlayerExit(Entity player) {
         getComponent(HealthBarComponent.class).hide();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Wall wall = (Wall) o;
+        return type == wall.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), type);
     }
 }

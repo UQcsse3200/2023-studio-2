@@ -20,20 +20,20 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-public class StructurePicker extends UIComponent {
+public class StructureToolPicker extends UIComponent {
     Logger logger;
     Table table;
-    private ArrayList<Button> buttons;
+    private final ArrayList<Button> buttons;
 
-    private StructureOptions structureOptions =
-            FileLoader.readClass(StructureOptions.class, "configs/structure_options.json");
+    private final ToolsConfig structureTools =
+            FileLoader.readClass(ToolsConfig.class, "configs/structure_tools.json");
     private Tool selectedTool;
     private int level = 0;
 
-    public StructurePicker() {
+    public StructureToolPicker() {
         super();
         buttons = new ArrayList<>();
-        logger = LoggerFactory.getLogger(StructurePicker.class);
+        logger = LoggerFactory.getLogger(StructureToolPicker.class);
         table = new Table();
     }
 
@@ -57,17 +57,14 @@ public class StructurePicker extends UIComponent {
         table.center();
         table.setFillParent(true);
 
-        for (var option : structureOptions.structureOptions) {
+        for (var option : structureTools.tools) {
             var optionValue = option.value;
 
-            // skip items which are above the current level
-            if (optionValue.level > level) {
-                continue;
-            }
 
             var tool = getTool(option.key, optionValue.cost);
 
-            if (tool == null) {
+            // skip items which are above the current level
+            if (optionValue.level > level || tool == null) {
                 continue;
             }
             var button = new Button(skin);
@@ -98,15 +95,15 @@ public class StructurePicker extends UIComponent {
 
             Object obj = cls.getDeclaredConstructor(ObjectMap.class).newInstance(cost);
 
-            if (obj instanceof Tool) {
-                return (Tool) obj;
+            if (obj instanceof Tool tool) {
+                return tool;
             } else {
-                logger.error(key + " is not an instance of Tool");
+                logger.error("{} is not an instance of Tool", key);
                 return null;
             }
         } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException
                  | InstantiationException | IllegalAccessException e) {
-            logger.error(key + " cannot be instantiated");
+            logger.error("{} cannot be instantiated", key);
             return null;
         }
     }
@@ -131,11 +128,6 @@ public class StructurePicker extends UIComponent {
     @Override
     public void draw(SpriteBatch batch)  {
         // draw is handled by the stage
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 
     public void show() {

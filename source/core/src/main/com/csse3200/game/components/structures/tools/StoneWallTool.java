@@ -30,7 +30,7 @@ public class StoneWallTool extends PlacementTool {
         PlaceableEntity newStructure = createEntity(player);
         newStructure.addComponent(new CostComponent(cost));
 
-        ServiceLocator.getStructurePlacementService().ReplaceStructureAt(newStructure, position, false, false);
+        ServiceLocator.getStructurePlacementService().replaceStructureAt(newStructure, position, false, false);
 
         return true;
     }

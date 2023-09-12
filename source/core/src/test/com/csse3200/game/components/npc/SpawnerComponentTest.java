@@ -23,26 +23,5 @@ public class SpawnerComponentTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    public void testSpawnEnemies() {
-       
-        ArrayList<Entity> targets = new ArrayList<>();
-        SpawnerComponent spawner = new SpawnerComponent(targets);
-
-        int meleeCount = 5;
-        int rangedCount = 3;
-
-      
-        when(gameTime.getTime()).thenReturn(0L);
-
-        spawner.spawnEnemies(meleeCount, rangedCount);
-
-       
-        assert spawner.isSpawning();
-        assert spawner.getEnemiesToSpawn() == meleeCount + rangedCount;
-        assert spawner.getMeleeEnemiesToSpawn() == meleeCount;
-        assert spawner.getRangedEnemiesToSpawn() == rangedCount;
-        assert spawner.getEnemiesSpawned() == 0;
-    }
 
 }

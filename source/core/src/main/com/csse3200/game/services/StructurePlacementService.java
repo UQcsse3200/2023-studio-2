@@ -44,6 +44,16 @@ public class StructurePlacementService {
         handler.trigger("placeStructureAt", new PlaceStructureAtArgs(entity, tilePos, centerX, centerY));
         entity.placed();
     }
+
+    public void ReplaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+        removeStructureAt(tilePos);
+
+        entity.willPlace();
+        placedStructures.put(tilePos, entity);
+        handler.trigger("placeStructureAt", new PlaceStructureAtArgs(entity, tilePos, centerX, centerY));
+        entity.placed();
+    }
+
     public void SpawnEntityAtVector(Entity entity, Vector2 worldPos) {
         handler.trigger("fireBullet", new SpawnEntityAtVectorArgs(entity, worldPos));
     }

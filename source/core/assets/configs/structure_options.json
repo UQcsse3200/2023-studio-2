@@ -2,15 +2,23 @@
   "structureOptions":{
     "com.csse3200.game.components.structures.tools.WallTool": {
       "level": 0,
-      "name": "wall",
+      "name": "Dirt Wall",
       "cost": {
         "unobtanium": 50
       },
       "texture": "images/structure-icons/wall.png"
     },
+    "com.csse3200.game.components.structures.tools.StoneWallTool": {
+      "level": 1,
+      "name": "Stone Wall",
+      "cost": {
+        "unobtanium": 100
+      },
+      "texture": "images/structure-icons/wall.png"
+    },
     "com.csse3200.game.components.structures.tools.TurretTool": {
       "level": 1,
-      "name": "turret",
+      "name": "Basic Turret",
       "cost": {
         "unobtanium": 50
       },

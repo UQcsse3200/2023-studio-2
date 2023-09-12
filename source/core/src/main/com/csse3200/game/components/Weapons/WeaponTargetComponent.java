@@ -18,7 +18,7 @@ public class WeaponTargetComponent extends Component {
      * Class to store variables of a spawned weapon
      */
     public WeaponTargetComponent(WeaponType weaponType,
-                                 Entity entity) {
+                                                Entity entity) {
         this.weaponType = weaponType;
         this.entity = entity;
         this.trackPrev = entity.getPosition();
@@ -37,7 +37,7 @@ public class WeaponTargetComponent extends Component {
                 //if (keyboardPlayerInputComponent == null) {return null;}
                 pos = keyboardPlayerInputComponent.getLastMousePos();
                 Vector2 eScl = entity.getScale();
-                return new Vector2(pos.x + eScl.x / 2 - 0.1f, pos.y + eScl.y / 2 - 0.1f);
+                return new Vector2(pos.x + eScl.x/2 - 0.1f, pos.y + eScl.y/2 - 0.1f);
             case ELEC_WRENCH:
                 var delta = entity.getPosition().sub(this.trackPrev);
                 this.trackPrev = entity.getPosition();

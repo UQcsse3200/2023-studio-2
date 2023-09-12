@@ -99,7 +99,7 @@ public class PlayerAnimationController extends Component {
             animator.startAnimation("Character_StandRight");
         } else if (lastDirection.y > 0.1) {
             animator.startAnimation("Character_StandUp");
-        } else if (lastDirection.y < -0.1) {
+        } else if (lastDirection.y < -0.1){
             animator.startAnimation("Character_StandDown");
         }
     }

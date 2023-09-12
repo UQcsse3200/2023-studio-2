@@ -1,7 +1,6 @@
 package com.csse3200.game.services;
 
 import com.csse3200.game.events.EventHandler;
-
 import java.util.Map;
 
 /**
@@ -25,9 +24,9 @@ public class GameStateObserver extends EventHandler {
      * Constructs the GameStateObserver instance.
      * Overwrites state interactor with given gameStateInteractor and registers event listeners.
      *
-     * @param gameStateInteractor The chosen GameStateInteraction for Observers to interface with.
+     * @param gameStateInteractor  The chosen GameStateInteraction for Observers to interface with.
      */
-    public GameStateObserver(GameStateInteraction gameStateInteractor) {
+    public  GameStateObserver(GameStateInteraction gameStateInteractor) {
         stateInteraction = gameStateInteractor;
         this.generateStateListeners();
     }
@@ -48,8 +47,7 @@ public class GameStateObserver extends EventHandler {
 
     /**
      * Returns a copy of the entire game state at the current moment.
-     *
-     * @return A map of the game state data.
+     * @return  A map of the game state data.
      */
     public Map<String, Object> getFullStateData() {
         return stateInteraction.getStateData();
@@ -58,8 +56,8 @@ public class GameStateObserver extends EventHandler {
     /**
      * Returns the value corresponding to the given key in the game state data.
      *
-     * @param key The key for which the value should be retrieved from
-     * @return The value at the given key, or null if key doesn't exist.
+     * @param key   The key for which the value should be retrieved from
+     * @return      The value at the given key, or null if key doesn't exist.
      */
     public Object getStateData(String key) {
         return stateInteraction.get(key);

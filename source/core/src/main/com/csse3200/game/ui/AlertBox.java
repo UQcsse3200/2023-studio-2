@@ -17,9 +17,8 @@ import static com.csse3200.game.screens.MainMenuScreen.logger;
 
 public class AlertBox extends Dialog {
 
-    private final GdxGame game;
-
-    public AlertBox(GdxGame game, String alert, Skin skin) {
+    private GdxGame game;
+    public AlertBox( GdxGame game, String alert, Skin skin) {
         super(alert, skin);
         this.game = game;
         setMovable(false);
@@ -56,7 +55,6 @@ public class AlertBox extends Dialog {
     public void showDialog(Stage stage) {
         stage.addActor(this);
     }
-
     private void onOK() {
         logger.info("Start game");
         game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));

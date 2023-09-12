@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
@@ -14,16 +12,17 @@ import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
 public class MiniScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MiniScreenDisplay.class);
-    private static final float textAnimationDuration = 18;
     private final GdxGame game;
-    private final float spaceSpeed = 1;
-    private final float planetToTextPadding = 150;
+
+    private static float textAnimationDuration = 18;
+    private float spaceSpeed = 1;
+    private float planetToTextPadding = 150;
     private Image background;
     private Image picture;
     private Table rootTable;
@@ -65,10 +64,10 @@ public class MiniScreenDisplay extends UIComponent {
 
         // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
         String space = """
-                3
-                2
-                1
-                """;
+             3
+             2
+             1
+             """;
         spaceLabel = new TypingLabel(space, skin);
         String defaultTokens = "{SLOWER}";
         spaceLabel.setDefaultToken(defaultTokens);

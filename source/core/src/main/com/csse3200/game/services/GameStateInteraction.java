@@ -3,6 +3,7 @@ package com.csse3200.game.services;
 import java.util.Map;
 
 
+
 /**
  * A utility interaction class to manage and modify game state
  */
@@ -42,8 +43,8 @@ public class GameStateInteraction {
     /**
      * Returns the value stored at the give key in the game state.
      *
-     * @param key The key from which the value should be retrieved from.
-     * @return The value stored at the given key, or null if key found.
+     * @param key   The key from which the value should be retrieved from.
+     * @return      The value stored at the given key, or null if key found.
      */
     public Object get(String key) {
         return gameState.get(key);
@@ -59,7 +60,7 @@ public class GameStateInteraction {
     /**
      * Returns a copy of the current entire game state data.
      *
-     * @return A map of game state data at the current moment.
+     * @return  A map of game state data at the current moment.
      */
     public Map<String, Object> getStateData() {
         return gameState.getStateData();
@@ -70,10 +71,10 @@ public class GameStateInteraction {
      * Retrieves the current amount stored and adds the given amount.
      * Note: the game state key is "resource/{resourceName}" not just the resource's name.
      *
-     * @param resourceName The name of the resource to be saved.
-     * @param changeAmount The amount the resource should increase by.
+     * @param resourceName  The name of the resource to be saved.
+     * @param changeAmount  The amount the resource should increase by.
      */
-    public void updateResource(String resourceName, int changeAmount) {
+    public void updateResource(String resourceName, int changeAmount){
         String resourceKey = "resource/" + resourceName;
         Object value = gameState.get(resourceKey);
         int amount = value == null ? 0 : (int) value;
@@ -91,10 +92,10 @@ public class GameStateInteraction {
      * Sets the maximum amount of a resource
      * Note: the game state key is "resourceMax/{resourceName}" not just the resource's name.
      *
-     * @param resourceName The name of the resource produced by the extractor.
-     * @param amount       The amount to cap the resource by
+     * @param resourceName  The name of the resource produced by the extractor.
+     * @param amount The amount to cap the resource by
      */
-    public void updateMaxResources(String resourceName, int amount) {
+    public void updateMaxResources(String resourceName, int amount){
         String resourceKey = "resourceMax/" + resourceName;
         this.put(resourceKey, amount);
     }
@@ -104,10 +105,10 @@ public class GameStateInteraction {
      * Retrieves the current amount stored and adds the given amount.
      * Note: the game state key is "extractors/{resourceName}" not just the resource's name.
      *
-     * @param resourceName The name of the resource produced by the extractor.
-     * @param changeAmount The amount the count should change by.
+     * @param resourceName  The name of the resource produced by the extractor.
+     * @param changeAmount  The amount the count should change by.
      */
-    public void updateExtractors(String resourceName, int changeAmount) {
+    public void updateExtractors(String resourceName, int changeAmount){
         String resourceKey = "extractors/" + resourceName;
         Object value = gameState.get(resourceKey);
         int amount = value == null ? 0 : (int) value;
@@ -115,21 +116,20 @@ public class GameStateInteraction {
     }
 
     /**
-     * Sets the maximum amount of extractors for a resource
+     *  Sets the maximum amount of extractors for a resource
      *
-     * @param resourceName The name of the resource produced by the extractor.
-     * @param amount       The amount to set the max to
+     * @param resourceName  The name of the resource produced by the extractor.
+     * @param amount The amount to set the max to
      */
-    public void updateMaxExtractors(String resourceName, int amount) {
+    public void updateMaxExtractors(String resourceName, int amount){
         String resourceKey = "extractorsMax/" + resourceName;
         this.put(resourceKey, amount);
     }
 
     /**
      * Sets the total amount of tracked extractors of the resource name to amount
-     *
      * @param resourceName The name of the resource produced by the extractor/s
-     * @param amount       The amount of extractors producing the resource
+     * @param amount The amount of extractors producing the resource
      */
     public void updateTotalExtractors(String resourceName, int amount) {
         String resourceKey = "extractorsTotal/" + resourceName;

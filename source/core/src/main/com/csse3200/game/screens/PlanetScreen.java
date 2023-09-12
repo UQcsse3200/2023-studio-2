@@ -39,13 +39,25 @@ import org.slf4j.LoggerFactory;
  */
 public class PlanetScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(PlanetScreen.class);
-    /**
-     * Starting position of the camera
-     */
+    private final GdxGame game;
+
+    private final String name;
+    private String nextPlanetName;
+
+    private Entity player;
+    private EarthGameArea gameArea; //TODO: Extend with new MapArea
+
+    /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-    /**
-     * file paths of textures for screen to load.
-     */
+
+    /** Service Instances */
+    private Renderer renderer;
+    private PhysicsEngine physicsEngine;
+
+    private ItemBox itemBox;
+    Entity currentExtractor = null;
+
+    /** file paths of textures for screen to load. */
     private static final String[] planetTextures = {
             "images/heart.png",
             "images/structure-icons/wall.png",
@@ -58,24 +70,12 @@ public class PlanetScreen extends ScreenAdapter {
             "images/structures/TurretOne.png",
             "images/structures/TurretTwo.png"
     };
-    private final GdxGame game;
-    private final String name;
-    Entity currentExtractor = null;
-    private String nextPlanetName;
-    private Entity player;
-    private EarthGameArea gameArea; //TODO: Extend with new MapArea
-    /**
-     * Service Instances
-     */
-    private Renderer renderer;
-    private PhysicsEngine physicsEngine;
-    private ItemBox itemBox;
 
     /**
      * Construct the PlanetScreen instance for the planet of given name.
      *
-     * @param game The current game instance to display screen on.
-     * @param name The name of the planet to create a screen for.
+     * @param game  The current game instance to display screen on.
+     * @param name  The name of the planet to create a screen for.
      */
     public PlanetScreen(GdxGame game, String name) {
         this.game = game;
@@ -103,7 +103,7 @@ public class PlanetScreen extends ScreenAdapter {
     /**
      * Get the next planet in the sequence after the current planet.
      *
-     * @return The PlanetScreen instance for the next planet.
+     * @return  The PlanetScreen instance for the next planet.
      */
     public PlanetScreen getNextPlanet() {
         return new PlanetScreen(this.game, this.nextPlanetName);
@@ -167,7 +167,6 @@ public class PlanetScreen extends ScreenAdapter {
                 }
                 return false;
             }
-
             @Override
             public boolean touchUp(int screenX, int screenY, int pointer, int button) {
                 currentExtractor = null;
@@ -185,12 +184,12 @@ public class PlanetScreen extends ScreenAdapter {
         renderer.render();
 
         itemBox.render();
-        if (itemBox.itemContainMouse() && currentExtractor == null) {
+        if(itemBox.itemContainMouse() && currentExtractor == null){
             currentExtractor = gameArea.getExtractor();
         }
-        if (currentExtractor != null) {
-            Vector2 mousePos = renderer.getCamera().getWorldPositionFromScreen(new Vector2(Gdx.input.getX() - 200, Gdx.input.getY() + 200));
-            currentExtractor.setPosition(mousePos.x, mousePos.y);
+        if(currentExtractor != null){
+            Vector2 mousePos = renderer.getCamera().getWorldPositionFromScreen(new Vector2(Gdx.input.getX() - 200,Gdx.input.getY() + 200));
+            currentExtractor.setPosition(mousePos.x,mousePos.y);
         }
     }
 
@@ -214,8 +213,7 @@ public class PlanetScreen extends ScreenAdapter {
      * Do not dispose of all services and renderers on screen switch. Preserve state
      */
     @Override
-    public void dispose() {
-    }
+    public void dispose() { }
 
     /**
      * Dispose of the entire game screen.

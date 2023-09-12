@@ -24,6 +24,13 @@ public class LabWindow extends Window {
     private final Entity deathpotion;
 
 
+    public static LabWindow MakeNewLaboratory(Entity deathpotion) {
+
+        Texture background = new Texture("images/lab.png");
+        background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
+        return new LabWindow(background, deathpotion);
+    }
+
     public LabWindow(Texture background, Entity deathpotion) {
         super("", new WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
 
@@ -56,13 +63,6 @@ public class LabWindow extends Window {
         inputOverrideComponent = new InputOverrideComponent();
 
         ServiceLocator.getInputService().register(inputOverrideComponent);
-    }
-
-    public static LabWindow MakeNewLaboratory(Entity deathpotion) {
-
-        Texture background = new Texture("images/lab.png");
-        background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
-        return new LabWindow(background, deathpotion);
     }
 
     /**

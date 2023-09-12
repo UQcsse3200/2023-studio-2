@@ -10,13 +10,8 @@ import com.csse3200.game.services.ServiceLocator;
 public class BoxFactory {
 
 
-    private BoxFactory() {
-        throw new IllegalStateException("Instantiating static util class");
-    }
-
     /**
      * Create a Box entity.
-     *
      * @return entity
      */
     //added a player reference for basic player tracking
@@ -51,6 +46,10 @@ public class BoxFactory {
         textureComponent.setHeight(newHeight);*/
 
 
+
         return Box;
+    }
+    private BoxFactory() {
+        throw new IllegalStateException("Instantiating static util class");
     }
 }

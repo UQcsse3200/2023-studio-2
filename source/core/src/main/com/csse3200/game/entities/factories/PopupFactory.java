@@ -21,7 +21,7 @@ public class PopupFactory {
             default -> throw new IllegalArgumentException("You must assign a valid resource!");
         }
 
-        popup.getComponent(TextureRenderComponent.class).overrideZIndex(1000);
+        ((TextureRenderComponent) popup.getComponent(TextureRenderComponent.class)).overrideZIndex(1000);
         return popup;
     }
 }

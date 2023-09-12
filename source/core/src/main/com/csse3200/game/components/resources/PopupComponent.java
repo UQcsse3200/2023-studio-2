@@ -23,7 +23,7 @@ public class PopupComponent extends Component {
      * the duration, disposing of it properly afterwards.
      *
      * @param duration the amount of time (ms) before cleanup
-     * @param speed    the speed of the popups motion
+     * @param speed the speed of the popups motion
      */
     public PopupComponent(int duration, double speed) {
         this.timer = new GameTime();
@@ -59,7 +59,6 @@ public class PopupComponent extends Component {
     /**
      * Overrides the generated timer, in case you want to prolong the life, pause the popup, etc
      * (useful for testing)
-     *
      * @param gameTime the new gameTime
      */
     public void setTimer(GameTime gameTime) {

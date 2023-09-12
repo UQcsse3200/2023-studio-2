@@ -16,16 +16,17 @@ import com.csse3200.game.services.ServiceLocator;
  * and when triggered should call methods within this class.
  */
 public class CompanionActions extends Component {
+    private String bulletTexturePath;
+
+    private static Vector2 MAX_NORMAL_SPEED = new Vector2(4f, 4f); // Metres per second
+
     private static final float ROTATION_SPEED = 10.0f;
-    private static final Vector2 MAX_NORMAL_SPEED = new Vector2(4f, 4f); // Metres per second
+    private float currentRotation = 5.0f;
+
+    private PhysicsComponent physicsComponent;
     public Vector2 walkDirection = Vector2.Zero.cpy();
     public boolean moving = false;
-    private String bulletTexturePath;
-    private float currentRotation = 5.0f;
-    private PhysicsComponent physicsComponent;
     private boolean speedBoostActive = false;
-    //initialising a reference player entity
-    private Entity playerEntity;
 
     @Override
     public void create() {
@@ -35,21 +36,22 @@ public class CompanionActions extends Component {
         entity.getEvents().addListener("attack", this::attack);
 
         // Initialize currentRotation based on the initial orientation of the companion
-        currentRotation = physicsComponent.getBody().getAngle() * MathUtils.radiansToDegrees;
+        currentRotation = physicsComponent.getBody().getAngle()*MathUtils.radiansToDegrees;
         if (playerEntity != null) {
             Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
             physicsComponent.getBody().setTransform(playerPosition, currentRotation * MathUtils.degreesToRadians);
         }
     }
+    //initialising a reference player entity
+    private Entity playerEntity;
 
-    public void setPlayerEntity(Entity playerEntity) {
+    public void setPlayerEntity(Entity playerEntity){
         this.playerEntity = playerEntity;
     }
 
-    public void setBulletTexturePath(String path) {
+    public void setBulletTexturePath(String path){
         bulletTexturePath = path;
     }
-
     @Override
     public void update() {
         if (playerEntity != null && moving) {
@@ -58,15 +60,14 @@ public class CompanionActions extends Component {
             updateSpeed();
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.B)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.B)){
             speedBoostActive = true;
-            MAX_NORMAL_SPEED.set(8f, 8f);
+            MAX_NORMAL_SPEED.set(8f,8f);
         } else {
             speedBoostActive = false;
             MAX_NORMAL_SPEED.set(4f, 4f);
         }
     }
-
     //functionality for basic player tracking
     public void updateFollowPlayer() {
         Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
@@ -90,25 +91,24 @@ public class CompanionActions extends Component {
         if (!isMovementKeyPressed) {
             // Calculate direction vector towards the player
             walkDirection = playerPosition.cpy().sub(companionPosition).nor();
-            // Move the companion towards the player
-            walkDirection.nor();
-            updateSpeed();
+                // Move the companion towards the player
+                walkDirection.nor();
+                updateSpeed();
 
-            // Calculate the rotation angle towards the player
-            float targetRotation = walkDirection.angleDeg() + 90;
+                // Calculate the rotation angle towards the player
+                float targetRotation = walkDirection.angleDeg() + 90;
 
-            // Interpolate the rotation angle smoothly
-            currentRotation = MathUtils.lerpAngleDeg(currentRotation, targetRotation, ROTATION_SPEED * Gdx.graphics.getDeltaTime());
+                // Interpolate the rotation angle smoothly
+                currentRotation = MathUtils.lerpAngleDeg(currentRotation, targetRotation, ROTATION_SPEED * Gdx.graphics.getDeltaTime());
 
-            // Set the new rotation for the companion
-            physicsComponent.getBody().setTransform(companionPosition, currentRotation * MathUtils.degreesToRadians);
+                // Set the new rotation for the companion
+                physicsComponent.getBody().setTransform(companionPosition, currentRotation * MathUtils.degreesToRadians);
 
         } else {
             // Stop the companion from walking when movement keys are pressed
             stopWalking();
         }
     }
-
     private boolean isMovementKeyPressed() {
         // Check if any of the movement keys are pressed (I, J, K, L)
         return Gdx.input.isKeyPressed(Input.Keys.I) || Gdx.input.isKeyPressed(Input.Keys.J) ||

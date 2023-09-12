@@ -3,19 +3,18 @@
  * It implements the InputProcessor interface to handle keyboard input events.
  */
 package com.csse3200.game.components.Companion;
-
+import com.csse3200.game.components.player.InteractionControllerComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.input.InputComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 
 public class KeyboardCompanionInputComponent extends InputComponent {
 
+  AnimationRenderComponent animator;
     private final Vector2 walkDirection = Vector2.Zero.cpy();
-    AnimationRenderComponent animator;
     private int flagW = 0;
     private int flagA = 0;
     private int flagS = 0;
@@ -23,27 +22,20 @@ public class KeyboardCompanionInputComponent extends InputComponent {
     private int flagMul = 0;
 
     private int testing = 0;
-    private final boolean leftCtrlFlag = false;
 
-    /**
-     * Constructs a new KeyboardCompanionInputComponent with a priority of 5.
-     */
-    public KeyboardCompanionInputComponent() {
-        super(5);
-    }
 
     /**
      * Returns value for testing.
-     *
      * @return int
      */
     public int getTesting() {
         return testing;
     }
-
     public void setTesting(int testing) {
         this.testing = testing;
     }
+
+    private boolean leftCtrlFlag = false;
 
     /**
      * @return int
@@ -54,7 +46,7 @@ public class KeyboardCompanionInputComponent extends InputComponent {
 
     private void diagonal() {
         int movFlagSum = getMovFlagSum();
-        if (movFlagSum >= 3) {
+        if (movFlagSum >= 3){
             walkDirection.set(Vector2.Zero);
         }
         if (movFlagSum == 2) {
@@ -75,6 +67,13 @@ public class KeyboardCompanionInputComponent extends InputComponent {
             flagMul = 0;
             walkDirection.scl(0);
         }
+    }
+
+    /**
+     * Constructs a new KeyboardCompanionInputComponent with a priority of 5.
+     */
+    public KeyboardCompanionInputComponent() {
+        super(5);
     }
 
     /**
@@ -232,8 +231,7 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                 }
                 triggerWalkEvent();
                 return true;
-            }
-            case Keys.M -> {
+            }case Keys.M-> {
                 System.out.println("M pressed");
                 InteractionControllerComponent interactionController = entity.getComponent(InteractionControllerComponent.class);
                 if (interactionController != null) {
@@ -248,7 +246,7 @@ public class KeyboardCompanionInputComponent extends InputComponent {
         }
     }
 
-    public Vector2 getDirection() {
+    public Vector2 getDirection(){
         return this.walkDirection;
     }
 
@@ -257,35 +255,42 @@ public class KeyboardCompanionInputComponent extends InputComponent {
      * If the walk direction is zero, it triggers the walkStop event.
      */
     private void triggerWalkEvent() {
-        if (this.getTesting() == 0) {
-            if (walkDirection.epsilonEquals(Vector2.Zero)) {
-                entity.getEvents().trigger("walkStop");
-            } else {
-                if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
-                    entity.getEvents().trigger("walkUpLeft");
-                } else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
-                    entity.getEvents().trigger("walkUpRight");
-                } else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
-                    entity.getEvents().trigger("walkUp");
-                } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN)) {
-                    entity.getEvents().trigger("walkDown");
-                } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_LEFT)) {
-                    entity.getEvents().trigger("walkDownLeft");
-                } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_RIGHT)) {
-                    entity.getEvents().trigger("walkDownRight");
-                } else if (walkDirection.epsilonEquals(Vector2Utils.LEFT)) {
-                    entity.getEvents().trigger("walkLeft");
-                } else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
-                    entity.getEvents().trigger("walkRight");
+            if (this.getTesting() == 0){
+                if (walkDirection.epsilonEquals(Vector2.Zero)) {
+                    entity.getEvents().trigger("walkStop");
+                } else {
+                    if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
+                        entity.getEvents().trigger("walkUpLeft");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
+                        entity.getEvents().trigger("walkUpRight");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
+                        entity.getEvents().trigger("walkUp");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.DOWN)) {
+                        entity.getEvents().trigger("walkDown");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_LEFT)) {
+                        entity.getEvents().trigger("walkDownLeft");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_RIGHT)) {
+                        entity.getEvents().trigger("walkDownRight");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.LEFT)) {
+                        entity.getEvents().trigger("walkLeft");
+                    }
+                    else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
+                        entity.getEvents().trigger("walkRight");
+                    }
+                    entity.getEvents().trigger("walk", walkDirection);
                 }
-                entity.getEvents().trigger("walk", walkDirection);
             }
-        }
 
 
     }
 
-    private double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt) {
+    private double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt)  {
         double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
         if (angle < 0) {
             angle += 360;

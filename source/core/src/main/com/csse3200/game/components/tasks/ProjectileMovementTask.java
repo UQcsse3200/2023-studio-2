@@ -7,107 +7,105 @@ import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 
-/**
- * Projectile moves towards the target in a straight line and is disposed once it reaches the target position
- */
+/** Projectile moves towards the target in a straight line and is disposed once it reaches the target position  */
 public class ProjectileMovementTask extends DefaultTask implements PriorityTask {
-    private final Vector2 targetLocation;
-    private final int priority;
-    private final float viewDistance;
-    private final float maxChaseDistance;
-    private final DebugRenderer debugRenderer;
-    private MovementTask movementTask;
+  private final Vector2 targetLocation;
+  private final int priority;
+  private final float viewDistance;
+  private final float maxChaseDistance;
+  private final DebugRenderer debugRenderer;
+  private MovementTask movementTask;
 
-    /**
-     * Creates a new projectile movement task.
-     *
-     * @param targetLocation   The location where the projectile will go to.
-     * @param priority         Task priority when moving (0 when not chasing).
-     * @param viewDistance     Maximum distance from the entity at which the movement can start.
-     * @param maxChaseDistance Maximum distance from the entity while moving before giving up.
-     */
-    public ProjectileMovementTask(Vector2 targetLocation, int priority, float viewDistance, float maxChaseDistance) {
-        this.targetLocation = targetLocation;
-        this.priority = priority;
-        this.viewDistance = viewDistance;
-        this.maxChaseDistance = maxChaseDistance;
-        debugRenderer = ServiceLocator.getRenderService().getDebug();
+  /**
+   * Creates a new projectile movement task.
+   *
+   * @param targetLocation The location where the projectile will go to.
+   * @param priority Task priority when moving (0 when not chasing).
+   * @param viewDistance Maximum distance from the entity at which the movement can start.
+   * @param maxChaseDistance Maximum distance from the entity while moving before giving up.
+   */
+  public ProjectileMovementTask(Vector2 targetLocation, int priority, float viewDistance, float maxChaseDistance) {
+    this.targetLocation = targetLocation;
+    this.priority = priority;
+    this.viewDistance = viewDistance;
+    this.maxChaseDistance = maxChaseDistance;
+    debugRenderer = ServiceLocator.getRenderService().getDebug();
+  }
+
+  @Override
+  public void start() {
+    super.start();
+    movementTask = new MovementTask(targetLocation);
+    movementTask.create(owner);
+    movementTask.start();
+
+    this.owner.getEntity().getEvents().trigger("chaseStart");
+  }
+
+  @Override
+  public void update() {
+    movementTask.update();
+    if (movementTask.getStatus() != Status.ACTIVE) {
+      Gdx.app.postRunnable(owner.getEntity()::dispose);
+    }
+  }
+
+  @Override
+  public int getPriority() {
+    if (status == Status.ACTIVE) {
+      return getActivePriority();
     }
 
-    @Override
-    public void start() {
-        super.start();
-        movementTask = new MovementTask(targetLocation);
-        movementTask.create(owner);
-        movementTask.start();
+    return getInactivePriority();
+  }
 
-        this.owner.getEntity().getEvents().trigger("chaseStart");
+  /**
+   * Returns the distance between the current entity and the target location.
+   *
+   * @return The distance between the owner's entity and the target location.
+   */
+  private float getDistanceToTarget() {
+    return owner.getEntity().getPosition().dst(targetLocation);
+  }
+
+  /**
+   * Returns the priority if task is currently active.
+   *
+   * @return The current priority.
+   */
+  private int getActivePriority() {
+    float dst = getDistanceToTarget();
+    if (dst > maxChaseDistance || !isTargetVisible()) {
+      return -1; // Too far, stop chasing
     }
+    return priority;
+  }
 
-    @Override
-    public void update() {
-        movementTask.update();
-        if (movementTask.getStatus() != Status.ACTIVE) {
-            Gdx.app.postRunnable(owner.getEntity()::dispose);
-        }
+  /**
+   * Returns the priority if task is currently inactive.
+   *
+   * @return The current priority.
+   */
+  private int getInactivePriority() {
+    float dst = getDistanceToTarget();
+    if (dst < viewDistance && isTargetVisible()) {
+      return priority;
     }
+    return -1;
+  }
 
-    @Override
-    public int getPriority() {
-        if (status == Status.ACTIVE) {
-            return getActivePriority();
-        }
+  /**
+   * Returns whether the enemy's vision of the target is being blocked.
+   * This method uses a line of sight renderer to check if the line between the enemy's
+   * center position and the target location is blocked by any in game obstacles.
+   *
+   * @return True if the target is visible, false otherwise.
+   */
+  private boolean isTargetVisible() {
+    Vector2 from = owner.getEntity().getCenterPosition();
+    Vector2 to = targetLocation;
 
-        return getInactivePriority();
-    }
-
-    /**
-     * Returns the distance between the current entity and the target location.
-     *
-     * @return The distance between the owner's entity and the target location.
-     */
-    private float getDistanceToTarget() {
-        return owner.getEntity().getPosition().dst(targetLocation);
-    }
-
-    /**
-     * Returns the priority if task is currently active.
-     *
-     * @return The current priority.
-     */
-    private int getActivePriority() {
-        float dst = getDistanceToTarget();
-        if (dst > maxChaseDistance || !isTargetVisible()) {
-            return -1; // Too far, stop chasing
-        }
-        return priority;
-    }
-
-    /**
-     * Returns the priority if task is currently inactive.
-     *
-     * @return The current priority.
-     */
-    private int getInactivePriority() {
-        float dst = getDistanceToTarget();
-        if (dst < viewDistance && isTargetVisible()) {
-            return priority;
-        }
-        return -1;
-    }
-
-    /**
-     * Returns whether the enemy's vision of the target is being blocked.
-     * This method uses a line of sight renderer to check if the line between the enemy's
-     * center position and the target location is blocked by any in game obstacles.
-     *
-     * @return True if the target is visible, false otherwise.
-     */
-    private boolean isTargetVisible() {
-        Vector2 from = owner.getEntity().getCenterPosition();
-        Vector2 to = targetLocation;
-
-        debugRenderer.drawLine(from, to);
-        return true;
-    }
+    debugRenderer.drawLine(from, to);
+    return true;
+  }
 }

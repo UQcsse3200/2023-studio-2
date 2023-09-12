@@ -2,6 +2,7 @@ package com.csse3200.game.rendering;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -22,7 +23,7 @@ public class AtlasRenderComponent extends RenderComponent {
      * Changes the atlas being used to a new atlas and sets the region to be
      * the given region.
      *
-     * @param atlas  - the new atlas
+     * @param atlas - the new atlas
      * @param region - the new region
      */
     public void updateTextureAtlas(TextureAtlas atlas, String region) {
@@ -31,17 +32,15 @@ public class AtlasRenderComponent extends RenderComponent {
         currentRegion = atlas.findRegion(region);
     }
 
-    /**
-     * Scale the entity to a width of 1 and a height matching the texture's ratio
-     */
+    /** Scale the entity to a width of 1 and a height matching the texture's ratio */
     public void scaleEntity() {
-        entity.setScale(1f, ((float) currentRegion.getRegionHeight()) / ((float) currentRegion.getRegionWidth()));
+        entity.setScale(1f, ((float)currentRegion.getRegionHeight()) / ((float)currentRegion.getRegionWidth()));
     }
 
     /**
      * Sets the region to use when drawing the texture.
      *
-     * @param region      - the region to use
+     * @param region - the region to use
      * @param scaleEntity - whether the scale should be updated.
      */
     public void setRegion(String region, boolean scaleEntity) {

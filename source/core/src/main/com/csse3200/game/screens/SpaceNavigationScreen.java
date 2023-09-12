@@ -21,39 +21,25 @@ import com.csse3200.game.services.PlanetTravel;
  * between various planets and options.
  */
 public class SpaceNavigationScreen implements Screen {
-    /**
-     * Reference to the main game instance
-     */
+    /** Reference to the main game instance */
     private final GdxGame game;
-    /**
-     * Textures for the planets shown on the screen
-     */
-    private final Texture[] planetTextures = new Texture[9];
-    /**
-     * Textures for the arrows on the screen
-     */
-    private final Texture[] arrowTextures = new Texture[4];
-    /**
-     * Names of the planets
-     */
-    private final String[] planetNames = {"Verdant Haven", "Chronos", "Rusterra", "Pyroterra", "Crimsona", "Novara", "Pyralis", "Luminae", "Aquelar"};
-    private final PlanetTravel planetTravel;
-    /**
-     * Stage where all actors will be drawn
-     */
+    /** Stage where all actors will be drawn */
     private Stage stage;
-    /**
-     * Skin for the UI elements
-     */
+    /** Skin for the UI elements */
     private Skin skin;
-    /**
-     * Texture for the title of this screen
-     */
+    /** Texture for the title of this screen */
     private Texture navigationTitle;
+    /** Textures for the planets shown on the screen */
+    private final Texture[] planetTextures = new Texture[9];
+    /** Textures for the arrows on the screen */
+    private final Texture[] arrowTextures = new Texture[4];
+    /** Names of the planets */
+    private final String[] planetNames = {"Verdant Haven", "Chronos", "Rusterra", "Pyroterra", "Crimsona", "Novara", "Pyralis", "Luminae", "Aquelar"};
+
+    private final PlanetTravel planetTravel;
 
     /**
      * Constructs a new SpaceNavigationScreen with a reference to the main game.
-     *
      * @param game The main game instance.
      */
     public SpaceNavigationScreen(GdxGame game) {
@@ -71,7 +57,7 @@ public class SpaceNavigationScreen implements Screen {
 
         // Planet icons from:
         // https://www.freepik.com/premium-vector/pixel-planets-set-pixel-art-solar-system_36179935.htm
-        for (var i = 0; i < planetTextures.length; i++) {
+        for(var i = 0; i < planetTextures.length; i++){
             planetTextures[i] = new Texture(Gdx.files.internal("images/space_navigation_planet_" + i + ".png"));
         }
 
@@ -94,7 +80,7 @@ public class SpaceNavigationScreen implements Screen {
 
         TextButton button = new TextButton("Main Menu", skin);
         button.setPosition(Gdx.graphics.getWidth() - (button.getWidth() + 20),
-                Gdx.graphics.getHeight() - (button.getHeight() + 20));
+                Gdx.graphics.getHeight() - (button.getHeight() + 20) );
 
         button.addListener(new ClickListener() {
             @Override
@@ -107,7 +93,7 @@ public class SpaceNavigationScreen implements Screen {
 
         // Add title
         Image navigationTitleImage = new Image(navigationTitle);
-        navigationTitleImage.setOrigin(navigationTitleImage.getImageWidth() / 2, navigationTitleImage.getImageHeight() / 2);
+        navigationTitleImage.setOrigin(navigationTitleImage.getImageWidth()/2, navigationTitleImage.getImageHeight()/2);
         navigationTitleImage.setScaling(Scaling.fit);
 
         Table titleTable = new Table();
@@ -126,7 +112,6 @@ public class SpaceNavigationScreen implements Screen {
 
     /**
      * Spawns planets on the stage, arranging them in a predefined grid pattern.
-     *
      * @param stage The stage on which to add planets.
      */
     private void spawnPlanets(Stage stage) {
@@ -151,7 +136,7 @@ public class SpaceNavigationScreen implements Screen {
 
         // Row 2: down arrow row
         table.row();
-        table.add().width(planetSize * 4).height(planetSize).colspan(4);
+        table.add().width(planetSize*4).height(planetSize).colspan(4);
         Image rowTwoArrow = createArrow("down");
         table.add(rowTwoArrow).width(arrowSize).height(arrowSize);
 
@@ -167,7 +152,7 @@ public class SpaceNavigationScreen implements Screen {
         table.row();
         Image rowFourArrow = createArrow("down");
         table.add(rowFourArrow).width(arrowSize).height(arrowSize);
-        table.add().width(planetSize * 4).height(planetSize).colspan(4);
+        table.add().width(planetSize*4).height(planetSize).colspan(4);
 
         // Row 5
         table.row();
@@ -183,7 +168,6 @@ public class SpaceNavigationScreen implements Screen {
 
     /**
      * Creates an arrow image pointing in the specified direction.
-     *
      * @param direction The direction in which the arrow should point.
      * @return An Image instance of the arrow.
      */
@@ -201,7 +185,6 @@ public class SpaceNavigationScreen implements Screen {
 
     /**
      * Creates a label with the given text.
-     *
      * @param text Text to display on the label.
      * @return A new Label instance.
      */
@@ -213,9 +196,8 @@ public class SpaceNavigationScreen implements Screen {
 
     /**
      * Creates a table for a specific planet which includes its image and name.
-     *
      * @param planetIndex Index of the planet in the planetTextures array.
-     * @param planetSize  Size for displaying the planet image.
+     * @param planetSize Size for displaying the planet image.
      * @return A new Table instance containing the planet image and its name.
      */
     private Table createPlanetTable(int planetIndex, int planetSize) {
@@ -232,7 +214,6 @@ public class SpaceNavigationScreen implements Screen {
 
     /**
      * Creates an image of a planet.
-     *
      * @param planetIndex Index of the planet in the planetTextures array.
      * @return A new Image instance for the planet.
      */
@@ -266,7 +247,6 @@ public class SpaceNavigationScreen implements Screen {
 
     /**
      * Renders the screen.
-     *
      * @param delta The time in seconds since the last render.
      */
     @Override
@@ -280,8 +260,7 @@ public class SpaceNavigationScreen implements Screen {
 
     /**
      * Resizes the viewport dimensions based on the given width and height.
-     *
-     * @param width  The new width.
+     * @param width The new width.
      * @param height The new height.
      */
     @Override
@@ -322,10 +301,10 @@ public class SpaceNavigationScreen implements Screen {
         stage.dispose();
         skin.dispose();
         navigationTitle.dispose();
-        for (Texture texture : planetTextures) {
+        for(Texture texture : planetTextures){
             texture.dispose();
         }
-        for (Texture texture : arrowTextures) {
+        for(Texture texture : arrowTextures){
             texture.dispose();
         }
     }

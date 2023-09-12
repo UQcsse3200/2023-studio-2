@@ -156,15 +156,14 @@ public class EnemyFactory {
   private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent) {
     // Ranged Enemies
     if (type == EnemyType.Ranged) {
+      aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
       // Wizard
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
           aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f, 3f));
-        } else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
-          aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
+        }
+        else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f, 3f));
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 6f, 6f,3f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
@@ -180,18 +179,20 @@ public class EnemyFactory {
         }
       }
     }
+
     // Red Ghost
     if (type == EnemyType.Melee) {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
-        } else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
         }
-        else {
+        else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
+        } else {
           aiTaskComponent.addTask(new ChaseTask(target, 5, 3f, 4f));
         }
       }
+
       // Troll
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
@@ -201,6 +202,7 @@ public class EnemyFactory {
         }
       }
     }
+
     // M.E.C.H
     if (type == EnemyType.BossMelee) {
       // Special Attack Component
@@ -209,16 +211,15 @@ public class EnemyFactory {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 5, 100f, 100f));
-        } else {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
-        } else if
-        (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         }
-        else {
+        else if
+        (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
+        } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
+
       // B.U.L.L
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
@@ -230,13 +231,13 @@ public class EnemyFactory {
     }
     // TODO: TBA
     if (type == EnemyType.BossRanged) {
+      aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
       // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 6f, 6f, 3f));
-        } else {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
-        } else if
+        }
+        else if
         (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
         }

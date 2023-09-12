@@ -58,7 +58,7 @@ public class AimTask extends DefaultTask implements PriorityTask {
     waitTask.start();
     currentTask = waitTask;
 
-    //this.owner.getEntity().getEvents().trigger("standing");
+    this.owner.getEntity().getEvents().trigger("standing");
   }
 
   @Override
@@ -113,7 +113,7 @@ public class AimTask extends DefaultTask implements PriorityTask {
    */
   private void startWaiting() {
     logger.debug("Starting waiting");
-    //this.owner.getEntity().getEvents().trigger("standing");
+    this.owner.getEntity().getEvents().trigger("standing");
     swapTask(waitTask);
   }
 
@@ -122,7 +122,7 @@ public class AimTask extends DefaultTask implements PriorityTask {
    */
   private void startAiming() {
     logger.debug("Starting aiming");
-    //this.owner.getEntity().getEvents().trigger("standing");
+    this.owner.getEntity().getEvents().trigger("standing");
     swapTask(aimTask);
   }
 

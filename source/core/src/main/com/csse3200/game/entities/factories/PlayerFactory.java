@@ -3,14 +3,10 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.player.InteractionControllerComponent;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.player.PlayerAnimationController;
-import com.csse3200.game.components.player.PlayerStatsDisplay;
-import com.csse3200.game.components.player.WeaponComponent;
+import com.csse3200.game.components.ProximityControllerComponent;
+import com.csse3200.game.components.player.*;
+import com.csse3200.game.components.structures.StructurePicker;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.origiPlayerConfig;
 import com.csse3200.game.files.FileLoader;
@@ -24,7 +20,6 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
-import com.csse3200.game.components.structures.StructurePicker;
 
 /**
  * Factory to create a player entity.

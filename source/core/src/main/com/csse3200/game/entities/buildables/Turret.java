@@ -1,17 +1,14 @@
 package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Transform;
-import com.csse3200.game.components.*;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.FOVComponent;
+import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.TurretConfig;
 import com.csse3200.game.entities.configs.TurretConfigs;
@@ -23,9 +20,6 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Turret extends PlaceableEntity{
 

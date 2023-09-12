@@ -1,22 +1,19 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.EarthGameArea;
-import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.structures.ExtractorAnimationController;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.entities.configs.EnemyConfig;
-import com.csse3200.game.entities.configs.ExtractorConfig;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -25,16 +22,11 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.DamageTextureComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
-
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.GameStateObserver;
-import com.csse3200.game.components.upgradetree.UpgradeDisplay;
-import com.csse3200.game.components.upgradetree.UpgradeTree;
 
 /**
  * Factory to create structure entities - such as extractors or ships.

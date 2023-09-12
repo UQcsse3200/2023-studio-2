@@ -1,18 +1,10 @@
 package com.csse3200.game.components.resources;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.PopupFactory;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.GameStateInteraction;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ServiceLocator;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -21,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

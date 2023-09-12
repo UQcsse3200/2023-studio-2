@@ -1,9 +1,5 @@
 package com.csse3200.game.services;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.screens.PlanetScreen;
-import com.csse3200.game.services.GameState;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.GameStateObserver;
 
 /**
  * Responsible for travel between planets and stored the number of planets remaining

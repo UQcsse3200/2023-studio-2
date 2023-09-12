@@ -8,8 +8,6 @@ import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.security.Provider;
-
 public class ExtractorTool extends PlacementTool {
     public ExtractorTool(ObjectMap<String, Integer> cost) {
         super(cost);

@@ -1,7 +1,6 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.LabWindow;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.DistanceCheckComponent;
@@ -9,9 +8,6 @@ import com.csse3200.game.components.InteractLabel;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;

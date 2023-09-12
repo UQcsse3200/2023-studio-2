@@ -11,17 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.spacenavigation.NavigationBackground;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
-import com.csse3200.game.input.InputService;
-import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.PlanetTravel;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Represents the navigation screen for the game, allowing the user to navigate
@@ -45,20 +40,12 @@ public class SpaceNavigationScreen implements Screen {
 
     private final PlanetTravel planetTravel;
 
-    private final Renderer renderer;
-
     /**
      * Constructs a new SpaceNavigationScreen with a reference to the main game.
      * @param game The main game instance.
      */
     public SpaceNavigationScreen(GdxGame game) {
         this.game = game;
-        ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
-        ServiceLocator.registerEntityService(new EntityService());
-        ServiceLocator.registerRenderService(new RenderService());
-        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
-        this.renderer = RenderFactory.createRenderer();
         this.planetTravel = new PlanetTravel(game);
     }
 
@@ -83,7 +70,8 @@ public class SpaceNavigationScreen implements Screen {
 
 
         // Initialise a stage for the scene
-        stage = ServiceLocator.getRenderService().getStage();
+        stage = new Stage(new ScreenViewport());
+
 
         // Animated background
         NavigationBackground animatedBackground = new NavigationBackground();
@@ -321,11 +309,5 @@ public class SpaceNavigationScreen implements Screen {
         for(Texture texture : arrowTextures){
             texture.dispose();
         }
-
-        renderer.dispose();
-        ServiceLocator.getEntityService().dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getResourceService().dispose();
-        ServiceLocator.clear();
     }
 }

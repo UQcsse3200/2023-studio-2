@@ -9,7 +9,7 @@
       "texture": "images/structure-icons/wall.png"
     },
     "com.csse3200.game.components.structures.tools.TurretTool": {
-      "level": 1,
+      "level": 0,
       "name": "turret",
       "cost": {
         "unobtanium": 50

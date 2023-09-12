@@ -11,10 +11,9 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
-import javax.swing.*;
 
 /**
- * A ui component for displaying player stats, e.g. health, healthBar, Dodge Cooldown Bar.
+ * An ui component for displaying player stats, e.g. health, healthBar, Dodge Cool-down Bar.
  */
 public class PlayerStatsDisplay extends UIComponent {
   Table table;
@@ -23,7 +22,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private ProgressBar healthBar;
   private ProgressBar DodgeBar;
   private Label DodgeLabel;
-  private float healthWidth = 1000f;
+  private final float healthWidth = 1000f;
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -33,7 +32,7 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
 
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
-    entity.getEvents().addListener("updateDodgeCooldown", this::updateDodgeBarUI);
+    entity.getEvents().addListener("updateDodgeCool down", this::updateDodgeBarUI);
   }
 
   /**
@@ -68,7 +67,7 @@ public class PlayerStatsDisplay extends UIComponent {
 
     // Dodge Text for cool down
     int dodge = entity.getComponent(KeyboardPlayerInputComponent.class).triggerDodgeEvent();
-    CharSequence dodgeText = String.format("Dodge Cooldown : %d" , dodge);
+    CharSequence dodgeText = String.format("Dodge Cool down : %d" , dodge);
     DodgeLabel = new Label(dodgeText, skin, "large");
 
 
@@ -111,7 +110,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param dodge player Dodge
    */
   public void updateDodgeBarUI (int dodge) {
-    CharSequence text = String.format("Dodge Cooldown : %d", dodge);
+    CharSequence text = String.format("Dodge Cool down : %d", dodge);
     DodgeLabel.setText(text);
     DodgeBar.setValue(dodge);
   }

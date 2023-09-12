@@ -160,10 +160,10 @@ public class EnemyFactory {
       // Wizard
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f, 3f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 5f, 5f, 3f));
         }
         else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f, 3f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 5f, 5f, 3f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
@@ -184,10 +184,10 @@ public class EnemyFactory {
     if (type == EnemyType.Melee) {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 5f, 5f));
         }
         else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 5f, 5f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 5, 3f, 4f));
         }
@@ -196,7 +196,7 @@ public class EnemyFactory {
       // Troll
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 5f, 5f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
@@ -210,11 +210,11 @@ public class EnemyFactory {
       // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          aiTaskComponent.addTask(new ChaseTask(target, 5, 100f, 100f));
+          aiTaskComponent.addTask(new ChaseTask(target, 5, 5f, 5f));
         }
         else if
         (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 5f, 5f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
@@ -223,7 +223,7 @@ public class EnemyFactory {
       // B.U.L.L
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 5f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }

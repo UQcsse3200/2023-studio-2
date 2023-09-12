@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.structures.StructureOptions;
 import com.csse3200.game.components.structures.StructurePicker;
 import com.csse3200.game.entities.Entity;
@@ -50,11 +51,12 @@ public class UpgradeDisplay extends Window {
     private UpgradeNode buildRoot;
     private UpgradeNode meleeRoot;
     private UpgradeNode rangedRoot;
+    private Skin skin;
 
     // Tree stuff
     private final List<UpgradeNode> trees = new ArrayList<>();
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private static final float VERTICAL_SPACING = 200f;
+    private static final float VERTICAL_SPACING = 175;
     private static final float HORIZONTAL_SPACING = 150f;
 
     /**
@@ -81,6 +83,7 @@ public class UpgradeDisplay extends Window {
 
         this.upgradeBench = upgradeBench;
 
+        skin = new Skin(Gdx.files.internal(SKIN_PATH));
         weaponConfigs = FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
         player = ServiceLocator.getEntityService().getPlayer();
 
@@ -105,7 +108,7 @@ public class UpgradeDisplay extends Window {
      * These trees dictate the progression of weapons that can be unlocked.
      */
     private void buildTrees() {
-        WeaponConfig stickConfig = weaponConfigs.GetWeaponConfig(WeaponType.STICK);
+        WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.ELEC_WRENCH); // todo: edit config png
         WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.KATANA);
         WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.SLING_SHOT);
         WeaponConfig rangedWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.THROW_ELEC_WRENCH);
@@ -113,7 +116,7 @@ public class UpgradeDisplay extends Window {
         WeaponConfig stonehammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.STONEHAMMER);
 
         // Melee Tree
-        meleeRoot = new UpgradeNode(stickConfig, WeaponType.STICK);
+        meleeRoot = new UpgradeNode(meleeWrench, WeaponType.ELEC_WRENCH);
         UpgradeNode swordNode = new UpgradeNode(katanaConfig, WeaponType.KATANA);
         meleeRoot.addChild(swordNode);
         trees.add(meleeRoot);
@@ -129,7 +132,7 @@ public class UpgradeDisplay extends Window {
         UpgradeNode hammer2 = new UpgradeNode(stonehammerConfig, WeaponType.STONEHAMMER);
         UpgradeNode hammer3 = new UpgradeNode(stonehammerConfig, WeaponType.STEELHAMMER);
         buildRoot.addChild(hammer2);
-        hammer2.addChild(hammer3);
+        buildRoot.addChild(hammer3);
         trees.add(buildRoot);
     }
 
@@ -145,7 +148,7 @@ public class UpgradeDisplay extends Window {
 
         for (UpgradeNode treeRoot : trees) {
             float treeX = (trees.indexOf(treeRoot) + 1) * getWidth() / (trees.size() + 1);
-            float startY = getHeight() - 200;  // start near the top
+            float startY = getHeight() - getHeight() / 3;  // start near the top
             createAndPositionNodes(treeRoot, treeX, startY, group, 0);
         }
 
@@ -282,7 +285,6 @@ public class UpgradeDisplay extends Window {
      * @return The created materials label.
      */
     private Label createMaterialsLabel() {
-        Skin skin = new Skin(Gdx.files.internal(SKIN_PATH));
         int materials = upgradeBench.getComponent(UpgradeTree.class).getMaterials();
 
         String str = String.format(MATERIALS_FORMAT, materials);
@@ -308,10 +310,35 @@ public class UpgradeDisplay extends Window {
         UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
 
         Image lockImage = lockItem(node, stats, size, weaponButton);
+        TextButton costButton = createCostButtons(node, weaponButton);
 
-        weaponButton.addListener(unlockWeapon(node, stats, weaponButton, lockImage));
+        // Create unlock listener for unlock button
+        if (costButton != null) {
+            costButton.addListener(unlockWeapon(node, stats, weaponButton, lockImage, costButton));
+        }
+
+        weaponButton.addListener(equipItem(node));
 
         return weaponButton;
+    }
+
+    public TextButton createCostButtons(UpgradeNode node, ImageButton weaponButton) {
+
+        UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
+        // Dont draw cost buttons for unlocked nodes
+        if (stats.isWeaponUnlocked(node.getWeaponType())) {
+            return null;
+        }
+
+        TextButton costButton = new TextButton(String.valueOf(node.getNodeCost()), skin);
+        costButton.setSize(SIZE, SIZE / 2);
+        costButton.setColor(Color.WHITE);
+        costButton.setPosition(
+                weaponButton.getX() + weaponButton.getWidth(),
+                weaponButton.getY() + weaponButton.getWidth());
+        addActor(costButton);
+
+        return costButton;
     }
 
     /**
@@ -334,6 +361,26 @@ public class UpgradeDisplay extends Window {
     }
 
     /**
+     * Equips the node item into the players inventory if it is unlocked
+     *
+     * @param node the node selected
+     * @return a change listener
+     */
+    private ChangeListener equipItem(UpgradeNode node) {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
+                System.out.println("Button press detected");
+                if (stats.isWeaponUnlocked(node.getWeaponType())) {
+                    InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
+                    playerInventory.placeInSlot(node.getWeaponType());
+                }
+            }
+        };
+    }
+
+    /**
      * Unlocks a weapon at a given node
      * @param node the weapon node to unlock
      * @param stats the weapons upgradetree stats
@@ -341,41 +388,44 @@ public class UpgradeDisplay extends Window {
      * @param lockImage the lock image
      * @return a change listener
      */
-    private ChangeListener unlockWeapon(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton, Image lockImage) {
+    private ChangeListener unlockWeapon(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton, Image lockImage, TextButton costButton) {
         return new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                handleWeaponUnlocking(node, stats, weaponButton, lockImage);
+                handleWeaponUnlocking(node, stats, weaponButton, lockImage, costButton);
             }
         };
     }
 
     /**
+     * Sets the node item to unlocked
      *
      * @param node the current weapon node to unlock
      * @param stats the weapons upgrade tree stats
      * @param weaponButton the weapons image button
      * @param lockImage the lock image
      */
-    private void handleWeaponUnlocking(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton, Image lockImage) {
-        int baseMaterialCost = 50;
-        int requiredMaterials = baseMaterialCost * (node.getDepth() + 1);
+    private void handleWeaponUnlocking(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton, Image lockImage, TextButton costButton) {
 
-        if (stats.isWeaponUnlocked(node.getWeaponType()) || stats.getMaterials() < requiredMaterials) return;
+        if (stats.isWeaponUnlocked(node.getWeaponType()) || stats.getMaterials() < node.getNodeCost()) {
+            return;
+        }
 
-        stats.subtractMaterials(requiredMaterials);
+        // Set the node to unlocked
+        stats.subtractMaterials(node.getNodeCost());
         stats.unlockWeapon(node.getWeaponType());
         weaponButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
-        materialsLabel.setText(String.format("Materials: %d", stats.getMaterials()));
+        materialsLabel.setText(String.format("Materials: %d", stats.getMaterials())); // todo: make dynamic
 
         StructurePicker structurePicker = player.getComponent(StructurePicker.class);
-
         // Update the StructurePickers level
-        if (node.getDepth() == structurePicker.getLevel() + 1) {
+        if (buildRoot.getChildren().contains(node) && node.getDepth() == structurePicker.getLevel() + 1) {
             structurePicker.setLevel(node.getDepth());
         }
 
-        if (lockImage != null) {
+        // Remove lock and cost
+        if (costButton != null && lockImage != null) {
+            costButton.remove();
             lockImage.remove();
         }
     }

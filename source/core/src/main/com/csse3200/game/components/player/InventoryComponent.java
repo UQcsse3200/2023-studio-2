@@ -43,6 +43,30 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Replaces the specified slot with a given weapon.
+   *
+   * @param slot the slot to be updated
+   * @param weaponType the weapon type to be placed in the slot
+   */
+  public void replaceSlotWithWeapon(int slot, WeaponType weaponType) {
+    if (slot > 3 || slot < 1) {
+      throw new IllegalArgumentException("Slot must be in range 1-3");
+    }
+    equippedWMap.remove(slot);
+    equippedWMap.put(slot, weaponType);
+  }
+
+  public void placeInSlot(WeaponType weaponType) {
+    int slot = switch (weaponType) {
+        case STICK, KATANA, ELEC_WRENCH -> 1;           // melee
+        case SLING_SHOT, THROW_ELEC_WRENCH -> 2;        // ranged
+        case WOODHAMMER, STONEHAMMER, STEELHAMMER -> 3; // building
+        default -> throw new IllegalArgumentException("Slot not assigned: " + weaponType);
+    };
+      replaceSlotWithWeapon(slot, weaponType);
+  }
+
+  /**
    * Cycles between equiped weapons
    */
   public void cycleEquipped() {

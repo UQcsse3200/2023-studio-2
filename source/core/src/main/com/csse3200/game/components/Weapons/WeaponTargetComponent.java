@@ -32,18 +32,21 @@ public class WeaponTargetComponent extends Component {
         Vector2 pos;
 
         switch (this.weaponType) {
-            case SLING_SHOT:
+            case SLING_SHOT -> {
                 KeyboardPlayerInputComponent keyboardPlayerInputComponent = entity.getComponent(KeyboardPlayerInputComponent.class);
                 //if (keyboardPlayerInputComponent == null) {return null;}
                 pos = keyboardPlayerInputComponent.getLastMousePos();
                 Vector2 eScl = entity.getScale();
-                return new Vector2(pos.x + eScl.x/2 - 0.1f, pos.y + eScl.y/2 - 0.1f);
-            case ELEC_WRENCH:
+                return new Vector2(pos.x + eScl.x / 2 - 0.1f, pos.y + eScl.y / 2 - 0.1f);
+            }
+            case ELEC_WRENCH, KATANA -> {
                 var delta = entity.getPosition().sub(this.trackPrev);
                 this.trackPrev = entity.getPosition();
                 return delta;
-            default:
+            }
+            default -> {
                 return new Vector2(0, 0);
+            }
         }
     }
 }

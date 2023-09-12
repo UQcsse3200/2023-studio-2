@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
@@ -24,13 +25,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
   private static final float DODGE_SPEED = 3f;
   private static final float WALK_SPEED = 1f;
-  private static final int DODGE_COOLDOWN = 300;
+  private static final int DODGE_COOLDOWN = 3000;
   private static final int DODGE_DURATION = 300;
 
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean dodge_available = true;
 
-  private int equippedItem = 1;
+  private Entity player;
+  private InventoryComponent playerInventory;
   private int testing = 0;
 
   static HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
@@ -89,52 +91,63 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     keyFlags.put(keycode, 1);
 
+    player = ServiceLocator.getEntityService().getPlayer();
+    playerInventory = player.getComponent(InventoryComponent.class);
 
-    switch (keycode) {
-      case Keys.SPACE:
-        if (!dodge_available ||
-                walkDirection.epsilonEquals(Vector2.Zero)) { return false; }
-        triggerDodgeEvent();
-        dodge();
-        return true;
+      switch (keycode) {
+          case Keys.SPACE -> {
+              if (!dodge_available ||
+                      walkDirection.epsilonEquals(Vector2.Zero)) {
+                  return false;
+              }
+              triggerDodgeEvent();
+              dodge();
+              return true;
+          }
+          case Keys.F -> {
+              InteractionControllerComponent interactionController = entity
+                      .getComponent(InteractionControllerComponent.class);
+              if (interactionController != null) {
+                  interactionController.interact();
+              }
 
-      case Keys.F:
-        InteractionControllerComponent interactionController = entity
-            .getComponent(InteractionControllerComponent.class);
-
-        if (interactionController != null) {
-          interactionController.interact();
-        }
-
-        // Stop movement if a menu is open
-        if (isWindowOpen()) {
-          keyFlags.clear();
-          triggerWalkEvent();
-        }
-        return true;
-      case Keys.T:
-        if (equippedItem == 3) {
-          entity.getEvents().trigger("change_structure");
-        }
-        return true;
-      case Keys.NUM_1:
-        triggerInventoryEvent(1);
-        return true;
-      case Keys.NUM_2:
-        triggerInventoryEvent(2);
-        return true;
-      case Keys.NUM_3:
-        triggerInventoryEvent(3);
-        return true;
-      case Keys.TAB:
-        triggerInventoryEvent(0);
-        return true;
-      case Keys.W, Keys.S, Keys.A, Keys.D:
-        triggerWalkEvent();
-        return true;
-      default:
-        return false;
-    }
+              // Stop movement if a menu is open
+              if (isWindowOpen()) {
+                  keyFlags.clear();
+                  triggerWalkEvent();
+              }
+              return true;
+          }
+          case Keys.T -> {
+              if (playerInventory.getEquipped() == 3) {
+                  entity.getEvents().trigger("change_structure");
+              }
+              return true;
+          }
+          case Keys.NUM_1 -> {
+              triggerInventoryEvent(1);
+              return true;
+          }
+          case Keys.NUM_2 -> {
+              triggerInventoryEvent(2);
+              return true;
+          }
+          case Keys.NUM_3 -> {
+              triggerInventoryEvent(3);
+              return true;
+          }
+          case Keys.TAB -> {
+              triggerInventoryEvent(0);
+              return true;
+          }
+          case Keys.W, Keys.S, Keys.A, Keys.D -> {
+              triggerWalkEvent();
+              return true;
+          }
+          default -> {
+              return false;
+          }
+      }
   }
 
   /**
@@ -169,6 +182,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     Vector2 position = mouseToGamePos(screenX, screenY);
     this.lastMousePos = position.cpy();
+    player = ServiceLocator.getEntityService().getPlayer();
+    playerInventory = player.getComponent(InventoryComponent.class);
     PlayerActions playerActions = entity.getComponent(PlayerActions.class);
     int cooldown = playerActions.getAttackCooldown();
 
@@ -178,21 +193,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
     double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
 
-    switch (equippedItem) {
-      // melee
-      case 1:
+    switch (playerInventory.getEquipped()) {
+      // melee/ranged
+      case 1, 2:
         if (button == Input.Buttons.LEFT) {
-          entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
+          entity.getEvents().trigger("weaponAttack", entity.getPosition(), playerInventory.getEquippedType(), (float) initRot);
         }
         break;
-
-      // ranged
-      case 2:
-        if (button == Input.Buttons.LEFT) {
-          entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
-        }
-        break;
-
       // building
       case 3:
         if (button == Input.Buttons.LEFT) {
@@ -260,15 +267,17 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   /**
    * Triggers dodge event.
    * Immunity is applied for 200 milliseconds whilst player moves.
+   *
+   * @return
    */
-  private void triggerDodgeEvent() {
+  public int triggerDodgeEvent() {
     final Timer timer = new Timer();
     this.walkDirection = keysToVector().scl(DODGE_SPEED);
     directions dir = keysToDirection();
 
     if (dir == directions.None) {
       entity.getEvents().trigger("walkStop");
-      return;
+      return this.DODGE_COOLDOWN;
     }
     switch (dir) {
       case Up -> entity.getEvents().trigger("dodgeUp");
@@ -290,11 +299,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       }
     };
     timer.schedule(stopDodge, DODGE_DURATION);
+    return this.DODGE_DURATION;
   }
 
   private void triggerInventoryEvent(int i) {
-    entity.getEvents().trigger("inventory", i);
-    this.equippedItem = entity.getComponent(InventoryComponent.class).getEquipped();
+      entity.getEvents().trigger("inventory", i);
   }
 
   /**
@@ -302,7 +311,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * Triggers when the spacebar is clicked.
    * Cooldown of 3000 ms.
    */
-  private void dodge() {
+  public void dodge() {
     dodge_available = false;
     final Timer timer = new Timer();
     java.util.TimerTask makeDodgeAvailable = new java.util.TimerTask() {

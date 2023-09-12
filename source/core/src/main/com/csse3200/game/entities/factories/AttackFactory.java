@@ -80,7 +80,7 @@ public class AttackFactory {
     attack.scaleWidth(config.imageScale);
 
     switch (weaponType) {
-      case SLING_SHOT, ELEC_WRENCH:
+      case SLING_SHOT, ELEC_WRENCH, KATANA:
         attack.addComponent(new WeaponTargetComponent(weaponType, player));
         break;
     }

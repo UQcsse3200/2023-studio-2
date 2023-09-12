@@ -39,6 +39,7 @@ public class PlanetTravel {
         // Finally, go to planet.
 //        PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
 //        PlanetScreen nextPlanet = currentPlanet.getNextPlanet();
+//        currentPlanet.clear();
 //        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
 //        game.setScreen(nextPlanet);
     }
@@ -56,7 +57,7 @@ public class PlanetTravel {
      * Return the current planet where player are in
      * @return current planet
      */
-    public Object returnCurrent() {
-        return ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
+    public PlanetScreen returnCurrent() {
+        return (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
     }
 }

@@ -72,13 +72,15 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../../components/Component.html" title="class in com.csse3200.game.components">com.csse3200.game.components.Component</a>
+<div class="inheritance"><a href="../../components/maingame/MainGameActions.html" title="class in com.csse3200.game.components.maingame">com.csse3200.game.components.maingame.MainGameActions</a>
 <div class="inheritance">com.csse3200.game.ui.terminal.MainGameActionss</div>
+</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">MainGameActionss</span>
-<span class="extends-implements">extends <a href="../../components/Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
+<span class="extends-implements">extends <a href="../../components/maingame/MainGameActions.html" title="class in com.csse3200.game.components.maingame">MainGameActions</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -116,14 +118,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onReturnPlanet()" class="member-name-link">onReturnPlanet</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Swaps to the Main Menu screen.</div>
 </div>
 </div>
 </div>
 </div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.csse3200.game.components.maingame.MainGameActions">Methods inherited from class&nbsp;com.csse3200.game.components.maingame.<a href="../../components/maingame/MainGameActions.html" title="class in com.csse3200.game.components.maingame">MainGameActions</a></h3>
+<code><a href="../../components/maingame/MainGameActions.html#create()">create</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.components.Component">Methods inherited from class&nbsp;com.csse3200.game.components.<a href="../../components/Component.html" title="class in com.csse3200.game.components">Component</a></h3>
 <code><a href="../../components/Component.html#dispose()">dispose</a>, <a href="../../components/Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../../components/Component.html#getEntity()">getEntity</a>, <a href="../../components/Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../../components/Component.html#setEntity(com.csse3200.game.entities.Entity)">setEntity</a>, <a href="../../components/Component.html#toString()">toString</a>, <a href="../../components/Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../../components/Component.html#triggerUpdate()">triggerUpdate</a>, <a href="../../components/Component.html#update()">update</a></code></div>
@@ -157,15 +162,13 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="create()">
-<h3>create</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../../components/Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<section class="detail" id="onReturnPlanet()">
+<h3>onReturnPlanet</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onReturnPlanet</span>()</div>
+<div class="block">Swaps to the Main Menu screen.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="../../components/Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../components/Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
+<dd><code><a href="../../components/maingame/MainGameActions.html#onReturnPlanet()">onReturnPlanet</a></code>&nbsp;in class&nbsp;<code><a href="../../components/maingame/MainGameActions.html" title="class in com.csse3200.game.components.maingame">MainGameActions</a></code></dd>
 </dl>
 </section>
 </li>

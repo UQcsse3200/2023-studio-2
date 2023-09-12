@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -23,5 +24,56 @@ public class SpawnerComponentTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    @Test
+    public void testSpawnEnemies() {
+        // Create a SpawnerComponent with mock dependencies
+        ArrayList<Entity> targets = new ArrayList<>();
+        SpawnerComponent spawner = new SpawnerComponent(targets);
 
+        // Define test values
+        int meleeCount = 5;
+        int rangedCount = 3;
+
+        // Mock behavior for gameTime
+        when(gameTime.getTime()).thenReturn(0L);
+
+        // Call the spawnEnemies method
+        spawner.spawnEnemies(meleeCount, rangedCount);
+
+        // Verify that the component state is updated correctly
+        assert spawner.isSpawning();
+        assert spawner.getEnemiesToSpawn() == meleeCount + rangedCount;
+        assert spawner.getMeleeEnemiesToSpawn() == meleeCount;
+        assert spawner.getRangedEnemiesToSpawn() == rangedCount;
+        assert spawner.getEnemiesSpawned() == 0;
+    }
+    @Mock
+    private ArrayList<Entity> targets;
+    @Test
+    public void testUpdate() {
+        // Create a SpawnerComponent with mock dependencies
+        SpawnerComponent spawner = new SpawnerComponent(targets);
+
+        // Set up the initial state for testing
+        spawner.setSpawning(false);
+        spawner.setEnemiesSpawned(0);
+        spawner.setEnemiesToSpawn(0);
+        spawner.setMeleeEnemiesToSpawn(0);
+        spawner.setRangedEnemiesToSpawn(0);
+
+        long currentTime = 0L;
+        when(gameTime.getTime()).thenReturn(currentTime);
+
+        // Call the update method
+        spawner.update();
+
+        // Verify that the state has been updated correctly
+        assertFalse(spawner.isSpawning());
+        assertEquals(0, spawner.getEnemiesToSpawn());
+        assertEquals(0, spawner.getMeleeEnemiesToSpawn());
+        assertEquals(0, spawner.getRangedEnemiesToSpawn());
+        assertEquals(0, spawner.getEnemiesSpawned());
+
+        // You can add more test cases here to cover different scenarios
+    }
 }

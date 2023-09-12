@@ -5,6 +5,7 @@ import com.csse3200.game.components.structures.Rotation;
 import com.csse3200.game.components.structures.RotationRenderComponent;
 import com.csse3200.game.entities.Entity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,17 +14,21 @@ public class FOVComponent extends ProximityActivationComponent {
 
     private RotationRenderComponent renderComponent;
     private List<Entity> enemies;
+    private final FOVFunc enter;
+    private final FOVFunc exit;
     private final Map<Entity, Boolean> entityIsInFOV = new HashMap<>();
 
-    public FOVComponent(float radius, List<Entity> enemies, ProximityFunc entered, ProximityFunc exited, RotationRenderComponent renderComponent) {
+    public FOVComponent(float radius, List<Entity> enemies, ProximityFunc entered, ProximityFunc exited, FOVFunc enter1, FOVFunc exit1) {
         super(radius, entered, exited);
-        this.renderComponent = renderComponent;
         this.enemies = enemies;
+        this.enter = enter1;
+        this.exit = exit1;
     }
 
-    public FOVComponent(float radius, Entity enemy, ProximityFunc entered, ProximityFunc exited, RotationRenderComponent renderComponent) {
+    public FOVComponent(float radius, Entity enemy, ProximityFunc entered, ProximityFunc exited, FOVFunc enter, FOVFunc exit) {
         super(radius, entered, exited);
-        this.renderComponent = renderComponent;
+        this.enter = enter;
+        this.exit = exit;
         this.enemies.add(enemy);
     }
 
@@ -66,7 +71,7 @@ public class FOVComponent extends ProximityActivationComponent {
     }
 
     public interface FOVFunc {
-        void call(Entity enemy);
+        void call(ArrayList<Entity> entities);
     }
 
     public void startAtlasRotation() {

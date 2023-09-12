@@ -1,13 +1,17 @@
 package com.csse3200.game.screens;
 
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.csse3200.game.rendering.RenderComponent;
+import com.csse3200.game.ui.ItemBox;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.EarthGameArea;
-import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.NavigationArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
@@ -42,8 +46,11 @@ import static com.csse3200.game.ui.UIComponent.skin;
  */
 public class MainGameScreen extends ScreenAdapter {
   private TitleBox titleBox;
+private static boolean alive = true;
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {"images/heart.png"};
+  private static final String[] mainGameTextures = {"images/heart.png",
+          "images/structure-icons/wall.png",
+          "images/structure-icons/turret.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;
@@ -55,8 +62,12 @@ public class MainGameScreen extends ScreenAdapter {
   private GameArea gameArea;
   private TerrainFactory terrainFactory;
 
+  private ItemBox itemBox;
+  Entity currentExtractor = null;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
+    this.alive = true;
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -86,17 +97,35 @@ public class MainGameScreen extends ScreenAdapter {
     gameArea = new EarthGameArea(terrainFactory, game);
     gameArea.create();
     player = ((EarthGameArea) gameArea).getPlayer();
+    player.getEvents().addListener("death", this::initiateDeathScreen);
     titleBox = new TitleBox(game, "Title", skin);
+
+    itemBox = new ItemBox(((EarthGameArea) gameArea).getExtractorIcon(), renderer);
+    InputMultiplexer inputMultiplexer = new InputMultiplexer();
+    inputMultiplexer.addProcessor(ServiceLocator.getInputService());
+    inputMultiplexer.addProcessor(new InputComponent() {
+      @Override
+      public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.O) {
+          itemBox.triggerShow();
+        }
+        return false;
+      }
+      @Override
+      public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        currentExtractor = null;
+        return super.touchUp(screenX, screenY, pointer, button);
+      }
+    });
+    Gdx.input.setInputProcessor(inputMultiplexer);
 
   }
 
   /**
-   * Loads the space map game area onto the screen to allow transitions to new planets (GameAreas)
+   * When player dies, the PlayerDeath screen is launched.
    */
-  public void loadSpaceMap(){
-    gameArea.dispose();
-    NavigationArea navArea = new NavigationArea(game, terrainFactory);
-    navArea.create();
+  public void initiateDeathScreen() {
+    alive = false;
   }
 
   @Override
@@ -105,6 +134,19 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().update();
     followPlayer();
     renderer.render();
+
+    itemBox.render();
+    if(itemBox.itemContainMouse() && currentExtractor == null){
+      currentExtractor = ((EarthGameArea) gameArea).getExtractor();
+    }
+    if(currentExtractor != null){
+      Vector2 mousePos = renderer.getCamera().getWorldPositionFromScreen(new Vector2(Gdx.input.getX() - 200,Gdx.input.getY() + 200));
+      currentExtractor.setPosition(mousePos.x,mousePos.y);
+    }
+    if (alive == false) {
+      logger.info("Launching player death screen");
+      game.setScreen(GdxGame.ScreenType.PLAYER_DEATH);
+    }
   }
 
   @Override
@@ -170,6 +212,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
+
   }
 
   private void followPlayer() {
@@ -193,4 +236,5 @@ public class MainGameScreen extends ScreenAdapter {
     //Set new position
     renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
   }
+
 }

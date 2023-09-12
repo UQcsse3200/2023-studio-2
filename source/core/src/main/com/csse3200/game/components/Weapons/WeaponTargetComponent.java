@@ -12,6 +12,7 @@ public class WeaponTargetComponent extends Component {
     /* Weapon Type to be controlled*/
     Entity entity;
     WeaponType weaponType;
+    Vector2 trackPrev;
 
     /**
      * Class to store variables of a spawned weapon
@@ -20,6 +21,7 @@ public class WeaponTargetComponent extends Component {
                                                 Entity entity) {
         this.weaponType = weaponType;
         this.entity = entity;
+        this.trackPrev = entity.getPosition();
     }
 
     /**
@@ -36,6 +38,10 @@ public class WeaponTargetComponent extends Component {
                 pos = keyboardPlayerInputComponent.getLastMousePos();
                 Vector2 eScl = entity.getScale();
                 return new Vector2(pos.x + eScl.x/2 - 0.1f, pos.y + eScl.y/2 - 0.1f);
+            case ELEC_WRENCH:
+                var delta = entity.getPosition().sub(this.trackPrev);
+                this.trackPrev = entity.getPosition();
+                return delta;
             default:
                 return new Vector2(0, 0);
         }

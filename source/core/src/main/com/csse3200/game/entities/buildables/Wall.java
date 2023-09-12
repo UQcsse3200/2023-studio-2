@@ -1,10 +1,10 @@
 package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.*;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.WallConfig;
 import com.csse3200.game.entities.configs.WallConfigs;
 import com.csse3200.game.files.FileLoader;
@@ -12,9 +12,9 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.components.joinable.JoinableComponent;
-import com.csse3200.game.components.joinable.JoinLayer;
-import com.csse3200.game.components.joinable.JoinableComponentShapes;
+import com.csse3200.game.components.structures.JoinableComponent;
+import com.csse3200.game.components.structures.JoinLayer;
+import com.csse3200.game.components.structures.JoinableComponentShapes;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -29,9 +29,7 @@ import com.csse3200.game.services.ServiceLocator;
  * Entity wall = new Wall(config);
  * </pre>
  */
-public class Wall extends Entity {
-
-    private boolean showHealthBar = true;
+public class Wall extends PlaceableEntity {
     private static final JoinableComponentShapes shapes =
             FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
 

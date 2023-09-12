@@ -26,6 +26,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
 
@@ -68,10 +69,11 @@ public class EnemyFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new DeathComponent())
             .addComponent(new HealthBarComponent(false))
-            .addComponent(new TouchAttackComponent(
-                    (short) (PhysicsLayer.PLAYER |
+            .addComponent(new TouchAttackComponent((short) (
+                    PhysicsLayer.PLAYER |PhysicsLayer.COMPANION |
                     PhysicsLayer.WALL |
-                    PhysicsLayer.STRUCTURE),
+                    PhysicsLayer.STRUCTURE |
+                    PhysicsLayer.WEAPON),
                     1.5f))
             .addComponent(new CombatStatsComponent(
                     health,
@@ -159,11 +161,17 @@ public class EnemyFactory {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
           aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f, 3f));
+        } else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
+          aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f, 3f));
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 6f, 6f,3f));
         } else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
       // TODO: TBA
+
+      // Destructible Targeting
       if (behaviour == EnemyBehaviour.DTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 6f, 6f, 3f));
@@ -176,8 +184,11 @@ public class EnemyFactory {
     if (type == EnemyType.Melee) {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          aiTaskComponent.addTask(new ChaseTask(target, 10, 100f, 100f));
-        } else {
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+        } else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+        }
+        else {
           aiTaskComponent.addTask(new ChaseTask(target, 5, 3f, 4f));
         }
       }
@@ -199,6 +210,12 @@ public class EnemyFactory {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 5, 100f, 100f));
         } else {
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+        } else if
+        (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+        }
+        else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }
@@ -218,6 +235,12 @@ public class EnemyFactory {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 6f, 6f, 3f));
         } else {
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+        } else if
+        (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
+          aiTaskComponent.addTask(new ChaseTask(target, 10, 3f, 4f));
+        }
+        else {
           aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
         }
       }

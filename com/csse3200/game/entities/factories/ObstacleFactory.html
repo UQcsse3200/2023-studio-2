@@ -44,13 +44,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -83,6 +83,21 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static float</code></div>
+<div class="col-second even-row-color"><code><a href="#WALL_SIZE" class="member-name-link">WALL_SIZE</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
@@ -100,9 +115,17 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates an Asteroid that has bounce</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createCustomTurret(com.csse3200.game.entities.buildables.TurretType,com.csse3200.game.entities.Entity)" class="member-name-link">createCustomTurret</a><wbr>(<a href="../buildables/TurretType.html" title="enum class in com.csse3200.game.entities.buildables">TurretType</a>&nbsp;type,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createAsteroid(com.csse3200.game.entities.configs.AsteroidConfig)" class="member-name-link">createAsteroid</a><wbr>(<a href="../configs/AsteroidConfig.html" title="class in com.csse3200.game.entities.configs">AsteroidConfig</a>&nbsp;config)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates an Asteroid that has bounce from config</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createCustomTurret(com.csse3200.game.entities.buildables.TurretType,com.csse3200.game.entities.Entity)" class="member-name-link">createCustomTurret</a><wbr>(<a href="../buildables/TurretType.html" title="enum class in com.csse3200.game.entities.buildables">TurretType</a>&nbsp;type,
  <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createCustomTurret(com.csse3200.game.entities.configs.TurretConfig)" class="member-name-link">createCustomTurret</a><wbr>(<a href="../configs/TurretConfig.html" title="class in com.csse3200.game.entities.configs">TurretConfig</a>&nbsp;config)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEnvironment()" class="member-name-link">createEnvironment</a>()</code></div>
@@ -122,15 +145,33 @@ loadScripts(document, 'script');</script>
  float&nbsp;height)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createObstacleGameGoal(float,float)" class="member-name-link">createObstacleGameGoal</a><wbr>(float&nbsp;width,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createObstacleEnemy(com.csse3200.game.entities.configs.BaseEntityConfig)" class="member-name-link">createObstacleEnemy</a><wbr>(<a href="../configs/BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a>&nbsp;config)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Create an obstacle enemy to match given config file</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createObstacleGameGoal(float,float)" class="member-name-link">createObstacleGameGoal</a><wbr>(float&nbsp;width,
  float&nbsp;height)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createObstacleGameGoal(com.csse3200.game.entities.configs.BaseEntityConfig)" class="member-name-link">createObstacleGameGoal</a><wbr>(<a href="../configs/BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a>&nbsp;config)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createStaticAsteroid(float,float)" class="member-name-link">createStaticAsteroid</a><wbr>(float&nbsp;width,
  float&nbsp;height)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTree()" class="member-name-link">createTree</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createStaticAsteroid(com.csse3200.game.entities.configs.AsteroidConfig)" class="member-name-link">createStaticAsteroid</a><wbr>(<a href="../configs/AsteroidConfig.html" title="class in com.csse3200.game.entities.configs">AsteroidConfig</a>&nbsp;config)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Create a new static asteroid from the given config file</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTree()" class="member-name-link">createTree</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a tree entity.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTree(com.csse3200.game.entities.configs.BaseEntityConfig)" class="member-name-link">createTree</a><wbr>(<a href="../configs/BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a>&nbsp;config)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a tree entity.</div>
 </div>
@@ -152,11 +193,36 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="WALL_SIZE">
+<h3>WALL_SIZE</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">WALL_SIZE</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="createTree(com.csse3200.game.entities.configs.BaseEntityConfig)">
+<h3>createTree</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createTree</span><wbr><span class="parameters">(<a href="../configs/BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a>&nbsp;config)</span></div>
+<div class="block">Creates a tree entity.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>entity</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="createTree()">
 <h3>createTree</h3>
@@ -214,6 +280,19 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="createAsteroid(com.csse3200.game.entities.configs.AsteroidConfig)">
+<h3>createAsteroid</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createAsteroid</span><wbr><span class="parameters">(<a href="../configs/AsteroidConfig.html" title="class in com.csse3200.game.entities.configs">AsteroidConfig</a>&nbsp;config)</span></div>
+<div class="block">Creates an Asteroid that has bounce from config</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>config</code> - Configuration file to match asteroid to</dd>
+<dt>Returns:</dt>
+<dd>Asteroid entity</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="createAsteroid(float,float)">
 <h3>createAsteroid</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createAsteroid</span><wbr><span class="parameters">(float&nbsp;width,
@@ -229,10 +308,36 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="createStaticAsteroid(com.csse3200.game.entities.configs.AsteroidConfig)">
+<h3>createStaticAsteroid</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createStaticAsteroid</span><wbr><span class="parameters">(<a href="../configs/AsteroidConfig.html" title="class in com.csse3200.game.entities.configs">AsteroidConfig</a>&nbsp;config)</span></div>
+<div class="block">Create a new static asteroid from the given config file</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>config</code> - Configuration file to match asteroid to</dd>
+<dt>Returns:</dt>
+<dd>Asteroid Entity</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="createStaticAsteroid(float,float)">
 <h3>createStaticAsteroid</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createStaticAsteroid</span><wbr><span class="parameters">(float&nbsp;width,
  float&nbsp;height)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="createObstacleEnemy(com.csse3200.game.entities.configs.BaseEntityConfig)">
+<h3>createObstacleEnemy</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createObstacleEnemy</span><wbr><span class="parameters">(<a href="../configs/BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a>&nbsp;config)</span></div>
+<div class="block">Create an obstacle enemy to match given config file</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>config</code> - Configuration file to match enemy to</dd>
+<dt>Returns:</dt>
+<dd>ObstacleEnemy</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -243,10 +348,22 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="createObstacleGameGoal(com.csse3200.game.entities.configs.BaseEntityConfig)">
+<h3>createObstacleGameGoal</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createObstacleGameGoal</span><wbr><span class="parameters">(<a href="../configs/BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a>&nbsp;config)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="createObstacleGameGoal(float,float)">
 <h3>createObstacleGameGoal</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createObstacleGameGoal</span><wbr><span class="parameters">(float&nbsp;width,
  float&nbsp;height)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="createCustomTurret(com.csse3200.game.entities.configs.TurretConfig)">
+<h3>createCustomTurret</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></span>&nbsp;<span class="element-name">createCustomTurret</span><wbr><span class="parameters">(<a href="../configs/TurretConfig.html" title="class in com.csse3200.game.entities.configs">TurretConfig</a>&nbsp;config)</span></div>
 </section>
 </li>
 <li>

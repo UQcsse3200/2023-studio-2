@@ -2,6 +2,7 @@ com.csse3200.game
 com.csse3200.game.ai.movement
 com.csse3200.game.ai.tasks
 com.csse3200.game.areas
+com.csse3200.game.areas.mapConfig
 com.csse3200.game.areas.terrain
 com.csse3200.game.components
 com.csse3200.game.components.Companion

@@ -67,12 +67,14 @@ loadScripts(document, 'script');</script>
 <h1 title="Class WeaponConfig" class="title">Class WeaponConfig</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance"><a href="BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">com.csse3200.game.entities.configs.BaseEntityConfig</a>
 <div class="inheritance">com.csse3200.game.entities.configs.WeaponConfig</div>
+</div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">WeaponConfig</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<span class="extends-implements">extends <a href="BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a></span></div>
 <div class="block">Defines each entries properties stored in wall config file to be loaded by the Wall Factory.</div>
 </section>
 <section class="summary">
@@ -90,7 +92,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="#attackCooldown" class="member-name-link">attackCooldown</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#imagePath" class="member-name-link">imagePath</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#iconPath" class="member-name-link">iconPath</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>int</code></div>
 <div class="col-second even-row-color"><code><a href="#imageRotationOffset" class="member-name-link">imageRotationOffset</a></code></div>
@@ -104,8 +106,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>int</code></div>
 <div class="col-second odd-row-color"><code><a href="#rotationSpeed" class="member-name-link">rotationSpeed</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#textureAtlas" class="member-name-link">textureAtlas</a></code></div>
+<div class="col-first even-row-color"><code><a href="../../components/Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a></code></div>
+<div class="col-second even-row-color"><code><a href="#type" class="member-name-link">type</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>int</code></div>
 <div class="col-second odd-row-color"><code><a href="#weaponDuration" class="member-name-link">weaponDuration</a></code></div>
@@ -114,6 +116,9 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="#weaponSpeed" class="member-name-link">weaponSpeed</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-com.csse3200.game.entities.configs.BaseEntityConfig">Fields inherited from class&nbsp;com.csse3200.game.entities.configs.<a href="BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a></h3>
+<code><a href="BaseEntityConfig.html#position">position</a>, <a href="BaseEntityConfig.html#requiredTextures">requiredTextures</a>, <a href="BaseEntityConfig.html#scale">scale</a>, <a href="BaseEntityConfig.html#spritePath">spritePath</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -133,6 +138,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.csse3200.game.entities.configs.BaseEntityConfig">Methods inherited from class&nbsp;com.csse3200.game.entities.configs.<a href="BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a></h3>
+<code><a href="BaseEntityConfig.html#getTextures()">getTextures</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -190,15 +198,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="textureAtlas">
-<h3>textureAtlas</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">textureAtlas</span></div>
+<section class="detail" id="type">
+<h3>type</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../components/Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a></span>&nbsp;<span class="element-name">type</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="imagePath">
-<h3>imagePath</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">imagePath</span></div>
+<section class="detail" id="iconPath">
+<h3>iconPath</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">iconPath</span></div>
 </section>
 </li>
 </ul>

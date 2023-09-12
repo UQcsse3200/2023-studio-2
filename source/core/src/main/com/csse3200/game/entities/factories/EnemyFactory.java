@@ -156,7 +156,7 @@ public class EnemyFactory {
   private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent) {
     // Ranged Enemies
     if (type == EnemyType.Ranged) {
-      aiTaskComponent.addTask(new AimTask( 2f, target, 3f));
+      aiTaskComponent.addTask(new AimTask( 0.5f, target, 3f));
       // Wizard
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {

@@ -2,7 +2,6 @@ package com.csse3200.game.components;
 
 import com.csse3200.game.entities.Entity;
 
-import java.util.Objects;
 
 
 /**
@@ -25,19 +24,31 @@ public class PotionComponent extends Component {
      */
     @Override
     public void create() {
+        return;
     }
 
     /**
      * Applies the effects of the Potion to the specified target entity.
      *
-     * @param target The entity receiving the Potion effect.
+     * @param target  The entity receiving the Potion effect.
      */
     public void applyEffect(Entity target) {
 
-        if (Objects.requireNonNull(type) == PotionType.DEATH_POTION) {
-        } else {
-            throw new IllegalArgumentException("You must specify a valid PotionType");
+        switch (type){
+            case DEATH_POTION -> {
+                return;
+            }
+            default -> throw new IllegalArgumentException("You must specify a valid PotionType");
         }
+    }
+
+    /**
+     * Sets the duration for which the Potion effect should last.
+     *
+     * @param duration  Duration in milliseconds.
+     */
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 
     /**
@@ -47,15 +58,6 @@ public class PotionComponent extends Component {
      */
     public long getDuration() {
         return duration;
-    }
-
-    /**
-     * Sets the duration for which the Potion effect should last.
-     *
-     * @param duration Duration in milliseconds.
-     */
-    public void setDuration(long duration) {
-        this.duration = duration;
     }
 
     /**
@@ -70,7 +72,7 @@ public class PotionComponent extends Component {
     /**
      * Sets the type of the Potion.
      *
-     * @param type The type to set.
+     * @param type  The type to set.
      */
     public void setType(PotionType type) {
         this.type = type;

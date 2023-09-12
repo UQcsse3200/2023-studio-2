@@ -32,7 +32,7 @@ public class PowerupComponent extends Component {
     /**
      * Applies the effects of the Powerup to the specified target entity.
      *
-     * @param target The entity receiving the Powerup effect.
+     * @param target  The entity receiving the Powerup effect.
      */
     public void applyEffect(Entity target) {
         playerCombatStats = target.getComponent(CombatStatsComponent.class);
@@ -67,21 +67,21 @@ public class PowerupComponent extends Component {
     }
 
     /**
+     * Sets the duration for which the Powerup effect should last.
+     *
+     * @param duration  Duration in milliseconds.
+     */
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    /**
      * Retrieves the duration for which the Powerup effect should last.
      *
      * @return Duration in milliseconds.
      */
     public long getDuration() {
         return duration;
-    }
-
-    /**
-     * Sets the duration for which the Powerup effect should last.
-     *
-     * @param duration Duration in milliseconds.
-     */
-    public void setDuration(long duration) {
-        this.duration = duration;
     }
 
     /**
@@ -96,7 +96,7 @@ public class PowerupComponent extends Component {
     /**
      * Sets the type of the Powerup.
      *
-     * @param type The type to set.
+     * @param type  The type to set.
      */
     public void setType(PowerupType type) {
         this.type = type;

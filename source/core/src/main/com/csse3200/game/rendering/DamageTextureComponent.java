@@ -13,12 +13,11 @@ import java.util.Map;
  * A Rendering component used to switch between different textures based on the current entity's health.
  */
 public class DamageTextureComponent extends RenderComponent {
-    private final Map<Integer, Texture> thresholds;
+    private Map<Integer, Texture> thresholds;
     private Texture texture = null;
 
     /**
      * Creates a DamageTextureComponent with the given texture
-     *
      * @param texturePath path to texture to be displayed
      */
     public DamageTextureComponent(String texturePath) {
@@ -27,7 +26,6 @@ public class DamageTextureComponent extends RenderComponent {
 
     /**
      * Creates a DamageTextureComponent with the given texture
-     *
      * @param texture Texture object to be displayed
      */
     public DamageTextureComponent(Texture texture) {
@@ -35,16 +33,10 @@ public class DamageTextureComponent extends RenderComponent {
         thresholds.put(Integer.MAX_VALUE, texture);
     }
 
-    //Helper method to get Texture resource from file path
-    private static Texture GetTexture(String texturePath) {
-        return ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
-    }
-
     /**
      * Add a texture with a given threshold such that if
      * health &lt;= threshold then the texture will show.
-     *
-     * @param threshold   Threshold to show texture at
+     * @param threshold Threshold to show texture at
      * @param texturePath Path to texture to be displayed
      * @return current DamageTextureComponent to allow for chaining
      */
@@ -55,14 +47,18 @@ public class DamageTextureComponent extends RenderComponent {
     /**
      * Add a texture with a given threshold such that if
      * health &lt;= threshold then the texture will show.
-     *
      * @param threshold Threshold to show texture at
-     * @param texture   Texture to be displayed
+     * @param texture Texture to be displayed
      * @return current DamageTextureComponent to allow for chaining
      */
     public DamageTextureComponent addTexture(int threshold, Texture texture) {
         thresholds.put(threshold, texture);
         return this;
+    }
+
+    //Helper method to get Texture resource from file path
+    private static Texture GetTexture(String texturePath) {
+        return ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
     }
 
     @Override
@@ -75,7 +71,6 @@ public class DamageTextureComponent extends RenderComponent {
 
     /**
      * Calculates the correct texture to display based on the thresholds and current health
-     *
      * @return Texture to be displayed for entity - undefined behaviour if multiple textures
      * exist with the same threshold.
      */

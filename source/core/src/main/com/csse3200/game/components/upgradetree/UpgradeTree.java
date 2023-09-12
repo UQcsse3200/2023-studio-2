@@ -14,9 +14,7 @@ import java.util.List;
  */
 public class UpgradeTree extends Component {
 
-    /**
-     * List of unlocked weapons for the player.
-     */
+    /** List of unlocked weapons for the player. */
     private final List<WeaponType> unlockedWeapons;
 
     /**
@@ -33,7 +31,6 @@ public class UpgradeTree extends Component {
 
     /**
      * Returns a list of all unlocked weapons.
-     *
      * @return The list of unlocked weapons.
      */
     public List<WeaponType> getUnlockedWeapons() {
@@ -42,7 +39,6 @@ public class UpgradeTree extends Component {
 
     /**
      * Unlocks a specified weapon type, adding it to the list of unlocked weapons if it's not already there.
-     *
      * @param weapon The type of weapon to unlock.
      */
     public void unlockWeapon(WeaponType weapon) {
@@ -53,7 +49,6 @@ public class UpgradeTree extends Component {
 
     /**
      * Checks if a given weapon type is already unlocked.
-     *
      * @param weapon The type of weapon to check.
      * @return True if the weapon is unlocked, false otherwise.
      */
@@ -64,7 +59,6 @@ public class UpgradeTree extends Component {
     /**
      * Retrieves the current number of materials available to the player.
      * It fetches this value from the game's state observer, updating the local materials value.
-     *
      * @return The number of materials.
      */
     public int getMaterials() {

@@ -68,9 +68,7 @@ public class WeaponControllerComponent extends Component {
         //Update position and rotation of projectile
         entity.setPosition(new Vector2(position.x + movement.x, position.y + movement.y));
         entity.setRotation(this.currentRotation - this.imageRotationOffset);
-        if (--this.remainingDuration <= 0) {
-            this.despawn();
-        }
+        if (--this.remainingDuration <= 0) {this.despawn();}
     }
 
     private void despawn() {
@@ -83,7 +81,7 @@ public class WeaponControllerComponent extends Component {
     //TODO fix this forbidden code
     private Vector2 weapon_x_update() {
         //Edit this.currentRotation and return movement vector
-        Vector2 movement = new Vector2(0, 0);
+        Vector2 movement = new Vector2(0,0);
         //double radians = Math.toRadians(currentRotation);
         return movement;
     }
@@ -101,7 +99,7 @@ public class WeaponControllerComponent extends Component {
     }
 
     private Vector2 weapon_2_update() {
-        Vector2 movement = new Vector2(0, 0);
+        Vector2 movement = new Vector2(0,0);
         double radians = Math.toRadians(currentRotation);
         movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
         movement.y = (float) Math.sin(radians) * 0.015f * this.speed;
@@ -109,7 +107,7 @@ public class WeaponControllerComponent extends Component {
     }
 
     private Vector2 weapon_target_update() {
-        Vector2 movement = new Vector2(0, 0);
+        Vector2 movement = new Vector2(0,0);
         WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
         Vector2 target_pos = weaponTargetComponent.get_pos_of_target();
         Vector2 weapon_pos = entity.getPosition();

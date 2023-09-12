@@ -17,129 +17,119 @@ import org.slf4j.LoggerFactory;
  * Read the wiki for details (https://github.com/UQcsse3200/game-engine/wiki/Service-Locator).
  */
 public class ServiceLocator {
-    private static final Logger logger = LoggerFactory.getLogger(ServiceLocator.class);
-    private static EntityService entityService;
-    private static RenderService renderService;
-    private static PhysicsService physicsService;
-    private static GameTime timeSource;
-    private static InputService inputService;
-    private static ResourceService resourceService;
-    private static TerrainService terrainService;
-    private static EntityPlacementService entityPlacementService;
-    private static GameStateObserver gameStateObserverService;
-    private static GameArea GameArea;
-    private static StructurePlacementService structurePlacementService;
+  private static final Logger logger = LoggerFactory.getLogger(ServiceLocator.class);
+  private static EntityService entityService;
+  private static RenderService renderService;
+  private static PhysicsService physicsService;
+  private static GameTime timeSource;
+  private static InputService inputService;
+  private static ResourceService resourceService;
+  private static TerrainService terrainService;
+  private static EntityPlacementService entityPlacementService;
+  private static GameStateObserver gameStateObserverService;
+  private static GameArea GameArea;
+  public static GameArea getGameArea(){return GameArea;}
 
-    private ServiceLocator() {
-        throw new IllegalStateException("Instantiating static util class");
-    }
+  public static void registerGameArea(GameArea area){
+    GameArea=area;
+  }
 
-    public static GameArea getGameArea() {
-        return GameArea;
-    }
+  private static StructurePlacementService structurePlacementService;
 
-    public static void registerGameArea(GameArea area) {
-        GameArea = area;
-    }
+  public static EntityService getEntityService() {
+    return entityService;
+  }
 
-    public static EntityService getEntityService() {
-        return entityService;
-    }
+  public static RenderService getRenderService() {
+    return renderService;
+  }
 
-    public static RenderService getRenderService() {
-        return renderService;
-    }
+  public static PhysicsService getPhysicsService() {
+    return physicsService;
+  }
 
-    public static PhysicsService getPhysicsService() {
-        return physicsService;
-    }
+  public static GameTime getTimeSource() {
+    return timeSource;
+  }
 
-    public static GameTime getTimeSource() {
-        return timeSource;
-    }
+  public static InputService getInputService() {
+    return inputService;
+  }
 
-    public static InputService getInputService() {
-        return inputService;
-    }
+  public static ResourceService getResourceService() {
+    return resourceService;
+  }
 
-    public static ResourceService getResourceService() {
-        return resourceService;
-    }
+  public static GameStateObserver getGameStateObserverService() { return gameStateObserverService; }
 
-    public static GameStateObserver getGameStateObserverService() {
-        return gameStateObserverService;
-    }
+  public static StructurePlacementService getStructurePlacementService() { return structurePlacementService; }
 
-    public static StructurePlacementService getStructurePlacementService() {
-        return structurePlacementService;
-    }
+  public static TerrainService getTerrainService() { return terrainService; }
 
-    public static TerrainService getTerrainService() {
-        return terrainService;
-    }
+  public static EntityPlacementService getEntityPlacementService() { return entityPlacementService; }
 
-    public static EntityPlacementService getEntityPlacementService() {
-        return entityPlacementService;
-    }
+  public static void registerStructurePlacementService(StructurePlacementService service) {
+    logger.debug("Registering stucture placement service {}", service);
+    structurePlacementService = service;
+  }
 
-    public static void registerStructurePlacementService(StructurePlacementService service) {
-        logger.debug("Registering stucture placement service {}", service);
-        structurePlacementService = service;
-    }
+  public static void registerEntityPlacementService(EntityPlacementService service) {
+    logger.debug("Registering entity placement service {}", service);
+    entityPlacementService = service;
+  }
 
-    public static void registerEntityPlacementService(EntityPlacementService service) {
-        logger.debug("Registering entity placement service {}", service);
-        entityPlacementService = service;
-    }
+  public static void registerEntityService(EntityService service) {
+    logger.debug("Registering entity service {}", service);
+    entityService = service;
+  }
 
-    public static void registerEntityService(EntityService service) {
-        logger.debug("Registering entity service {}", service);
-        entityService = service;
-    }
+  public static void registerRenderService(RenderService service) {
+    logger.debug("Registering render service {}", service);
+    renderService = service;
+  }
 
-    public static void registerRenderService(RenderService service) {
-        logger.debug("Registering render service {}", service);
-        renderService = service;
-    }
+  public static void registerPhysicsService(PhysicsService service) {
+    logger.debug("Registering physics service {}", service);
+    physicsService = service;
+  }
 
-    public static void registerPhysicsService(PhysicsService service) {
-        logger.debug("Registering physics service {}", service);
-        physicsService = service;
-    }
+  public static void registerTimeSource(GameTime source) {
+    logger.debug("Registering time source {}", source);
+    timeSource = source;
+  }
 
-    public static void registerTimeSource(GameTime source) {
-        logger.debug("Registering time source {}", source);
-        timeSource = source;
-    }
+  public static void registerInputService(InputService source) {
+    logger.debug("Registering input service {}", source);
+    inputService = source;
+  }
 
-    public static void registerInputService(InputService source) {
-        logger.debug("Registering input service {}", source);
-        inputService = source;
-    }
+  public static void registerResourceService(ResourceService source) {
+    logger.debug("Registering resource service {}", source);
+    resourceService = source;
+  }
 
-    public static void registerResourceService(ResourceService source) {
-        logger.debug("Registering resource service {}", source);
-        resourceService = source;
-    }
+  public static void registerTerrainService(TerrainService source) {
+    logger.debug("Registering game state service {}", source);
+    terrainService = source;
+  }
 
-    public static void registerTerrainService(TerrainService source) {
-        logger.debug("Registering game state service {}", source);
-        terrainService = source;
-    }
+  public static void registerGameStateObserverService(GameStateObserver source) {
+    logger.debug("Registering game state observer service {}", source);
+    gameStateObserverService = source;
+  }
 
-    public static void registerGameStateObserverService(GameStateObserver source) {
-        logger.debug("Registering game state observer service {}", source);
-        gameStateObserverService = source;
-    }
+  public static void clear() {
+    entityService = null;
+    renderService = null;
+    physicsService = null;
+    timeSource = null;
+    inputService = null;
+    resourceService = null;
+    terrainService = null;
+    gameStateObserverService = null;
+  }
 
-    public static void clear() {
-        entityService = null;
-        renderService = null;
-        physicsService = null;
-        timeSource = null;
-        inputService = null;
-        resourceService = null;
-        terrainService = null;
-        gameStateObserverService = null;
-    }
+  private ServiceLocator() {
+    throw new IllegalStateException("Instantiating static util class");
+  }
 }

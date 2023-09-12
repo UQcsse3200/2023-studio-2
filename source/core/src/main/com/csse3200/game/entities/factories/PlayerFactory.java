@@ -30,71 +30,70 @@ import com.csse3200.game.ui.DialogueBox;
 
 public class PlayerFactory {
 
-    private static final origiPlayerConfig stats =
-            FileLoader.readClass(origiPlayerConfig.class, "configs/player.json");
-    private static DialogueBox dialogueBox;
+  private static DialogueBox dialogueBox;
+  private static final origiPlayerConfig stats =
+      FileLoader.readClass(origiPlayerConfig.class, "configs/player.json");
 
 
-    private PlayerFactory() {
-        throw new IllegalStateException("Instantiating static util class");
-    }
+  /**
+   * Create a player entity.
+   * @return entity
+   */
+  public static Entity createPlayer() {
+    InputComponent inputComponent =
+        ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
-    /**
-     * Create a player entity.
-     *
-     * @return entity
-     */
-    public static Entity createPlayer() {
-        InputComponent inputComponent =
-                ServiceLocator.getInputService().getInputFactory().createForPlayer();
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class));
+    animator.addAnimation("Character_StandDown", 0.2f);
+    animator.addAnimation("Character_StandUp", 0.2f);
+    animator.addAnimation("Character_StandLeft", 0.2f);
+    animator.addAnimation("Character_StandRight", 0.2f);
 
-        AnimationRenderComponent animator =
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class));
-        animator.addAnimation("Character_StandDown", 0.2f);
-        animator.addAnimation("Character_StandUp", 0.2f);
-        animator.addAnimation("Character_StandLeft", 0.2f);
-        animator.addAnimation("Character_StandRight", 0.2f);
+    animator.addAnimation("Character_DownLeft", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_UpRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_Up", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_Left", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_DownRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_Down", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_UpLeft", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Character_Right", 0.2f, Animation.PlayMode.LOOP);
 
-        animator.addAnimation("Character_DownLeft", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_UpRight", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_Up", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_Left", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_DownRight", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_Down", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_UpLeft", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("Character_Right", 0.2f, Animation.PlayMode.LOOP);
-
-        animator.addAnimation("Character_RollDown", 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("Character_RollRight", 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("Character_RollLeft", 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("Character_RollUp", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Character_RollDown", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Character_RollRight", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Character_RollLeft", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Character_RollUp", 0.1f, Animation.PlayMode.NORMAL);
 
 
-        Entity player =
-                new Entity()
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent())
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                        .addComponent(new PlayerActions())
-                        .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
-                        .addComponent(new InventoryComponent())
-                        .addComponent(inputComponent)
-                        .addComponent(new PlayerStatsDisplay())
-                        .addComponent(animator)
-                        .addComponent(new PlayerAnimationController())
-                        .addComponent(new WeaponComponent())
-                        .addComponent(new DialogComponent(dialogueBox))
-                        .addComponent(new InteractionControllerComponent(false))
-                        .addComponent(new HealthBarComponent(true))
-                        .addComponent(new StructurePicker())
-                        .addComponent(new ProximityControllerComponent());
+    Entity player =
+        new Entity()
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent())
+            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+            .addComponent(new PlayerActions())
+            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
+            .addComponent(new InventoryComponent())
+            .addComponent(inputComponent)
+            .addComponent(new PlayerStatsDisplay())
+            .addComponent(animator)
+            .addComponent(new PlayerAnimationController())
+            .addComponent(new WeaponComponent())
+            .addComponent(new DialogComponent(dialogueBox))
+            .addComponent(new InteractionControllerComponent(false))
+            .addComponent(new HealthBarComponent(true))
+            .addComponent(new StructurePicker())
+            .addComponent(new ProximityControllerComponent());
 
 
-        PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
-        player.getComponent(ColliderComponent.class).setDensity(1.5f);
-        animator.startAnimation("Character_StandDown");
-        player.setEntityType("player");
-        return player;
-    }
+    PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
+    player.getComponent(ColliderComponent.class).setDensity(1.5f);
+    animator.startAnimation("Character_StandDown");
+    player.setEntityType("player");
+    return player;
+  }
+
+  private PlayerFactory() {
+    throw new IllegalStateException("Instantiating static util class");
+  }
 }

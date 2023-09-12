@@ -4,15 +4,15 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.structures.StructurePicker;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.structures.StructurePicker;
 
 /**
  * Action component for interacting with the player. Player events should be
@@ -22,7 +22,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class PlayerActions extends Component {
     private static Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
-    private final EntityService entityService = new EntityService();
+    private EntityService entityService = new EntityService();
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
@@ -135,14 +135,14 @@ public class PlayerActions extends Component {
     }
 
     /**
-     * <<<<<<< HEAD
+<<<<<<< HEAD
      * Converts the screen coords to a grid position and then places the selected structure
      * doesn't exist at the grid position, otherwise upgrades the existing structure.
-     * =======
+=======
      * Converts the screen coords to a grid position and then places a wall if a
      * wall
      * doesn't exist at the grid position, otherwise upgrades the wall.
-     * >>>>>>> feature/player
+>>>>>>> feature/player
      *
      * @param screenX - the x coord of the screen
      * @param screenY - the y coord of teh screen
@@ -202,11 +202,11 @@ public class PlayerActions extends Component {
         picker.show();
     }
 
-    public int getAttackCooldown() {
-        return this.attackCooldown;
-    }
-
     public void setAttackCooldown(int cooldown) {
         this.attackCooldown = cooldown;
+    }
+
+    public int getAttackCooldown() {
+        return this.attackCooldown;
     }
 }

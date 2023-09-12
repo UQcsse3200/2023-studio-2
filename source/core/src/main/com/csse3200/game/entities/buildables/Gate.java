@@ -24,9 +24,9 @@ public class Gate extends PlaceableEntity {
 
     private static final JoinableComponentShapes shapes =
             FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
-    private final TextureAtlas openAtlas;
+    private TextureAtlas openAtlas;
 
-    private final TextureAtlas closedAtlas;
+    private TextureAtlas closedAtlas;
 
     public Gate(Entity player) {
         openAtlas = ServiceLocator.getResourceService().getAsset(config.openTextureAtlas, TextureAtlas.class);
@@ -36,9 +36,9 @@ public class Gate extends PlaceableEntity {
         addComponent(new ProximityActivationComponent(1.5f, player, this::openGate, this::closeGate));
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
-        addComponent(new CombatStatsComponent(config.health, 0, 0, false));
+        addComponent(new CombatStatsComponent(config.health, 0,0,false));
         addComponent(new HealthBarComponent(true));
-        addComponent(new JoinableComponent(closedAtlas, JoinLayer.WALLS, shapes));
+        addComponent(new JoinableComponent(closedAtlas,JoinLayer.WALLS, shapes));
         addComponent(new StructureDestroyComponent());
 
         getComponent(JoinableComponent.class).scaleEntity();

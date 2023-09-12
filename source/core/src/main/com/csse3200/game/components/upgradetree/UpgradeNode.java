@@ -12,39 +12,26 @@ import java.util.List;
  */
 public class UpgradeNode {
 
-    /**
-     * Path to the image that represents the weapon upgrade.
-     */
-    private final String imagePath;
+    /** Path to the image that represents the weapon upgrade. */
+    private String imagePath;
 
-    /**
-     * Type of weapon this node represents.
-     */
-    private final WeaponType weaponType;
+    /** Type of weapon this node represents. */
+    private WeaponType weaponType;
 
-    /**
-     * List of child nodes, representing subsequent potential upgrades.
-     */
-    private final List<UpgradeNode> children;
+    /** List of child nodes, representing subsequent potential upgrades. */
+    private List<UpgradeNode> children;
 
-    /**
-     * X-coordinate of the node, typically used for UI positioning.
-     */
+    /** X-coordinate of the node, typically used for UI positioning. */
     private float x;
 
-    /**
-     * Y-coordinate of the node, typically used for UI positioning.
-     */
+    /** Y-coordinate of the node, typically used for UI positioning. */
     private float y;
 
-    /**
-     * Depth of the tree
-     */
+    /** Depth of the tree */
     private int depth;
 
     /**
      * Constructs a new UpgradeNode with the given weapon type and image path.
-     *
      * @param config - The weapons config file
      */
     UpgradeNode(WeaponConfig config, WeaponType weaponType) {
@@ -54,17 +41,16 @@ public class UpgradeNode {
         this.depth = 0;
     }
 
-    public int getDepth() {
-        return depth;
-    }
-
     public void setDepth(int depth) {
         this.depth = depth;
     }
 
+    public int getDepth() {
+        return depth;
+    }
+
     /**
      * Adds a child node to this node.
-     *
      * @param child The child node to be added.
      */
     public void addChild(UpgradeNode child) {
@@ -72,17 +58,7 @@ public class UpgradeNode {
     }
 
     /**
-     * Returns the x-coordinate of the node.
-     *
-     * @return The x-coordinate.
-     */
-    public float getX() {
-        return x;
-    }
-
-    /**
      * Sets the x-coordinate of the node.
-     *
      * @param x The x-coordinate.
      */
     public void setX(float x) {
@@ -90,17 +66,7 @@ public class UpgradeNode {
     }
 
     /**
-     * Returns the y-coordinate of the node.
-     *
-     * @return The y-coordinate.
-     */
-    public float getY() {
-        return y;
-    }
-
-    /**
      * Sets the y-coordinate of the node.
-     *
      * @param y The y-coordinate.
      */
     public void setY(float y) {
@@ -108,8 +74,23 @@ public class UpgradeNode {
     }
 
     /**
+     * Returns the x-coordinate of the node.
+     * @return The x-coordinate.
+     */
+    public float getX() {
+        return x;
+    }
+
+    /**
+     * Returns the y-coordinate of the node.
+     * @return The y-coordinate.
+     */
+    public float getY() {
+        return y;
+    }
+
+    /**
      * Returns the type of weapon this node represents.
-     *
      * @return The weapon type.
      */
     public WeaponType getWeaponType() {
@@ -118,7 +99,6 @@ public class UpgradeNode {
 
     /**
      * Returns a list of child nodes.
-     *
      * @return The child nodes.
      */
     public List<UpgradeNode> getChildren() {
@@ -127,7 +107,6 @@ public class UpgradeNode {
 
     /**
      * Returns the image path associated with this node.
-     *
      * @return The image path.
      */
     public String getImagePath() {

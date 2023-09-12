@@ -6,49 +6,40 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.services.ServiceLocator;
 
-/**
- * Render a static texture.
- */
+/** Render a static texture. */
 public class TextureRenderComponent extends RenderComponent {
-    private final Texture texture;
-    private float rotation = 0.0f;
-    private float alpha = 1.0f;
+  private final Texture texture;
+  private float rotation = 0.0f;
+  private float alpha = 1.0f;
 
-    /**
-     * @param texturePath Internal path of static texture to render.
-     *                    Will be scaled to the entity's scale.
-     */
-    public TextureRenderComponent(String texturePath) {
-        this(ServiceLocator.getResourceService().getAsset(texturePath, Texture.class));
-    }
+  /**
+   * @param texturePath Internal path of static texture to render.
+   *                    Will be scaled to the entity's scale.
+   */
+  public TextureRenderComponent(String texturePath) {
+    this(ServiceLocator.getResourceService().getAsset(texturePath, Texture.class));
+  }
 //...
+  /** @param texture Static texture to render. Will be scaled to the entity's scale. */
+  public TextureRenderComponent(Texture texture) {
+    this.texture = texture;
+  }
 
-    /**
-     * @param texture Static texture to render. Will be scaled to the entity's scale.
-     */
-    public TextureRenderComponent(Texture texture) {
-        this.texture = texture;
-    }
+  /** Scale the entity to a width of 1 and a height matching the texture's ratio */
+  public void scaleEntity() {
+    entity.setScale(1f, (float) texture.getHeight() / texture.getWidth());
+  }
 
-    /**
-     * Scale the entity to a width of 1 and a height matching the texture's ratio
-     */
-    public void scaleEntity() {
-        entity.setScale(1f, (float) texture.getHeight() / texture.getWidth());
-    }
-
-    public void setRotation(float degrees) {
-        rotation = degrees;
-    }
-
-    /**
-     * Sets the alpha of the spritebatch
-     *
-     * @param alpha the alpha to set
-     */
-    public void setAlpha(float alpha) {
-        this.alpha = alpha;
-    }
+  public void setRotation(float degrees) {
+      rotation = degrees;
+  }
+  /**
+   * Sets the alpha of the spritebatch
+   * @param alpha the alpha to set
+   */
+  public void setAlpha(float alpha) {
+    this.alpha = alpha;
+  }
 
     @Override
     protected void draw(SpriteBatch batch) {

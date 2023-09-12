@@ -13,10 +13,10 @@ import java.util.Map;
 
 public class FOVComponent extends ProximityActivationComponent {
 
+    private RotationRenderComponent renderComponent;
+    private List<Entity> enemies =  new ArrayList<>();
     private final Map<Entity, Boolean> enemyIsInFOV = new HashMap<>();
     EntityService entityService = new EntityService();
-    private RotationRenderComponent renderComponent;
-    private List<Entity> enemies = new ArrayList<>();
 
     public FOVComponent(float radius, List<Entity> enemies, ProximityFunc entered, ProximityFunc exited) {
         super(radius, entered, exited);
@@ -43,7 +43,8 @@ public class FOVComponent extends ProximityActivationComponent {
             } else if (isInFOV && !enemyIsInFOV(enemy)) {
                 enemyIsInFOV.put(enemy, false);
                 exited.call(enemy);
-            } else if (isInFOV) {
+            }
+            else if (isInFOV) {
                 entered.call(enemy);
             }
         }
@@ -69,6 +70,10 @@ public class FOVComponent extends ProximityActivationComponent {
 
     }
 
+    public interface FOVFunc {
+        void call(ArrayList<Entity> entities);
+    }
+
     public void startAtlasRotation() {
         long lastRotationTime = System.currentTimeMillis();
         // Rotate the turret every 2 seconds (60 frames)
@@ -83,9 +88,5 @@ public class FOVComponent extends ProximityActivationComponent {
                 renderComponent.setRotation(Rotation.NORTH);
             }
         }
-    }
-
-    public interface FOVFunc {
-        void call(ArrayList<Entity> entities);
     }
 }

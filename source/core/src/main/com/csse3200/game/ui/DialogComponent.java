@@ -9,14 +9,11 @@ import com.csse3200.game.services.ServiceLocator;
 import static com.csse3200.game.ui.UIComponent.skin;
 
 public class DialogComponent extends Component {
-    public Stage stage = ServiceLocator.getRenderService().getStage();
+    public Stage stage=ServiceLocator.getRenderService().getStage();
     private DialogueBox dialogueBox;
     //private Dialog activeDialog;
-    private final GdxGame game = MainMenuActions.game;
-
-    public DialogComponent(DialogueBox dialogueBox) {
-    }
-
+    private GdxGame game= MainMenuActions.game;
+    public DialogComponent(DialogueBox dialogueBox){}
     public void showdialogue(String text) {
         dialogueBox = new DialogueBox(game, dialogueBox, text, skin);
         dialogueBox.setDialogueText(text);

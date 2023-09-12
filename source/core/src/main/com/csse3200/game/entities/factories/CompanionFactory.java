@@ -28,10 +28,6 @@ public class CompanionFactory {
     private static final CompanionConfig stats =
             FileLoader.readClass(CompanionConfig.class, "configs/companion.json");
 
-    private CompanionFactory() {
-        throw new IllegalStateException("Instantiating static util class");
-    }
-
     /**
      * Create a Companion entity.
      *
@@ -76,12 +72,16 @@ public class CompanionFactory {
 //        CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(true, 0, health);
         //CompanionInventoryComponent companionInventoryComponent = new CompanionInventoryComponent(10);
         animator.startAnimation("DOWN");
-        // companion.addComponent(companionStatsDisplay);
+       // companion.addComponent(companionStatsDisplay);
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
         companion.scaleHeight(0.9f);
 
         companion.getComponent(CompanionActions.class).setBulletTexturePath(stats.bulletTexturePath);
         return companion;
+    }
+
+    private CompanionFactory() {
+        throw new IllegalStateException("Instantiating static util class");
     }
 }

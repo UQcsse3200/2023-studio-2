@@ -45,7 +45,7 @@ public abstract class PlacementTool extends Tool {
                 return false;
             }
 
-            if ((int) availableResources < resourceCost.value) {
+            if ((int)availableResources < resourceCost.value) {
                 return false;
             }
         }

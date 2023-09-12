@@ -16,9 +16,9 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class InteractLabel extends Table {
 
-    private final Label messageLabelBeforeF;
-    private final Image fButtonImage;
-    private final Label messageLabelAfterF;
+    private Label messageLabelBeforeF;
+    private Image fButtonImage;
+    private Label messageLabelAfterF;
 
     public InteractLabel() {
         super();

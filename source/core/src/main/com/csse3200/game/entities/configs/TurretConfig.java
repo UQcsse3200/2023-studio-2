@@ -5,5 +5,5 @@ public class TurretConfig {
     public String texture = "images/TurretOne.png";
     public int maxAmmo = 0;
     public int damage = 0;
-}
+    }
 

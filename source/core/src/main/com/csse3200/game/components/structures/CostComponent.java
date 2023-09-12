@@ -9,7 +9,6 @@ import com.csse3200.game.services.ServiceLocator;
 public class CostComponent extends Component implements Placeable {
 
     private final ObjectMap<String, Integer> cost;
-
     public CostComponent(ObjectMap<String, Integer> cost) {
         this.cost = cost;
     }

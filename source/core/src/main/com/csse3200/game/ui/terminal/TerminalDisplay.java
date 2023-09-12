@@ -9,43 +9,43 @@ import com.csse3200.game.ui.UIComponent;
  * screen.
  */
 public class TerminalDisplay extends UIComponent {
-    private static final float Z_INDEX = 10f;
-    private Terminal terminal;
-    private Label label;
+  private static final float Z_INDEX = 10f;
+  private Terminal terminal;
+  private Label label;
 
-    @Override
-    public void create() {
-        super.create();
-        addActors();
-        terminal = entity.getComponent(Terminal.class);
-    }
+  @Override
+  public void create() {
+    super.create();
+    addActors();
+    terminal = entity.getComponent(Terminal.class);
+  }
 
-    private void addActors() {
-        String message = "";
-        label = new Label("> " + message, skin);
-        label.setPosition(5f, 0);
-        stage.addActor(label);
-    }
+  private void addActors() {
+    String message = "";
+    label = new Label("> " + message, skin);
+    label.setPosition(5f, 0);
+    stage.addActor(label);
+  }
 
-    @Override
-    public void draw(SpriteBatch batch) {
-        if (terminal.isOpen()) {
-            label.setVisible(true);
-            String message = terminal.getEnteredMessage();
-            label.setText("> " + message);
-        } else {
-            label.setVisible(false);
-        }
+  @Override
+  public void draw(SpriteBatch batch) {
+    if (terminal.isOpen()) {
+      label.setVisible(true);
+      String message = terminal.getEnteredMessage();
+      label.setText("> " + message);
+    } else {
+      label.setVisible(false);
     }
+  }
 
-    @Override
-    public float getZIndex() {
-        return Z_INDEX;
-    }
+  @Override
+  public float getZIndex() {
+    return Z_INDEX;
+  }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-        label.remove();
-    }
+  @Override
+  public void dispose() {
+    super.dispose();
+    label.remove();
+  }
 }

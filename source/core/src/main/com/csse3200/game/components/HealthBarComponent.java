@@ -55,7 +55,6 @@ public class HealthBarComponent extends UIComponent {
 
     /**
      * Helper function to return the entities CombatStatsComponent
-     *
      * @return the entities CombatStatsComponent
      */
     private CombatStatsComponent getCombatStatsComponent() {
@@ -75,7 +74,7 @@ public class HealthBarComponent extends UIComponent {
             yPos += entity.getCenterPosition().y;
         }
 
-        var position2 = new Vector3(entity.getCenterPosition().x - width / 2, yPos, 0);
+        var position2 = new Vector3(entity.getCenterPosition().x - width/2, yPos, 0);
         position2.scl(SCALE_REDUCTION);
         healthBar.setPosition(position2.x, position2.y - centerOffset);
     }
@@ -89,14 +88,14 @@ public class HealthBarComponent extends UIComponent {
      * @see RenderComponent for default implementation
      */
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch)  {
         if (enabled) {
             updateUIPosition();
             Matrix4 originalMatrix = batch.getProjectionMatrix().cpy(); // cpy() needed to properly set afterwards because calling set() seems to modify kept matrix, not replaces it
 
             var newScale = new Vector3();
             newScale = originalMatrix.getScale(newScale);
-            newScale.scl(1 / SCALE_REDUCTION);
+            newScale.scl(1/SCALE_REDUCTION);
 
             var originalPosition = originalMatrix.getTranslation(new Vector3());
             var originalRotation = originalMatrix.getRotation(new Quaternion());
@@ -112,7 +111,6 @@ public class HealthBarComponent extends UIComponent {
 
     /**
      * Updates the Wall's health on the ui.
-     *
      * @param health player health
      */
     public void updateHealth(int health) {

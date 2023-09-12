@@ -18,7 +18,7 @@ public class GameState {
     /**
      * Add or update the state data and trigger the state change callbacks.
      *
-     * @param key      The key of the state to be set.
+     * @param key The key of the state to be set.
      * @param newValue The new value to be set.
      */
     public void put(String key, Object newValue) {

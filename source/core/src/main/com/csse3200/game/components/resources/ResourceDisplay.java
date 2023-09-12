@@ -65,7 +65,7 @@ public class ResourceDisplay extends UIComponent {
      * Adjusts the width of the resource bar based on a given percentage.
      *
      * @param resource The type of resource to adjust.
-     * @param pct      The percentage to which the bar should be filled.
+     * @param pct The percentage to which the bar should be filled.
      */
     void setWidth(Resource resource, double pct) {
         TextureRegion region = this.resourceBars.get(resource.toString());
@@ -92,11 +92,13 @@ public class ResourceDisplay extends UIComponent {
     public ResourceDisplay withResource(Resource resource) {
         this.resources.add(resource);
 
-        Image barForegroundImage = new Image(ServiceLocator.getResourceService().getAsset("images/resourcebar_foreground.png", Texture.class));
-        Image barBackgroundImage = new Image(ServiceLocator.getResourceService().getAsset("images/resourcebar_background.png", Texture.class));
+        Image barForegroundImage= new Image(ServiceLocator.getResourceService().getAsset("images/resourcebar_foreground.png", Texture.class));
+        Image barBackgroundImage= new Image(ServiceLocator.getResourceService().getAsset("images/resourcebar_background.png", Texture.class));
 
         Texture extractorBarTexture = ServiceLocator.getResourceService().getAsset("images/resourcebar_lights.png", Texture.class);
-        TextureRegion extractorBarTextureRegion = new TextureRegion(extractorBarTexture, (int) (extractorBarTexture.getWidth() * 1.0), extractorBarTexture.getHeight());
+        TextureRegion extractorBarTextureRegion = new TextureRegion(extractorBarTexture,
+                (int) (extractorBarTexture.getWidth() * 1.0),
+                extractorBarTexture.getHeight());
         extractorBars.put(resource.toString(), extractorBarTextureRegion);
         extractorBarWidths.put(resource.toString(), (float) extractorBarTexture.getWidth());
         Image extractorBar = new Image(extractorBarTextureRegion);
@@ -104,7 +106,9 @@ public class ResourceDisplay extends UIComponent {
 
         String barPath = "images/resourcebar_" + resource.toString().toLowerCase() + ".png";
         Texture resourceBarTexture = ServiceLocator.getResourceService().getAsset(barPath, Texture.class);
-        TextureRegion resourceBarTextureRegion = new TextureRegion(resourceBarTexture, (int) (resourceBarTexture.getWidth() * 1.0), resourceBarTexture.getHeight());
+        TextureRegion resourceBarTextureRegion = new TextureRegion(resourceBarTexture,
+                (int) (resourceBarTexture.getWidth() * 1.0),
+                resourceBarTexture.getHeight());
         resourceBars.put(resource.toString(), resourceBarTextureRegion);
         barWidths.put(resource.toString(), (float) resourceBarTexture.getWidth());
         Image resourceBar = new Image(resourceBarTextureRegion);
@@ -117,14 +121,13 @@ public class ResourceDisplay extends UIComponent {
         barStack.add(barForegroundImage);
 
         table.row();
-        table.add(barStack).size(resourceBarTexture.getWidth() * scale, resourceBarTexture.getHeight() * scale).pad(5);
+        table.add(barStack).size(resourceBarTexture.getWidth()*scale, resourceBarTexture.getHeight()*scale).pad(5);
 
         return this;
     }
 
     /**
      * Creates actors and positions them on the stage using a table.
-     *
      * @see Table for positioning options
      */
     private void addActors() {
@@ -142,7 +145,7 @@ public class ResourceDisplay extends UIComponent {
      * @param batch The SpriteBatch used for drawing.
      */
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch)  {
         // draw is handled by the stage
         for (Resource resource : this.resources) {
             Object count = ServiceLocator.getGameStateObserverService().getStateData("extractors/" + resource.toString());
@@ -152,7 +155,7 @@ public class ResourceDisplay extends UIComponent {
                 this.setExtractorCount(resource, 0);
             }
 
-            Object quantity = ServiceLocator.getGameStateObserverService().getStateData("resource/" + resource);
+            Object quantity = ServiceLocator.getGameStateObserverService().getStateData("resource/" + resource.toString());
             if (quantity != null) {
                 int value = (int) quantity;
                 setWidth(resource, Math.min((double) Math.round((float) value / (float) maxResource * this.steps) / this.steps, 1.0));

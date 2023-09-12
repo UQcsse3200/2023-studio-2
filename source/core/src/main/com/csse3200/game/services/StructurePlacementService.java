@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StructurePlacementService {
-    private final Map<GridPoint2, PlaceableEntity> placedStructures = new HashMap<>();
     EventHandler handler;
+    private final Map<GridPoint2, PlaceableEntity> placedStructures = new HashMap<>();
 
 
     public StructurePlacementService(EventHandler handler) {
@@ -72,7 +72,6 @@ public class StructurePlacementService {
 
         Gdx.app.postRunnable(entity::dispose);
     }
-
     public PlaceableEntity getStructureAt(GridPoint2 position) {
         return placedStructures.get(position);
     }

@@ -20,18 +20,18 @@ import static com.csse3200.game.screens.MainMenuScreen.logger;
  */
 public class DialogueBox extends Dialog {
 
-    private final GdxGame game;
+    private GdxGame game;
     private TitleBox titleBox;
-    private final Label dialogueLabel;
-    private final DialogueBox dialogueBox;
+    private Label dialogueLabel;
+    private DialogueBox dialogueBox;
 
     /**
      * Creates a new DialogueBox instance.
      *
-     * @param game        The game instance.
+     * @param game       The game instance.
      * @param dialogueBox The dialogue box instance.
-     * @param title       The title of the dialogue box.
-     * @param skin        The skin to use for styling the dialogue box.
+     * @param title      The title of the dialogue box.
+     * @param skin       The skin to use for styling the dialogue box.
      */
     public DialogueBox(GdxGame game, DialogueBox dialogueBox, String title, Skin skin) {
         super(title, skin);

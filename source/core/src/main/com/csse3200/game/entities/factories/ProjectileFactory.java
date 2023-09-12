@@ -32,7 +32,7 @@ public class ProjectileFactory {
      * Creates A projectile, using the stats of the shooter which will fire towards a certain location.
      *
      * @param targetLocation The location where the projectile is aimed
-     * @param shooter        The entity which fired the projectile
+     * @param shooter The entity which fired the projectile
      * @return The projectile entity
      */
     public static Entity createEnemyBullet(Vector2 targetLocation, Entity shooter) {
@@ -54,7 +54,7 @@ public class ProjectileFactory {
                         atlas);
         animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("explode", 0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("explode",0.3f, Animation.PlayMode.LOOP);
 
 
         enemy
@@ -83,9 +83,9 @@ public class ProjectileFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                         .addComponent(new ProjectileAttackComponent((short) (
                                 PhysicsLayer.PLAYER |
-                                        PhysicsLayer.WALL |
-                                        PhysicsLayer.STRUCTURE |
-                                        PhysicsLayer.NPC),
+                                PhysicsLayer.WALL |
+                                PhysicsLayer.STRUCTURE |
+                                PhysicsLayer.NPC),
                                 1.5f));
 
         // Image scaling

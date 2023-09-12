@@ -54,7 +54,7 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
 
         logger.debug("Initialising extractor minigame screen entities");
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        ExtractorMiniGameArea extractorMiniGameArea = new ExtractorMiniGameArea(terrainFactory);
+        ExtractorMiniGameArea extractorMiniGameArea= new ExtractorMiniGameArea(terrainFactory);
         extractorMiniGameArea.create();
     }
 

@@ -121,7 +121,7 @@ public class StructureFactory {
             String resourceKey = "resource/" + Resource.Solstite;
             int currentResourceCount = (int) gameStateOb.getStateData(resourceKey);
             if (currentResourceCount > 1000) {
-                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
             } else {
                 ShipInteractionPopup shipPopup = new ShipInteractionPopup();
                 ServiceLocator.getRenderService().getStage().addActor(shipPopup);

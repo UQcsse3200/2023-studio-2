@@ -62,10 +62,6 @@ public class Wall extends PlaceableEntity {
         getComponent(JoinableComponent.class).scaleEntity();
     }
 
-    public WallType getWallType() {
-        return type;
-    }
-
     private void onPlayerEnter(Entity player) {
         getComponent(HealthBarComponent.class).show();
     }

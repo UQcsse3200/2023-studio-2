@@ -72,6 +72,7 @@ public class CombatStatsComponent extends Component {
       entity.getEvents().trigger("updateHealth", this.health);
     }
     if (entity != null) {
+      //check that the entity is the player to initiate game ending logic
       if (isDead() && entity.getEntityType().equals("player")) {
         final Timer timer = new Timer();
         java.util.TimerTask killPlayer = new java.util.TimerTask() {
@@ -90,7 +91,7 @@ public class CombatStatsComponent extends Component {
   }
 
   /**
-   * Adds to the player's health. The amount added can be negative.
+   * Adds to the entities health. The amount added can be negative.
    *
    * @param health health to add
    */

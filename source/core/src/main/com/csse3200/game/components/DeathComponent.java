@@ -44,7 +44,9 @@ public class DeathComponent extends Component {
             // Not triggered by hitbox, ignore
             return;
         }
+        //check if health is 0, and the kill property has been fulfilled
         if (combatStats.isDead() && this.notkilled) {
+            //stop animating the entity once it's death has been confirmed
             this.notkilled = false;
             AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
             animator.stopAnimation();

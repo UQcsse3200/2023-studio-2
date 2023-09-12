@@ -33,36 +33,42 @@ import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * A screen that represents a single planet of the game with its corresponding game area/s.
+ * Determines which game area to generate and the next planet in the chain.
+ */
 public class PlanetScreen extends ScreenAdapter {
-
     private static final Logger logger = LoggerFactory.getLogger(PlanetScreen.class);
-
     private final GdxGame game;
 
     private final String name;
     private String nextPlanetName;
 
     private final Entity player;
-
     private EarthGameArea gameArea; //TODO: Extend with new MapArea
 
+    /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
+    /** Service Instances */
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
 
     private ItemBox itemBox;
     Entity currentExtractor = null;
 
+    /** file paths of textures for screen to load. */
     private static final String[] planetTextures = {"images/heart.png",
             "images/structure-icons/wall.png",
             "images/structure-icons/turret.png"
     };
 
-    private static final String[] planetAtlases = {
-            "images/player.atlas"
-    };
-
+    /**
+     * Construct the PlanetScreen instance for the planet of given name.
+     *
+     * @param game  The current game instance to display screen on.
+     * @param name  The name of the planet to create a screen for.
+     */
     public PlanetScreen(GdxGame game, String name) {
         this.game = game;
         this.name = name;
@@ -80,10 +86,18 @@ public class PlanetScreen extends ScreenAdapter {
         this.player = this.gameArea.getPlayer();
     }
 
+    /**
+     * Get the next planet in the sequence after the current planet.
+     *
+     * @return  The PlanetScreen instance for the next planet.
+     */
     public PlanetScreen getNextPlanet() {
         return new PlanetScreen(this.game, this.nextPlanetName);
     }
 
+    /**
+     * Set the corresponding planets game area based on its name.
+     */
     private void setGameArea() {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
@@ -99,6 +113,9 @@ public class PlanetScreen extends ScreenAdapter {
         }
     }
 
+    /**
+     * Register all the required screen services.
+     */
     private void registerServices() {
         logger.debug(String.format("Initialising %s screen services", this.name));
         ServiceLocator.registerTimeSource(new GameTime());
@@ -121,6 +138,9 @@ public class PlanetScreen extends ScreenAdapter {
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
     }
 
+    /**
+     * Create the extractor item box.
+     */
     private void createItemBox() {
         itemBox = new ItemBox(gameArea.getExtractorIcon(), renderer);
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -189,14 +209,19 @@ public class PlanetScreen extends ScreenAdapter {
         ServiceLocator.clear();
     }
 
+    /**
+     * Load in all the assests for the screen.
+     */
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(planetTextures);
-        resourceService.loadTextureAtlases(planetAtlases);
         ServiceLocator.getResourceService().loadAll();
     }
 
+    /**
+     * Unload all the screen assets.
+     */
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -226,6 +251,9 @@ public class PlanetScreen extends ScreenAdapter {
 
     }
 
+    /**
+     * Move the camera to follow the player around at screen centre.
+     */
     private void followPlayer() {
         // Calculate half of the camera's viewport dimensions
         float halfViewportWidth = renderer.getCamera().getCamera().viewportWidth * 0.5f;

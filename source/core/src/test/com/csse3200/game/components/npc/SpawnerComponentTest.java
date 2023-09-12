@@ -24,6 +24,7 @@ public class SpawnerComponentTest {
         MockitoAnnotations.initMocks(this);
     }
 
+
     @Test
     public void testSpawnEnemies() {
         // Create a SpawnerComponent with mock dependencies
@@ -74,6 +75,9 @@ public class SpawnerComponentTest {
         assertEquals(0, spawner.getRangedEnemiesToSpawn());
         assertEquals(0, spawner.getEnemiesSpawned());
 
-        // You can add more test cases here to cover different scenarios
     }
 }
+
+       
+
+

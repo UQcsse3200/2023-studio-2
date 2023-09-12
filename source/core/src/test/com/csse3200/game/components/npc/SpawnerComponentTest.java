@@ -1,3 +1,7 @@
+/**
+ * The SpawnerComponentTest class is responsible for testing the functionality
+ * of the SpawnerComponent class.
+ */
 package com.csse3200.game.components.npc;
 
 import com.csse3200.game.components.npc.SpawnerComponent;
@@ -9,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -19,65 +24,68 @@ public class SpawnerComponentTest {
     @Mock
     private GameTime gameTime;
 
+    /**
+     * Sets up the dependencies and initializes the mock objects
+     * before each test case.
+     */
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
-
+    /**
+     * Tests the spawnEnemies() method of the SpawnerComponent class.
+     */
     @Test
     public void testSpawnEnemies() {
-        // Create a SpawnerComponent with mock dependencies
+        // Prepare
         ArrayList<Entity> targets = new ArrayList<>();
         SpawnerComponent spawner = new SpawnerComponent(targets);
-
-        // Define test values
         int meleeCount = 5;
         int rangedCount = 3;
 
-        // Mock behavior for gameTime
+        // Set up mock behavior
         when(gameTime.getTime()).thenReturn(0L);
 
-        // Call the spawnEnemies method
+        // Perform the spawning
         spawner.spawnEnemies(meleeCount, rangedCount);
 
-        // Verify that the component state is updated correctly
-        assert spawner.isSpawning();
-        assert spawner.getEnemiesToSpawn() == meleeCount + rangedCount;
-        assert spawner.getMeleeEnemiesToSpawn() == meleeCount;
-        assert spawner.getRangedEnemiesToSpawn() == rangedCount;
-        assert spawner.getEnemiesSpawned() == 0;
+        // Assert the expected results
+        assertTrue(spawner.isSpawning());
+        assertEquals(meleeCount + rangedCount, spawner.getEnemiesToSpawn());
+        assertEquals(meleeCount, spawner.getMeleeEnemiesToSpawn());
+        assertEquals(rangedCount, spawner.getRangedEnemiesToSpawn());
+        assertEquals(0, spawner.getEnemiesSpawned());
     }
+
     @Mock
     private ArrayList<Entity> targets;
+
+    /**
+     * Tests the update() method of the SpawnerComponent class.
+     */
     @Test
     public void testUpdate() {
-        // Create a SpawnerComponent with mock dependencies
+        // Prepare
         SpawnerComponent spawner = new SpawnerComponent(targets);
-
-        // Set up the initial state for testing
         spawner.setSpawning(false);
         spawner.setEnemiesSpawned(0);
         spawner.setEnemiesToSpawn(0);
         spawner.setMeleeEnemiesToSpawn(0);
         spawner.setRangedEnemiesToSpawn(0);
-
         long currentTime = 0L;
+
+        // Set up mock behavior
         when(gameTime.getTime()).thenReturn(currentTime);
 
-        // Call the update method
+        // Perform the update
         spawner.update();
-
-        // Verify that the state has been updated correctly
+        
+        // Assert the expected results of the update method()
         assertFalse(spawner.isSpawning());
         assertEquals(0, spawner.getEnemiesToSpawn());
         assertEquals(0, spawner.getMeleeEnemiesToSpawn());
         assertEquals(0, spawner.getRangedEnemiesToSpawn());
         assertEquals(0, spawner.getEnemiesSpawned());
-
     }
 }
-
-       
-
-

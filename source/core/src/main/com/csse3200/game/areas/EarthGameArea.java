@@ -10,8 +10,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.badlogic.gdx.Gdx;
-import java.util.List;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.buildables.TurretType;
@@ -105,7 +103,9 @@ public class EarthGameArea extends GameArea {
             "images/player.png",
             "images/nebulite.png",
             "images/solstite.png",
-            "images/durasteel.png"
+            "images/durasteel.png",
+            "images/f_button.png",
+            "images/ExtractorAnimation.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -114,20 +114,21 @@ public class EarthGameArea extends GameArea {
             "images/base_enemy.atlas",
             "images/troll_enemy.atlas",
             "images/rangeEnemy.atlas",
-            "images/stone_wall.atlas",
-            "images/dirt_wall.atlas",
             "images/botanist.atlas",
             "images/boss_enemy.atlas",
             "images/botanist.atlas",
             "images/playerSS.atlas",
             "images/wrench.atlas",
             "images/baseballbat.atlas",
-            "images/open_gate.atlas",
-            "images/closed_gate.atlas",
+            "images/structures/closed_gate.atlas",
+            "images/structures/open_gate.atlas",
+            "images/structures/dirt_wall.atlas",
+            "images/structures/stone_wall.atlas",
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
-            "images/player.atlas"
+            "images/player.atlas",
+            "images/ExtractorAnimation.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
@@ -177,6 +178,7 @@ public class EarthGameArea extends GameArea {
         spawnBoss();
         spawnAsteroids();
         spawnBotanist();
+        spawnTurret();
 
         playMusic();
     }

@@ -1,5 +1,7 @@
 {
   "texturePaths": [
+    "images/f_button.png",
+    "images/refinedExtractor2.png",
     "images/SpaceMiniGameBackground.png",
     "images/extractor.png",
     "images/broken_extractor.png",
@@ -27,13 +29,21 @@
     "images/durastell.png",
     "images/nebulite.png",
     "images/uparrow.png",
-    "images/solsite.png",
+    "images/solstite.png",
     "images/resourcebar_background.png",
     "images/resourcebar_durasteel.png",
     "images/resourcebar_foreground.png",
     "images/resourcebar_nebulite.png",
     "images/resourcebar_solstite.png",
-    "images/resourcebar_lights.png"
+    "images/resourcebar_lights.png",
+    "images/upgradetree/background.png",
+    "images/upgradetree/exit.png",
+    "images/upgradetree/upgradebench.png",
+    "images/upgradetree/hammer1.png",
+    "images/upgradetree/hammer2.png",
+    "images/upgradetree/stick.png",
+    "images/upgradetree/exit.png",
+    "images/sling_shot.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -51,7 +61,8 @@
     "images/wrench.atlas",
     "images/open_gate.atlas",
     "images/closed_gate.atlas",
-    "images/botanist.atlas"
+    "images/botanist.atlas",
+    "images/sling_shot.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav"
@@ -84,12 +95,41 @@
         "baseAttack": 10,
         "speed": 5,
         "behaviour": "PTE",
-        "spritePath": "images/troll_enemy.atlas",
+        "spritePath": "images/base_enemy.atlas",
+        "position": {
+          "x": 40,
+          "y": 40
+        }
+      },
+      {
+        "health": 20,
+        "baseAttack": 10,
+        "speed": 5,
+        "behaviour": "PTE",
+        "spritePath": "images/base_enemy.atlas",
         "position": {
           "x": 20,
           "y": 20
         }
       }
-    ]
+    ],
+    "extractors": [
+      {
+        "resource": "Solstite",
+        "health": 200,
+        "tickRate": 1000,
+        "tickSize": 10,
+        "position": {
+          "x": 20,
+          "y": 30
+        }
+      }
+    ],
+    "upgradeBench": {
+      "position" : {
+        "x": 20,
+        "y": 40
+      }
+    }
   }
 }

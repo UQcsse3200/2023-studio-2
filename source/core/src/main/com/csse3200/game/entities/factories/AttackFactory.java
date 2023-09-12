@@ -5,30 +5,23 @@ package com.csse3200.game.entities.factories;
  *              Combat stats: damage, (Health = 1, Is immue = True, attack multiplier = 1)
  *              //Or use player combat stast
 */
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.Weapons.WeaponTargetComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.tasks.ChaseTask;
-import com.csse3200.game.components.tasks.WanderTask;
-import com.csse3200.game.entities.configs.*;
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.WeaponConfig;
+import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.PhysicsUtils;
-import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Class to create weapons when the player attacks

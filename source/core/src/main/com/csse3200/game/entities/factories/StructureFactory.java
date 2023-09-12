@@ -1,14 +1,18 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.ResourceCondition;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.ExtractorRepairPartComponent;
-import com.csse3200.game.components.InteractableComponent;
+import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.components.structures.ExtractorAnimationController;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.ExtractorConfig;
 import com.csse3200.game.entities.configs.ShipConfig;
@@ -22,18 +26,13 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.DamageTextureComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.ShipInteractionPopup;
-import com.csse3200.game.services.GameStateObserver;
-import com.csse3200.game.components.upgradetree.UpgradeDisplay;
-import com.csse3200.game.components.upgradetree.UpgradeTree;
 
 /**
  * Factory to create structure entities - such as extractors or ships.
@@ -47,6 +46,8 @@ public class StructureFactory {
             FileLoader.readClass(UpgradeBenchConfig.class, "configs/upgradeBench.json");
     public static final ShipConfig defaultShip =
             FileLoader.readClass(ShipConfig.class, "configs/ship.json");
+    public static final ExtractorConfig defaultExtractor =
+            FileLoader.readClass(ExtractorConfig.class, "configs/extractor.json");
 
     /**
      * Creates an extractor entity
@@ -56,18 +57,26 @@ public class StructureFactory {
      * @param config Configuration file to match extractor to
      * @return a new extractor Entity
      */
-    public static Entity createExtractor(ExtractorConfig config) {
-        Entity extractor = new Entity()
-                .addComponent(new DamageTextureComponent(config.spritePath)
-                        .addTexture(0, "images/broken_extractor.png")) //TODO: Fix this when new animations are implemented
+    public static PlaceableEntity createExtractor(ExtractorConfig config) {
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class));
+        animator.addAnimation("animateBroken", 0.2f,Animation.PlayMode.LOOP);
+        animator.addAnimation("animateExtracting", 0.2f, Animation.PlayMode.LOOP);
+
+        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
+                .addComponent(animator)
                 .addComponent(new CombatStatsComponent(config.health, 0, 0, false))
-                .addComponent(new ProductionComponent(config.resource, config.tickRate, config.tickSize));
+                .addComponent(new ProductionComponent(config.resource, config.tickRate, config.tickSize))
+                .addComponent(new ExtractorAnimationController());
 
-        //For testing start at 0 so you can repair
-        extractor.getComponent(CombatStatsComponent.class).setHealth(0);
+        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
+        extractor.addComponent(new DistanceCheckComponent(5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
+
         extractor.addComponent(new InteractableComponent(entity -> {
             CombatStatsComponent healthStats = extractor.getComponent(CombatStatsComponent.class);
 
@@ -82,6 +91,7 @@ public class StructureFactory {
         return extractor;
     }
 
+    //TODO: REMOVE - LEGACY
     /**
      * Creates an extractor entity
      *
@@ -94,29 +104,12 @@ public class StructureFactory {
      * @return a new extractor Entity
      */
     public static PlaceableEntity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
-        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity()
-                .addComponent(new DamageTextureComponent("images/refinedExtractor2.png")
-                        .addTexture(0, "images/refinedBrokenExtractor.png"))
-                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new CombatStatsComponent(health, 0, 0, false))
-                .addComponent(new ProductionComponent(producedResource, tickRate, tickSize));
-
-        //For testing start at 0 so you can repair
-        extractor.getComponent(CombatStatsComponent.class).setHealth(0);
-        extractor.addComponent(new InteractableComponent(entity -> {
-            CombatStatsComponent healthStats = extractor.getComponent(CombatStatsComponent.class);
-
-            if (healthStats.isDead()) {
-                ExtractorMinigameWindow minigame = ExtractorMinigameWindow.MakeNewMinigame(extractor);
-                ServiceLocator.getRenderService().getStage().addActor(minigame);
-            }
-        }, 5f));
-        extractor.setScale(1.8f, 2f);
-        PhysicsUtils.setScaledCollider(extractor, 1f, 0.6f);
-
-        return extractor;
+        ExtractorConfig extractorConfig = new ExtractorConfig();
+        extractorConfig.health = health;
+        extractorConfig.resource = producedResource;
+        extractorConfig.tickRate = tickRate;
+        extractorConfig.tickSize = tickSize;
+        return createExtractor(extractorConfig);
     }
 
     public static Entity createExtractorRepairPart() {
@@ -165,13 +158,21 @@ public class StructureFactory {
                         .addComponent(new InteractableComponent(entity -> {
                             if (checkWinCondition(requirements)) {
                                 game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
+                            } else {
+                                ShipInteractionPopup shipPopup = new ShipInteractionPopup();
+                                ServiceLocator.getRenderService().getStage().addActor(shipPopup);
                             }
                         }, 5));
 
         ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();
-        ship.setScale(4f, 4.5f);
+        ship.setScale(5f, 4.5f);
         PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
+
+        InteractLabel interactLabel = new InteractLabel(); //code for interaction prompt
+        ship.addComponent(new DistanceCheckComponent(5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
+
         return ship;
 
     }
@@ -194,6 +195,10 @@ public class StructureFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new TextureRenderComponent(config.spritePath))
                 .addComponent(new UpgradeTree());
+
+        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
+        upgradeBench.addComponent(new DistanceCheckComponent(0.5f, interactLabel));
+        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
 
         upgradeBench.addComponent(new InteractableComponent(entity -> {
             UpgradeDisplay minigame = UpgradeDisplay.createUpgradeDisplay(upgradeBench);

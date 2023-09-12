@@ -7,4 +7,8 @@ public class ExtractorConfig extends BaseEntityConfig {
     public int health;
     public long tickRate;
     public int tickSize;
+
+    public ExtractorConfig() {
+        spritePath = "images/ExtractorAnimation.atlas";
+    }
 }

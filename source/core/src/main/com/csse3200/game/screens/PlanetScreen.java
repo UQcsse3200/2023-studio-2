@@ -57,9 +57,17 @@ public class PlanetScreen extends ScreenAdapter {
     private PhysicsEngine physicsEngine;
 
     /** file paths of textures for screen to load. */
-    private static final String[] planetTextures = {"images/heart.png",
+    private static final String[] planetTextures = {
+            "images/heart.png",
             "images/structure-icons/wall.png",
-            "images/structure-icons/turret.png"
+            "images/structure-icons/stone_wall.png",
+            "images/structure-icons/turret.png",
+            "images/structures/closed_gate.png",
+            "images/structures/open_gate.png",
+            "images/structures/dirt_wall.png",
+            "images/structures/stone_wall.png",
+            "images/structures/TurretOne.png",
+            "images/structures/TurretTwo.png"
     };
 
     /**
@@ -106,13 +114,13 @@ public class PlanetScreen extends ScreenAdapter {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
         if ("Earth".equals(name)) {
-            this.gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
+            this.gameArea = new EarthGameArea(terrainFactory, game);
             this.nextPlanetName = "Not Earth"; //TODO: Extend
             // Only on game area, needs to be extended to go to other areas
         } else {
             // TODO: Extend
             // Only one planet game area atm, needs to be extended for further planets
-            this.gameArea = new EarthGameArea(terrainFactory, game);
+            this.gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
             this.nextPlanetName = "Earth";
         }
     }

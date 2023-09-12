@@ -8,7 +8,6 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.GameStateObserver;
 
 public class ProductionComponent extends Component {
 

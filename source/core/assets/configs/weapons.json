@@ -42,7 +42,7 @@
     "attackCooldown": 10,
     "spritePath": "images/upgradetree/stick.png",
     "imageScale" : 1,
-    "imagePath" : "images/upgradetree/stick.png"
+    "type": "STICK"
   },
 
   "KATANA": {

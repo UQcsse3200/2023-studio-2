@@ -4,8 +4,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
 
-import java.util.Map;
-
 public abstract class Tool {
     final ObjectMap<String, Integer> cost;
 

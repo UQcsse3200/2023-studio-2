@@ -108,7 +108,6 @@ public class GdxGame extends Game {
 
   public enum ScreenType {
     MAIN_MENU, MAIN_GAME, SETTINGS, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME, GAME_STORY, PLAYER_DEATH, UPGRADE_SHOP, NAVIGATION_SCREEN, ENDGAME, INITIAL_SCREEN
-
   }
   /**
    * Exit the game.

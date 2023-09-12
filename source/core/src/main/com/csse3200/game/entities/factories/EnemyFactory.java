@@ -43,6 +43,7 @@ public class EnemyFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
   public static DialogueBox dialogueBox;
+  public static ArrayList<Entity> enemies = new ArrayList<>();
 
   /**
    * Creates a melee enemy entity.
@@ -220,5 +221,9 @@ public class EnemyFactory {
    */
   private EnemyFactory() {
     throw new IllegalStateException("Instantiating static util class");
+  }
+
+  public static ArrayList<Entity> getEnemies() {
+    return enemies;
   }
 }

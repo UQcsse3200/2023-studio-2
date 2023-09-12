@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ServiceLocator;
 
-import java.io.Serial;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,5 +54,14 @@ public class PopupComponent extends Component {
 
         this.entity.setPosition(this.entity.getPosition().x, (float) (this.entity.getPosition().y + since * speed));
         this.entity.getComponent(TextureRenderComponent.class).setAlpha(1.0F - (float) (lifespan / duration));
+    }
+
+    /**
+     * Overrides the generated timer, in case you want to prolong the life, pause the popup, etc
+     * (useful for testing)
+     * @param gameTime the new gameTime
+     */
+    public void setTimer(GameTime gameTime) {
+        this.timer = gameTime;
     }
 }

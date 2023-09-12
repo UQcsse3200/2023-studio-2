@@ -1,4 +1,4 @@
-package com.csse3200.game.components.structures;
+package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -16,7 +16,7 @@ public class Healing extends Tool {
     }
 
     @Override
-    public void interact(Entity player, GridPoint2 position) {
+    public boolean interact(Entity player, GridPoint2 position) {
         // For checking whether the player has clicked on an entity
         Entity clickedEntity = determineSelectedEntity(position);
 
@@ -26,9 +26,12 @@ public class Healing extends Tool {
 
             if (combatStats != null) {
                 // For setting the health of the clicked entity to 100
-                combatStats.setHealth(100);
+                combatStats.setHealth(combatStats.getMaxHealth());
+                return true;
+
             }
         }
+        return false;
     }
 
     private Entity determineSelectedEntity(GridPoint2 position) {

@@ -1,5 +1,6 @@
 package com.csse3200.game.components.tasks;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.ai.tasks.DefaultTask;
@@ -30,8 +31,8 @@ public class AimTask extends DefaultTask implements PriorityTask {
    * creates an aim task.
    *
    * @param waitTime How long in seconds to wait between firing a projectile.
-   * @param target The target for
-   * @param range The range before entity stops chasing and starts shooting.
+   * @param target   The target for
+   * @param range    The range before entity stops chasing and starts shooting.
    */
   public AimTask(float waitTime, Entity target, float range) {
     this.waitTime = waitTime;
@@ -146,4 +147,5 @@ public class AimTask extends DefaultTask implements PriorityTask {
     currentTask.start();
   }
 }
+
 

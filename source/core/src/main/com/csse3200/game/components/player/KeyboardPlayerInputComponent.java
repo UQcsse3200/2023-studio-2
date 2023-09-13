@@ -88,8 +88,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyDown(int keycode) {
     keyFlags.put(keycode, 1);
-
-
+    System.out.println(keycode);
+    InventoryComponent inv = entity.getComponent(InventoryComponent.class);
     switch (keycode) {
       case Keys.SPACE:
         if (!dodge_available ||
@@ -132,9 +132,29 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W, Keys.S, Keys.A, Keys.D:
         triggerWalkEvent();
         return true;
+      case Keys.NUMPAD_0:
+        inv.changeEquipped(WeaponType.MELEE_WRENCH);
+        break;
+      case Keys.NUMPAD_1:
+        inv.changeEquipped(WeaponType.MELEE_KATANA);
+        break;
+      case Keys.NUMPAD_2:
+        inv.changeEquipped(WeaponType.MELEE_BEE_STING);
+        break;
+      case Keys.NUMPAD_3:
+        inv.changeEquipped(WeaponType.RANGED_SLINGSHOT);
+        break;
+      case Keys.NUMPAD_4:
+        inv.changeEquipped(WeaponType.RANGED_BOOMERANG);
+        break;
+      case Keys.NUMPAD_5:
+        inv.changeEquipped(WeaponType.RANGED_HOMING);
+        break;
       default:
         return false;
     }
+    entity.getEvents().trigger("changeWeapon", inv.getEquippedType());
+    return true;
   }
 
   /**
@@ -158,7 +178,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   /**
    * TODO this is barely works
    * Function to repond to player mouse press
-   *
    * @param screenX - X position on screen that mouse was pressed
    * @param screenY - Y position on screen that mouse was pressed
    * @param pointer -
@@ -167,29 +186,27 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    Vector2 position = mouseToGamePos(screenX, screenY);
-    this.lastMousePos = position.cpy();
-    PlayerActions playerActions = entity.getComponent(PlayerActions.class);
-    int cooldown = playerActions.getAttackCooldown();
+    Vector2 clickPosition = mouseToGamePos(screenX, screenY);
+    this.lastMousePos = clickPosition.cpy();
 
-    if (cooldown != 0) {
-      return false;
-    }
-
-    double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
+    WeaponComponent weaponComponent = entity.getComponent(WeaponComponent.class);
+    int cooldown = weaponComponent.getAttackCooldown();
+    if (cooldown != 0) {return false;}
 
     switch (equippedItem) {
-      // melee
-      case 1:
+      // melee/Ranged
+      case 1, 2:
         if (button == Input.Buttons.LEFT) {
-          entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.ELEC_WRENCH, (float) initRot);
-        }
-        break;
+          InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+          WeaponType weapon = invComp.getEquippedType();
 
-      // ranged
-      case 2:
-        if (button == Input.Buttons.LEFT) {
-          entity.getEvents().trigger("weaponAttack", entity.getPosition(), WeaponType.THROW_ELEC_WRENCH, (float) initRot);
+          if (weapon == WeaponType.MELEE_BEE_STING) {
+            for (int i = 0; i < 8; i++) {
+              entity.getEvents().trigger("weaponAttack", weapon, clickPosition);
+            }
+          } else {
+            entity.getEvents().trigger("weaponAttack", weapon, clickPosition);
+          }
         }
         break;
 
@@ -294,7 +311,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   private void triggerInventoryEvent(int i) {
     entity.getEvents().trigger("inventory", i);
-    this.equippedItem = entity.getComponent(InventoryComponent.class).getEquipped();
+    InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+    this.equippedItem = invComp.getEquipped();
+    entity.getEvents().trigger("changeWeapon", invComp.getEquippedType());
   }
 
   /**
@@ -314,26 +333,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       }
     };
     timer.schedule(makeDodgeAvailable, DODGE_COOLDOWN);
-  }
-
-  /**
-   * Calcuate angle between 2 points from the center point to the target point,
-   * angle is
-   * in degrees with 0degrees being in the direction of the positive x-axis going
-   * counter clockwise
-   * up to 359.9... until wrapping back around
-   * 
-   * @param centerPt - point from where angle is calculated from
-   * @param targetPt - Tart point to where angle is calculated to
-   * @return return angle between points in degrees from the positive x-axis
-   */
-  // https://stackoverflow.com/questions/9970281/java-calculating-the-angle-between-two-points-in-degrees
-  private double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt) {
-    double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
-    if (angle < 0) {
-      angle += 360;
-    }
-    return angle;
   }
 
   private boolean is_pressed(int keycode) {

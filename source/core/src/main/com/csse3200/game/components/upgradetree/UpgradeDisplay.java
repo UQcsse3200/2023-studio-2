@@ -106,21 +106,21 @@ public class UpgradeDisplay extends Window {
      */
     private void buildTrees() {
         WeaponConfig stickConfig = weaponConfigs.GetWeaponConfig(WeaponType.STICK);
-        WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.KATANA);
-        WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.SLING_SHOT);
-        WeaponConfig rangedWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.THROW_ELEC_WRENCH);
+        WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA);
+        WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_SLINGSHOT);
+        WeaponConfig rangedWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_HOMING);
         WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
         WeaponConfig stonehammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.STONEHAMMER);
 
         // Melee Tree
         meleeRoot = new UpgradeNode(stickConfig, WeaponType.STICK);
-        UpgradeNode swordNode = new UpgradeNode(katanaConfig, WeaponType.KATANA);
+        UpgradeNode swordNode = new UpgradeNode(katanaConfig, WeaponType.MELEE_KATANA);
         meleeRoot.addChild(swordNode);
         trees.add(meleeRoot);
 
         // Ranged Tree
-        rangedRoot = new UpgradeNode(slingshotConfig, WeaponType.SLING_SHOT);
-        UpgradeNode wrenchNode2 = new UpgradeNode(rangedWrenchConfig, WeaponType.THROW_ELEC_WRENCH);
+        rangedRoot = new UpgradeNode(slingshotConfig, WeaponType.RANGED_SLINGSHOT);
+        UpgradeNode wrenchNode2 = new UpgradeNode(rangedWrenchConfig, WeaponType.RANGED_BOOMERANG);
         rangedRoot.addChild(wrenchNode2);
         trees.add(rangedRoot);
 

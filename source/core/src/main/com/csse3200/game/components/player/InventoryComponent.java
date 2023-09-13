@@ -19,8 +19,8 @@ public class InventoryComponent extends Component {
   private HashMap<Integer, WeaponType> equippedWMap = new HashMap<Integer, WeaponType>();
 
   public void create() {
-    equippedWMap.put(1, WeaponType.ELEC_WRENCH);
-    equippedWMap.put(2, WeaponType.SLING_SHOT);
+    equippedWMap.put(1, WeaponType.MELEE_BEE_STING);
+    equippedWMap.put(2, WeaponType.RANGED_BOOMERANG);
     equippedWMap.put(3, WeaponType.WOODHAMMER);
   }
 
@@ -64,6 +64,7 @@ public class InventoryComponent extends Component {
    * @param weaponType - Type of the new weapon
    */
   public void changeEquipped(WeaponType weaponType) {
+    System.out.println(weaponType);
     WeaponType equippedType = getEquippedType();
     this.equippedWMap.remove(equippedType);
     this.equippedWMap.put(getEquipped(), weaponType);

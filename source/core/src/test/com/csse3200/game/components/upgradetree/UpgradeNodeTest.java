@@ -33,7 +33,7 @@ public class UpgradeNodeTest {
         WeaponConfig katanaConfig = mock(WeaponConfig.class);
         when(weaponConfigs.GetWeaponConfig(WeaponType.KATANA)).thenReturn(katanaConfig);
         WeaponConfig elecWrenchConfig = mock(WeaponConfig.class);
-        when(weaponConfigs.GetWeaponConfig(WeaponType.ELEC_WRENCH)).thenReturn(elecWrenchConfig);
+        when(weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH)).thenReturn(elecWrenchConfig);
 
         node = new UpgradeNode(stickConfig, WeaponType.STICK);
     }

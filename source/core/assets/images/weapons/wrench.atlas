@@ -1,12 +1,19 @@
 wrench.png
-size: 1500, 860
+size: 512, 512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-attack
+UP
   rotate: false
   xy: 0, 0
   size: 512, 512
-  orig: 256, 256
+  orig: 512, 512
+  offset: 0, 0
+  index: 0
+STATIC
+  rotate: false
+  xy: 0, 0
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: 0

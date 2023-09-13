@@ -34,7 +34,7 @@ public class ShipInteractionPopup extends Window {
         setPosition(stage.getWidth() / 2 - popupWidth / 2, stage.getHeight() / 2 - popupHeight / 2);
         setSize(popupWidth, popupHeight); //setting the popup size at once using width and height variables
 
-        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
 
         Label titleLabel = new Label("ship", labelStyle);

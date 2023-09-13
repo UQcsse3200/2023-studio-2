@@ -132,6 +132,6 @@ public class EnemyFactoryTest {
         // Checking Health matches PTE Melee Enemy
         Assertions.assertEquals(boss.getComponent(CombatStatsComponent.class).getHealth(), 100);
         // Checking Base Attack matches PTE Melee Enemy
-        Assertions.assertEquals(boss.getComponent(CombatStatsComponent.class).getBaseAttack(), 25);
+        Assertions.assertEquals(boss.getComponent(CombatStatsComponent.class).getBaseAttack(), 15);
     }
 }

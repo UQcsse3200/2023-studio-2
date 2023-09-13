@@ -6,4 +6,7 @@ public class ShipConfig extends BaseEntityConfig {
     public int acceleration = 1;
 
 
+
+    //public ShipConfig() {this.spritePath = "images/LeftShip.png";}
+
 }

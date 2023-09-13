@@ -74,7 +74,7 @@ public class ExtractorMinigameWindow extends Window {
         // put extractors grid
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                Image extractorImage = new Image(new Texture(Gdx.files.internal("images/elixir_collector.png")));
+                Image extractorImage = new Image(new Texture(Gdx.files.internal("images/extractor.png")));
                 float x = col * cellSize;
                 float y = row * cellSize;
                 extractorImage.setPosition(x, y);

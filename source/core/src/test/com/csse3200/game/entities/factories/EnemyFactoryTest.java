@@ -59,7 +59,7 @@ public class EnemyFactoryTest {
         Entity newPlayer = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
         targetList.add(newPlayer);
         // List should contain one empty Entity
-        Entity enemy = createEnemy(targetList, EnemyType.Melee, EnemyBehaviour.PTE);
+        Entity enemy = createEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
 
         // Checking Health matches PTE Melee Enemy
         Assertions.assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 20);
@@ -83,7 +83,7 @@ public class EnemyFactoryTest {
         Entity structure = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
         targetList.add(structure);
         // List should contain one empty Entity
-        Entity enemy = createEnemy(targetList, EnemyType.Melee, EnemyBehaviour.DTE);
+        Entity enemy = createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
         // Checking Health matches PTE Melee Enemy
         Assertions.assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 50);
         // Checking Base Attack matches PTE Melee Enemy
@@ -106,7 +106,7 @@ public class EnemyFactoryTest {
         Entity structure = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
         targetList.add(structure);
         // List should contain one empty Entity
-        Entity enemy = createEnemy(targetList, EnemyType.Ranged, EnemyBehaviour.PTE);
+        Entity enemy = createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
         // Checking Health matches PTE Melee Enemy
         Assertions.assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 40);
         // Checking Base Attack matches PTE Melee Enemy
@@ -128,7 +128,7 @@ public class EnemyFactoryTest {
         Entity structure = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
         targetList.add(structure);
         // List should contain one empty Entity
-        Entity boss = createEnemy(targetList, EnemyType.BossMelee, EnemyBehaviour.PTE);
+        Entity boss = createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
         // Checking Health matches PTE Melee Enemy
         Assertions.assertEquals(boss.getComponent(CombatStatsComponent.class).getHealth(), 100);
         // Checking Base Attack matches PTE Melee Enemy

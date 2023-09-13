@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
-import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
@@ -16,15 +15,11 @@ import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
-import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
-import com.csse3200.game.input.InputFactory;
 import com.csse3200.game.input.InputService;
-import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TerrainService;
@@ -37,7 +32,7 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ExtractorMiniGameScreen.class);
 
     private static final String[] textures =
-            {"images/fire.png", "images/Hole.png", "images/elixir_collector.png", "images/spanner.png",
+            {"images/fire.png", "images/Hole.png", "images/extractor.png", "images/spanner.png",
                     "images/extinguisher.png", "images/extinguisherCursor.png", "images/spannerCursor.png",
                     "images/bang.png"};
 
@@ -49,14 +44,6 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
 
     public ExtractorMiniGameScreen(GdxGame game) {
         this.game = game;
-
-        logger.debug("Initialising extractor minigame screen services");
-
-        ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
-
-        ServiceLocator.registerEntityService(new EntityService());
-        ServiceLocator.registerRenderService(new RenderService());
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);

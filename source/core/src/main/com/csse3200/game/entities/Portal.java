@@ -1,6 +1,5 @@
 package com.csse3200.game.entities;
 
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.ProximityActivationComponent;
 
 public class Portal extends Entity {
@@ -23,9 +22,9 @@ public class Portal extends Entity {
         player.setPosition(x, y);
     }
 
+    @Override
     public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }
-
 }

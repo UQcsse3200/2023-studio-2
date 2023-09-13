@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.List;
 
 import static com.csse3200.game.entities.factories.EnvironmentFactory.createEnvironment;
 
@@ -46,8 +47,7 @@ public class EarthGameArea extends GameArea {
     private static final GridPoint2 PORTAL_TWO = new GridPoint2(78, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
-
-    private static final float PORTAL_SIZE = 1.0f;
+    private List<Entity> spawnedTreeTopEntities = new ArrayList<>();
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
             "images/extractor.png",
@@ -139,7 +139,9 @@ public class EarthGameArea extends GameArea {
         spawnPlayer();
 
         spawnEnemies();
+        spawnSecretEnemies();
         spawnBoss();
+        spawnSecretBoss();
         spawnAsteroids();
         spawnTreeTopLayer();
         spawnBotanist();
@@ -156,7 +158,7 @@ public class EarthGameArea extends GameArea {
      */
     private void spawnPortal(GridPoint2 position, float x, float y) {
         StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
-        Entity portal = PortalFactory.createPortal(PORTAL_SIZE, PORTAL_SIZE, x, y, player);
+        Entity portal = PortalFactory.createPortal(x, y, player);
         placementService.PlaceStructureAt(portal, position, false, false);
     }
 
@@ -177,6 +179,12 @@ public class EarthGameArea extends GameArea {
         GridPoint2 spawnTreeTop = new GridPoint2(0, 30);
         Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
         spawnEntityAt(treeTop, spawnTreeTop, false, false);
+
+        // Add the spawned tree top entity to the list
+        spawnedTreeTopEntities.add(treeTop);
+    }
+    public List<Entity> getSpawnedTreeTopEntities() {
+        return spawnedTreeTopEntities;
     }
 
 
@@ -359,6 +367,49 @@ public class EarthGameArea extends GameArea {
             spawnEntityAt(ranged, randomPos, true, true);
             //ranged.addComponent(new DialogComponent(dialogueBox));
         }
+    }
+
+    private void spawnSecretEnemies() {
+        GridPoint2 minPos = new GridPoint2(71, 1);
+        GridPoint2 maxPos = new GridPoint2(89, 19);
+
+
+        for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+            spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
+        }
+
+        for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+            spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
+        }
+
+        for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
+            spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
+        }
+
+        for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+            spawnEntityAt(ranged, randomPos, true, true);
+            //ranged.addComponent(new DialogComponent(dialogueBox));
+        }
+    }
+
+    private void spawnSecretBoss() {
+        GridPoint2 minPos = new GridPoint2(71, 1);
+        GridPoint2 maxPos = new GridPoint2(89, 19);
+
+        GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+        Entity boss = EnemyFactory.createBoss(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
+        spawnEntityAt(boss, randomPos, true, true);
     }
 
     /**

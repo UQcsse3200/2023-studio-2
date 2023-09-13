@@ -39,6 +39,7 @@ import java.util.ArrayList;
  * <p>If needed, this factory can be separated into more specific factories for entities with
  * similar characteristics.
  */
+
 public class EnemyFactory {
   private static final EnemyConfigs configs =
       FileLoader.readClass(EnemyConfigs.class, "configs/enemy.json");

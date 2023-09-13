@@ -84,7 +84,7 @@ public class SpawnerComponent extends Component {
         setRangedEnemiesToSpawn(rangedCount);
     }
 
-    private void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {
+    public void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {
         Vector2 worldPos = entity.getCenterPosition();
         Entity enemy = EnemyFactory.createEnemy(targets, enemyType, behaviour);
         ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);

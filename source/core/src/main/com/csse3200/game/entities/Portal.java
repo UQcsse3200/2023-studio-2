@@ -1,5 +1,4 @@
 package com.csse3200.game.entities;
-
 import com.csse3200.game.components.ProximityActivationComponent;
 
 public class Portal extends Entity {
@@ -14,9 +13,9 @@ public class Portal extends Entity {
     }
 
     /**
-     * Changes the texture to resemble a closed gate and enables the collision.
+     * Teleports the player to a fixed destination
      *
-     * @param player - the player who opened the gate
+     * @param player - the player entering the portal
      */
     public void teleport(Entity player) {
         player.setPosition(x, y);

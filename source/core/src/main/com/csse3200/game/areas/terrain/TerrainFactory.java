@@ -52,15 +52,15 @@ public class TerrainFactory {
    *
    * @return Terrain component which renders the terrain
    */
-  public TerrainComponent createTerrain() {
+  public TerrainComponent createTerrain(String mapPath) {
     TmxMapLoader mapLoader = new TmxMapLoader();
     TiledMap tiledMap = null;
     try {
-      tiledMap = mapLoader.load(Gdx.files.internal("source/core/assets/map/base.tmx").file().getAbsolutePath());
+      tiledMap = mapLoader.load(Gdx.files.internal("source/core/assets/" + mapPath).file().getAbsolutePath());
     } catch (Exception e) {
 
       try {
-        tiledMap = mapLoader.load(Gdx.files.internal("map/base.tmx").file().getAbsolutePath());
+        tiledMap = mapLoader.load(Gdx.files.internal(mapPath).file().getAbsolutePath());
       } catch (Exception ex) {
         // Handle the exception (e.g., print an error message)
         System.err.println("Error loading TiledMap: " + ex.getMessage());

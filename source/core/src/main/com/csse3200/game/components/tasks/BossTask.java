@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class BossTask extends DefaultTask implements PriorityTask {
 
-  private final int priority = 5;
+  private final int priority = 7;
   private static final Logger logger = LoggerFactory.getLogger(AimTask.class);
   private final float waitTime;
   private WaitTask waitTask;
@@ -78,9 +78,12 @@ public class BossTask extends DefaultTask implements PriorityTask {
 
     if (currentTask.getStatus() != Status.ACTIVE) {
       if (currentTask == waitTask) {
-        if (attackReady && !unleashed) {
-          attackReady = false;
-          unleashed = true;
+//        if (attackReady && !unleashed) {
+//          attackReady = false;
+//          unleashed = true;
+//          startSpecialAttack();
+//        }
+        if (attackReady) {
           startSpecialAttack();
         }
       } else {

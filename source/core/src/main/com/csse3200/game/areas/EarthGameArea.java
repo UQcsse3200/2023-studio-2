@@ -17,6 +17,7 @@ import java.util.List;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.components.tasks.BossTask;
 import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.components.resources.ResourceDisplay;

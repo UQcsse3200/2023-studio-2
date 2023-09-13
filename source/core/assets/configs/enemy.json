@@ -34,7 +34,7 @@
 
   "meleeBossPTE": {
     "health": 100,
-    "baseAttack": 25,
+    "baseAttack": 15,
     "speed": 10,
     "specialAttack": 40,
     "atlas": "images/enemy/Night.atlas"

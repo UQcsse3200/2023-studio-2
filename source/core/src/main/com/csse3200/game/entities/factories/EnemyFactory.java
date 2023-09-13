@@ -121,7 +121,8 @@ public class EnemyFactory {
     else if (type == EnemyType.Ranged) {
       scale = 2.0f;
     }
-    enemy.scaleHeight(scale);
+//    enemy.scaleHeight(scale);
+
     return enemy;
   }
 
@@ -205,18 +206,17 @@ public class EnemyFactory {
 
     // M.E.C.H
     if (type == EnemyType.BossMelee) {
-      // Special Attack Component
-      aiTaskComponent.addTask(new BossTask(2f, 10f, target));
       // Player Targeting
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
-          aiTaskComponent.addTask(new ChaseTask(target, 5, 5f, 5f));
+          // Special Attack Component
+          aiTaskComponent.addTask(new ChaseTask(target, 7, 10f, 1000f));
         }
         else if
         (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {
           aiTaskComponent.addTask(new ChaseTask(target, 10, 5f, 5f));
         } else {
-          aiTaskComponent.addTask(new ChaseTask(target, 0, 3f, 4f));
+          aiTaskComponent.addTask(new ChaseTask(target, 4, 3f, 4f));
         }
       }
 

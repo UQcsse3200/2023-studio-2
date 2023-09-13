@@ -53,7 +53,7 @@ private static boolean alive = true;
   private static final String[] mainGameTextures = {"images/heart.png",
           "images/structure-icons/wall.png",
           "images/structure-icons/turret.png",
-          "images/structure-icons/heal.png"}; //TODO: Refactor this to be dynamic? Like game area
+          "images/structure-icons/wall.png"}; //TODO: Refactor this to be dynamic? Like game area
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;

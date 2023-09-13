@@ -85,7 +85,7 @@ public class UpgradeDisplay extends Window {
 
         setupWindowDimensions();
 
-        Label materialsLabel = createMaterialsLabel();
+        materialsLabel = createMaterialsLabel();
         Button exitButton = createExitButton();
         Group group = createUpgradeButtons();
 
@@ -408,7 +408,7 @@ public class UpgradeDisplay extends Window {
         stats.subtractMaterials(node.getNodeCost());
         stats.unlockWeapon(node.getWeaponType());
         weaponButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
-        materialsLabel.setText(String.format("Materials: %d", stats.getMaterials())); // todo: make dynamic
+        materialsLabel.setText(String.format(MATERIALS_FORMAT, stats.getMaterials())); // todo: make dynamic
 
         StructurePicker structurePicker = player.getComponent(StructurePicker.class);
         // Update the StructurePickers level
@@ -474,16 +474,5 @@ public class UpgradeDisplay extends Window {
         shapeRenderer.end();
 
         batch.begin();
-    }
-
-    /**
-     * Draws the UpgradeDisplay and its children.
-     *
-     * @param batch       The batch used for rendering.
-     * @param parentAlpha The parent alpha value, for transparency.
-     */
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
     }
 }

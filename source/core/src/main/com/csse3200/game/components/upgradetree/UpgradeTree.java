@@ -21,7 +21,7 @@ public class UpgradeTree extends Component {
      * Constructs a new UpgradeTree with default weapons unlocked.
      */
     public UpgradeTree() {
-        unlockedWeapons = new ArrayList<WeaponType>();
+        unlockedWeapons = new ArrayList<>();
 
         // Base weapons
         unlockedWeapons.add(WeaponType.WOODHAMMER);

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private int equipped = 1;
-  private HashMap<Integer, WeaponType> equippedWMap = new HashMap<Integer, WeaponType>();
+  private final HashMap<Integer, WeaponType> equippedWMap = new HashMap<Integer, WeaponType>();
 
   public void create() {
     equippedWMap.put(1, WeaponType.ELEC_WRENCH);

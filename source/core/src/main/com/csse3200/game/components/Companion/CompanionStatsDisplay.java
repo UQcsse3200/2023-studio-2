@@ -17,9 +17,11 @@ import com.badlogic.gdx.utils.Timer.Task;
  * A UI component for displaying Companion stats, e.g., health.
  */
 public class CompanionStatsDisplay extends UIComponent {
-    Table table;
+    Table companionStatisticsUI;
+
     private boolean update = false;
-    Table table2;
+    Table playerLowHealthAlert;
+
 
     /**
      * The player entity associated with this CompanionStatsDisplay.
@@ -27,10 +29,13 @@ public class CompanionStatsDisplay extends UIComponent {
     public Entity playerEntity;
 
     /**
-     * The UI label for displaying the companion's health.
+     * The UI playerLowHealthLabel for displaying the companion's health.
      */
-    public Label messageLabel;
-    public Label label;
+    public Label playerLowHealthLabel;
+
+    public Label companionHealthLabel; //this is the label for the companions health displayed
+
+    public Label companionUIHeaderLabel; // label for the header of the UI component.
 
     private boolean isInvincible = true;
     private boolean isInfiniteHealth = true;
@@ -64,21 +69,31 @@ public class CompanionStatsDisplay extends UIComponent {
     }
 
     /**
-     * Creates actors and positions them on the stage using a table.
+     * Creates actors and positions them on the stage using a companionStatisticsUI.
+     * This means that the UI components are initialised and their locations are set, as well as their starting values
      * See {@link Table} for positioning options.
      */
     private void addActors() {
-        table = new Table();
-        table.top().left();
-        table.setFillParent(true);
-        table.padTop(85f).padLeft(5f);
+        companionStatisticsUI = new Table();
+        companionStatisticsUI.top().right();
+        companionStatisticsUI.setFillParent(true);
+        //placing the companionStatisticsUI/UI on a certain portion of the screen!
+        companionStatisticsUI.padTop(85f).padRight(5f);
 
-        // Health text
+        // ADD A COMPANION UI HEADER
+        CharSequence companionUIHeader = "Companion";
+        companionUIHeaderLabel = new Label(companionUIHeader, skin, "title");
+        companionStatisticsUI.add(companionUIHeaderLabel);
+        companionStatisticsUI.row();
+
+        companionStatisticsUI.padTop(100f).padRight(5f);
+
+        // ADD THE COMPANIONS HEALTH INFORMATION
         int companionHealth = entity.getComponent(CombatStatsComponent.class).getHealth();
-        CharSequence healthText = String.format("Companion Health: %d", companionHealth);
-        messageLabel = new Label(healthText, skin, "large");
-        table.add(messageLabel);
-        stage.addActor(table);
+        CharSequence companionHealthText = String.format("Health: %d", companionHealth);
+        companionHealthLabel = new Label(companionHealthText, skin, "large");
+        companionStatisticsUI.add(companionHealthLabel);
+        stage.addActor(companionStatisticsUI);
     }
 
     /**
@@ -140,17 +155,24 @@ public class CompanionStatsDisplay extends UIComponent {
      * @param health The current health value.
      */
     private void addAlert(int health) {
+        //FIND WHERE THE COMPANION IS
         PhysicsComponent companionPhysics = entity.getComponent(PhysicsComponent.class);
         Vector2 compPos = companionPhysics.getBody().getPosition();
-        table2 = new Table();
-        table2.top().left();
-        table2.setFillParent(true);
-        table2.setPosition(compPos.x + 550f, compPos.y - 200F);
+        playerLowHealthAlert = new Table();
+        playerLowHealthAlert.top().left();
+        playerLowHealthAlert.setFillParent(true);
+        //place the label where the companion is plus an offset
+        playerLowHealthAlert.setPosition(compPos.x + 550f, compPos.y - 200F);
 
-        CharSequence healthText2 = String.format("Low Health: %d", health);
-        label = new Label(healthText2, skin, "large");
-        table2.add(label);
-        stage.addActor(table2);
+        // plate up the low player health string
+        CharSequence playerLowHealthString = String.format("Player Low Health: %d", health);
+        playerLowHealthLabel = new Label(playerLowHealthString, skin, "large");
+
+
+        playerLowHealthAlert.add(playerLowHealthLabel);
+
+        //launch the table onto the screen
+        stage.addActor(playerLowHealthAlert);
     }
 
     @Override
@@ -171,11 +193,11 @@ public class CompanionStatsDisplay extends UIComponent {
         }
 
         if (update) {
-            // Schedule a task to remove the label after a delay (e.g., 3 seconds)
+            // Schedule a task to remove the playerLowHealthLabel after a delay (e.g., 3 seconds)
             Timer.schedule(new Task() {
                 @Override
                 public void run() {
-                    label.remove();
+                    playerLowHealthLabel.remove();
                     update = false;
                 }
             }, 3.0f);
@@ -189,13 +211,17 @@ public class CompanionStatsDisplay extends UIComponent {
      */
     public void updateCompanionHealthUI(int health) {
         CharSequence text = String.format("Companion Health: %d", health);
-        messageLabel.setText(text);
+        companionHealthLabel.setText(text);
     }
 
+    /**
+     * remove all labels form the screen when disposing
+     */
     @Override
     public void dispose() {
         super.dispose();
-        messageLabel.remove();
-        label.remove();
+        companionHealthLabel.remove();
+        playerLowHealthLabel.remove();
+        companionUIHeaderLabel.remove();
     }
 }

@@ -1,4 +1,4 @@
-package com.csse3200.game.ui.terminal;
+package com.csse3200.game.components.obstacleMinigame;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;

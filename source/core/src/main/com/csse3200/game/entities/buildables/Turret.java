@@ -17,6 +17,7 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import java.util.Objects;
 
@@ -28,6 +29,7 @@ public class Turret extends PlaceableEntity{
             FileLoader.readClass(TurretConfigs.class, "configs/turrets.json");
 
     TurretType type;
+    private int currentAmmo;
 
     int maxAmmo;
     int damage;
@@ -45,6 +47,7 @@ public class Turret extends PlaceableEntity{
         super();
 
         maxAmmo = turretConfig.maxAmmo;
+        currentAmmo = maxAmmo;
         damage = turretConfig.damage;
         var texture = ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, Texture.class);
 
@@ -57,6 +60,19 @@ public class Turret extends PlaceableEntity{
         addComponent(new FOVComponent(4f, this::startDamage, this::stopDamage));
         addComponent(new StructureDestroyComponent());
     }
+    public void refillAmmo() {
+        currentAmmo = maxAmmo;
+    }
+    public boolean Canfire() {
+        return  (currentAmmo > 0) ;
+    }
+    public void refillAmmo(int ammo) {
+        if (currentAmmo + ammo <= maxAmmo) {
+            currentAmmo += ammo;
+        } else {
+        }
+    }
+
 
     @Override
     public void update() {
@@ -84,7 +100,7 @@ public class Turret extends PlaceableEntity{
             healthBarComponent.setEnabled(false);
         }
 
-        if (focusCombatStatsComponent.getHealth() <= 0) {
+        if (focusCombatStatsComponent.getHealth() <= 0 || !Canfire()) {
             return;
         }
 
@@ -94,8 +110,23 @@ public class Turret extends PlaceableEntity{
             giveDamage(focus);
             this.start = System.currentTimeMillis();
             stopDamage(focus);
+
         }
     }
+    public void interactWithTurret(Entity player) {
+        int requiredAmmo = maxAmmo - currentAmmo;
+        var GamestateObserver = ServiceLocator.getGameStateObserverService();
+        int AvailableResources = (int)GamestateObserver.getStateData("resource/nebulite");
+        if (AvailableResources >= requiredAmmo) {
+            GamestateObserver.trigger("resourceAdd", "nebulite", -requiredAmmo);
+            refillAmmo(requiredAmmo);
+        } else {
+            // Handle insufficient resources (optional)
+        }
+    }
+
+
+
 
     public void stopDamage(Entity focus) {
 
@@ -108,6 +139,7 @@ public class Turret extends PlaceableEntity{
         if (focus.getComponent(CombatStatsComponent.class) != null) {
             focus.getComponent(CombatStatsComponent.class).setHealth(focus.getComponent(CombatStatsComponent.class).getHealth() - damage);
             rotateTurret(focus);
+            currentAmmo --;
         }
     }
 

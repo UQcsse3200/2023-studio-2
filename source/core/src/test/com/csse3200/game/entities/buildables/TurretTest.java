@@ -14,8 +14,8 @@ public class TurretTest {
     @Before
     public void setUp() {
         TurretConfig turretConfig = new TurretConfig();
-        turretConfig.setMaxAmmo(10); // Use setters if available
-        turretConfig.setDamage(5); // Use setters if available
+        turretConfig.setMaxAmmo(10);
+        turretConfig.setDamage(5);
         turret = new Turret(turretConfig);
     }
 
@@ -49,7 +49,7 @@ public class TurretTest {
 
 
         turret.refillAmmo(3);
-        assertEquals(10, turret.currentAmmo); // Should not exceed max ammo
+        assertEquals(10, turret.currentAmmo);
 
 
         turret.currentAmmo = 0;

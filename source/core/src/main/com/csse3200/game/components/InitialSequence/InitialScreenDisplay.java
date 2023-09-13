@@ -26,8 +26,8 @@ public class InitialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(InitialScreenDisplay.class);
     private final GdxGame game;
     private BitmapFont font;
-    private static float textAnimationDuration = 18;
-    private float spaceSpeed = 1;
+    private static float textAnimationDuration = 50;
+    private float spaceSpeed = 5;
     private float planetToTextPadding = 150;
     private Image background;
     private Image planet;

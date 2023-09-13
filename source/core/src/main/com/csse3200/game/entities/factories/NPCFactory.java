@@ -114,8 +114,9 @@ public class NPCFactory {
     NPCConfigs configs =
             FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
     botanist.addComponent(new InteractableComponent(entity -> {
-              botanist.getComponent(DialogComponent.class).showdialogue("This is Botanist");
-              },5f));
+              botanist.getComponent(DialogComponent.class).showdialogue("\"Greetings, I am the botanist!\"  \n" +
+                      "My name is Adam\nI'm here to help you\nunderstand the planet's flora and fauna", "");
+              },7f));
 
    // botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
    // botanist.getComponent(TextureRenderComponent.class).scaleEntity();

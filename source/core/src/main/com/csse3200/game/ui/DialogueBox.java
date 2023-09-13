@@ -22,42 +22,29 @@ public class DialogueBox extends Dialog {
 
     //private final InputOverrideComponent inputOverrideComponent;
 
-    private GdxGame game;
     private TitleBox titleBox;
     private Label dialogueLabel;
-    private DialogueBox dialogueBox;
+    private Label titleLabel;
 
     /**
      * Creates a new DialogueBox instance.
      *
-     * @param game       The game instance.
-     * @param dialogueBox The dialogue box instance.
      * @param title      The title of the dialogue box.
      * @param skin       The skin to use for styling the dialogue box.
      */
-    public DialogueBox(GdxGame game, DialogueBox dialogueBox, String title, Skin skin) {
-        super(title, skin);
-        this.game = game;
-        this.dialogueBox = dialogueBox;
-        this.dialogueLabel = new Label("", skin);
+    public DialogueBox(String title, String message, Skin skin) {
+        super("",skin);
 
+        titleLabel = new Label(title, skin);
+        this.dialogueLabel = new Label(message, skin);
 
-        Table imageTable = new Table();
-        Image image = new Image(new Texture("images/escape-earth2.png"));
-        imageTable.setBackground(image.getDrawable());
-        image.setScaling(Scaling.stretch);
-
-        imageTable.setBackground(image.getDrawable());
-
-
-        Label titleLabel = getTitleLabel();
-        titleLabel.setAlignment(Align.center);
-        titleLabel.setFontScale(1.8f); // Adjust font scale as needed
-        titleLabel.setColor(Color.WHITE); // TitleBox Title Colour can be changed here
+        titleLabel.setAlignment(Align.top);
+        titleLabel.setFontScale(0.3f); // Adjust font scale as needed
+        titleLabel.setColor(Color.BLACK); // TitleBox Title Colour can be changed here
 
 
         this.getContentTable().add(titleLabel).padTop(20f).row();
-        this.getContentTable().add(dialogueLabel).width(800f).height(350f).pad(20f).center(); // Adjust width and height as needed
+        this.getContentTable().add(dialogueLabel).width(500f).height(30f).pad(20f).center(); // Adjust width and height as needed
 
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("large", Label.LabelStyle.class));
@@ -89,8 +76,8 @@ public class DialogueBox extends Dialog {
 
 
         // Size and positioning of the dialog
-        setSize(1920f, 1080f); // Adjust the size as needed
-        setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, Gdx.graphics.getHeight() - getHeight()/2); // Adjust the Y position as needed
+        setSize(600f, 350f); // Adjust the size as needed
+        setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, Gdx.graphics.getHeight() - getHeight()-700); // Adjust the Y position as needed
 
 
     }

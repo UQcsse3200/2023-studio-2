@@ -26,8 +26,8 @@ public class DialogComponent extends Component {
     //private Dialog activeDialog;
     private GdxGame game= MainMenuActions.game;
     public DialogComponent(DialogueBox dialogueBox){}
-    public void showdialogue(String text) {
-        dialogueBox = new DialogueBox(game, dialogueBox, text, skin);
+    public void showdialogue(String Title ,String text) {
+        dialogueBox = new DialogueBox(Title,text, skin);
         dialogueBox.setDialogueText(text);
         dialogueBox.showDialog(stage);
 

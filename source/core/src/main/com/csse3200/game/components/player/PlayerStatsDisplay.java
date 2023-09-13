@@ -33,8 +33,6 @@ public class PlayerStatsDisplay extends UIComponent {
   public void create() {
     super.create();
     addActors();
-
-   entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
   }
 
   /**
@@ -66,27 +64,6 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void draw(SpriteBatch batch)  {
     // draw is handled by the stage
-  }
-
-  /**
-   * Updates the player's health on the ui.
-   * @param health player health
-   */
-  public void updatePlayerHealthUI(int health) {
-    CharSequence text = String.format("Health: %d", health);
-    healthLabel.setText(text);
-    DialogComponent dialogue = entity.getComponent(DialogComponent.class);
-
-    // Check if health is zero
-    if (health == 0) {
-      if (dialogue != null) {
-        dialogue.showdialogue("");
-      }
-
-
-      // Transition to the EndGameScreen
-      //game.setScreen(new EndGameScreen(game));
-    }
   }
 
 

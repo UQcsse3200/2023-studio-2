@@ -44,8 +44,6 @@ public class EarthGameArea extends GameArea {
     private static final GridPoint2 PORTAL_TWO = new GridPoint2(78, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
-
-    private static final float PORTAL_SIZE = 1.0f;
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
             "images/extractor.png",
@@ -154,7 +152,7 @@ public class EarthGameArea extends GameArea {
      */
     private void spawnPortal(GridPoint2 position, float x, float y) {
         StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
-        Entity portal = PortalFactory.createPortal(PORTAL_SIZE, PORTAL_SIZE, x, y, player);
+        Entity portal = PortalFactory.createPortal(x, y, player);
         placementService.PlaceStructureAt(portal, position, false, false);
     }
 

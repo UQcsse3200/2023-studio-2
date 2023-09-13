@@ -10,14 +10,14 @@ import com.csse3200.game.entities.Portal;
 
 public class PortalFactory {
 
-    public static Entity createPortal(float width, float height, float x, float y, Entity player) {
+    public static Entity createPortal(float x, float y, Entity player) {
 
-        Entity portal = new Portal(player).
-                addComponent(new TextureRenderComponent("map/portal.png"))
+        Entity portal = new Portal(player)
                 .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new TextureRenderComponent("map/portal.png"));
         portal.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        portal.setScale(width, height);
+        portal.setScale(1.0f, 1.0f);
         portal.setPosition(x, y);
         return portal;
     }

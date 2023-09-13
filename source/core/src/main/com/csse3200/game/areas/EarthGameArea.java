@@ -106,8 +106,8 @@ public class EarthGameArea extends GameArea {
             "images/potion3.png","images/companionSS_1.png","images/companionSS_0.png",
             "images/companionSS.png",
             "images/Potion1re.png",
-            "images/Potion3re.png",
             "images/Potion2re.png",
+            "images/Potion3re.png",
             "images/Potion4re.png"
 
 

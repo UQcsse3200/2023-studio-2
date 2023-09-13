@@ -102,7 +102,7 @@ public class ForestGameArea extends GameArea {
       "images/player.png",
           "images/Potion1re.png",
           "images/Potion3re.png",
-          "images/Potion3re.png",
+          "images/Potion2re.png",
           "images/Potion4re.png"
 
   };

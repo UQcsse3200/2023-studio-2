@@ -38,8 +38,8 @@ public class LaboratoryFactory {
 
 
             if (healthStats.isDead()) {
-                LabWindow minigame = LabWindow.MakeNewLaboratory(Laboratory);
-                ServiceLocator.getRenderService().getStage().addActor(minigame);
+                LabWindow lab = LabWindow.MakeNewLaboratory(Laboratory);
+                ServiceLocator.getRenderService().getStage().addActor(lab);
             }
         }, 5f));
         return Laboratory;

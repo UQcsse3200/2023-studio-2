@@ -6,27 +6,17 @@ import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.services.ServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Random;
-
 
 /**
- * Shoots a projectile at a target in game.
+ * Fires Boss' Special Attack
  */
 public class SpecialAttackTask extends DefaultTask implements PriorityTask {
-    private static final Logger logger = LoggerFactory.getLogger(ShootTask.class);
-
-    private Vector2 spawn;
-
     private boolean hasShot;
-    private final int priority = 8;
 
     private final float radius;
 
     /**
-     * Creates a new shoot task.
+     * Creates new Special Attack Task
      */
     public SpecialAttackTask(float radius) {
         this.radius = radius;
@@ -35,7 +25,6 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
     @Override
     public void start() {
         super.start();
-        this.spawn = owner.getEntity().getPosition();
         hasShot = false;
         // Use special attack
         specialAttack();
@@ -43,7 +32,7 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
     }
 
     /**
-     * Fires projectile in game.
+     * Creates multiple projectiles, calculates which position to fire to, sets them off.
      */
     public void specialAttack() {
         Vector2 center = owner.getEntity().getPosition();
@@ -86,18 +75,17 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
     public void update() {
         if (hasShot) {
             status = Status.FINISHED;
-            //logger.debug("Finished Attack");
         }
     }
 
     @Override
     public void stop() {
         super.stop();
-        //logger.debug("Stopping aim");
     }
 
     @Override
     public int getPriority() {
-        return priority;
+        // Priority is 8
+        return 8;
     }
 }

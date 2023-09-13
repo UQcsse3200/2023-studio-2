@@ -68,7 +68,7 @@ public class PotionComponent extends Component {
 
                 // Set health to a specific value temporarily
                 playerCombatStats.setHealth(100);
-                companionCombatStats.setHealth(100);
+                companionCombatStats.setHealth(50);
 
                 // Schedule a task to restore original health values after a delay
                 Timer.schedule(new Timer.Task() {

@@ -50,8 +50,8 @@ public class LabWindow extends Window {
 
         Table exit = new Table();
         Texture potion1Image = new Texture("images/Potion3re.png");
-        Texture potion2Image = new Texture("images/Potion2re.png");
-        Texture potion3Image = new Texture("images/Potion4re.png");
+        Texture potion2Image = new Texture("images/Potion4re.png");
+        Texture potion3Image = new Texture("images/Potion2re.png");
         Texture potion4Image = new Texture("images/Potion1re.png");
         Image potion1ImageWidget = new Image(potion1Image);
         Image potion2ImageWidget = new Image(potion2Image);

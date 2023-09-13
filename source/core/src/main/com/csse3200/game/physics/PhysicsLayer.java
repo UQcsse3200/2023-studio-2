@@ -6,6 +6,9 @@ public class PhysicsLayer {
   public static final short PLAYER = (1 << 1);
 
   public static final short COMPANION = (1 << 1);
+  public static final short DISPLAY_ONLY = (1 << 11);
+  public static final short ITEMS_ABOVE_PLATFORM = (1 << 12); // New layer for items above the platform
+
   public static final short SHIP = (1<<1);
   public static final short LABORATORY = (1<<5);
 

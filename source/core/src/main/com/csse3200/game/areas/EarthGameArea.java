@@ -133,7 +133,7 @@ public class EarthGameArea extends GameArea {
         spawnExtractors();
 
         spawnShip();
-        spawnPlayer();
+        spawnPlayer(PLAYER_SPAWN);
 
         spawnEnemies();
         spawnSecretEnemies();
@@ -295,16 +295,6 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(
                 ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
-    }
-
-    /**
-     * Spawns the player entity and adds them to the list of targetable entities
-     */
-    private void spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer();
-        spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-        targetables.add(newPlayer);
-        player = newPlayer;
     }
 
     /**
@@ -477,9 +467,5 @@ public class EarthGameArea extends GameArea {
         super.dispose();
         ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
         this.unloadAssets();
-    }
-
-    public static Entity getPlayer() {
-        return player;
     }
 }

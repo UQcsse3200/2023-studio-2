@@ -107,13 +107,7 @@ public abstract class GameArea implements Disposable {
    */
   public static float getSpeedMult() {
     TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
-    Entity player = EarthGameArea.getPlayer();
-    Vector2 playerPos;
-    if (player == null) {
-      playerPos = LushGameArea.getPlayer().getPosition();
-    } else {
-      playerPos = player.getPosition();
-    }
+    Vector2 playerPos = getPlayer().getPosition();
     TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
     Object speedMult = cell.getTile().getProperties().get("speedMult");
 
@@ -123,7 +117,7 @@ public abstract class GameArea implements Disposable {
   /**
    * Spawns the player entity and adds them to the list of targetable entities
    */
-  private void spawnPlayer(GridPoint2 PLAYER_SPAWN) {
+  protected void spawnPlayer(GridPoint2 PLAYER_SPAWN) {
     Entity newPlayer = PlayerFactory.createPlayer();
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     targetables.add(newPlayer);
@@ -154,4 +148,9 @@ public abstract class GameArea implements Disposable {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }
+
+  public static Entity getPlayer() {
+    return player;
+  }
+
 }

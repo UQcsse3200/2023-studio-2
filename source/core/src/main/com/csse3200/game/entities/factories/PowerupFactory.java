@@ -11,6 +11,10 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class PowerupFactory {
 
+    private PowerupFactory() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Creates a powerup entity based on the specified type. The entity will have a texture render component
      * representing the image of the powerup, a physics component, and a hitbox component set to PLAYER layer,

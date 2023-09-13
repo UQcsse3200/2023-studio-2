@@ -24,7 +24,6 @@ import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.components.structures.StructurePicker;
 
-import java.util.ArrayList;
 
 /**
  * Factory to create a player entity.

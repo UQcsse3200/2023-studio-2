@@ -7,8 +7,13 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -20,6 +25,16 @@ import static org.mockito.Mockito.*;
 @ExtendWith(GameExtension.class)
 class EarthGameAreaTest {
 
+    @BeforeEach
+    void setUp() {
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ResourceService resourceService = new ResourceService();
+        ServiceLocator.registerResourceService(resourceService);
+        String[] treeTopTexture = {"map/treetop.png"};
+        resourceService.loadTextures(treeTopTexture);
+        resourceService.loadAll();
+    }
     @Test
     void spawnEnvironmentTest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         TerrainFactory terrainFactory = mock(TerrainFactory.class);

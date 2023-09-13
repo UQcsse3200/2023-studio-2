@@ -6,14 +6,16 @@ import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-/** Chases a target entity until they get too far away or line of sight is lost */
+/** Runs away from target entity if it gets too close */
 public class RunTask extends DefaultTask implements PriorityTask {
   private final Entity target;
   private final int priority;
@@ -38,10 +40,11 @@ public class RunTask extends DefaultTask implements PriorityTask {
   @Override
   public void start() {
     super.start();
+    owner.getEntity().getComponent(PhysicsMovementComponent.class).changeMaxSpeed(new Vector2(2f, 2f));
     movementTask = new MovementTask(getVectorTo());
     movementTask.create(owner);
     movementTask.start();
-    char direction = getDirection(target.getPosition());
+    char direction = getDirection(getVectorTo());
     if(direction == '<'){
       this.owner.getEntity().getEvents().trigger("chaseLeft");
     }
@@ -70,6 +73,7 @@ public class RunTask extends DefaultTask implements PriorityTask {
 
   @Override
   public void stop() {
+    owner.getEntity().getComponent(PhysicsMovementComponent.class).changeMaxSpeed(Vector2Utils.ONE);
     super.stop();
     movementTask.stop();
   }
@@ -103,7 +107,7 @@ public class RunTask extends DefaultTask implements PriorityTask {
     return -1;
   }
 
-  public char getDirection(Vector2 destination) {
+  private char getDirection(Vector2 destination) {
     if (owner.getEntity().getPosition().x - destination.x < 0) {
       return '>';
     }

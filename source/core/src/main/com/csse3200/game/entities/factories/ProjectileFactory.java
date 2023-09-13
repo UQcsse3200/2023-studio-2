@@ -77,10 +77,12 @@ public class ProjectileFactory {
      */
     public static Entity createBaseBullet() {
         // Makes bullet entity with physical interaction components
+        PhysicsMovementComponent movementComponent = new PhysicsMovementComponent();
+        movementComponent.changeMaxSpeed(new Vector2(2f, 2f));
         Entity bullet =
                 new Entity()
                         .addComponent(new PhysicsComponent())
-                        .addComponent(new PhysicsMovementComponent())
+                        .addComponent(movementComponent)
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                         .addComponent(new ProjectileAttackComponent((short) (

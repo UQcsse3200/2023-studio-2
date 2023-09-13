@@ -157,6 +157,7 @@ public class EnemyFactory {
   private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent) {
     // Ranged Enemies
     if (type == EnemyType.Ranged) {
+      aiTaskComponent.addTask(new RunTask(target, 11, 2f));
       aiTaskComponent.addTask(new AimTask( 0.5f, target, 3f));
       // Wizard
       if (behaviour == EnemyBehaviour.PTE) {

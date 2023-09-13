@@ -24,8 +24,8 @@ public class PortalFactoryTest {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ResourceService resourceService = new ResourceService();
         ServiceLocator.registerResourceService(resourceService);
-        String[] powerupTextures = {"map/portal.png"};
-        resourceService.loadTextures(powerupTextures);
+        String[] portalTexture = {"map/portal.png"};
+        resourceService.loadTextures(portalTexture);
         resourceService.loadAll();
     }
     @Test

@@ -93,6 +93,17 @@ public class CombatStatsComponent extends Component {
           }
         };
         timer.schedule(killPlayer, 500);
+      } else if (isDead() && entity.getEntityType().equals("companion")) {
+          final Timer timer1 = new Timer();
+          TimerTask killCompanion = new TimerTask() {
+            @Override
+            public void run() {
+              entity.getEvents().trigger("death");
+              timer1.cancel();
+              timer1.purge();
+            }
+          };
+          timer1.schedule(killCompanion,500);
       } else if (isDead() && entity.getEntityType().equals("playerWeapon")) {
         entity.getEvents().trigger("death", 0);
       }

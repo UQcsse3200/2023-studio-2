@@ -12,6 +12,7 @@ import com.csse3200.game.GdxGame;
 import com.badlogic.gdx.Gdx;
 import java.util.List;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.PotionComponent;
 import com.csse3200.game.components.PotionType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.buildables.TurretType;
@@ -111,7 +112,8 @@ public class EarthGameArea extends GameArea {
             "images/Potion3re.png",
             "images/Potion3re.png",
             "images/Potion4re.png",
-            "images/platform.png"
+            "images/platform.png",
+            "images/companiondeathscreen.png"
 
 
     };
@@ -363,7 +365,6 @@ public class EarthGameArea extends GameArea {
         Vector2 playerPosition = playerPhysics.getBody().getPosition();
         spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
         targetables.add(newCompanion);
-
         return newCompanion;
     }
 

@@ -70,14 +70,6 @@ public class PotionComponent extends Component {
                 playerCombatStats.setHealth(100);
                 companionCombatStats.setHealth(50);
 
-                // Schedule a task to restore original health values after a delay
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        playerCombatStats.setHealth(currentHealthPlayer);
-                        companionCombatStats.setHealth(currentHealthCompanion);
-                    }
-                }, 3.0f);
             }
             case SPEED_POTION -> {
                 if (playerActions == null && companionActions == null) {

@@ -103,7 +103,6 @@ public class LushGameArea extends GameArea {
 
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
-    private static Entity player;
     private final GdxGame game;
 
     /**

@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.ForestGameArea;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.LushGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
@@ -84,7 +85,7 @@ public class MainGameScreen extends ScreenAdapter {
     //LushGameArea lushGameArea = new LushGameArea(terrainFactory, game);
     //lushGameArea.create();
     //player = lushGameArea.getPlayer();
-    player = earthGameArea.getPlayer();
+    player = GameArea.getPlayer();
     titleBox = new TitleBox(game, "Title", skin);
 
   }

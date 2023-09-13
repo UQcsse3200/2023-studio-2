@@ -20,13 +20,13 @@ class ToolsConfigTest {
                 FileLoader.readClass(ToolsConfig.class, "configs/structure_tools.json");
 
         assertNotNull(toolsConfig);
-        assertNotNull(toolsConfig.tools);
+        assertNotNull(toolsConfig.toolConfigs);
 
         // shouldn't be empty
-        assertNotEquals(toolsConfig.tools.size, 0);
+        assertNotEquals(toolsConfig.toolConfigs.size, 0);
 
         // each structureOption should not be null
-        for (var structureOption : toolsConfig.tools) {
+        for (var structureOption : toolsConfig.toolConfigs) {
             assertNotNull(structureOption);
 
             assertNotNull(structureOption.value);

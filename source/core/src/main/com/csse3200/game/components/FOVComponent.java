@@ -1,17 +1,10 @@
 package com.csse3200.game.components;
 
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.structures.Rotation;
-import com.csse3200.game.components.structures.RotationRenderComponent;
 import com.csse3200.game.components.structures.TurretTargetableComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class FOVComponent extends ProximityActivationComponent {
     public FOVComponent(float radius, ProximityFunc entered, ProximityFunc exited) {

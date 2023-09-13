@@ -104,8 +104,9 @@ class StructureToolPickerTest {
         var position = mock(GridPoint2.class);
 
         structurePicker.setSelectedTool(tool);
+        structurePicker.setEntity(player);
 
-        structurePicker.interact(player, position);
+        structurePicker.interact(position);
 
         verify(tool).interact(player, position);
 
@@ -113,7 +114,7 @@ class StructureToolPickerTest {
 
         reset(tool);
 
-        structurePicker.interact(player, position);
+        structurePicker.interact(position);
 
         verify(tool, never()).interact(any(), any());
     }

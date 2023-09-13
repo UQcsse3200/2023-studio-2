@@ -197,6 +197,9 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
         updateTextureAtlas(atlas, deriveCardinalityId());
     }
 
+    /**
+     * Determines what connections the structure has, and notifies neighbouring structures of a change.
+     */
     @Override
     public void placed() {
         // finds current position.
@@ -225,6 +228,9 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
         notifyNeighbours(true);
     }
 
+    /**
+     * Notifies neighbouring structures that the structure is being removed.
+     */
     @Override
     public void willRemove() {
         notifyNeighbours(false);

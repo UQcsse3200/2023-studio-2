@@ -136,7 +136,7 @@ class MockPlacementTool extends PlacementTool {
     }
 
     @Override
-    public PlaceableEntity createEntity(Entity player) {
+    public PlaceableEntity createStructure(Entity player) {
         return mock(PlaceableEntity.class);
     }
 }

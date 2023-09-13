@@ -1,7 +1,6 @@
 package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
@@ -26,8 +25,9 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
-class TurretToolTest { @Mock
-Entity player;
+class TurretToolTest {
+    @Mock
+    Entity player;
     @Mock
     StructurePlacementService structurePlacementService;
     @Mock
@@ -55,6 +55,6 @@ Entity player;
 
         TurretTool turretTool = new TurretTool(new ObjectMap<>());
 
-        assertNotNull(turretTool.createEntity(player));
+        assertNotNull(turretTool.createStructure(player));
     }
 }

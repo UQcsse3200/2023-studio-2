@@ -1,5 +1,5 @@
 {
-  "tools": {
+  "toolConfigs": {
     "com.csse3200.game.components.structures.tools.BasicWallTool": {
       "level": 0,
       "name": "Dirt Wall",

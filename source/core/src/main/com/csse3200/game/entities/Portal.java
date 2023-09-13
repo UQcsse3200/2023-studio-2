@@ -1,6 +1,9 @@
 package com.csse3200.game.entities;
-
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.ProximityActivationComponent;
+import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
+
 
 public class Portal extends Entity {
 
@@ -14,9 +17,9 @@ public class Portal extends Entity {
     }
 
     /**
-     * Changes the texture to resemble a closed gate and enables the collision.
+     * Teleports the player to a fixed destination
      *
-     * @param player - the player who opened the gate
+     * @param player - the player entering the portal
      */
     public void teleport(Entity player) {
         player.setPosition(x, y);

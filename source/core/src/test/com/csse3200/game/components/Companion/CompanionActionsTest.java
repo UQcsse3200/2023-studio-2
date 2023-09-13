@@ -61,66 +61,13 @@ class CompanionActionsTest {
         verify(physicsComponent.getBody()).getAngle();
     }
 
-    /**
-     * Test the updateFollowPlayer method of CompanionActions.
-     */
-    @Test
-    public void testUpdateFollowPlayer() {
-        // Simulate player and companion positions
-        Vector2 playerPosition = new Vector2(10f, 10f);
-        Vector2 companionPosition = new Vector2(20f, 20f);
 
-        // Set player and companion positions
-        when(playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition()).thenReturn(playerPosition);
-        when(physicsComponent.getBody().getPosition()).thenReturn(companionPosition);
-
-        // Simulate a movement key being pressed
-        simulateMovementKeysPressed();
-
-        // Call the updateFollowPlayer method
-        companionActions.updateFollowPlayer();
-
-        // Verify that physics is active
-        verify(physicsComponent.getBody()).setActive(true);
-
-        // Verify that updateSpeed is called
-        verify(companionActions).updateSpeed();
-
-        // Verify that the direction towards the player is calculated
-        verify(physicsComponent.getBody(), times(2)).getPosition();
-    }
-
-    /**
-     * Test the updateFollowPlayer method of CompanionActions when the companion is within the minimum distance.
-     */
-    @Test
-    public void testUpdateFollowPlayerWithinMinDistance() {
-        // Simulate player and companion positions
-        Vector2 playerPosition = new Vector2(10f, 10f);
-        Vector2 companionPosition = new Vector2(15f, 15f);
-
-        // Set player and companion positions
-        when(playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition()).thenReturn(playerPosition);
-        when(physicsComponent.getBody().getPosition()).thenReturn(companionPosition);
-
-        // Simulate a movement key being pressed
-        simulateMovementKeysPressed();
-
-        // Call the updateFollowPlayer method
-        companionActions.updateFollowPlayer();
-
-        // Verify that physics is not active
-        verify(physicsComponent.getBody()).setActive(false);
-
-        // Verify that updateSpeed is not called
-        verify(companionActions, never()).updateSpeed();
-    }
 
     /**
      * Test the walk method of CompanionActions.
      */
     @Test
-    public void testWalk() {
+    public void testMoving() {
         Vector2 direction = new Vector2(1f, 0f);
         companionActions.move(direction);
         assertEquals(direction, companionActions.movingDirection);
@@ -131,7 +78,7 @@ class CompanionActionsTest {
      * Test the stopWalking method of CompanionActions.
      */
     @Test
-    public void testStopWalking() {
+    public void testStopMoving() {
         companionActions.stopMoving();
         assertEquals(Vector2.Zero, companionActions.movingDirection);
         assertEquals(false, companionActions.moving);

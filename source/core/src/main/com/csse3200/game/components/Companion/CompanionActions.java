@@ -100,85 +100,6 @@ public class CompanionActions extends Component {
     }
 
     /**
-     * NEW UPDATE FOLLOW PLAYER
-     * UpdateMovement
-     * Handles all the movement required of the companion on each frame
-     * Checks if the companion is in boost mode, and adjusts the speed accordingly
-     *
-     * Then, checks if the companion is moving or not. If it is not moving, it moves the companion
-     * towards the player
-     *
-     */
-    public void newUpdateFollowPlayer() {
-
-        // Check if boost is on
-        if (Gdx.input.isKeyPressed(Input.Keys.B)){
-            updateSpeedBoost(true, (MAX_BOOST_SPEED));
-        } else {
-            updateSpeedBoost(false, (NORMAL_COMPANION_SPEED));
-        }
-
-        // Update actual movement of the companion
-        // Check if we need to follow or are moving independently
-        if (moving) {
-            //update the speed as if you are just moving like normal
-            updateSpeed();
-            System.out.println("Moving independently");
-        } else {
-            // Must move towards player
-            System.out.println("Not moving - follow player");
-            entity.getComponent(FollowComponent.class).update();
-        }
-
-    }
-
-    /**
-     * updateFollowPlayer
-     * Making sure that the companion is following the player on the map (being gravitationally attracted)
-     */
-    public void updateFollowPlayer() {
-        logger.info("GETTING SUCKED IN");
-        Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
-        Vector2 companionPosition = physicsComponent.getBody().getPosition();
-
-        // Calculate direction vector towards the player
-        Vector2 directionToPlayer = playerPosition.cpy().sub(companionPosition);
-        float distanceToPlayer = directionToPlayer.len();
-
-        double minDistanceThreshold = 50.0f;
-        if (distanceToPlayer < minDistanceThreshold) {
-            physicsComponent.getBody().setActive(false); // Disable physics simulation
-        } else {
-            physicsComponent.getBody().setActive(true); // Enable physics simulation
-            updateSpeed(); // Only apply speed if physics is active
-        }
-
-        // Check if any movement key is pressed
-        boolean isMovementKeyPressed = isMovementKeyPressed();
-
-        if (!isMovementKeyPressed) {
-            // Calculate direction vector towards the player
-            movingDirection = playerPosition.cpy().sub(companionPosition).nor();
-            // Move the companion towards the player
-            movingDirection.nor();
-            updateSpeed();
-
-            // Calculate the rotation angle towards the player
-            float targetRotation = movingDirection.angleDeg() + 90;
-
-            // Interpolate the rotation angle smoothly
-            currentRotation = MathUtils.lerpAngleDeg(currentRotation, targetRotation, ROTATION_SPEED * Gdx.graphics.getDeltaTime());
-
-            // Set the new rotation for the companion
-            physicsComponent.getBody().setTransform(companionPosition, currentRotation * MathUtils.degreesToRadians);
-
-        } else {
-            // Stop the companion from walking when movement keys are pressed
-            stopMoving();
-        }
-    }
-
-    /**
      * Updates the speed boost status and the speed of the companion
      * @param speedBoostActive - true/false parameter to tell if in boost mode
      * @param speedValues - the value/speed in which to update the companion to
@@ -216,8 +137,6 @@ public class CompanionActions extends Component {
         Vector2 desiredVelocity = movingDirection.cpy().scl(COMPANION_SPEED);
         // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
-
-        //apply movement to physics body
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
     }
 

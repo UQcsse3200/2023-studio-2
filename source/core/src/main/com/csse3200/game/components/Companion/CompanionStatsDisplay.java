@@ -33,7 +33,6 @@ public class CompanionStatsDisplay extends UIComponent {
     public Label label;
 
 
-
     private boolean isInvincible = true;
     private boolean invincibilityImageLoaded = false;
     private float invincibilityTimer = 0.0f;
@@ -52,11 +51,8 @@ public class CompanionStatsDisplay extends UIComponent {
 
 
 
-
-
-    public CompanionStatsDisplay(Entity playerEntity){
-        this.playerEntity = playerEntity;
-
+    public CompanionStatsDisplay(Entity playerEntitiy){
+        this.playerEntity = playerEntitiy;
 
     }
 
@@ -91,41 +87,111 @@ public class CompanionStatsDisplay extends UIComponent {
         stage.addActor(table);
 
     }
+    public void update(float deltaTime) {
+        // Decrease the invincibility timer if invincible
+        if (isInvincible) {
+            invincibilityTimer -= deltaTime;
+
+            // Check if the invincibility duration has elapsed
+            if (invincibilityTimer <= 0) {
+                isInvincible = false; // Turn off invincibility when the timer runs out
+                resetImage(); // Reset the companion's image
+            }
+        }
+
+        // Call assetManager.update() to load assets asynchronously
+        assetManager.update();
+
+//        // Check if all assets are loaded
+//        if (assetManager.isFinished()) {
+//            // Handle the loaded assets here, e.g., update the companion's texture
+//            // You can access the loaded assets using assetManager.get()
+//            if (assetManager.isLoaded("images/companionSS_1.png", Texture.class)) {
+//                invincibleTexture = assetManager.get("images/companionSS_1.png", Texture.class);
+//                defaultTexture = new Texture("images/companionSS_0.png");
+//                // Check if the companion sprite is initialized
+//                if (companionSprite != null) {
+//                    // Set the companion sprite's texture based on invincibility state
+//                    if (isInvincible) {
+//                        companionSprite.setTexture(invincibleTexture); // Set invincible image
+//                    } else {
+//                        companionSprite.setTexture(defaultTexture); // Set default image
+//                    }
+//                } else {
+//                    Gdx.app.error("Invincibility", "Companion sprite is not initialized.");
+//                }
+//            } else {
+//                Gdx.app.error("Invincibility", "Invincible image is not yet loaded.");
+//            }
+//        }
+    }
 
 
 
+    public void setInvincibleImage() {
+        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
+
+        animator.startAnimation("RIGHT");
+    }
 
 
 
+    public void toggleInvincibility() {
+        if (isInvincible) {
+            // 10 seconds of invincibility
+            invincibilityTimer = 10.0f;
+            setInvincibleImage(); // Call the method to change the image
+            Gdx.app.debug("Invincibility", "Invincibility is ON");
+            isInvincible=false;
+            Timer.schedule(new Task() {
+                @Override
+                public void run() {
+                    resetImage();
+                }
+            }, invincibilityTimer);
+        } else {
+            resetImage(); // Reset the image when invincibility is turned off
+            Gdx.app.debug("Invincibility", "Invincibility is OFF");
+        }
+    }
 
 
 
+    public void performSpecialAttack() {
+        // Implement your special attack logic here
+        if (!isSpecialAttack) {
+            // Execute special attack code
+            isSpecialAttack = true;
+        }
+    }
 
 
-
-
-
+    public void resetImage() {
+        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
+        animator.startAnimation("RIGHT");
+    }
 
     public void toggleInfiniteHealth() {
-
         if (isInfiniteHealth) {
-            // Save the original health value before making it infinite
-            Gdx.app.debug("Infinite Health", "Original Health: "+ 50 );
 
-            updateCompanionHealthUI(Integer.MAX_VALUE);
-            Gdx.app.debug("Infinite Health", "Infinite Health is ON");
-            // Print the updated health value
-            Gdx.app.debug("Infinite Health", "Updated Health: " + 50);
+            table = new Table();
+            table.top().left();
+            table.setFillParent(true);
+            table.padTop(150f).padLeft(5f);
+            CharSequence healthText2 = String.format("Companion Health: %d", Integer.MAX_VALUE);
+            label = new Label(healthText2, skin, "large");
+            table.add(label);
+            ServiceLocator.getRenderService().getStage().addActor(table);
+            Timer.schedule(new Task() {
+                @Override
+                public void run() {
+                    label.remove();
+                    update = false;
+                }
+            }, 3.0f);
             isInfiniteHealth = false;
-        } else {
-            // Restore the original health value
-            updateCompanionHealthUI(50);
-            Gdx.app.debug("Infinite Health", "Infinite Health is OFF");
-
-            // Print the restored health value
-            Gdx.app.debug("Infinite Health", "Restored Health: " + 50);
-            isInfiniteHealth = true;
         }
+
     }
 
 
@@ -190,21 +256,8 @@ public class CompanionStatsDisplay extends UIComponent {
      * @param health The updated health value to display.
      */
     public void updateCompanionHealthUI(int health) {
-        table = new Table();
-        table.top().left();
-        table.setFillParent(true);
-        table.padTop(85f).padLeft(5f);
-        CharSequence healthText2 = String.format("Companion Health: %d", health);
-        label = new Label(healthText2, skin, "large");
-        table.add(label);
-        ServiceLocator.getRenderService().getStage().addActor(table);
-        Timer.schedule(new Task() {
-            @Override
-            public void run() {
-                label.remove();
-                update = false;
-            }
-        }, 8.0f);
+        CharSequence text = String.format("Companion Health: %d", health);
+        messageLabel.setText(text);
 
     }
     /*public void updateCompanionGoldUI(int gold) {

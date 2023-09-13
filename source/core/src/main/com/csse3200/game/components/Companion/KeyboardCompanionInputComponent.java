@@ -3,6 +3,7 @@
  * It implements the InputProcessor interface to handle keyboard input events.
  */
 package com.csse3200.game.components.Companion;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.badlogic.gdx.Input.Keys;

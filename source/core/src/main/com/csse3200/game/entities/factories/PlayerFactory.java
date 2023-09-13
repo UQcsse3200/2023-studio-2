@@ -7,7 +7,7 @@ import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.player.*;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.origiPlayerConfig;
+import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -31,21 +31,30 @@ import com.csse3200.game.components.structures.StructureToolPicker;
 public class PlayerFactory {
 
   private static DialogueBox dialogueBox;
-  private static final origiPlayerConfig stats =
-      FileLoader.readClass(origiPlayerConfig.class, "configs/player.json");
+  private static final PlayerConfig config =
+      FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
-
+  //TODO: REMOVE - LEGACY
   /**
    * Create a player entity.
    * @return entity
    */
   public static Entity createPlayer() {
+    return createPlayer(config);
+  }
+
+  /**
+   * Create a player entity.
+   * @param config - configuration file to match player to
+   * @return entity
+   */
+  public static Entity createPlayer(PlayerConfig config) {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class));
     animator.addAnimation("Character_StandDown", 0.2f);
     animator.addAnimation("Character_StandUp", 0.2f);
     animator.addAnimation("Character_StandLeft", 0.2f);
@@ -72,7 +81,7 @@ public class PlayerFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
             .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())

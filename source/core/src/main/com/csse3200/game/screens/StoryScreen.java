@@ -40,21 +40,10 @@ public class StoryScreen extends ScreenAdapter {
     public StoryScreen(GdxGame game) {
         this.game = game;
 
-        logger.debug("Initialising story screen services");
-        ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
-
-        ServiceLocator.registerEntityService(new EntityService());
-        ServiceLocator.registerRenderService(new RenderService());
-        //ServiceLocator.registerRenderService(new RenderService());
-
-
-
         renderer = RenderFactory.createRenderer();
 
         loadAssets();
         createUI();
-
     }
 
     @Override
@@ -75,12 +64,6 @@ public class StoryScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
-
-        ServiceLocator.getEntityService().dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getResourceService().dispose();
-
-        ServiceLocator.clear();
     }
 
     private void loadAssets() {

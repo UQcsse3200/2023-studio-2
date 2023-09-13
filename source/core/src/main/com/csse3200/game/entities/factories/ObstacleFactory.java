@@ -1,19 +1,18 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.entities.buildables.Turret;
 import com.csse3200.game.entities.buildables.TurretType;
-import com.csse3200.game.entities.configs.AsteroidConfig;
-import com.csse3200.game.entities.configs.TurretConfigs;
-import com.csse3200.game.entities.configs.WallConfigs;
+import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.entities.buildables.Turret;
 
 /**
  * Factory to create obstacle entities.
@@ -22,32 +21,46 @@ import com.csse3200.game.rendering.TextureRenderComponent;
  */
 public class ObstacleFactory {
 
+  public static float WALL_SIZE = 0.1f;
+
   private static final WallConfigs configs =
           FileLoader.readClass(WallConfigs.class, "configs/walls.json");
 
-  private static final AsteroidConfig asteroidCustom =
+  private static final AsteroidConfig asteroidConfig =
           FileLoader.readClass(AsteroidConfig.class, "configs/asteroid.json");
+  private static final MinigameConfigs minigameConfigs =
+          FileLoader.readClass(MinigameConfigs.class, "configs/minigame.json");
   private static final TurretConfigs turretconfigs =
           FileLoader.readClass(TurretConfigs.class, "configs/turrets.json");
 
-
+  private static final BaseEntityConfig treeConfig =
+          FileLoader.readClass(BaseEntityConfig.class, "configs/tree.json");
 
   /**
    * Creates a tree entity.
    * @return entity
    */
-  public static Entity createTree() {
+  public static Entity createTree(BaseEntityConfig config) {
     Entity tree =
-        new Entity()
-            .addComponent(new TextureRenderComponent("images/tree.png"))
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+            new Entity()
+                    .addComponent(new TextureRenderComponent(config.spritePath))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
     tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     tree.getComponent(TextureRenderComponent.class).scaleEntity();
     tree.scaleHeight(2.5f);
     PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
     return tree;
+  }
+
+  //TODO: REMOVE - LEGACY
+  /**
+   * Creates a tree entity.
+   * @return entity
+   */
+  public static Entity createTree() {
+    return createTree(treeConfig);
   }
 
   /**
@@ -95,7 +108,23 @@ public class ObstacleFactory {
     return wall;
   }
 
+  //TODO: Should this be refactored to a "Minigame factory"?
+  /**
+   * Creates an Asteroid that has bounce from config
+   * @param config Configuration file to match asteroid to
+   * @return Asteroid entity
+   */
+  public static Entity createAsteroid(AsteroidConfig config) {
+    ColliderComponent asteroidCollider = new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE);
+    Entity asteroid = new Entity()
+            .addComponent(new TextureRenderComponent(config.spritePath))
+            .addComponent(new PhysicsComponent().setBodyType(BodyType.DynamicBody))
+            .addComponent(asteroidCollider);
+    asteroid.setScale(config.scale);
+    return asteroid;
+  }
 
+  //TODO: REMOVE - LEGACY
   /**
    * Creates an Asteroid that has bounce
    * @param width Asteroid width in world units
@@ -112,40 +141,73 @@ public class ObstacleFactory {
     asteroid.setScale(width, height);
     return asteroid;
   }
-  public static Entity createStaticAsteroid(float width, float height) {
+
+  /**
+   * Create a new static asteroid from the given config file
+   * @param config Configuration file to match asteroid to
+   * @return Asteroid Entity
+   */
+  public static Entity createStaticAsteroid(AsteroidConfig config) {
     Entity asteroid = new Entity()
-            .addComponent(new TextureRenderComponent("images/meteor.png"))
+            .addComponent(new TextureRenderComponent(config.spritePath))
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    asteroid.setScale(width, height);
+    asteroid.setScale(config.scale);
     return asteroid;
   }
 
-  public static Entity createObstacleEnemy(float width, float height){
+  //TODO: REMOVE - LEGACY
+  public static Entity createStaticAsteroid(float width, float height) {
+    asteroidConfig.scale = new Vector2(width, height);
+    return createStaticAsteroid(asteroidConfig);
+  }
+
+  /**
+   * Create an obstacle enemy to match given config file
+   * @param config Configuration file to match enemy to
+   * @return ObstacleEnemy
+   */
+  public static Entity createObstacleEnemy(BaseEntityConfig config){ //TODO: Could create custom config type if necessary
     Entity enemy = new Entity()
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-            .addComponent(new TextureRenderComponent("images/obstacle-enemy.png"));
-    enemy.setScale(width, height);
+            .addComponent(new TextureRenderComponent(config.spritePath));
+    enemy.setScale(config.scale);
     return enemy;
   }
 
-  public static Entity createObstacleGameGoal(float width, float height){
+  //TODO: REMOVE - LEGACY
+  public static Entity createObstacleEnemy(float width, float height){
+    minigameConfigs.obstacleEnemy.scale = new Vector2(width, height);
+    return createObstacleEnemy(minigameConfigs.obstacleEnemy);
+  }
+
+  public static Entity createObstacleGameGoal(BaseEntityConfig config){ //TODO: Could create custom config type if necessary
     Entity goal = new Entity()
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-            .addComponent(new TextureRenderComponent("images/wormhole.jpg"));
-    goal.setScale(width, height);
+            .addComponent(new TextureRenderComponent(config.spritePath));
+    goal.setScale(config.scale);
     return goal;
+  }
+
+  //TODO: REMOVE - LEGACY
+  public static Entity createObstacleGameGoal(float width, float height){
+    minigameConfigs.obstacleGameGoal.scale = new Vector2(width, height);
+    return createObstacleGameGoal(minigameConfigs.obstacleGameGoal);
   }
 
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
 
+  public static PlaceableEntity createCustomTurret(TurretConfig config) {
+    return new Turret(config);
+  }
 
+  //TODO: REMOVE - LEGACY
   public static PlaceableEntity createCustomTurret(TurretType type, Entity player) {
-    return new Turret(type, player);
+    return new Turret(type,player);
   }
 
 }

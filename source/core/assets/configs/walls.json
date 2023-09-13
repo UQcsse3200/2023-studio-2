@@ -1,14 +1,14 @@
 {
   "basic": {
     "health": 200,
-    "textureAtlas": "images/structures/dirt_wall.atlas"
+    "spritePath": "images/structures/dirt_wall.atlas"
   },
   "intermediate": {
     "health": 400,
-    "textureAtlas": "images/structures/stone_wall.atlas"
+    "spritePath": "images/structures/stone_wall.atlas"
   },
     "gate": {
         "health": 200,
-        "textureAtlas": "images/structures/gate.atlas"
+        "spritePath": "images/structures/gate.atlas"
     }
 }

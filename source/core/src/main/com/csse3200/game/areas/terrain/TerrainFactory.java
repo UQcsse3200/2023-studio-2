@@ -49,18 +49,18 @@ public class TerrainFactory {
   /**
    * Create a terrain of the given type, using the orientation of the factory. This can be extended
    * to add additional game terrains.
-   *
+   * @param mapPath path to file containing terrain information (.tmx file)
    * @return Terrain component which renders the terrain
    */
-  public TerrainComponent createTerrain() {
+  public TerrainComponent createTerrain(String mapPath) {
     TmxMapLoader mapLoader = new TmxMapLoader();
     TiledMap tiledMap = null;
     try {
-      tiledMap = mapLoader.load(Gdx.files.internal("source/core/assets/map/base.tmx").file().getAbsolutePath());
+      tiledMap = mapLoader.load(Gdx.files.internal("source/core/assets/" + mapPath).file().getAbsolutePath());
     } catch (Exception e) {
 
       try {
-        tiledMap = mapLoader.load(Gdx.files.internal("map/base.tmx").file().getAbsolutePath());
+        tiledMap = mapLoader.load(Gdx.files.internal(mapPath).file().getAbsolutePath());
       } catch (Exception ex) {
         // Handle the exception (e.g., print an error message)
         System.err.println("Error loading TiledMap: " + ex.getMessage());

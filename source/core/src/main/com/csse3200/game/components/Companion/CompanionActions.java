@@ -63,7 +63,6 @@ public class CompanionActions extends Component {
             physicsComponent.getBody().setTransform(playerPosition, currentRotation * MathUtils.degreesToRadians);
         }
 
-        //create logger for debug
         logger = LoggerFactory.getLogger(CompanionActions.class);
     }
 

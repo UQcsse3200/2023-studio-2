@@ -5,7 +5,6 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.GridPoint3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
@@ -114,8 +113,6 @@ public class EarthGameArea extends GameArea {
             "images/Potion4re.png",
             "images/platform.png",
             "images/companiondeathscreen.png"
-
-
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -183,16 +180,14 @@ public class EarthGameArea extends GameArea {
         spawnLaboratory();
         spawnUpgradeBench();
         spawnShip();
-        spawnPlatform();
         player = spawnPlayer();
         companion = spawnCompanion(player);
-        companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
-
         spawnTurret();
         spawnEnemies();
         spawnBoss();
         spawnAsteroids();
         spawnBotanist();
+        companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
         playMusic();
     }
     public static void removeItemOnMap(Entity entityToRemove) {
@@ -392,29 +387,23 @@ public class EarthGameArea extends GameArea {
             case DEATH_POTION:
                newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION,player,companion);
                itemsOnMap.add(newPotion);
-               GridPoint2 pos = new GridPoint2(39, 21);
+               GridPoint2 pos = new GridPoint2(34, 18);
                spawnEntityAt(newPotion, pos, true, false);
                return newPotion;
             case SPEED_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION,player,companion);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos2 = new GridPoint2(40, 21);
+                GridPoint2 pos2 = new GridPoint2(37, 18);
                 spawnEntityAt(newPotion, pos2, true, false);
                 return newPotion;
             case HEALTH_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION,player,companion);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos3 = new GridPoint2(41, 21);
+                GridPoint2 pos3 = new GridPoint2(40, 18);
                 spawnEntityAt(newPotion, pos3, true, false);
                 return newPotion;
             default: throw new IllegalArgumentException("You must assign a valid PowerupType");
         }
-    }
-    public Entity spawnPlatform(){
-        Entity newPlatform = PlatformFactory.createPlatform();
-        GridPoint2 pos = new GridPoint2(40,20);
-        spawnEntityAt(newPlatform,pos,true,false);
-        return newPlatform;
     }
 
 

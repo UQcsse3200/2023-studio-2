@@ -116,6 +116,11 @@ public class EnemyFactory {
     return enemy;
   }
 
+  /**
+   * Determines the appropriate scale for an enemy based on its type.
+   * @param type The type of the enemy for which the scale is to be determined.
+   * @return The scaling factor for the provided enemy type.
+   */
   static float getEnemyscale(EnemyType type){
     float scale = 2.0f;
     if (type == EnemyType.BossRanged){

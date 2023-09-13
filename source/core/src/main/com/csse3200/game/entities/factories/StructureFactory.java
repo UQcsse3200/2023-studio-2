@@ -32,7 +32,8 @@ import java.util.ArrayList;
  * Factory to create structure entities - such as extractors or ships.
 
  *
- * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
+ * <p>Each obstacle entity type should have a creation method
+ * that returns a corresponding entity.
  */
 public class StructureFactory {
 
@@ -45,7 +46,8 @@ public class StructureFactory {
     /**
      * Creates an extractor entity
      *
-     * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
+     * <p>Each obstacle entity type should have a creation method that returns a
+     * corresponding entity.
 
      * @param health the max and initial health of the extractor
      * @param producedResource the resource type produced by the extractor
@@ -53,13 +55,16 @@ public class StructureFactory {
      * @param tickSize the amount of the resource produced at each tick
      * @return a new extractor Entity
      */
-    public static PlaceableEntity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
+    public static PlaceableEntity createExtractor(int health, Resource producedResource,
+                                                  long tickRate, int tickSize) {
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/ExtractorAnimation.atlas", TextureAtlas.class));
+                        ServiceLocator.getResourceService().getAsset("images/" +
+                                "ExtractorAnimation.atlas", TextureAtlas.class));
         animator.addAnimation("animateBroken", 0.2f,Animation.PlayMode.LOOP);
-        animator.addAnimation("animateExtracting", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("animateExtracting", 0.2f,
+                Animation.PlayMode.LOOP);
 
         PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity()
 //                .addComponent(new DamageTextureComponent("images/refinedExtractor2.png")
@@ -68,7 +73,8 @@ public class StructureFactory {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(animator)
-                .addComponent(new CombatStatsComponent(health, 0, 0, false))
+                .addComponent(new CombatStatsComponent(health, 0,
+                        0, false))
                 .addComponent(new ProductionComponent(producedResource, tickRate, tickSize))
                 .addComponent(new ExtractorAnimationController());
 
@@ -82,7 +88,8 @@ public class StructureFactory {
             CombatStatsComponent healthStats = extractor.getComponent(CombatStatsComponent.class);
 
             if (healthStats.isDead()) {
-                ExtractorMinigameWindow minigame = ExtractorMinigameWindow.MakeNewMinigame(extractor);
+                ExtractorMinigameWindow minigame =
+                        ExtractorMinigameWindow.MakeNewMinigame(extractor);
                 ServiceLocator.getRenderService().getStage().addActor(minigame);
             }
         }, 5f));
@@ -108,7 +115,8 @@ public class StructureFactory {
     public static Entity createShip(GdxGame game) {
         Entity ship =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/refinedShip.png"))
+                        .addComponent(new TextureRenderComponent("images/" +
+                                "refinedShip.png"))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
@@ -147,7 +155,8 @@ public class StructureFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new TextureRenderComponent("images/upgradetree/upgradebench.png"))
+                .addComponent(new TextureRenderComponent("images/upgradetree/" +
+                        "upgradebench.png"))
                 .addComponent(new UpgradeTree());
 
         InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
@@ -163,9 +172,10 @@ public class StructureFactory {
 
         return upgradeBench;
     }
-    /**
 
-     * Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map
+    /**
+     * Create an enemy spawner that spawns the desired enemies at
+     * a given tick rate and at a given location on the map
      *
      * @param targets the targets the entities that spawn will target
      * @param spawnRate the frequency of the enemy spawning
@@ -174,13 +184,15 @@ public class StructureFactory {
      * @param count the maximum amount of enemies the spawner will spawn
      * @return
      */
-    public static Entity createSpawner(ArrayList<Entity> targets, long spawnRate, EnemyType type, EnemyBehaviour behaviour, int count) {
+    public static Entity createSpawner(ArrayList<Entity> targets, long spawnRate, EnemyType type,
+                                       EnemyBehaviour behaviour, int count) {
         Entity spawner =
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/Spawner.png"))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                         .addComponent(new ColliderComponent())
-                        .addComponent(new SpawnerComponent(targets, spawnRate, type, behaviour, count));
+                        .addComponent(new SpawnerComponent(targets, spawnRate, type,
+                                behaviour, count));
 
         spawner.getComponent(TextureRenderComponent.class).scaleEntity();
         spawner.scaleHeight(1.5f);

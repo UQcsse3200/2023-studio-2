@@ -25,9 +25,6 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
             entity.getEvents().addListener("updateHealth", this::updatingHealth);
         }
 
-        /**
-         * Changes extractor animation based on its health
-         */
         void updatingHealth(int health) {
             CombatStatsComponent healthStats = entity.getComponent(CombatStatsComponent.class);
             if (healthStats.isDead()) {

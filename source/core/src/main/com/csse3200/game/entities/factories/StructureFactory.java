@@ -32,8 +32,7 @@ import java.util.ArrayList;
  * Factory to create structure entities - such as extractors or ships.
 
  *
- * <p>Each obstacle entity type should have a creation method
- * that returns a corresponding entity.
+ * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
 public class StructureFactory {
 
@@ -73,8 +72,8 @@ public class StructureFactory {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(animator)
-                .addComponent(new CombatStatsComponent(health, 0,
-                        0, false))
+                .addComponent(new CombatStatsComponent(health, 0, 0,
+                        false))
                 .addComponent(new ProductionComponent(producedResource, tickRate, tickSize))
                 .addComponent(new ExtractorAnimationController());
 
@@ -155,8 +154,8 @@ public class StructureFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new TextureRenderComponent("images/upgradetree/" +
-                        "upgradebench.png"))
+                .addComponent(new TextureRenderComponent("images/" +
+                        "upgradetree/upgradebench.png"))
                 .addComponent(new UpgradeTree());
 
         InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
@@ -172,10 +171,10 @@ public class StructureFactory {
 
         return upgradeBench;
     }
-
     /**
-     * Create an enemy spawner that spawns the desired enemies at
-     * a given tick rate and at a given location on the map
+
+     * Create an enemy spawner that spawns the desired enemies
+     * at a given tick rate and at a given location on the map
      *
      * @param targets the targets the entities that spawn will target
      * @param spawnRate the frequency of the enemy spawning
@@ -184,15 +183,15 @@ public class StructureFactory {
      * @param count the maximum amount of enemies the spawner will spawn
      * @return
      */
-    public static Entity createSpawner(ArrayList<Entity> targets, long spawnRate, EnemyType type,
-                                       EnemyBehaviour behaviour, int count) {
+    public static Entity createSpawner(ArrayList<Entity> targets, long spawnRate,
+                                       EnemyType type, EnemyBehaviour behaviour, int count) {
         Entity spawner =
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/Spawner.png"))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                         .addComponent(new ColliderComponent())
-                        .addComponent(new SpawnerComponent(targets, spawnRate, type,
-                                behaviour, count));
+                        .addComponent(new SpawnerComponent(targets, spawnRate,
+                                type, behaviour, count));
 
         spawner.getComponent(TextureRenderComponent.class).scaleEntity();
         spawner.scaleHeight(1.5f);

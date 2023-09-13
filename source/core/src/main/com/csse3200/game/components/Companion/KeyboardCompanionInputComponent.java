@@ -271,11 +271,14 @@ public class KeyboardCompanionInputComponent extends InputComponent {
     /**
      * Triggers the walk event for the companion based on the current walk direction.
      * If the walk direction is zero, it triggers the walkStop event.
+     *
+     * Creates the individual triggers to show the direction of the companion. Useful for the animation
+     * Also, if the walkDirection is not zero, it calls a generic 'move' method to adjust the position of companion
      */
     private void triggerWalkEvent() {
             if (this.getTesting() == 0){
                 if (walkDirection.epsilonEquals(Vector2.Zero)) {
-                    entity.getEvents().trigger("walkStop");
+                    entity.getEvents().trigger("moveStop");
                 } else {
                     if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
                         entity.getEvents().trigger("walkUpLeft");
@@ -301,7 +304,7 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                     else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
                         entity.getEvents().trigger("walkRight");
                     }
-                    entity.getEvents().trigger("walk", walkDirection);
+                    entity.getEvents().trigger("move", walkDirection);
                 }
             }
 

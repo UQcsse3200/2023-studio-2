@@ -1,9 +1,7 @@
 
 {
-  "health": 50,
+  "health": 80,
   "baseAttack": 5,
   "attackMultiplier": 1,
-  "isImmune": false,
-  "gold": 10,
-  "favouriteColour": "peach"
+  "isImmune": false
 }

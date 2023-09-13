@@ -33,6 +33,7 @@ public class CompanionStatsDisplay extends UIComponent {
     public Label label;
 
 
+
     private boolean isInvincible = true;
     private boolean invincibilityImageLoaded = false;
     private float invincibilityTimer = 0.0f;
@@ -51,8 +52,11 @@ public class CompanionStatsDisplay extends UIComponent {
 
 
 
-    public CompanionStatsDisplay(Entity playerEntitiy){
-        this.playerEntity = playerEntitiy;
+
+
+    public CompanionStatsDisplay(Entity playerEntity){
+        this.playerEntity = playerEntity;
+
 
     }
 

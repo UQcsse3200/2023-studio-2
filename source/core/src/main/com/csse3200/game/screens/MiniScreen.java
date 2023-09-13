@@ -39,12 +39,14 @@ public class MiniScreen extends ScreenAdapter {
     public MiniScreen(GdxGame game) {
         this.game = game;
 
+
         logger.debug("Initializing control screen services");
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerTimeSource(new GameTime());
+        logger.debug("Initialising controls screen services");
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(5f, 5f);
@@ -67,11 +69,8 @@ public class MiniScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         renderer.dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getEntityService().dispose();
 
         unloadAssets();
-        ServiceLocator.clear();
     }
 
     private void loadAssets() {

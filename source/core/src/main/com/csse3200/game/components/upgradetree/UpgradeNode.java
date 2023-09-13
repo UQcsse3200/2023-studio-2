@@ -35,7 +35,7 @@ public class UpgradeNode {
      * @param config - The weapons config file
      */
     UpgradeNode(WeaponConfig config, WeaponType weaponType) {
-        this.imagePath = config.imagePath;
+        this.imagePath = config.iconPath == null ? config.spritePath : config.iconPath;
         this.weaponType = weaponType;
         this.children = new ArrayList<>();
         this.depth = 0;

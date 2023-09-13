@@ -14,8 +14,6 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.spacenavigation.NavigationBackground;
-import com.csse3200.game.entities.factories.RenderFactory;
-import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.PlanetTravel;
 
 /**

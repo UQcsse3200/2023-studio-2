@@ -2,7 +2,6 @@ package com.csse3200.game.services;
 
 import java.util.Map;
 
-import static java.lang.Math.max;
 
 
 /**

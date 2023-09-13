@@ -1,4 +1,4 @@
-package com.csse3200.game.components.Controls;
+package com.csse3200.game.components.controls;
 
 
 

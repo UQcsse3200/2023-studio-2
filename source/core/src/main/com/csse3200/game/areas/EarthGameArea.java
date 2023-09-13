@@ -135,7 +135,9 @@ public class EarthGameArea extends GameArea {
         spawnPlayer();
 
         spawnEnemies();
+        spawnSecretEnemies();
         spawnBoss();
+        spawnSecretBoss();
         spawnAsteroids();
         spawnTreeTopLayer();
         spawnBotanist();
@@ -355,6 +357,49 @@ public class EarthGameArea extends GameArea {
             spawnEntityAt(ranged, randomPos, true, true);
             //ranged.addComponent(new DialogComponent(dialogueBox));
         }
+    }
+
+    private void spawnSecretEnemies() {
+        GridPoint2 minPos = new GridPoint2(71, 1);
+        GridPoint2 maxPos = new GridPoint2(89, 19);
+
+
+        for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+            spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
+        }
+
+        for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+            spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
+        }
+
+        for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
+            spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
+        }
+
+        for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+            spawnEntityAt(ranged, randomPos, true, true);
+            //ranged.addComponent(new DialogComponent(dialogueBox));
+        }
+    }
+
+    private void spawnSecretBoss() {
+        GridPoint2 minPos = new GridPoint2(71, 1);
+        GridPoint2 maxPos = new GridPoint2(89, 19);
+
+        GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+        Entity boss = EnemyFactory.createBoss(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
+        spawnEntityAt(boss, randomPos, true, true);
     }
 
     /**

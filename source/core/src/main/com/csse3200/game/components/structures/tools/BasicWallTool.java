@@ -6,8 +6,8 @@ import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.BuildablesFactory;
 
-public class WallTool extends PlacementTool {
-    public WallTool(ObjectMap<String, Integer> cost) {
+public class BasicWallTool extends PlacementTool {
+    public BasicWallTool(ObjectMap<String, Integer> cost) {
         super(cost);
     }
 

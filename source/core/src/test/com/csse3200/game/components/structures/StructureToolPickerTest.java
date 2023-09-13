@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
-class StructurePickerTest {
+class StructureToolPickerTest {
     @Mock
     RenderService renderService;
     @Mock

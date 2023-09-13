@@ -10,8 +10,8 @@ import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.factories.BuildablesFactory;
 import com.csse3200.game.services.ServiceLocator;
 
-public class StoneWallTool extends PlacementTool {
-    public StoneWallTool(ObjectMap<String, Integer> cost) {
+public class IntermediateWallTool extends PlacementTool {
+    public IntermediateWallTool(ObjectMap<String, Integer> cost) {
         super(cost);
     }
 

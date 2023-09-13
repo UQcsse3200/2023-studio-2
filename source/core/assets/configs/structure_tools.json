@@ -1,6 +1,6 @@
 {
-  "tools":{
-    "com.csse3200.game.components.structures.tools.WallTool": {
+  "tools": {
+    "com.csse3200.game.components.structures.tools.BasicWallTool": {
       "level": 0,
       "name": "Dirt Wall",
       "cost": {
@@ -8,7 +8,7 @@
       },
       "texture": "images/structure-icons/wall.png"
     },
-    "com.csse3200.game.components.structures.tools.StoneWallTool": {
+    "com.csse3200.game.components.structures.tools.IntermediateWallTool": {
       "level": 0,
       "name": "Stone Wall",
       "cost": {

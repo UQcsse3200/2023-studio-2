@@ -99,7 +99,8 @@ public class CompanionStatsDisplay extends UIComponent {
     /**
      * Set the companion's image to an invincible state.
      */
-    public void setInvincibleImage() {AnimationRenderComponent infanimator = ServiceLocator.getGameArea().getCompanion().getComponent(AnimationRenderComponent.class);
+    public void setInvincibleImage() {
+        AnimationRenderComponent infanimator = ServiceLocator.getGameArea().getCompanion().getComponent(AnimationRenderComponent.class);
         infanimator.startAnimation("LEFT");
     }
 
@@ -127,7 +128,6 @@ public class CompanionStatsDisplay extends UIComponent {
     public void resetImage() {
         AnimationRenderComponent animator = ServiceLocator.getGameArea().getCompanion().getComponent(AnimationRenderComponent.class);
         animator.startAnimation("RIGHT");
-
     }
 
     /**

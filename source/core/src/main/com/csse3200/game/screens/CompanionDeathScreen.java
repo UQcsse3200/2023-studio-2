@@ -17,11 +17,20 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The screen displayed when the companion character dies in the game.
+ */
 public class CompanionDeathScreen extends ScreenAdapter {
     public static final Logger logger = LoggerFactory.getLogger(CompanionDeathScreen.class);
     private final GdxGame game;
     private final Renderer renderer;
-    private static final String[] companiondeathScreenTextures = {"images/companiondeathscreen.png"};
+    private static final String[] companionDeathScreenTextures = {"images/companiondeathscreen.png"};
+
+    /**
+     * Constructs the CompanionDeathScreen with the given game instance.
+     *
+     * @param game The GdxGame instance.
+     */
     public CompanionDeathScreen(GdxGame game) {
         this.game = game;
         ServiceLocator.registerInputService(new InputService());
@@ -32,6 +41,7 @@ public class CompanionDeathScreen extends ScreenAdapter {
         loadAssets();
         createUI();
     }
+
     @Override
     public void render(float delta) {
         ServiceLocator.getEntityService().update();
@@ -55,14 +65,14 @@ public class CompanionDeathScreen extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(companiondeathScreenTextures);
+        resourceService.loadTextures(companionDeathScreenTextures);
         ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(companiondeathScreenTextures);
+        resourceService.unloadAssets(companionDeathScreenTextures);
     }
 
     private void createUI() {

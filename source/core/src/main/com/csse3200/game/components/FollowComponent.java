@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 public class FollowComponent extends Component{
     private Entity followEntity;
     private float followSpeed;
-    //  minimumDistance is defined as the smallest amount of distance between entities which should invoke a follow
-    // command
     private float minimumDistance = 0.5f;
 
     private static Logger logger; // how to log print

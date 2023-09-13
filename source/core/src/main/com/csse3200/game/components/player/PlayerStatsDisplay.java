@@ -18,11 +18,13 @@ import javax.swing.*;
  */
 public class PlayerStatsDisplay extends UIComponent {
   Table table;
+  Table table2;
   private Image heartImage;
   private Label healthLabel;
   private ProgressBar healthBar;
   private ProgressBar DodgeBar;
   private Label DodgeLabel;
+  private Label livesLabel;
   private float healthWidth = 1000f;
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -43,8 +45,12 @@ public class PlayerStatsDisplay extends UIComponent {
   private void addActors() {
     table = new Table();
     table.top().left();
+    table2 = new Table();
+    table2.top().left();
     table.setFillParent(true);
     table.padTop(45f).padLeft(5f);
+    table2.setFillParent(true);
+    table2.padTop(120f).padLeft(5f);
 
     //health Bar
     int health = entity.getComponent(CombatStatsComponent.class).getHealth();
@@ -83,12 +89,18 @@ public class PlayerStatsDisplay extends UIComponent {
     DodgeBar.setWidth(200f);
     DodgeBar.setDebug(true);
 
+    //Player lives text
+    int lives = entity.getComponent(CombatStatsComponent.class).getLives();
+    CharSequence livesText = String.format("Lives Left: %d", lives);
+    livesLabel = new Label(livesText, skin, "large");
     table.add(heartImage).size(heartSideLength).pad(5);
     table.add(healthLabel);
     table.add(healthBar);
     table.add(DodgeLabel);
     table.add(DodgeBar);
+    table2.add(livesLabel);
     stage.addActor(table);
+    stage.addActor(table2);
   }
 
   @Override
@@ -116,6 +128,11 @@ public class PlayerStatsDisplay extends UIComponent {
     DodgeBar.setValue(dodge);
   }
 
+  public void updatePlayerLives(int lives) {
+    CharSequence livesText = String.format("Lives Left: %d", lives);
+    livesLabel.setText(livesText);
+  }
+
   @Override
   public void dispose() {
     super.dispose();
@@ -124,5 +141,6 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.remove();
     DodgeLabel.remove();
     DodgeBar.remove();
+    livesLabel.remove();
   }
 }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -90,10 +91,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyDown(int keycode) {
     keyFlags.put(keycode, 1);
-
     player = ServiceLocator.getEntityService().getPlayer();
     playerInventory = player.getComponent(InventoryComponent.class);
-
+    if (entity.getComponent(CombatStatsComponent.class).isDead()) {
+        return false;
+    }
       switch (keycode) {
           case Keys.SPACE -> {
               if (!dodge_available ||
@@ -158,6 +160,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
+      if (entity.getComponent(CombatStatsComponent.class).isDead()) {
+          return false;
+      }
     keyFlags.put(keycode, 0);
     switch (keycode) {
       case Keys.W, Keys.S, Keys.A, Keys.D:
@@ -186,7 +191,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     playerInventory = player.getComponent(InventoryComponent.class);
     PlayerActions playerActions = entity.getComponent(PlayerActions.class);
     int cooldown = playerActions.getAttackCooldown();
-
     if (cooldown != 0) {
       return false;
     }

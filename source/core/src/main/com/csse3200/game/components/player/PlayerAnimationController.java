@@ -155,6 +155,5 @@ public class PlayerAnimationController extends Component {
     }
     void animateDeath() {
         animator.startAnimation("Character_Death");
-        System.out.println("death");
     }
 }

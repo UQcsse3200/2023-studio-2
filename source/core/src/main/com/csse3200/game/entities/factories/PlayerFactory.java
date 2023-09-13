@@ -36,11 +36,16 @@ import java.util.ArrayList;
 public class PlayerFactory {
 
   private static DialogueBox dialogueBox;
+  private int playerLives = 3;
   private static final origiPlayerConfig stats =
       FileLoader.readClass(origiPlayerConfig.class, "configs/player.json");
 
-  static String[] playerAtlases = {"images/player.atlas", "images/skeleton.atlas"};
-
+  public int getPlayerLives() {
+    return playerLives;
+  }
+  public void setPlayerLives(int lives) {
+    playerLives = lives;
+  }
   /**
    * Create a player entity.
    * @return entity
@@ -79,7 +84,7 @@ public class PlayerFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
+            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune, stats.lives))
             .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())

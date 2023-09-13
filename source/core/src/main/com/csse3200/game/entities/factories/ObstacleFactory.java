@@ -156,7 +156,14 @@ public class ObstacleFactory {
     return asteroid;
   }
 
-  //TODO: REMOVE - LEGACY
+  public static Entity createBorder(float width, float height) {
+    Entity asteroid = new Entity()
+            .addComponent(new TextureRenderComponent("images/stone.png"))
+            .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+    asteroid.setScale(width, height);
+    return asteroid;
+  }
   public static Entity createStaticAsteroid(float width, float height) {
     asteroidConfig.scale = new Vector2(width, height);
     return createStaticAsteroid(asteroidConfig);
@@ -167,7 +174,8 @@ public class ObstacleFactory {
    * @param config Configuration file to match enemy to
    * @return ObstacleEnemy
    */
-  public static Entity createObstacleEnemy(BaseEntityConfig config){ //TODO: Could create custom config type if necessary
+  public static Entity createObstacleEnemy(BaseEntityConfig config){
+
     Entity enemy = new Entity()
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
@@ -176,7 +184,6 @@ public class ObstacleFactory {
     return enemy;
   }
 
-  //TODO: REMOVE - LEGACY
   public static Entity createObstacleEnemy(float width, float height){
     minigameConfigs.obstacleEnemy.scale = new Vector2(width, height);
     return createObstacleEnemy(minigameConfigs.obstacleEnemy);

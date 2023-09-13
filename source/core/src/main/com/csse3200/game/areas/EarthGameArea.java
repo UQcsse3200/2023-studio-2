@@ -9,6 +9,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
+import com.csse3200.game.concurrency.JobSystem;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
@@ -24,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static com.csse3200.game.entities.factories.EnvironmentFactory.createEnvironment;
 
@@ -385,15 +387,32 @@ public class EarthGameArea extends GameArea {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+        JobSystem.launchBlocking(() -> this.readMusic(earthMusic));
         resourceService.loadTextures(earthTextures);
         resourceService.loadTextureAtlases(earthTextureAtlases);
         resourceService.loadSounds(earthSounds);
-        resourceService.loadMusic(earthMusic);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
         }
+    }
+
+    /**
+     * Loads music files which are typically very large in a parallel thread
+     * @param files an array of music files
+     * @return array of loaded music
+     */
+    private Music[] readMusic(String[] files) {
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        Music[] music = new Music[files.length];
+        for (int i = 0; i < files.length; i++) {
+            resourceService.loadMusic(new String[]{files[i]});
+            music[i] = resourceService.getAsset(files[i], Music.class);
+        }
+
+        resourceService.loadAll();
+        return music;
     }
 
     private void unloadAssets() {

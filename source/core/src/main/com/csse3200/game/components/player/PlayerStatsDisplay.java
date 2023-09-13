@@ -16,23 +16,16 @@ import com.csse3200.game.ui.UIComponent;
  * An ui component for displaying player stats, e.g. health, healthBar, Dodge Cool-down Bar.
  */
 public class PlayerStatsDisplay extends UIComponent {
-<<<<<<< HEAD
   Table table;
   Table table2;
-=======
-  Table table, table1;
->>>>>>> 86e7107316b9c7cdf3d5dc2dd21e81e68d99c872
+  Table table1;
   private Image heartImage;
   private Label healthLabel;
   private ProgressBar healthBar;
   private ProgressBar DodgeBar;
   private Label DodgeLabel;
-<<<<<<< HEAD
   private Label livesLabel;
   private float healthWidth = 1000f;
-=======
-  private final float healthWidth = 1000f;
->>>>>>> 86e7107316b9c7cdf3d5dc2dd21e81e68d99c872
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -56,15 +49,12 @@ public class PlayerStatsDisplay extends UIComponent {
     table2.top().left();
     table.setFillParent(true);
     table.padTop(45f).padLeft(5f);
-<<<<<<< HEAD
     table2.setFillParent(true);
-    table2.padTop(120f).padLeft(5f);
-=======
+    table2.padTop(205f).padLeft(5f);
     table1 = new Table();
     table1.top().left();
     table1.setFillParent(true);
     table1.padTop(165f).padLeft(5f);
->>>>>>> 86e7107316b9c7cdf3d5dc2dd21e81e68d99c872
 
     //health Bar
     int health = entity.getComponent(CombatStatsComponent.class).getHealth();

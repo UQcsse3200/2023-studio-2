@@ -117,6 +117,31 @@ class IntermediateWallToolTest {
     }
 
     @Test
+    void testInteractExistingWallSufficientFunds() {
+        setupResourceAndPhysics();
+
+        ObjectMap<String, Integer> cost = new ObjectMap<>();
+        cost.put("resource1", 10);
+        cost.put("resource2", 25);
+
+        when(stateObserver.getStateData(any())).thenReturn(100);
+
+        var tool = new IntermediateWallTool(cost);
+
+        var position = new GridPoint2(0, 0);
+
+        when(structurePlacementService.getStructureAt(position)).thenReturn(mock(Wall.class));
+
+        tool.interact(player, position);
+
+        verify(stateObserver).getStateData("resource/resource1");
+        verify(stateObserver).getStateData("resource/resource2");
+        verify(structurePlacementService, atLeastOnce()).getStructureAt(position);
+        verify(structurePlacementService).replaceStructureAt(any(), eq(position),
+                eq(false), eq(false));
+    }
+
+    @Test
     void testInteractWithCostAndSufficientFunds() {
         setupResourceAndPhysics();
 

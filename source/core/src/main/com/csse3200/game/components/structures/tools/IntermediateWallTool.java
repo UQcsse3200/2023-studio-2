@@ -27,6 +27,10 @@ public class IntermediateWallTool extends PlacementTool {
             return false;
         }
 
+        if (!hasEnoughResources()) {
+            return false;
+        }
+
         PlaceableEntity newStructure = createEntity(player);
         newStructure.addComponent(new CostComponent(cost));
 

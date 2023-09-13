@@ -19,6 +19,10 @@ public abstract class PlacementTool extends Tool {
             return false;
         }
 
+        if (!hasEnoughResources()) {
+            return false;
+        }
+
         PlaceableEntity newStructure = createEntity(player);
         newStructure.addComponent(new CostComponent(cost));
 
@@ -32,10 +36,10 @@ public abstract class PlacementTool extends Tool {
     public boolean isPositionValid(GridPoint2 position) {
         var existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
 
-        if (existingStructure != null) {
-            return false;
-        }
+        return existingStructure == null;
+    }
 
+    public boolean hasEnoughResources() {
         GameStateObserver stateObserver = ServiceLocator.getGameStateObserverService();
 
         for (var resourceCost : cost.entries()) {

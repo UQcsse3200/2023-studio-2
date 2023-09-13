@@ -478,4 +478,8 @@ public class EarthGameArea extends GameArea {
         ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
         this.unloadAssets();
     }
+
+    public static Entity getPlayer() {
+        return player;
+    }
 }

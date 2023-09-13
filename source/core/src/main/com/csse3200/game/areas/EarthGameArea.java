@@ -25,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.List;
 
 import static com.csse3200.game.entities.factories.EnvironmentFactory.createEnvironment;
@@ -104,8 +103,6 @@ public class EarthGameArea extends GameArea {
     private static final String[] earthMusic = {backgroundMusic};
 
     private final TerrainFactory terrainFactory;
-    private final ArrayList<Entity> targetables;
-    private static Entity player;
     private final GdxGame game;
 
     /**
@@ -117,7 +114,6 @@ public class EarthGameArea extends GameArea {
         super();
         this.game = game;
         this.terrainFactory = terrainFactory;
-        this.targetables = new ArrayList<>();
     }
 
     /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -480,9 +476,5 @@ public class EarthGameArea extends GameArea {
         super.dispose();
         ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
         this.unloadAssets();
-    }
-
-    public static Entity getPlayer() {
-        return player;
     }
 }

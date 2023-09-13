@@ -6,21 +6,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.events.listeners.EventListener1;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
-import com.csse3200.game.entities.factories.StructureFactory;
-import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.events.listeners.EventListener1;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
 
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.csse3200.game.areas.EarthGameArea.getPlayer;
 
 /**
  * Represents an area in the game, such as a level, indoor area, etc. An area has a terrain and
@@ -33,9 +27,12 @@ public abstract class GameArea implements Disposable {
   protected List<Entity> areaEntities;
   protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;
+  protected ArrayList<Entity> targetables;
+  protected static Entity player;
 
   protected GameArea() {
     areaEntities = new ArrayList<>();
+    this.targetables = new ArrayList<>();
   }
 
   /** Create the game area in the world. */
@@ -117,6 +114,16 @@ public abstract class GameArea implements Disposable {
     return speedMult != null ? (float)speedMult : 1f;
   }
 
+  /**
+   * Spawns the player entity and adds them to the list of targetable entities
+   */
+  private void spawnPlayer(GridPoint2 PLAYER_SPAWN) {
+    Entity newPlayer = PlayerFactory.createPlayer();
+    spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    targetables.add(newPlayer);
+    player = newPlayer;
+  }
+
 
   /**
    * Spawn entity on a given tile. Requires the terrain to be set first.
@@ -140,5 +147,9 @@ public abstract class GameArea implements Disposable {
 
     entity.setPosition(worldPos);
     spawnEntity(entity);
+  }
+
+  public static Entity getPlayer() {
+    return player;
   }
 }

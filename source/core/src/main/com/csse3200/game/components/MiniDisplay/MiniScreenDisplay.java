@@ -39,7 +39,7 @@ public class MiniScreenDisplay extends UIComponent {
         addUIElements();
     }
 
-    void addUIElements() {
+    public void addUIElements() {
         // Load and set the background image
         background =
                 new Image(
@@ -75,7 +75,7 @@ public class MiniScreenDisplay extends UIComponent {
         stage.addActor(rootTable);
     }
 
-    void startGame() {
+    public void startGame() {
         game.setScreen(ScreenType.SPACE_MAP);
     }
 

@@ -1,12 +1,5 @@
-/**
- * The SpaceMiniTransition class represents a screen transition effect used in a LibGDX game.
- * It allows for transitioning between different game screens with a visual effect.
- *
- * This class extends the LibGDX Actor class and is designed to be used as an actor within a Stage.
- * The transition effect is achieved by moving a transition image diagonally across the screen.
- * When the transition is complete, it can trigger a callback or change to a new game screen.
- */
 package com.csse3200.game.ui;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,21 +9,27 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.GdxGame;
-
+/**
+ * The SpaceMiniTransition class represents a screen transition effect used in a LibGDX game.
+ * It allows for transitioning between different game screens with a visual effect.
+ *
+ * This class extends the LibGDX Actor class and is designed to be used as an actor within a Stage.
+ * The transition effect is achieved by moving a transition image diagonally across the screen.
+ * When the transition is complete, it can trigger a callback or change to a new game screen.
+ */
 public class SpaceMiniTransition extends Actor {
 
-    // Fields and properties
-    private GdxGame game;              // Reference to the game instance
-    private Runnable callback;         // Callback to execute after the transition
-    public boolean isTransitioning;    // Indicates if the transition is in progress
-    public Texture transitionImage;    // The image used for the transition effect
-    public SpriteBatch spriteBatch;    // Batch for rendering the transition image
-    public Sprite transitionSprite;    // Sprite for rendering the transition
-    public float transitionX;          // X-axis position for the transition
-    public float transitionY;          // Y-axis position for the transition
-    private float transitionSpeedX;    // Speed of the X-axis transition
-    private float transitionSpeedY;    // Speed of the Y-axis transition
-    public boolean isExit;             // Indicates if the transition is an exit transition
+    private GdxGame game;
+    private Runnable callback;
+    private boolean isTransitioning = false;
+    private Texture transitionImage;
+    private SpriteBatch spriteBatch;
+    private Sprite transitionSprite;
+    private float transitionX = 0f; // X-axis position for the transition
+    private float transitionY = 0f; // Y-axis position for the transition
+    private float transitionSpeedX = 450f; // Adjust the speed of the X-axis transition
+    private float transitionSpeedY = 450f; // Adjust the speed of the Y-axis transition
+    private boolean isExit = false;
 
     /**
      * Creates a new SpaceMiniTransition instance.
@@ -43,8 +42,8 @@ public class SpaceMiniTransition extends Actor {
     public SpaceMiniTransition(GdxGame game, String alert, Skin skin, String alertText) {
 
         this.game = game;
-        if("Exit game".equals(alert))
-            isExit =true;
+        if ("Exit game".equals(alert))
+            isExit = true;
         startTransition();
         // Load your transition image (replace with the actual image path)
         transitionImage = new Texture(Gdx.files.internal("images/game-over-final.png"));
@@ -57,7 +56,6 @@ public class SpaceMiniTransition extends Actor {
         transitionSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         transitionSprite.setSize(1600f, 1080f);
     }
-
     /**
      * Updates the actor's state on each frame.
      *
@@ -84,7 +82,6 @@ public class SpaceMiniTransition extends Actor {
             }
         }
     }
-
     /**
      * Draws the actor on the screen.
      *
@@ -99,7 +96,7 @@ public class SpaceMiniTransition extends Actor {
         }
     }
 
-    public void startTransition() {
+    private void startTransition() {
         isTransitioning = true;
         transitionX = 0;
         transitionY = 0;
@@ -116,7 +113,6 @@ public class SpaceMiniTransition extends Actor {
         this.callback = callback;
         stage.addActor(this);
     }
-
     /**
      * Disposes of resources used by the SpaceMiniTransition instance.
      * Call this method when the transition effect is no longer needed.

@@ -148,8 +148,8 @@ public class CompanionActions extends Component {
      * Makes the companion attack.
      */
     void attack() {
-        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-        attackSound.play();
+     //   Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+     //   attackSound.play();
     }
     public void setSpeed(float x, float y) {
         MAX_NORMAL_SPEED = new Vector2(x, y);

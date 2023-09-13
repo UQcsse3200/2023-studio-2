@@ -11,15 +11,19 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 
+
 public class KeyboardCompanionInputComponent extends InputComponent {
 
-  AnimationRenderComponent animator;
+
+    AnimationRenderComponent animator;
     private final Vector2 walkDirection = Vector2.Zero.cpy();
     private int flagW = 0;
     private int flagA = 0;
     private int flagS = 0;
     private int flagD = 0;
     private int flagMul = 0;
+
+    private final CompanionStatsDisplay companionStatsDisplay= new CompanionStatsDisplay();
 
     private int testing = 0;
 
@@ -74,7 +78,13 @@ public class KeyboardCompanionInputComponent extends InputComponent {
      */
     public KeyboardCompanionInputComponent() {
         super(5);
+
     }
+
+
+
+
+
 
     /**
      * Handles key down events and triggers companion events based on specific keycodes.
@@ -90,6 +100,14 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                 entity.getEvents().trigger("attack");
                 return true;
             }
+
+
+            case Keys.H -> {
+                companionStatsDisplay.toggleInfiniteHealth();
+
+                return true;
+            }
+
             case Keys.I -> {
 //                walkDirection.add(Vector2Utils.UP);
 //                entity.getEvents().trigger("walkUp");

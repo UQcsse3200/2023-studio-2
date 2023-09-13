@@ -103,7 +103,8 @@ public class EarthGameArea extends GameArea {
             "images/player.png",
             "images/deathpotion.png",
             "images/potion2.png",
-            "images/potion3.png"
+            "images/potion3.png","images/companionSS_1.png","images/companionSS_0.png",
+            "images/companionSS.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -125,7 +126,8 @@ public class EarthGameArea extends GameArea {
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
-            "images/player.atlas"
+            "images/player.atlas",
+            "images/companionSS.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};

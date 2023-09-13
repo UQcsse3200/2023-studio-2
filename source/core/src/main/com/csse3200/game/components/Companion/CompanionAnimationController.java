@@ -21,6 +21,7 @@ public class CompanionAnimationController extends Component {
                 entity.getEvents().addListener("walkUpRight", this::animateUpRight);
                 entity.getEvents().addListener("walkDownLeft", this::animateDownLeft);
                 entity.getEvents().addListener("walkDownRight", this::animateDownRight);
+
             }
 
 
@@ -49,4 +50,6 @@ public class CompanionAnimationController extends Component {
         animator.startAnimation("DOWN_LEFT");
     }
     void animateDownRight() {animator.startAnimation("DOWN_RIGHT");}
+    void infanimateDownRight() {animator.startAnimation("DOWN_RIGHT");}
+
 }

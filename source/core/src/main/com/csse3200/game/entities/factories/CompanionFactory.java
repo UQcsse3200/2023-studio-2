@@ -45,6 +45,9 @@ public class CompanionFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/comp_spritesheet.atlas", TextureAtlas.class));
+        AnimationRenderComponent infanimator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/companionSS.atlas", TextureAtlas.class));
         animator.addAnimation("UP", 1f);
         animator.addAnimation("DOWN", 1f);
         animator.addAnimation("LEFT", 1f);
@@ -53,6 +56,7 @@ public class CompanionFactory {
         animator.addAnimation("UP_LEFT", 1f);
         animator.addAnimation("DOWN_RIGHT", 1f);
         animator.addAnimation("DOWN_LEFT", 1f);
+        infanimator.addAnimation("RIGHT",1f);
 
 
         Entity companion =
@@ -68,6 +72,7 @@ public class CompanionFactory {
                         //.addComponent(new CompanionInteractionControllerComponent())
                         //we do not need the class of CompanionInteractionControllerComponent - Maxwell S
                         .addComponent(new CompanionStatsDisplay(playerEntity))
+                        .addComponent(new KeyboardCompanionInputComponent())
                         .addComponent(animator)
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new InteractionControllerComponent(false));

@@ -1,9 +1,16 @@
 package com.csse3200.game.components.Companion;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
@@ -24,6 +31,24 @@ public class CompanionStatsDisplay extends UIComponent {
 
     public Label messageLabel;
     public Label label;
+
+
+    private boolean isInvincible = true;
+    private boolean invincibilityImageLoaded = false;
+    private float invincibilityTimer = 0.0f;
+    private boolean isInfiniteHealth = true;
+    private boolean isSpecialAttack = false;
+
+    public Texture defaultTexture;
+    public Texture invincibleTexture;
+
+    private  AssetManager assetManager;
+
+    public CompanionStatsDisplay() {
+        assetManager = new AssetManager();
+    }
+
+
 
 
     public CompanionStatsDisplay(Entity playerEntitiy){
@@ -63,6 +88,50 @@ public class CompanionStatsDisplay extends UIComponent {
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void toggleInfiniteHealth() {
+
+        if (isInfiniteHealth) {
+            // Save the original health value before making it infinite
+            Gdx.app.debug("Infinite Health", "Original Health: "+ 50 );
+
+            updateCompanionHealthUI(Integer.MAX_VALUE);
+            Gdx.app.debug("Infinite Health", "Infinite Health is ON");
+            // Print the updated health value
+            Gdx.app.debug("Infinite Health", "Updated Health: " + 50);
+            isInfiniteHealth = false;
+        } else {
+            // Restore the original health value
+            updateCompanionHealthUI(50);
+            Gdx.app.debug("Infinite Health", "Infinite Health is OFF");
+
+            // Print the restored health value
+            Gdx.app.debug("Infinite Health", "Restored Health: " + 50);
+            isInfiniteHealth = true;
+        }
+    }
+
+
+
+
+
+
+
+
+
     private void addAlert(int health){
         PhysicsComponent companionPhysics = entity.getComponent(PhysicsComponent.class);
         //calculate the player position
@@ -89,12 +158,12 @@ public class CompanionStatsDisplay extends UIComponent {
     }
 
 
-    public boolean updatePlayerHealthUI(int health) {
+    public void updatePlayerHealthUI(int health) {
         // super.update();
         if (health <= 50 && !update) {
             addAlert(health);
             update = true;
-            return true;
+            return;
         }
 
         if (update) {
@@ -108,7 +177,6 @@ public class CompanionStatsDisplay extends UIComponent {
             }, 3.0f); // Adjust the delay as needed (3.0f is 3 seconds)
         }
 
-        return false;
     }
 
 
@@ -118,8 +186,22 @@ public class CompanionStatsDisplay extends UIComponent {
      * @param health The updated health value to display.
      */
     public void updateCompanionHealthUI(int health) {
-        CharSequence text = String.format("Companion Health: %d", health);
-        messageLabel.setText(text);
+        table = new Table();
+        table.top().left();
+        table.setFillParent(true);
+        table.padTop(85f).padLeft(5f);
+        CharSequence healthText2 = String.format("Companion Health: %d", health);
+        label = new Label(healthText2, skin, "large");
+        table.add(label);
+        ServiceLocator.getRenderService().getStage().addActor(table);
+//        Timer.schedule(new Task() {
+//            @Override
+//            public void run() {
+//                label.remove();
+//                update = false; // Reset the update flag
+//            }
+//        }, 8.0f); // Adjust the delay as needed (3.0f is 3 seconds)
+
     }
     /*public void updateCompanionGoldUI(int gold) {
         CharSequence text = String.format("Companion Gold: %d", gold);
@@ -133,3 +215,6 @@ public class CompanionStatsDisplay extends UIComponent {
         label.remove();
     }
 }
+
+
+

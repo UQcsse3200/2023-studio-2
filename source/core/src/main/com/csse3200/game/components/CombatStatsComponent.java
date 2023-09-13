@@ -70,6 +70,7 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       entity.getEvents().trigger("updateHealth", this.health);
+
     }
     if (entity != null) {
       //check that the entity is the player to initiate game ending logic

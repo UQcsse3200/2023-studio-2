@@ -49,6 +49,11 @@ public class ShootTask extends DefaultTask {
         if (currentPos.y < position.y) {
             spawn.y += 1;
         }
+        if (currentPos.x < position.x) {
+            spawn.x += 1;
+        } else {
+            spawn.x -= 0.5;
+        }
         ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawn);
     }
 

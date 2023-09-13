@@ -198,13 +198,13 @@ public class CompanionStatsDisplay extends UIComponent {
         label = new Label(healthText2, skin, "large");
         table.add(label);
         ServiceLocator.getRenderService().getStage().addActor(table);
-//        Timer.schedule(new Task() {
-//            @Override
-//            public void run() {
-//                label.remove();
-//                update = false; // Reset the update flag
-//            }
-//        }, 8.0f); // Adjust the delay as needed (3.0f is 3 seconds)
+        Timer.schedule(new Task() {
+            @Override
+            public void run() {
+                label.remove();
+                update = false;
+            }
+        }, 8.0f);
 
     }
     /*public void updateCompanionGoldUI(int gold) {

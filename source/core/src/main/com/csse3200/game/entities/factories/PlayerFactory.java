@@ -19,10 +19,12 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
+import com.csse3200.game.components.structures.StructurePicker;
+
+import java.util.ArrayList;
 
 /**
  * Factory to create a player entity.
@@ -34,10 +36,16 @@ import com.csse3200.game.ui.DialogueBox;
 public class PlayerFactory {
 
   private static DialogueBox dialogueBox;
+  private int playerLives = 3;
   private static final origiPlayerConfig stats =
       FileLoader.readClass(origiPlayerConfig.class, "configs/player.json");
 
-
+  public int getPlayerLives() {
+    return playerLives;
+  }
+  public void setPlayerLives(int lives) {
+    playerLives = lives;
+  }
   /**
    * Create a player entity.
    * @return entity
@@ -67,6 +75,7 @@ public class PlayerFactory {
     animator.addAnimation("Character_RollRight", 0.1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("Character_RollLeft", 0.1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("Character_RollUp", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Character_Death", 0.2f, Animation.PlayMode.NORMAL);
 
 
     Entity player =
@@ -75,7 +84,7 @@ public class PlayerFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
+            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune, stats.lives))
             .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())
@@ -83,7 +92,8 @@ public class PlayerFactory {
             .addComponent(new PlayerAnimationController())
             .addComponent(new WeaponComponent())
             .addComponent(new DialogComponent(dialogueBox))
-            .addComponent(new InteractionControllerComponent(false));
+            .addComponent(new InteractionControllerComponent(false))
+            .addComponent(new StructurePicker());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

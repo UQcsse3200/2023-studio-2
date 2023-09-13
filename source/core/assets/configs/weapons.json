@@ -6,7 +6,8 @@
     "initialRotationOffset": 0,
     "imageRotationOffset": 45,
     "textureAtlas": "images/sling_shot.atlas",
-    "imageScale" : 0.2
+    "imageScale" : 0.2,
+    "imagePath" : "images/sling_shot.png"
   },
 
   "ELEC_WRENCH": {
@@ -17,7 +18,8 @@
     "imageRotationOffset": 45,
     "attackCooldown": 10,
     "textureAtlas": "images/baseballbat.atlas",
-    "imageScale" : 1
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/stick.png"
   },
 
   "THROW_ELEC_WRENCH": {
@@ -27,6 +29,49 @@
     "initialRotationOffset": 0,
     "imageRotationOffset": 45,
     "textureAtlas": "images/wrench.atlas",
-    "imageScale" : 1
+    "imageScale" : 1,
+    "imagePath" : "images/wrench.png"
+  },
+
+  "STICK": {
+    "weaponSpeed": 0.75,
+    "weaponDuration": 50,
+    "rotationSpeed": 6,
+    "initialRotationOffset": 90,
+    "imageRotationOffset": 45,
+    "attackCooldown": 10,
+    "textureAtlas": "images/upgradetree/stick.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/stick.png"
+  },
+
+  "KATANA": {
+    "weaponSpeed": 0.85,
+    "weaponDuration": 50,
+    "rotationSpeed": 6,
+    "initialRotationOffset": 90,
+    "imageRotationOffset": 45,
+    "attackCooldown": 10,
+    "textureAtlas": "images/upgradetree/sword.atlas",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/sword.png"
+  },
+
+  "WOODHAMMER": {
+    "textureAtlas": "images/upgradetree/hammer1.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer1.png"
+  },
+
+  "STONEHAMMER": {
+    "textureAtlas": "images/upgradetree/hammer2.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer2.png"
+  },
+
+  "STEELHAMMER": {
+    "textureAtlas": "images/upgradetree/hammer2.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer2.png"
   }
 }

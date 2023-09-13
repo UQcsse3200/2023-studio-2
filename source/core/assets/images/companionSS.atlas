@@ -1,0 +1,32 @@
+companionSS.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+DOWN
+  rotate: false
+  xy: 1, 1
+  size: 112, 128
+  orig: 112, 128
+  offset: 0, 0
+  index: -1
+RIGHT
+  rotate: false
+  xy: 113, 1
+  size: 112, 128
+  orig: 112, 128
+  offset: 0, 0
+  index: -1
+LEFT
+  rotate: false
+  xy: 225, 1
+  size: 112, 128
+  orig: 112, 128
+  offset: 0, 0
+  index: -1
+UP
+  rotate: false
+  xy: 337, 1
+  size: 112, 128
+  orig: 112, 128
+  offset: 0, 0
+  index: -1

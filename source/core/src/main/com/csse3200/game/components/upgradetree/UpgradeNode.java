@@ -1,6 +1,8 @@
 package com.csse3200.game.components.upgradetree;
 
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.entities.configs.WeaponConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +13,13 @@ import java.util.List;
 public class UpgradeNode {
 
     /** Path to the image that represents the weapon upgrade. */
-    private String imagePath;
+    private final String imagePath;
 
     /** Type of weapon this node represents. */
-    private WeaponType weaponType;
+    private final WeaponType weaponType;
 
     /** List of child nodes, representing subsequent potential upgrades. */
-    private List<UpgradeNode> children;
+    private final List<UpgradeNode> children;
 
     /** X-coordinate of the node, typically used for UI positioning. */
     private float x;
@@ -25,15 +27,28 @@ public class UpgradeNode {
     /** Y-coordinate of the node, typically used for UI positioning. */
     private float y;
 
+    /** Depth of the tree */
+    private int depth;
+
+    private static final int BASE_COST = 50;
+
     /**
      * Constructs a new UpgradeNode with the given weapon type and image path.
-     * @param weaponType The type of weapon this node represents.
-     * @param imagePath Path to the image representing the weapon.
+     * @param config - The weapons config file
      */
-    UpgradeNode(WeaponType weaponType, String imagePath) {
-        this.imagePath = imagePath;
+    UpgradeNode(WeaponConfig config, WeaponType weaponType) {
+        this.imagePath = config.imagePath;
         this.weaponType = weaponType;
         this.children = new ArrayList<>();
+        this.depth = 0;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
+    public int getDepth() {
+        return depth;
     }
 
     /**
@@ -98,5 +113,14 @@ public class UpgradeNode {
      */
     public String getImagePath() {
         return imagePath;
+    }
+
+    /**
+     * Gets the selected nodes upgrade cost
+     *
+     * @return int: the nodes cost
+     */
+    public int getNodeCost() {
+        return BASE_COST * (this.getDepth() + 1);
     }
 }

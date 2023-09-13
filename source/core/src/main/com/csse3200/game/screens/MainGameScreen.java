@@ -40,9 +40,11 @@ import static com.csse3200.game.ui.UIComponent.skin;
  */
 public class MainGameScreen extends ScreenAdapter {
   private TitleBox titleBox;
-private static boolean alive = true;
+  private static boolean alive = true;
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {"images/heart.png"};
+  private static final String[] mainGameTextures = {"images/heart.png",
+          "images/structure-icons/wall.png",
+          "images/structure-icons/turret.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;
@@ -86,7 +88,7 @@ private static boolean alive = true;
     gameArea = new EarthGameArea(terrainFactory, game);
     gameArea.create();
     player = ((EarthGameArea) gameArea).getPlayer();
-    player.getEvents().addListener("death", this::initiateDeathScreen);
+    player.getEvents().addListener("deathscreen", this::initiateDeathScreen);
     titleBox = new TitleBox(game, "Title", skin);
 
   }

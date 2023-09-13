@@ -63,16 +63,9 @@ public class WeaponControllerComponent extends Component {
         //switch statement to define weapon movement based on type (a projectile
         Vector2 movement = switch (this.weaponType) {
             case SLING_SHOT -> weapon_target_update();
-            case ELEC_WRENCH -> weapon_meleeswing_update();
+            case ELEC_WRENCH, KATANA -> weapon_meleeswing_update();
             case THROW_ELEC_WRENCH -> weapon_2_update();
-            case STICK -> null; // todo
-            case LASERGUN -> null;
-            case KATANA -> null;
-            case WOODHAMMER -> null;
-            case STONEHAMMER -> null;
-            case TEMP1 -> null;
-            case TEMP2 -> null;
-            case TEMP3 -> null;
+            default -> throw new IllegalStateException("Unexpected value: " + this.weaponType);
         };
 
 

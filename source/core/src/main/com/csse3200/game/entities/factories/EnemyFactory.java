@@ -111,19 +111,26 @@ public class EnemyFactory {
     // UI adjustments
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
+    enemy.scaleHeight(getEnemyscale(type));
+
+    return enemy;
+  }
+
+  private static float getEnemyscale(EnemyType type){
     float scale = 2.0f;
     if (type == EnemyType.BossRanged){
-      scale = 1.5f;
+      scale = 2.2f;
     }
-    if (type == EnemyType.BossMelee){
-      scale = 3.5f;
+    else if (type == EnemyType.BossMelee){
+      scale = 2.4f;
     }
     else if (type == EnemyType.Ranged) {
       scale = 2.0f;
     }
-    enemy.scaleHeight(scale);
-
-    return enemy;
+    else if (type == EnemyType.Melee) {
+      scale = 1.8f;
+    }
+    return scale;
   }
 
   /**

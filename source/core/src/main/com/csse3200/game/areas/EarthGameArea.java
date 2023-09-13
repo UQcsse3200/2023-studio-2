@@ -104,7 +104,14 @@ public class EarthGameArea extends GameArea {
             "images/deathpotion.png",
             "images/potion2.png",
             "images/potion3.png","images/companionSS_1.png","images/companionSS_0.png",
-            "images/companionSS.png"
+            "images/companionSS.png",
+            "images/Potion1re.png",
+            "images/Potion3re.png",
+            "images/Potion3re.png",
+            "images/Potion4re.png"
+
+
+
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -137,6 +144,7 @@ public class EarthGameArea extends GameArea {
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
     private Entity player;
+
     private Entity companion;
     private Entity laboratory;
     private GdxGame game;
@@ -173,15 +181,12 @@ public class EarthGameArea extends GameArea {
         spawnShip();
         player = spawnPlayer();
         companion = spawnCompanion(player);
-        spawnPotion(PotionType.DEATH_POTION);
-        spawnPotion(PotionType.SPEED_POTION);
-        spawnPotion(PotionType.HEALTH_POTION);
         spawnTurret();
         spawnEnemies();
         spawnBoss();
         spawnAsteroids();
         spawnBotanist();
-
+        companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
         playMusic();
     }
     public static void removeItemOnMap(Entity entityToRemove) {
@@ -354,6 +359,7 @@ public class EarthGameArea extends GameArea {
         Vector2 playerPosition = playerPhysics.getBody().getPosition();
         spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
         targetables.add(newCompanion);
+
         return newCompanion;
     }
 
@@ -374,6 +380,7 @@ public class EarthGameArea extends GameArea {
             spawnEntityAt(speedPowerup, randomPos2, true, false);
         }
     }
+
     public Entity spawnPotion(PotionType potionType){
         Entity newPotion;
         switch (potionType){
@@ -398,6 +405,7 @@ public class EarthGameArea extends GameArea {
             default: throw new IllegalArgumentException("You must assign a valid PowerupType");
         }
     }
+
 
     /**
      * Spawns all the enemies detailed in the Game Area.

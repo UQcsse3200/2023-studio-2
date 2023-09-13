@@ -21,14 +21,14 @@ public class PotionFactory {
         Potion.setScale(0.4f,0.4f);
         switch (type){
             case DEATH_POTION -> {
-                Potion.addComponent(new TextureRenderComponent("images/deathpotion.png"))
+                Potion.addComponent(new TextureRenderComponent("images/Potion3re.png"))
                         /*.addComponent(new PotionComponent(PotionType.DEATH_POTION).applyEffect();)*/;}
             case HEALTH_POTION -> {
-                Potion.addComponent(new TextureRenderComponent("images/potion2.png"))
+                Potion.addComponent(new TextureRenderComponent("images/Potion4re.png"))
                         .addComponent(new PotionComponent(PotionType.DEATH_POTION))
                         .getComponent(PotionComponent.class).applyEffect(player,companion);}
             case SPEED_POTION -> {
-                Potion.addComponent(new TextureRenderComponent("images/potion3.png"))
+                Potion.addComponent(new TextureRenderComponent("images/Potion2re.png"))
                         .addComponent(new PotionComponent(PotionType.SPEED_POTION))
                         .getComponent(PotionComponent.class).applyEffect(player,companion);}
             default -> throw new IllegalArgumentException("You must assign a valid PotionType");

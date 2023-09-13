@@ -49,10 +49,10 @@ public class LabWindow extends Window {
 
 
         Table exit = new Table();
-        Texture potion1Image = new Texture("images/deathpotion.png");
-        Texture potion2Image = new Texture("images/potion2.png");
-        Texture potion3Image = new Texture("images/potion3.png");
-        Texture potion4Image = new Texture("images/potion4.png");
+        Texture potion1Image = new Texture("images/Potion3re.png");
+        Texture potion2Image = new Texture("images/Potion2re.png");
+        Texture potion3Image = new Texture("images/Potion4re.png");
+        Texture potion4Image = new Texture("images/Potion1re.png");
         Image potion1ImageWidget = new Image(potion1Image);
         Image potion2ImageWidget = new Image(potion2Image);
         Image potion3ImageWidget = new Image(potion3Image);
@@ -93,18 +93,21 @@ public class LabWindow extends Window {
         potion1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event,float x, float y){
+                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("SpawnPotion",PotionType.DEATH_POTION);
                 failLaboratory();
             }
         });
         potion2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("SpawnPotion",PotionType.HEALTH_POTION);
                 failLaboratory();
             }
         });
         potion3.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("SpawnPotion",PotionType.SPEED_POTION);
                 failLaboratory();
             }
         });
@@ -112,6 +115,7 @@ public class LabWindow extends Window {
         potion4.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("SpawnPotion");
                 failLaboratory();
             }
         });

@@ -33,7 +33,7 @@ public class Entity {
   private static final String EVT_NAME_POS = "setPosition";
   private String entityType;
   private final int id;
-  private final IntMap<Component> components;
+  protected final IntMap<Component> components;
   private final EventHandler eventHandler;
   private boolean enabled = true;
   private boolean created = false;

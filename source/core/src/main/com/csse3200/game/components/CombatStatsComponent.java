@@ -20,13 +20,21 @@ public class CombatStatsComponent extends Component {
   private int maxHealth;
   private int attackMultiplier;
   private Boolean isImmune;
-
+  private int lives;
   public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune) {
     this.maxHealth = health;
     this.setHealth(health);
     this.setBaseAttack(baseAttack);
     this.setAttackMultiplier(attackMultiplier);
     this.setImmunity(isImmune);
+  }
+  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune, int lives) {
+    this.maxHealth = health;
+    this.setHealth(health);
+    this.setBaseAttack(baseAttack);
+    this.setAttackMultiplier(attackMultiplier);
+    this.setImmunity(isImmune);
+    this.lives = lives;
   }
 
   /**
@@ -73,18 +81,19 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       if (isDead() && entity.getEntityType().equals("player")) {
+        entity.getEvents().trigger("playerDeath");
         final Timer timer = new Timer();
         java.util.TimerTask killPlayer = new java.util.TimerTask() {
           @Override
           public void run() {
-            entity.getEvents().trigger("death");
+            entity.getEvents().trigger("deathscreen");
             timer.cancel();
             timer.purge();
           }
         };
-        timer.schedule(killPlayer, 500);
+        timer.schedule(killPlayer, 750);
       } else if (isDead() && entity.getEntityType().equals("playerWeapon")) {
-            entity.getEvents().trigger("death", 0);
+        entity.getEvents().trigger("death", 0);
       }
     }
   }
@@ -175,6 +184,34 @@ public class CombatStatsComponent extends Component {
    */
   public int getAttack() {
     return getBaseAttack() * getAttackMultiplier();
+  }
+
+  /**
+   * Sets the number of lives player has left.
+   * @param lives
+   */
+  public void setLives(int lives) {
+    this.lives = lives;
+  }
+
+  /**
+   * Subtracts one life from player lives.
+   */
+  public void minusLife() {
+    this.lives -= 1;
+  }
+  /**
+   * Adds one life to player lives.
+   */
+  public void addLife() {
+    this.lives += 1;
+  }
+  /**
+   * returns number of lives player has left.
+   * @return number of lives
+   */
+  public int getLives() {
+    return this.lives;
   }
 
   public void hit(CombatStatsComponent attacker) {

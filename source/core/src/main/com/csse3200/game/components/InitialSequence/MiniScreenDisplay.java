@@ -24,9 +24,9 @@ public class MiniScreenDisplay extends UIComponent {
     private float spaceSpeed = 1;
     private float planetToTextPadding = 150;
     private Image background;
-    private Image planet;
+    private Image picture;
     private Table rootTable;
-    private TypingLabel storyLabel;
+    private TypingLabel spaceLabel;
 
     public MiniScreenDisplay(GdxGame game) {
         super();
@@ -44,7 +44,7 @@ public class MiniScreenDisplay extends UIComponent {
         background =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/earth_design.png", Texture.class));
+                                .getAsset("images/start.png", Texture.class));
         background.setPosition(0, 0);
         // Scale the height of the background to maintain the original aspect ratio of the image
         // This prevents distortion of the image.
@@ -52,59 +52,50 @@ public class MiniScreenDisplay extends UIComponent {
         background.setHeight(scaledHeight);
 
         // Load the animated planet
-        planet =
+        picture =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/earth_design.png", Texture.class));
-        planet.setSize(200, 200); // Set to a reasonable fixed size
+                                .getAsset("images/start.png", Texture.class));
+        picture.setSize(200, 200); // Set to a reasonable fixed size
 
-        // The planet moves at a constant speed, so to make it appear at the right time,
-        // it is to be placed at the right y coordinate above the screen.
-        // The height is informed by the length of the text animation and the game's target FPS.
+
         float planetOffset = textAnimationDuration * UserSettings.get().fps;
-        planet.setPosition((float) Gdx.graphics.getWidth() / 2, planetOffset, Align.center);
+        picture.setPosition((float) Gdx.graphics.getWidth() / 2, planetOffset, Align.center);
 
         // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
-        String story = """
-             {WAIT=0.02}
-             READY
-             {WAIT=0.02}
-             TO
-             {WAIT=0.02}
-             PLAY?
-             {WAIT}
-         
-             {WAIT=1}
+        String space = """
+             3
+             2
+             1
              """;
-        storyLabel = new TypingLabel(story, skin); // Create the TypingLabel with the formatted story
-        // Reduce the animation speed of all text in the story.
+        spaceLabel = new TypingLabel(space, skin);
         String defaultTokens = "{SLOWER}";
-        storyLabel.setDefaultToken(defaultTokens);
-        storyLabel.setAlignment(Align.center); // Center align the text
+        spaceLabel.setDefaultToken(defaultTokens);
+        spaceLabel.setAlignment(Align.center);
 
-        TextButton continueButton = new TextButton("Continue", skin);
+        TextButton LaunchMissionButton = new TextButton("Launch Mission", skin);
 
-        // The continue button lets the user proceed to the main game
-        continueButton.addListener(new ChangeListener() {
+
+        LaunchMissionButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Continue button clicked");
+                logger.debug("LaunchMission button clicked");
                 startGame();
             }
         });
 
         rootTable = new Table();
-        rootTable.setFillParent(true); // Make the table fill the screen
+        rootTable.setFillParent(true);
 
         rootTable.row();
 
-        rootTable.add(storyLabel).expandX().center().padTop(150f); // The story label is at the top of the screen
+        rootTable.add(spaceLabel).expandX().center().padTop(250f);
         rootTable.row().padTop(30f);
-        rootTable.add(continueButton).bottom().padBottom(30f);
+        rootTable.add(LaunchMissionButton).bottom().padBottom(30f);
 
-        // The background and planet are added directly to the stage so that they can be moved and animated freely.
+
         stage.addActor(background);
-        stage.addActor(planet);
+        stage.addActor(picture);
         stage.addActor(rootTable);
     }
 
@@ -120,8 +111,8 @@ public class MiniScreenDisplay extends UIComponent {
     @Override
     public void update() {
         // This movement logic is triggered on every frame until the middle of the planet hits its target position on the screen.
-        if (planet.getY(Align.center) >= storyLabel.getY(Align.top) + planetToTextPadding) {
-            planet.setY(planet.getY() - spaceSpeed); // Move the planet
+        if (picture.getY(Align.center) >= spaceLabel.getY(Align.top) + planetToTextPadding) {
+            picture.setY(picture.getY() - spaceSpeed); // Move the planet
             background.setY(background.getY() - spaceSpeed); // Move the background
         }
         stage.act(ServiceLocator.getTimeSource().getDeltaTime());
@@ -131,9 +122,9 @@ public class MiniScreenDisplay extends UIComponent {
     @Override
     public void dispose() {
         rootTable.clear();
-        planet.clear();
+        picture.clear();
         background.clear();
-        storyLabel.clear();
+        spaceLabel.clear();
         super.dispose();
     }
 }

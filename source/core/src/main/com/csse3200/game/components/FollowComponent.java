@@ -6,6 +6,7 @@ import com.csse3200.game.entities.factories.PlayerFactory;
 public class FollowComponent extends Component{
     private Entity playerEntity;
     private float followspeed;
+    private float minimumDistance = 0.5f;
 
     public FollowComponent(Entity playerEntity,float followspeed){
         this.playerEntity = playerEntity;
@@ -15,16 +16,22 @@ public class FollowComponent extends Component{
         entity.getEvents().addListener();
     }*/
 
-    public void update(){
+    public void update() {
         if (playerEntity != null) {
             Vector2 playerPosition = playerEntity.getPosition();
             Vector2 currentPosition = entity.getPosition();
 
-            Vector2 direction = playerPosition.cpy().sub(currentPosition).nor();
-            Vector2 movement = direction.scl(followspeed * Gdx.graphics.getDeltaTime());
+            Vector2 direction = playerPosition.cpy().sub(currentPosition);
+            float distance = direction.len();
 
-            currentPosition.add(movement);
-            entity.setPosition(currentPosition);
+            if (distance > minimumDistance) {
+                // Calculate movement only if the distance is greater than the minimum
+                direction.nor().scl(followspeed * Gdx.graphics.getDeltaTime());
+
+                currentPosition.add(direction);
+                entity.setPosition(currentPosition);
+            }
         }
     }
 }
+

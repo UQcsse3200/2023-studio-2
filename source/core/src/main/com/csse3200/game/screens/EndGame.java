@@ -22,58 +22,11 @@ import org.slf4j.LoggerFactory;
 
 public class EndGame extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(StoryScreen.class);
-    private final GdxGame game;
-    private final Renderer renderer;
-    private static final String[] storyTextures = {
-            "images/GameOver.png"
-    };
-    public EndGame(GdxGame game) {
-        this.game = game;
 
-        ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
-
-        ServiceLocator.registerEntityService(new EntityService());
-        ServiceLocator.registerRenderService(new RenderService());
-        renderer = RenderFactory.createRenderer();
-
-        loadAssets();
-        createUI();
-
+    public EndGame(GdxGame gdxGame) {
     }
-    @Override
-    public void render(float delta) {
-        ServiceLocator.getEntityService().update();
-        renderer.render();
-    }
-    @Override
-    public void resize(int width, int height) {
-        renderer.resize(width, height);
-        logger.trace("Resized renderer: ({} x {})", width, height);
-    }
-    @Override
-    public void dispose() {
 
-        renderer.dispose();
-        unloadAssets();
 
-        ServiceLocator.getEntityService().dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getResourceService().dispose();
-
-        ServiceLocator.clear();
-    }
-    private void loadAssets() {
-        logger.debug("Loading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(storyTextures);
-        ServiceLocator.getResourceService().loadAll();
-    }
-    private void unloadAssets() {
-        logger.debug("Unloading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(storyTextures);
-    }
     private void createUI() {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();

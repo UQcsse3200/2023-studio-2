@@ -367,3 +367,38 @@ Character_RollUp
   orig: 32, 32
   offset: 0, 0
   index: -1
+Character_Death
+  rotate: false
+  xy: 992, 233
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Character_Death
+  rotate: false
+  xy: 960, 330
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Character_Death
+  rotate: false
+  xy: 992, 330
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Character_Death
+  rotate: false
+  xy: 1024, 330
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Character_Death
+  rotate: false
+  xy: 1056, 330
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

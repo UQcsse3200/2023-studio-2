@@ -1,6 +1,7 @@
-package com.csse3200.game.components;
+package com.csse3200.game.screens;
 
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import org.junit.jupiter.api.Test;
 

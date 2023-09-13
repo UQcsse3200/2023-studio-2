@@ -76,7 +76,6 @@ public class SpaceGameArea extends GameArea {
         createBoundary();
         spawnEnemy();
 
-
     }
 
     private void playMusic() {
@@ -201,6 +200,10 @@ public class SpaceGameArea extends GameArea {
         targetables.add(newShip);
         ship = newShip;
         return newShip;
+    }
+    public static void Exitonc()
+    {
+        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
 
 

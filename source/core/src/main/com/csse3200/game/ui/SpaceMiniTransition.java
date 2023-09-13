@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.csse3200.game.GdxGame;
 
-public class MainAlertBox extends Actor {
+public class SpaceMiniTransition extends Actor {
 
     private GdxGame game;
     private Runnable callback;
@@ -24,7 +24,7 @@ public class MainAlertBox extends Actor {
     private float transitionSpeedY = 650f; // Adjust the speed of the Y-axis transition
     private boolean isExit = false;
 
-    public MainAlertBox(GdxGame game, String alert, Skin skin, String alertText) {
+    public SpaceMiniTransition(GdxGame game, String alert, Skin skin, String alertText) {
 
         this.game = game;
         if("Exit game".equals(alert))

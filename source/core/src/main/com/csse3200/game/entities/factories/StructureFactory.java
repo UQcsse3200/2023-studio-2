@@ -23,10 +23,12 @@ import com.csse3200.game.input.ExtinguisherInputComponent;
 import com.csse3200.game.input.FireInputComponent;
 import com.csse3200.game.input.HoleInputComponent;
 import com.csse3200.game.input.SpannerInputComponent;
+
 import com.csse3200.game.entities.configs.ExtractorConfig;
 import com.csse3200.game.entities.configs.ShipConfig;
 import com.csse3200.game.entities.configs.UpgradeBenchConfig;
 import com.csse3200.game.entities.PlaceableEntity;
+
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
@@ -219,7 +221,6 @@ public class StructureFactory {
     }
 
     //CONFLICT HERE
-
 
     /**
      * Creates a ship entity that matches the config file

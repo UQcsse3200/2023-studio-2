@@ -90,7 +90,7 @@ public class ForestGameArea extends GameArea {
       "images/TurretOne.png",
       "images/TurretTwo.png",
       "images/rangeEnemy.png",
-      "images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
+      //"images/elixir_collector.png", //TODO: Replace these images with copyright free images - these are just for testing purposes!!
       "images/broken_elixir_collector.png",
       "images/stone_wall.png",
        "images/companionSS.png",
@@ -98,9 +98,7 @@ public class ForestGameArea extends GameArea {
           "images/companionSS_1.png",
           "images/companionSS_2.png",
           "images/companionSS_03.png",
-
       "images/player.png",
-
       "images/companionSS.png",
       "images/companionSS_0.png",
       "images/companionSS_1.png",

@@ -56,7 +56,6 @@ public class EarthGameArea extends GameArea {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
             "images/extractor.png",
             "images/broken_extractor.png",
-            //"images/elixir_collector.png", //Should check if minigame window loads
             "images/refinedExtractor2.png",
             "images/refinedBrokenExtractor.png",
             "images/box_boy_leaf.png",

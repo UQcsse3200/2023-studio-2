@@ -1,7 +1,5 @@
 package com.csse3200.game.components.Companion;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 

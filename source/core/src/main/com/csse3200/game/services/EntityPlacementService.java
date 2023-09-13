@@ -1,10 +1,8 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
-import com.badlogic.gdx.math.Vector2;
-import java.util.Map;
 
 /**
  * Service to allow entities to be placed after game initilisation

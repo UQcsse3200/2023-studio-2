@@ -1,9 +1,14 @@
 package com.csse3200.game.entities.configs;
 
-public class ExtractorConfig {
+import com.csse3200.game.components.resources.Resource;
 
-    private static final String[] ExtractorAnimationAtlas = {
-            //"images/refinedBrokenExtractor.atlas",
-            //"images/ExtractorAnimation.atlas",
-    };
+public class ExtractorConfig extends BaseEntityConfig {
+    public Resource resource;
+    public int health;
+    public long tickRate;
+    public int tickSize;
+
+    public ExtractorConfig() {
+        spritePath = "images/ExtractorAnimation.atlas";
+    }
 }

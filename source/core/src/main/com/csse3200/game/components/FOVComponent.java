@@ -5,7 +5,6 @@ import com.csse3200.game.components.structures.Rotation;
 import com.csse3200.game.components.structures.RotationRenderComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.factories.EnemyFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;

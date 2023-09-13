@@ -60,7 +60,7 @@ public class ProjectileFactoryTest {
         ArrayList<Entity> targetList = new ArrayList<>();
         Entity newPlayer = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
         targetList.add(newPlayer);
-        Entity enemy = createEnemy(targetList, EnemyType.Melee, EnemyBehaviour.PTE);
+        Entity enemy = createEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
         Vector2 bulletPosition = new Vector2(1f, 1f);
         Entity bullet = createEnemyBullet(bulletPosition,enemy);
 

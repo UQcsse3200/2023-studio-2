@@ -6,10 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.ReturnToPlanetDisplay;
+import com.csse3200.game.components.ships.ShipActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.components.ships.ShipActions;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
@@ -25,7 +26,6 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.MainGameActionss;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
-import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,18 +45,7 @@ public class SpaceMapScreen extends ScreenAdapter {
 
     public SpaceMapScreen(GdxGame game) {
         this.game = game;
-
-        logger.debug("Initialising space mini game screen services");
-        ServiceLocator.registerTimeSource(new GameTime());
-
-        PhysicsService physicsService = new PhysicsService();
-        ServiceLocator.registerPhysicsService(physicsService);
-        physicsEngine = physicsService.getPhysics();
-        ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
-
-        ServiceLocator.registerEntityService(new EntityService());
-        ServiceLocator.registerRenderService(new RenderService());
+        physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
 
         ServiceLocator.registerGameStateObserverService(new GameStateObserver());
 
@@ -96,12 +85,6 @@ public class SpaceMapScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
-
-        ServiceLocator.getEntityService().dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getResourceService().dispose();
-
-        ServiceLocator.clear();
     }
 
     private void loadAssets() {

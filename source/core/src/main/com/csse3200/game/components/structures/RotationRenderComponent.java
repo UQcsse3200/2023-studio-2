@@ -1,5 +1,6 @@
 package com.csse3200.game.components.structures;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.rendering.AtlasRenderComponent;
 
 /**
@@ -19,12 +20,18 @@ public class RotationRenderComponent extends AtlasRenderComponent {
         this.rotation = rotation;
     }
 
+    public RotationRenderComponent(TextureAtlas atlas, Rotation rotation) {
+        super(atlas, rotation.toString());
+        this.rotation = rotation;
+    }
+
     /**
      * Sets the current rotation of the atlas.
      * @param rotation - the rotation to set the atlas too.
      */
     public void setRotation(Rotation rotation) {
         super.setRegion(rotation.toString(), false);
+        this.rotation = rotation;
     }
 
     /**

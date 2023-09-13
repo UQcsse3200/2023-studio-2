@@ -116,7 +116,7 @@ public class EnemyFactory {
     return enemy;
   }
 
-  private static float getEnemyscale(EnemyType type){
+  static float getEnemyscale(EnemyType type){
     float scale = 2.0f;
     if (type == EnemyType.BossRanged){
       scale = 2.2f;

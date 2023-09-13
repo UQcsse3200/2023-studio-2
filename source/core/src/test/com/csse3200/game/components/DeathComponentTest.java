@@ -57,5 +57,32 @@ class DeathComponentTest {
         verify(mockEntity.getComponent(HitboxComponent.class), times(0)).setLayer((short) 0);
         verify(mockEntity.getEvents(), times(0)).trigger("dispose");
     }
+
+    @Test
+    void shouldNotKillIfNotTriggeredByHitbox() {
+        Fixture mockMe = mock(Fixture.class);
+        Fixture mockOther = mock(Fixture.class);
+
+        when(mockHitboxComponent.getFixture()).thenReturn(null);
+
+        deathComponent.kill(mockMe, mockOther);
+
+        verify(mockEntity, times(0)).getComponent(AnimationRenderComponent.class);
+    }
+
+    @Test
+    void shouldKillIfTriggeredByHitboxAndIsDead() {
+        Fixture mockMe = mock(Fixture.class);
+        Fixture mockOther = mock(Fixture.class);
+
+        when(mockHitboxComponent.getFixture()).thenReturn(mockMe);
+        when(mockCombatStats.isDead()).thenReturn(true);
+
+        deathComponent.kill(mockMe, mockOther);
+
+        verify(mockAnimator).stopAnimation();
+        verify(mockEntity.getComponent(HitboxComponent.class)).setLayer((short) 0);
+        verify(mockEntity.getEvents()).trigger("dispose");
+    }
 }
 

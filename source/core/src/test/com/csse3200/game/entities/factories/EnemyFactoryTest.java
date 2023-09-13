@@ -17,7 +17,6 @@ import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +25,7 @@ import org.mockito.Mock;
 import java.util.ArrayList;
 
 import static com.csse3200.game.entities.factories.EnemyFactory.createEnemy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(GameExtension.class)
 public class EnemyFactoryTest {
@@ -43,6 +43,14 @@ public class EnemyFactoryTest {
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerRenderService(new RenderService());
     }
+    @Test
+    void getEnemyScaleTest() {
+        assertEquals(2.0f, EnemyFactory.getEnemyscale(EnemyType.Ranged));
+        assertEquals(1.8f, EnemyFactory.getEnemyscale(EnemyType.Melee));
+        assertEquals(2.2f, EnemyFactory.getEnemyscale(EnemyType.BossRanged));
+        assertEquals(2.4f, EnemyFactory.getEnemyscale(EnemyType.BossMelee));
+    }
+
     /**
      * Melee PTE Enemy distinguished by stat traits
      * "meleeEnemyPTE":
@@ -62,9 +70,9 @@ public class EnemyFactoryTest {
         Entity enemy = createEnemy(targetList, EnemyType.Melee, EnemyBehaviour.PTE);
 
         // Checking Health matches PTE Melee Enemy
-        Assertions.assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 20);
+        assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 20);
         // Checking Base Attack matches PTE Melee Enemy
-        Assertions.assertEquals(enemy.getComponent(CombatStatsComponent.class).getBaseAttack(), 10);
+        assertEquals(enemy.getComponent(CombatStatsComponent.class).getBaseAttack(), 10);
     }
 
     /**
@@ -85,9 +93,9 @@ public class EnemyFactoryTest {
         // List should contain one empty Entity
         Entity enemy = createEnemy(targetList, EnemyType.Melee, EnemyBehaviour.DTE);
         // Checking Health matches PTE Melee Enemy
-        Assertions.assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 50);
+        assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 50);
         // Checking Base Attack matches PTE Melee Enemy
-        Assertions.assertEquals(enemy.getComponent(CombatStatsComponent.class).getBaseAttack(), 5);
+        assertEquals(enemy.getComponent(CombatStatsComponent.class).getBaseAttack(), 5);
     }
 
     /**
@@ -108,9 +116,9 @@ public class EnemyFactoryTest {
         // List should contain one empty Entity
         Entity enemy = createEnemy(targetList, EnemyType.Ranged, EnemyBehaviour.PTE);
         // Checking Health matches PTE Melee Enemy
-        Assertions.assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 40);
+        assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 40);
         // Checking Base Attack matches PTE Melee Enemy
-        Assertions.assertEquals(enemy.getComponent(CombatStatsComponent.class).getBaseAttack(), 10);
+        assertEquals(enemy.getComponent(CombatStatsComponent.class).getBaseAttack(), 10);
     }
     /**
      * Creates new boss with the following stats:
@@ -130,8 +138,8 @@ public class EnemyFactoryTest {
         // List should contain one empty Entity
         Entity boss = createEnemy(targetList, EnemyType.BossMelee, EnemyBehaviour.PTE);
         // Checking Health matches PTE Melee Enemy
-        Assertions.assertEquals(boss.getComponent(CombatStatsComponent.class).getHealth(), 100);
+        assertEquals(boss.getComponent(CombatStatsComponent.class).getHealth(), 100);
         // Checking Base Attack matches PTE Melee Enemy
-        Assertions.assertEquals(boss.getComponent(CombatStatsComponent.class).getBaseAttack(), 15);
+        assertEquals(boss.getComponent(CombatStatsComponent.class).getBaseAttack(), 15);
     }
 }

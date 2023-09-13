@@ -65,9 +65,17 @@ public class Turret extends PlaceableEntity{
         addComponent(new FOVComponent(4f, this::startDamage, this::stopDamage));
         addComponent(new StructureDestroyComponent());
     }
+    /**
+     * Refill the turret's ammunition to its maximum capacity.
+     */
     public void refillAmmo() {
         currentAmmo = maxAmmo;
     }
+    /**
+     * Check if the turret can fire (has ammunition).
+     *
+     * @return True if the turret can fire, else false.
+     */
     public boolean Canfire() {
         return  (currentAmmo > 0) ;
     }
@@ -121,6 +129,11 @@ public class Turret extends PlaceableEntity{
 
         }
     }
+    /**
+     * Interact with the turret to refill its ammunition using player resources.
+     *
+     * @param player The player entity interacting with the turret.
+     */
     public void interactWithTurret(Entity player) {
         int requiredAmmo = maxAmmo - currentAmmo;
         var GamestateObserver = ServiceLocator.getGameStateObserverService();

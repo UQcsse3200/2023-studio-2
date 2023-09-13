@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.components.ships.DistanceDisplay;
 
+import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 
 /**
@@ -92,9 +93,15 @@ public class SpaceMapScreen extends ScreenAdapter {
         // Calculate the distance between the ship and the goal
         float distance = SpaceGameArea.calculateDistance(ship, goal);
         distanceDisplay.updateDistanceUI(distance);
+        if(distance < 0.8)
+        {
+            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+        }
         renderer.render();
 
     }
+
+
 
     @Override
     public void resize(int width, int height) {

@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 import com.badlogic.gdx.audio.Music;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.files.UserSettings;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.components.ships.DistanceDisplay;
 
+import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -28,6 +30,7 @@ public class SpaceGameArea extends GameArea {
     private static final float STATIC_ASTEROID_SIZE =0.9f;
     private static final float WORMHOLE_SIZE = 0.9f;
     private static final int NUM_ENEMIES = 10;
+    private float distance;
     private Entity ship;
     private Entity goal;
     private static final int NUM_ASTEROIDS = 100;
@@ -69,6 +72,7 @@ public class SpaceGameArea extends GameArea {
         Entity goal = spawnGoal();
         createBoundary();
         spawnEnemy();
+
 
     }
 
@@ -220,6 +224,8 @@ public class SpaceGameArea extends GameArea {
 
         return distance;
     }
+
+
 
 
     /**

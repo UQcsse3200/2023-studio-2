@@ -48,7 +48,7 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_POWERUPS = 3;
     private static final int NUM_Laboratory = 4;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
-    private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(9, 9);
+    private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
     /*private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);*/
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
@@ -104,7 +104,9 @@ public class EarthGameArea extends GameArea {
             "images/deathpotion.png",
             "images/potion2.png",
             "images/potion3.png","images/companionSS_1.png","images/companionSS_0.png",
-            "images/companionSS.png"
+            "images/companionSS.png", "images/companion_UP.png","images/companion_DOWN.png","images/companion_UP_LEFT.png",
+            "images/companion_UP_RIGHT.png","images/companion_DOWN_LEFT.png","images/companion_DOWN_RIGHT.png",
+            "images/companion_RIGHT.png","images/companion_RIGHT.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -378,11 +380,11 @@ public class EarthGameArea extends GameArea {
         Entity newPotion;
         switch (potionType){
             case DEATH_POTION:
-               newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION,player,companion);
-               itemsOnMap.add(newPotion);
-               GridPoint2 pos = new GridPoint2(34, 18);
-               spawnEntityAt(newPotion, pos, true, false);
-               return newPotion;
+                newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION,player,companion);
+                itemsOnMap.add(newPotion);
+                GridPoint2 pos = new GridPoint2(34, 18);
+                spawnEntityAt(newPotion, pos, true, false);
+                return newPotion;
             case SPEED_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION,player,companion);
                 itemsOnMap.add(newPotion);
@@ -482,8 +484,8 @@ public class EarthGameArea extends GameArea {
 
     public Entity getPlayer() {
         return player;
-  }
-  public void setCompanion(Entity Companion){companion=Companion;}
+    }
+    public void setCompanion(Entity Companion){companion=Companion;}
     public Entity getCompanion() {
         return companion;
     }

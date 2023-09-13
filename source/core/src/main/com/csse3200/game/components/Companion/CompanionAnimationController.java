@@ -12,26 +12,35 @@ public class CompanionAnimationController extends Component {
     @Override
     public void create() {
         super.create();
-        animator = this.entity.getComponent(AnimationRenderComponent.class);
-                entity.getEvents().addListener("walkLeft", this::animateLeft);
-                entity.getEvents().addListener("walkRight", this::animateRight);
-                entity.getEvents().addListener("walkUp", this::animateUp);
-                entity.getEvents().addListener("walkDown", this::animateDown);
-                entity.getEvents().addListener("walkUpLeft", this::animateUpLeft);
-                entity.getEvents().addListener("walkUpRight", this::animateUpRight);
-                entity.getEvents().addListener("walkDownLeft", this::animateDownLeft);
-                entity.getEvents().addListener("walkDownRight", this::animateDownRight);
 
         infanimator = this.entity.getComponent(AnimationRenderComponent.class);
+        entity.getEvents().addListener("walkLeft1", this::infanimateLeft);
+        entity.getEvents().addListener("walkRight1", this::infanimateRight);
+        entity.getEvents().addListener("walkUp1", this::infanimateUp);
+        entity.getEvents().addListener("walkDown1", this::infanimateDown);
+
+        animator = this.entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("walkLeft", this::animateLeft);
         entity.getEvents().addListener("walkRight", this::animateRight);
         entity.getEvents().addListener("walkUp", this::animateUp);
         entity.getEvents().addListener("walkDown", this::animateDown);
-
+        entity.getEvents().addListener("walkUpLeft", this::animateUpLeft);
+        entity.getEvents().addListener("walkUpRight", this::animateUpRight);
+        entity.getEvents().addListener("walkDownLeft", this::animateDownLeft);
+        entity.getEvents().addListener("walkDownRight", this::animateDownRight);
 
     }
 
-
+    void infanimateLeft() {
+        infanimator.startAnimation("LEFT_1");
+    }
+    void infanimateRight() {
+        infanimator.startAnimation("RIGHT_1");
+    }
+    void infanimateUp() {infanimator.startAnimation("UP_1");}
+    void infanimateDown() {
+        infanimator.startAnimation("DOWN_1");
+    }
 
 
 
@@ -57,6 +66,6 @@ public class CompanionAnimationController extends Component {
         animator.startAnimation("DOWN_LEFT");
     }
     void animateDownRight() {animator.startAnimation("DOWN_RIGHT");}
-    void infanimateDownRight() {animator.startAnimation("DOWN_RIGHT");}
+
 
 }

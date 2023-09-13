@@ -41,13 +41,14 @@ public class CompanionFactory {
     public static Entity createCompanion(Entity playerEntity) {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForCompanion();
+        AnimationRenderComponent infanimator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/companionSS.atlas", TextureAtlas.class));
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/comp_spritesheet.atlas", TextureAtlas.class));
-        AnimationRenderComponent infanimator =
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/companionSS.atlas", TextureAtlas.class));
+
         animator.addAnimation("UP", 1f);
         animator.addAnimation("DOWN", 1f);
         animator.addAnimation("LEFT", 1f);
@@ -75,14 +76,18 @@ public class CompanionFactory {
                         //we do not need the class of CompanionInteractionControllerComponent - Maxwell S
                         .addComponent(new CompanionStatsDisplay(playerEntity))
                         .addComponent(new KeyboardCompanionInputComponent())
+
+
+                        .addComponent(new CompanionAnimationController())
                         .addComponent(animator)
                         .addComponent(infanimator)
-                        .addComponent(new CompanionAnimationController())
+
                         .addComponent(new InteractionControllerComponent(false));
-        //Initialise the companion to be facing down
-        animator.startAnimation("DOWN");
+
+
         //set the scale of the companion
-        infanimator.startAnimation("DOWN_1");
+//        infanimator.startAnimation("RIGHT_1");
+        animator.startAnimation("DOWN");
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
         companion.scaleHeight(0.9f);

@@ -1,0 +1,45 @@
+{
+  "tools": {
+    "com.csse3200.game.components.structures.tools.BasicWallTool": {
+      "level": 0,
+      "name": "Dirt Wall",
+      "cost": {
+        "Durasteel": 0
+      },
+      "texture": "images/structure-icons/wall.png"
+    },
+    "com.csse3200.game.components.structures.tools.IntermediateWallTool": {
+      "level": 0,
+      "name": "Stone Wall",
+      "cost": {
+        "Durasteel": 100
+      },
+      "texture": "images/structure-icons/stone_wall.png"
+    },
+    "com.csse3200.game.components.structures.tools.TurretTool": {
+      "level": 0,
+      "name": "Basic Turret",
+      "cost": {
+        "Durasteel": 0,
+        "Solstite": 0
+      },
+      "texture": "images/structure-icons/turret.png"
+    },
+    "com.csse3200.game.components.structures.tools.Healing": {
+      "level": 0,
+      "name": "wall",
+      "cost": {
+        "Durasteel": 0
+      },
+      "texture": "images/structure-icons/wall.png"
+    },
+    "com.csse3200.game.components.structures.tools.ExtractorTool": {
+      "level": 0,
+      "name": "extractor",
+      "cost": {
+        "unobtanium": 0
+      },
+      "texture": "images/refinedExtractor2.png"
+    }
+  }
+}

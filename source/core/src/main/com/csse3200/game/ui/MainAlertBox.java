@@ -1,13 +1,13 @@
 package com.csse3200.game.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 
 public class MainAlertBox extends Actor {
@@ -56,9 +56,7 @@ public class MainAlertBox extends Actor {
                 if(isExit)
                     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
                 else
-                    game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-
-
+                    this.callback.run();
             }
 
         }

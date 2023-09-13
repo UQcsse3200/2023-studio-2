@@ -1,16 +1,12 @@
 package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Transform;
 import com.csse3200.game.components.*;
+import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.TurretConfig;
 import com.csse3200.game.entities.configs.TurretConfigs;
@@ -23,15 +19,11 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class Turret extends PlaceableEntity{
 
     private long start = System.currentTimeMillis();
-    private Vector2 position;
-    private Vector2 target;
 
     private static final TurretConfigs turretConfigs =
             FileLoader.readClass(TurretConfigs.class, "configs/turrets.json");
@@ -58,7 +50,8 @@ public class Turret extends PlaceableEntity{
         addComponent(new CombatStatsComponent(turretConfig.health, 0, 0, false));
         addComponent(new HealthBarComponent(true));
         addComponent(new TextureRenderComponent(texture));
-        addComponent(new FOVComponent(4f, EnemyFactory.enemies, this::startDamage, this::stopDamage));
+        addComponent(new FOVComponent(4f, this::startDamage, this::stopDamage));
+        addComponent(new StructureDestroyComponent());
     }
     public void refillAmmo() {
         currentAmmo = maxAmmo;
@@ -80,25 +73,37 @@ public class Turret extends PlaceableEntity{
     }
 
     public void startDamage(Entity focus) {
+        var combatStatsComponent = getComponent(CombatStatsComponent.class);
 
-        if(this.getComponent(CombatStatsComponent.class).getHealth() < this.getComponent(CombatStatsComponent.class).getMaxHealth()) {
-            this.getComponent(HealthBarComponent.class).setEnabled(true);
+        var focusCombatStatsComponent = focus.getComponent(CombatStatsComponent.class);
+
+        var healthBarComponent = getComponent(HealthBarComponent.class);
+
+        if (combatStatsComponent == null || healthBarComponent == null || focusCombatStatsComponent == null) {
+            return;
         }
-        else if(this.getComponent(CombatStatsComponent.class).getHealth() == this.getComponent(CombatStatsComponent.class).getMaxHealth()) {
-            this.getComponent(HealthBarComponent.class).setEnabled(false);
+
+        if(combatStatsComponent.getHealth() < combatStatsComponent.getMaxHealth()) {
+            healthBarComponent.setEnabled(true);
+        }
+        else if(combatStatsComponent.getHealth() == combatStatsComponent.getMaxHealth()) {
+            healthBarComponent.setEnabled(false);
         }
         else {
-            this.getComponent(HealthBarComponent.class).setEnabled(false);
+            healthBarComponent.setEnabled(false);
         }
-        if (focus.getComponent(CombatStatsComponent.class) != null && focus.getComponent(CombatStatsComponent.class).getHealth() > 0
-        && Canfire()) {
-            // give damage until health is 0
-            focus.getComponent(HealthBarComponent.class).setEnabled(true);
-            if (System.currentTimeMillis() - this.start > 1000) {
-                currentAmmo --;
-                this.start = System.currentTimeMillis();
-                stopDamage(focus);
-            }
+
+        if (focusCombatStatsComponent.getHealth() <= 0 || !Canfire()) {
+            return;
+        }
+
+        // give damage until health is 0
+        focus.getComponent(HealthBarComponent.class).setEnabled(true);
+        if (System.currentTimeMillis() - this.start > 1000) {
+            giveDamage(focus);
+            this.start = System.currentTimeMillis();
+            stopDamage(focus);
+
         }
     }
     public void interactWithTurret(Entity player) {
@@ -127,12 +132,13 @@ public class Turret extends PlaceableEntity{
         if (focus.getComponent(CombatStatsComponent.class) != null) {
             focus.getComponent(CombatStatsComponent.class).setHealth(focus.getComponent(CombatStatsComponent.class).getHealth() - damage);
             rotateTurret(focus);
+            currentAmmo --;
         }
     }
 
     public void rotateTurret(Entity focus) {
-        target = new Vector2(focus.getCenterPosition().x, focus.getCenterPosition().y);
-        position = new Vector2(this.getPosition().x, this.getPosition().y);
+        var target = new Vector2(focus.getCenterPosition().x, focus.getCenterPosition().y);
+        var position = new Vector2(this.getPosition().x, this.getPosition().y);
         float angle = MathUtils.atan2(target.y - position.y, target.x - position.x);
         float degrees = MathUtils.radiansToDegrees * angle;
 
@@ -140,4 +146,18 @@ public class Turret extends PlaceableEntity{
         textureComponent.setRotation(degrees - 90);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Turret turret = (Turret) o;
+        return start == turret.start && maxAmmo == turret.maxAmmo && damage == turret.damage
+                && type == turret.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), start, type, maxAmmo, damage);
+    }
 }

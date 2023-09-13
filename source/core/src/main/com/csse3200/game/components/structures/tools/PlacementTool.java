@@ -9,20 +9,26 @@ import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
 public abstract class PlacementTool extends Tool {
-    public PlacementTool(ObjectMap<String, Integer> cost) {
+    protected PlacementTool(ObjectMap<String, Integer> cost) {
         super(cost);
     }
 
     @Override
-    public void interact(Entity player, GridPoint2 position) {
+    public boolean interact(Entity player, GridPoint2 position) {
         if (!isPositionValid(position)) {
-            return;
+            return false;
+        }
+
+        if (!hasEnoughResources()) {
+            return false;
         }
 
         PlaceableEntity newStructure = createEntity(player);
         newStructure.addComponent(new CostComponent(cost));
 
-        ServiceLocator.getStructurePlacementService().PlaceStructureAt(newStructure, position, false, false);
+        ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position, false, false);
+
+        return true;
     }
 
     public abstract PlaceableEntity createEntity(Entity player);
@@ -30,10 +36,10 @@ public abstract class PlacementTool extends Tool {
     public boolean isPositionValid(GridPoint2 position) {
         var existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
 
-        if (existingStructure != null) {
-            return false;
-        }
+        return existingStructure == null;
+    }
 
+    public boolean hasEnoughResources() {
         GameStateObserver stateObserver = ServiceLocator.getGameStateObserverService();
 
         for (var resourceCost : cost.entries()) {

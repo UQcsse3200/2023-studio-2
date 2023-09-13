@@ -10,8 +10,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.badlogic.gdx.Gdx;
-import java.util.List;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.buildables.TurretType;
@@ -108,7 +106,9 @@ public class EarthGameArea extends GameArea {
             "images/player.png",
             "images/nebulite.png",
             "images/solstite.png",
-            "images/durasteel.png"
+            "images/durasteel.png",
+            "images/f_button.png",
+            "images/ExtractorAnimation.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -117,20 +117,21 @@ public class EarthGameArea extends GameArea {
             "images/base_enemy.atlas",
             "images/troll_enemy.atlas",
             "images/rangeEnemy.atlas",
-            "images/stone_wall.atlas",
-            "images/dirt_wall.atlas",
             "images/botanist.atlas",
             "images/boss_enemy.atlas",
             "images/botanist.atlas",
             "images/playerSS.atlas",
             "images/wrench.atlas",
             "images/baseballbat.atlas",
-            "images/open_gate.atlas",
-            "images/closed_gate.atlas",
+            "images/structures/closed_gate.atlas",
+            "images/structures/open_gate.atlas",
+            "images/structures/dirt_wall.atlas",
+            "images/structures/stone_wall.atlas",
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
-            "images/player.atlas"
+            "images/player.atlas",
+            "images/ExtractorAnimation.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
@@ -183,7 +184,6 @@ public class EarthGameArea extends GameArea {
         spawnBoss();
         spawnAsteroids();
         spawnBotanist();
-        spawnTurret();
 
         playMusic();
     }
@@ -309,12 +309,6 @@ public class EarthGameArea extends GameArea {
         Entity ship = StructureFactory.createShip(game);
         spawnEntityAt(ship, spawnPosition, false, false);
     }
-    public void spawnTurret() {
-        Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
-        Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
-        spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
-    }
-
 
     private void displayUI() {
         Entity ui = new Entity();
@@ -372,11 +366,13 @@ public class EarthGameArea extends GameArea {
     }
 
     private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer();
-        spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-        targetables.add(newPlayer);
-        player = newPlayer;
-        return newPlayer;
+        //TODO: Think of solution for sharing player between screens (Currently it keeps getting disposed!!)
+        this.player = PlayerFactory.createPlayer();
+        this.player.getEvents().addListener("death", () -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH));
+        ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", this.player);
+        spawnEntityAt(this.player, PLAYER_SPAWN, true, true);
+        targetables.add(this.player);
+        return this.player;
     }
     private Entity spawnCompanion(Entity playerEntity) {
         Entity newCompanion = CompanionFactory.createCompanion(playerEntity);

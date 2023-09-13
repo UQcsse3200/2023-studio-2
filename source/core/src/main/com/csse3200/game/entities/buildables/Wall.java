@@ -2,7 +2,13 @@ package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.components.*;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.ProximityActivationComponent;
+import com.csse3200.game.components.structures.JoinLayer;
+import com.csse3200.game.components.structures.JoinableComponent;
+import com.csse3200.game.components.structures.JoinableComponentShapes;
+import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.WallConfig;
@@ -12,10 +18,9 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.components.structures.JoinableComponent;
-import com.csse3200.game.components.structures.JoinLayer;
-import com.csse3200.game.components.structures.JoinableComponentShapes;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Objects;
 
 /**
  * Core wall class. Wall inherits entity and adds the required components and functionality for
@@ -58,6 +63,7 @@ public class Wall extends PlaceableEntity {
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));
         addComponent(new ProximityActivationComponent(1.5f, player, this::onPlayerEnter, this::onPlayerExit));
+        addComponent(new StructureDestroyComponent());
 
         getComponent(JoinableComponent.class).scaleEntity();
     }
@@ -68,5 +74,19 @@ public class Wall extends PlaceableEntity {
 
     private void onPlayerExit(Entity player) {
         getComponent(HealthBarComponent.class).hide();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Wall wall = (Wall) o;
+        return type == wall.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), type);
     }
 }

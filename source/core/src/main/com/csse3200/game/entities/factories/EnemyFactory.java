@@ -1,7 +1,5 @@
 package com.csse3200.game.entities.factories;
 
-import com.csse3200.game.ui.DialogComponent;
-import com.csse3200.game.ui.DialogueBox;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -11,7 +9,10 @@ import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.EnemyAnimationController;
-import com.csse3200.game.components.tasks.*;
+import com.csse3200.game.components.structures.TurretTargetableComponent;
+import com.csse3200.game.components.tasks.AimTask;
+import com.csse3200.game.components.tasks.ChaseTask;
+import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
@@ -25,9 +26,11 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Factory to create non-playable enemies entities with predefined components.
@@ -52,7 +55,7 @@ public class EnemyFactory {
    * @param type type of enemy - melee or ranged
    * @return entity
    */
-  public static Entity createEnemy(ArrayList<Entity> targets, EnemyType type, EnemyBehaviour behaviour) {
+  public static Entity createEnemy(List<Entity> targets, EnemyType type, EnemyBehaviour behaviour) {
 
     EnemyConfig config = configs.GetEnemyConfig(type, behaviour);
     AnimationRenderComponent animator;
@@ -84,7 +87,8 @@ public class EnemyFactory {
                     PhysicsLayer.STRUCTURE |
                     PhysicsLayer.WEAPON),
                     1.5f))
-            .addComponent(new DialogComponent(dialogueBox));
+            .addComponent(new DialogComponent(dialogueBox))
+            .addComponent(new TurretTargetableComponent());
 
     if (type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);

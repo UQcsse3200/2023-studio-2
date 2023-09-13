@@ -5,8 +5,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.buildables.TurretType;
@@ -90,16 +88,20 @@ public class ForestGameArea extends GameArea {
       "images/oldman_down_1.png",
       "images/base_enemy.png",
       "images/Troll.png",
-          "images/TurretOne.png",
-          "images/TurretTwo.png",
+      "images/TurretOne.png",
+      "images/TurretTwo.png",
       "images/rangeEnemy.png",
       "images/stone_wall.png",
-       "images/companionSS.png",
-          "images/companionSS_0.png",
-          "images/companionSS_1.png",
-          "images/companionSS_2.png",
-          "images/companionSS_03.png",
-      "images/player.png"
+      "images/companionSS.png",
+      "images/companionSS_0.png",
+      "images/companionSS_1.png",
+      "images/companionSS_2.png",
+      "images/companionSS_03.png",
+      "images/nebulite.png",
+      "images/solstite.png",
+      "images/durasteel.png",
+      "images/player.png",
+      "images/ExtractorAnimation.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
@@ -117,8 +119,9 @@ public class ForestGameArea extends GameArea {
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
       "images/playerSS.atlas",
-          "images/companionSS.atlas",
-      "images/player.atlas"
+      "images/companionSS.atlas",
+      "images/player.atlas",
+      "images/ExtractorAnimation.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -167,7 +170,6 @@ public class ForestGameArea extends GameArea {
     spawnBoss();
     spawnAsteroids();
     player = spawnPlayer();
-    spawnTurret();
     spawnBotanist();
 
     playMusic();
@@ -334,13 +336,6 @@ public class ForestGameArea extends GameArea {
     Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
     //boss.addComponent(new DialogComponent(dialogueBox));
-  }
-
-  public void spawnTurret() {
-    Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
-    Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
-    spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
-    spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
   }
 
   private void playMusic() {

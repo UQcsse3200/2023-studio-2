@@ -9,8 +9,8 @@ public class TurretConfigs {
 
     public TurretConfig GetTurretConfig(TurretType type) {
         return switch (type) {
-            case levelOne -> levelOne;
-            case levelTwo -> levelTwo;
+            case LEVEL_ONE -> levelOne;
+            case LEVEL_TWO -> levelTwo;
         };
 
     }

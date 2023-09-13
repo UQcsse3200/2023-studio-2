@@ -39,12 +39,12 @@ public class MiniScreenDisplay extends UIComponent {
         addUIElements();
     }
 
-    private void addUIElements() {
+    void addUIElements() {
         // Load and set the background image
         background =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/start.png", Texture.class));
+                                .getAsset("images/RELAUNCH MISSION-2.png", Texture.class));
         background.setPosition(0, 0);
 
         // Scale the height of the background to maintain the original aspect ratio of the image
@@ -75,7 +75,7 @@ public class MiniScreenDisplay extends UIComponent {
         stage.addActor(rootTable);
     }
 
-    private void startGame() {
+    void startGame() {
         game.setScreen(ScreenType.SPACE_MAP);
     }
 
@@ -95,5 +95,8 @@ public class MiniScreenDisplay extends UIComponent {
         rootTable.clear();
         background.clear();
         super.dispose();
+    }
+
+    public void setSkin(Skin mockSkin) {
     }
 }

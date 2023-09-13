@@ -27,7 +27,7 @@ public class MiniScreen extends ScreenAdapter {
     /**
      * An array of paths to image textures needed for this screen.
      */
-    private static final String[] introScreenAssets = {"images/start.png", "images/start.png"};
+    private static final String[] introScreenAssets = {"images/RELAUNCH MISSION-2.png", "images/RELAUNCH MISSION-2.png"};
     private final GdxGame game;
     private final Renderer renderer;
 

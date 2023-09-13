@@ -40,4 +40,3 @@ public class CompanionInteractionControllerComponent extends Component {
         }
     }
 }
-

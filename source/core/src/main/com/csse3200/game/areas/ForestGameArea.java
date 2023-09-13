@@ -254,16 +254,33 @@ public class ForestGameArea extends GameArea {
     return newPlayer;
   }
 
+  /**
+   * Spawns a new companion entity for the player.
+   *
+   * @param playerEntity The player entity for which the companion is spawned.
+   * @return The newly spawned companion entity.
+   */
   private Entity spawnCompanion(Entity playerEntity) {
+    // Create a new companion entity using the CompanionFactory
     Entity newCompanion = CompanionFactory.createCompanion(playerEntity);
+
+    // Get the physics component of the player entity to calculate its position
     PhysicsComponent playerPhysics = playerEntity.getComponent(PhysicsComponent.class);
-    //calculate the player position
+
+    // Calculate the player's position
     Vector2 playerPosition = playerPhysics.getBody().getPosition();
 
+    // Spawn the new companion entity at a specified position (COMPANION_SPAWN)
+    // Enable rendering and physics for the companion (true, true)
     spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
+
+    // Add the newly spawned companion entity to the list of targetable entities
     targetables.add(newCompanion);
+
+    // Return the newly spawned companion entity
     return newCompanion;
   }
+
 
   private void spawnPowerups() {
     GridPoint2 minPos = new GridPoint2(0, 0);

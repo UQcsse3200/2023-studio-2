@@ -324,10 +324,22 @@ public class EarthGameArea extends GameArea {
                 ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
     }
-    private Entity spawnLaboratory(){
+    /**
+     * Spawns a new laboratory entity at a random position.
+     *
+     * @return The newly spawned laboratory entity.
+     */
+    private Entity spawnLaboratory() {
+        // Generate a random position for the laboratory
         GridPoint2 randomPos = new GridPoint2(34,19);
+
+        // Create a new laboratory entity
         Entity newLaboratory = LaboratoryFactory.createLaboratory();
-        spawnEntityAt(newLaboratory, randomPos, true,false);
+
+        // Spawn the laboratory entity at the random position
+        spawnEntityAt(newLaboratory, randomPos, true, false);
+
+        // Return the newly spawned laboratory entity
         return newLaboratory;
     }
 
@@ -349,13 +361,30 @@ public class EarthGameArea extends GameArea {
         player = newPlayer;
         return newPlayer;
     }
+    /**
+     * Spawns a new companion entity for the player.
+     *
+     * @param playerEntity The player entity for which the companion is spawned.
+     * @return The newly spawned companion entity.
+     */
     private Entity spawnCompanion(Entity playerEntity) {
+        // Create a new companion entity using the CompanionFactory
         Entity newCompanion = CompanionFactory.createCompanion(playerEntity);
+
+        // Get the physics component of the player entity to calculate its position
         PhysicsComponent playerPhysics = playerEntity.getComponent(PhysicsComponent.class);
-        //calculate the player position
+
+        // Calculate the player's position
         Vector2 playerPosition = playerPhysics.getBody().getPosition();
+
+        // Spawn the new companion entity at a specified position (COMPANION_SPAWN)
+        // Enable rendering and physics for the companion (true, true)
         spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
+
+        // Add the newly spawned companion entity to the list of targetable entities
         targetables.add(newCompanion);
+
+        // Return the newly spawned companion entity
         return newCompanion;
     }
 
@@ -376,28 +405,60 @@ public class EarthGameArea extends GameArea {
             spawnEntityAt(speedPowerup, randomPos2, true, false);
         }
     }
-    public Entity spawnPotion(PotionType potionType){
+    /**
+     * Spawns a new potion entity of the specified type.
+     *
+     * @param potionType The type of potion to spawn.
+     * @return The newly spawned potion entity.
+     * @throws IllegalArgumentException If an invalid potion type is provided.
+     */
+    public Entity spawnPotion(PotionType potionType) throws IllegalArgumentException {
         Entity newPotion;
-        switch (potionType){
+
+        // Depending on the potion type, create the corresponding potion entity
+        switch (potionType) {
             case DEATH_POTION:
-                newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION,player,companion);
-                itemsOnMap.add(newPotion);
-                GridPoint2 pos = new GridPoint2(34, 18);
-                spawnEntityAt(newPotion, pos, true, false);
-                return newPotion;
+                newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION, player, companion);
+                GridPoint2 pos1 = new GridPoint2(34, 18);
+                break;
             case SPEED_POTION:
-                newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION,player,companion);
-                itemsOnMap.add(newPotion);
+                newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION, player, companion);
                 GridPoint2 pos2 = new GridPoint2(37, 18);
-                spawnEntityAt(newPotion, pos2, true, false);
-                return newPotion;
+                break;
             case HEALTH_POTION:
-                newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION,player,companion);
-                itemsOnMap.add(newPotion);
+                newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION, player, companion);
                 GridPoint2 pos3 = new GridPoint2(40, 18);
-                spawnEntityAt(newPotion, pos3, true, false);
-                return newPotion;
-            default: throw new IllegalArgumentException("You must assign a valid PowerupType");
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid potion type provided.");
+        }
+
+        // Add the newly spawned potion entity to the list of items on the map
+        itemsOnMap.add(newPotion);
+
+        // Spawn the potion entity at the specified position
+        spawnEntityAt(newPotion, getPositionForPotionType(potionType), true, false);
+
+        // Return the newly spawned potion entity
+        return newPotion;
+    }
+
+    /**
+     * Gets the spawn position for a given potion type.
+     *
+     * @param potionType The type of potion.
+     * @return The grid position at which the potion should be spawned.
+     */
+    private GridPoint2 getPositionForPotionType(PotionType potionType) {
+        switch (potionType) {
+            case DEATH_POTION:
+                return new GridPoint2(34, 18);
+            case SPEED_POTION:
+                return new GridPoint2(37, 18);
+            case HEALTH_POTION:
+                return new GridPoint2(40, 18);
+            default:
+                throw new IllegalArgumentException("Invalid potion type provided.");
         }
     }
 

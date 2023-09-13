@@ -4,8 +4,8 @@ import com.csse3200.game.entities.buildables.TurretType;
 
 public class TurretConfigs {
 
-    public TurretConfig levelOne = new TurretConfig();
-    public TurretConfig levelTwo = new TurretConfig();
+    public TurretConfig levelOne;
+    public TurretConfig levelTwo;
 
     public TurretConfig GetTurretConfig(TurretType type) {
         return switch (type) {

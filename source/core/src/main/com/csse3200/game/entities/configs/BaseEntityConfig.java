@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class BaseEntityConfig {
     public String spritePath = "";
-    public GridPoint2 position;
+    public GridPoint2 position = null;
     public List<String> requiredTextures = null;
     public Vector2 scale = new Vector2(1,1);
 

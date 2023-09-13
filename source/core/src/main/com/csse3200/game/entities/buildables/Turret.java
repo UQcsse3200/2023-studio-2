@@ -59,7 +59,8 @@ public class Turret extends PlaceableEntity{
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.TURRET));
         addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
-        addComponent(new CombatStatsComponent(turretConfig.health, turretConfig.damage, turretConfig.attackMultiplier, turretConfig.isImmune));
+        addComponent(new CombatStatsComponent(turretConfig.health, turretConfig.damage,
+                turretConfig.attackMultiplier, turretConfig.isImmune));
         addComponent(new HealthBarComponent(true));
         addComponent(new TextureRenderComponent(texture));
         addComponent(new FOVComponent(4f, this::startDamage, this::stopDamage));

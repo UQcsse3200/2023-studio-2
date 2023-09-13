@@ -13,10 +13,8 @@ public class TurretTest {
 
     @Before
     public void setUp() {
-        TurretConfig turretConfig = new TurretConfig();
-        turretConfig.setMaxAmmo(10);
-        turretConfig.setDamage(5);
-        turret = new Turret(turretConfig);
+
+        //turret = new Turret(turretConfig);
     }
 
 

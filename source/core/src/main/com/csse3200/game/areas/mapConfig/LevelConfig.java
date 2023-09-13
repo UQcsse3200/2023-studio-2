@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class LevelConfig {
     public List<GameAreaConfig> gameAreas;
-    public PlayerConfig player;
 
     public String[] getTextures() {
         //Get all entities from all game areas and get each of their sprite paths, then collect to an array

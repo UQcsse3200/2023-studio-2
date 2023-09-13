@@ -2,6 +2,7 @@ package com.csse3200.game.areas.mapConfig;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.entities.configs.BaseEntityConfig;
+import com.csse3200.game.entities.configs.PlayerConfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +22,7 @@ public class GameAreaConfig {
     public String mapName = "Planet";
     public String terrainPath = "map/base.tmx";
     public List<ResourceCondition> winConditions = null;
-    public GridPoint2 playerSpawn = null;
+    public PlayerConfig playerConfig = null;
 
     public AreaEntityConfig areaEntityConfig = null;
 

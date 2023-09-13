@@ -254,9 +254,9 @@ public class MapGameArea extends GameArea{
      * @return The player entity created
      */
     private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer(); //TODO: Fix config for player?
-        if (mapConfig.playerSpawn != null) {
-            spawnEntityAt(newPlayer, mapConfig.playerSpawn, true, true);
+        Entity newPlayer = PlayerFactory.createPlayer(mapConfig.playerConfig);
+        if (mapConfig.playerConfig != null && mapConfig.playerConfig.position != null) {
+            spawnEntityAt(newPlayer, mapConfig.playerConfig.position, true, true);
         } else {
             //If no position specified spawn in middle of map.
             GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);

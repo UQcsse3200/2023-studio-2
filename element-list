@@ -7,10 +7,10 @@ com.csse3200.game.areas.terrain
 com.csse3200.game.components
 com.csse3200.game.components.Companion
 com.csse3200.game.components.gamearea
-com.csse3200.game.components.InitialSequence
 com.csse3200.game.components.joinable
 com.csse3200.game.components.maingame
 com.csse3200.game.components.mainmenu
+com.csse3200.game.components.MiniDisplay
 com.csse3200.game.components.npc
 com.csse3200.game.components.player
 com.csse3200.game.components.resources

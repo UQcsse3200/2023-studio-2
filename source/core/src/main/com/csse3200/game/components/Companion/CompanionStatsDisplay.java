@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -17,7 +20,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-
+import com.csse3200.game.components.Companion.MyCustomComponent;
 
 /**
  * A UI component for displaying Companion stats, e.g. health.
@@ -26,6 +29,10 @@ public class CompanionStatsDisplay extends UIComponent {
     Table table;
     private boolean update = false;
     Table table2;
+
+
+
+
 
     public Entity playerEntity;
 
@@ -53,8 +60,8 @@ public class CompanionStatsDisplay extends UIComponent {
 
     public CompanionStatsDisplay(Entity playerEntitiy){
         this.playerEntity = playerEntitiy;
-
     }
+
 
     /**
      * Creates reusable UI styles and adds actors to the stage.
@@ -63,6 +70,7 @@ public class CompanionStatsDisplay extends UIComponent {
     public void create() {
         super.create();
         addActors();
+
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
         //entity.getEvents().addListener("updateGold", this::updateCompanionGoldUI);
         playerEntity.getEvents().addListener("updateHealth", this:: updatePlayerHealthUI);
@@ -87,116 +95,23 @@ public class CompanionStatsDisplay extends UIComponent {
         stage.addActor(table);
 
     }
-    public void update(float deltaTime) {
-        // Decrease the invincibility timer if invincible
-        if (isInvincible) {
-            invincibilityTimer -= deltaTime;
 
-            // Check if the invincibility duration has elapsed
-            if (invincibilityTimer <= 0) {
-                isInvincible = false; // Turn off invincibility when the timer runs out
-                resetImage(); // Reset the companion's image
-            }
-        }
-
-        // Call assetManager.update() to load assets asynchronously
-        assetManager.update();
-
-//        // Check if all assets are loaded
-//        if (assetManager.isFinished()) {
-//            // Handle the loaded assets here, e.g., update the companion's texture
-//            // You can access the loaded assets using assetManager.get()
-//            if (assetManager.isLoaded("images/companionSS_1.png", Texture.class)) {
-//                invincibleTexture = assetManager.get("images/companionSS_1.png", Texture.class);
-//                defaultTexture = new Texture("images/companionSS_0.png");
-//                // Check if the companion sprite is initialized
-//                if (companionSprite != null) {
-//                    // Set the companion sprite's texture based on invincibility state
-//                    if (isInvincible) {
-//                        companionSprite.setTexture(invincibleTexture); // Set invincible image
-//                    } else {
-//                        companionSprite.setTexture(defaultTexture); // Set default image
-//                    }
-//                } else {
-//                    Gdx.app.error("Invincibility", "Companion sprite is not initialized.");
-//                }
-//            } else {
-//                Gdx.app.error("Invincibility", "Invincible image is not yet loaded.");
-//            }
-//        }
-    }
-
-
-
-    public void setInvincibleImage() {
-        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-
-        animator.startAnimation("RIGHT");
-    }
-
-
-
-    public void toggleInvincibility() {
-        if (isInvincible) {
-            // 10 seconds of invincibility
-            invincibilityTimer = 10.0f;
-            setInvincibleImage(); // Call the method to change the image
-            Gdx.app.debug("Invincibility", "Invincibility is ON");
-            isInvincible=false;
-            Timer.schedule(new Task() {
-                @Override
-                public void run() {
-                    resetImage();
-                }
-            }, invincibilityTimer);
-        } else {
-            resetImage(); // Reset the image when invincibility is turned off
-            Gdx.app.debug("Invincibility", "Invincibility is OFF");
-        }
-    }
-
-
-
-    public void performSpecialAttack() {
-        // Implement your special attack logic here
-        if (!isSpecialAttack) {
-            // Execute special attack code
-            isSpecialAttack = true;
-        }
-    }
-
-
-    public void resetImage() {
-        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-        animator.startAnimation("RIGHT");
-    }
 
     public void toggleInfiniteHealth() {
         if (isInfiniteHealth) {
+            int maxHealth = Integer.MAX_VALUE;
+            ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setHealth(maxHealth); // Set health to infinity
+          //  updateCompanionHealthUI(maxHealth); // Update the UI to reflect the change
+            isInfiniteHealth = false; // Toggle the flag
 
-            table = new Table();
-            table.top().left();
-            table.setFillParent(true);
-            table.padTop(150f).padLeft(5f);
-            CharSequence healthText2 = String.format("Companion Health: %d", Integer.MAX_VALUE);
-            label = new Label(healthText2, skin, "large");
-            table.add(label);
-            ServiceLocator.getRenderService().getStage().addActor(table);
             Timer.schedule(new Task() {
                 @Override
                 public void run() {
-                    label.remove();
-                    update = false;
+                    ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setHealth(50);
                 }
-            }, 3.0f);
-            isInfiniteHealth = false;
+            }, 10.0f); // Adjust the delay as needed (10.0f seconds in this case)
         }
-
     }
-
-
-
-
 
 
 

@@ -56,8 +56,10 @@ public class CompanionFactory {
         animator.addAnimation("UP_LEFT", 1f);
         animator.addAnimation("DOWN_RIGHT", 1f);
         animator.addAnimation("DOWN_LEFT", 1f);
-        infanimator.addAnimation("RIGHT",1f);
-
+        infanimator.addAnimation("UP_1",1f);
+        infanimator.addAnimation("DOWN_1",1f);
+        infanimator.addAnimation("RIGHT_1",1f);
+        infanimator.addAnimation("LEFT_1",1f);
 
         Entity companion =
                 new Entity()
@@ -74,11 +76,13 @@ public class CompanionFactory {
                         .addComponent(new CompanionStatsDisplay(playerEntity))
                         .addComponent(new KeyboardCompanionInputComponent())
                         .addComponent(animator)
+                        .addComponent(infanimator)
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new InteractionControllerComponent(false));
         //Initialise the companion to be facing down
         animator.startAnimation("DOWN");
         //set the scale of the companion
+        infanimator.startAnimation("DOWN_1");
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
         companion.scaleHeight(0.9f);

@@ -7,7 +7,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class CompanionAnimationController extends Component {
     AnimationRenderComponent animator;
-
+    AnimationRenderComponent infanimator;
 
     @Override
     public void create() {
@@ -22,7 +22,14 @@ public class CompanionAnimationController extends Component {
                 entity.getEvents().addListener("walkDownLeft", this::animateDownLeft);
                 entity.getEvents().addListener("walkDownRight", this::animateDownRight);
 
-            }
+        infanimator = this.entity.getComponent(AnimationRenderComponent.class);
+        entity.getEvents().addListener("walkLeft", this::animateLeft);
+        entity.getEvents().addListener("walkRight", this::animateRight);
+        entity.getEvents().addListener("walkUp", this::animateUp);
+        entity.getEvents().addListener("walkDown", this::animateDown);
+
+
+    }
 
 
 

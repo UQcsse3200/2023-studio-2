@@ -8,10 +8,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.FollowComponent;
+import com.csse3200.game.components.ItemPickupComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.commands.DebugCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Objects;
 
 /**
  * Action component for interacting with the Companion. Companion events should be initialised in create()
@@ -21,6 +26,8 @@ public class CompanionActions extends Component {
     private String bulletTexturePath;
 
     private static Vector2 COMPANION_SPEED; // Metres per second
+
+    private static Logger logger; // how to log print
 
     private static final Vector2 MAX_BOOST_SPEED = new Vector2(8f, 8f);
 
@@ -54,6 +61,9 @@ public class CompanionActions extends Component {
             Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
             physicsComponent.getBody().setTransform(playerPosition, currentRotation * MathUtils.degreesToRadians);
         }
+
+        //create logger for debug
+        logger = LoggerFactory.getLogger(CompanionActions.class);
     }
 
     /**
@@ -79,12 +89,7 @@ public class CompanionActions extends Component {
      */
     @Override
     public void update() {
-        //
-        if (playerEntity != null && moving) {
-            updateFollowPlayer();
-        } else if (moving) {
-            updateSpeed();
-        }
+        updateSpeed();
 
         // if boost is active, adjust speed
         if (Gdx.input.isKeyPressed(Input.Keys.B)){
@@ -132,6 +137,7 @@ public class CompanionActions extends Component {
      * Making sure that the companion is following the player on the map (being gravitationally attracted)
      */
     public void updateFollowPlayer() {
+        logger.info("GETTING SUCKED IN");
         Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
         Vector2 companionPosition = physicsComponent.getBody().getPosition();
 
@@ -196,7 +202,13 @@ public class CompanionActions extends Component {
     }
 
     /**
-     * NOT SURE
+     * updateSpeed
+     * This function is for regular movement. It gets the velocity of the
+     * body, and the desired direction and applies a vector transformation
+     *
+     * It uses a movingDirection vector which is constantly updated by keyboard input
+     *
+     *
      */
     public void updateSpeed() {
         Body body = physicsComponent.getBody();
@@ -204,26 +216,38 @@ public class CompanionActions extends Component {
         Vector2 desiredVelocity = movingDirection.cpy().scl(COMPANION_SPEED);
         // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
+
+        //apply movement to physics body
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
     }
 
+    /**
+     * Method to show if the companion is currently moving or not
+     * @return - bool true if moving, false if still
+     */
+    public boolean isCompanionBeingMoved() {
+        return this.moving;
+    }
 
     /**
+     * Called by the keyboard input
      * Moves the Companion towards a given direction.
      *
      * @param direction direction to move in
      */
-    void move(Vector2 direction) {
+    public void move(Vector2 direction) {
         this.movingDirection = direction;
         moving = true;
+
     }
 
     /**
-     * Stops the player from moving. Gives the moving direction a 0,0 value
+     * Called by the keyboard inputStops the player from moving. Gives the moving direction a 0,0 value
+     *
+     *
      */
-    void stopMoving() {
+    public void stopMoving() {
         this.movingDirection = Vector2.Zero.cpy();
-        updateSpeed();
         moving = false;
     }
 

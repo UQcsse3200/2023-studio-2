@@ -1,14 +1,20 @@
 package com.csse3200.game.components;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlayerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class FollowComponent extends Component{
     private Entity followEntity;
     private float followSpeed;
     //  minimumDistance is defined as the smallest amount of distance between entities which should invoke a follow
     // command
     private float minimumDistance = 0.5f;
+
+    private static Logger logger; // how to log print
 
     /**
      *
@@ -18,6 +24,9 @@ public class FollowComponent extends Component{
     public FollowComponent(Entity followEntity,float followSpeed){
         this.followEntity = followEntity;
         this.followSpeed = followSpeed;
+
+        //create logger for debug
+        logger = LoggerFactory.getLogger(FollowComponent.class);
     }
 
 
@@ -33,8 +42,24 @@ public class FollowComponent extends Component{
     /**
      * Update the entity following the followEntity.
      * Check if it exists, and if it does, apply our saved speed movement towards/away from that entity
+     *
+     * Firstly, get the 'moving' property from the CompanionActions
+     * If the moving property is true, don't suck in.
+     * If the moving property is false, then suck in.
+     *
      */
     public void update() {
+        //If you are currently moving, don't start the timer to attract the companion
+        if (entity.getComponent(CompanionActions.class).isCompanionBeingMoved()) {
+            // do nothing
+        } else {
+            // move companion towards following entity
+            moveEntityTowardFollowingEntity();
+        }
+
+    }
+
+    public void moveEntityTowardFollowingEntity() {
         //If the following entity is still existing, and not null, follow it
         if (followEntity != null) {
             //get position of the followEntity and the current entity

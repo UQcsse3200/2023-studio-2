@@ -34,7 +34,7 @@ public class Turret extends PlaceableEntity{
             FileLoader.readClass(TurretConfigs.class, "configs/turrets.json");
 
     TurretType type;
-    private int currentAmmo;
+    public int currentAmmo;
 
     int maxAmmo;
     int damage;
@@ -208,4 +208,7 @@ public class Turret extends PlaceableEntity{
     public int hashCode() {
         return Objects.hash(super.hashCode(), start, type, maxAmmo, damage);
     }
+
+
+
 }

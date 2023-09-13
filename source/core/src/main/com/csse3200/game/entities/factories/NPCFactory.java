@@ -86,15 +86,19 @@ public class NPCFactory {
   public static Entity createBotanist() {
 
     AITaskComponent aiComponent = new AITaskComponent();
-    aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
 
     AnimationRenderComponent animator =
        new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/botanist.atlas", TextureAtlas.class));
-            animator.addAnimation("oldman_down_1", 1f, Animation.PlayMode.NORMAL);
-            animator.addAnimation("oldman_right_1", 0.1f, Animation.PlayMode.LOOP);
-            animator.addAnimation("oldman_up_1", 0.1f, Animation.PlayMode.LOOP);
-            animator.addAnimation("oldman_left_1", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
+            animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
+            animator.addAnimation("row-1-column-4", 0.01f, Animation.PlayMode.LOOP);
+            animator.addAnimation("row-1-column-5", 0.01f, Animation.PlayMode.LOOP);
+            animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.NORMAL);
+            animator.addAnimation("row-1-column-6", 0.01f, Animation.PlayMode.LOOP);
+            animator.addAnimation("row-1-column-7", 0.01f, Animation.PlayMode.LOOP);
+            animator.addAnimation("row-1-column-8", 0.01f, Animation.PlayMode.LOOP);
 
     Entity botanist =
             new Entity()
@@ -115,7 +119,7 @@ public class NPCFactory {
 
    // botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
    // botanist.getComponent(TextureRenderComponent.class).scaleEntity();
-    botanist.scaleHeight(1.1f);
+    botanist.scaleHeight(6.1f);
     //PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.7f);
     return botanist;
   }

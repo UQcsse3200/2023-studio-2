@@ -34,17 +34,17 @@ public class BotanistAnimationController extends Component {
         assetManager.finishLoading();
         atlas = assetManager.get("images/botanist.atlas");
 
-        TextureAtlas.AtlasRegion left1 = atlas.findRegion("oldman_left_1");
-        TextureAtlas.AtlasRegion  left2 = atlas.findRegion("oldman_left_2");
+        TextureAtlas.AtlasRegion left1 = atlas.findRegion("row-1-column-1");
+        TextureAtlas.AtlasRegion  left2 = atlas.findRegion("row-1-column-2");
 
-        TextureAtlas.AtlasRegion right1 = atlas.findRegion("oldman_right_1");
-        TextureAtlas.AtlasRegion right2 = atlas.findRegion("oldman_right_2");
+        TextureAtlas.AtlasRegion right1 = atlas.findRegion("row-1-column-3");
+        TextureAtlas.AtlasRegion right2 = atlas.findRegion("row-1-column-4");
 
-        TextureAtlas.AtlasRegion bottom1 = atlas.findRegion("oldman_down_1");
-        TextureAtlas.AtlasRegion bottom2 = atlas.findRegion("oldman_down_2");
+        TextureAtlas.AtlasRegion bottom1 = atlas.findRegion("row-1-column-5");
+        TextureAtlas.AtlasRegion bottom2 = atlas.findRegion("row-1-column-6");
 
-        TextureAtlas.AtlasRegion top1 = atlas.findRegion("oldman_up_1");
-        TextureAtlas.AtlasRegion top2 = atlas.findRegion("oldman_up_2");
+        TextureAtlas.AtlasRegion top1 = atlas.findRegion("row-1-column-7");
+        TextureAtlas.AtlasRegion top2 = atlas.findRegion("row-1-column-8");
 
 
         // Initialize the animation sequences.
@@ -54,7 +54,7 @@ public class BotanistAnimationController extends Component {
         upAnimation = new Animation<TextureAtlas.AtlasRegion>(1f ,top1,top2 );
 
         // Start with the default animation.
-        animator.startAnimation("oldman_down_1");
+        animator.startAnimation("row-1-column-1");
     }
     @Override
     public void update() {
@@ -68,13 +68,17 @@ public class BotanistAnimationController extends Component {
 
             // Switch between animations.
             switch (animator.getCurrentAnimation()) {
-                case "oldman_left_1" -> animator.startAnimation("oldman_up_1");
-                case "oldman_right_1" -> animator.startAnimation("oldman_down_1");
-                case "oldman_down_1" -> animator.startAnimation("oldman_left_1");
-                case "oldman_up_1" -> animator.startAnimation("oldman_right_1");
+                case "row-1-column-1" -> animator.startAnimation("row-1-column-2");
+                case "row-1-column-2" -> animator.startAnimation("row-1-column-3");
+                case "row-1-column-3" -> animator.startAnimation("row-1-column-4");
+                case "row-1-column-4" -> animator.startAnimation("row-1-column-5");
+                case "row-1-column-5" -> animator.startAnimation("row-1-column-6");
+                case "row-1-column-6" -> animator.startAnimation("row-1-column-7");
+                case "row-1-column-7" -> animator.startAnimation("row-1-column-8");
+                case "row-1-column-8" -> animator.startAnimation("row-1-column-1");
                 default ->
                     // Default to the bottom animation if not in any specific state.
-                        animator.startAnimation("oldman_left_1");
+                        animator.startAnimation("row-1-column-1");
             }
         }
     }

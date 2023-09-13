@@ -43,7 +43,7 @@ public class Turret extends PlaceableEntity{
      * Create a new turret placeable entity to match the provided config file
      * @param turretConfig Configuration file to match turret to
      */
-    public Turret(TurretConfig turretConfig ) {
+    public Turret(TurretConfig turretConfig) {
         super();
 
         maxAmmo = turretConfig.maxAmmo;
@@ -60,9 +60,7 @@ public class Turret extends PlaceableEntity{
         addComponent(new FOVComponent(4f, this::startDamage, this::stopDamage));
         addComponent(new StructureDestroyComponent());
     }
-    public void refillAmmo() {
-        currentAmmo = maxAmmo;
-    }
+
     public boolean Canfire() {
         return  (currentAmmo > 0) ;
     }

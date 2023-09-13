@@ -4,13 +4,17 @@ import com.csse3200.game.components.structures.TurretTargetableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
-
+/** FOVComponent
+ *  This component is used to detect enemies within a certain radius of the turret.
+ */
 public class FOVComponent extends ProximityActivationComponent {
     public FOVComponent(float radius, ProximityFunc entered, ProximityFunc exited) {
         super(radius, entered, exited);
     }
 
+    /**
+     * Updates the FOV component.
+     */
     @Override
     public void update() {
         var entities = ServiceLocator.getEntityService().getEntitiesByComponent(TurretTargetableComponent.class);
@@ -38,12 +42,13 @@ public class FOVComponent extends ProximityActivationComponent {
         }
     }
 
+    /**
+     * Checks if the enemy is within the radius of the turret.
+     * @param enemy The enemy to check.
+     * @return True if the enemy is within the radius of the turret, false otherwise.
+     */
     public boolean enemyIsInFOV(Entity enemy) {
         float distance = this.entity.getCenterPosition().dst(enemy.getCenterPosition());
         return distance <= this.radius;
-    }
-
-    public interface FOVFunc {
-        void call(ArrayList<Entity> entities);
     }
 }

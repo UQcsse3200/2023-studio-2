@@ -35,11 +35,11 @@
     },
     "com.csse3200.game.components.structures.tools.Healing": {
       "level": 0,
-      "name": "wall",
+      "name": "heal",
       "cost": {
         "Durasteel": 0
       },
-      "texture": "images/structure-icons/wall.png"
+      "texture": "images/structure-icons/stone_wall.png"
     },
     "com.csse3200.game.components.structures.tools.ExtractorTool": {
       "level": 0,

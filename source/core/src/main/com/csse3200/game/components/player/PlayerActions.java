@@ -102,6 +102,11 @@ public class PlayerActions extends Component {
         entity.getComponent(CombatStatsComponent.class).changeImmunityStatus();
     }
 
+
+    /**
+     * Updates inventory
+     * @param i - used for determining inventory action
+     */
     void updateInventory(int i) {
         switch (i) {
             case 1:

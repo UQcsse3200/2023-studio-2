@@ -36,6 +36,7 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Changes active inventory slot to a specific slot
    * @param i - the weapon to be equipped
    */
   public void setEquipped(int i) {
@@ -43,7 +44,7 @@ public class InventoryComponent extends Component {
   }
 
   /**
-   * Cycles between equiped weapons
+   * Cycles between inventory slots
    */
   public void cycleEquipped() {
     int equiped = getEquipped();
@@ -54,6 +55,7 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Returns the equipped weapon type
    * @return WeaponType - Type of cureently equiped weapon
    */
   public WeaponType getEquippedType() {
@@ -61,6 +63,7 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Updates weapon of the active inventory slot
    * @param weaponType - Type of the new weapon
    */
   public void changeEquipped(WeaponType weaponType) {

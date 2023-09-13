@@ -288,6 +288,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     timer.schedule(stopDodge, DODGE_DURATION);
   }
 
+  
+  /** 
+   * Triggers inventory events
+   * @param i - sets inventory event type
+   */
   private void triggerInventoryEvent(int i) {
     entity.getEvents().trigger("inventory", i);
     this.equippedItem = entity.getComponent(InventoryComponent.class).getEquipped();

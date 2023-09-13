@@ -3,7 +3,6 @@ package com.csse3200.game.components.upgradetree;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
-import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -22,12 +21,13 @@ public class UpgradeTree extends Component {
      * Constructs a new UpgradeTree with default weapons unlocked.
      */
     public UpgradeTree() {
-        unlockedWeapons = new ArrayList<WeaponType>();
+        unlockedWeapons = new ArrayList<>();
 
         // Base weapons
         unlockedWeapons.add(WeaponType.WOODHAMMER);
+
         unlockedWeapons.add(WeaponType.RANGED_SLINGSHOT);
-        unlockedWeapons.add(WeaponType.STICK);
+        unlockedWeapons.add(WeaponType.MELEE_WRENCH);
     }
 
     /**
@@ -66,7 +66,6 @@ public class UpgradeTree extends Component {
         GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
         String resourceKey = "resource/" + Resource.Nebulite;
         if (gameStateOb != null) {
-            /** The starting number of materials available to the player for upgrades. */
             return (int) gameStateOb.getStateData(resourceKey);
         }
         return 0;

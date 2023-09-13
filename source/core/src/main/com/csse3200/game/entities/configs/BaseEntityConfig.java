@@ -8,4 +8,5 @@ public class BaseEntityConfig {
     public int baseAttack = 0;
     public int attackMultiplier = 1;
     public Boolean isImmune = false;
+    public int lives = 3;
 }

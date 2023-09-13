@@ -28,7 +28,7 @@ public class WeaponConfigs {
             case RANGED_SLINGSHOT -> RANGED_SLINGSHOT;
             case RANGED_BOOMERANG -> RANGED_BOOMERANG;
             case RANGED_HOMING -> RANGED_HOMING;
-            case STATIC_WEAPON -> STATIC_WEAPON;
+            //case STATIC_WEAPON -> STATIC_WEAPON;
             case STICK -> STICK;
             case WOODHAMMER -> WOODHAMMER;
             case STONEHAMMER -> STONEHAMMER;

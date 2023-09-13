@@ -76,29 +76,21 @@ public class ForestGameArea extends GameArea {
       "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
       "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
       "images/iso_grass_3.png",
-      "images/playerSS_2.png",
-      "images/playerSS_4.png",
-      "images/playerSS_0.png",
-      "images/playerSS_1.png",
-      "images/playerSS_3.png",
-      "images/playerSS_5.png",
-      "images/playerSS_7.png",
-      "images/playerSS_6.png",
       "images/player_blank.png",
       "images/Ship.png",
       "images/stone_wall.png",
       "images/oldman_down_1.png",
       "images/base_enemy.png",
       "images/Troll.png",
-          "images/TurretOne.png",
-          "images/TurretTwo.png",
+      "images/TurretOne.png",
+      "images/TurretTwo.png",
       "images/rangeEnemy.png",
       "images/stone_wall.png",
-       "images/companionSS.png",
-          "images/companionSS_0.png",
-          "images/companionSS_1.png",
-          "images/companionSS_2.png",
-          "images/companionSS_03.png",
+      "images/companionSS.png",
+      "images/companionSS_0.png",
+      "images/companionSS_1.png",
+      "images/companionSS_2.png",
+      "images/companionSS_03.png",
       "images/player.png"
   };
   private static final String[] forestTextureAtlases = {
@@ -116,8 +108,7 @@ public class ForestGameArea extends GameArea {
       "images/stone_wall.atlas",
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
-      "images/playerSS.atlas",
-          "images/companionSS.atlas",
+      "images/companionSS.atlas",
       "images/player.atlas"
   };
 

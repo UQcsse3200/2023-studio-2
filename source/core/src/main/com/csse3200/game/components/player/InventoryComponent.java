@@ -16,11 +16,11 @@ import org.slf4j.LoggerFactory;
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private int equipped = 1;
-  private HashMap<Integer, WeaponType> equippedWMap = new HashMap<Integer, WeaponType>();
+  private final HashMap<Integer, WeaponType> equippedWMap = new HashMap<Integer, WeaponType>();
 
   public void create() {
-    equippedWMap.put(1, WeaponType.MELEE_BEE_STING);
-    equippedWMap.put(2, WeaponType.RANGED_BOOMERANG);
+    equippedWMap.put(1, WeaponType.MELEE_WRENCH);
+    equippedWMap.put(2, WeaponType.RANGED_SLINGSHOT);
     equippedWMap.put(3, WeaponType.WOODHAMMER);
   }
 
@@ -36,10 +36,36 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Changes active inventory slot to a specific slot
+   * 
    * @param i - the weapon to be equipped
    */
   public void setEquipped(int i) {
     this.equipped = i;
+  }
+
+  /**
+   * Replaces the specified slot with a given weapon.
+   *
+   * @param slot       the slot to be updated
+   * @param weaponType the weapon type to be placed in the slot
+   */
+  public void replaceSlotWithWeapon(int slot, WeaponType weaponType) {
+    if (slot > 3 || slot < 1) {
+      throw new IllegalArgumentException("Slot must be in range 1-3");
+    }
+    equippedWMap.remove(slot);
+    equippedWMap.put(slot, weaponType);
+  }
+
+  public void placeInSlot(WeaponType weaponType) {
+    int slot = switch (weaponType) {
+      case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING -> 1; // melee
+      case RANGED_SLINGSHOT, RANGED_BOOMERANG, RANGED_HOMING -> 2; // ranged
+      case WOODHAMMER, STONEHAMMER, STEELHAMMER -> 3; // building
+      default -> throw new IllegalArgumentException("Slot not assigned: " + weaponType);
+    };
+    replaceSlotWithWeapon(slot, weaponType);
   }
 
   /**
@@ -54,6 +80,8 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Returns the equipped weapon type
+   * 
    * @return WeaponType - Type of cureently equiped weapon
    */
   public WeaponType getEquippedType() {
@@ -61,6 +89,8 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Updates weapon of the active inventory slot
+   * 
    * @param weaponType - Type of the new weapon
    */
   public void changeEquipped(WeaponType weaponType) {

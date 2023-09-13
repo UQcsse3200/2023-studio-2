@@ -2,14 +2,18 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.InteractableComponent;
+import com.csse3200.game.components.PowerUpDisplayHUD;
 import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class PowerupFactory {
+
+    private PowerupFactory() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * Creates a powerup entity based on the specified type. The entity will have a texture render component
@@ -26,7 +30,8 @@ public class PowerupFactory {
         // Initialise and resize a new Powerup
         Entity powerup = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new PowerupComponent(type, PhysicsLayer.PLAYER));
+                .addComponent(new PowerupComponent(type));
+        powerup.addComponent(new PowerUpDisplayHUD(type));
 
         powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));
         powerup.setScale(0.6f, 0.6f);

@@ -41,9 +41,11 @@ public class WeaponTargetComponent extends Component {
                 var delta = entity.getPosition().sub(this.trackPrev);
                 this.trackPrev = entity.getPosition();
                 return delta;
+
             default:
                 return new Vector2(0, 0);
         }
     }
 }
+
 

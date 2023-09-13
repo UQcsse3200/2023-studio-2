@@ -24,6 +24,7 @@ import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.components.structures.StructurePicker;
 
+
 /**
  * Factory to create a player entity.
  *
@@ -34,10 +35,16 @@ import com.csse3200.game.components.structures.StructurePicker;
 public class PlayerFactory {
 
   private static DialogueBox dialogueBox;
+  private int playerLives = 3;
   private static final origiPlayerConfig stats =
       FileLoader.readClass(origiPlayerConfig.class, "configs/player.json");
 
-
+  public int getPlayerLives() {
+    return playerLives;
+  }
+  public void setPlayerLives(int lives) {
+    playerLives = lives;
+  }
   /**
    * Create a player entity.
    * @return entity
@@ -48,7 +55,7 @@ public class PlayerFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/player/player.atlas", TextureAtlas.class));
     animator.addAnimation("Character_StandDown", 0.2f);
     animator.addAnimation("Character_StandUp", 0.2f);
     animator.addAnimation("Character_StandLeft", 0.2f);
@@ -67,6 +74,7 @@ public class PlayerFactory {
     animator.addAnimation("Character_RollRight", 0.1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("Character_RollLeft", 0.1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("Character_RollUp", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Character_Death", 0.2f, Animation.PlayMode.NORMAL);
 
 
     Entity player =
@@ -75,7 +83,7 @@ public class PlayerFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune))
+            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack, stats.attackMultiplier, stats.isImmune, stats.lives))
             .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())

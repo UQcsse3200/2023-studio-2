@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
@@ -190,6 +191,11 @@ public class PlanetScreen extends ScreenAdapter {
         if(currentExtractor != null){
             Vector2 mousePos = renderer.getCamera().getWorldPositionFromScreen(new Vector2(Gdx.input.getX() - 200,Gdx.input.getY() + 200));
             currentExtractor.setPosition(mousePos.x,mousePos.y);
+        }
+
+        ProximityControllerComponent proximityController = player.getComponent(ProximityControllerComponent.class);
+        if (proximityController != null) {
+            proximityController.checkAllEntitiesProximity();   //checks whether the player is near an intractable entity to show the prompt
         }
     }
 

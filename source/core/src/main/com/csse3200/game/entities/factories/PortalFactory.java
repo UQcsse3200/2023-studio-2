@@ -1,5 +1,4 @@
 package com.csse3200.game.entities.factories;
-
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -10,6 +9,13 @@ import com.csse3200.game.entities.Portal;
 
 public class PortalFactory {
 
+    /**
+     * Teleports the player to a fixed destination
+     *
+     * @param x - x coordinate to place the portal
+     * @param y - y coordinate to place the portal
+     * @param player - the player instantiated in the current game area
+     */
     public static Entity createPortal(float x, float y, Entity player) {
 
         Entity portal = new Portal(player)

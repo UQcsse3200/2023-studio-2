@@ -1,5 +1,4 @@
 package com.csse3200.game.areas;
-
 import com.badlogic.gdx.audio.Music;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -25,14 +24,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.List;
 
 import static com.csse3200.game.entities.factories.EnvironmentFactory.createEnvironment;
 
 
 /** Planet Earth area for the demo game with trees, a player, and some enemies. */
-public class EarthGameArea extends GameArea {
-    private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
+public class LushGameArea extends GameArea {
+    private static final Logger logger = LoggerFactory.getLogger(LushGameArea.class);
     //private DialogueBox dialogueBox;
     private static final int NUM_TREES = 7;
     private static final int NUM_MELEE_ENEMIES_PTE = 1;
@@ -46,8 +46,7 @@ public class EarthGameArea extends GameArea {
     private static final GridPoint2 PORTAL_TWO = new GridPoint2(78, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
-    private static final String mapPath = "map/base.tmx";
-    private List<Entity> spawnedTreeTopEntities = new ArrayList<>();
+    private static final String mapPath = "map/map1.tmx";
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
             "images/extractor.png",
@@ -78,7 +77,6 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
-            "map/treetop.png",
             "map/portal.png",
             "images/playerSS_6.png"
     };
@@ -104,6 +102,7 @@ public class EarthGameArea extends GameArea {
     private static final String[] earthMusic = {backgroundMusic};
 
     private final TerrainFactory terrainFactory;
+    private final ArrayList<Entity> targetables;
     private final GdxGame game;
 
     /**
@@ -111,10 +110,11 @@ public class EarthGameArea extends GameArea {
      * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
      * @requires terrainFactory != null
      */
-    public EarthGameArea(TerrainFactory terrainFactory, GdxGame game) {
+    public LushGameArea(TerrainFactory terrainFactory, GdxGame game) {
         super();
         this.game = game;
         this.terrainFactory = terrainFactory;
+        this.targetables = new ArrayList<>();
     }
 
     /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -140,7 +140,6 @@ public class EarthGameArea extends GameArea {
         spawnBoss();
         spawnSecretBoss();
         spawnAsteroids();
-        spawnTreeTopLayer();
         spawnBotanist();
 
         playMusic();
@@ -167,23 +166,6 @@ public class EarthGameArea extends GameArea {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
         createEnvironment(collisionLayer);
     }
-
-    /**
-     * Places the sprite for the top of a tree on a higher layer so that the player appears behind
-     * tree when walking over it
-     */
-    private void spawnTreeTopLayer() {
-        GridPoint2 spawnTreeTop = new GridPoint2(0, 30);
-        Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
-        spawnEntityAt(treeTop, spawnTreeTop, false, false);
-
-        // Add the spawned tree top entity to the list
-        spawnedTreeTopEntities.add(treeTop);
-    }
-    public List<Entity> getSpawnedTreeTopEntities() {
-        return spawnedTreeTopEntities;
-    }
-
 
     /**
      * Spawns a Botanist NPC entity at a predefined spawn position on the terrain.
@@ -259,7 +241,7 @@ public class EarthGameArea extends GameArea {
      */
     private void displayUI() {
         Entity ui = new Entity();
-        ui.addComponent(new GameAreaDisplay("Planet Earth"));
+        ui.addComponent(new GameAreaDisplay("An Alien Jungle"));
         spawnEntity(ui);
     }
 
@@ -467,5 +449,9 @@ public class EarthGameArea extends GameArea {
         super.dispose();
         ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
         this.unloadAssets();
+    }
+
+    public static Entity getPlayer() {
+        return player;
     }
 }

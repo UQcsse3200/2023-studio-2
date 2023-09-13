@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.ForestGameArea;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.LushGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
@@ -78,11 +80,12 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    //ForestGameArea forestGameArea = new ForestGameArea(terrainFactory, game);
-    //forestGameArea.create();
     EarthGameArea earthGameArea = new EarthGameArea(terrainFactory, game);
     earthGameArea.create();
-    player = earthGameArea.getPlayer();
+    //LushGameArea lushGameArea = new LushGameArea(terrainFactory, game);
+    //lushGameArea.create();
+    //player = lushGameArea.getPlayer();
+    player = GameArea.getPlayer();
     titleBox = new TitleBox(game, "Title", skin);
 
   }

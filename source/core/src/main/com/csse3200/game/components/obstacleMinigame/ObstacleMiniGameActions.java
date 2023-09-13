@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 
 import static com.csse3200.game.ui.UIComponent.skin;
 
-public class MainGameActionss extends MainGameActions {
-    private static final Logger logger = LoggerFactory.getLogger(MainGameActionss.class);
+public class ObstacleMiniGameActions extends MainGameActions {
+    private static final Logger logger = LoggerFactory.getLogger(ObstacleMiniGameActions.class);
     private GdxGame game;
     private Stage stage;
 
-    public MainGameActionss(GdxGame game, Stage stage) {
+    public ObstacleMiniGameActions(GdxGame game, Stage stage) {
         super(game);
         this.game = game;
         this.stage = stage;

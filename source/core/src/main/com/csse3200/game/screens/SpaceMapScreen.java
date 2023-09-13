@@ -23,7 +23,7 @@ import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.obstacleMinigame.MainGameActionss;
+import com.csse3200.game.components.obstacleMinigame.ObstacleMiniGameActions;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
@@ -111,7 +111,7 @@ public class SpaceMapScreen extends ScreenAdapter {
         Entity ui = new Entity();
         ui.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
-                .addComponent(new MainGameActionss(this.game,stage))
+                .addComponent(new ObstacleMiniGameActions(this.game,stage))
                 .addComponent(new ReturnToPlanetDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)

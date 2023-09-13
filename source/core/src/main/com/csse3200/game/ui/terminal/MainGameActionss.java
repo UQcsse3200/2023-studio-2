@@ -22,12 +22,23 @@ public class MainGameActionss extends MainGameActions {
         this.stage = stage;
     }
 
+
+    @Override
+    public void create() {
+        entity.getEvents().addListener("returnPlanet", this::onReturnPlanet);
+    }
     /**
      * Swaps to the Main Menu screen.
      */
+
     protected void onReturnPlanet() {
         logger.info("Exiting main game screen");
         MainAlertBox mainAlertBox = new MainAlertBox(game, "Return to planet", skin, "Game Over");
-        mainAlertBox.showDialog(stage,()-> game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet")));
+        mainAlertBox.showDialog(stage,()-> {
+            //game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+        });
     }
+
+
 }

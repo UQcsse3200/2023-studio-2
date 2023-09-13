@@ -21,13 +21,15 @@ public class DistanceDisplay extends UIComponent {
 
     private void addActors() {
         table = new Table();
-        table.top().left();
+        //table.top().left();
+        table.center().bottom();
         table.setFillParent(true);
         table.padTop(45f).padLeft(5f);
 
         // Distance text
         CharSequence distanceText = "Distance: N/A";
-        distanceLabel = new Label(distanceText, skin, "large");
+        //distanceLabel = new Label(distanceText, skin, "large");
+        distanceLabel = new Label(distanceText, skin, "title");
 
         table.add(distanceLabel);
         stage.addActor(table);

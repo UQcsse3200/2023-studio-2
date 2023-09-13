@@ -42,7 +42,7 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
     entity.getEvents().addListener("space map", this::onSpaceMap);
-
+    entity.getEvents().addListener("upgrade shop", this::onShop);
   }
 
   /**
@@ -90,7 +90,7 @@ public class MainMenuActions extends Component {
   private void onMini(){
     logger.info("starting space minigame");
     MainAlert mainAlertBox = new MainAlert(game, "Start game", skin, "Ready to play the game");
-    mainAlertBox.showDialog(stage, () -> game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN));
+    mainAlertBox.showDialog(stage, () -> game.setScreen(GdxGame.ScreenType.SPACEMINI_SCREEN));
 
   }
   private void onExtractor(){
@@ -106,6 +106,10 @@ public class MainMenuActions extends Component {
     game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
   }
 
+  private void onShop() {
+    logger.info("Launching Upgrade Shop screen");
+    game.setScreen(GdxGame.ScreenType.UPGRADE_SHOP);
+  }
 }
 
 

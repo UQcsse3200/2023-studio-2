@@ -13,6 +13,8 @@ import com.csse3200.game.utils.math.Vector2Utils;
 public class KeyboardShipInputComponent extends InputComponent {
     private final Vector2 flyDirection = Vector2.Zero.cpy();
 
+    public KeyboardShipInputComponent() { super(5); }
+
 
     /**
      * Triggers ship events on specific keycodes.
@@ -25,12 +27,15 @@ public class KeyboardShipInputComponent extends InputComponent {
         switch (keycode) {
             case Keys.W, Keys.UP -> {
                 flyDirection.add(Vector2Utils.UP);
+                //flyDirection.add(Vector2Utils.RIGHT);
                 triggerFlyEvent();
+                //triggerAccelerateEvent();
                 return true;
             }
             case Keys.A,Keys.LEFT -> {
                 flyDirection.add(Vector2Utils.LEFT);
                 triggerFlyEvent();
+                //triggerLeftEvent();
                 return true;
             }
             case Keys.S,Keys.DOWN -> {
@@ -50,6 +55,7 @@ public class KeyboardShipInputComponent extends InputComponent {
         }
     }
 
+
     /**
      * Triggers player events on specific keycodes.
      *
@@ -59,14 +65,18 @@ public class KeyboardShipInputComponent extends InputComponent {
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
+
             case Keys.W, Keys.UP -> {
                 flyDirection.sub(Vector2Utils.UP);
+                //flyDirection.add(Vector2Utils.RIGHT);
                 triggerFlyEvent();
+                //triggerAccelerateEvent();
                 return true;
             }
             case Keys.A,Keys.LEFT-> {
                 flyDirection.sub(Vector2Utils.LEFT);
                 triggerFlyEvent();
+                //triggerLeftEvent();
                 return true;
             }
             case Keys.S,Keys.DOWN -> {
@@ -79,6 +89,8 @@ public class KeyboardShipInputComponent extends InputComponent {
                 triggerFlyEvent();
                 return true;
             }
+
+
 
             case Keys.B -> {
                 triggerBrakeOnEvent();
@@ -97,11 +109,20 @@ public class KeyboardShipInputComponent extends InputComponent {
         }
     }
 
+
     private void triggerFlyEvent() {
         if (flyDirection.epsilonEquals(Vector2.Zero)) {
             entity.getEvents().trigger("flyStop");
         } else {
             entity.getEvents().trigger("fly", flyDirection);
+        }
+    }
+
+    private void triggerAccelerateEvent() {
+        if (flyDirection.epsilonEquals(Vector2.Zero)) {
+            entity.getEvents().trigger("flyStop");
+        } else {
+            entity.getEvents().trigger("boostRight", flyDirection);
         }
     }
 
@@ -111,6 +132,10 @@ public class KeyboardShipInputComponent extends InputComponent {
 
     private void triggerBrakeOffEvent() {
         entity.getEvents().trigger("brakeOff");
+    }
+
+    private void triggerLeftEvent() {
+        entity.getEvents().trigger("turnLeft");
     }
 }
 

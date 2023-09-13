@@ -14,14 +14,11 @@ public class PowerupComponent extends Component {
     private PlayerActions playerActions;
     private long duration;
 
-    private String PowerUp;
-
-
 
     /**
      * Assigns a type and targetLayer value to a given Powerup
      */
-    public PowerupComponent(PowerupType type, short targetLayer) {
+    public PowerupComponent(PowerupType type) {
         this.type = type;
     }
 
@@ -95,25 +92,6 @@ public class PowerupComponent extends Component {
      */
     public PowerupType getType() {
         return type;
-    }
-
-    /**
-     * @return powerType
-     */
-    public String getPowerupType() {
-        String powerType;
-        if (type == PowerupType.HEALTH_BOOST) {
-            powerType = "Health Boost";
-            this.PowerUp = powerType;
-            return powerType;
-        }
-        if (type == PowerupType.SPEED_BOOST) {
-            powerType = "Speed Boost";
-            this.PowerUp = powerType;
-            return powerType;
-        }
-        powerType = "Null";
-        return powerType;
     }
 
     /**

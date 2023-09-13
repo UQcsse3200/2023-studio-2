@@ -6,7 +6,6 @@ import com.csse3200.game.components.PowerUpDisplayHUD;
 import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
@@ -27,7 +26,7 @@ public class PowerupFactory {
         // Initialise and resize a new Powerup
         Entity powerup = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new PowerupComponent(type, PhysicsLayer.PLAYER));
+                .addComponent(new PowerupComponent(type));
         powerup.addComponent(new PowerUpDisplayHUD(type));
 
         powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));

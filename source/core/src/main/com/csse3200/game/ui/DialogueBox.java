@@ -49,10 +49,6 @@ public class DialogueBox extends Dialog {
 
         imageTable.setBackground(image.getDrawable());
 
-        // Make the image table fill the entire content area of the dialog
-        getContentTable().add(imageTable).pad(20f).width(800f).height(350f).center();
-        getContentTable().row();
-
 
         Label titleLabel = getTitleLabel();
         titleLabel.setAlignment(Align.center);
@@ -123,6 +119,6 @@ public class DialogueBox extends Dialog {
     }
     private void onOK() {
         logger.info("Start game");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        remove();
     }
 }

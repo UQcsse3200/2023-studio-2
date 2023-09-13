@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.BotanistAnimationController;
+import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
@@ -102,10 +104,14 @@ public class NPCFactory {
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
 
     NPCConfigs configs =
             FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+    botanist.addComponent(new InteractableComponent(entity -> {
+              botanist.getComponent(DialogComponent.class).showdialogue("This is Botanist");
+              },5f));
 
    // botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
    // botanist.getComponent(TextureRenderComponent.class).scaleEntity();

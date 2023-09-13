@@ -43,6 +43,16 @@ public class EnemyFactoryTest {
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerRenderService(new RenderService());
     }
+
+    /**
+     * Test method for the getEnemyscale method in the EnemyFactory class.
+     * It verifies that the scale values returned by the getEnemyscale method
+     * Valid cases (expected scales):
+     * - For Ranged enemy type, the scale should be 2.0f.
+     * - For Melee enemy type, the scale should be 1.8f.
+     * - For BossRanged enemy type, the scale should be 2.2f.
+     * - For BossMelee enemy type, the scale should be 2.4f.
+     */
     @Test
     void getEnemyScaleTest() {
         assertEquals(2.0f, EnemyFactory.getEnemyscale(EnemyType.Ranged));

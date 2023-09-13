@@ -43,6 +43,10 @@ class DeathComponentTest {
         deathComponent.create();
     }
 
+    /**
+     * Tests the kill functionality when the entity is not dead.
+     * Passes Test if the entity is not killed when it's not dead.
+     */
     @Test
     void shouldNotKillIfNotDead() {
         Fixture mockMe = mock(Fixture.class);
@@ -58,6 +62,10 @@ class DeathComponentTest {
         verify(mockEntity.getEvents(), times(0)).trigger("dispose");
     }
 
+    /**
+     * Tests the kill functionality when the hitbox is not triggered.
+     * Passes Test if the entity is not killed when the hitbox isn't triggered.
+     */
     @Test
     void shouldNotKillIfNotTriggeredByHitbox() {
         Fixture mockMe = mock(Fixture.class);
@@ -70,6 +78,10 @@ class DeathComponentTest {
         verify(mockEntity, times(0)).getComponent(AnimationRenderComponent.class);
     }
 
+    /**
+     * Tests the kill functionality when the entity is dead and the hitbox is triggered.
+     * Passes Test if the entity is killed when it's dead and the hitbox is triggered.
+     */
     @Test
     void shouldKillIfTriggeredByHitboxAndIsDead() {
         Fixture mockMe = mock(Fixture.class);

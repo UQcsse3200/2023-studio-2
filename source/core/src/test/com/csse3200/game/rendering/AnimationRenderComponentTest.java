@@ -126,6 +126,10 @@ class AnimationRenderComponentTest {
     assertNull(animator.getCurrentAnimation());
   }
 
+  /**
+   * Tests the retrieval of the duration of an animation.
+   * Passes if correct duration of the animation is returned by the method.
+   */
   @Test
   void shouldReturnAnimationDuration() {
     TextureAtlas atlas = createMockAtlas("test_name", 5);
@@ -134,6 +138,10 @@ class AnimationRenderComponentTest {
     assertEquals(1.0f, animator.getAnimationDuration("test_name"));
   }
 
+  /**
+   * Tests the retrieval of the duration of an animation that doesn't exist.
+   * Passes if the method returns -1 for the null animation.
+   */
   @Test
   void shouldReturnNegativeForUnknownAnimationDuration() {
     TextureAtlas atlas = createMockAtlas("test_name", 5);

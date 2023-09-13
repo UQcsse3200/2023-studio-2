@@ -47,6 +47,14 @@ public class BossTask extends DefaultTask implements PriorityTask {
     debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
 
+  /**
+   * Used to check if Boss has used special attack outside of class
+   * @return True if Boss has already used special attack
+   */
+  public boolean isUnleashed() {
+      return unleashed;
+  }
+
   @Override
   public void start() {
     super.start();

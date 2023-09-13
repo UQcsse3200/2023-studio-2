@@ -152,14 +152,14 @@ public class MainMenuDisplay extends UIComponent {
         table.add(exitBtn).padTop(15f).padLeft(1200f);
 
         stage.addActor(titleImage);
-        updateAnimation();
+        AmendAnimation();
 
         stage.addActor(transitionFrames);
         stage.addActor(table);
     }
 
-    private void updateAnimation() {
-        if (frame < MainMenuScreen.frameCount) {
+    private void AmendAnimation() {
+        if (frame < MainMenuScreen.MountedFrames) {
             transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
                     .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
             transitionFrames.setWidth(Gdx.graphics.getWidth());
@@ -174,7 +174,7 @@ public class MainMenuDisplay extends UIComponent {
 
     public void update() {
         if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
-            updateAnimation();
+            AmendAnimation();
         }
     }
 

@@ -31,9 +31,9 @@ public class MainMenuScreen extends ScreenAdapter {
   public static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  public static final int frameCount = 105;
+  public static final int MountedFrames = 105;
   private static final String[] mainMenuTextures = {"images/escape-earth2.png"};
-  public static String[] transitionTextures = new String[frameCount];
+  public static String[] transitionTextures = new String[MountedFrames];
   private static final String animationPrefix = "images/main_menu_video/menu_animations";
 
   public MainMenuScreen(GdxGame game) {
@@ -92,14 +92,14 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainMenuTextures);
-    loadFrames();
+    loadMountedFrames();
     ServiceLocator.getResourceService().loadAll();
   }
-  private void loadFrames() {
+  private void loadMountedFrames() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
 
-    for (int i = 0; i < frameCount; i++) {
+    for (int i = 0; i < MountedFrames; i++) {
       transitionTextures[i] = animationPrefix + i + ".png";
     }
     resourceService.loadTextures(transitionTextures);

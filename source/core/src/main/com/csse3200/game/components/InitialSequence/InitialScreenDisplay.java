@@ -19,6 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.graphics.Color;
 
+/**
+ * The user interface component responsible for displaying the initial story sequence.
+ */
 public class InitialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(InitialScreenDisplay.class);
     private final GdxGame game;
@@ -32,6 +35,11 @@ public class InitialScreenDisplay extends UIComponent {
     private TweenManager tweenManager;
     private Label storyLabel;
 
+    /**
+     * Creates a new instance of the InitialScreenDisplay.
+     *
+     * @param game The main game instance.
+     */
     public InitialScreenDisplay(GdxGame game) {
         super();
         this.game = game;

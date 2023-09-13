@@ -1,7 +1,5 @@
 package com.csse3200.game.components.controls;
 
-
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,6 +14,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
+/**
+ * A UI component responsible for displaying the controls screen's user interface.
+ */
 public class ControlsScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreenDisplay.class);
     private Table table;
@@ -42,28 +43,16 @@ public class ControlsScreenDisplay extends UIComponent {
 
         InsertButtons bothButtons = new InsertButtons();
 
-//        String playAgainTexture = "images/playAgain.PNG";
-//        String playAgainTextureHover = "images/playAgainHover.PNG";
-//        ImageButton playAgainBtn;
-//        playAgainBtn = bothButtons.draw(playAgainTexture, playAgainTextureHover);
-//
-//        // Keep the "Play Again" button in its position
-//        playAgainBtn.setPosition(810f, 80f);
-//        playAgainBtn.setSize(250, 100);
-
-
         TextButton WBtn = new TextButton("W", skin);
         TextButton ABtn = new TextButton("A", skin);
         TextButton SBtn = new TextButton("S", skin);
         TextButton DBtn = new TextButton("D", skin);
 
-
-       WBtn.addListener(new ChangeListener() {
+        WBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("W button clicked");
                 entity.getEvents().trigger("w");
-
             }
         });
 
@@ -72,7 +61,6 @@ public class ControlsScreenDisplay extends UIComponent {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("A button clicked");
                 entity.getEvents().trigger("a");
-
             }
         });
 
@@ -81,7 +69,6 @@ public class ControlsScreenDisplay extends UIComponent {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("S button clicked");
                 entity.getEvents().trigger("s");
-
             }
         });
 
@@ -90,11 +77,8 @@ public class ControlsScreenDisplay extends UIComponent {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("D button clicked");
                 entity.getEvents().trigger("d");
-
             }
         });
-
-
 
         table.row();
         table.add(WBtn).padTop(15f).padRight(650f);
@@ -104,7 +88,6 @@ public class ControlsScreenDisplay extends UIComponent {
         table.add(SBtn).padTop(15f).padRight(650f);
         table.row();
         table.add(DBtn).padTop(15f).padRight(650f);
-
 
         String exitTexture = "images/on_exit.png";
         String exitTextureHover = "images/on_exit_hover.PNG";

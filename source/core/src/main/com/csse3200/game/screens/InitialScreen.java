@@ -17,16 +17,24 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The initial screen of the game, responsible for loading assets and creating UI elements.
+ */
 public class InitialScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
 
     /**
-     * An array of paths to image textures needed for this screen
+     * An array of paths to image textures needed for this screen.
      */
     private static final String[] introScreenAssets = {"images/InitialScreenBG.png", "images/InitialScreenImage.png"};
     private final GdxGame game;
     private final Renderer renderer;
 
+    /**
+     * Creates a new instance of the InitialScreen.
+     *
+     * @param game The main game instance.
+     */
     public InitialScreen(GdxGame game) {
         this.game = game;
 
@@ -43,7 +51,6 @@ public class InitialScreen extends ScreenAdapter {
         loadAssets();
         createUI();
     }
-
 
     @Override
     public void render(float delta) {
@@ -67,7 +74,7 @@ public class InitialScreen extends ScreenAdapter {
     }
 
     /**
-     * Load all the image textures required for this screen into memory
+     * Load all the image textures required for this screen into memory.
      */
     private void loadAssets() {
         logger.debug("Loading assets");
@@ -77,7 +84,7 @@ public class InitialScreen extends ScreenAdapter {
     }
 
     /**
-     * Remove all the loaded image textures from the ResouceService, and thus game memory.
+     * Remove all the loaded image textures from the ResourceService, and thus game memory.
      */
     private void unloadAssets() {
         logger.debug("Unloading assets");
@@ -86,11 +93,11 @@ public class InitialScreen extends ScreenAdapter {
     }
 
     /**
-     * Creates the intro screen's ui including components for rendering ui elements to the screen
-     * and capturing and handling ui input.
+     * Creates the intro screen's UI, including components for rendering UI elements to the screen
+     * and capturing and handling UI input.
      */
     private void createUI() {
-        logger.debug("Creating ui");
+        logger.debug("Creating UI");
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
         ui.addComponent(new InitialScreenDisplay(game))

@@ -210,7 +210,8 @@ public class EnemyFactory {
       if (behaviour == EnemyBehaviour.PTE) {
         if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER) {
           // Special Attack Component
-          aiTaskComponent.addTask(new ChaseTask(target, 7, 10f, 1000f));
+          aiTaskComponent.addTask(new BossTask(target, 7, 10f, 1000f));
+//          aiTaskComponent.addTask(new ChaseTask(target, 7, 10f, 1000f));
         }
         else if
         (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.COMPANION) {

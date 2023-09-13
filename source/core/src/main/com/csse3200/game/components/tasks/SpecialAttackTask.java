@@ -35,7 +35,6 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
     @Override
     public void start() {
         super.start();
-        owner.getEntity().getEvents().trigger("standing");
         this.spawn = owner.getEntity().getPosition();
         hasShot = false;
         // Use special attack

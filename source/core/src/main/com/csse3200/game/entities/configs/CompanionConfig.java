@@ -19,4 +19,8 @@ public class CompanionConfig extends BaseEntityConfig {
      * The file path to the bullet texture used by the companion.
      */
     public String bulletTexturePath = "Bullet.png";
+    public int health;
+    public int baseAttack;
+    public int attackMultiplier;
+    public boolean isImmune;
 }

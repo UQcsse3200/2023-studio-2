@@ -10,8 +10,6 @@ import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
-
 /** Chases a target entity until they get too far away or line of sight is lost */
 public class ChaseTask extends DefaultTask implements PriorityTask {
   private final Entity target;

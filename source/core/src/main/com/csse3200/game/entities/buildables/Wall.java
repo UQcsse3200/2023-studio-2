@@ -2,7 +2,12 @@ package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.components.*;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.ProximityActivationComponent;
+import com.csse3200.game.components.structures.JoinLayer;
+import com.csse3200.game.components.structures.JoinableComponent;
+import com.csse3200.game.components.structures.JoinableComponentShapes;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
@@ -13,9 +18,6 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.components.structures.JoinableComponent;
-import com.csse3200.game.components.structures.JoinLayer;
-import com.csse3200.game.components.structures.JoinableComponentShapes;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -50,7 +52,7 @@ public class Wall extends PlaceableEntity {
         this.type = type;
 
         WallConfig config = configs.GetWallConfig(type);
-        var textures = ServiceLocator.getResourceService().getAsset(config.textureAtlas, TextureAtlas.class);
+        var textures = ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class);
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));

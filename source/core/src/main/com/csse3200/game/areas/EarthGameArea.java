@@ -10,8 +10,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.badlogic.gdx.Gdx;
-import java.util.List;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.buildables.TurretType;
@@ -23,6 +21,7 @@ import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.TerrainService;
@@ -60,12 +59,8 @@ public class EarthGameArea extends GameArea {
             "images/refinedBrokenExtractor.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
-            "images/RightShip.png",
+            "images/LeftShip.png",
             "images/wall.png",
-//            "images/companionSS_0.png",
-//            "images/companionSS_1.png",
-//            "images/companionSS_2.png",
-//            "images/companionSS.png",
             "images/wall2.png",
             "images/gate_close.png",
             "images/gate_open.png",
@@ -142,8 +137,6 @@ public class EarthGameArea extends GameArea {
 
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
-    private Entity player;
-    private Entity companion;
     private Entity laboratory;
     private GdxGame game;
 
@@ -177,11 +170,10 @@ public class EarthGameArea extends GameArea {
         laboratory = spawnLaboratory();
         spawnUpgradeBench();
         spawnShip();
-
-        player = spawnPlayer();
-        companion = spawnCompanion(player);
+        this.player = spawnPlayer();
+        this.companion = spawnCompanion(player);
         spawnPotion(companion,laboratory);
-
+        spawnTurret();
         spawnEnemies();
         spawnBoss();
         spawnAsteroids();
@@ -298,6 +290,7 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(extractor, pos, true, false);
         return extractor;
     }
+
     public Entity getExtractor() {
         GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(24, 2).x / 2, terrain.getMapBounds(0).sub(2, 2).y / 2);
         Entity extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
@@ -309,15 +302,9 @@ public class EarthGameArea extends GameArea {
     private void spawnShip() {
         GridPoint2 spawnPosition = new GridPoint2(7*terrain.getMapBounds(0).sub(1, 1).x/12,
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
-        Entity ship = StructureFactory.createShip(game);
+        Entity ship = StructureFactory.createShip(game, null); //Doesn't implement windconditions
         spawnEntityAt(ship, spawnPosition, false, false);
     }
-    public void spawnTurret() {
-        Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
-        Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
-        spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
-    }
-
 
     private void displayUI() {
         Entity ui = new Entity();
@@ -328,7 +315,7 @@ public class EarthGameArea extends GameArea {
 
     private void spawnTerrain() {
         // Background terrain
-        terrain = terrainFactory.createTerrain();
+        terrain = terrainFactory.createTerrain("map/base.tmx");
         spawnEntity(new Entity().addComponent(terrain));
 
         // Terrain walls
@@ -427,23 +414,20 @@ public class EarthGameArea extends GameArea {
         // Spawning enemies based on set number of each type
         for (int i = 0; i < NUM_MELEE_PTE; i++) {
             GridPoint2 randomPos1 = RandomUtils.random(minPos, maxPos);
-            Entity meleePTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.PTE);
+            Entity meleePTE = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
             spawnEntityAt(meleePTE, randomPos1, true, true);
-            EnemyFactory.enemies.add(meleePTE);
         }
 
         for (int i = 0; i < NUM_MELEE_DTE; i++) {
             GridPoint2 randomPos2 = RandomUtils.random(minPos, maxPos);
-            Entity meleeDTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+            Entity meleeDTE = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(meleeDTE, randomPos2, true, true);
-            EnemyFactory.enemies.add(meleeDTE);
         }
 
         for (int i = 0; i < NUM_RANGE_PTE; i++) {
             GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
-            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+            Entity rangePTE = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
             spawnEntityAt(rangePTE, randomPos3, true, true);
-            EnemyFactory.enemies.add(rangePTE);
         }
     }
 
@@ -455,11 +439,17 @@ public class EarthGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
+        Entity boss = EnemyFactory.createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
         spawnEntityAt(boss, randomPos, true, true);
-        EnemyFactory.enemies.add(boss);
         //boss.addComponent(new DialogComponent(dialogueBox));
 
+    }
+
+    public void spawnTurret() {
+        Entity levelOne = ObstacleFactory.createCustomTurret(TurretType.levelOne, player);
+        Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
+        spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
+        spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
     }
 
     private void playMusic() {

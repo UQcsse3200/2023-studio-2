@@ -1,17 +1,14 @@
 package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Transform;
-import com.csse3200.game.components.*;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.FOVComponent;
+import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.TurretConfig;
 import com.csse3200.game.entities.configs.TurretConfigs;
@@ -23,9 +20,6 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Turret extends PlaceableEntity{
 
@@ -41,22 +35,29 @@ public class Turret extends PlaceableEntity{
     int maxAmmo;
     int damage;
 
+    //TODO: REMOVE - LEGACY
     public Turret(TurretType type, Entity player) {
-        super();
-        this.type = type;
+        this(turretConfigs.GetTurretConfig(type));
+    }
 
-        TurretConfig turretConfig = turretConfigs.GetTurretConfig(type);
+    /**
+     * Create a new turret placeable entity to match the provided config file
+     * @param turretConfig Configuration file to match turret to
+     */
+    public Turret(TurretConfig turretConfig ) {
+        super();
+
         maxAmmo = turretConfig.maxAmmo;
         damage = turretConfig.damage;
-        var texture = ServiceLocator.getResourceService().getAsset(turretConfig.texture, Texture.class);
+        var texture = ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, Texture.class);
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.TURRET));
         addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
-        addComponent(new CombatStatsComponent(turretConfig.health, 0, 0, false));
+        addComponent(new CombatStatsComponent(turretConfig.health, turretConfig.damage, turretConfig.attackMultiplier, turretConfig.isImmune));
         addComponent(new HealthBarComponent(true));
         addComponent(new TextureRenderComponent(texture));
-        addComponent(new FOVComponent(4f, EnemyFactory.enemies, this::startDamage, this::stopDamage));
+//        addComponent(new FOVComponent(4f, EnemyFactory.enemies, this::startDamage, this::stopDamage));
         addComponent(new StructureDestroyComponent());
     }
 

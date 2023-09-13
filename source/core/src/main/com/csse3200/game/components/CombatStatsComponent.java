@@ -3,9 +3,7 @@ package com.csse3200.game.components;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Time;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities

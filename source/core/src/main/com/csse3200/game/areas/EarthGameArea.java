@@ -48,7 +48,7 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_POWERUPS = 3;
     private static final int NUM_Laboratory = 4;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
-    private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
+    private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(9, 9);
     /*private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);*/
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;

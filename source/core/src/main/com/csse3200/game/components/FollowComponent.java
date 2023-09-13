@@ -6,7 +6,7 @@ import com.csse3200.game.entities.factories.PlayerFactory;
 public class FollowComponent extends Component{
     private Entity followEntity;
     private float followSpeed;
-    //minimumDistance is defined as the smallest amount of distance between entities which should invoke a follow
+    //  minimumDistance is defined as the smallest amount of distance between entities which should invoke a follow
     // command
     private float minimumDistance = 0.5f;
 
@@ -19,9 +19,7 @@ public class FollowComponent extends Component{
         this.followEntity = followEntity;
         this.followSpeed = followSpeed;
     }
-    /*public void create(){
-        entity.getEvents().addListener();
-    }*/
+
 
     /**
      * Sets the entities follow speed to the given input

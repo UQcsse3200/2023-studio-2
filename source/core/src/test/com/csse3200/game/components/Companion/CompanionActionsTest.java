@@ -122,8 +122,8 @@ class CompanionActionsTest {
     @Test
     public void testWalk() {
         Vector2 direction = new Vector2(1f, 0f);
-        companionActions.walk(direction);
-        assertEquals(direction, companionActions.walkDirection);
+        companionActions.move(direction);
+        assertEquals(direction, companionActions.movingDirection);
         assertEquals(true, companionActions.moving);
     }
 
@@ -132,8 +132,8 @@ class CompanionActionsTest {
      */
     @Test
     public void testStopWalking() {
-        companionActions.stopWalking();
-        assertEquals(Vector2.Zero, companionActions.walkDirection);
+        companionActions.stopMoving();
+        assertEquals(Vector2.Zero, companionActions.movingDirection);
         assertEquals(false, companionActions.moving);
     }
 

@@ -26,8 +26,8 @@ public class CompanionStatsDisplay extends UIComponent {
     public Label label;
 
 
-    public CompanionStatsDisplay(Entity playerEntitiy){
-        this.playerEntity = playerEntitiy;
+    public CompanionStatsDisplay(Entity playerEntity){
+        this.playerEntity = playerEntity;
 
     }
 

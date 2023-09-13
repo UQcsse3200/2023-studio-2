@@ -65,11 +65,16 @@ public class TouchCompanionInputComponent extends InputComponent {
         }
     }
 
+    /**
+     * Trigger all the MOVING of the companion.
+     */
     private void triggerWalkEvent() {
+        // if no input direction was given, stop the companions movement
         if (walkDirection.epsilonEquals(Vector2.Zero)) {
-            entity.getEvents().trigger("walkStop");
+            entity.getEvents().trigger("moveStop");
         } else {
-            entity.getEvents().trigger("walk", walkDirection);
+            // update the companions position based off the direction
+            entity.getEvents().trigger("move", walkDirection);
         }
     }
 
@@ -80,101 +85,6 @@ public class TouchCompanionInputComponent extends InputComponent {
         return true;
     }
 }
-
-
-/*
-*//**
- * Input handler for the Companion for keyboard and touch (mouse) input.
- * This input handler uses keyboard and touch input.
- *//*
-public class TouchCompanionInputComponent extends InputComponent {
-    private final Vector2 walkDirection = Vector2.Zero.cpy();
-
-    public TouchCompanionInputComponent() {
-        super(5);
-    }
-
-    *//**
-     * Triggers Companion events on specific keycodes.
-     *
-     * @return whether the input was processed
-     * @see InputProcessor#keyDown(int)
-     *//*
-    @Override
-    public boolean keyDown(int keycode) {
-        switch (keycode) {
-            case Input.Keys.UP:
-                walkDirection.add(Vector2Utils.UP);
-                triggerWalkEvent();
-                return true;
-            case Input.Keys.LEFT:
-                walkDirection.add(Vector2Utils.LEFT);
-                triggerWalkEvent();
-                return true;
-            case Input.Keys.DOWN:
-                walkDirection.add(Vector2Utils.DOWN);
-                triggerWalkEvent();
-                return true;
-            case Input.Keys.RIGHT:
-                walkDirection.add(Vector2Utils.RIGHT);
-                triggerWalkEvent();
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    *//**
-     * Triggers Companion events on specific keycodes.
-     *
-     * @return whether the input was processed
-     * @see InputProcessor#keyUp(int)
-     *//*
-    @Override
-    public boolean keyUp(int keycode) {
-        switch (keycode) {
-            case Input.Keys.UP:
-                walkDirection.sub(Vector2Utils.UP);
-                triggerWalkEvent();
-                return true;
-            case Input.Keys.LEFT:
-                walkDirection.sub(Vector2Utils.LEFT);
-                triggerWalkEvent();
-                return true;
-            case Input.Keys.DOWN:
-                walkDirection.sub(Vector2Utils.DOWN);
-                triggerWalkEvent();
-                return true;
-            case Input.Keys.RIGHT:
-                walkDirection.sub(Vector2Utils.RIGHT);
-                triggerWalkEvent();
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    *//**
-     * Triggers the Companionattack.
-     * @return whether the input was processed
-     * @see InputProcessor#touchDown(int, int, int, int)
-     *//*
-    @Override
-
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        entity.getEvents().trigger("attack");
-        return true;
-    }
-
-    private void triggerWalkEvent() {
-        if (walkDirection.epsilonEquals(Vector2.Zero)) {
-            entity.getEvents().trigger("walkStop");
-        } else {
-            entity.getEvents().trigger("walk", walkDirection);
-        }
-    }
-}*/
-
 
 
 

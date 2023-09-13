@@ -31,7 +31,7 @@
       "cost": {
         "Durasteel": 0
       },
-      "texture": "images/structure-icons/wall.png"
+      "texture": "images/structures/heal.png"
     },
     "com.csse3200.game.components.structures.tools.ExtractorTool": {
       "level": 0,

@@ -121,7 +121,7 @@ public class EnemyFactory {
     else if (type == EnemyType.Ranged) {
       scale = 2.0f;
     }
-//    enemy.scaleHeight(scale);
+    enemy.scaleHeight(scale);
 
     return enemy;
   }

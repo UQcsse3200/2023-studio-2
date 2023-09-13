@@ -18,6 +18,7 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.Objects;
@@ -33,28 +34,50 @@ public class Turret extends PlaceableEntity{
             FileLoader.readClass(TurretConfigs.class, "configs/turrets.json");
 
     TurretType type;
+    private int currentAmmo;
 
     int maxAmmo;
     int damage;
 
+    //TODO: REMOVE - LEGACY
     public Turret(TurretType type, Entity player) {
-        super();
-        this.type = type;
+        this(turretConfigs.GetTurretConfig(type));
+    }
 
-        TurretConfig turretConfig = turretConfigs.GetTurretConfig(type);
+    /**
+     * Create a new turret placeable entity to match the provided config file
+     * @param turretConfig Configuration file to match turret to
+     */
+    public Turret(TurretConfig turretConfig ) {
+        super();
+
         maxAmmo = turretConfig.maxAmmo;
+        currentAmmo = maxAmmo;
         damage = turretConfig.damage;
-        var texture = ServiceLocator.getResourceService().getAsset(turretConfig.texture, Texture.class);
+        var texture = ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, Texture.class);
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.TURRET));
         addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
-        addComponent(new CombatStatsComponent(turretConfig.health, 0, 0, false));
+        addComponent(new CombatStatsComponent(turretConfig.health, turretConfig.damage, turretConfig.attackMultiplier, turretConfig.isImmune));
         addComponent(new HealthBarComponent(true));
         addComponent(new TextureRenderComponent(texture));
         addComponent(new FOVComponent(4f, this::startDamage, this::stopDamage));
         addComponent(new StructureDestroyComponent());
     }
+    public void refillAmmo() {
+        currentAmmo = maxAmmo;
+    }
+    public boolean Canfire() {
+        return  (currentAmmo > 0) ;
+    }
+    public void refillAmmo(int ammo) {
+        if (currentAmmo + ammo <= maxAmmo) {
+            currentAmmo += ammo;
+        } else {
+        }
+    }
+
 
     @Override
     public void update() {
@@ -86,7 +109,7 @@ public class Turret extends PlaceableEntity{
             healthBarComponent.setEnabled(false);
         }
 
-        if (focusCombatStatsComponent.getHealth() <= 0) {
+        if (focusCombatStatsComponent.getHealth() <= 0 || !Canfire()) {
             return;
         }
         // give damage until health is 0
@@ -95,8 +118,23 @@ public class Turret extends PlaceableEntity{
             giveDamage(focus);
             this.start = System.currentTimeMillis();
             stopDamage(focus);
+
         }
     }
+    public void interactWithTurret(Entity player) {
+        int requiredAmmo = maxAmmo - currentAmmo;
+        var GamestateObserver = ServiceLocator.getGameStateObserverService();
+        int AvailableResources = (int)GamestateObserver.getStateData("resource/nebulite");
+        if (AvailableResources >= requiredAmmo) {
+            GamestateObserver.trigger("resourceAdd", "nebulite", -requiredAmmo);
+            refillAmmo(requiredAmmo);
+        } else {
+            // Handle insufficient resources (optional)
+        }
+    }
+
+
+
 
     /**
      * This method is used to stop giving damage to an entity.
@@ -117,6 +155,7 @@ public class Turret extends PlaceableEntity{
         if (focus.getComponent(CombatStatsComponent.class) != null) {
             focus.getComponent(CombatStatsComponent.class).setHealth(focus.getComponent(CombatStatsComponent.class).getHealth() - damage);
             rotateTurret(focus);
+            currentAmmo --;
         }
     }
 

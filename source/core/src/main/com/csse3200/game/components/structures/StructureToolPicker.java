@@ -22,9 +22,13 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+/**
+ * This component can be placed onto the player and allows them to select and interact
+ * with structure tools.
+ */
 public class StructureToolPicker extends UIComponent {
-    Logger logger;
-    Table table;
+    private final Logger logger;
+    private final Table table;
     private final ArrayList<Button> buttons;
 
     private final ToolsConfig structureTools =
@@ -32,6 +36,9 @@ public class StructureToolPicker extends UIComponent {
     private Tool selectedTool;
     private int level = 0;
 
+    /**
+     * Creates a new structure tool picker
+     */
     public StructureToolPicker() {
         super();
         buttons = new ArrayList<>();
@@ -40,7 +47,7 @@ public class StructureToolPicker extends UIComponent {
     }
 
     /**
-     * Creates reusable ui styles and adds actors to the stage.
+     * Adds actors to the stage on creation
      */
     @Override
     public void create() {
@@ -49,7 +56,8 @@ public class StructureToolPicker extends UIComponent {
     }
 
     /**
-     * Creates actors and positions them on the stage using a table.
+     * Creates an entry for each structure tool in the config file
+     * and positions them on the stage using a table.
      * @see Table for positioning options
      */
     private void addActors() {
@@ -59,7 +67,7 @@ public class StructureToolPicker extends UIComponent {
         table.center();
         table.setFillParent(true);
 
-        for (var option : structureTools.tools) {
+        for (var option : structureTools.toolConfigs) {
             var optionValue = option.value;
 
 
@@ -91,6 +99,13 @@ public class StructureToolPicker extends UIComponent {
         table.setVisible(false);
     }
 
+    /**
+     * Gets the tool class referred to in the config file.
+     *
+     * @param key - the name of the class to get
+     * @param cost - the cost of the tool
+     * @return an instance of the specified tool class if it exists, otherwise null
+     */
     private Tool getTool(String key, ObjectMap<String, Integer> cost) {
         try {
             Class<?> cls = Class.forName(key);
@@ -110,19 +125,36 @@ public class StructureToolPicker extends UIComponent {
         }
     }
 
+    /**
+     * Sets the given tool to be the selected tool.
+     * @param tool - the tool to be selected.
+     */
     public void setSelectedTool(Tool tool) {
         this.selectedTool = tool;
     }
 
+    /**
+     * Returns the currently selected tool.
+     * @return the selected tool.
+     */
     public Tool getSelectedTool() {
         return selectedTool;
     }
 
+    /**
+     * Sets the level of the ToolPicker and updates the options displayed to
+     * the user to match the new level of the picker.
+     * @param level - the maximum level of tools to display.
+     */
     public void setLevel(int level) {
         this.level = level;
         addActors();
     }
 
+    /**
+     * Gets the current level of the ToolPicker.
+     * @return the maximum level of tools to display.
+     */
     public int getLevel() {
         return level;
     }
@@ -132,22 +164,37 @@ public class StructureToolPicker extends UIComponent {
         // draw is handled by the stage
     }
 
+    /**
+     * Shows the tool picker.
+     */
     public void show() {
         table.setVisible(true);
     }
 
+    /**
+     * Hides the tool picker.
+     */
     public void hide() {
         table.setVisible(false);
     }
+
+    /**
+     * Returns whether the tool picker is visible.
+     * @return whether the tool picker is visible.
+     */
     public boolean isVisible() {
         return table.isVisible();
     }
 
-    public void interact(Entity player, GridPoint2 location) {
+    /**
+     * Interacts with the currently selected tool.
+     * @param location - the location being interacted with.
+     */
+    public void interact(GridPoint2 location) {
         if (selectedTool == null) {
             return;
         }
 
-        selectedTool.interact(player, location);
+        selectedTool.interact(entity, location);
     }
 }

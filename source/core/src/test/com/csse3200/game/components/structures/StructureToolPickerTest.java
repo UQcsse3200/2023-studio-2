@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
-class StructurePickerTest {
+class StructureToolPickerTest {
     @Mock
     RenderService renderService;
     @Mock
@@ -104,8 +104,9 @@ class StructurePickerTest {
         var position = mock(GridPoint2.class);
 
         structurePicker.setSelectedTool(tool);
+        structurePicker.setEntity(player);
 
-        structurePicker.interact(player, position);
+        structurePicker.interact(position);
 
         verify(tool).interact(player, position);
 
@@ -113,7 +114,7 @@ class StructurePickerTest {
 
         reset(tool);
 
-        structurePicker.interact(player, position);
+        structurePicker.interact(position);
 
         verify(tool, never()).interact(any(), any());
     }

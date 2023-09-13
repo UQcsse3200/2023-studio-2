@@ -153,7 +153,7 @@ public class PlayerActions extends Component {
         GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
 
         var structurePicker = getEntity().getComponent(StructureToolPicker.class);
-        structurePicker.interact(entity, gridPosition);
+        structurePicker.interact(gridPosition);
     }
 
     /**

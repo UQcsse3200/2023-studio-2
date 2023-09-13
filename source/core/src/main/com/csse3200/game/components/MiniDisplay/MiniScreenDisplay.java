@@ -96,7 +96,4 @@ public class MiniScreenDisplay extends UIComponent {
         background.clear();
         super.dispose();
     }
-
-    public void setSkin(Skin mockSkin) {
-    }
 }

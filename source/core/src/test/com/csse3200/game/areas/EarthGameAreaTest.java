@@ -6,12 +6,15 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 @ExtendWith(GameExtension.class)
@@ -35,5 +38,40 @@ class EarthGameAreaTest {
         Method spawnEnvironmentMethod = EarthGameArea.class.getDeclaredMethod("spawnEnvironment");
         spawnEnvironmentMethod.setAccessible(true);
         spawnEnvironmentMethod.invoke(spyEarthGameArea);
+    }
+    @Test
+    void spawnTreeTopLayerTest() throws Exception {
+        // Create mocks for required dependencies
+        TerrainFactory terrainFactory = mock(TerrainFactory.class);
+        TiledMapTileLayer tileLayer = mock(TiledMapTileLayer.class);
+        TiledMap tiledMap = mock(TiledMap.class);
+        GdxGame gdxGame = mock(GdxGame.class);
+        MapLayers mapLayers = mock(MapLayers.class);
+
+        // Create an instance of EarthGameArea
+        EarthGameArea earthGameArea = new EarthGameArea(terrainFactory, gdxGame);
+
+        // Mock the terrain component and map layers
+        earthGameArea.terrain = mock(TerrainComponent.class);
+        when(earthGameArea.terrain.getMap()).thenReturn(tiledMap);
+        when(tiledMap.getLayers()).thenReturn(mapLayers);
+        when(mapLayers.get("Tree Base")).thenReturn(tileLayer);
+
+        // Use reflection to access the private spawnTreeTopLayer method
+        Method spawnTreeTopLayerMethod = EarthGameArea.class.getDeclaredMethod("spawnTreeTopLayer");
+        spawnTreeTopLayerMethod.setAccessible(true);
+
+        // Create a spy of the EarthGameArea instance
+        EarthGameArea spyEarthGameArea = spy(earthGameArea);
+
+        // Invoke the spawnTreeTopLayer method
+        spawnTreeTopLayerMethod.invoke(spyEarthGameArea);
+
+        // Use reflection to access the private gameEntities field
+        List<Entity> spawnedTreeTopEntities = spyEarthGameArea.getSpawnedTreeTopEntities();
+
+        // Verify that tree top entities were correctly spawned
+        int expectedNumTreeTops = 1;
+        Assertions.assertEquals(expectedNumTreeTops, spawnedTreeTopEntities.size());
     }
 }

@@ -43,7 +43,7 @@ public class DeathComponent extends Component {
      * @param me The current Entity's Fixture
      * @param other The targeted Entity's Fixture
      */
-    private void kill(Fixture me, Fixture other) {
+    public void kill(Fixture me, Fixture other) {
         if (hitboxComponent.getFixture() != me) {
             // Not triggered by hitbox, ignore
             return;

@@ -47,7 +47,7 @@ public class EarthGameArea extends GameArea {
     private static final GridPoint2 PORTAL_TWO = new GridPoint2(78, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
-    private static String mapPath = "map/base.tmx";
+    private static final String mapPath = "map/base.tmx";
     private List<Entity> spawnedTreeTopEntities = new ArrayList<>();
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame

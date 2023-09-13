@@ -35,14 +35,15 @@ public class CompanionInventoryComponent extends Component {
 
     /**
      * I HAVE NO IDEA WHAT THIS FUNCTION DOES - MAXWELL
-     * @param item
-     * @param storage
-     * @return
+     * @param item - the item to check if it is in the inventory or not
+     * @return - -1, if the item is not in the inventory. Otherwise, integer >=0 giving the index of that item in inventory
      */
-    public int getItemIndex(Entity item, List<Entity> storage) {
+    public int getItemIndex(Entity item) {
         int index = -1;
-        for (int i = 0; i < storage.size(); ++i) {
-                return i;
+        for (int i = 0; i < inventory.size(); ++i) {
+                if (inventory.get(i).equals(item)) {
+                    return i;
+                }
         }
         return index;
     }

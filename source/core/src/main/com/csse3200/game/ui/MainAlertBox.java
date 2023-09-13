@@ -18,10 +18,11 @@ public class MainAlertBox extends Actor {
     private Texture transitionImage;
     private SpriteBatch spriteBatch;
     private Sprite transitionSprite;
-    private float transitionX = 50f; // X-axis position for the transition
-    private float transitionSpeed = 450f; // Adjust the speed of the transition
-
-    private boolean isExit=false;
+    private float transitionX = 0f; // X-axis position for the transition
+    private float transitionY = 0f; // Y-axis position for the transition
+    private float transitionSpeedX = 650f; // Adjust the speed of the X-axis transition
+    private float transitionSpeedY = 650f; // Adjust the speed of the Y-axis transition
+    private boolean isExit = false;
 
     public MainAlertBox(GdxGame game, String alert, Skin skin, String alertText) {
 
@@ -45,34 +46,35 @@ public class MainAlertBox extends Actor {
     @Override
     public void act(float delta) {
         if (isTransitioning) {
-            // Move the transition image along the X-axis
-            transitionX += transitionSpeed * delta;
-            if (transitionX >= Gdx.graphics.getWidth()) {
+            // Move the transition image diagonally
+            transitionX += transitionSpeedX * delta;
+            transitionY += transitionSpeedY * delta;
+            if (transitionX >= Gdx.graphics.getWidth() && transitionY >= Gdx.graphics.getHeight()) {
                 // Transition is complete
                 transitionX = Gdx.graphics.getWidth();
+                transitionY = Gdx.graphics.getHeight();
                 isTransitioning = false;
                 // Change the screen after the transition
                 // Replace with your actual screen class
-                if(isExit)
+                if (isExit)
                     this.callback.run();
                 else
                     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
             }
-
         }
     }
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (isTransitioning) {
-            // Draw the transition image at the current X-axis position
-            batch.draw(transitionSprite, transitionX, 10);
+            // Draw the transition image at the current X and Y positions
+            batch.draw(transitionSprite, transitionX, transitionY);
         }
-
     }
 
     private void startTransition() {
         isTransitioning = true;
         transitionX = 0;
+        transitionY = 0;
     }
 
     public void showDialog(Stage stage, Runnable callback) {

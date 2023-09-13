@@ -12,13 +12,19 @@ public class PortalFactory {
     /**
      * Teleports the player to a fixed destination
      *
-     * @param width - the width of the portal object
-     * @param height - the height of the portal object
+     * @param x - x coordinate to place the portal
+     * @param y - y coordinate to place the portal
      * @param player - the player instantiated in the current game area
      */
-    public static Entity createPortal(float width, float height, Entity player) {
-        Entity portal = new Portal(player);
-        portal.setScale(width, height);
+    public static Entity createPortal(float x, float y, Entity player) {
+
+        Entity portal = new Portal(player)
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new TextureRenderComponent("map/portal.png"));
+        portal.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+        portal.setScale(1.0f, 1.0f);
+        portal.setPosition(x, y);
         return portal;
     }
 

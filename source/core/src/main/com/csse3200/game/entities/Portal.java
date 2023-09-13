@@ -1,9 +1,5 @@
 package com.csse3200.game.entities;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.ProximityActivationComponent;
-import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
-
 
 public class Portal extends Entity {
 

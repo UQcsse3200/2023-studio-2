@@ -8,14 +8,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
-import com.badlogic.gdx.InputProcessor;
 
+/**
+ * TouchCompanionInputComponent handles touch input to control a companion character.
+ */
 public class TouchCompanionInputComponent extends InputComponent {
 
     private final Vector2 walkDirection = Vector2.Zero.cpy();
-    public TouchCompanionInputComponent() {
-        super(5);
-    }
+
+
 
     @Override
     public boolean keyDown(int keycode) {
@@ -66,27 +67,22 @@ public class TouchCompanionInputComponent extends InputComponent {
     }
 
     /**
-     * Trigger all the MOVING of the companion.
+     * Trigger the companion's walking event based on the input direction.
      */
     private void triggerWalkEvent() {
-        // if no input direction was given, stop the companions movement
+        // If no input direction was given, stop the companion's movement
         if (walkDirection.epsilonEquals(Vector2.Zero)) {
             entity.getEvents().trigger("moveStop");
         } else {
-            // update the companions position based off the direction
+            // Update the companion's position based on the direction
             entity.getEvents().trigger("move", walkDirection);
         }
     }
 
-
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        // Trigger the companion's attack event when touched
         entity.getEvents().trigger("attack");
         return true;
     }
 }
-
-
-
-
-

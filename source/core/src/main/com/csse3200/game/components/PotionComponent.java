@@ -1,21 +1,17 @@
+/**
+ * Component representing a power-up (potion) within the game.
+ * It provides methods for applying various effects to entities when consumed.
+ */
 package com.csse3200.game.components;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.components.Companion.CompanionInventoryComponent;
-import com.csse3200.game.components.LaboratoryInventoryComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.BodyUserData;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.components.HitboxComponent;
-
-
 
 /**
- * Represents a power-up component within the game.
+ * PotionComponent represents a power-up (potion) in the game, with the ability to apply
+ * different effects to entities when consumed.
  */
 public class PotionComponent extends Component {
 
@@ -27,14 +23,16 @@ public class PotionComponent extends Component {
     private CompanionActions companionActions;
 
     /**
-     * Assigns a type and targetLayer value to a given Potion
+     * Creates a PotionComponent with the specified type.
+     *
+     * @param type The type of the potion.
      */
     public PotionComponent(PotionType type) {
         this.type = type;
     }
 
     /**
-     * Overrides the Component create() function
+     * Overrides the Component's create() function.
      */
     @Override
     public void create() {
@@ -43,25 +41,36 @@ public class PotionComponent extends Component {
     }
 
     /**
-     * Applies the effects of the Potion to the specified target entity.
+     * Applies the effects of the potion to the specified target entities.
      *
-     * @param target1  The entity receiving the Potion effect.
+     * @param target1 The first entity receiving the potion effect.
+     * @param target2 The second entity receiving the potion effect.
      */
-    public void applyEffect(Entity target1,Entity target2) {
+    public void applyEffect(Entity target1, Entity target2) {
         playerCombatStats = target1.getComponent(CombatStatsComponent.class);
         playerActions = target1.getComponent(PlayerActions.class);
         companionCombatStats = target2.getComponent(CombatStatsComponent.class);
         companionActions = target2.getComponent(CompanionActions.class);
 
-        switch (type){
+        switch (type) {
             case DEATH_POTION -> {
+                // Handle death potion effect
+                // Currently, no action is taken for this type
                 return;
             }
-            case HEALTH_POTION -> {if (playerActions == null&&companionActions== null) {return;}
+            case HEALTH_POTION -> {
+                if (playerActions == null && companionActions == null) {
+                    return;
+                }
+                // Store current health values
                 int currentHealthPlayer = playerCombatStats.getHealth();
-                playerCombatStats.setHealth(100);
                 int currentHealthCompanion = companionCombatStats.getHealth();
+
+                // Set health to a specific value temporarily
                 playerCombatStats.setHealth(100);
+                companionCombatStats.setHealth(100);
+
+                // Schedule a task to restore original health values after a delay
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
@@ -70,35 +79,42 @@ public class PotionComponent extends Component {
                     }
                 }, 3.0f);
             }
-            case SPEED_POTION -> {if (playerActions == null&&companionActions== null) {return;}
-                playerActions.setSpeed(6,6);
-                companionActions.setSpeed(7,7);
+            case SPEED_POTION -> {
+                if (playerActions == null && companionActions == null) {
+                    return;
+                }
+                // Adjust the speed of player and companion
+                playerActions.setSpeed(6, 6);
+                companionActions.setSpeed(7, 7);
+
+                // Set the duration for speed effect
                 this.setDuration(10000);
+
+                // Schedule a task to reset the speed values after the specified duration
                 java.util.TimerTask speedUp = new java.util.TimerTask() {
                     @Override
                     public void run() {
                         playerActions.setSpeed(3, 3);
-                        companionActions.setSpeed(4,4);
+                        companionActions.setSpeed(4, 4);
                     }
                 };
                 new java.util.Timer().schedule(speedUp, getDuration());
-
             }
-            default -> throw new IllegalArgumentException("You must specify a valid PotionType");
+            default -> throw new IllegalArgumentException("Invalid PotionType");
         }
     }
 
     /**
-     * Sets the duration for which the Potion effect should last.
+     * Sets the duration for which the potion effect should last.
      *
-     * @param duration  Duration in milliseconds.
+     * @param duration Duration in milliseconds.
      */
     public void setDuration(long duration) {
         this.duration = duration;
     }
 
     /**
-     * Retrieves the duration for which the Potion effect should last.
+     * Retrieves the duration for which the potion effect should last.
      *
      * @return Duration in milliseconds.
      */
@@ -107,18 +123,18 @@ public class PotionComponent extends Component {
     }
 
     /**
-     * Retrieves the type of the Potion.
+     * Retrieves the type of the potion.
      *
-     * @return The current Potion type.
+     * @return The current potion type.
      */
     public PotionType getType() {
         return type;
     }
 
     /**
-     * Sets the type of the Potion.
+     * Sets the type of the potion.
      *
-     * @param type  The type to set.
+     * @param type The type to set.
      */
     public void setType(PotionType type) {
         this.type = type;

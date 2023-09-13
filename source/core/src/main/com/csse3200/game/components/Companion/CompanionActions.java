@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Objects;
 
 /**
- * Action component for interacting with the Companion. Companion events should be initialised in create()
- * and when triggered should call methods within this class.
+ * This class represents the action component for interacting with a Companion entity.
+ * It handles various actions related to the Companion, such as movement, speed, and attacking.
  */
 public class CompanionActions extends Component {
     private String bulletTexturePath;
@@ -31,7 +31,7 @@ public class CompanionActions extends Component {
 
     private static final Vector2 MAX_BOOST_SPEED = new Vector2(8f, 8f);
 
-    private static final Vector2 NORMAL_COMPANION_SPEED = new Vector2( 5f, 5f); //the normal speed of companion
+    private static final Vector2 NORMAL_COMPANION_SPEED = new Vector2(5f, 5f); //the normal speed of companion
 
     private static final float ROTATION_SPEED = 10.0f;
     private float currentRotation = 5.0f;
@@ -45,7 +45,8 @@ public class CompanionActions extends Component {
     private Entity playerEntity;
 
     /**
-     * Initialise the companion to be facing the player
+     * Initialise the companion to be facing the player.
+     * It sets up event listeners for companion movements and actions.
      */
     @Override
     public void create() {
@@ -56,7 +57,7 @@ public class CompanionActions extends Component {
         COMPANION_SPEED = (NORMAL_COMPANION_SPEED); //Set the companion to go at the normal speed set
 
         // Initialize currentRotation based on the initial orientation of the companion
-        currentRotation = physicsComponent.getBody().getAngle()*MathUtils.radiansToDegrees;
+        currentRotation = physicsComponent.getBody().getAngle() * MathUtils.radiansToDegrees;
         if (playerEntity != null) {
             Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
             physicsComponent.getBody().setTransform(playerPosition, currentRotation * MathUtils.degreesToRadians);
@@ -67,32 +68,34 @@ public class CompanionActions extends Component {
     }
 
     /**
-     * Set the player entity, binding it to the companion
+     * Set the player entity, binding it to the companion.
+     *
      * @param playerEntity - the player entity
      */
-    public void setPlayerEntity(Entity playerEntity){
+    public void setPlayerEntity(Entity playerEntity) {
         this.playerEntity = playerEntity;
     }
 
     /**
-     * Set the bullet texture path
+     * Set the bullet texture path.
+     *
      * @param path - Path????
      */
-    public void setBulletTexturePath(String path){
+    public void setBulletTexturePath(String path) {
         bulletTexturePath = path;
     }
 
     /**
-     * Update
-     * This is called once per frame, and will update the companion state
-     * We make sure we are following the player, and that if boost is activated, our speed is adjusted
+     * Update.
+     * This is called once per frame, and will update the companion state.
+     * It ensures the companion follows the player and adjusts its speed if boost is activated.
      */
     @Override
     public void update() {
         updateSpeed();
 
         // if boost is active, adjust speed
-        if (Gdx.input.isKeyPressed(Input.Keys.B)){
+        if (Gdx.input.isKeyPressed(Input.Keys.B)) {
             updateSpeedBoost(true, (MAX_BOOST_SPEED));
         } else {
             updateSpeedBoost(false, (NORMAL_COMPANION_SPEED));
@@ -100,9 +103,10 @@ public class CompanionActions extends Component {
     }
 
     /**
-     * Updates the speed boost status and the speed of the companion
+     * Updates the speed boost status and the speed of the companion.
+     *
      * @param speedBoostActive - true/false parameter to tell if in boost mode
-     * @param speedValues - the value/speed in which to update the companion to
+     * @param speedValues      - the value/speed in which to update the companion to
      */
     private void updateSpeedBoost(Boolean speedBoostActive, Vector2 speedValues) {
         if (speedBoostActive) {
@@ -113,7 +117,8 @@ public class CompanionActions extends Component {
     }
 
     /**
-     * Checks if a single movement key has been pressed
+     * Checks if a single movement key has been pressed.
+     *
      * @return - true/false boolean if any movement keys were pressed.
      */
     private boolean isMovementKeyPressed() {
@@ -125,11 +130,8 @@ public class CompanionActions extends Component {
     /**
      * updateSpeed
      * This function is for regular movement. It gets the velocity of the
-     * body, and the desired direction and applies a vector transformation
-     *
-     * It uses a movingDirection vector which is constantly updated by keyboard input
-     *
-     *
+     * body, and the desired direction and applies a vector transformation.
+     * It uses a movingDirection vector which is constantly updated by keyboard input.
      */
     public void updateSpeed() {
         Body body = physicsComponent.getBody();
@@ -141,15 +143,16 @@ public class CompanionActions extends Component {
     }
 
     /**
-     * Method to show if the companion is currently moving or not
-     * @return - bool true if moving, false if still
+     * Method to show if the companion is currently moving or not.
+     *
+     * @return - boolean true if moving, false if still
      */
     public boolean isCompanionBeingMoved() {
         return this.moving;
     }
 
     /**
-     * Called by the keyboard input
+     * Called by the keyboard input.
      * Moves the Companion towards a given direction.
      *
      * @param direction direction to move in
@@ -157,13 +160,11 @@ public class CompanionActions extends Component {
     public void move(Vector2 direction) {
         this.movingDirection = direction;
         moving = true;
-
     }
 
     /**
-     * Called by the keyboard inputStops the player from moving. Gives the moving direction a 0,0 value
-     *
-     *
+     * Called by the keyboard input.
+     * Stops the player from moving. Gives the moving direction a 0,0 value.
      */
     public void stopMoving() {
         this.movingDirection = Vector2.Zero.cpy();
@@ -174,18 +175,17 @@ public class CompanionActions extends Component {
      * Makes the companion attack.
      */
     void attack() {
-     //   Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-     //   attackSound.play();
+        // Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+        // attackSound.play();
     }
 
     /**
-     * set the speed to a set number
+     * Set the speed to a set number.
+     *
      * @param x - how fast in x direction
      * @param y - how fast in y direction
      */
     public void setSpeed(float x, float y) {
         COMPANION_SPEED = new Vector2(x, y);
     }
-
-
 }

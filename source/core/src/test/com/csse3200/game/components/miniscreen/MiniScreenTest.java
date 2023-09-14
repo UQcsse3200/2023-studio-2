@@ -9,6 +9,7 @@ import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 
+
 public class MiniScreenTest {
 
     @Before

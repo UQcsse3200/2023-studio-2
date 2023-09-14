@@ -53,7 +53,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   /**
-   *
+   * Returns the last known position of the users cursor
    */
   public Vector2 getLastMousePos() {
     return this.lastMousePos.cpy();
@@ -70,7 +70,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   /**
    * Sets value for testing.
-   * 
    * @param testing
    */
   public void setTesting(int testing) {
@@ -200,7 +199,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   /**
-   * TODO this is barely works
    * Function to repond to player mouse press
    * @param screenX - X position on screen that mouse was pressed
    * @param screenY - Y position on screen that mouse was pressed
@@ -251,12 +249,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     return true;
   }
 
+  /**
+   * Update location of known mouse position
+   * @param screenX, screenY Location of mouse press
+   * @return - false
+   */
   public boolean touchDragged(int screenX, int screenY, int pointer) {
     Vector2 position = mouseToGamePos(screenX, screenY);
     this.lastMousePos = position.cpy();
     return false;
   }
 
+    /**
+     * Update location of known mouse position
+     * @param screenX, screenY Location of mouse press
+     * @return - false
+     */
   public boolean mouseMoved(int screenX, int screenY) {
     Vector2 position = mouseToGamePos(screenX, screenY);
     this.lastMousePos = position.cpy();
@@ -303,7 +311,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   /**
    * Triggers dodge event.
    * Immunity is applied for 200 milliseconds whilst player moves.
-   *
    * @return
    */
   public int triggerDodgeEvent() {
@@ -368,17 +375,31 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     timer.schedule(makeDodgeAvailable, DODGE_COOLDOWN);
   }
 
+    /**
+     * FUnction to known if a key is currently being pressed
+     * @param keycode - key to test if pressed
+     * @return true if the key is pressed otherwise false
+     */
   private boolean is_pressed(int keycode) {
     return keyFlags.getOrDefault(keycode, 0) == 1;
   }
 
-  // TODO this code needs to be looked over
+    /**
+     * Function to convert a mouse position to a game location
+     * @param screenX x of mouse  location
+     * @param screenY y of mouse location
+     * @return game position of mouse location
+     */
   private Vector2 mouseToGamePos(int screenX, int screenY) {
     Vector2 entityScale = entity.getScale();
     Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
     return new Vector2(mouse.x / 2 - entityScale.x / 2, (mouse.y) / 2 - entityScale.y / 2);
   }
 
+    /**
+     * returns a scaled vector the direction should be moving based on current key presses
+     * @return direction play should move
+     */
   private Vector2 keysToVector() {
     float xCom = (is_pressed(Keys.D) ? Vector2Utils.RIGHT.x : 0f) + (is_pressed(Keys.A) ? Vector2Utils.LEFT.x : 0f);
     float yCom = (is_pressed(Keys.W) ? Vector2Utils.UP.y : 0f) + (is_pressed(Keys.S) ? Vector2Utils.DOWN.y : 0f);
@@ -386,6 +407,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     return new Vector2(xCom, yCom).scl(mag);
   }
 
+    /**
+     * Convert the keys currently being pressed to a direction
+     * @return direction enum based on current key pressed
+     */
   private directions keysToDirection() {
     int dirFlags =  0b0101 +
             ((is_pressed(Keys.W) ? 1 : 0) << 2) - ((is_pressed(Keys.S) ? 1 : 0) << 2) +
@@ -403,6 +428,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       };
   }
 
+    /**
+     * Enum of each possible direction including no direction
+     */
   private enum directions {
     None,
     Up,

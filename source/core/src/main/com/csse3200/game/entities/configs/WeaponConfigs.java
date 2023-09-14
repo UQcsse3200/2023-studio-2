@@ -5,7 +5,7 @@ import com.csse3200.game.components.Weapons.WeaponType;
 import java.util.Map;
 
 /**
- *
+ * Class to return weapon configs
  */
 public class WeaponConfigs {
     public WeaponConfig MELEE_WRENCH = new WeaponConfig();
@@ -14,7 +14,6 @@ public class WeaponConfigs {
     public WeaponConfig RANGED_SLINGSHOT = new WeaponConfig();
     public WeaponConfig RANGED_BOOMERANG = new WeaponConfig();
     public WeaponConfig RANGED_HOMING = new WeaponConfig();
-    public WeaponConfig STATIC_WEAPON = new WeaponConfig();
     public WeaponConfig STICK = new WeaponConfig();
     public WeaponConfig WOODHAMMER = new WeaponConfig();
     public WeaponConfig STONEHAMMER = new WeaponConfig();
@@ -28,7 +27,6 @@ public class WeaponConfigs {
             case RANGED_SLINGSHOT -> RANGED_SLINGSHOT;
             case RANGED_BOOMERANG -> RANGED_BOOMERANG;
             case RANGED_HOMING -> RANGED_HOMING;
-            //case STATIC_WEAPON -> STATIC_WEAPON;
             case STICK -> STICK;
             case WOODHAMMER -> WOODHAMMER;
             case STONEHAMMER -> STONEHAMMER;

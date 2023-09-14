@@ -55,6 +55,10 @@ public class WeaponControllerComponent extends Component {
         this.entity.getEvents().addListener("death", this::setDuration);
     }
 
+    /**
+     * Sets the remaining duration
+     * @param duration duration to set reamining duration
+     */
     private void setDuration(int duration) {
         this.remainingDuration = duration;
     }
@@ -82,14 +86,19 @@ public class WeaponControllerComponent extends Component {
     }
 
 
-
+    /**
+     * Despawn a weapon when it runs out of durtaion or health
+     */
     private void despawn() {
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
         animator.stopAnimation();
         Gdx.app.postRunnable(entity::dispose);
     }
 
-    //TODO fix this forbidden code
+    /**
+     * Template function to update weapon movement
+     * @return movement of the weaopn
+     */
     private Vector2 weapon_x_update() {
         //Edit this.currentRotation and return movement vector
         Vector2 movement = new Vector2(0,0);
@@ -97,6 +106,10 @@ public class WeaponControllerComponent extends Component {
         return movement;
     }
 
+    /**
+     * Melee specific movement update functions
+     * @return distance weapon should move
+     */
     private Vector2 update_melee_wrench() {
         return update_swing();
     }
@@ -107,6 +120,10 @@ public class WeaponControllerComponent extends Component {
         return update_swing();
     }
 
+    /**
+     * base melee movement functio that implements player tracking and rotational swinging
+     * @return
+     */
     private Vector2 update_swing() {
         WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
         Vector2 movement = weaponTargetComponent.get_pos_of_target();
@@ -118,9 +135,18 @@ public class WeaponControllerComponent extends Component {
         return movement;
     }
 
+    /**
+     * Movement function for slingshot projectile
+     * @return movement the shot should move
+     */
     private Vector2 update_ranged_slingshot() {
         return update_stright();
     }
+
+    /**
+     * Base movement update function of linear velocity projectiles
+     * @return required movememnt of projectile
+     */
     private Vector2 update_stright() {
         Vector2 movement = new Vector2(0,0);
         double radians = Math.toRadians(currentRotation);
@@ -129,16 +155,21 @@ public class WeaponControllerComponent extends Component {
         return movement;
     }
 
+    /**
+     * update function for boomerag weapon
+     * @return required movement
+     */
     private Vector2 update_ranged_boomerang() {
         return update_swing();
     }
 
+    /**
+     * update function of mouse homing weapon
+     * @return required movement
+     */
     private Vector2 update_ranged_homing() {
-
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-
         int dir = (int) Math.floor((this.currentRotation + 22.5) / 45);
-        System.out.println(dir);
         switch (dir) {
             case 0, 8 -> animator.startAnimation("RIGHT2");
             case 1 -> animator.startAnimation("RIGHT1");
@@ -149,10 +180,13 @@ public class WeaponControllerComponent extends Component {
             case -2 -> animator.startAnimation("DOWN");
             case -1 -> animator.startAnimation("RIGHT3");
         }
-
         return update_mousehoming();
     }
 
+    /**
+     * Movement to home a weapon to the mouse
+     * @return
+     */
     private Vector2 update_mousehoming() {
         Vector2 movement = new Vector2(0,0);
         WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
@@ -166,6 +200,10 @@ public class WeaponControllerComponent extends Component {
         return movement;
     }
 
+    /**
+     * required movement for static weapon display - tracks player
+     * @return required movement
+     */
     private Vector2 update_static() {
         WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
         return weaponTargetComponent.get_pos_of_target();

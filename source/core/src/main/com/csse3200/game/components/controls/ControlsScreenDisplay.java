@@ -43,51 +43,51 @@ public class ControlsScreenDisplay extends UIComponent {
 
         InsertButtons bothButtons = new InsertButtons();
 
-        TextButton WBtn = new TextButton("W", skin);
-        TextButton ABtn = new TextButton("A", skin);
-        TextButton SBtn = new TextButton("S", skin);
-        TextButton DBtn = new TextButton("D", skin);
+//        TextButton WBtn = new TextButton("W", skin);
+//        TextButton ABtn = new TextButton("A", skin);
+//        TextButton SBtn = new TextButton("S", skin);
+//        TextButton DBtn = new TextButton("D", skin);
 
-        WBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("W button clicked");
-                entity.getEvents().trigger("w");
-            }
-        });
-
-        ABtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("A button clicked");
-                entity.getEvents().trigger("a");
-            }
-        });
-
-        SBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("S button clicked");
-                entity.getEvents().trigger("s");
-            }
-        });
-
-        DBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("D button clicked");
-                entity.getEvents().trigger("d");
-            }
-        });
-
-        table.row();
-        table.add(WBtn).padTop(15f).padRight(650f);
-        table.row();
-        table.add(ABtn).padTop(15f).padRight(650f);
-        table.row();
-        table.add(SBtn).padTop(15f).padRight(650f);
-        table.row();
-        table.add(DBtn).padTop(15f).padRight(650f);
+//        WBtn.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent changeEvent, Actor actor) {
+//                logger.debug("W button clicked");
+//                entity.getEvents().trigger("w");
+//            }
+//        });
+//
+//        ABtn.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent changeEvent, Actor actor) {
+//                logger.debug("A button clicked");
+//                entity.getEvents().trigger("a");
+//            }
+//        });
+//
+//        SBtn.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent changeEvent, Actor actor) {
+//                logger.debug("S button clicked");
+//                entity.getEvents().trigger("s");
+//            }
+//        });
+//
+//        DBtn.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent changeEvent, Actor actor) {
+//                logger.debug("D button clicked");
+//                entity.getEvents().trigger("d");
+//            }
+//        });
+//
+//        table.row();
+//        table.add(WBtn).padTop(15f).padRight(650f);
+//        table.row();
+//        table.add(ABtn).padTop(15f).padRight(650f);
+//        table.row();
+//        table.add(SBtn).padTop(15f).padRight(650f);
+//        table.row();
+//        table.add(DBtn).padTop(15f).padRight(650f);
 
         String exitTexture = "images/on_exit.png";
         String exitTextureHover = "images/on_exit_hover.PNG";

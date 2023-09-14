@@ -6,6 +6,7 @@ import com.csse3200.game.components.ships.ShipUpgradesComponent;
 import com.csse3200.game.components.ships.ShipUpgradesType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.ShipUpgradesConfig;
+import com.csse3200.game.entities.configs.AllShipUpgradesConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -13,9 +14,14 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class ShipUpgradesFactory {
 
-    private static final ShipUpgradesConfig configs
-            = FileLoader.readClass(ShipUpgradesConfig.class, "configs/shipUpgrades.json");
+    private static final AllShipUpgradesConfig configs
+            = FileLoader.readClass(AllShipUpgradesConfig.class, "configs/shipUpgrades.json");
 
+    /**
+     * Based on given ShipUpgradesConfig, create the relevant stat upgrade
+     * @param config
+     * @return the relevant stat ShipUpgrade entity
+     */
     public static Entity createUpgrade(ShipUpgradesConfig config) {
         // Initialise and resize a new Powerup
         Entity shipUpgrade = new Entity()
@@ -29,4 +35,18 @@ public class ShipUpgradesFactory {
 
         return shipUpgrade;
     }
-}
+
+    /**
+     * Create the health upgrade for the ship
+     * @return the Health stat upgrade entity
+     */
+    public static Entity createHealthUpgrade() {return createUpgrade(configs.healthUpgrade);}
+
+    /**
+     * Create the fuel upgrade for the ship
+     * @return the fuel stat upgrade entity
+     */
+    public static Entity createFuelUpgrade() {return createUpgrade(configs.fuelUpgrade);}
+
+
+ }

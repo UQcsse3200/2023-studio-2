@@ -5,6 +5,7 @@ import com.csse3200.game.components.ships.ShipUpgradesType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.configs.ShipUpgradesConfig;
+import com.csse3200.game.entities.configs.AllShipUpgradesConfig;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsService;
@@ -25,8 +26,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(GameExtension.class)
 public class ShipUpgradesFactoryTest {
 
-    private static final ShipUpgradesConfig configs =
-            FileLoader.readClass(ShipUpgradesConfig.class, "configs/shipUpgrades.json");
+    private static final AllShipUpgradesConfig configs =
+            FileLoader.readClass(AllShipUpgradesConfig.class, "configs/shipUpgrades.json");
 
     /**
      * Set up services and resources necessary for the tests.
@@ -50,7 +51,7 @@ public class ShipUpgradesFactoryTest {
      */
     @Test
     public void testCreateUpgrade() {
-        Entity shipUpgrade = ShipUpgradesFactory.createUpgrade(configs);
+        Entity shipUpgrade = ShipUpgradesFactory.createHealthUpgrade(configs.healthUpgrade);
         ShipUpgradesType type = shipUpgrade.getComponent(ShipUpgradesComponent.class).getType();
 
         assertNotNull(shipUpgrade);

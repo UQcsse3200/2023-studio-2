@@ -63,7 +63,7 @@ public class ShopArea extends GameArea {
      */
     private void spawnShipUpgrades() {
 
-        Entity shipUpgrade = ShipUpgradesFactory.createUpgrade(shipUpgradesConfig);
+        Entity shipUpgrade = ShipUpgradesFactory.createHealthUpgrade();
         spawnEntityAt(shipUpgrade, new GridPoint2(8, 12), true, true);
     }
 

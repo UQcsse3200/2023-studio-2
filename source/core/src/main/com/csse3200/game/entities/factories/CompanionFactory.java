@@ -80,7 +80,7 @@ public class CompanionFactory {
                         .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
-                        .addComponent(new FollowComponent(playerEntity, 1.5f))
+                        .addComponent(new FollowComponent(playerEntity, 1.4f))
                         .addComponent(animator)
                         .addComponent(infanimator)
                         .addComponent(new CompanionStatsDisplay(playerEntity))

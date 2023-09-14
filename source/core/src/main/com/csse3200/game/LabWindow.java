@@ -18,7 +18,6 @@ import com.csse3200.game.components.PotionType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.entities.factories.PotionFactory;
 
 /**
  * This is a window that can be added to a stage to pop up for the extractor Laboratory.

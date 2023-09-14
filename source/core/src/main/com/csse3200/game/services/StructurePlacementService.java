@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
@@ -18,7 +19,7 @@ public class StructurePlacementService {
         this.handler = handler;
     }
 
-    public void PlaceStructure(Entity entity) {
+    public void placeStructure(Entity entity) {
         handler.trigger("placeStructure", entity);
     }
 
@@ -38,14 +39,24 @@ public class StructurePlacementService {
         return null;
     }
 
-    public void PlaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+    public void placeStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
         entity.willPlace();
         placedStructures.put(tilePos, entity);
-        handler.trigger("placeStructureAt", new PlaceStructureAtArgs(entity, tilePos, centerX, centerY));
+        handler.trigger("placeStructureAt", new placeStructureAtArgs(entity, tilePos, centerX, centerY));
         entity.placed();
     }
-    public void SpawnEntityAtVector(Entity entity, Vector2 worldPos) {
-        handler.trigger("fireBullet", new SpawnEntityAtVectorArgs(entity, worldPos));
+
+    public void replaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+        removeStructureAt(tilePos);
+
+        entity.willPlace();
+        placedStructures.put(tilePos, entity);
+        handler.trigger("placeStructureAt", new placeStructureAtArgs(entity, tilePos, centerX, centerY));
+        entity.placed();
+    }
+
+    public void spawnEntityAtVector(Entity entity, Vector2 worldPos) {
+        handler.trigger("fireBullet", new spawnEntityAtVectorArgs(entity, worldPos));
     }
 
     public void removeStructureAt(GridPoint2 tilePos) {
@@ -57,34 +68,82 @@ public class StructurePlacementService {
 
         entity.willRemove();
         placedStructures.remove(tilePos);
-
-        ServiceLocator.getEntityService().unregister(entity);
         entity.removed();
+
+        Gdx.app.postRunnable(entity::dispose);
     }
-    public Entity getStructureAt(GridPoint2 position) {
+    public PlaceableEntity getStructureAt(GridPoint2 position) {
         return placedStructures.get(position);
     }
 
-    public static class PlaceStructureAtArgs {
-        public Entity entity;
-        public GridPoint2 tilePos;
-        public boolean centerX;
-        public boolean centerY;
+    public static class placeStructureAtArgs {
+        private Entity entity;
+        private GridPoint2 tilePos;
+        private boolean centerX;
+        private boolean centerY;
 
-        public PlaceStructureAtArgs(Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+        public placeStructureAtArgs(Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+            this.setEntity(entity);
+            this.setTilePos(tilePos);
+            this.setCenterX(centerX);
+            this.setCenterY(centerY);
+        }
+
+        public Entity getEntity() {
+            return entity;
+        }
+
+        public void setEntity(Entity entity) {
             this.entity = entity;
+        }
+
+        public GridPoint2 getTilePos() {
+            return tilePos;
+        }
+
+        public void setTilePos(GridPoint2 tilePos) {
             this.tilePos = tilePos;
+        }
+
+        public boolean isCenterX() {
+            return centerX;
+        }
+
+        public void setCenterX(boolean centerX) {
             this.centerX = centerX;
+        }
+
+        public boolean isCenterY() {
+            return centerY;
+        }
+
+        public void setCenterY(boolean centerY) {
             this.centerY = centerY;
         }
     }
 
-    public static class SpawnEntityAtVectorArgs {
-        public Entity entity;
-        public Vector2 worldPos;
+    public static class spawnEntityAtVectorArgs {
+        private Entity entity;
+        private Vector2 worldPos;
 
-        public SpawnEntityAtVectorArgs(Entity entity, Vector2 worldPos) {
+        public spawnEntityAtVectorArgs(Entity entity, Vector2 worldPos) {
+            this.setEntity(entity);
+            this.setWorldPos(worldPos);
+        }
+
+        public Entity getEntity() {
+            return entity;
+        }
+
+        public void setEntity(Entity entity) {
             this.entity = entity;
+        }
+
+        public Vector2 getWorldPos() {
+            return worldPos;
+        }
+
+        public void setWorldPos(Vector2 worldPos) {
             this.worldPos = worldPos;
         }
     }

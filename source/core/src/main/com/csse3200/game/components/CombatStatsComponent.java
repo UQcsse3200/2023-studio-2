@@ -12,15 +12,21 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
+<<<<<<< HEAD
  * CombatStatsComponent handles combat-related attributes for entities, including health, attack,
  * attack multiplier, and immunity.
+=======
+ * Component used to store information related to combat such as health, attack, etc. Any entities
+ * which engage in combat should have an instance of this class registered. This class can be
+ * extended for more specific combat needs.
+>>>>>>> 52e926db9f1112ecb09f187635cc18832766d3df
  */
 public class CombatStatsComponent extends Component {
 
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
   private int health;
   private int baseAttack;
-  private int maxHealth;
+  private final int maxHealth;
   private int attackMultiplier;
   private Boolean isImmune;
 
@@ -39,7 +45,6 @@ public class CombatStatsComponent extends Component {
     this.setAttackMultiplier(attackMultiplier);
     this.setImmunity(isImmune);
   }
-
   /**
    * Returns true if the entity's health is 0 or less, indicating that it's dead; otherwise, returns false.
    *
@@ -111,7 +116,23 @@ public class CombatStatsComponent extends Component {
   }
 
   /**
+<<<<<<< HEAD
    * Adds the specified amount to the entity's health. The amount can be negative.
+=======
+   * sets the entity's health to maximum if H-Key is pressed on the keyboard.
+   * @param newHealth
+   * @param isHKeyPressed
+   */
+  public void setHealth(int newHealth, boolean isHKeyPressed) {
+    if (isHKeyPressed) {
+      this.health = 100;
+    }
+  }
+
+
+  /**
+   * Adds to the player's health. The amount added can be negative.
+>>>>>>> 52e926db9f1112ecb09f187635cc18832766d3df
    *
    * @param health The health to add.
    */
@@ -206,7 +227,8 @@ public class CombatStatsComponent extends Component {
     if (getImmunity()) {
       return;
     }
-    int newHealth = getHealth() - attacker.getAttack();
+    int newHealth;
+    newHealth = getHealth() - attacker.getAttack();
     setHealth(newHealth);
   }
 }

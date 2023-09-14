@@ -16,6 +16,7 @@ import com.csse3200.game.components.Weapons.WeaponType;
 import java.util.HashMap;
 import java.util.Timer;
 
+
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
@@ -74,7 +75,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     this.testing = testing;
   }
 
-
   public KeyboardPlayerInputComponent() {
     super(5);
   }
@@ -88,6 +88,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyDown(int keycode) {
     keyFlags.put(keycode, 1);
+
 
 
     switch (keycode) {
@@ -112,6 +113,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           triggerWalkEvent();
         }
         return true;
+
       case Keys.T:
         if (equippedItem == 3) {
           entity.getEvents().trigger("change_structure");

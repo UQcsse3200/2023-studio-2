@@ -47,7 +47,7 @@ import static com.csse3200.game.ui.UIComponent.skin;
  * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class MainGameScreen extends ScreenAdapter {
-  private TitleBox titleBox;
+private TitleBox titleBox;
 private static boolean alive = true;
 private static boolean companionalive = true;
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
@@ -101,11 +101,12 @@ private static boolean companionalive = true;
 
     gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
     gameArea.create();
+
+    player = ((EarthGameArea) gameArea).getPlayer();
+    player.getEvents().addListener("deathscreen", this::initiateDeathScreen);
+
     companion = ((EarthGameArea) gameArea).getCompanion();
     companion.getEvents().addListener("death", this::initiateCompanionDeathScreen);
-    player = ((MapGameArea) gameArea).getPlayer();
-    player.getEvents().addListener("death", this::initiateDeathScreen);
-    titleBox = new TitleBox(game, "Title", skin);
 
     itemBox = new ItemBox(((EarthGameArea) gameArea).getExtractorIcon(), renderer);
     InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -153,7 +154,9 @@ private static boolean companionalive = true;
       Vector2 mousePos = renderer.getCamera().getWorldPositionFromScreen(new Vector2(Gdx.input.getX() - 200,Gdx.input.getY() + 200));
       currentExtractor.setPosition(mousePos.x,mousePos.y);
     }
+
     if (alive == false) {
+
       logger.info("Launching player death screen");
       game.setScreen(GdxGame.ScreenType.PLAYER_DEATH);
     } else if (companionalive == false) {

@@ -22,21 +22,25 @@ public class WeaponControllerComponent extends Component {
     float currentRotation;
     /* number degrees of positive x-axis image is */
     int imageRotationOffset;
+    /* Determined by # of directions in sprite sheet */
+    int animationType;
 
     /**
      * Class to store variables of a spawned weapon
      */
     public WeaponControllerComponent(WeaponType weaponType,
+                                     int weaponDuration,
                                      float currentRotation,
                                      float speed,
-                                     int remainingDuration,
                                      int rotationSpeed,
+                                     int animationType,
                                      int imageRotationOffset) {
         this.weaponType = weaponType;
-        this.remainingDuration = remainingDuration;
+        this.remainingDuration = weaponDuration;
+        this.currentRotation = currentRotation;
         this.speed = speed;
         this.rotationSpeed = rotationSpeed;
-        this.currentRotation = currentRotation;
+        this.animationType = animationType;
         this.imageRotationOffset = imageRotationOffset;
     }
 
@@ -45,6 +49,10 @@ public class WeaponControllerComponent extends Component {
         this.entity.getEvents().addListener("death", this::setDuration);
     }
 
+    /**
+     * Sets the remaining duration
+     * @param duration duration to set reamining duration
+     */
     private void setDuration(int duration) {
         this.remainingDuration = duration;
     }
@@ -54,31 +62,41 @@ public class WeaponControllerComponent extends Component {
      */
     @Override
     public void update() {
+        if (--this.remainingDuration <= 0) {
+            this.despawn();
+            return;
+        }
         //switch statement to define weapon movement based on type (a projectile
         Vector2 movement = switch (this.weaponType) {
-            case SLING_SHOT -> weapon_target_update();
-            case ELEC_WRENCH -> weapon_meleeswing_update();
-            case THROW_ELEC_WRENCH -> weapon_2_update();
+            case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING, RANGED_BOOMERANG -> update_swing();
+            case RANGED_SLINGSHOT -> update_ranged_slingshot();
+            case RANGED_HOMING -> update_ranged_homing();
+            case STATIC_WEAPON -> update_static();
             default -> throw new IllegalStateException("Unexpected value: " + this.weaponType);
         };
-
 
         //Reference to current position of the projectile
         Vector2 position = entity.getPosition();
         //Update position and rotation of projectile
         entity.setPosition(new Vector2(position.x + movement.x, position.y + movement.y));
         entity.setRotation(this.currentRotation - this.imageRotationOffset);
-        if (--this.remainingDuration <= 0) {this.despawn();}
+
     }
 
+
+    /**
+     * Despawn a weapon when it runs out of durtaion or health
+     */
     private void despawn() {
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
         animator.stopAnimation();
-        entity.getComponent(HitboxComponent.class).setLayer((short) 0);
         Gdx.app.postRunnable(entity::dispose);
     }
 
-    //TODO fix this forbidden code
+    /**
+     * Template function to update weapon movement
+     * @return movement of the weaopn
+     */
     private Vector2 weapon_x_update() {
         //Edit this.currentRotation and return movement vector
         Vector2 movement = new Vector2(0,0);
@@ -86,19 +104,48 @@ public class WeaponControllerComponent extends Component {
         return movement;
     }
 
-    private Vector2 weapon_meleeswing_update() {
+    /**
+     * Melee specific movement update functions
+     * @return distance weapon should move
+     */
+    private Vector2 update_melee_wrench() {
+        return update_swing();
+    }
+    private Vector2 update_melee_katana() {
+        return update_swing();
+    }
+    private Vector2 update_melee_bee_sting() {
+        return update_swing();
+    }
+
+    /**
+     * base melee movement functio that implements player tracking and rotational swinging
+     * @return
+     */
+    private Vector2 update_swing() {
         WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
         Vector2 movement = weaponTargetComponent.get_pos_of_target();
 
-        //Vector2 movement = new Vector2(0,0);
         this.currentRotation -= this.rotationSpeed;
         double radians = Math.toRadians(currentRotation);
-        movement.x += (float) Math.cos(radians) * 0.015f * this.speed;
-        movement.y += (float) Math.sin(radians) * 0.015f * this.speed;
+        movement.x += (float) Math.cos(radians) * 0.01f * this.speed;
+        movement.y += (float) Math.sin(radians) * 0.01f * this.speed;
         return movement;
     }
 
-    private Vector2 weapon_2_update() {
+    /**
+     * Movement function for slingshot projectile
+     * @return movement the shot should move
+     */
+    private Vector2 update_ranged_slingshot() {
+        return update_stright();
+    }
+
+    /**
+     * Base movement update function of linear velocity projectiles
+     * @return required movememnt of projectile
+     */
+    private Vector2 update_stright() {
         Vector2 movement = new Vector2(0,0);
         double radians = Math.toRadians(currentRotation);
         movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
@@ -106,16 +153,58 @@ public class WeaponControllerComponent extends Component {
         return movement;
     }
 
-    private Vector2 weapon_target_update() {
+    /**
+     * update function for boomerag weapon
+     * @return required movement
+     */
+    private Vector2 update_ranged_boomerang() {
+        return update_swing();
+    }
+
+    /**
+     * update function of mouse homing weapon
+     * @return required movement
+     */
+    private Vector2 update_ranged_homing() {
+        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
+        int dir = (int) Math.floor((this.currentRotation + 22.5) / 45);
+        switch (dir) {
+            case 0, 8 -> animator.startAnimation("RIGHT2");
+            case 1 -> animator.startAnimation("RIGHT1");
+            case 2 -> animator.startAnimation("UP");
+            case 3 -> animator.startAnimation("LEFT1");
+            case 4, -4 -> animator.startAnimation("LEFT2");
+            case -3 -> animator.startAnimation("LEFT3");
+            case -2 -> animator.startAnimation("DOWN");
+            case -1 -> animator.startAnimation("RIGHT3");
+        }
+        return update_mousehoming();
+    }
+
+    /**
+     * Movement to home a weapon to the mouse
+     * @return
+     */
+    private Vector2 update_mousehoming() {
         Vector2 movement = new Vector2(0,0);
         WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
         Vector2 target_pos = weaponTargetComponent.get_pos_of_target();
         Vector2 weapon_pos = entity.getPosition();
 
-        double radians = Math.atan2(target_pos.y - weapon_pos.y, target_pos.x - weapon_pos.x);
-        movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
-        movement.y = (float) Math.sin(radians) * 0.015f * this.speed;
+        var angle = (float) Math.atan2(target_pos.y - weapon_pos.y, target_pos.x - weapon_pos.x);
+        movement.x = (float) Math.cos(angle) * 0.015f * this.speed;
+        movement.y = (float) Math.sin(angle) * 0.015f * this.speed;
+        this.currentRotation = (float) Math.toDegrees(angle);
         return movement;
+    }
+
+    /**
+     * required movement for static weapon display - tracks player
+     * @return required movement
+     */
+    private Vector2 update_static() {
+        WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
+        return weaponTargetComponent.get_pos_of_target();
     }
 }
 

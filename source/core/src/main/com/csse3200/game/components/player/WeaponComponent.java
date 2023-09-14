@@ -20,7 +20,6 @@ public class WeaponComponent extends Component {
     /* Entity reference to projectile that follows */
     private Entity holdingWeapon;
 
-
     @Override
     public void update() {
         if (attackCooldown > 0) {attackCooldown--;}

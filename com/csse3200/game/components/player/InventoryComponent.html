@@ -120,7 +120,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changeEquipped(com.csse3200.game.components.Weapons.WeaponType)" class="member-name-link">changeEquipped</a><wbr>(<a href="../Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates weapon of the active inventory slot</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -136,10 +138,23 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEquippedType()" class="member-name-link">getEquippedType</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the equipped weapon type</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#placeInSlot(com.csse3200.game.components.Weapons.WeaponType)" class="member-name-link">placeInSlot</a><wbr>(<a href="../Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#replaceSlotWithWeapon(int,com.csse3200.game.components.Weapons.WeaponType)" class="member-name-link">replaceSlotWithWeapon</a><wbr>(int&nbsp;slot,
+ <a href="../Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Replaces the specified slot with a given weapon.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEquipped(int)" class="member-name-link">setEquipped</a><wbr>(int&nbsp;i)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Changes active inventory slot to a specific slot</div>
+</div>
 </div>
 </div>
 </div>
@@ -201,10 +216,30 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setEquipped(int)">
 <h3>setEquipped</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setEquipped</span><wbr><span class="parameters">(int&nbsp;i)</span></div>
+<div class="block">Changes active inventory slot to a specific slot</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>i</code> - - the weapon to be equipped</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="replaceSlotWithWeapon(int,com.csse3200.game.components.Weapons.WeaponType)">
+<h3>replaceSlotWithWeapon</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">replaceSlotWithWeapon</span><wbr><span class="parameters">(int&nbsp;slot,
+ <a href="../Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType)</span></div>
+<div class="block">Replaces the specified slot with a given weapon.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>slot</code> - the slot to be updated</dd>
+<dd><code>weaponType</code> - the weapon type to be placed in the slot</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="placeInSlot(com.csse3200.game.components.Weapons.WeaponType)">
+<h3>placeInSlot</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">placeInSlot</span><wbr><span class="parameters">(<a href="../Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType)</span></div>
 </section>
 </li>
 <li>
@@ -218,6 +253,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getEquippedType()">
 <h3>getEquippedType</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a></span>&nbsp;<span class="element-name">getEquippedType</span>()</div>
+<div class="block">Returns the equipped weapon type</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>WeaponType - Type of cureently equiped weapon</dd>
@@ -228,6 +264,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="changeEquipped(com.csse3200.game.components.Weapons.WeaponType)">
 <h3>changeEquipped</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">changeEquipped</span><wbr><span class="parameters">(<a href="../Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType)</span></div>
+<div class="block">Updates weapon of the active inventory slot</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>weaponType</code> - - Type of the new weapon</dd>

@@ -84,8 +84,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SpaceMapScreen</span>
 <span class="extends-implements">extends com.badlogic.gdx.ScreenAdapter</span></div>
 <div class="block">The game screen containing the main game.
-
- <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens</div>
+ Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -98,7 +97,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.GdxGame)" class="member-name-link">SpaceMapScreen</a><wbr>(<a href="../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Method for creating the space map screen for the obstacle minigame</div>
+</div>
 </div>
 </section>
 </li>
@@ -115,14 +116,28 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dispose()" class="member-name-link">dispose</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for disposing and unloading
+ all assets onto the main screen</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#render(float)" class="member-name-link">render</a><wbr>(float&nbsp;delta)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#Exitonc(float)" class="member-name-link">Exitonc</a><wbr>(float&nbsp;d)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for exiting from the obstacle minigame
+ to the main screen of the game</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resize(int,int)" class="member-name-link">resize</a><wbr>(int&nbsp;width,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#render(float)" class="member-name-link">render</a><wbr>(float&nbsp;delta)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for rendering the entities in the obstacle minigame
+ alongside updating the distance between two entities</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resize(int,int)" class="member-name-link">resize</a><wbr>(int&nbsp;width,
  int&nbsp;height)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for resizing the rendering of the entities</div>
+</div>
 </div>
 </div>
 </div>
@@ -147,6 +162,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(com.csse3200.game.GdxGame)">
 <h3>SpaceMapScreen</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SpaceMapScreen</span><wbr><span class="parameters">(<a href="../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game)</span></div>
+<div class="block">Method for creating the space map screen for the obstacle minigame</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>game</code> - Obstacle minigame</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -161,11 +181,27 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="render(float)">
 <h3>render</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">render</span><wbr><span class="parameters">(float&nbsp;delta)</span></div>
+<div class="block">Method for rendering the entities in the obstacle minigame
+ alongside updating the distance between two entities</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>render</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.Screen</code></dd>
 <dt>Overrides:</dt>
 <dd><code>render</code>&nbsp;in class&nbsp;<code>com.badlogic.gdx.ScreenAdapter</code></dd>
+<dt>Parameters:</dt>
+<dd><code>delta</code> - The time in seconds since the last render.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="Exitonc(float)">
+<h3>Exitonc</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">Exitonc</span><wbr><span class="parameters">(float&nbsp;d)</span></div>
+<div class="block">Method for exiting from the obstacle minigame
+ to the main screen of the game</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>d</code> - Distance of the spaceship from the exit goal</dd>
 </dl>
 </section>
 </li>
@@ -174,11 +210,15 @@ loadScripts(document, 'script');</script>
 <h3>resize</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resize</span><wbr><span class="parameters">(int&nbsp;width,
  int&nbsp;height)</span></div>
+<div class="block">Method for resizing the rendering of the entities</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>resize</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.Screen</code></dd>
 <dt>Overrides:</dt>
 <dd><code>resize</code>&nbsp;in class&nbsp;<code>com.badlogic.gdx.ScreenAdapter</code></dd>
+<dt>Parameters:</dt>
+<dd><code>width</code> - Width of the render</dd>
+<dd><code>height</code> - Height of the render</dd>
 </dl>
 </section>
 </li>
@@ -186,6 +226,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="dispose()">
 <h3>dispose</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dispose</span>()</div>
+<div class="block">Method for disposing and unloading
+ all assets onto the main screen</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>dispose</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.Screen</code></dd>

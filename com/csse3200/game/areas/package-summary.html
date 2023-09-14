@@ -15,7 +15,11 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="package-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../";
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
+var pathtoroot = "../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -78,8 +82,9 @@ loadScripts(document, 'script');</script>
 </li>
 <li>
 <div id="class-summary">
-<div class="caption"><span>Classes</span></div>
-<div class="summary-table two-column-summary">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button><button id="class-summary-tab3" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab3', 2)" class="table-tab">Enum Classes</button></div>
+<div id="class-summary.tabpanel" role="tabpanel">
+<div class="summary-table two-column-summary" aria-labelledby="class-summary-tab0">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="EarthGameArea.html" title="class in com.csse3200.game.areas">EarthGameArea</a></div>
@@ -88,25 +93,28 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ForestGameArea.html" title="class in com.csse3200.game.areas">ForestGameArea</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="ExtractorMiniGameArea.MouseState.html" title="enum class in com.csse3200.game.areas">ExtractorMiniGameArea.MouseState</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ForestGameArea.html" title="class in com.csse3200.game.areas">ForestGameArea</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Forest area for the demo game with trees, a player, and some enemies.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Represents an area in the game, such as a level, indoor area, etc.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MapGameArea.html" title="class in com.csse3200.game.areas">MapGameArea</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MapGameArea.html" title="class in com.csse3200.game.areas">MapGameArea</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">A Base Game Area for any level.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ShopArea.html" title="class in com.csse3200.game.areas">ShopArea</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ShopArea.html" title="class in com.csse3200.game.areas">ShopArea</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Shop Area for spawning items and stats about the ship</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SpaceGameArea.html" title="class in com.csse3200.game.areas">SpaceGameArea</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SpaceGameArea.html" title="class in com.csse3200.game.areas">SpaceGameArea</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Forest area for the demo game with trees, a player, and some enemies.</div>
+</div>
 </div>
 </div>
 </div>

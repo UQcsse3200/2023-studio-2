@@ -77,6 +77,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">WeaponConfigs</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Class to return weapon configs</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -90,25 +91,31 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></code></div>
-<div class="col-second even-row-color"><code><a href="#ELEC_WRENCH" class="member-name-link">ELEC_WRENCH</a></code></div>
+<div class="col-second even-row-color"><code><a href="#MELEE_BEE_STING" class="member-name-link">MELEE_BEE_STING</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#KATANA" class="member-name-link">KATANA</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#MELEE_KATANA" class="member-name-link">MELEE_KATANA</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></code></div>
-<div class="col-second even-row-color"><code><a href="#SLING_SHOT" class="member-name-link">SLING_SHOT</a></code></div>
+<div class="col-second even-row-color"><code><a href="#MELEE_WRENCH" class="member-name-link">MELEE_WRENCH</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#STEELHAMMER" class="member-name-link">STEELHAMMER</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#RANGED_BOOMERANG" class="member-name-link">RANGED_BOOMERANG</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></code></div>
-<div class="col-second even-row-color"><code><a href="#STICK" class="member-name-link">STICK</a></code></div>
+<div class="col-second even-row-color"><code><a href="#RANGED_HOMING" class="member-name-link">RANGED_HOMING</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#STONEHAMMER" class="member-name-link">STONEHAMMER</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#RANGED_SLINGSHOT" class="member-name-link">RANGED_SLINGSHOT</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></code></div>
-<div class="col-second even-row-color"><code><a href="#THROW_ELEC_WRENCH" class="member-name-link">THROW_ELEC_WRENCH</a></code></div>
+<div class="col-second even-row-color"><code><a href="#STEELHAMMER" class="member-name-link">STEELHAMMER</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#STICK" class="member-name-link">STICK</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></code></div>
+<div class="col-second even-row-color"><code><a href="#STONEHAMMER" class="member-name-link">STONEHAMMER</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#WOODHAMMER" class="member-name-link">WOODHAMMER</a></code></div>
@@ -161,33 +168,45 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="SLING_SHOT">
-<h3>SLING_SHOT</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">SLING_SHOT</span></div>
+<section class="detail" id="MELEE_WRENCH">
+<h3>MELEE_WRENCH</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">MELEE_WRENCH</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="ELEC_WRENCH">
-<h3>ELEC_WRENCH</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">ELEC_WRENCH</span></div>
+<section class="detail" id="MELEE_KATANA">
+<h3>MELEE_KATANA</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">MELEE_KATANA</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="THROW_ELEC_WRENCH">
-<h3>THROW_ELEC_WRENCH</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">THROW_ELEC_WRENCH</span></div>
+<section class="detail" id="MELEE_BEE_STING">
+<h3>MELEE_BEE_STING</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">MELEE_BEE_STING</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="RANGED_SLINGSHOT">
+<h3>RANGED_SLINGSHOT</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">RANGED_SLINGSHOT</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="RANGED_BOOMERANG">
+<h3>RANGED_BOOMERANG</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">RANGED_BOOMERANG</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="RANGED_HOMING">
+<h3>RANGED_HOMING</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">RANGED_HOMING</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="STICK">
 <h3>STICK</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">STICK</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="KATANA">
-<h3>KATANA</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">KATANA</span></div>
 </section>
 </li>
 <li>

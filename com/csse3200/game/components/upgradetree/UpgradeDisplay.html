@@ -149,16 +149,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="UpgradeDisplay.html" title="class in com.csse3200.game.components.upgradetree">UpgradeDisplay</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createUpgradeDisplay(com.csse3200.game.entities.Entity)" class="member-name-link">createUpgradeDisplay</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;upgradeBench)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.TextButton</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createCostButtons(com.csse3200.game.components.upgradetree.UpgradeNode,com.badlogic.gdx.scenes.scene2d.ui.ImageButton)" class="member-name-link">createCostButtons</a><wbr>(<a href="UpgradeNode.html" title="class in com.csse3200.game.components.upgradetree">UpgradeNode</a>&nbsp;node,
+ com.badlogic.gdx.scenes.scene2d.ui.ImageButton&nbsp;weaponButton)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="UpgradeDisplay.html" title="class in com.csse3200.game.components.upgradetree">UpgradeDisplay</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createUpgradeDisplay(com.csse3200.game.entities.Entity)" class="member-name-link">createUpgradeDisplay</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;upgradeBench)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Factory method for creating an instance of UpgradeDisplay.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.Batch,float)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.Batch&nbsp;batch,
- float&nbsp;parentAlpha)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Draws the UpgradeDisplay and its children.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawBackground(com.badlogic.gdx.graphics.g2d.Batch,float,float,float)" class="member-name-link">drawBackground</a><wbr>(com.badlogic.gdx.graphics.g2d.Batch&nbsp;batch,
@@ -178,7 +176,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.badlogic.gdx.scenes.scene2d.ui.Window">Methods inherited from class&nbsp;com.badlogic.gdx.scenes.scene2d.ui.Window</h3>
-<code>drawStageBackground, getPrefWidth, getStyle, getTitleLabel, getTitleTable, hit, isDragging, isModal, isMovable, isResizable, keepWithinStage, newLabel, setKeepWithinStage, setModal, setMovable, setResizable, setResizeBorder, setStyle</code></div>
+<code>draw, drawStageBackground, getPrefWidth, getStyle, getTitleLabel, getTitleTable, hit, isDragging, isModal, isMovable, isResizable, keepWithinStage, newLabel, setKeepWithinStage, setModal, setMovable, setResizable, setResizeBorder, setStyle</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.badlogic.gdx.scenes.scene2d.ui.Table">Methods inherited from class&nbsp;com.badlogic.gdx.scenes.scene2d.ui.Table</h3>
 <code>add, add, add, add, add, add, add, align, background, background, bottom, center, clearChildren, clip, clip, columnDefaults, debug, debug, debugActor, debugAll, debugCell, debugTable, defaults, drawDebug, drawDebugBounds, getAlign, getBackground, getCell, getCells, getClip, getColumnMinWidth, getColumnPrefWidth, getColumns, getColumnWidth, getMinHeight, getMinWidth, getPadBottom, getPadBottomValue, getPadLeft, getPadLeftValue, getPadRight, getPadRightValue, getPadTop, getPadTopValue, getPadX, getPadY, getPrefHeight, getRow, getRowHeight, getRowMinHeight, getRowPrefHeight, getRows, getSkin, getTableDebug, invalidate, layout, left, pad, pad, pad, pad, padBottom, padBottom, padLeft, padLeft, padRight, padRight, padTop, padTop, removeActor, removeActor, removeActorAt, reset, right, row, setBackground, setBackground, setClip, setDebug, setRound, setSkin, stack, top</code></div>
@@ -240,6 +238,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="createCostButtons(com.csse3200.game.components.upgradetree.UpgradeNode,com.badlogic.gdx.scenes.scene2d.ui.ImageButton)">
+<h3>createCostButtons</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.TextButton</span>&nbsp;<span class="element-name">createCostButtons</span><wbr><span class="parameters">(<a href="UpgradeNode.html" title="class in com.csse3200.game.components.upgradetree">UpgradeNode</a>&nbsp;node,
+ com.badlogic.gdx.scenes.scene2d.ui.ImageButton&nbsp;weaponButton)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="remove()">
 <h3>remove</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">remove</span>()</div>
@@ -268,21 +273,6 @@ loadScripts(document, 'script');</script>
 <dd><code>parentAlpha</code> - The parent alpha value, for transparency.</dd>
 <dd><code>x</code> - The x-coordinate of the bottom left corner of the background.</dd>
 <dd><code>y</code> - The y-coordinate of the bottom left corner of the background.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="draw(com.badlogic.gdx.graphics.g2d.Batch,float)">
-<h3>draw</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.Batch&nbsp;batch,
- float&nbsp;parentAlpha)</span></div>
-<div class="block">Draws the UpgradeDisplay and its children.</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code>draw</code>&nbsp;in class&nbsp;<code>com.badlogic.gdx.scenes.scene2d.ui.Window</code></dd>
-<dt>Parameters:</dt>
-<dd><code>batch</code> - The batch used for rendering.</dd>
-<dd><code>parentAlpha</code> - The parent alpha value, for transparency.</dd>
 </dl>
 </section>
 </li>

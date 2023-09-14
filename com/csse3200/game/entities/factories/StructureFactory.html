@@ -93,15 +93,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final <a href="../configs/ExtractorConfig.html" title="class in com.csse3200.game.entities.configs">ExtractorConfig</a></code></div>
-<div class="col-second even-row-color"><code><a href="#defaultExtractor" class="member-name-link">defaultExtractor</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="../configs/ShipConfig.html" title="class in com.csse3200.game.entities.configs">ShipConfig</a></code></div>
+<div class="col-second even-row-color"><code><a href="#defaultShip" class="member-name-link">defaultShip</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="../configs/ShipConfig.html" title="class in com.csse3200.game.entities.configs">ShipConfig</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#defaultShip" class="member-name-link">defaultShip</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="../configs/UpgradeBenchConfig.html" title="class in com.csse3200.game.entities.configs">UpgradeBenchConfig</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#defaultUpgradeBench" class="member-name-link">defaultUpgradeBench</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="../configs/UpgradeBenchConfig.html" title="class in com.csse3200.game.entities.configs">UpgradeBenchConfig</a></code></div>
-<div class="col-second even-row-color"><code><a href="#defaultUpgradeBench" class="member-name-link">defaultUpgradeBench</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -116,35 +113,57 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtractor(int,com.csse3200.game.components.resources.Resource,long,int)" class="member-name-link">createExtractor</a><wbr>(int&nbsp;health,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtinguisher(com.csse3200.game.areas.terrain.TerrainComponent,com.csse3200.game.areas.ExtractorMiniGameArea)" class="member-name-link">createExtinguisher</a><wbr>(<a href="../../areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrain,
+ <a href="../../areas/ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a>&nbsp;area)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtractor(int,com.csse3200.game.components.resources.Resource,long,int)" class="member-name-link">createExtractor</a><wbr>(int&nbsp;health,
  <a href="../../components/resources/Resource.html" title="enum class in com.csse3200.game.components.resources">Resource</a>&nbsp;producedResource,
  long&nbsp;tickRate,
  int&nbsp;tickSize)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates an extractor entity</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtractor(com.csse3200.game.entities.configs.ExtractorConfig)" class="member-name-link">createExtractor</a><wbr>(<a href="../configs/ExtractorConfig.html" title="class in com.csse3200.game.entities.configs">ExtractorConfig</a>&nbsp;config)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates an extractor entity</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtractor(com.csse3200.game.entities.configs.ExtractorConfig)" class="member-name-link">createExtractor</a><wbr>(<a href="../configs/ExtractorConfig.html" title="class in com.csse3200.game.entities.configs">ExtractorConfig</a>&nbsp;config)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates an extractor entity</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtractorBang()" class="member-name-link">createExtractorBang</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtractorRepairPart()" class="member-name-link">createExtractorRepairPart</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtractorFirePart(com.csse3200.game.areas.terrain.TerrainComponent,com.csse3200.game.areas.ExtractorMiniGameArea)" class="member-name-link">createExtractorFirePart</a><wbr>(<a href="../../areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrain,
+ <a href="../../areas/ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a>&nbsp;area)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createShip(com.csse3200.game.GdxGame,java.util.List)" class="member-name-link">createShip</a><wbr>(<a href="../../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtractorHolePart(com.csse3200.game.areas.terrain.TerrainComponent,com.csse3200.game.areas.ExtractorMiniGameArea)" class="member-name-link">createExtractorHolePart</a><wbr>(<a href="../../areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrain,
+ <a href="../../areas/ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a>&nbsp;area)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtractorRepair()" class="member-name-link">createExtractorRepair</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExtractorRepairPart()" class="member-name-link">createExtractorRepairPart</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createShip(com.csse3200.game.GdxGame,java.util.List)" class="member-name-link">createShip</a><wbr>(<a href="../../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../areas/mapConfig/ResourceCondition.html" title="class in com.csse3200.game.areas.mapConfig">ResourceCondition</a>&gt;&nbsp;requirements)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a ship entity that uses the default package</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createShip(com.csse3200.game.GdxGame,java.util.List,com.csse3200.game.entities.configs.ShipConfig)" class="member-name-link">createShip</a><wbr>(<a href="../../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createShip(com.csse3200.game.GdxGame,java.util.List,com.csse3200.game.entities.configs.ShipConfig)" class="member-name-link">createShip</a><wbr>(<a href="../../GdxGame.html" title="class in com.csse3200.game">GdxGame</a>&nbsp;game,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../areas/mapConfig/ResourceCondition.html" title="class in com.csse3200.game.areas.mapConfig">ResourceCondition</a>&gt;&nbsp;requirements,
  <a href="../configs/ShipConfig.html" title="class in com.csse3200.game.entities.configs">ShipConfig</a>&nbsp;config)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a ship entity that matches the config file</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createSpanner(com.csse3200.game.areas.terrain.TerrainComponent,com.csse3200.game.areas.ExtractorMiniGameArea)" class="member-name-link">createSpanner</a><wbr>(<a href="../../areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrain,
+ <a href="../../areas/ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a>&nbsp;area)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createSpawner(java.util.ArrayList)" class="member-name-link">createSpawner</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;targets)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -189,12 +208,6 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="../configs/ShipConfig.html" title="class in com.csse3200.game.entities.configs">ShipConfig</a></span>&nbsp;<span class="element-name">defaultShip</span></div>
 </section>
 </li>
-<li>
-<section class="detail" id="defaultExtractor">
-<h3>defaultExtractor</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="../configs/ExtractorConfig.html" title="class in com.csse3200.game.entities.configs">ExtractorConfig</a></span>&nbsp;<span class="element-name">defaultExtractor</span></div>
-</section>
-</li>
 </ul>
 </section>
 </li>
@@ -216,6 +229,46 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>a new extractor Entity</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createExtractorRepair()">
+<h3>createExtractorRepair</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createExtractorRepair</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="createExtinguisher(com.csse3200.game.areas.terrain.TerrainComponent,com.csse3200.game.areas.ExtractorMiniGameArea)">
+<h3>createExtinguisher</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createExtinguisher</span><wbr><span class="parameters">(<a href="../../areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrain,
+ <a href="../../areas/ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a>&nbsp;area)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="createSpanner(com.csse3200.game.areas.terrain.TerrainComponent,com.csse3200.game.areas.ExtractorMiniGameArea)">
+<h3>createSpanner</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createSpanner</span><wbr><span class="parameters">(<a href="../../areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrain,
+ <a href="../../areas/ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a>&nbsp;area)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="createExtractorFirePart(com.csse3200.game.areas.terrain.TerrainComponent,com.csse3200.game.areas.ExtractorMiniGameArea)">
+<h3>createExtractorFirePart</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createExtractorFirePart</span><wbr><span class="parameters">(<a href="../../areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrain,
+ <a href="../../areas/ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a>&nbsp;area)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="createExtractorHolePart(com.csse3200.game.areas.terrain.TerrainComponent,com.csse3200.game.areas.ExtractorMiniGameArea)">
+<h3>createExtractorHolePart</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createExtractorHolePart</span><wbr><span class="parameters">(<a href="../../areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a>&nbsp;terrain,
+ <a href="../../areas/ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a>&nbsp;area)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="createExtractorBang()">
+<h3>createExtractorBang</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createExtractorBang</span>()</div>
 </section>
 </li>
 <li>

@@ -114,7 +114,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.buildables.TurretType,com.csse3200.game.entities.Entity)" class="member-name-link">Turret</a><wbr>(<a href="TurretType.html" title="enum class in com.csse3200.game.entities.buildables">TurretType</a>&nbsp;type,
  <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Create a new turret placeable entity to match the provided type</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.configs.TurretConfig)" class="member-name-link">Turret</a><wbr>(<a href="../configs/TurretConfig.html" title="class in com.csse3200.game.entities.configs">TurretConfig</a>&nbsp;turretConfig)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Create a new turret placeable entity to match the provided config file</div>
@@ -170,7 +172,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#refillAmmo(int)" class="member-name-link">refillAmmo</a><wbr>(int&nbsp;ammo)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Refill the turret's ammunition by the given amount.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rotateTurret(com.csse3200.game.entities.Entity)" class="member-name-link">rotateTurret</a><wbr>(<a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;focus)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -189,7 +193,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Perform an update on all components.</div>
+<div class="block">This method is used to update the turret.</div>
 </div>
 </div>
 </div>
@@ -233,6 +237,14 @@ loadScripts(document, 'script');</script>
 <h3>Turret</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Turret</span><wbr><span class="parameters">(<a href="TurretType.html" title="enum class in com.csse3200.game.entities.buildables">TurretType</a>&nbsp;type,
  <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</span></div>
+<div class="block">Create a new turret placeable entity to match the provided type</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>type</code> - Type of turret to create
+             (used to get config file)</dd>
+<dd><code>player</code> - Player entity to create turret for
+               (used to get position and rotation)</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -276,6 +288,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="refillAmmo(int)">
 <h3>refillAmmo</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refillAmmo</span><wbr><span class="parameters">(int&nbsp;ammo)</span></div>
+<div class="block">Refill the turret's ammunition by the given amount.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ammo</code> - The amount of ammunition to refill.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -293,9 +310,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Entity.html#update()">Entity</a></code></span></div>
-<div class="block">Perform an update on all components. This is called by the entity service and should not be
- called manually.</div>
+<div class="block">This method is used to update the turret.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Entity.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></dd>

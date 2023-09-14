@@ -24,10 +24,9 @@ public class UpgradeTree extends Component {
         unlockedWeapons = new ArrayList<>();
 
         // Base weapons
+        unlockedWeapons.add(WeaponType.MELEE_KATANA);
+        unlockedWeapons.add(WeaponType.RANGED_BOOMERANG);
         unlockedWeapons.add(WeaponType.WOODHAMMER);
-
-        unlockedWeapons.add(WeaponType.RANGED_SLINGSHOT);
-        unlockedWeapons.add(WeaponType.MELEE_WRENCH);
     }
 
     /**

@@ -18,11 +18,12 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.components.ships.DistanceDisplay;
-
 import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 
-/** Forest area for the demo game with trees, a player, and some enemies. */
+/**
+ * Forest area for the demo game with trees, a player, and some enemies.
+ */
 public class SpaceGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(5, 10);
@@ -62,7 +63,8 @@ public class SpaceGameArea extends GameArea {
     }
 
     /**
-     * Main method for calling all the methods in the obstacle minigame into the SpaceMapScreen class
+     * Main method for calling all the methods in the obstacle
+     * minigame into the SpaceMapScreen class
      */
     @Override
     public void create() {
@@ -78,6 +80,9 @@ public class SpaceGameArea extends GameArea {
 
     }
 
+    /**
+     * Method for the background music of the game
+     */
     private void playMusic() {
         UserSettings.Settings settings = UserSettings.get();
         Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
@@ -88,9 +93,9 @@ public class SpaceGameArea extends GameArea {
 
 
     /**
-     * Recursively calls n number of asteroids starting from position to the right
-     * @param n Number of asteroids
-     * @param pos Starting position for asteroid spawning
+     * Method for creating boundaries along the x-axis
+     * @param n Number of blocks that are added along the x-axis
+     * @param pos Start position from where the number of blocks are added
      */
     private void spawnStaticAsteroidsRight(int n, GridPoint2 pos){
         Entity asteroid_length = ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
@@ -104,7 +109,11 @@ public class SpaceGameArea extends GameArea {
         spawnStaticAsteroidsRight(n - 1, pos); // Recursive call
     }
 
-
+    /**
+     * Method of for creating the boundaries along the y-axis
+     * @param n Number of blocks that are added along the y-axis
+     * @param pos Start position from where the number of blocks are added on the map
+     */
     private void spawnStaticAsteroidsUp(int n, GridPoint2 pos){
         Entity asteroid_width = ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
         if (n <= 0) {
@@ -116,7 +125,9 @@ public class SpaceGameArea extends GameArea {
         spawnStaticAsteroidsUp(n - 1, pos); // Recursive call
     }
 
-
+    /**
+     * Method for creating the boundaries of the map
+     */
     private void createBoundary(){
         spawnStaticAsteroidsRight(60,new GridPoint2(0,-1));
         spawnStaticAsteroidsRight(60,new GridPoint2(0,29));
@@ -126,7 +137,7 @@ public class SpaceGameArea extends GameArea {
 
 
     /**
-     * Method for spawning enemies randomly
+     * Method for spawning enemies randomly across the map in the minigame
      */
     private void spawnEnemy(){
         GridPoint2 minPos = new GridPoint2(1, 1);
@@ -139,8 +150,7 @@ public class SpaceGameArea extends GameArea {
     }
 
     /**
-     * Spawn Asteroids of a given size and position
-     * @requires ASTEROID_SIZE != null
+     * Method for spawning asteroids randomly across the map in the minigame
      */
     private void spawnAsteroids() {
         GridPoint2 minPos = new GridPoint2(1, 1);
@@ -164,8 +174,9 @@ public class SpaceGameArea extends GameArea {
         return goal; // Return the instance variable
     }
 
-
-
+    /**
+     * DisplayUI method for displaying Space game in the main menu
+     */
     private void displayUI() {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Space Game"));
@@ -201,10 +212,6 @@ public class SpaceGameArea extends GameArea {
         ship = newShip;
         return newShip;
     }
-    public static void Exitonc()
-    {
-        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-    }
 
 
     /**
@@ -215,11 +222,21 @@ public class SpaceGameArea extends GameArea {
         return ship;
     }
 
+
+    /**
+     * Getter method for goal
+     * @return Goal Entity
+     */
     public Entity getGoal() {
         return goal;
     }
 
-
+    /**
+     * Method for calculating distance between two entities
+     * @param entity1 Entity 1
+     * @param entity2 Entity 2
+     * @return Distance between Entity 1 and Entity 2
+     */
     public static float calculateDistance(Entity entity1, Entity entity2) {
         // Get the center positions of both entities
         Vector2 position1 = entity1.getCenterPosition();
@@ -262,7 +279,9 @@ public class SpaceGameArea extends GameArea {
 
     }
 
-
+    /**
+     * Override method for disposing and unloading assets
+     */
     @Override
     public void dispose() {
         super.dispose();

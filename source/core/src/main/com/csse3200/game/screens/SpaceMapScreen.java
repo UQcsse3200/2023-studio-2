@@ -30,14 +30,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.components.ships.DistanceDisplay;
-
 import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 
 /**
  * The game screen containing the main game.
- *
- * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
+ * Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class SpaceMapScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SpaceMapScreen.class);
@@ -51,7 +49,10 @@ public class SpaceMapScreen extends ScreenAdapter {
     private Label distanceLabel;
     private DistanceDisplay distanceDisplay;
 
-
+    /**
+     * Method for creating the space map screen for the obstacle minigame
+     * @param game Obstacle minigame
+     */
     public SpaceMapScreen(GdxGame game) {
         this.game = game;
         physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
@@ -77,6 +78,11 @@ public class SpaceMapScreen extends ScreenAdapter {
         distanceDisplay.updateDistanceUI(0);
     }
 
+    /**
+     * Method for rendering the entities in the obstacle minigame
+     * alongside updating the distance between two entities
+     * @param delta The time in seconds since the last render.
+     */
     @Override
     public void render(float delta) {
         physicsEngine.update();
@@ -89,6 +95,12 @@ public class SpaceMapScreen extends ScreenAdapter {
         renderer.render();
 
     }
+
+    /**
+     * Method for exiting from the obstacle minigame
+     * to the main screen of the game
+     * @param d Distance of the spaceship from the exit goal
+     */
     public void Exitonc(float d)
     {
         if(d < 1.0) {
@@ -96,16 +108,21 @@ public class SpaceMapScreen extends ScreenAdapter {
         }
     }
 
-
-
-
+    /**
+     * Method for resizing the rendering of the entities
+     * @param width Width of the render
+     * @param height Height of the render
+     */
     @Override
     public void resize(int width, int height) {
         renderer.resize(width, height);
         logger.trace("Resized renderer: ({} x {})", width, height);
     }
 
-
+    /**
+     * Method for disposing and unloading
+     * all assets onto the main screen
+     */
     @Override
     public void dispose() {
         logger.debug("Disposing main game screen");
@@ -126,7 +143,8 @@ public class SpaceMapScreen extends ScreenAdapter {
     }
 
     /**
-     * Creates the main game's ui including components for rendering ui elements to the screen and
+     * Creates the main game's ui including components for
+     * rendering ui elements to the screen and
      * capturing and handling ui input.
      */
     private void createUI() {
@@ -148,6 +166,10 @@ public class SpaceMapScreen extends ScreenAdapter {
 
     }
 
+    /**
+     * Method for making ship follow the player while making
+     * sure that the camera doesn't go beyond the boundaries of the map
+     */
     private void followShip() {
         float maxX = 59 * 1f - renderer.getCamera().getCamera().viewportWidth * 0.5f;
         float maxY = 29 * 1f - renderer.getCamera().getCamera().viewportHeight * 0.5f;

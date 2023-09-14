@@ -1,10 +1,15 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.npc.BotanistAnimationController;
+import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
@@ -17,7 +22,9 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 
@@ -112,17 +119,38 @@ public class NPCFactory {
    * @return The created Botanist NPC entity.
    */
   public static Entity createBotanist(BotanistConfig config) {
+
+    AITaskComponent aiComponent = new AITaskComponent();
+    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/botanist.atlas", TextureAtlas.class));
+    animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-4", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-5", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("row-1-column-6", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-7", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-8", 0.01f, Animation.PlayMode.LOOP);
+
     Entity botanist =
             new Entity()
-                    .addComponent(new TextureRenderComponent(config.spritePath))
-                    .addComponent(new PhysicsComponent())
+                    .addComponent(animator)
+                    .addComponent(new BotanistAnimationController())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE));
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new InteractionControllerComponent(true))
+                    .addComponent(aiComponent);
+    botanist.addComponent(new InteractableComponent(entity -> {
+      botanist.getComponent(DialogComponent.class).showdialogue("\"Greetings, I am the botanist!\"  \n" +
+              "My name is Adam\nI'm here to help you\nunderstand the planet's flora and fauna", "");
+    },7f));
 
-    botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    botanist.getComponent(TextureRenderComponent.class).scaleEntity();
-    botanist.scaleHeight(1.1f);
-    PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.7f);
+    botanist.scaleHeight(6.1f);
     return botanist;
   }
 

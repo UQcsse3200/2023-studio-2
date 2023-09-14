@@ -104,34 +104,36 @@ public class UpgradeDisplay extends Window {
      * These trees dictate the progression of weapons that can be unlocked.
      */
     private void buildTrees() {
-
-        WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.STICK);
+        // todo: make this less bad
+        WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
         WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA);
         WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_SLINGSHOT);
-        WeaponConfig rangedWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_HOMING);
+        WeaponConfig boomerangConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BOOMERANG);
         WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
         WeaponConfig stonehammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.STONEHAMMER);
+        WeaponConfig rocketConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_HOMING);
+        WeaponConfig beeConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_BEE_STING);
 
         // Melee Tree
-
-        UpgradeNode meleeRoot = new UpgradeNode(meleeWrench, WeaponType.STICK);
         UpgradeNode swordNode = new UpgradeNode(katanaConfig, WeaponType.MELEE_KATANA);
-        meleeRoot.addChild(swordNode);
-        trees.add(meleeRoot);
+        UpgradeNode wrenchNode = new UpgradeNode(meleeWrench, WeaponType.MELEE_WRENCH);
+        UpgradeNode beeNode = new UpgradeNode(beeConfig, WeaponType.MELEE_BEE_STING);
+        swordNode.addChild(wrenchNode);
+        swordNode.addChild(beeNode);
+        trees.add(swordNode);
 
         // Ranged Tree
-
-        UpgradeNode rangedRoot = new UpgradeNode(slingshotConfig, WeaponType.RANGED_SLINGSHOT);
-        UpgradeNode wrenchNode2 = new UpgradeNode(rangedWrenchConfig, WeaponType.RANGED_BOOMERANG);
-        rangedRoot.addChild(wrenchNode2);
-        trees.add(rangedRoot);
+        UpgradeNode slingShot = new UpgradeNode(slingshotConfig, WeaponType.RANGED_SLINGSHOT);
+        UpgradeNode rocket = new UpgradeNode(rocketConfig, WeaponType.RANGED_HOMING);
+        UpgradeNode boomerang = new UpgradeNode(boomerangConfig, WeaponType.RANGED_BOOMERANG);
+        boomerang.addChild(slingShot);
+        slingShot.addChild(rocket);
+        trees.add(boomerang);
 
         // Build Tree
         buildRoot = new UpgradeNode(woodhammerConfig, WeaponType.WOODHAMMER);
         UpgradeNode hammer2 = new UpgradeNode(stonehammerConfig, WeaponType.STONEHAMMER);
-        UpgradeNode hammer3 = new UpgradeNode(stonehammerConfig, WeaponType.STEELHAMMER);
         buildRoot.addChild(hammer2);
-        buildRoot.addChild(hammer3);
         trees.add(buildRoot);
     }
 

@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 

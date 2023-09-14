@@ -174,7 +174,6 @@ public class BossTask extends DefaultTask implements PriorityTask {
 
   /**
    * Converts the Vector2 positions to one of a few characters that represent certain directions.
-   * '{@literal <}' means left, '{@literal >}' means right. Otherwise, return '='.
    * @param destination final destination for the Boss.
    * @return a character that represents which direction Boss should face.
    */

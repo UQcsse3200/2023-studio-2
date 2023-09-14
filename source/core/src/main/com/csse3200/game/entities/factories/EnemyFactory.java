@@ -160,7 +160,7 @@ public class EnemyFactory {
       scale = 2.2f;
     }
     else if (type == EnemyType.BossMelee){
-      scale = 2.4f;
+      scale = 4.4f;
     }
     else if (type == EnemyType.Ranged) {
       scale = 2.0f;

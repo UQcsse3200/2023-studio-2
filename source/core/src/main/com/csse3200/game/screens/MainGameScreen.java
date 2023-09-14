@@ -98,7 +98,7 @@ private static boolean alive = true;
 
     gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
     gameArea.create();
-    player = ((MapGameArea) gameArea).getPlayer();
+    player = gameArea.getPlayer();
     player.getEvents().addListener("death", this::initiateDeathScreen);
     titleBox = new TitleBox(game, "Title", skin);
 

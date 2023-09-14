@@ -1,8 +1,11 @@
 package com.csse3200.game.areas;
 import com.badlogic.gdx.audio.Music;
 
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -10,6 +13,7 @@ import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.concurrency.JobSystem;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.UserSettings;
@@ -154,8 +158,8 @@ public class LushGameArea extends GameArea {
      */
     private void spawnPortal(GridPoint2 position, float x, float y) {
         StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
-        Entity portal = PortalFactory.createPortal(x, y, player);
-        placementService.PlaceStructureAt(portal, position, false, false);
+        PlaceableEntity portal = (PlaceableEntity) PortalFactory.createPortal(x, y, player);
+        placementService.placeStructureAt(portal, position, false, false);
     }
 
     /**
@@ -163,8 +167,38 @@ public class LushGameArea extends GameArea {
      * based on the dimensions defined in the .tsx file
      */
     private void spawnEnvironment() {
-        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
-        createEnvironment(collisionLayer);
+        int tileSize = 16;
+
+        /** The scale used when importing the map into the game. */
+        float scaleSize = 0.5f;
+
+        /** The constant used to improve collision hit boxes. */
+        float xyShift = 0.3f;
+
+        TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
+        Entity environment;
+
+        for (int y = 0; y < layer.getHeight(); y++) {
+            for (int x = 0; x < layer.getWidth(); x++) {
+                TiledMapTileLayer.Cell cell = layer.getCell(x, layer.getHeight() - 1 - y);
+                if (cell != null) {
+                    MapObjects objects = cell.getTile().getObjects();
+                    GridPoint2 tilePosition = new GridPoint2(x, layer.getHeight() - 1 - y);
+                    if (objects.getCount() >= 1) {
+                        RectangleMapObject object = (RectangleMapObject) objects.get(0);
+                        Rectangle collisionBox = object.getRectangle();
+                        float collisionX = xyShift - collisionBox.x / tileSize;
+                        float collisionY = xyShift - collisionBox.y / tileSize;
+                        float collisionWidth = scaleSize * (collisionBox.width / tileSize);
+                        float collisionHeight = scaleSize * (collisionBox.height / tileSize);
+                        environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
+                    } else {
+                        environment = ObstacleFactory.createEnvironment();
+                    }
+                    spawnEntityAt(environment, tilePosition, false, false);
+                }
+            }
+        }
     }
 
     /**
@@ -218,7 +252,7 @@ public class LushGameArea extends GameArea {
         targetables.add(extractor);
         spawnEntityAt(extractor, pos, true, false);
 
-        ResourceDisplay resourceDisplayComponent = new ResourceDisplay()
+        ResourceDisplay resourceDisplayComponent = new ResourceDisplay(5, 32, 1000)
                 .withResource(Resource.Durasteel)
                 .withResource(Resource.Solstite)
                 .withResource(Resource.Nebulite);
@@ -232,7 +266,7 @@ public class LushGameArea extends GameArea {
     private void spawnShip() {
         GridPoint2 spawnPosition = new GridPoint2(7*terrain.getMapBounds(0).sub(1, 1).x/12,
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
-        Entity ship = StructureFactory.createShip(game);
+        Entity ship = StructureFactory.createShip(game, null);
         spawnEntityAt(ship, spawnPosition, false, false);
     }
 
@@ -311,28 +345,28 @@ public class LushGameArea extends GameArea {
 
         for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+            Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
             //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+            Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
             //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
+            Entity melee = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
             //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+            Entity ranged = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
             spawnEntityAt(ranged, randomPos, true, true);
             //ranged.addComponent(new DialogComponent(dialogueBox));
         }
@@ -345,28 +379,28 @@ public class LushGameArea extends GameArea {
 
         for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+            Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
             //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+            Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
             //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
+            Entity melee = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.DTE);
             spawnEntityAt(melee, randomPos, true, true);
             //melee.addComponent(new DialogComponent(dialogueBox));
         }
 
         for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+            Entity ranged = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
             spawnEntityAt(ranged, randomPos, true, true);
             //ranged.addComponent(new DialogComponent(dialogueBox));
         }
@@ -377,7 +411,7 @@ public class LushGameArea extends GameArea {
         GridPoint2 maxPos = new GridPoint2(89, 19);
 
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
+        Entity boss = EnemyFactory.createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
         spawnEntityAt(boss, randomPos, true, true);
     }
 
@@ -389,7 +423,7 @@ public class LushGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
+        Entity boss = EnemyFactory.createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
         spawnEntityAt(boss, randomPos, true, true);
         //boss.addComponent(new DialogComponent(dialogueBox));
 

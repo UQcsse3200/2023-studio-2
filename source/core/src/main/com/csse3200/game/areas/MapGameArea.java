@@ -82,9 +82,6 @@ public class MapGameArea extends GameArea{
     }
 
     //TODO: is this needed?
-    public Entity getPlayer() {
-        return this.playerEntity;
-    }
 
     /**
      * Loads all assets listed in the config file

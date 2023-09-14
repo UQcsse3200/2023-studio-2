@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
@@ -50,7 +51,7 @@ public class EnvironmentFactory {
                     } else {
                         environment = ObstacleFactory.createEnvironment();
                     }
-                    placementService.PlaceStructureAt(environment, tilePosition, false, false);
+                    //placementService.placeStructureAt(environment, tilePosition, false, false);
                 }
             }
         }

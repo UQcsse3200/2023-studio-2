@@ -18,169 +18,173 @@ import com.csse3200.game.components.Weapons.WeaponType;
 import java.util.HashMap;
 import java.util.Timer;
 
+
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
-  private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
-  private static final float DODGE_SPEED = 3f;
-  private static final float WALK_SPEED = 1f;
-  private static final int DODGE_COOLDOWN = 300;
-  private static final int DODGE_DURATION = 300;
+    private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
+    private static final float DODGE_SPEED = 3f;
+    private static final float WALK_SPEED = 1f;
+    private static final int DODGE_COOLDOWN = 300;
+    private static final int DODGE_DURATION = 300;
 
-  private Vector2 walkDirection = Vector2.Zero.cpy();
-  private boolean dodge_available = true;
+    private Vector2 walkDirection = Vector2.Zero.cpy();
+    private boolean dodge_available = true;
 
-  private Entity player;
-  private InventoryComponent playerInventory;
-  private int testing = 0;
+    private Entity player;
+    private InventoryComponent playerInventory;
+    private int testing = 0;
 
-  static HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
-  Vector2 lastMousePos = new Vector2(0, 0);
+    static HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
+    Vector2 lastMousePos = new Vector2(0, 0);
 
-  /**
-   * Checks if any Window is currently open and visible on the stage.
-   * @return true if any window is open and visible; false otherwise.
-   */
-  public boolean isWindowOpen() {
-    for (Actor actor : ServiceLocator.getRenderService().getStage().getActors()) {
-      if (actor instanceof Window && actor.isVisible()) {
-        return true;
-      }
+    public KeyboardPlayerInputComponent() {
+        super(5);
     }
-    return false;
-  }
+
+    /**
+     * Checks if any Window is currently open and visible on the stage.
+     *
+     * @return true if any window is open and visible; false otherwise.
+     */
+    public boolean isWindowOpen() {
+        for (Actor actor : ServiceLocator.getRenderService().getStage().getActors()) {
+            if (actor instanceof Window && actor.isVisible()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void playerDead() {
         if (entity.getComponent(CombatStatsComponent.class).isDead()) {
             keyFlags.clear();
             triggerWalkEvent();
         }
     }
-  /**
-   * Returns the last known position of the users cursor
-   */
-  public Vector2 getLastMousePos() {
-    return this.lastMousePos.cpy();
-  }
 
-  /**
-   * Returns value for testing.
-   * 
-   * @return int
-   */
-  public int getTesting() {
-    return testing;
-  }
-
-  /**
-   * Sets value for testing.
-   * @param testing
-   */
-  public void setTesting(int testing) {
-    this.testing = testing;
-  }
-
-
-  public KeyboardPlayerInputComponent() {
-    super(5);
-  }
-
-  /**
-   * Triggers player events on specific keycodes.
-   *
-   * @return whether the input was processed
-   * @see InputProcessor#keyDown(int)
-   */
-  @Override
-  public boolean keyDown(int keycode) {
-    keyFlags.put(keycode, 1);
-    player = ServiceLocator.getEntityService().getPlayer();
-    playerInventory = player.getComponent(InventoryComponent.class);
-    if (entity.getComponent(CombatStatsComponent.class).isDead()) {
-        return false;
+    /**
+     * Returns the last known position of the users cursor
+     */
+    public Vector2 getLastMousePos() {
+        return this.lastMousePos.cpy();
     }
-      switch (keycode) {
-          case Keys.SPACE -> {
-              if (!dodge_available ||
-                      walkDirection.epsilonEquals(Vector2.Zero)) {
-                  return false;
-              }
-              triggerDodgeEvent();
-              dodge();
-              return true;
-          }
-          case Keys.F -> {
-              InteractionControllerComponent interactionController = entity
-                      .getComponent(InteractionControllerComponent.class);
-              if (interactionController != null) {
-                  interactionController.interact();
-              }
 
-              // Stop movement if a menu is open
-              if (isWindowOpen()) {
-                  keyFlags.clear();
-                  triggerWalkEvent();
-              }
-              return true;
-          }
-          case Keys.T -> {
-              if (playerInventory.getEquipped() == 3) {
-                  entity.getEvents().trigger("change_structure");
-              }
-              return true;
-          }
-          case Keys.NUM_1 -> {
-              triggerInventoryEvent(1);
-              return true;
-          }
-          case Keys.NUM_2 -> {
-              triggerInventoryEvent(2);
-              return true;
-          }
-          case Keys.NUM_3 -> {
-              triggerInventoryEvent(3);
-              return true;
-          }
-          case Keys.TAB -> {
-              triggerInventoryEvent(0);
-              return true;
-          }
-          case Keys.W, Keys.S, Keys.A, Keys.D -> {
-              triggerWalkEvent();
-              return true;
-          }
-          case Keys.NUMPAD_0 -> {
-              playerInventory.changeEquipped(WeaponType.MELEE_WRENCH);
-              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
-              return true;
-          } case Keys.NUMPAD_1 -> {
-              playerInventory.changeEquipped(WeaponType.MELEE_KATANA);
-              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
-              return true;
-          } case Keys.NUMPAD_2 -> {
-              playerInventory.changeEquipped(WeaponType.MELEE_BEE_STING);
-              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
-              return true;
-          } case Keys.NUMPAD_3 -> {
-              playerInventory.changeEquipped(WeaponType.RANGED_SLINGSHOT);
-              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
-              return true;
-          } case Keys.NUMPAD_4 -> {
-              playerInventory.changeEquipped(WeaponType.RANGED_BOOMERANG);
-              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
-              return true;
-          } case Keys.NUMPAD_5 -> {
-              playerInventory.changeEquipped(WeaponType.RANGED_HOMING);
-              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
-              return true;
-          } default -> {
-              return false;
-          }
+    /**
+     * Returns value for testing.
+     *
+     * @return int
+     */
+    public int getTesting() {
+        return testing;
+    }
+
+    /**
+     * Sets value for testing.
+     *
+     * @param testing
+     */
+    public void setTesting(int testing) {
+        this.testing = testing;
+    }
+
+    /**
+     * Triggers player events on specific keycodes.
+     *
+     * @return whether the input was processed
+     * @see InputProcessor#keyDown(int)
+     */
+    @Override
+    public boolean keyDown(int keycode) {
+        keyFlags.put(keycode, 1);
+        player = ServiceLocator.getEntityService().getPlayer();
+        playerInventory = player.getComponent(InventoryComponent.class);
+        if (entity.getComponent(CombatStatsComponent.class).isDead()) {
+            return false;
+        }
+        switch (keycode) {
+            case Keys.SPACE -> {
+                if (!dodge_available ||
+                        walkDirection.epsilonEquals(Vector2.Zero)) {
+                    return false;
+                }
+                triggerDodgeEvent();
+                dodge();
+                return true;
+            }
+            case Keys.F -> {
+                InteractionControllerComponent interactionController = entity
+                        .getComponent(InteractionControllerComponent.class);
+                if (interactionController != null) {
+                    interactionController.interact();
+                }
+
+                // Stop movement if a menu is open
+                if (isWindowOpen()) {
+                    keyFlags.clear();
+                    triggerWalkEvent();
+                }
+                return true;
+            }
+            case Keys.T -> {
+                if (playerInventory.getEquipped() == 3) {
+                    entity.getEvents().trigger("change_structure");
+                }
+                return true;
+            }
+            case Keys.NUM_1 -> {
+                triggerInventoryEvent(1);
+                return true;
+            }
+            case Keys.NUM_2 -> {
+                triggerInventoryEvent(2);
+                return true;
+            }
+            case Keys.NUM_3 -> {
+                triggerInventoryEvent(3);
+                return true;
+            }
+            case Keys.TAB -> {
+                triggerInventoryEvent(0);
+                return true;
+            }
+            case Keys.W, Keys.S, Keys.A, Keys.D -> {
+                triggerWalkEvent();
+                return true;
+            }
+            case Keys.NUMPAD_0 -> {
+                playerInventory.changeEquipped(WeaponType.MELEE_WRENCH);
+                entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+                return true;
+            } case Keys.NUMPAD_1 -> {
+                playerInventory.changeEquipped(WeaponType.MELEE_KATANA);
+                entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+                return true;
+            } case Keys.NUMPAD_2 -> {
+                playerInventory.changeEquipped(WeaponType.MELEE_BEE_STING);
+                entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+                return true;
+            } case Keys.NUMPAD_3 -> {
+                playerInventory.changeEquipped(WeaponType.RANGED_SLINGSHOT);
+                entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+                return true;
+            } case Keys.NUMPAD_4 -> {
+                playerInventory.changeEquipped(WeaponType.RANGED_BOOMERANG);
+                entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+                return true;
+            } case Keys.NUMPAD_5 -> {
+                playerInventory.changeEquipped(WeaponType.RANGED_HOMING);
+                entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+                return true;
+            } default -> {
+                return false;
+            }
 
 
-      }
-  }
+        }
+    }
 
   /**
    * Triggers player events on specific keycodes.
@@ -311,7 +315,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       }
       entity.getEvents().trigger("walk", walkDirection);
     }
-  }
+    }
 
   /**
    * Triggers dodge event.

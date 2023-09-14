@@ -4,13 +4,11 @@ import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Time;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
- * which engage it combat should have an instance of this class registered. This class can be
+ * which engage in combat should have an instance of this class registered. This class can be
  * extended for more specific combat needs.
  */
 public class CombatStatsComponent extends Component {
@@ -18,7 +16,7 @@ public class CombatStatsComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
   private int health;
   private int baseAttack;
-  private int maxHealth;
+  private final int maxHealth;
   private int attackMultiplier;
   private Boolean isImmune;
   private int lives;
@@ -29,21 +27,22 @@ public class CombatStatsComponent extends Component {
     this.setAttackMultiplier(attackMultiplier);
     this.setImmunity(isImmune);
   }
-  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune, int lives) {
-    this.maxHealth = health;
-    this.setHealth(health);
-    this.setBaseAttack(baseAttack);
-    this.setAttackMultiplier(attackMultiplier);
-    this.setImmunity(isImmune);
-    this.lives = lives;
-  }
+
+//  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune, int lives) {
+//    this.maxHealth = health;
+//    this.setHealth(health);
+//    this.setBaseAttack(baseAttack);
+//    this.setAttackMultiplier(attackMultiplier);
+//    this.setImmunity(isImmune);
+//    this.lives = lives;
+//  }
 
   /**
    * Returns true if the entity's has 0 health, otherwise false.
    *
    * @return is player dead
    */
-  public Boolean isDead() {
+  public boolean isDead() {
     return this.health == 0;
   }
 
@@ -99,6 +98,18 @@ public class CombatStatsComponent extends Component {
       }
     }
   }
+
+  /**
+   * sets the entity's health to maximum if H-Key is pressed on the keyboard.
+   * @param newHealth
+   * @param isHKeyPressed
+   */
+  public void setHealth(int newHealth, boolean isHKeyPressed) {
+    if (isHKeyPressed) {
+      this.health = 100;
+    }
+  }
+
 
   /**
    * Adds to the player's health. The amount added can be negative.
@@ -220,7 +231,8 @@ public class CombatStatsComponent extends Component {
     if (getImmunity()) {
       return;
     }
-    int newHealth = getHealth() - attacker.getAttack();
+    int newHealth;
+    newHealth = getHealth() - attacker.getAttack();
     setHealth(newHealth);
   }
 }

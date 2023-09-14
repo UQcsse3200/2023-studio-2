@@ -15,13 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.structures.StructurePicker;
+import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -415,7 +416,8 @@ public class UpgradeDisplay extends Window {
         weaponButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
         materialsLabel.setText(String.format(MATERIALS_FORMAT, stats.getMaterials())); // todo: make dynamic
 
-        StructurePicker structurePicker = player.getComponent(StructurePicker.class);
+        StructureToolPicker structurePicker = player.getComponent(StructureToolPicker.class);
+
         // Update the StructurePickers level
         if (buildRoot.getChildren().contains(node) && node.getDepth() == structurePicker.getLevel() + 1) {
             structurePicker.setLevel(node.getDepth());

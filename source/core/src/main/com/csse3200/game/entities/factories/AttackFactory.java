@@ -2,8 +2,6 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
@@ -16,15 +14,14 @@ import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.WeaponConfig;
+import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.PhysicsUtils;
-import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Class to create weapons when the player attacks
@@ -32,10 +29,13 @@ import com.csse3200.game.services.ServiceLocator;
 public class AttackFactory {
   private static final WeaponConfigs configs =
           FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
+
+  //TODO: REMOVE - LEGACY
   /**
    * Static function to create a new weapon entity
    * @param weaponType - the type of weapon entity to be made
    * @param initRot - the initial rotation of the player
+   * @param player - the player using this attack
    * @return A reference to the created weapon entity
    */
   public static Entity createAttack(WeaponType weaponType, float initRot, Entity player) {
@@ -66,7 +66,7 @@ public class AttackFactory {
                     .addComponent(weaponController);
     attack.setEntityType("playerWeapon");
 
-    TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
+    TextureAtlas atlas = new TextureAtlas(config.spritePath);
     AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
 
     switch (config.animationType) {

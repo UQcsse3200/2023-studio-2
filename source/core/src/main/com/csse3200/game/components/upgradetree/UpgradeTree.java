@@ -65,7 +65,8 @@ public class UpgradeTree extends Component {
         GameStateObserver gameStateOb = ServiceLocator.getGameStateObserverService();
         String resourceKey = "resource/" + Resource.Nebulite;
         if (gameStateOb != null) {
-            return (int) gameStateOb.getStateData(resourceKey);
+            Object value = gameStateOb.getStateData(resourceKey);
+            return value == null ? 0 : (int) value;
         }
         return 0;
     }

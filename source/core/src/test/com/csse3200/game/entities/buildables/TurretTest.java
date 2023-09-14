@@ -60,12 +60,5 @@ public class TurretTest {
         assertEquals(5, turret.currentAmmo);
     }
 
-
-
-
-
-
-
-
 }
 

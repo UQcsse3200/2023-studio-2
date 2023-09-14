@@ -1,5 +1,6 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -16,6 +17,7 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 
 /**
  * Class to create weapons for the player to hold
@@ -38,14 +40,9 @@ public class PlayerWeaponFactory {
     Entity attack = new Entity().addComponent(weaponController);
     attack.setEntityType("playerStaticWeapon");
 
-    TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
-    AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
-
-    animator.addAnimation("STATIC", 0.1f, Animation.PlayMode.NORMAL);
-    attack.addComponent(animator)
-            .addComponent(new CombatStatsComponent(1, 0, 0, true));
-
-    animator.startAnimation("STATIC");
+    Texture texture = new Texture(config.imagePath);
+    attack.    addComponent(new TextureRenderComponent(texture));
+    
     attack.scaleWidth(config.imageScale / 2);
     attack.addComponent(new WeaponTargetComponent(WeaponType.MELEE_WRENCH, player));
     return attack;

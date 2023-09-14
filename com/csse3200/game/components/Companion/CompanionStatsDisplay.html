@@ -104,16 +104,19 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="#companionHealthLabel" class="member-name-link">companionHealthLabel</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
-<div class="col-second odd-row-color"><code><a href="#companionUIHeaderLabel" class="member-name-link">companionUIHeaderLabel</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#companionModeLabel" class="member-name-link">companionModeLabel</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second even-row-color"><code><a href="#playerEntity" class="member-name-link">playerEntity</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
+<div class="col-second even-row-color"><code><a href="#companionUIHeaderLabel" class="member-name-link">companionUIHeaderLabel</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#playerEntity" class="member-name-link">playerEntity</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The player entity associated with this CompanionStatsDisplay.</div>
 </div>
-<div class="col-first odd-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
-<div class="col-second odd-row-color"><code><a href="#playerLowHealthLabel" class="member-name-link">playerLowHealthLabel</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
+<div class="col-second even-row-color"><code><a href="#playerLowHealthLabel" class="member-name-link">playerLowHealthLabel</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The UI playerLowHealthLabel for displaying the companion's health.</div>
 </div>
 </div>
@@ -196,8 +199,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Updates the companion's health UI.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerHealthUI(int)" class="member-name-link">updatePlayerHealthUI</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateCompanionModeUI(java.lang.String)" class="member-name-link">updateCompanionModeUI</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newMode)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">updating the companion UI to include the mode</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerHealthUI(int)" class="member-name-link">updatePlayerHealthUI</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Update the player's health UI.</div>
 </div>
 </div>
@@ -256,6 +264,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="companionUIHeaderLabel">
 <h3>companionUIHeaderLabel</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Label</span>&nbsp;<span class="element-name">companionUIHeaderLabel</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="companionModeLabel">
+<h3>companionModeLabel</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.Label</span>&nbsp;<span class="element-name">companionModeLabel</span></div>
 </section>
 </li>
 </ul>
@@ -364,6 +378,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>health</code> - The updated health value to display.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateCompanionModeUI(java.lang.String)">
+<h3>updateCompanionModeUI</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateCompanionModeUI</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newMode)</span></div>
+<div class="block">updating the companion UI to include the mode</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>newMode</code> - - the mode sent by the CompanionActions trigger to be put on screen</dd>
 </dl>
 </section>
 </li>

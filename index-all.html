@@ -529,7 +529,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsLayer.html#COMPANION" class="member-name-link">COMPANION</a> - Static variable in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsLayer.html" title="class in com.csse3200.game.physics">PhysicsLayer</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/Companion/CompanionActions.html#COMPANION_ATTACK_MODE_SPEED" class="member-name-link">COMPANION_ATTACK_MODE_SPEED</a> - Static variable in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" title="class in com.csse3200.game.components.Companion">CompanionActions</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/GdxGame.ScreenType.html#COMPANION_DEATH" class="member-name-link">COMPANION_DEATH</a> - Enum constant in enum class com.csse3200.game.<a href="com/csse3200/game/GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/Companion/CompanionActions.html#COMPANION_MODE_ATTACK" class="member-name-link">COMPANION_MODE_ATTACK</a> - Static variable in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" title="class in com.csse3200.game.components.Companion">CompanionActions</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/Companion/CompanionActions.html#COMPANION_MODE_NORMAL" class="member-name-link">COMPANION_MODE_NORMAL</a> - Static variable in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" title="class in com.csse3200.game.components.Companion">CompanionActions</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/Companion/CompanionActions.html#COMPANION_NORMAL_MODE_SPEED" class="member-name-link">COMPANION_NORMAL_MODE_SPEED</a> - Static variable in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" title="class in com.csse3200.game.components.Companion">CompanionActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/Companion/CompanionActions.html" class="type-name-link" title="class in com.csse3200.game.components.Companion">CompanionActions</a> - Class in <a href="com/csse3200/game/components/Companion/package-summary.html">com.csse3200.game.components.Companion</a></dt>
 <dd>
@@ -584,6 +592,10 @@ loadScripts(document, 'script');</script>
 <div class="block">CompanionInventoryComponent handles all the inventory management for the companion.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/Companion/CompanionInventoryComponent.html#%3Cinit%3E()" class="member-name-link">CompanionInventoryComponent()</a> - Constructor for class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionInventoryComponent.html" title="class in com.csse3200.game.components.Companion">CompanionInventoryComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/Companion/CompanionActions.html#companionMode" class="member-name-link">companionMode</a> - Variable in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" title="class in com.csse3200.game.components.Companion">CompanionActions</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/Companion/CompanionStatsDisplay.html#companionModeLabel" class="member-name-link">companionModeLabel</a> - Variable in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionStatsDisplay.html" title="class in com.csse3200.game.components.Companion">CompanionStatsDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/Companion/CompanionStatsDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.Companion">CompanionStatsDisplay</a> - Class in <a href="com/csse3200/game/components/Companion/package-summary.html">com.csse3200.game.components.Companion</a></dt>
 <dd>
@@ -1892,6 +1904,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/GameArea.html#getCompanion()" class="member-name-link">getCompanion()</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/Companion/CompanionActions.html#getCompanionMode()" class="member-name-link">getCompanionMode()</a> - Method in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" title="class in com.csse3200.game.components.Companion">CompanionActions</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/Entity.html#getComponent(java.lang.Class)" class="member-name-link">getComponent(Class&lt;T&gt;)</a> - Method in class com.csse3200.game.entities.<a href="com/csse3200/game/entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></dt>
 <dd>
 <div class="block">Get a component of type T on the entity.</div>
@@ -2596,6 +2610,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/StructurePlacementService.placeStructureAtArgs.html#isCenterY()" class="member-name-link">isCenterY()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/StructurePlacementService.placeStructureAtArgs.html" title="class in com.csse3200.game.services">StructurePlacementService.placeStructureAtArgs</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/Companion/CompanionActions.html#isCompanionBeingMoved()" class="member-name-link">isCompanionBeingMoved()</a> - Method in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" title="class in com.csse3200.game.components.Companion">CompanionActions</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/CombatStatsComponent.html#isDead()" class="member-name-link">isDead()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/CombatStatsComponent.html" title="class in com.csse3200.game.components">CombatStatsComponent</a></dt>
 <dd>
 <div class="block">Returns true if the entity's health is 0 or less, indicating that it's dead; otherwise, returns false.</div>
@@ -3083,6 +3099,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
  processed</div>
 </dd>
+<dt><a href="com/csse3200/game/components/FollowComponent.html#moveEntityTowardFollowingEntity()" class="member-name-link">moveEntityTowardFollowingEntity()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/FollowComponent.html" title="class in com.csse3200.game.components">FollowComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/movement/MovementController.html" class="type-name-link" title="interface in com.csse3200.game.ai.movement">MovementController</a> - Interface in <a href="com/csse3200/game/ai/movement/package-summary.html">com.csse3200.game.ai.movement</a></dt>
 <dd>
 <div class="block">A movement controller moves something to a given a target.</div>
@@ -4022,6 +4040,14 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/areas/EarthGameArea.html#setCompanion(com.csse3200.game.entities.Entity)" class="member-name-link">setCompanion(Entity)</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/EarthGameArea.html" title="class in com.csse3200.game.areas">EarthGameArea</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/Companion/CompanionActions.html#setCompanionModeAttack()" class="member-name-link">setCompanionModeAttack()</a> - Method in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" title="class in com.csse3200.game.components.Companion">CompanionActions</a></dt>
+<dd>
+<div class="block">Set companion mode to attack</div>
+</dd>
+<dt><a href="com/csse3200/game/components/Companion/CompanionActions.html#setCompanionModeNormal()" class="member-name-link">setCompanionModeNormal()</a> - Method in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" title="class in com.csse3200.game.components.Companion">CompanionActions</a></dt>
+<dd>
+<div class="block">set the companion mode to normal</div>
+</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsUtils.html#setCustomCollider(com.csse3200.game.entities.Entity,float,float,float,float)" class="member-name-link">setCustomCollider(Entity, float, float, float, float)</a> - Static method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsUtils.html" title="class in com.csse3200.game.physics">PhysicsUtils</a></dt>
 <dd>
 <div class="block">Modifies the collider of an entity to be a rectangle of a specified size with the corner
@@ -4079,6 +4105,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/player/InventoryComponent.html#setEquipped(int)" class="member-name-link">setEquipped(int)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/InventoryComponent.html" title="class in com.csse3200.game.components.player">InventoryComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/FollowComponent.html#setFollowSpeed(float)" class="member-name-link">setFollowSpeed(float)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/FollowComponent.html" title="class in com.csse3200.game.components">FollowComponent</a></dt>
+<dd>
+<div class="block">Sets the entities follow speed to the given input</div>
+</dd>
 <dt><a href="com/csse3200/game/physics/components/ColliderComponent.html#setFriction(float)" class="member-name-link">setFriction(float)</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/ColliderComponent.html" title="class in com.csse3200.game.physics.components">ColliderComponent</a></dt>
 <dd>
 <div class="block">Set friction.</div>
@@ -5026,7 +5056,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/ExtractorRepairPartComponent.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ExtractorRepairPartComponent.html" title="class in com.csse3200.game.components">ExtractorRepairPartComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/FollowComponent.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/FollowComponent.html" title="class in com.csse3200.game.components">FollowComponent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Update the entity following the followEntity.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/FOVComponent.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/FOVComponent.html" title="class in com.csse3200.game.components">FOVComponent</a></dt>
 <dd>
 <div class="block">Updates the FOV component.</div>
@@ -5099,12 +5131,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Updates the companion's health UI.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/Companion/CompanionStatsDisplay.html#updateCompanionModeUI(java.lang.String)" class="member-name-link">updateCompanionModeUI(String)</a> - Method in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionStatsDisplay.html" title="class in com.csse3200.game.components.Companion">CompanionStatsDisplay</a></dt>
+<dd>
+<div class="block">updating the companion UI to include the mode</div>
+</dd>
 <dt><a href="com/csse3200/game/services/GameStateInteraction.html#updateExtractors(java.lang.String,int)" class="member-name-link">updateExtractors(String, int)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameStateInteraction.html" title="class in com.csse3200.game.services">GameStateInteraction</a></dt>
 <dd>
 <div class="block">Increases the specified extractor count by a given amount.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/Companion/CompanionActions.html#updateFollowPlayer()" class="member-name-link">updateFollowPlayer()</a> - Method in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" title="class in com.csse3200.game.components.Companion">CompanionActions</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/HealthBarComponent.html#updateHealth(int)" class="member-name-link">updateHealth(int)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/HealthBarComponent.html" title="class in com.csse3200.game.components">HealthBarComponent</a></dt>
 <dd>
 <div class="block">Updates the Wall's health on the ui.</div>

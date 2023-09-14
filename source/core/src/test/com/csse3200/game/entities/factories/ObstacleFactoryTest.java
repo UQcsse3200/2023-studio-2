@@ -57,7 +57,7 @@ public class ObstacleFactoryTest {
 
     @Test
     void createLevelOneTurretConfigTest() {
-        PlaceableEntity turret = ObstacleFactory.createCustomTurret(turretconfigs.GetTurretConfig(TurretType.levelOne));
+        PlaceableEntity turret = ObstacleFactory.createCustomTurret(turretconfigs.GetTurretConfig(TurretType.LEVEL_ONE));
         assertEquals(200, turret.getComponent(CombatStatsComponent.class).getHealth());
         assertEquals(2, turret.getComponent(CombatStatsComponent.class).getBaseAttack());
 
@@ -65,7 +65,7 @@ public class ObstacleFactoryTest {
 
     @Test
     void createLevelTwoTurretConfigTest() {
-        PlaceableEntity turret = ObstacleFactory.createCustomTurret(turretconfigs.GetTurretConfig(TurretType.levelTwo));
+        PlaceableEntity turret = ObstacleFactory.createCustomTurret(turretconfigs.GetTurretConfig(TurretType.LEVEL_TWO));
         assertEquals(500, turret.getComponent(CombatStatsComponent.class).getHealth());
         assertEquals(5, turret.getComponent(CombatStatsComponent.class).getBaseAttack());
     }

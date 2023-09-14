@@ -60,6 +60,7 @@ public class PlanetScreen extends ScreenAdapter {
     /** file paths of textures for screen to load. */
     private static final String[] planetTextures = {
             "images/heart.png",
+            "images/structure-icons/gate.png",
             "images/structure-icons/wall.png",
             "images/structure-icons/stone_wall.png",
             "images/structure-icons/turret.png",
@@ -68,7 +69,8 @@ public class PlanetScreen extends ScreenAdapter {
             "images/structures/dirt_wall.png",
             "images/structures/stone_wall.png",
             "images/structures/TurretOne.png",
-            "images/structures/TurretTwo.png"
+            "images/structures/TurretTwo.png",
+            "images/structures/heal_icon.png"
     };
 
     /**

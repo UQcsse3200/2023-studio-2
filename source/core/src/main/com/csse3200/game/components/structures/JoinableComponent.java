@@ -9,34 +9,24 @@ import com.csse3200.game.rendering.AtlasRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This component is used to change the texture and collision bounds of an entity
  * depending on its neighbours.
  */
 public class JoinableComponent extends AtlasRenderComponent implements Placeable {
-    private final Map<JoinDirection, Boolean> JoinedInDirectionMap = new HashMap<>() {
-        {
-            put(JoinDirection.UP, false);
-            put(JoinDirection.DOWN, false);
-            put(JoinDirection.LEFT, false);
-            put(JoinDirection.RIGHT, false);
-        }
-    };
+    private final Map<JoinDirection, Boolean> joinedInDirectionMap;
     private final JoinLayer layer;
     private final JoinableComponentShapes shapes;
-    private static final Map<JoinDirection, GridPoint2> DirectionMatrices = new HashMap<>() {
-        {
-            put(JoinDirection.UP, new GridPoint2(0,-2));
-            put(JoinDirection.DOWN, new GridPoint2(0,2));
-            put(JoinDirection.LEFT, new GridPoint2(2,0));
-            put(JoinDirection.RIGHT, new GridPoint2(-2,0));
-        }
-    };
+    private static final Map<JoinDirection, GridPoint2> DIRECTION_MATRICES =  new EnumMap<>(JoinDirection.class);
+
+    static {
+        DIRECTION_MATRICES.put(JoinDirection.UP, new GridPoint2(0,-2));
+        DIRECTION_MATRICES.put(JoinDirection.DOWN, new GridPoint2(0,2));
+        DIRECTION_MATRICES.put(JoinDirection.LEFT, new GridPoint2(2,0));
+        DIRECTION_MATRICES.put(JoinDirection.RIGHT, new GridPoint2(-2,0));
+    }
 
     /**
      * Helper function to check if the entity is joinable.
@@ -70,6 +60,15 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
 
         this.layer = layer;
         this.shapes = shapes;
+
+        joinedInDirectionMap = new EnumMap<>(JoinDirection.class) {
+            {
+                put(JoinDirection.UP, false);
+                put(JoinDirection.DOWN, false);
+                put(JoinDirection.LEFT, false);
+                put(JoinDirection.RIGHT, false);
+            }
+        };
     }
 
 
@@ -80,7 +79,7 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
      * @param isJoined - whether the entity is joined in the given direction.
      */
     public void updateJoin(JoinDirection direction, boolean isJoined) {
-        JoinedInDirectionMap.put(direction, isJoined);
+        joinedInDirectionMap.put(direction, isJoined);
         updateAtlasTexture();
         updateShape();
     }
@@ -110,19 +109,19 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
     private String deriveCardinalityId() {
         List<String> regions = new ArrayList<>();
 
-        if (JoinedInDirectionMap.get(JoinDirection.LEFT)) {
+        if (Boolean.TRUE.equals(joinedInDirectionMap.get(JoinDirection.LEFT))) {
             regions.add("left");
         }
 
-        if (JoinedInDirectionMap.get(JoinDirection.UP)) {
+        if (Boolean.TRUE.equals(joinedInDirectionMap.get(JoinDirection.UP))) {
             regions.add("up");
         }
 
-        if (JoinedInDirectionMap.get(JoinDirection.RIGHT)) {
+        if (Boolean.TRUE.equals(joinedInDirectionMap.get(JoinDirection.RIGHT))) {
             regions.add("right");
         }
 
-        if (JoinedInDirectionMap.get(JoinDirection.DOWN)) {
+        if (Boolean.TRUE.equals(joinedInDirectionMap.get(JoinDirection.DOWN))) {
             regions.add("down");
         }
 
@@ -157,7 +156,7 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
     private void notifyNeighbour(JoinDirection direction, GridPoint2 centrePosition, boolean isJoined) {
         StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
 
-        GridPoint2 position = centrePosition.cpy().add(DirectionMatrices.get(direction));
+        GridPoint2 position = centrePosition.cpy().add(DIRECTION_MATRICES.get(direction));
 
         Entity neighbour = structurePlacementService.getStructureAt(position);
 
@@ -198,6 +197,9 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
         updateTextureAtlas(atlas, deriveCardinalityId());
     }
 
+    /**
+     * Determines what connections the structure has, and notifies neighbouring structures of a change.
+     */
     @Override
     public void placed() {
         // finds current position.
@@ -215,10 +217,10 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
         Entity right = structurePlacementService.getStructureAt(centrePosition.cpy().add(2,0));
 
         // adds whether there is a wall in each direction to the JoinDirection array.
-        JoinedInDirectionMap.put(JoinDirection.UP, isEntityJoinable(up));
-        JoinedInDirectionMap.put(JoinDirection.DOWN, isEntityJoinable(down));
-        JoinedInDirectionMap.put(JoinDirection.LEFT, isEntityJoinable(left));
-        JoinedInDirectionMap.put(JoinDirection.RIGHT, isEntityJoinable(right));
+        joinedInDirectionMap.put(JoinDirection.UP, isEntityJoinable(up));
+        joinedInDirectionMap.put(JoinDirection.DOWN, isEntityJoinable(down));
+        joinedInDirectionMap.put(JoinDirection.LEFT, isEntityJoinable(left));
+        joinedInDirectionMap.put(JoinDirection.RIGHT, isEntityJoinable(right));
 
         updateAtlasTexture();
         updateShape();
@@ -226,6 +228,9 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
         notifyNeighbours(true);
     }
 
+    /**
+     * Notifies neighbouring structures that the structure is being removed.
+     */
     @Override
     public void willRemove() {
         notifyNeighbours(false);

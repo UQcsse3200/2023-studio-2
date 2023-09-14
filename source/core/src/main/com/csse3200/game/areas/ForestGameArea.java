@@ -170,7 +170,6 @@ public class ForestGameArea extends GameArea {
     spawnBoss();
     spawnAsteroids();
     player = spawnPlayer();
-    spawnTurret();
     spawnBotanist();
 
     playMusic();
@@ -337,13 +336,6 @@ public class ForestGameArea extends GameArea {
     Entity boss = EnemyFactory.createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
     //boss.addComponent(new DialogComponent(dialogueBox));
-  }
-
-  public void spawnTurret() {
-    Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
-    Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
-    spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
-    spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
   }
 
   private void playMusic() {

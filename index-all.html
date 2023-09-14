@@ -457,6 +457,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/Companion/package-summary.html">com.csse3200.game.components.Companion</a> - package com.csse3200.game.components.Companion</dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/controls/package-summary.html">com.csse3200.game.components.controls</a> - package com.csse3200.game.components.controls</dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/gamearea/package-summary.html">com.csse3200.game.components.gamearea</a> - package com.csse3200.game.components.gamearea</dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/joinable/package-summary.html">com.csse3200.game.components.joinable</a> - package com.csse3200.game.components.joinable</dt>
@@ -661,6 +663,26 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/utils/SortedIntMap.html#containsKey(int)" class="member-name-link">containsKey(int)</a> - Method in class com.csse3200.game.utils.<a href="com/csse3200/game/utils/SortedIntMap.html" title="class in com.csse3200.game.utils">SortedIntMap</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/GdxGame.ScreenType.html#CONTROL_SCREEN" class="member-name-link">CONTROL_SCREEN</a> - Enum constant in enum class com.csse3200.game.<a href="com/csse3200/game/GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/ControlsScreen.html" class="type-name-link" title="class in com.csse3200.game.screens">ControlsScreen</a> - Class in <a href="com/csse3200/game/screens/package-summary.html">com.csse3200.game.screens</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/ControlsScreen.html#%3Cinit%3E(com.csse3200.game.GdxGame)" class="member-name-link">ControlsScreen(GdxGame)</a> - Constructor for class com.csse3200.game.screens.<a href="com/csse3200/game/screens/ControlsScreen.html" title="class in com.csse3200.game.screens">ControlsScreen</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/controls/ControlsScreenActions.html" class="type-name-link" title="class in com.csse3200.game.components.controls">ControlsScreenActions</a> - Class in <a href="com/csse3200/game/components/controls/package-summary.html">com.csse3200.game.components.controls</a></dt>
+<dd>
+<div class="block">A component that defines actions and event listeners for the Controls Screen.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/controls/ControlsScreenActions.html#%3Cinit%3E(com.csse3200.game.GdxGame)" class="member-name-link">ControlsScreenActions(GdxGame)</a> - Constructor for class com.csse3200.game.components.controls.<a href="com/csse3200/game/components/controls/ControlsScreenActions.html" title="class in com.csse3200.game.components.controls">ControlsScreenActions</a></dt>
+<dd>
+<div class="block">Creates a new instance of ControlsScreenActions.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/controls/ControlsScreenDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.controls">ControlsScreenDisplay</a> - Class in <a href="com/csse3200/game/components/controls/package-summary.html">com.csse3200.game.components.controls</a></dt>
+<dd>
+<div class="block">A UI component responsible for displaying the controls screen's user interface.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/controls/ControlsScreenDisplay.html#%3Cinit%3E()" class="member-name-link">ControlsScreenDisplay()</a> - Constructor for class com.csse3200.game.components.controls.<a href="com/csse3200/game/components/controls/ControlsScreenDisplay.html" title="class in com.csse3200.game.components.controls">ControlsScreenDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/structures/ToolConfig.html#cost" class="member-name-link">cost</a> - Variable in class com.csse3200.game.components.structures.<a href="com/csse3200/game/components/structures/ToolConfig.html" title="class in com.csse3200.game.components.structures">ToolConfig</a></dt>
 <dd>
 <div class="block">A map containing the tools cost for each resource</div>
@@ -727,6 +749,12 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Called when the entity is created and registered.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/controls/ControlsScreenActions.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.controls.<a href="com/csse3200/game/components/controls/ControlsScreenActions.html" title="class in com.csse3200.game.components.controls">ControlsScreenActions</a></dt>
+<dd>
+<div class="block">Called when this component is created.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/controls/ControlsScreenDisplay.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.controls.<a href="com/csse3200/game/components/controls/ControlsScreenDisplay.html" title="class in com.csse3200.game.components.controls">ControlsScreenDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/DeathComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/DeathComponent.html" title="class in com.csse3200.game.components">DeathComponent</a></dt>
 <dd>
 <div class="block">Creates a new listener on an entity to wait for kill condition</div>
@@ -1316,6 +1344,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Called when the component is disposed.</div>
 </dd>
+<dt><a href="com/csse3200/game/components/controls/ControlsScreenDisplay.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.controls.<a href="com/csse3200/game/components/controls/ControlsScreenDisplay.html" title="class in com.csse3200.game.components.controls">ControlsScreenDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ExtractorRepairPartComponent.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ExtractorRepairPartComponent.html" title="class in com.csse3200.game.components">ExtractorRepairPartComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/gamearea/GameAreaDisplay.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.components.gamearea.<a href="com/csse3200/game/components/gamearea/GameAreaDisplay.html" title="class in com.csse3200.game.components.gamearea">GameAreaDisplay</a></dt>
@@ -1382,6 +1412,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/rendering/RenderService.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderService.html" title="class in com.csse3200.game.rendering">RenderService</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/CompanionDeathScreen.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/CompanionDeathScreen.html" title="class in com.csse3200.game.screens">CompanionDeathScreen</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/ControlsScreen.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/ControlsScreen.html" title="class in com.csse3200.game.screens">ControlsScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/ExtractorMiniGameScreen.html#dispose()" class="member-name-link">dispose()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/ExtractorMiniGameScreen.html" title="class in com.csse3200.game.screens">ExtractorMiniGameScreen</a></dt>
 <dd>&nbsp;</dd>
@@ -1465,6 +1497,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/Companion/CompanionDeathScreenDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionDeathScreenDisplay.html" title="class in com.csse3200.game.components.Companion">CompanionDeathScreenDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/Companion/CompanionStatsDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionStatsDisplay.html" title="class in com.csse3200.game.components.Companion">CompanionStatsDisplay</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/controls/ControlsScreenDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.controls.<a href="com/csse3200/game/components/controls/ControlsScreenDisplay.html" title="class in com.csse3200.game.components.controls">ControlsScreenDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/gamearea/GameAreaDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.gamearea.<a href="com/csse3200/game/components/gamearea/GameAreaDisplay.html" title="class in com.csse3200.game.components.gamearea">GameAreaDisplay</a></dt>
 <dd>&nbsp;</dd>
@@ -3101,6 +3135,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Blocking call to load all assets.</div>
 </dd>
+<dt><a href="com/csse3200/game/screens/ControlsScreen.html#loadAssets()" class="member-name-link">loadAssets()</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/ControlsScreen.html" title="class in com.csse3200.game.screens">ControlsScreen</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ResourceService.html#loadDynamicAssets(java.lang.String%5B%5D)" class="member-name-link">loadDynamicAssets(String[])</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ResourceService.html" title="class in com.csse3200.game.services">ResourceService</a></dt>
 <dd>
 <div class="block">Loads multiple assets of different types into the asset manager.</div>
@@ -3951,6 +3987,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/CompanionDeathScreen.html#render(float)" class="member-name-link">render(float)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/CompanionDeathScreen.html" title="class in com.csse3200.game.screens">CompanionDeathScreen</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/ControlsScreen.html#render(float)" class="member-name-link">render(float)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/ControlsScreen.html" title="class in com.csse3200.game.screens">ControlsScreen</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/ExtractorMiniGameScreen.html#render(float)" class="member-name-link">render(float)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/ExtractorMiniGameScreen.html" title="class in com.csse3200.game.screens">ExtractorMiniGameScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/MainGameScreen.html#render(float)" class="member-name-link">render(float)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MainGameScreen.html" title="class in com.csse3200.game.screens">MainGameScreen</a></dt>
@@ -4002,6 +4040,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/rendering/RenderComponent.html#%3Cinit%3E()" class="member-name-link">RenderComponent()</a> - Constructor for class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/ControlsScreen.html#renderer" class="member-name-link">renderer</a> - Variable in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/ControlsScreen.html" title="class in com.csse3200.game.screens">ControlsScreen</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/Renderer.html" class="type-name-link" title="class in com.csse3200.game.rendering">Renderer</a> - Class in <a href="com/csse3200/game/rendering/package-summary.html">com.csse3200.game.rendering</a></dt>
 <dd>
 <div class="block">Core rendering system for the game.</div>
@@ -4047,6 +4087,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Resize the renderer to a new screen size.</div>
 </dd>
 <dt><a href="com/csse3200/game/screens/CompanionDeathScreen.html#resize(int,int)" class="member-name-link">resize(int, int)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/CompanionDeathScreen.html" title="class in com.csse3200.game.screens">CompanionDeathScreen</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/ControlsScreen.html#resize(int,int)" class="member-name-link">resize(int, int)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/ControlsScreen.html" title="class in com.csse3200.game.screens">ControlsScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/screens/MainGameScreen.html#resize(int,int)" class="member-name-link">resize(int, int)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/MainGameScreen.html" title="class in com.csse3200.game.screens">MainGameScreen</a></dt>
 <dd>&nbsp;</dd>

@@ -64,8 +64,6 @@ public class ExtractorMinigameWindow extends Window {
         setHeight((float) (stage.getHeight()*0.65));
         setPosition(stage.getWidth()/2 - getWidth()/2 * getScaleX(), stage.getHeight()/2 - getHeight()/2 * getScaleY());
 
-
-
         inputOverrideComponent = new InputOverrideComponent();
         ServiceLocator.getInputService().register(inputOverrideComponent);
 
@@ -162,8 +160,7 @@ public class ExtractorMinigameWindow extends Window {
         }
         add(imageTable).fill();
 
-        Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
-
+        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
         TextButton button = new TextButton("Complete Minigame", skin);
         TextButton button2 = new TextButton("Exit Minigame", skin);
         button.addListener(new ChangeListener() {

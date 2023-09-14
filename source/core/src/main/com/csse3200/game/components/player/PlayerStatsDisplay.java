@@ -74,7 +74,7 @@ public class PlayerStatsDisplay extends UIComponent {
 
     // Health text
     CharSequence healthText = String.format("Health: %d", health);
-    healthLabel = new Label(healthText, skin, "small");
+    healthLabel = new Label(healthText, skin, "large");
 
     // Dodge Text for cool down
     int dodge = entity.getComponent(KeyboardPlayerInputComponent.class).triggerDodgeEvent();

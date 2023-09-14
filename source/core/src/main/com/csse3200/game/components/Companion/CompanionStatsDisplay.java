@@ -82,13 +82,11 @@ public class CompanionStatsDisplay extends UIComponent {
         //placing the companionStatisticsUI/UI on a certain portion of the screen!
         companionStatisticsUI.padTop(85f).padRight(5f);
 
-
         // ADD A COMPANION UI HEADER
         CharSequence companionUIHeader = "Companion";
         companionUIHeaderLabel = new Label(companionUIHeader, skin, "title");
         companionStatisticsUI.add(companionUIHeaderLabel);
         companionStatisticsUI.row();
-
 
         companionStatisticsUI.padTop(100f).padRight(5f);
 

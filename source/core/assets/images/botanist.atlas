@@ -1,61 +1,138 @@
-botanist.png
-size: 2000, 250
+oldman_down_1.png
+size: 160, 16
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest, Nearest
 repeat: none
-row-1-column-1
+idle_left
   rotate: false
   xy: 0, 0
-  size: 250, 250
-  orig: 250, 250
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
-row-1-column-2
+idle_right
+   rotate: false
+   xy: 80, 0
+   size: 16, 16
+   orig: 16, 16
+   offset: 0, 0
+   index: -1
+wanderStart_left
   rotate: false
-  xy: 250, 0
-  size: 250, 250
-  orig: 250, 250
+  xy: 16, 0
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
-row-1-column-3
+wanderStart_left
   rotate: false
-  xy: 500, 0
-  size: 250, 250
-  orig: 250, 250
+  xy: 32, 0
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
-row-1-column-4
+wanderStart_left
   rotate: false
-  xy: 750, 0
-  size: 250, 250
-  orig: 250, 250
+  xy: 48, 0
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
-row-1-column-5
+wanderStart_left
   rotate: false
-  xy: 1000, 0
-  size: 250, 250
-  orig: 250, 250
+  xy: 64, 0
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
-row-1-column-6
+wanderStart_right
   rotate: false
-  xy: 1250, 0
-  size: 250, 250
-  orig: 250, 250
+  xy: 96, 0
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
-row-1-column-7
+wanderStart_right
   rotate: false
-  xy: 1500, 0
-  size: 250, 250
-  orig: 250, 250
+  xy: 112, 0
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
-row-1-column-8
+wanderStart_right
   rotate: false
-  xy: 1750, 0
-  size: 250, 250
-  orig: 250, 250
+  xy: 128, 0
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
+wanderStart_right
+  rotate: false
+  xy: 144, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+run_left
+  rotate: false
+  xy: 16, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+run_left
+  rotate: false
+  xy: 32, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+run_left
+  rotate: false
+  xy: 48, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+run_left
+  rotate: false
+  xy: 64, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+run_right
+  rotate: false
+  xy: 96, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+run_right
+  rotate: false
+  xy: 112, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+run_right
+  rotate: false
+  xy: 128, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+run_right
+  rotate: false
+  xy: 144, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+default
+   rotate: false
+   xy: 80, 0
+   size: 16, 16
+   orig: 16, 16
+   offset: 0, 0
+   index: -1

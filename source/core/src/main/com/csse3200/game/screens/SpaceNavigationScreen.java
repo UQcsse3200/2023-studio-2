@@ -76,7 +76,7 @@ public class SpaceNavigationScreen implements Screen {
         stage.addActor(animatedBackground);
 
         // Create Back button
-        skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
+        skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
 
         TextButton button = new TextButton("Main Menu", skin);
         button.setPosition(Gdx.graphics.getWidth() - (button.getWidth() + 20),

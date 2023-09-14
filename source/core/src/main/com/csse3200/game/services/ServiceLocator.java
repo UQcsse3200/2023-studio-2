@@ -48,7 +48,6 @@ public class ServiceLocator {
     return physicsService;
   }
 
-
   public static GameTime getTimeSource() {
     return timeSource;
   }

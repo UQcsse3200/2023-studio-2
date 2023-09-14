@@ -28,33 +28,22 @@ public class StoryScreen extends ScreenAdapter {
     private final GdxGame game;
     private final Renderer renderer;
     private static final String[] storyTextures = {
-            "images/Story_1.png",
-            "images/Story_2.png",
-            "images/Story_3.png",
-            "images/Story_4.png",
-            "images/Story_5.png",
-            "images/Story_6.png"
+            "images/P1_B.png",
+            "images/P2_B.png",
+            "images/P3_B.png",
+            "images/P4_B.png",
+            "images/P5_B.png",
+            "images/P6_B.png"
     };
 
 
     public StoryScreen(GdxGame game) {
         this.game = game;
 
-        logger.debug("Initialising story screen services");
-        ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
-
-        ServiceLocator.registerEntityService(new EntityService());
-        ServiceLocator.registerRenderService(new RenderService());
-        //ServiceLocator.registerRenderService(new RenderService());
-
-
-
         renderer = RenderFactory.createRenderer();
 
         loadAssets();
         createUI();
-
     }
 
     @Override
@@ -75,12 +64,6 @@ public class StoryScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
-
-        ServiceLocator.getEntityService().dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getResourceService().dispose();
-
-        ServiceLocator.clear();
     }
 
     private void loadAssets() {

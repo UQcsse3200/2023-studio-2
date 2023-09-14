@@ -131,7 +131,6 @@ public class EarthGameArea extends GameArea {
             "images/f_button.png",
             "images/ExtractorAnimation.png",
             "images/player/player.png"
-
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -155,10 +154,7 @@ public class EarthGameArea extends GameArea {
             "images/companionSS.atlas",
             "images/enemy/bull.atlas",
             "images/enemy/Night.atlas",
-            "images/ExtractorAnimation.atlas",
-            "images/botanist.atlas"
-
-
+            "images/ExtractorAnimation.atlas"
     };
 
     private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
@@ -264,7 +260,6 @@ public class EarthGameArea extends GameArea {
         // Arguments: entity, position, isCentered, isLocal
         spawnEntityAt(botanist, spawnPosition, true, false);
     }
-
 
     private void spawnUpgradeBench() {
         // spawns next to ship

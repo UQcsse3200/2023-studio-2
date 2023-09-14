@@ -1,15 +1,10 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.TouchAttackComponent;
-import com.csse3200.game.components.npc.BotanistAnimationController;
-import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
@@ -22,9 +17,7 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 
@@ -58,57 +51,78 @@ public class NPCFactory {
     this.assetManager = assetManager;
   }
 
+//  public static Entity createGhost(Entity target) {
+//
+//    Entity ghost = createBaseNPC(target);
+//    BaseEntityConfig config = configs.ghost;
+//
+//    AnimationRenderComponent animator =
+//        new AnimationRenderComponent(
+//            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
+//    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+//
+//    ghost
+//        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
+//        .addComponent(animator)
+//        .addComponent(new GhostAnimationController())
+//        .addComponent(new DialogComponent(dialogueBox));
+//    ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
+//
+//    return ghost;
+//  }
+
+
+  //TODO
+//  public static Entity createBotanist() {
+//    AnimationRenderComponent animator = new AnimationRenderComponent(
+//            ServiceLocator.getResourceService().getAsset("images/botanist.atlas", TextureAtlas.class));
+//    animator.addAnimation("idle_left", Float.MAX_VALUE, Animation.PlayMode.LOOP);
+//    animator.addAnimation("idle_right", Float.MAX_VALUE, Animation.PlayMode.LOOP);
+//    animator.addAnimation("wanderStart_left", 0.4f, Animation.PlayMode.LOOP_REVERSED);
+//    animator.addAnimation("wanderStart_right", 0.4f, Animation.PlayMode.LOOP);
+////    animator.addAnimation("runLeft", 0.2f, Animation.PlayMode.LOOP_REVERSED);
+////    animator.addAnimation("runRight", 0.2f, Animation.PlayMode.LOOP);
+//
+//    AITaskComponent aiTaskComponent = new AITaskComponent()
+//            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+//
+//    Entity botanist = new Entity()
+//            .addComponent(new PhysicsComponent())
+//            .addComponent(new PhysicsMovementComponent())
+//            .addComponent(new ColliderComponent())
+//            .addComponent(aiTaskComponent)
+//            .addComponent(animator)
+//            .addComponent(new BotanistAnimationController());
+//
+//    PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.4f);
+//    return botanist;
+//  }
+  //TODO: REMOVE - LEGACY
   /**
    * Creates a generic Botanist NPC entity.
    * @return The created Botanist NPC entity.
    */
-//  public static Entity createBotanist() {
-//    return createBotanist(configs.botanist);
-//  }
+  public static Entity createBotanist() {
+    return createBotanist(configs.botanist);
+  }
 
   /**
    * Creates a Botanist NPC to match the config file
    * @return The created Botanist NPC entity.
    */
-  public static Entity createBotanist() {
-
-    AITaskComponent aiComponent = new AITaskComponent();
-    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
-
-    AnimationRenderComponent animator =
-            new AnimationRenderComponent(
-                    new TextureAtlas("images/botanist.atlas"));
-    animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-4", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-5", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.NORMAL);
-    animator.addAnimation("row-1-column-6", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-7", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-8", 0.01f, Animation.PlayMode.LOOP);
-
+  public static Entity createBotanist(BotanistConfig config) {
     Entity botanist =
             new Entity()
-                    .addComponent(animator)
-                    .addComponent(new BotanistAnimationController())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                    .addComponent(new DialogComponent(dialogueBox))
+                    .addComponent(new TextureRenderComponent(config.spritePath))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new PhysicsMovementComponent())
-                    .addComponent(new InteractionControllerComponent(true))
-                    .addComponent(aiComponent);
+                    .addComponent(new DialogComponent(dialogueBox))
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE));
 
-    NPCConfigs configs =
-            FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
-    botanist.addComponent(new InteractableComponent(entity -> {
-      botanist.getComponent(DialogComponent.class).showdialogue("\"Greetings, I am the botanist!\"  \n" +
-              "My name is Adam\nI'm here to help you\nunderstand the planet's flora and fauna", "");
-    },7f));
-
-    // botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    // botanist.getComponent(TextureRenderComponent.class).scaleEntity();
-    botanist.scaleHeight(6.1f);
-    //PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.7f);
+    botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    botanist.getComponent(TextureRenderComponent.class).scaleEntity();
+    botanist.scaleHeight(1.1f);
+    PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.7f);
     return botanist;
   }
 

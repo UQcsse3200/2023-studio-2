@@ -32,8 +32,8 @@ public class UpgradeTreeTest {
         mock(ServiceLocator.class);
         ServiceLocator.registerGameStateObserverService(gameStateObserver);
         defaultWeapons.add(WeaponType.WOODHAMMER);
-        defaultWeapons.add(WeaponType.RANGED_SLINGSHOT);
-        defaultWeapons.add(WeaponType.MELEE_WRENCH);
+        defaultWeapons.add(WeaponType.RANGED_BOOMERANG);
+        defaultWeapons.add(WeaponType.MELEE_KATANA);
     }
 
     @Test
@@ -46,15 +46,18 @@ public class UpgradeTreeTest {
         // Ensure the defaults are true and nonUnlocks are false
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER));
         assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STEELHAMMER));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_WRENCH));
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_SLINGSHOT));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA));
+        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG));
     }
 
     @Test
     public void testDefaultWeapons() {
         // ensure the tree contains only the default weapons
-        assertEquals(defaultWeapons, upgradeTree.getUnlockedWeapons());
+        assertEquals(3, upgradeTree.getUnlockedWeapons().size());
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG));
     }
 
     @Test
@@ -77,16 +80,12 @@ public class UpgradeTreeTest {
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STEELHAMMER));
 
         // Check ranged wrench unlocks correctly
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG));
-        upgradeTree.unlockWeapon(WeaponType.RANGED_BOOMERANG);
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG));
+        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING));
+        upgradeTree.unlockWeapon(WeaponType.RANGED_HOMING);
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING));
 
-        // Ensure the unlocked weapons is the same as the current unlocked weapons
-        ArrayList<WeaponType> dummy = new ArrayList<WeaponType>(
-                Arrays.asList(
-                        WeaponType.WOODHAMMER, WeaponType.RANGED_SLINGSHOT, WeaponType.MELEE_WRENCH,
-                        WeaponType.STONEHAMMER, WeaponType.STEELHAMMER, WeaponType.RANGED_BOOMERANG));
-        assertEquals(dummy, upgradeTree.getUnlockedWeapons());
+        // Ensure there are now 6 weapons in total unlocked, including default weapons
+        assertEquals(6, upgradeTree.getUnlockedWeapons().size());
     }
 
     @Test

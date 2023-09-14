@@ -5,6 +5,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.ExtractorMiniGameArea;
+import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.areas.mapConfig.ResourceCondition;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.SpawnerComponent;
@@ -14,10 +19,16 @@ import com.csse3200.game.components.structures.ExtractorAnimationController;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.input.ExtinguisherInputComponent;
+import com.csse3200.game.input.FireInputComponent;
+import com.csse3200.game.input.HoleInputComponent;
+import com.csse3200.game.input.SpannerInputComponent;
+
 import com.csse3200.game.entities.configs.ExtractorConfig;
 import com.csse3200.game.entities.configs.ShipConfig;
 import com.csse3200.game.entities.configs.UpgradeBenchConfig;
 import com.csse3200.game.entities.PlaceableEntity;
+
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
@@ -54,8 +65,7 @@ public class StructureFactory {
             FileLoader.readClass(UpgradeBenchConfig.class, "configs/upgradeBench.json");
     public static final ShipConfig defaultShip =
             FileLoader.readClass(ShipConfig.class, "configs/ship.json");
-    public static final ExtractorConfig defaultExtractor =
-            FileLoader.readClass(ExtractorConfig.class, "configs/extractor.json");
+
 
     /**
      * Creates an extractor entity
@@ -99,6 +109,66 @@ public class StructureFactory {
         return extractor;
     }
 
+    //HEAD
+    public static Entity createExtractorRepair() {
+        Entity extractorRepair = new Entity()
+                //.addComponent(new TextureRenderComponent("images/elixir_collector.png")); //This image removed
+                .addComponent(new TextureRenderComponent("images/extractor.png"));
+        extractorRepair.setScale(2.2f, 2.6f);
+        return extractorRepair;
+    }
+
+    public static Entity createExtinguisher(TerrainComponent terrain, ExtractorMiniGameArea area) {
+        Entity extinguisher = new Entity()
+                .addComponent(new TextureRenderComponent("images/extinguisher.png"));
+        ExtinguisherInputComponent extinguisherComponent = new ExtinguisherInputComponent(terrain, area);
+        ServiceLocator.getInputService().register(extinguisherComponent);
+        extinguisher.addComponent(extinguisherComponent);
+        extinguisher.setScale(2f, 2f);
+        return extinguisher;
+    }
+
+    public static Entity createSpanner(TerrainComponent terrain, ExtractorMiniGameArea area) {
+        Entity spanner = new Entity()
+                .addComponent(new TextureRenderComponent("images/spanner.png"));
+        SpannerInputComponent spannerComponent = new SpannerInputComponent(terrain, area);
+        ServiceLocator.getInputService().register(spannerComponent);
+        spanner.addComponent(spannerComponent);
+        spanner.setScale(2f, 2f);
+        return spanner;
+    }
+
+    public static Entity createExtractorFirePart(TerrainComponent terrain, ExtractorMiniGameArea area) {
+        Entity extractorFirePart = new Entity()
+                .addComponent(new TextureRenderComponent("images/fire.png"));
+        FireInputComponent fireComponent = new FireInputComponent(terrain, area);
+        ServiceLocator.getInputService().register(fireComponent);
+
+        extractorFirePart.addComponent(fireComponent);
+
+        extractorFirePart.setScale(1.2f, 1.4f);
+
+        return extractorFirePart;
+    }
+
+    public static Entity createExtractorHolePart(TerrainComponent terrain, ExtractorMiniGameArea area) {
+        Entity extractorHolePart = new Entity()
+                .addComponent(new TextureRenderComponent("images/Hole.png"));
+        HoleInputComponent holeComponent = new HoleInputComponent(terrain, area);
+        ServiceLocator.getInputService().register(holeComponent);
+
+        extractorHolePart.addComponent(holeComponent);
+
+        extractorHolePart.setScale(1.4f, 1.6f);
+        return extractorHolePart;
+    }
+
+    public static Entity createExtractorBang() {
+        Entity extractorBang = new Entity().addComponent(new TextureRenderComponent("images/bang.png"));
+        extractorBang.setScale(2.2f, 2.4f);
+        return extractorBang;
+    }
+
     //TODO: REMOVE - LEGACY
     /**
      * Creates an extractor entity
@@ -111,6 +181,7 @@ public class StructureFactory {
      * @param tickSize the amount of the resource produced at each tick
      * @return a new extractor Entity
      */
+
     public static PlaceableEntity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         ExtractorConfig extractorConfig = new ExtractorConfig();
         extractorConfig.health = health;
@@ -120,6 +191,7 @@ public class StructureFactory {
         return createExtractor(extractorConfig);
     }
 
+
     public static Entity createExtractorRepairPart() {
         Entity extractorRepairPart = new Entity()
                 .addComponent(new TextureRenderComponent("images/fire.png"))
@@ -127,6 +199,8 @@ public class StructureFactory {
         extractorRepairPart.setScale(1.8f, 2f);
         return extractorRepairPart;
     }
+
+
 
     private static boolean checkWinCondition(List<ResourceCondition> requirements) {
         if (requirements == null) {
@@ -145,6 +219,7 @@ public class StructureFactory {
         return true;
     }
 
+
     //TODO: REMOVE - LEGACY
     /**
      * Creates a ship entity that uses the default package
@@ -152,6 +227,8 @@ public class StructureFactory {
     public static Entity createShip(GdxGame game, List<ResourceCondition> requirements) {
         return createShip(game, requirements, defaultShip);
     }
+
+    //CONFLICT HERE
 
     /**
      * Creates a ship entity that matches the config file

@@ -68,6 +68,10 @@ public class WeaponControllerComponent extends Component {
      */
     @Override
     public void update() {
+        if (--this.remainingDuration <= 0) {
+            this.despawn();
+            return;
+        }
         //switch statement to define weapon movement based on type (a projectile
         Vector2 movement = switch (this.weaponType) {
             case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING, RANGED_BOOMERANG -> update_swing();
@@ -82,7 +86,7 @@ public class WeaponControllerComponent extends Component {
         //Update position and rotation of projectile
         entity.setPosition(new Vector2(position.x + movement.x, position.y + movement.y));
         entity.setRotation(this.currentRotation - this.imageRotationOffset);
-        if (--this.remainingDuration <= 0) {this.despawn();}
+
     }
 
 

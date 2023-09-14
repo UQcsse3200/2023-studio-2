@@ -191,8 +191,8 @@ public class EarthGameArea extends GameArea {
         spawnUpgradeBench();
         spawnShip();
         spawnPlatform();
-        player = spawnPlayer();
-        companion = spawnCompanion(player);
+        this.player = spawnPlayer();
+        this.companion = spawnCompanion(player);
         /*spawnTurret();*/
         spawnEnemies();
         spawnBoss();

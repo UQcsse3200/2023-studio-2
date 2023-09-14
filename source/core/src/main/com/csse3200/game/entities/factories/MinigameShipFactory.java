@@ -34,7 +34,6 @@ public class MinigameShipFactory {
     private static final ShipConfig stats = FileLoader.readClass(ShipConfig.class, "configs/ship.json");
     /**
      * Creates a new minigame ship to match the config file
-     * @param config Configuration file to match ship to
      * @return Created minigame ship
      */
     public static Entity createMinigameShip() {

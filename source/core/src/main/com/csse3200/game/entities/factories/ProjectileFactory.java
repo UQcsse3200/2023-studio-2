@@ -55,6 +55,7 @@ public class ProjectileFactory {
         animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("explode",0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("stand",0.3f, Animation.PlayMode.LOOP);
 
 
         enemy
@@ -64,6 +65,7 @@ public class ProjectileFactory {
                 .addComponent(aiComponent);
 
         enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
+
 
         return enemy;
     }
@@ -87,10 +89,12 @@ public class ProjectileFactory {
      */
     public static Entity createBaseBullet() {
         // Makes bullet entity with physical interaction components
+        PhysicsMovementComponent movementComponent = new PhysicsMovementComponent();
+        movementComponent.changeMaxSpeed(new Vector2(2f, 2f));
         Entity bullet =
                 new Entity()
                         .addComponent(new PhysicsComponent())
-                        .addComponent(new PhysicsMovementComponent())
+                        .addComponent(movementComponent)
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                         .addComponent(new ProjectileAttackComponent((short) (

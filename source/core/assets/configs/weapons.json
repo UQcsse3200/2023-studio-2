@@ -32,7 +32,7 @@
     "textureAtlas": "images/weapons/rocket.atlas",
     "imageScale" : 1.2,
     "animationType" : 8,
-    "imagePath" : "images/weapons/rocketImage.png"
+    "imagePath" : "images/weapons/rocket_image.png"
   },
 
   "MELEE_WRENCH": {
@@ -71,7 +71,7 @@
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 0.6,
     "animationType" : 4,
-    "imagePath" : "images/weapons/beeSting.png"
+    "imagePath" : "images/weapons/bee_sting.png"
   },
 
   "STICK": {

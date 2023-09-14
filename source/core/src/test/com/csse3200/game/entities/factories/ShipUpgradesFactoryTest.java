@@ -58,3 +58,5 @@ public class ShipUpgradesFactoryTest {
         assertEquals(type, ShipUpgradesType.HEALTH_UPGRADE);
     }
 
+}
+

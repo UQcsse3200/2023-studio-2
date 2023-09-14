@@ -99,7 +99,7 @@ private static boolean companionalive = true;
     logger.debug("Initialising main game screen entities");
     terrainFactory = new TerrainFactory(renderer.getCamera());
 
-    gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
+    gameArea = new MapGameArea("levels/earth/main-area", terrainFactory, game);
     gameArea.create();
 
     player = ((EarthGameArea) gameArea).getPlayer();

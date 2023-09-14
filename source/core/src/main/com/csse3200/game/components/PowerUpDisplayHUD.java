@@ -75,7 +75,7 @@ public class PowerUpDisplayHUD extends UIComponent {
             // timer task on applyEffect
             table.add(SpeedUpImage).size(powerUpLength).pad(5);
         }
-        stage.addActor(table);
+        // stage.addActor(table); todo: fix
     }
 
     /**

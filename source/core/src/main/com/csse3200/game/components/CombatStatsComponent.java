@@ -1,5 +1,6 @@
 package com.csse3200.game.components;
 
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,6 +82,7 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       if (isDead() && entity.getEntityType().equals("player")) {
+        entity.getComponent(KeyboardPlayerInputComponent.class).playerDead();
         entity.getEvents().trigger("playerDeath");
         final Timer timer = new Timer();
         java.util.TimerTask killPlayer = new java.util.TimerTask() {

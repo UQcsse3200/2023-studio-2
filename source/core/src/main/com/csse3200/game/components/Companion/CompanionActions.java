@@ -7,13 +7,20 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.FollowComponent;
+import com.csse3200.game.components.ItemPickupComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.terminal.commands.DebugCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Objects;
 
 /**
- * Action component for interacting with the Companion. Companion events should be initialised in create()
- * and when triggered should call methods within this class.
+ * This class represents the action component for interacting with a Companion entity.
+ * It handles various actions related to the Companion, such as movement, speed, and attacking.
  */
 public class CompanionActions extends Component {
     private String bulletTexturePath;
@@ -28,6 +35,10 @@ public class CompanionActions extends Component {
     public boolean moving = false;
     private boolean speedBoostActive = false;
 
+    /**
+     * Initialise the companion to be facing the player.
+     * It sets up event listeners for companion movements and actions.
+     */
     @Override
     public void create() {
         physicsComponent = entity.getComponent(PhysicsComponent.class);
@@ -42,16 +53,32 @@ public class CompanionActions extends Component {
             physicsComponent.getBody().setTransform(playerPosition, currentRotation * MathUtils.degreesToRadians);
         }
     }
-    //initialising a reference player entity
     private Entity playerEntity;
+    /**
+     * Set the player entity, binding it to the companion.
+     *
+     * @param playerEntity - the player entity
+     */
 
     public void setPlayerEntity(Entity playerEntity){
         this.playerEntity = playerEntity;
     }
 
-    public void setBulletTexturePath(String path){
+
+    /**
+     * Set the bullet texture path.
+     *
+     * @param path - Path????
+     */
+    public void setBulletTexturePath(String path) {
         bulletTexturePath = path;
     }
+
+    /**
+     * Update.
+     * This is called once per frame, and will update the companion state.
+     * It ensures the companion follows the player and adjusts its speed if boost is activated.
+     */
     @Override
     public void update() {
         if (playerEntity != null && moving) {
@@ -65,7 +92,7 @@ public class CompanionActions extends Component {
             MAX_NORMAL_SPEED.set(8f,8f);
         } else {
             speedBoostActive = false;
-            MAX_NORMAL_SPEED.set(4f, 4f);
+            MAX_NORMAL_SPEED.set(5f, 5f);
         }
     }
     //functionality for basic player tracking
@@ -91,18 +118,18 @@ public class CompanionActions extends Component {
         if (!isMovementKeyPressed) {
             // Calculate direction vector towards the player
             walkDirection = playerPosition.cpy().sub(companionPosition).nor();
-                // Move the companion towards the player
-                walkDirection.nor();
-                updateSpeed();
+            // Move the companion towards the player
+            walkDirection.nor();
+            updateSpeed();
 
-                // Calculate the rotation angle towards the player
-                float targetRotation = walkDirection.angleDeg() + 90;
+            // Calculate the rotation angle towards the player
+            float targetRotation = walkDirection.angleDeg() + 90;
 
-                // Interpolate the rotation angle smoothly
-                currentRotation = MathUtils.lerpAngleDeg(currentRotation, targetRotation, ROTATION_SPEED * Gdx.graphics.getDeltaTime());
+            // Interpolate the rotation angle smoothly
+            currentRotation = MathUtils.lerpAngleDeg(currentRotation, targetRotation, ROTATION_SPEED * Gdx.graphics.getDeltaTime());
 
-                // Set the new rotation for the companion
-                physicsComponent.getBody().setTransform(companionPosition, currentRotation * MathUtils.degreesToRadians);
+            // Set the new rotation for the companion
+            physicsComponent.getBody().setTransform(companionPosition, currentRotation * MathUtils.degreesToRadians);
 
         } else {
             // Stop the companion from walking when movement keys are pressed
@@ -152,5 +179,13 @@ public class CompanionActions extends Component {
         attackSound.play();
     }
 
-
+    /**
+     * Set the speed to a set number.
+     *
+     * @param x - how fast in x direction
+     * @param y - how fast in y direction
+     */
+    public void setSpeed(float x, float y) {
+        MAX_NORMAL_SPEED = new Vector2(x, y);
+    }
 }

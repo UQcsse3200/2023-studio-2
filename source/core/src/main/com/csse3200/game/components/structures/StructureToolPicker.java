@@ -1,11 +1,13 @@
 package com.csse3200.game.components.structures;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -22,25 +24,32 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-public class StructurePicker extends UIComponent {
-    Logger logger;
-    Table table;
-    private ArrayList<Button> buttons;
+/**
+ * This component can be placed onto the player and allows them to select and interact
+ * with structure tools.
+ */
+public class StructureToolPicker extends UIComponent {
+    private final Logger logger;
+    private final Table table;
+    private final ArrayList<Button> buttons;
 
-    private StructureOptions structureOptions =
-            FileLoader.readClass(StructureOptions.class, "configs/structure_options.json");
+    private final ToolsConfig structureTools =
+            FileLoader.readClass(ToolsConfig.class, "configs/structure_tools.json");
     private Tool selectedTool;
     private int level = 0;
 
-    public StructurePicker() {
+    /**
+     * Creates a new structure tool picker
+     */
+    public StructureToolPicker() {
         super();
         buttons = new ArrayList<>();
-        logger = LoggerFactory.getLogger(StructurePicker.class);
+        logger = LoggerFactory.getLogger(StructureToolPicker.class);
         table = new Table();
     }
 
     /**
-     * Creates reusable ui styles and adds actors to the stage.
+     * Adds actors to the stage on creation
      */
     @Override
     public void create() {
@@ -49,7 +58,8 @@ public class StructurePicker extends UIComponent {
     }
 
     /**
-     * Creates actors and positions them on the stage using a table.
+     * Creates an entry for each structure tool in the config file
+     * and positions them on the stage using a table.
      * @see Table for positioning options
      */
     private void addActors() {
@@ -59,24 +69,37 @@ public class StructurePicker extends UIComponent {
         table.center();
         table.setFillParent(true);
 
-        for (var option : structureOptions.structureOptions) {
+        for (var option : structureTools.toolConfigs) {
             var optionValue = option.value;
 
-            // skip items which are above the current level
-            if (optionValue.level > level) {
-                continue;
-            }
 
             var tool = getTool(option.key, optionValue.cost);
 
-            if (tool == null) {
+            // skip items which are above the current level
+            if (optionValue.level > level || tool == null) {
                 continue;
             }
             var button = new Button(skin);
+            var buttonTable = new Table();
+            buttonTable.center();
+            var nameLabel = new Label(optionValue.name, skin);
+            nameLabel.setColor(Color.BLACK);
             var image = new Image(ServiceLocator.getResourceService().getAsset(optionValue.texture, Texture.class));
 
+            buttonTable.add(image).size(30,30);
+            buttonTable.add(nameLabel).padLeft(10);
+
+            for (var cost : optionValue.cost) {
+                var costLabel = new Label(String.format("%s - %d", cost.key, cost.value), skin);
+                costLabel.setColor(Color.BLACK);
+                costLabel.setFontScale(0.9f);
+
+                buttonTable.row().colspan(2);
+                buttonTable.add(costLabel).padTop(10).center();
+            }
+
             image.setScaling(Scaling.fill);
-            button.add(image);
+            button.add(buttonTable);
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -84,9 +107,9 @@ public class StructurePicker extends UIComponent {
                     hide();
                 }
             });
-            button.setSize(10, 10);
             buttons.add(button);
-            table.add(button).size(50, 50).pad(5);
+            table.row().padTop(10);
+            table.add(button).width(250);
         }
 
         stage.addActor(table);
@@ -94,38 +117,62 @@ public class StructurePicker extends UIComponent {
         table.setVisible(false);
     }
 
+    /**
+     * Gets the tool class referred to in the config file.
+     *
+     * @param key - the name of the class to get
+     * @param cost - the cost of the tool
+     * @return an instance of the specified tool class if it exists, otherwise null
+     */
     private Tool getTool(String key, ObjectMap<String, Integer> cost) {
         try {
             Class<?> cls = Class.forName(key);
 
             Object obj = cls.getDeclaredConstructor(ObjectMap.class).newInstance(cost);
 
-            if (obj instanceof Tool) {
-                return (Tool) obj;
+            if (obj instanceof Tool tool) {
+                return tool;
             } else {
-                logger.error(key + " is not an instance of Tool");
+                logger.error("{} is not an instance of Tool", key);
                 return null;
             }
         } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException
                  | InstantiationException | IllegalAccessException e) {
-            logger.error(key + " cannot be instantiated");
+            logger.error("{} cannot be instantiated", key);
             return null;
         }
     }
 
+    /**
+     * Sets the given tool to be the selected tool.
+     * @param tool - the tool to be selected.
+     */
     public void setSelectedTool(Tool tool) {
         this.selectedTool = tool;
     }
 
+    /**
+     * Returns the currently selected tool.
+     * @return the selected tool.
+     */
     public Tool getSelectedTool() {
         return selectedTool;
     }
 
+    /**
+     * Sets the level of the ToolPicker and updates the options displayed to
+     * the user to match the new level of the picker.
+     * @param level - the maximum level of tools to display.
+     */
     public void setLevel(int level) {
         this.level = level;
         addActors();
     }
 
+    /**
+     * Gets the current level of the ToolPicker.
+     * @return the maximum level of tools to display.
+     */
     public int getLevel() {
         return level;
     }
@@ -135,27 +182,37 @@ public class StructurePicker extends UIComponent {
         // draw is handled by the stage
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
+    /**
+     * Shows the tool picker.
+     */
     public void show() {
         table.setVisible(true);
     }
 
+    /**
+     * Hides the tool picker.
+     */
     public void hide() {
         table.setVisible(false);
     }
+
+    /**
+     * Returns whether the tool picker is visible.
+     * @return whether the tool picker is visible.
+     */
     public boolean isVisible() {
         return table.isVisible();
     }
 
-    public void interact(Entity player, GridPoint2 location) {
+    /**
+     * Interacts with the currently selected tool.
+     * @param location - the location being interacted with.
+     */
+    public void interact(GridPoint2 location) {
         if (selectedTool == null) {
             return;
         }
 
-        selectedTool.interact(player, location);
+        selectedTool.interact(entity, location);
     }
 }

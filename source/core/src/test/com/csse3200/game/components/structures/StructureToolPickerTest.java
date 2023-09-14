@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
-class StructurePickerTest {
+class StructureToolPickerTest {
     @Mock
     RenderService renderService;
     @Mock
@@ -48,7 +47,7 @@ class StructurePickerTest {
         when(resourceService.getAsset(any(), any())).thenReturn(texture);
         when(renderService.getStage()).thenReturn(stage);
 
-        var structurePicker = new StructurePicker();
+        var structurePicker = new StructureToolPicker();
         structurePicker.create();
 
         // should be 0 by default
@@ -66,7 +65,7 @@ class StructurePickerTest {
 
     @Test
     void dispose() {
-        var structurePicker = new StructurePicker();
+        var structurePicker = new StructureToolPicker();
         structurePicker.dispose();
 
         verify(renderService).unregister(structurePicker);
@@ -74,7 +73,7 @@ class StructurePickerTest {
 
     @Test
     void testShowAndHide() {
-        var structurePicker = new StructurePicker();
+        var structurePicker = new StructureToolPicker();
 
         structurePicker.show();
 
@@ -87,7 +86,7 @@ class StructurePickerTest {
 
     @Test
     void testSetAndGetSelectedTool() {
-        var structurePicker = new StructurePicker();
+        var structurePicker = new StructureToolPicker();
 
         var tool = mock(Tool.class);
 
@@ -98,15 +97,16 @@ class StructurePickerTest {
 
     @Test
     void interact() {
-        var structurePicker = new StructurePicker();
+        var structurePicker = new StructureToolPicker();
 
         var tool = mock(Tool.class);
         var player = mock(Entity.class);
         var position = mock(GridPoint2.class);
 
         structurePicker.setSelectedTool(tool);
+        structurePicker.setEntity(player);
 
-        structurePicker.interact(player, position);
+        structurePicker.interact(position);
 
         verify(tool).interact(player, position);
 
@@ -114,7 +114,7 @@ class StructurePickerTest {
 
         reset(tool);
 
-        structurePicker.interact(player, position);
+        structurePicker.interact(position);
 
         verify(tool, never()).interact(any(), any());
     }

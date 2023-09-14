@@ -38,13 +38,23 @@ public class ShootTask extends DefaultTask {
         hasShot = true;
     }
 
+    /**
+     * Fires projectile in game.
+     *
+     * @param position The position where the projectile is fired at.
+     */
     public void fireProjectile(Vector2 position) {
         Vector2 currentPos = owner.getEntity().getPosition();
         Entity bullet = ProjectileFactory.createEnemyBullet(target.getPosition(), owner.getEntity());
         if (currentPos.y < position.y) {
             spawn.y += 1;
         }
-        ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawn);
+        if (currentPos.x < position.x) {
+            spawn.x += 1;
+        } else {
+            spawn.x -= 0.5;
+        }
+        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(bullet, spawn);
     }
 
     @Override

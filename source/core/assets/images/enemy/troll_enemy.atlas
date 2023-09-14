@@ -1,5 +1,5 @@
 Troll.png
-size: 8400,200
+size: 12000,200
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -227,7 +227,7 @@ stand
   orig: 600, 600
   offset: 0, 0
   index: 0
-attack
+death
   rotate: false
   xy: 6400, 0
   size: 200, 200
@@ -297,19 +297,126 @@ attack
   orig: 600, 600
   offset: 0, 0
   index: 0
-death
+attackLeft
   rotate: false
   xy: 8000, 0
   size: 200, 200
   orig: 600, 600
   offset: 0, 0
   index: 0
-death
+attackleft
   rotate: false
   xy: 8200, 0
   size: 200, 200
   orig: 600, 600
   offset: 0, 0
   index: 0
+attackLeft
+  rotate: false
+  xy: 8400, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attackleft
+  rotate: false
+  xy: 8600, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 8800, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attackleft
+  rotate: false
+  xy: 9000, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 9200, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attackleft
+  rotate: false
+  xy: 9400, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 9600, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+attackleft
+  rotate: false
+  xy: 9800, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 10000, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 10200, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 10400, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 10600, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 10800, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 11000, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+chaseLeft
+  rotate: false
+  xy: 11200, 0
+  size: 200, 200
+  orig: 600, 600
+  offset: 0, 0
+  index: 0
+
+
 
 

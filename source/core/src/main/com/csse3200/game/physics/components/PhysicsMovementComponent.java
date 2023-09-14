@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /** Movement controller for a physics-based entity. */
 public class PhysicsMovementComponent extends Component implements MovementController {
   private static final Logger logger = LoggerFactory.getLogger(PhysicsMovementComponent.class);
-  private static final Vector2 maxSpeed = Vector2Utils.ONE;
+  private Vector2 maxSpeed = Vector2Utils.ONE;
 
   private PhysicsComponent physicsComponent;
   private Vector2 targetPosition;
@@ -82,5 +82,14 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   private Vector2 getDirection() {
     // Move towards targetPosition based on our current position
     return targetPosition.cpy().sub(entity.getPosition()).nor();
+  }
+
+  /**
+   * Set an entities max speed.
+   *
+   * @param speed the desired speed
+   */
+  public void changeMaxSpeed(Vector2 speed) {
+    this.maxSpeed = speed;
   }
 }

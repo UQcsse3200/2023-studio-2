@@ -13,7 +13,9 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.PotionComponent;
 import com.csse3200.game.components.PotionType;
+import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.components.tasks.BossTask;
 import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.components.resources.ResourceDisplay;
@@ -51,7 +53,8 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_Laboratory = 4;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(9, 9);
-    /*private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);*/
+    private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(35, 2);
+    private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final float ASTEROID_SIZE = 0.9f;
@@ -66,12 +69,10 @@ public class EarthGameArea extends GameArea {
             "images/wall2.png",
             "images/gate_close.png",
             "images/gate_open.png",
-            "images/ghost_king.png",
             "images/companion_DOWN.png",
-            "images/ghost_1.png",
-            "images/base_enemy.png",
-            "images/Troll.png",
-            "images/rangeEnemy.png",
+            "images/enemy/base_enemy.png",
+            "images/enemy/Troll.png",
+            "images/enemy/rangeEnemy.png",
             "images/stone_wall.png",
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
@@ -93,11 +94,13 @@ public class EarthGameArea extends GameArea {
             "images/TurretOne.png",
             "images/TurretTwo.png",
             "images/playerSS_6.png",
+            "images/enemy/Bull.png",
             "images/laboratory.png",
             "images/Potion.png",
             "images/upgradetree/exit.png",
             "images/upgradetree/background.png",
             "images/upgradetree/upgradebench.png",
+            "images/Spawner.png",
             "images/upgradetree/hammer1.png",
             "images/upgradetree/hammer2.png",
             "images/upgradetree/stick.png",
@@ -122,13 +125,11 @@ public class EarthGameArea extends GameArea {
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
-            "images/ghost.atlas",
-            "images/ghostKing.atlas",
-            "images/base_enemy.atlas",
-            "images/troll_enemy.atlas",
             "images/rangeEnemy.atlas",
             "images/botanist.atlas",
-            "images/boss_enemy.atlas",
+            "images/enemy/boss_enemy.atlas",
+            "images/enemy/base_enemy.atlas",
+            "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
             "images/playerSS.atlas",
             "images/wrench.atlas",
@@ -142,6 +143,8 @@ public class EarthGameArea extends GameArea {
             "images/sling_shot.atlas",
             "images/player.atlas",
             "images/companionSS.atlas",
+            "images/enemy/bull.atlas",
+            "images/enemy/Night.atlas",
             "images/ExtractorAnimation.atlas"
 
     };
@@ -196,6 +199,7 @@ public class EarthGameArea extends GameArea {
         spawnAsteroids();
         spawnBotanist();
         companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
+        spawnSpawner();
         playMusic();
     }
     public static void removeItemOnMap(Entity entityToRemove) {
@@ -320,6 +324,11 @@ public class EarthGameArea extends GameArea {
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
         Entity ship = StructureFactory.createShip(game, null); //Doesn't implement windconditions
         spawnEntityAt(ship, spawnPosition, false, false);
+    }
+
+    private void spawnSpawner() {
+        Entity spawner = StructureFactory.createSpawner(targetables);
+        spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
     }
 
     private void displayUI() {
@@ -530,6 +539,7 @@ public class EarthGameArea extends GameArea {
     public Entity getPlayer() {
         return player;
   }
+
   public void setCompanion(Entity Companion){companion=Companion;}
     public Entity getCompanion() {
         return companion;

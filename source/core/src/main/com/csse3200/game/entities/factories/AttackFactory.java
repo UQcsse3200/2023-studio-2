@@ -69,7 +69,7 @@ public class AttackFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WEAPON))
                     .addComponent(new TouchAttackComponent((short)
-                            (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.NPC)))
+                            (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE)))
                     .addComponent(weaponController);
     attack.setEntityType("playerWeapon");
 

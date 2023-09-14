@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.PotionComponent;
+import com.csse3200.game.components.PotionType;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.tasks.BossTask;
@@ -50,7 +52,7 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_POWERUPS = 3;
     private static final int NUM_Laboratory = 4;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
-    private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
+    private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(9, 9);
     private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(35, 2);
     private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
@@ -114,6 +116,17 @@ public class EarthGameArea extends GameArea {
             "images/upgradetree/stick.png",
             "images/upgradetree/exit.png",
             "images/player.png",
+            "images/deathpotion.png",
+            "images/potion2.png",
+            "images/potion3.png","images/companionSS_1.png","images/companionSS_0.png",
+            "images/companionSS.png",
+            "images/Potion1re.png",
+            "images/Potion2re.png",
+            "images/Potion3re.png",
+            "images/Potion3re.png",
+            "images/Potion4re.png",
+            "images/platform.png",
+            "images/companiondeathscreen.png",
             "images/nebulite.png",
             "images/solstite.png",
             "images/durasteel.png",
@@ -139,6 +152,7 @@ public class EarthGameArea extends GameArea {
             "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
             "images/player.atlas",
+            "images/companionSS.atlas",
             "images/enemy/bull.atlas",
             "images/enemy/Night.atlas",
             "images/ExtractorAnimation.atlas"
@@ -150,6 +164,9 @@ public class EarthGameArea extends GameArea {
 
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
+    private Entity player;
+
+    private Entity companion;
     private Entity laboratory;
     private GdxGame game;
 
@@ -180,17 +197,18 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
-        laboratory = spawnLaboratory();
+        spawnLaboratory();
         spawnUpgradeBench();
         spawnShip();
+        spawnPlatform();
         this.player = spawnPlayer();
         this.companion = spawnCompanion(player);
-        spawnPotion(companion,laboratory);
+        /*spawnTurret();*/
         spawnEnemies();
         spawnBoss();
         spawnBotanist();
+        companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
         spawnSpawner();
-
         playMusic();
     }
     public static void removeItemOnMap(Entity entityToRemove) {
@@ -405,12 +423,38 @@ public class EarthGameArea extends GameArea {
             spawnEntityAt(speedPowerup, randomPos2, true, false);
         }
     }
-    private void spawnPotion(Entity companionEntity ,Entity laboratoryEntity){
-        Entity newPotion = PotionFactory.createDeathPotion(companionEntity, laboratoryEntity);
-        itemsOnMap.add(newPotion);
-        GridPoint2 pos = new GridPoint2(34, 18);
-        spawnEntityAt(newPotion, pos, true, false);
+
+    public Entity spawnPotion(PotionType potionType){
+        Entity newPotion;
+        switch (potionType){
+            case DEATH_POTION:
+               newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION,player,companion);
+               itemsOnMap.add(newPotion);
+               GridPoint2 pos = new GridPoint2(39, 21);
+               spawnEntityAt(newPotion, pos, true, false);
+               return newPotion;
+            case SPEED_POTION:
+                newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION,player,companion);
+                itemsOnMap.add(newPotion);
+                GridPoint2 pos2 = new GridPoint2(40, 21);
+                spawnEntityAt(newPotion, pos2, true, false);
+                return newPotion;
+            case HEALTH_POTION:
+                newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION,player,companion);
+                itemsOnMap.add(newPotion);
+                GridPoint2 pos3 = new GridPoint2(41, 21);
+                spawnEntityAt(newPotion, pos3, true, false);
+                return newPotion;
+            default: throw new IllegalArgumentException("You must assign a valid PotionType");
+        }
     }
+    public Entity spawnPlatform(){
+        Entity newPlatform = PlatformFactory.createPlatform();
+        GridPoint2 pos = new GridPoint2(40,20);
+        spawnEntityAt(newPlatform,pos,true,false);
+        return newPlatform;
+    }
+
 
     /**
      * Spawns all the enemies detailed in the Game Area.

@@ -12,43 +12,63 @@ import com.csse3200.game.services.ServiceLocator;
 import java.util.ArrayList;
 
 public class SpawnerComponent extends Component {
-    // Timer used to track time since last tick
-    GameTime timer;
+    private GameTime timer;
+    private long lastTime;
+    private ArrayList<Entity> targets;
+    private int currentWave;
+    private long waveDelay = 20000; // 20 second delay between enemy waves
+    private boolean isSpawning;
+    private long spawnDelay = 3000; // 3 second delay between enemy spawns
+    private int enemiesToSpawn;
+    private int enemiesSpawned;
 
-    // The desired amount of time (seconds) between each tick
-    long tickRate;
+    private int meleeEnemiesToSpawn;
 
-    // The time of the last tick
-    long lastTime;
+    private int rangedEnemiesToSpawn;
 
-    // The enemy this spawns
-    ArrayList<Entity> targets;
-
-    EnemyType type;
-
-    EnemyBehaviour behaviour;
-
-    int count;
-
-    int spawnedAmount = 0;
-
-    /**
-     * SpawnerComponent allows an entity to spawn enemies on some real time interval and send them to
-     * the gameState and event handler.
-     *
-     * @param targets the list of enemy targets
-     * @param tickRate the amount of seconds between ticks (not guaranteed but catchup is performed if a tick is missed)
-     * @param type the type of enemy e.g.(Melee, Ranged) (Recommend to use for just small enemies)
-     * @param behaviour the behaviour of the enemy, what it will prioritise
-     */
-    public SpawnerComponent(ArrayList<Entity> targets, long tickRate, EnemyType type, EnemyBehaviour behaviour, int count) {
+    public SpawnerComponent(ArrayList<Entity> targets) {
         this.timer = new GameTime();
-        this.tickRate = tickRate;
         this.lastTime = timer.getTime();
         this.targets = targets;
-        this.type = type;
-        this.behaviour = behaviour;
-        this.count = count;
+    }
+    public boolean isSpawning() {
+        return isSpawning;
+    }
+
+    public void setSpawning(boolean spawning) {
+        isSpawning = spawning;
+    }
+
+    public int getEnemiesSpawned() {
+        return enemiesSpawned;
+    }
+
+    public void setEnemiesSpawned(int enemiesSpawned) {
+        this.enemiesSpawned = enemiesSpawned;
+    }
+
+    public int getEnemiesToSpawn() {
+        return enemiesToSpawn;
+    }
+
+    public void setEnemiesToSpawn(int enemiesToSpawn) {
+        this.enemiesToSpawn = enemiesToSpawn;
+    }
+
+    public int getMeleeEnemiesToSpawn() {
+        return meleeEnemiesToSpawn;
+    }
+
+    public void setMeleeEnemiesToSpawn(int meleeEnemiesToSpawn) {
+        this.meleeEnemiesToSpawn = meleeEnemiesToSpawn;
+    }
+
+    public int getRangedEnemiesToSpawn() {
+        return rangedEnemiesToSpawn;
+    }
+
+    public void setRangedEnemiesToSpawn(int rangedEnemiesToSpawn) {
+        this.rangedEnemiesToSpawn = rangedEnemiesToSpawn;
     }
 
     @Override
@@ -56,17 +76,58 @@ public class SpawnerComponent extends Component {
         super.create();
     }
 
+    public void spawnEnemies(int meleeCount, int rangedCount) {
+        isSpawning = true;
+        setEnemiesToSpawn(meleeCount + rangedCount);
+        enemiesSpawned = 0;
+        setMeleeEnemiesToSpawn(meleeCount);
+        setRangedEnemiesToSpawn(rangedCount);
+    }
+
+    public void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {
+        Vector2 worldPos = entity.getCenterPosition();
+        Entity enemy = EnemyFactory.createEnemy(enemyType, behaviour);
+        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemy, worldPos);
+    }
+
     @Override
     public void update() {
         super.update();
-        Vector2 worldPos;
-        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate && spawnedAmount < count) {
-                worldPos = entity.getCenterPosition();
-                Entity enemy = EnemyFactory.createEnemy(type, behaviour);
-                ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
-                spawnedAmount += 1;
-                System.out.println(spawnedAmount);
-                this.lastTime += this.tickRate;
+        long currentTime = timer.getTime();
+
+        if (!isSpawning && currentTime - lastTime >= waveDelay) {
+            switch (currentWave) {
+                case 0:
+                    spawnEnemies(10, 0);
+                    break;
+                case 1:
+                    spawnEnemies(10, 5);
+                    break;
+                case 2:
+                    spawnEnemies(10, 10);
+                    break;
+            }
+
+            currentWave++;
+            lastTime = currentTime;
+        }
+
+        if (isSpawning && enemiesSpawned < getEnemiesToSpawn() && currentTime - lastTime >= spawnDelay) {
+            if (getMeleeEnemiesToSpawn() > 0) {
+                spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
+                setMeleeEnemiesToSpawn(getMeleeEnemiesToSpawn() - 1);
+            } else if (getRangedEnemiesToSpawn() > 0) {
+                spawnEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
+                setRangedEnemiesToSpawn(getRangedEnemiesToSpawn() - 1);
+            }
+            enemiesSpawned++;
+            lastTime = currentTime;
+        }
+
+        if (enemiesSpawned >= getEnemiesToSpawn()) {
+            isSpawning = false;
+            setEnemiesToSpawn(0);
+            enemiesSpawned = 0;
         }
     }
 }

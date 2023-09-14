@@ -49,6 +49,7 @@ import static com.csse3200.game.ui.UIComponent.skin;
 public class MainGameScreen extends ScreenAdapter {
   private TitleBox titleBox;
 private static boolean alive = true;
+private static boolean companionalive = true;
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png",
           "images/structure-icons/wall.png",
@@ -60,6 +61,7 @@ private static boolean alive = true;
   private final PhysicsEngine physicsEngine;
 
   private Entity player;
+  private Entity companion;
 
   private GameArea gameArea;
   private TerrainFactory terrainFactory;
@@ -70,6 +72,7 @@ private static boolean alive = true;
   public MainGameScreen(GdxGame game) {
     this.game = game;
     this.alive = true;
+    this.companionalive = true;
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -98,6 +101,8 @@ private static boolean alive = true;
 
     gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
     gameArea.create();
+    companion = ((EarthGameArea) gameArea).getCompanion();
+    companion.getEvents().addListener("death", this::initiateCompanionDeathScreen);
     player = ((MapGameArea) gameArea).getPlayer();
     player.getEvents().addListener("death", this::initiateDeathScreen);
     titleBox = new TitleBox(game, "Title", skin);
@@ -129,6 +134,9 @@ private static boolean alive = true;
   public void initiateDeathScreen() {
     alive = false;
   }
+  public void initiateCompanionDeathScreen() {
+    companionalive = false;
+  }
 
   @Override
   public void render(float delta) {
@@ -148,11 +156,9 @@ private static boolean alive = true;
     if (alive == false) {
       logger.info("Launching player death screen");
       game.setScreen(GdxGame.ScreenType.PLAYER_DEATH);
-    }
-
-    ProximityControllerComponent proximityController = player.getComponent(ProximityControllerComponent.class);
-    if (proximityController != null) {
-      proximityController.checkAllEntitiesProximity();   //checks whether the player is near an intractable entity to show the prompt
+    } else if (companionalive == false) {
+      logger.info("Launching companion death screen");
+      game.setScreen(GdxGame.ScreenType.COMPANION_DEATH);
     }
 
   }

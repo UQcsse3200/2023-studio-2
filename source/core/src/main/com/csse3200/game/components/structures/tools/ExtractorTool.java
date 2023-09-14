@@ -32,7 +32,7 @@ public class ExtractorTool extends PlacementTool {
      * @return the extractor, fully built
      */
     @Override
-    public PlaceableEntity createEntity(Entity player) {
+    public PlaceableEntity createStructure(Entity player) {
         Object total = ServiceLocator.getGameStateObserverService().getStateData("extractorsTotal/" + produces.toString());
         ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", this.produces.toString(),
                 (total != null ? (int) total : 0) + 1);

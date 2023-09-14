@@ -25,6 +25,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.awt.event.ComponentAdapter;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @ExtendWith(GameExtension.class)
@@ -75,18 +77,18 @@ class EntityServiceTest {
   void testGetEntitiesByComponent() {
     EntityService entityService = new EntityService();
 // Checking whether the below components are in list
-    Assertions.assertEquals(entityService.getEntitiesByComponent(PowerupComponent.class).size, 0);
-    Assertions.assertEquals(entityService.getEntitiesByComponent(InventoryComponent.class).size, 0);
-    Assertions.assertEquals(entityService.getEntitiesByComponent(KeyboardPlayerInputComponent.class).size, 0);
-    Assertions.assertEquals(entityService.getEntitiesByComponent(PlayerActions.class).size, 0);
-    Assertions.assertEquals(entityService.getEntitiesByComponent(PlayerStatsDisplay.class).size, 0);
-    Assertions.assertEquals(entityService.getEntitiesByComponent(CameraComponent.class).size, 0);
-    Assertions.assertEquals(entityService.getEntitiesByComponent(CombatStatsComponent.class).size, 0);
-    Assertions.assertEquals(entityService.getEntitiesByComponent(TouchAttackComponent.class).size, 0);
-    Assertions.assertEquals(entityService.getEntitiesByComponent(PerformanceDisplay.class).size, 0);
+    Assertions.assertEquals(entityService.getEntitiesByComponent(PowerupComponent.class).size(), 0);
+    Assertions.assertEquals(entityService.getEntitiesByComponent(InventoryComponent.class).size(), 0);
+    Assertions.assertEquals(entityService.getEntitiesByComponent(KeyboardPlayerInputComponent.class).size(), 0);
+    Assertions.assertEquals(entityService.getEntitiesByComponent(PlayerActions.class).size(), 0);
+    Assertions.assertEquals(entityService.getEntitiesByComponent(PlayerStatsDisplay.class).size(), 0);
+    Assertions.assertEquals(entityService.getEntitiesByComponent(CameraComponent.class).size(), 0);
+    Assertions.assertEquals(entityService.getEntitiesByComponent(CombatStatsComponent.class).size(), 0);
+    Assertions.assertEquals(entityService.getEntitiesByComponent(TouchAttackComponent.class).size(), 0);
+    Assertions.assertEquals(entityService.getEntitiesByComponent(PerformanceDisplay.class).size(), 0);
 
-    Array<Entity> entity =  entityService.getEntitiesByComponent(CombatStatsComponent.class);
-    assertEquals(0, entity.size);
+    List<Entity> entity =  entityService.getEntitiesByComponent(CombatStatsComponent.class);
+    assertEquals(0, entity.size());
 
   }
 // Creates test as in general
@@ -113,8 +115,8 @@ class EntityServiceTest {
     entityService.register(entityA);
     entityService.register(entityB);
 
-    Array<Entity> test =  entityService.getEntitiesByComponent(componentA.getClass());
-    assertEquals(2, test.size);
+    List<Entity> test =  entityService.getEntitiesByComponent(componentA.getClass());
+    assertEquals(2, test.size());
 
   }
 

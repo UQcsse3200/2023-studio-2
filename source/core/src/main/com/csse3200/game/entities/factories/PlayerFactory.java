@@ -6,7 +6,6 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.player.*;
-import com.csse3200.game.components.structures.StructurePicker;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
@@ -20,6 +19,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
+import com.csse3200.game.components.structures.StructureToolPicker;
 
 /**
  * Factory to create a player entity.
@@ -91,9 +91,8 @@ public class PlayerFactory {
             .addComponent(new DialogComponent(dialogueBox))
             .addComponent(new InteractionControllerComponent(false))
             .addComponent(new HealthBarComponent(true))
-            .addComponent(new StructurePicker())
+            .addComponent(new StructureToolPicker())
             .addComponent(new ProximityControllerComponent());
-
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

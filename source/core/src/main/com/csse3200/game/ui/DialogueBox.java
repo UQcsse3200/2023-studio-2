@@ -1,16 +1,16 @@
 package com.csse3200.game.ui;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.ServiceLocator;
 
 import static com.csse3200.game.screens.MainMenuScreen.logger;
@@ -20,25 +20,39 @@ import static com.csse3200.game.screens.MainMenuScreen.logger;
  */
 public class DialogueBox extends Dialog {
 
-    private GdxGame game;
+    //private final InputOverrideComponent inputOverrideComponent;
+
     private TitleBox titleBox;
     private Label dialogueLabel;
-    private DialogueBox dialogueBox;
+    private Label titleLabel;
 
     /**
      * Creates a new DialogueBox instance.
      *
-     * @param game       The game instance.
-     * @param dialogueBox The dialogue box instance.
      * @param title      The title of the dialogue box.
      * @param skin       The skin to use for styling the dialogue box.
      */
-    public DialogueBox(GdxGame game, DialogueBox dialogueBox, String title, Skin skin) {
-        super(title, skin);
-        this.game = game;
-        this.dialogueBox = dialogueBox;
-        this.dialogueLabel = new Label("", skin);
-        this.getContentTable().add(dialogueLabel).align(Align.left);
+    public DialogueBox(String title, String message, Skin skin) {
+        super("",skin);
+
+        titleLabel = new Label(title, skin);
+        this.dialogueLabel = new Label(message, skin);
+
+        titleLabel.setAlignment(Align.top);
+        titleLabel.setFontScale(0.3f); // Adjust font scale as needed
+        titleLabel.setColor(Color.BLACK); // TitleBox Title Colour can be changed here
+
+
+        this.getContentTable().add(titleLabel).padTop(20f).row();
+        this.getContentTable().add(dialogueLabel).width(500f).height(30f).pad(20f).center(); // Adjust width and height as needed
+
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("large", Label.LabelStyle.class));
+        labelStyle.font.getData().setScale(1.6f); // Set the font scale to make it larger
+
+
+
+
         TextButton startButton = new TextButton("OK", skin);
         button(startButton, true);
         Entity entity = new Entity();
@@ -51,6 +65,21 @@ public class DialogueBox extends Dialog {
                         entity.getEvents().trigger("ok");
                     }
                 });
+
+        Table customButtonTable = new Table();
+        customButtonTable.add(startButton).pad(20f); // Add padding as needed
+
+
+        // Add the custom button table to the dialog
+        this.getContentTable().row();
+        this.getContentTable().add(customButtonTable).center();
+
+
+        // Size and positioning of the dialog
+        setSize(600f, 350f); // Adjust the size as needed
+        setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, Gdx.graphics.getHeight() - getHeight()-700); // Adjust the Y position as needed
+
+
     }
 
     /**
@@ -70,9 +99,13 @@ public class DialogueBox extends Dialog {
     public void showDialog(Stage stage) {
         stage.addActor(this);
     }
-
+    @Override
+    public boolean remove() {
+        //Stop overriding input when exiting minigame
+        return super.remove();
+    }
     private void onOK() {
         logger.info("Start game");
-        game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+        remove();
     }
 }

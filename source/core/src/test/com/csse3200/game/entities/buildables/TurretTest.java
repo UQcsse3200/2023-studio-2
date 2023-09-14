@@ -2,11 +2,15 @@ package com.csse3200.game.entities.buildables;
 
 import com.csse3200.game.entities.buildables.Turret;
 import com.csse3200.game.entities.configs.TurretConfig;
+import com.csse3200.game.extensions.GameExtension;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.Assert.*;
 
+@ExtendWith(GameExtension.class)
+@ExtendWith(GameExtension.class)
 public class TurretTest {
 
     private Turret turret;

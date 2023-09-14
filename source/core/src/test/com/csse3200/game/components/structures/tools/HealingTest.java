@@ -38,7 +38,5 @@ class HealingTest {
         Healing healing = new Healing(new ObjectMap<>());
         healing.interact(mock(Entity.class), new GridPoint2());
         verify(combatStatsComponent, times(1)).setHealth(100);
-
     }
-
 }

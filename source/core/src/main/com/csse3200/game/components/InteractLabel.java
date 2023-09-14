@@ -26,7 +26,7 @@ public class InteractLabel extends Table {
         TextureRegionDrawable fButtonDrawable = new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/f_button.png", Texture.class)));
         fButtonImage = new Image(fButtonDrawable);
 
-        Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
+        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
 
         messageLabelBeforeF = new Label("Press ", skin);
         messageLabelBeforeF.setColor(Color.WHITE);

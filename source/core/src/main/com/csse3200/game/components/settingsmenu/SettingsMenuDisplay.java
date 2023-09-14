@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.files.UserSettings.DisplaySettings;
 import com.csse3200.game.services.ServiceLocator;
@@ -67,10 +66,10 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   private Table makeSettingsTable() {
-
+    // Get current values
     UserSettings.Settings settings = UserSettings.get();
 
-
+    // Create components
     Label fpsLabel = new Label("FPS Cap:", skin);
     fpsText = new TextField(Integer.toString(settings.fps), skin);
 
@@ -98,66 +97,47 @@ public class SettingsMenuDisplay extends UIComponent {
     displayModeSelect.setItems(getDisplayModes(selectedMonitor));
     displayModeSelect.setSelected(getActiveMode(displayModeSelect.getItems()));
 
+    // Position Components on table
+    Table table = new Table();
 
-    Table settingsTable = new Table();
+    table.add(fpsLabel).right().padRight(15f);
+    table.add(fpsText).width(100).left();
 
-    settingsTable.add(fpsLabel).right().padRight(15f);
-    settingsTable.add(fpsText).width(100).left();
+    table.row().padTop(10f);
+    table.add(fullScreenLabel).right().padRight(15f);
+    table.add(fullScreenCheck).left();
 
-    settingsTable.row().padTop(10f);
-    settingsTable.add(fullScreenLabel).right().padRight(15f);
-    settingsTable.add(fullScreenCheck).left();
+    table.row().padTop(10f);
+    table.add(vsyncLabel).right().padRight(15f);
+    table.add(vsyncCheck).left();
 
-    settingsTable.row().padTop(10f);
-    settingsTable.add(vsyncLabel).right().padRight(15f);
-    settingsTable.add(vsyncCheck).left();
-
-    settingsTable.row().padTop(10f);
+    table.row().padTop(10f);
     Table uiScaleTable = new Table();
     uiScaleTable.add(uiScaleSlider).width(100).left();
     uiScaleTable.add(uiScaleValue).left().padLeft(5f).expandX();
 
-    settingsTable.add(uiScaleLabel).right().padRight(15f);
-    settingsTable.add(uiScaleTable).left();
+    table.add(uiScaleLabel).right().padRight(15f);
+    table.add(uiScaleTable).left();
 
-    settingsTable.row().padTop(10f);
+    table.row().padTop(10f);
     Table musicVolumeTable = new Table();
     musicVolumeTable.add(musicVolumeSlider).width(100).left();
     musicVolumeTable.add(musicVolumeValue).left().padLeft(5f).expandX();
 
-    settingsTable.add(musicVolumeLabel).right().padRight(15f);
-    settingsTable.add(musicVolumeTable).left();
+    table.add(musicVolumeLabel).right().padRight(15f);
+    table.add(musicVolumeTable).left();
 
-    settingsTable.row().padTop(10f);
-    settingsTable.add(displayModeLabel).right().padRight(15f);
-    settingsTable.add(displayModeSelect).left();
-
-
-    Table table = new Table();
-
-    table.add(settingsTable).expandX().fillX().padBottom(20f).row();
-
-
-    TextButton okButton = new TextButton("CONTROLS", skin);
-    Entity entity = new Entity();
-    entity.getEvents().addListener("ok", this::onOK);
-    okButton.addListener(
-            new ChangeListener() {
-              @Override
-              public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("OK button clicked");
-                entity.getEvents().trigger("ok");
-              }
-            });
-    table.add(okButton).expandX().center();
+    table.row().padTop(10f);
+    table.add(displayModeLabel).right().padRight(15f);
+    table.add(displayModeSelect).left();
 
     // Events on inputs
     uiScaleSlider.addListener(
-            (Event event) -> {
-              float value = uiScaleSlider.getValue();
-              uiScaleValue.setText(String.format("%.2fx", value));
-              return true;
-            });
+        (Event event) -> {
+          float value = uiScaleSlider.getValue();
+          uiScaleValue.setText(String.format("%.2fx", value));
+          return true;
+        });
 
     musicVolumeSlider.addListener(
             (Event event) -> {
@@ -175,8 +155,8 @@ public class SettingsMenuDisplay extends UIComponent {
     for (StringDecorator<DisplayMode> stringMode : modes) {
       DisplayMode mode = stringMode.object;
       if (active.width == mode.width
-              && active.height == mode.height
-              && active.refreshRate == mode.refreshRate) {
+          && active.height == mode.height
+          && active.refreshRate == mode.refreshRate) {
         return stringMode;
       }
     }
@@ -202,24 +182,23 @@ public class SettingsMenuDisplay extends UIComponent {
     TextButton exitBtn = new TextButton("Exit", skin);
     TextButton applyBtn = new TextButton("Apply", skin);
 
-
     exitBtn.addListener(
-            new ChangeListener() {
-              @Override
-              public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Exit button clicked");
-                exitMenu();
-              }
-            });
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+            logger.debug("Exit button clicked");
+            exitMenu();
+          }
+        });
 
     applyBtn.addListener(
-            new ChangeListener() {
-              @Override
-              public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Apply button clicked");
-                applyChanges();
-              }
-            });
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+            logger.debug("Apply button clicked");
+            applyChanges();
+          }
+        });
 
     Table table = new Table();
     table.add(exitBtn).expandX().left().pad(0f, 15f, 15f, 0f);
@@ -247,11 +226,6 @@ public class SettingsMenuDisplay extends UIComponent {
     game.setScreen(ScreenType.MAIN_MENU);
   }
 
-  private void onOK() {
-    logger.info("Start game");
-    game.setScreen(ScreenType.CONTROLS_SCREEN);
-  }
-
   private Integer parseOrNull(String num) {
     try {
       return Integer.parseInt(num, 10);
@@ -261,8 +235,8 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   @Override
-  protected void draw(SpriteBatch batch)
-  {
+  protected void draw(SpriteBatch batch) {
+    // draw is handled by the stage
   }
 
   @Override

@@ -41,8 +41,7 @@ public class LabWindow extends Window {
         setWidth((float) (stage.getWidth() * 0.8));
         setHeight((float) (stage.getHeight() * 0.65));
         setPosition(stage.getWidth() / 2 - getWidth() / 2 * getScaleX(), stage.getHeight() / 2 - getHeight() / 2 * getScaleY());
-
-         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
+        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
         // Create a Table to hold the buttons and center them within the window
         Table buttonTable = new Table();
         buttonTable.setFillParent(true); // Fill the entire LabWindow
@@ -94,7 +93,6 @@ public class LabWindow extends Window {
         addActor(exit);
 
         returnToGameButton.addListener(new ClickListener() {
-
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 failLaboratory();

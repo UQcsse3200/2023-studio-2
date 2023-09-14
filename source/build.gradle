@@ -91,10 +91,6 @@ project(":core") {
         api "net.dermetfan.libgdx-utils:libgdx-utils:$gdxUtilsVersion"
         api "net.dermetfan.libgdx-utils:libgdx-utils-box2d:$gdxUtilsVersion"
 
-        implementation "org.mini2Dx:universal-tween-engine:6.3.3"
-        implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-
         // Logging
         api "org.slf4j:slf4j-api:$slf4jVersion"
         api "org.slf4j:slf4j-jdk14:$slf4jVersion"

@@ -193,8 +193,14 @@ public class ObstacleFactory {
     Entity goal = new Entity()
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-            .addComponent(new TextureRenderComponent(config.spritePath));
+
+            //.addComponent(new TextureRenderComponent(config.spritePath))
+
+
+            .addComponent(new TextureRenderComponent("images/wormhole.png"));
+    //NEED to decide spritePath texture or png texture
     goal.setScale(config.scale);
+
     return goal;
   }
 

@@ -57,12 +57,12 @@ public class EarthGameArea extends GameArea {
     private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
-    private static final float ASTEROID_SIZE = 0.9f;
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
+            "images/extractor.png",
+            "images/broken_extractor.png",
             "images/refinedExtractor2.png",
             "images/refinedBrokenExtractor.png",
-            "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
             "images/LeftShip.png",
             "images/wall.png",
@@ -70,19 +70,29 @@ public class EarthGameArea extends GameArea {
             "images/gate_close.png",
             "images/gate_open.png",
             "images/companion_DOWN.png",
+            "images/ghost_1.png",
+            "images/base_enemy.png",
+            "images/Troll.png",
+            "images/rangeEnemy.png",
             "images/enemy/base_enemy.png",
             "images/enemy/Troll.png",
             "images/enemy/rangeEnemy.png",
-            "images/stone_wall.png",
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/refinedShip.png",
             "images/stone_wall.png",
             "images/oldman_down_1.png",
+            "images/fire.png",
+            "images/Hole.png",
+            "images/spanner.png",
+            "images/extinguisherCoursor.png",
+            "images/extinguisher.png",
+            "images/spannerCursor.png",
+            "images/ExtractorminiGameBackground.png",
             "images/player_blank.png",
             "images/wrench.png",
-            "images/durastell.png",
-            "images/nebulite.png",
+            //"images/durastell.png",
+            //"images/nebulite.png",
             "images/uparrow.png",
             "images/solsite.png",
             "images/resourcebar_background.png",
@@ -196,7 +206,6 @@ public class EarthGameArea extends GameArea {
         /*spawnTurret();*/
         spawnEnemies();
         spawnBoss();
-        spawnAsteroids();
         spawnBotanist();
         companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
         spawnSpawner();
@@ -251,14 +260,6 @@ public class EarthGameArea extends GameArea {
         // Spawn the entity at the calculated position
         // Arguments: entity, position, isCentered, isLocal
         spawnEntityAt(botanist, spawnPosition, true, false);
-    }
-
-    private void spawnAsteroids() {
-        //Extra Spicy Asteroids
-        GridPoint2 posAs = new GridPoint2(8, 8);
-        spawnEntityAt(
-                ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
-
     }
 
     private void spawnUpgradeBench() {

@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.components.tasks.RunTask;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.*;
@@ -220,6 +221,7 @@ public class EnemyFactory {
       maxChaseDistance = 100f;
 
       aiTaskComponent.addTask(new AimTask(aimDelay, target, range));
+      aiTaskComponent.addTask(new RunTask(target, 11, 2f));
       aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
     } else {
       aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));

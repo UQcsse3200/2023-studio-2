@@ -2,26 +2,27 @@ package com.csse3200.game.components;
 
 import com.csse3200.game.entities.Entity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This component can be used to call an entry or exit method when on of the tracking
  * entities enters or exits a proximity.
  */
 public class ProximityActivationComponent extends Component {
-    private final float radius;
-    private final ProximityFunc entered;
-    private final ProximityFunc exited;
-    private final List<Entity> entities;
+    protected final float radius;
+    protected final ProximityFunc entered;
+    protected final ProximityFunc exited;
+    private List<Entity> entities = new ArrayList<>();
     private final Map<Entity, Boolean> entityWithinRadiusMap = new HashMap<>();
-    private boolean isWithinRadius;
 
     public ProximityActivationComponent(float radius, Entity entity,
                                         ProximityFunc entered, ProximityFunc exited) {
         this.radius = radius;
         this.entered = entered;
         this.exited = exited;
-        this.entities = new ArrayList<>();
         this.entities.add(entity);
         entityWithinRadiusMap.put(entity, false);
     }
@@ -33,6 +34,12 @@ public class ProximityActivationComponent extends Component {
         this.exited = exited;
         this.entities = entities;
         entities.forEach(entity -> entityWithinRadiusMap.put(entity, false));
+    }
+
+    public ProximityActivationComponent(float radius, ProximityFunc entered, ProximityFunc exited) {
+        this.radius = radius;
+        this.entered = entered;
+        this.exited = exited;
     }
 
     /**

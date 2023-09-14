@@ -4,7 +4,11 @@ import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.configs.NPCConfigs;
+import com.csse3200.game.entities.configs.PowerupConfig;
+import com.csse3200.game.entities.configs.PowerupConfigs;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -21,6 +25,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 public class PowerupFactoryTest {
+
+    private static final PowerupConfigs configs =
+            FileLoader.readClass(PowerupConfigs .class, "configs/powerups.json");
+
 
     /**
      * Set up services and resources necessary for the tests.
@@ -59,6 +67,28 @@ public class PowerupFactoryTest {
     @Test
     public void testCreateSpeedPowerup() {
         Entity powerup = PowerupFactory.createSpeedPowerup();
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(type, PowerupType.SPEED_BOOST);
+    }
+
+    @Test
+    void createHealthPowerupConfigTest() {
+        PowerupConfig config = configs.healthPowerup;
+        Entity powerup = PowerupFactory.createPowerup(config);
+
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(type, PowerupType.HEALTH_BOOST);
+    }
+
+    @Test
+    void createSpeedPowerupConfigTest() {
+        PowerupConfig config = configs.speedPowerup;
+        Entity powerup = PowerupFactory.createPowerup(config);
+
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);

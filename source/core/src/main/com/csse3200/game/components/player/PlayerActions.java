@@ -7,17 +7,13 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.joinable.JoinableComponent;
-import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.buildables.Wall;
-import com.csse3200.game.entities.buildables.WallType;
-import com.csse3200.game.entities.factories.BuildablesFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.structures.StructureToolPicker;
 
 /**
  * Action component for interacting with the player. Player events should be
@@ -40,11 +36,11 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("walk", this::walk);
         entity.getEvents().addListener("walkStop", this::stopWalking);
         entity.getEvents().addListener("attack", this::attack);
-        entity.getEvents().addListener("place", this::placeWallOrUpgradeWall);
-        entity.getEvents().addListener("ctrl_place", this::placeGate);
-        entity.getEvents().addListener("remove", this::removeWall);
+        entity.getEvents().addListener("place", this::place);
+        entity.getEvents().addListener("remove", this::remove);
         entity.getEvents().addListener("dodged", this::dodged);
         entity.getEvents().addListener("repair", this::repairWall);
+        entity.getEvents().addListener("change_structure", this::changeStructure);
         entity.getEvents().addListener("inventory", this::updateInventory);
         gameStateInteraction = new GameStateInteraction();
         attackCooldown = 0;
@@ -144,87 +140,40 @@ public class PlayerActions extends Component {
     }
 
     /**
+<<<<<<< HEAD
+     * Converts the screen coords to a grid position and then places the selected structure
+     * doesn't exist at the grid position, otherwise upgrades the existing structure.
+=======
      * Converts the screen coords to a grid position and then places a wall if a
      * wall
      * doesn't exist at the grid position, otherwise upgrades the wall.
+>>>>>>> feature/player
      *
      * @param screenX - the x coord of the screen
      * @param screenY - the y coord of teh screen
      */
-    void placeWallOrUpgradeWall(int screenX, int screenY) {
+    void place(int screenX, int screenY) {
         // gets the gridPosition of the wall from the screen click
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
         GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
 
-        // gets the structure at that position if it exists.
-        Entity structure = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
-
-        // if structure doesn't exist at position, adds wall.
-        if (structure == null) {
-            Entity wall = BuildablesFactory.createCustomWall(WallType.basic, entity);
-            updateResources(-2);
-            ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, gridPosition, false, false);
-            wall.getComponent(JoinableComponent.class).notifyNeighbours(true);
-            // if the existing structure is a wall, attempt upgrade.
-        } else if (structure instanceof Wall existingWall) {
-            if (existingWall.getWallType() == WallType.basic) {
-                updateResources(-2);
-                structure.dispose();
-                this.entityService.unregister(structure);
-                Entity wall = BuildablesFactory.createCustomWall(WallType.intermediate, entity);
-                ServiceLocator.getStructurePlacementService().PlaceStructureAt(wall, gridPosition, false, false);
-            }
-        }
-
-        // does nothing if the existing structure is not a wall.
+        var structurePicker = getEntity().getComponent(StructureToolPicker.class);
+        structurePicker.interact(gridPosition);
     }
 
     /**
-     * Converts the screen coords to a grid position and then places a gate at the
-     * grid position.
+     * Removes the structure the corresponding grid value from screen coords.
      *
      * @param screenX - the x coord of the screen
      * @param screenY - the y coord of teh screen
      */
-    private void placeGate(int screenX, int screenY) {
-        // gets the gridPosition of the wall from the screen click
+    void remove(int screenX, int screenY) {
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
         GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
-
-        // gets the structure at that position if it exists.
         Entity structure = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
 
-        // if structure doesn't exist at position, adds wall.
-        if (structure == null) {
-            updateResources(-2);
-            Entity gate = BuildablesFactory.createGate(entity);
-            ServiceLocator.getStructurePlacementService().PlaceStructureAt(gate, gridPosition, false, false);
-            gate.getComponent(JoinableComponent.class).notifyNeighbours(true);
-        }
-    }
-
-    /**
-     * Removes a wall or gate the corresponding grid value from screen coords.
-     *
-     * @param screenX - the x coord of the screen
-     * @param screenY - the y coord of teh screen
-     */
-    void removeWall(int screenX, int screenY) {
-        var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-        GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
-        Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
-
-        if (existingWall != null) {
-            var joinableComponent = existingWall.getComponent(JoinableComponent.class);
-
-            if (joinableComponent != null) {
-                joinableComponent.notifyNeighbours(false);
-            }
-
-            existingWall.dispose();
-            updateResources(1);
+        if (structure != null) {
             ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
-            this.entityService.unregister(existingWall);
         }
     }
 
@@ -241,23 +190,21 @@ public class PlayerActions extends Component {
         Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
 
         if (existingWall != null) {
-            if (existingWall.getComponent(CombatStatsComponent.class).getHealth() < existingWall
-                    .getComponent(CombatStatsComponent.class).getMaxHealth()) {
-                updateResources(-1);
-                entity.getComponent(HealthBarComponent.class)
-                        .updateHealth(entity.getComponent(CombatStatsComponent.class).getMaxHealth());
+            if (existingWall.getComponent(CombatStatsComponent.class).getHealth() < existingWall.getComponent(CombatStatsComponent.class).getMaxHealth()) {
+
+                entity.getComponent(HealthBarComponent.class).updateHealth(entity.getComponent(CombatStatsComponent.class).getMaxHealth());
             }
         }
     }
 
-    /**
-     * Updates the Unobtanium resource supply.
-     *
-     * @param change - how much to change the existing resource by.
-     */
-    void updateResources(int change) {
-        gameStateInteraction.updateResource(Resource.Solstite.toString(), change);
+    void changeStructure() {
+        var picker = entity.getComponent(StructureToolPicker.class);
 
+        if (picker == null) {
+            return;
+        }
+
+        picker.show();
     }
 
     public void setAttackCooldown(int cooldown) {

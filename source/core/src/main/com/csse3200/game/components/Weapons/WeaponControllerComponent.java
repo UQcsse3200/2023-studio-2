@@ -1,16 +1,10 @@
 package com.csse3200.game.components.Weapons;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.entities.Entity;
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 
-import java.util.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 
 /**
  * Class to control the movement of weapons that have been spawned
@@ -65,14 +59,7 @@ public class WeaponControllerComponent extends Component {
             case SLING_SHOT -> weapon_target_update();
             case ELEC_WRENCH -> weapon_meleeswing_update();
             case THROW_ELEC_WRENCH -> weapon_2_update();
-            case STICK -> null; // todo
-            case LASERGUN -> null;
-            case KATANA -> null;
-            case WOODHAMMER -> null;
-            case STONEHAMMER -> null;
-            case TEMP1 -> null;
-            case TEMP2 -> null;
-            case TEMP3 -> null;
+            default -> throw new IllegalStateException("Unexpected value: " + this.weaponType);
         };
 
 

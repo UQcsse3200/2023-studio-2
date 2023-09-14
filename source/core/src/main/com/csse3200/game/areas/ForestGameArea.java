@@ -4,39 +4,22 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.entities.factories.StructureFactory;
-import com.csse3200.game.entities.factories.BoxFactory;
 
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.NPCFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.entities.factories.PowerupFactory;
-import com.csse3200.game.entities.buildables.WallType;
-import com.csse3200.game.entities.factories.*;
-import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.entities.enemies.*;
-import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.services.StructurePlacementService;
-import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -47,8 +30,6 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
-import java.util.List;
-import static com.csse3200.game.ui.UIComponent.skin;
 
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -75,7 +56,6 @@ public class ForestGameArea extends GameArea {
       "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
       "images/box_boy_leaf.png",
       "images/RightShip.png",
-          "images/Companion1.png",
       "images/tree.png",
       "images/wall.png",
       "images/wall2.png",
@@ -108,9 +88,20 @@ public class ForestGameArea extends GameArea {
       "images/oldman_down_1.png",
       "images/base_enemy.png",
       "images/Troll.png",
+      "images/TurretOne.png",
+      "images/TurretTwo.png",
       "images/rangeEnemy.png",
       "images/stone_wall.png",
-      "images/player.png"
+      "images/companionSS.png",
+      "images/companionSS_0.png",
+      "images/companionSS_1.png",
+      "images/companionSS_2.png",
+      "images/companionSS_03.png",
+      "images/nebulite.png",
+      "images/solstite.png",
+      "images/durasteel.png",
+      "images/player.png",
+      "images/ExtractorAnimation.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
@@ -128,7 +119,9 @@ public class ForestGameArea extends GameArea {
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
       "images/playerSS.atlas",
-      "images/player.atlas"
+      "images/companionSS.atlas",
+      "images/player.atlas",
+      "images/ExtractorAnimation.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -200,7 +193,7 @@ public class ForestGameArea extends GameArea {
   private void spawnShip() {
     GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
             terrain.getMapBounds(0).sub(1, 1).y/3);
-    Entity ship = StructureFactory.createShip(game);
+    Entity ship = StructureFactory.createShip(game, null); //Doesn't implement winconditions
     spawnEntityAt(ship, spawnPosition, false, false);
   }
 
@@ -212,7 +205,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-//    terrain = terrainFactory.createTerrain();
+    terrain = terrainFactory.createTerrain("map/base.tmx");
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
@@ -304,25 +297,25 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+      Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
     for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+      Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
     for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
+      Entity melee = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
     for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+      Entity ranged = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
       spawnEntityAt(ranged, randomPos, true, true);
     }
   }
@@ -340,7 +333,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
+    Entity boss = EnemyFactory.createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
     //boss.addComponent(new DialogComponent(dialogueBox));
   }

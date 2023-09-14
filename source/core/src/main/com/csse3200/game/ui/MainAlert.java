@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.GdxGame;
+
 import static com.csse3200.game.screens.MainMenuScreen.logger;
 
 public class MainAlert extends Dialog {
@@ -49,6 +50,4 @@ public class MainAlert extends Dialog {
         this.callback = callback;
         stage.addActor(this);
     }
-
-
 }

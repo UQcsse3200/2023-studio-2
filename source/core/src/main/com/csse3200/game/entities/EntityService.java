@@ -2,11 +2,11 @@ package com.csse3200.game.entities;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
@@ -26,6 +26,20 @@ public class EntityService {
   }
 
   /**
+   * Gets the player entity in the EntityService
+   *
+   * @return Entity - the player entity, or null - no player found in EntityService
+   */
+  public Entity getPlayer() {
+    for (Entity entity : entities) {
+      if (entity.getEntityType().equals("player")) {
+        return entity;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Gets all entities belonging to a specified component class.
    *
    * Example:
@@ -35,10 +49,10 @@ public class EntityService {
    * @param componentClass The component class to search for
    * @return An array of entities who have the specified component
    */
-  public Array<Entity> getEntitiesByComponent(Class<? extends Component> componentClass) {
-    Array<Entity> filteredEntities = new Array<>();
+  public List<Entity> getEntitiesByComponent(Class<? extends Component> componentClass) {
+    List<Entity> filteredEntities = new ArrayList<>();
 
-    for (Entity entity : entities) {
+    for (Entity entity : new  Array.ArrayIterator<>(entities)) {
       if (entity.getComponent(componentClass) != null) {
         filteredEntities.add(entity);
       }
@@ -83,4 +97,5 @@ public class EntityService {
       entity.dispose();
     }
   }
+
 }

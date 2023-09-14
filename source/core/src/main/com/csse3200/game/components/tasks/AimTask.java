@@ -1,10 +1,13 @@
 package com.csse3200.game.components.tasks;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Null;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.GameTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Waits around for a set amount of time and then fires a projectile at a target.
  */
 public class AimTask extends DefaultTask implements PriorityTask {
-
   private final int priority = 5;
   private static final Logger logger = LoggerFactory.getLogger(AimTask.class);
   private final float waitTime;
@@ -21,18 +23,23 @@ public class AimTask extends DefaultTask implements PriorityTask {
   private ShootTask aimTask;
   private final Entity target;
   private final float range;
-
+  private GameTime timer;
+  private long lastShotTime;
+  private int numshots = 0;
 
   /**
    * creates an aim task.
    *
    * @param waitTime How long in seconds to wait between firing a projectile.
-   * @param target The target for
+   * @param target   The target for
+   * @param range    The range before entity stops chasing and starts shooting.
    */
   public AimTask(float waitTime, Entity target, float range) {
     this.waitTime = waitTime;
     this.target = target;
     this.range = range;
+    this.timer = new GameTime();
+    lastShotTime = timer.getTime();
   }
 
   @Override
@@ -50,6 +57,7 @@ public class AimTask extends DefaultTask implements PriorityTask {
 
     waitTask = new WaitTask(waitTime);
     waitTask.create(owner);
+
     aimTask = new ShootTask(target);
     aimTask.create(owner);
 
@@ -62,7 +70,7 @@ public class AimTask extends DefaultTask implements PriorityTask {
   @Override
   public void update() {
     if (currentTask.getStatus() != Status.ACTIVE) {
-      if (currentTask == waitTask) {
+      if (currentTask == waitTask && ((timer.getTime() - lastShotTime > 4000) || numshots == 0)) {
         startAiming();
       } else {
         startWaiting();
@@ -121,6 +129,8 @@ public class AimTask extends DefaultTask implements PriorityTask {
   private void startAiming() {
     logger.debug("Starting aiming");
     this.owner.getEntity().getEvents().trigger("standing");
+    lastShotTime = timer.getTime();
+    numshots = 1;
     swapTask(aimTask);
   }
 
@@ -137,4 +147,5 @@ public class AimTask extends DefaultTask implements PriorityTask {
     currentTask.start();
   }
 }
+
 

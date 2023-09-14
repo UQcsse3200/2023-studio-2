@@ -1,5 +1,7 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
+import java.util.List;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -8,13 +10,17 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.components.tasks.BossTask;
+import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.concurrency.JobSystem;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -37,16 +43,19 @@ import static com.csse3200.game.entities.factories.EnvironmentFactory.createEnvi
 public class EarthGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     //private DialogueBox dialogueBox;
+    private static List<Entity> itemsOnMap = new ArrayList<>();
     private static final int NUM_TREES = 7;
     private static final int NUM_MELEE_PTE = 2;
     private static final int NUM_MELEE_DTE = 2;
     private static final int NUM_RANGE_PTE = 2;
     private static final int NUM_RANGE_DTE = 2;
     private static final int NUM_POWERUPS = 3;
+    private static final int NUM_Laboratory = 4;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 40);
     private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
-    //private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);
-    private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(35, 2);
+    private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 40);
     private static final GridPoint2 PORTAL_ONE = new GridPoint2(30, 40);
     private static final GridPoint2 PORTAL_TWO = new GridPoint2(78, 10);
     private static final float WALL_WIDTH = 0.1f;
@@ -55,25 +64,23 @@ public class EarthGameArea extends GameArea {
     private List<Entity> spawnedTreeTopEntities = new ArrayList<>();
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
-            "images/extractor.png",
-            "images/broken_extractor.png",
+            "images/refinedExtractor2.png",
+            "images/refinedBrokenExtractor.png",
             "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
-            "images/RightShip.png",
+            "images/LeftShip.png",
             "images/wall.png",
-            "images/Companion1.png",
             "images/wall2.png",
             "images/gate_close.png",
             "images/gate_open.png",
-            "images/ghost_king.png",
-            "images/ghost_1.png",
-            "images/base_enemy.png",
-            "images/Troll.png",
-            "images/rangeEnemy.png",
+            "images/companion_DOWN.png",
+            "images/enemy/base_enemy.png",
+            "images/enemy/Troll.png",
+            "images/enemy/rangeEnemy.png",
             "images/stone_wall.png",
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
-            "images/Ship.png",
+            "images/refinedShip.png",
             "images/stone_wall.png",
             "images/oldman_down_1.png",
             "images/player_blank.png",
@@ -90,36 +97,49 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_lights.png",
             "map/treetop.png",
             "map/portal.png",
+            "images/TurretOne.png",
+            "images/TurretTwo.png",
             "images/playerSS_6.png",
+            "images/enemy/Bull.png",
+            "images/laboratory.png",
+            "images/Potion.png",
             "images/upgradetree/exit.png",
             "images/upgradetree/background.png",
             "images/upgradetree/upgradebench.png",
+            "images/Spawner.png",
             "images/upgradetree/hammer1.png",
             "images/upgradetree/hammer2.png",
             "images/upgradetree/stick.png",
             "images/upgradetree/exit.png",
-            "images/player.png"
+            "images/player.png",
+            "images/nebulite.png",
+            "images/solstite.png",
+            "images/durasteel.png",
+            "images/f_button.png",
+            "images/ExtractorAnimation.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
-            "images/ghost.atlas",
-            "images/ghostKing.atlas",
-            "images/base_enemy.atlas",
-            "images/troll_enemy.atlas",
             "images/rangeEnemy.atlas",
-            "images/stone_wall.atlas",
-            "images/dirt_wall.atlas",
             "images/botanist.atlas",
-            "images/boss_enemy.atlas",
+            "images/enemy/boss_enemy.atlas",
+            "images/enemy/base_enemy.atlas",
+            "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
             "images/playerSS.atlas",
             "images/wrench.atlas",
             "images/baseballbat.atlas",
-            "images/open_gate.atlas",
-            "images/closed_gate.atlas",
+            "images/structures/closed_gate.atlas",
+            "images/structures/open_gate.atlas",
+            "images/structures/dirt_wall.atlas",
+            "images/structures/stone_wall.atlas",
             "images/botanist.atlas",
+            "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
-            "images/player.atlas"
+            "images/player.atlas",
+            "images/enemy/bull.atlas",
+            "images/enemy/Night.atlas",
+            "images/ExtractorAnimation.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
@@ -127,6 +147,8 @@ public class EarthGameArea extends GameArea {
     private static final String[] earthMusic = {backgroundMusic};
 
     private final TerrainFactory terrainFactory;
+    private final ArrayList<Entity> targetables;
+    private Entity laboratory;
     private GdxGame game;
 
     /**
@@ -138,6 +160,8 @@ public class EarthGameArea extends GameArea {
         super();
         this.game = game;
         this.terrainFactory = terrainFactory;
+        this.targetables = new ArrayList<>();
+        ServiceLocator.registerGameArea(this);
     }
 
     /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -154,12 +178,12 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
+        laboratory = spawnLaboratory();
         spawnUpgradeBench();
-
         spawnShip();
-        spawnPlayer(PLAYER_SPAWN);
-        spawnCompanion(player);
-
+        this.player = spawnPlayer();
+        this.companion = spawnCompanion(player);
+        spawnPotion(companion,laboratory);
         spawnEnemies();
         spawnSecretEnemies();
         spawnBoss();
@@ -167,6 +191,7 @@ public class EarthGameArea extends GameArea {
         spawnAsteroids();
         spawnTreeTopLayer();
         spawnBotanist();
+        spawnSpawner();
 
         playMusic();
 
@@ -182,6 +207,11 @@ public class EarthGameArea extends GameArea {
         StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
         Entity portal = PortalFactory.createPortal(x, y, player);
         placementService.PlaceStructureAt(portal, position, false, false);
+    }
+    public static void removeItemOnMap(Entity entityToRemove) {
+        entityToRemove.setEnabled(false);
+        itemsOnMap.remove(entityToRemove);
+        Gdx.app.postRunnable(entityToRemove::dispose);
     }
 
     /**
@@ -251,27 +281,56 @@ public class EarthGameArea extends GameArea {
     }
 
     private void spawnExtractors() {
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) 100);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) 500);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) 1000);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Nebulite.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Durasteel.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Solstite.toString(),  (int) 4);
+
         GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(0, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 100.0, 1);
+        Entity extractor = StructureFactory.createExtractor(30, Resource.Nebulite, (long) 1000.0, 10);
         spawnEntityAt(extractor, pos, true, false);
         targetables.add(extractor);
 
         pos = new GridPoint2(terrain.getMapBounds(0).sub(8, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        extractor = StructureFactory.createExtractor(30, Resource.Solstite, (long) 100.0, 1);
+        extractor = StructureFactory.createExtractor(30, Resource.Solstite, (long) 1000.0, 10);
         targetables.add(extractor);
         spawnEntityAt(extractor, pos, true, false);
 
         pos = new GridPoint2(terrain.getMapBounds(0).sub(16, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
-        extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
+        extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 1000.0, 10);
         targetables.add(extractor);
         spawnEntityAt(extractor, pos, true, false);
 
-        ResourceDisplay resourceDisplayComponent = new ResourceDisplay()
+        ResourceDisplay resourceDisplayComponent = new ResourceDisplay(5, 32, 1000)
                 .withResource(Resource.Durasteel)
                 .withResource(Resource.Solstite)
                 .withResource(Resource.Nebulite);
         Entity resourceDisplay = new Entity().addComponent(resourceDisplayComponent);
         spawnEntity(resourceDisplay);
+    }
+    public Entity getExtractorIcon(){
+        GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(24, 2).x/2, terrain.getMapBounds(0).sub(2, 2).y/2);
+        Entity extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
+        targetables.add(extractor);
+        extractor.setScale(new Vector2(0.5f,0.5f));
+        spawnEntityAt(extractor, pos, true, false);
+        return extractor;
+    }
+
+    public Entity getExtractor() {
+        GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).sub(24, 2).x / 2, terrain.getMapBounds(0).sub(2, 2).y / 2);
+        Entity extractor = StructureFactory.createExtractor(30, Resource.Durasteel, (long) 100.0, 1);
+        targetables.add(extractor);
+        spawnEntityAt(extractor, pos, true, false);
+        return extractor;
     }
 
     /**
@@ -280,8 +339,13 @@ public class EarthGameArea extends GameArea {
     private void spawnShip() {
         GridPoint2 spawnPosition = new GridPoint2(7*terrain.getMapBounds(0).sub(1, 1).x/12,
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
-        Entity ship = StructureFactory.createShip(game);
+        Entity ship = StructureFactory.createShip(game, null); //Doesn't implement windconditions
         spawnEntityAt(ship, spawnPosition, false, false);
+    }
+
+    private void spawnSpawner() {
+        Entity spawner = StructureFactory.createSpawner(targetables);
+        spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
     }
 
     /**
@@ -326,6 +390,12 @@ public class EarthGameArea extends GameArea {
                 ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
     }
+    private Entity spawnLaboratory(){
+        GridPoint2 randomPos = new GridPoint2(34,19);
+        Entity newLaboratory = LaboratoryFactory.createLaboratory();
+        spawnEntityAt(newLaboratory, randomPos, true,false);
+        return newLaboratory;
+    }
 
 
     private void spawnTrees() {
@@ -340,18 +410,19 @@ public class EarthGameArea extends GameArea {
     }
 
     private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer();
-        spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-        targetables.add(newPlayer);
-        player = newPlayer;
-        return newPlayer;
+        //TODO: Think of solution for sharing player between screens (Currently it keeps getting disposed!!)
+        this.player = PlayerFactory.createPlayer();
+        this.player.getEvents().addListener("death", () -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH));
+        ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", this.player);
+        spawnEntityAt(this.player, PLAYER_SPAWN, true, true);
+        targetables.add(this.player);
+        return this.player;
     }
     private Entity spawnCompanion(Entity playerEntity) {
         Entity newCompanion = CompanionFactory.createCompanion(playerEntity);
         PhysicsComponent playerPhysics = playerEntity.getComponent(PhysicsComponent.class);
         //calculate the player position
         Vector2 playerPosition = playerPhysics.getBody().getPosition();
-
         spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
         targetables.add(newCompanion);
         return newCompanion;
@@ -360,6 +431,8 @@ public class EarthGameArea extends GameArea {
     /**
      * Spawns a set number of health and speed powerups at random locations
      */
+
+
     private void spawnPowerups() {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -375,6 +448,12 @@ public class EarthGameArea extends GameArea {
             spawnEntityAt(speedPowerup, randomPos2, true, false);
         }
     }
+    private void spawnPotion(Entity companionEntity ,Entity laboratoryEntity){
+        Entity newPotion = PotionFactory.createDeathPotion(companionEntity, laboratoryEntity);
+        itemsOnMap.add(newPotion);
+        GridPoint2 pos = new GridPoint2(34, 18);
+        spawnEntityAt(newPotion, pos, true, false);
+    }
 
     /**
      * Spawns all the enemies detailed in the Game Area.
@@ -386,19 +465,19 @@ public class EarthGameArea extends GameArea {
         // Spawning enemies based on set number of each type
         for (int i = 0; i < NUM_MELEE_PTE; i++) {
             GridPoint2 randomPos1 = RandomUtils.random(minPos, maxPos);
-            Entity meleePTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.PTE);
+            Entity meleePTE = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
             spawnEntityAt(meleePTE, randomPos1, true, true);
         }
 
         for (int i = 0; i < NUM_MELEE_DTE; i++) {
             GridPoint2 randomPos2 = RandomUtils.random(minPos, maxPos);
-            Entity meleeDTE = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+            Entity meleeDTE = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
             spawnEntityAt(meleeDTE, randomPos2, true, true);
         }
 
         for (int i = 0; i < NUM_RANGE_PTE; i++) {
             GridPoint2 randomPos3 = RandomUtils.random(minPos, maxPos);
-            Entity rangePTE = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+            Entity rangePTE = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
             spawnEntityAt(rangePTE, randomPos3, true, true);
         }
     }
@@ -454,7 +533,7 @@ public class EarthGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
         GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
+        Entity boss = EnemyFactory.createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
         spawnEntityAt(boss, randomPos, true, true);
         //boss.addComponent(new DialogComponent(dialogueBox));
 
@@ -468,6 +547,7 @@ public class EarthGameArea extends GameArea {
         music.setVolume(settings.musicVolume);
         music.play();
     }
+
 
     private void loadAssets() {
         logger.debug("Loading assets");
@@ -514,5 +594,14 @@ public class EarthGameArea extends GameArea {
         super.dispose();
         ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
         this.unloadAssets();
+    }
+
+    public Entity getPlayer() {
+        return player;
+  }
+
+  public void setCompanion(Entity Companion){companion=Companion;}
+    public Entity getCompanion() {
+        return companion;
     }
 }

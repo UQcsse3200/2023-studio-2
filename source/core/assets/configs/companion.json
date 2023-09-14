@@ -1,9 +1,10 @@
 
 {
-  "health": 150,
+  "health": 50,
   "baseAttack": 5,
   "attackMultiplier": 1,
   "isImmune": false,
   "gold": 10,
-  "favouriteColour": "peach"
+  "favouriteColour": "peach",
+  "spritePath": "images/comp_spritesheet.atlas"
 }

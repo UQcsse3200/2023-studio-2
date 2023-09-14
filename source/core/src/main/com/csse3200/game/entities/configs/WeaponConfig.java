@@ -1,9 +1,11 @@
 package com.csse3200.game.entities.configs;
 
+import com.csse3200.game.components.Weapons.WeaponType;
+
 /**
  * Defines each entries properties stored in wall config file to be loaded by the Wall Factory.
  */
-public class WeaponConfig {
+public class WeaponConfig extends BaseEntityConfig {
     //Direction Speed
     public float weaponSpeed = 0;
     //Ticks before despawn
@@ -19,6 +21,7 @@ public class WeaponConfig {
 
     public float imageScale = 1;
 
-    //Texture
-    public String textureAtlas = "images/wrench.atlas";
+    public WeaponType type;
+
+    public String iconPath;
 }

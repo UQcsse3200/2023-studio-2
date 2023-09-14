@@ -28,33 +28,34 @@ public class ProjectileFactory {
     static final ProjectileConfigs configs =
             FileLoader.readClass(ProjectileConfigs.class, "configs/projectile.json");
 
+    //TODO: Remove target location and shooter in exchange for a vector and damage properties in config?
     /**
-     * Creates A projectile, using the stats of the shooter which will fire towards a certain location.
+     * Creates a projectile, using the stats of the shooter which will fire towards a certain location.
      *
      * @param targetLocation The location where the projectile is aimed
      * @param shooter The entity which fired the projectile
+     * @param config The configuration file to match the bullet to
      * @return The projectile entity
      */
-    public static Entity createEnemyBullet(Vector2 targetLocation, Entity shooter) {
+    public static Entity createEnemyBullet(Vector2 targetLocation, Entity shooter, EnemyBulletConfig config) {
         int damage = shooter.getComponent(CombatStatsComponent.class).getAttack();
 
         Entity enemy = createBaseBullet();
 
         AITaskComponent aiComponent = new AITaskComponent();
 
+        //TODO: Change this to a vector?
         aiComponent.addTask(new ProjectileMovementTask(targetLocation, 10, 100f, 100f));
 
-        EnemyBulletConfig config = configs.GetProjectileConfig();
-
-        TextureAtlas atlas = new TextureAtlas(config.atlas);
+        TextureAtlas atlas = new TextureAtlas(config.spritePath);
 
         // Animations for the bullet
         AnimationRenderComponent animator =
-                new AnimationRenderComponent(
-                        atlas);
+                new AnimationRenderComponent(atlas);
         animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("explode",0.3f, Animation.PlayMode.LOOP);
+        animator.addAnimation("stand",0.3f, Animation.PlayMode.LOOP);
 
 
         enemy
@@ -65,7 +66,20 @@ public class ProjectileFactory {
 
         enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 
+
         return enemy;
+    }
+
+    //TODO: REMOVE - LEGACY
+    /**
+     * Creates A projectile, using the stats of the shooter which will fire towards a certain location.
+     *
+     * @param targetLocation The location where the projectile is aimed
+     * @param shooter The entity which fired the projectile
+     * @return The projectile entity
+     */
+    public static Entity createEnemyBullet(Vector2 targetLocation, Entity shooter) {
+        return createEnemyBullet(targetLocation, shooter, configs.GetProjectileConfig());
     }
 
     /**
@@ -75,10 +89,12 @@ public class ProjectileFactory {
      */
     public static Entity createBaseBullet() {
         // Makes bullet entity with physical interaction components
+        PhysicsMovementComponent movementComponent = new PhysicsMovementComponent();
+        movementComponent.changeMaxSpeed(new Vector2(2f, 2f));
         Entity bullet =
                 new Entity()
                         .addComponent(new PhysicsComponent())
-                        .addComponent(new PhysicsMovementComponent())
+                        .addComponent(movementComponent)
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                         .addComponent(new ProjectileAttackComponent((short) (

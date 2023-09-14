@@ -6,7 +6,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.rendering.RenderComponent;
@@ -63,6 +62,11 @@ public class TerrainComponent extends RenderComponent {
   public GridPoint2 getMapBounds(int layer) {
     TiledMapTileLayer terrainLayer = (TiledMapTileLayer)tiledMap.getLayers().get(layer);
     return new GridPoint2(terrainLayer.getWidth(), terrainLayer.getHeight());
+  }
+
+  public boolean gridWithinBounds(int x, int y) {
+    GridPoint2 block = new GridPoint2(x, y);
+    return getMapBounds(TERRAIN_LAYER).x > block.x && getMapBounds(TERRAIN_LAYER).y > block.y;
   }
 
   public TiledMap getMap() {

@@ -14,9 +14,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.WeaponConfig;
+import com.csse3200.game.entities.configs.WeaponConfigs;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +44,11 @@ public class UpgradeDisplay extends Window {
     private final InputOverrideComponent inputOverrideComponent;
     private final Entity upgradeBench;
     private Label materialsLabel;
+    private final WeaponConfigs weaponConfigs;
+    private final Entity player;
+    private UpgradeNode buildRoot;
+    private UpgradeNode meleeRoot;
+    private UpgradeNode rangedRoot;
 
     // Tree stuff
     private final List<UpgradeNode> trees = new ArrayList<>();
@@ -70,6 +80,9 @@ public class UpgradeDisplay extends Window {
 
         this.upgradeBench = upgradeBench;
 
+        weaponConfigs = FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
+        player = ServiceLocator.getEntityService().getPlayer();
+
         setupWindowDimensions();
 
         Label materialsLabel = createMaterialsLabel();
@@ -91,27 +104,31 @@ public class UpgradeDisplay extends Window {
      * These trees dictate the progression of weapons that can be unlocked.
      */
     private void buildTrees() {
-        // todo: possibly create config file
+        WeaponConfig stickConfig = weaponConfigs.GetWeaponConfig(WeaponType.STICK);
+        WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.KATANA);
+        WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.SLING_SHOT);
+        WeaponConfig rangedWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.THROW_ELEC_WRENCH);
+        WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
+        WeaponConfig stonehammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.STONEHAMMER);
+
         // Melee Tree
-        UpgradeNode meleeRoot = new UpgradeNode(WeaponType.STICK, "images/upgradetree/stick.png");
-        UpgradeNode swordNode = new UpgradeNode(WeaponType.KATANA, "images/upgradetree/sword.png");
+        meleeRoot = new UpgradeNode(stickConfig, WeaponType.STICK);
+        UpgradeNode swordNode = new UpgradeNode(katanaConfig, WeaponType.KATANA);
         meleeRoot.addChild(swordNode);
         trees.add(meleeRoot);
 
         // Ranged Tree
-        UpgradeNode rangedRoot = new UpgradeNode(WeaponType.THROW_ELEC_WRENCH, "images/wrench.png");
-        UpgradeNode wrenchNode = new UpgradeNode(WeaponType.TEMP1, "images/speedpowerup.png");
-        UpgradeNode wrenchNode2 = new UpgradeNode(WeaponType.TEMP2, "images/meteor.png");
-        rangedRoot.addChild(wrenchNode);
+        rangedRoot = new UpgradeNode(slingshotConfig, WeaponType.SLING_SHOT);
+        UpgradeNode wrenchNode2 = new UpgradeNode(rangedWrenchConfig, WeaponType.THROW_ELEC_WRENCH);
         rangedRoot.addChild(wrenchNode2);
-        wrenchNode2.addChild((new UpgradeNode(WeaponType.SLING_SHOT, "images/meteor.png")));
-        wrenchNode2.addChild((new UpgradeNode(WeaponType.TEMP3, "images/meteor.png")));
         trees.add(rangedRoot);
 
         // Build Tree
-        UpgradeNode buildRoot = new UpgradeNode(WeaponType.WOODHAMMER, "images/upgradetree/hammer1.png");
-        UpgradeNode hammer2 = new UpgradeNode(WeaponType.STONEHAMMER, "images/upgradetree/hammer2.png");
+        buildRoot = new UpgradeNode(woodhammerConfig, WeaponType.WOODHAMMER);
+        UpgradeNode hammer2 = new UpgradeNode(stonehammerConfig, WeaponType.STONEHAMMER);
+        UpgradeNode hammer3 = new UpgradeNode(stonehammerConfig, WeaponType.STEELHAMMER);
         buildRoot.addChild(hammer2);
+        hammer2.addChild(hammer3);
         trees.add(buildRoot);
     }
 
@@ -128,7 +145,7 @@ public class UpgradeDisplay extends Window {
         for (UpgradeNode treeRoot : trees) {
             float treeX = (trees.indexOf(treeRoot) + 1) * getWidth() / (trees.size() + 1);
             float startY = getHeight() - 200;  // start near the top
-            createAndPositionNodes(treeRoot, treeX, startY, group);
+            createAndPositionNodes(treeRoot, treeX, startY, group, 0);
         }
 
         return group;
@@ -142,7 +159,7 @@ public class UpgradeDisplay extends Window {
      * @param y    The y-coordinate of the node.
      * @param group The group where the buttons will be added.
      */
-    private void createAndPositionNodes(UpgradeNode node, float x, float y, Group group) {
+    private void createAndPositionNodes(UpgradeNode node, float x, float y, Group group, int depth) {
 
         // base case
         if (node == null) {
@@ -151,6 +168,7 @@ public class UpgradeDisplay extends Window {
 
         node.setX(x);
         node.setY(y);
+        node.setDepth(depth);
 
         ImageButton button = createWeaponButtons(node, SIZE, x, y);
         group.addActor(button);
@@ -163,10 +181,11 @@ public class UpgradeDisplay extends Window {
             float childX = currentX;
             float childY = y - VERTICAL_SPACING;
 
-            createAndPositionNodes(child, childX, childY, group);
+            createAndPositionNodes(child, childX, childY, group, depth + 1);
             currentX += HORIZONTAL_SPACING;
         }
     }
+
 
     /**
      * Draws a background box around each upgrade node.
@@ -281,44 +300,83 @@ public class UpgradeDisplay extends Window {
      * @return The created ImageButton.
      */
     private ImageButton createWeaponButtons(UpgradeNode node, float size, float posX, float posY) {
-        TextureRegionDrawable drawable = createTextureRegionDrawable(node.getImagePath(), size);
-        ImageButton button = new ImageButton(drawable);
+        TextureRegionDrawable buttonDrawable = createTextureRegionDrawable(node.getImagePath(), size);
+        ImageButton weaponButton = new ImageButton(buttonDrawable);
+        weaponButton.setPosition(posX, posY);
 
         UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
 
-        Image lock = null;
-        if (!stats.isWeaponUnlocked(node.getWeaponType())) {
-            lock = new Image(new Texture("images/upgradetree/lock.png"));
-            lock.setSize(size, size);
-            button.addActor(lock);
-            button.setColor(0.5f,0.5f,0.5f,0.5f);
-        }
-        button.setPosition(posX, posY);
+        Image lockImage = lockItem(node, stats, size, weaponButton);
 
-        final Image finalLockImage = lock;
-        button.addListener(new ChangeListener() {
+        weaponButton.addListener(unlockWeapon(node, stats, weaponButton, lockImage));
+
+        return weaponButton;
+    }
+
+    /**
+     * Draws a lock image on a current node
+     * @param node the current node to lock
+     * @param stats the upgrade tree node statistics
+     * @param size the size of the lock
+     * @param weaponButton the weapons image button
+     * @return the lock image
+     */
+    private Image lockItem(UpgradeNode node, UpgradeTree stats, float size, ImageButton weaponButton) {
+        if (stats.isWeaponUnlocked(node.getWeaponType())) return null;
+
+        Image lock = new Image(new Texture("images/upgradetree/lock.png"));
+        lock.setSize(size, size);
+        weaponButton.addActor(lock);
+        weaponButton.setColor(0.5f, 0.5f, 0.5f, 0.5f); // grey out the image
+
+        return lock;
+    }
+
+    /**
+     * Unlocks a weapon at a given node
+     * @param node the weapon node to unlock
+     * @param stats the weapons upgradetree stats
+     * @param weaponButton the weapons image button
+     * @param lockImage the lock image
+     * @return a change listener
+     */
+    private ChangeListener unlockWeapon(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton, Image lockImage) {
+        return new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                int requiredMaterials = 50;  // todo: make each level cost more
-
-                // Try to unlock a new weapon if the node is locked
-                if (!stats.isWeaponUnlocked(node.getWeaponType())) {
-                    if (stats.getMaterials() >= requiredMaterials) {
-                        stats.subtractMaterials(requiredMaterials);
-                        stats.unlockWeapon(node.getWeaponType());
-                        button.setColor(1f,1f,1f,1f);
-
-                        materialsLabel.setText(String.format("Materials: %d", stats.getMaterials()));
-
-                        if (finalLockImage != null) {
-                            finalLockImage.remove();
-                        }
-                    }
-                }
+                handleWeaponUnlocking(node, stats, weaponButton, lockImage);
             }
-        });
+        };
+    }
 
-        return button;
+    /**
+     *
+     * @param node the current weapon node to unlock
+     * @param stats the weapons upgrade tree stats
+     * @param weaponButton the weapons image button
+     * @param lockImage the lock image
+     */
+    private void handleWeaponUnlocking(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton, Image lockImage) {
+        int baseMaterialCost = 50;
+        int requiredMaterials = baseMaterialCost * (node.getDepth() + 1);
+
+        if (stats.isWeaponUnlocked(node.getWeaponType()) || stats.getMaterials() < requiredMaterials) return;
+
+        stats.subtractMaterials(requiredMaterials);
+        stats.unlockWeapon(node.getWeaponType());
+        weaponButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
+        materialsLabel.setText(String.format("Materials: %d", stats.getMaterials()));
+
+        StructureToolPicker structurePicker = player.getComponent(StructureToolPicker.class);
+
+        // Update the StructurePickers level
+        if (node.getDepth() == structurePicker.getLevel() + 1) {
+            structurePicker.setLevel(node.getDepth());
+        }
+
+        if (lockImage != null) {
+            lockImage.remove();
+        }
     }
 
     /**

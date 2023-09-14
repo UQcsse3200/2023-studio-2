@@ -197,7 +197,7 @@ public class EarthGameArea extends GameArea {
 
         playMusic();
 
-        spawnPortal(PORTAL_ONE, 40, 5);
+        spawnPortal(PORTAL_ONE, 78, 5);
         spawnPortal(PORTAL_TWO, 16, 20);
 
     }
@@ -626,6 +626,10 @@ public class EarthGameArea extends GameArea {
         super.dispose();
         ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
         this.unloadAssets();
+    }
+
+    public static Entity getPlayer() {
+        return player;
     }
 
   public void setCompanion(Entity Companion){companion=Companion;}

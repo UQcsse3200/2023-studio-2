@@ -69,4 +69,6 @@ public class HoleInputComponent extends InputComponent {
         ServiceLocator.getRenderService().getStage().addActor(label);
     }
 
+
 }
+

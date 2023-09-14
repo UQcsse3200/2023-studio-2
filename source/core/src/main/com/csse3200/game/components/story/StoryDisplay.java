@@ -8,8 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -17,7 +16,6 @@ import com.csse3200.game.components.mainmenu.InsertButtons;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 
 /**
@@ -52,12 +50,12 @@ public class StoryDisplay extends UIComponent {
         table.bottom().right();
 
         storyImages = new ArrayList<>();
-        storyImages.add("images/P1_B.png");
-        storyImages.add("images/P2_B.png");
-        storyImages.add("images/P3_B.png");
-        storyImages.add("images/P4_B.png");
-        storyImages.add("images/P5_B.png");
-        storyImages.add("images/P6_B.png");
+        storyImages.add("images/Story_1.png");
+        storyImages.add("images/Story_2.png");
+        storyImages.add("images/Story_3.png");
+        storyImages.add("images/Story_4.png");
+        storyImages.add("images/Story_5.png");
+        storyImages.add("images/Story_6.png");
         start = 0;
         end = 6;
 

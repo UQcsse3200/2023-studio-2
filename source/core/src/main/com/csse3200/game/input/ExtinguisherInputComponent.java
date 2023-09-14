@@ -41,4 +41,6 @@ public class ExtinguisherInputComponent extends InputComponent {
     public void dispose() {
         super.dispose();
     }
+
 }
+

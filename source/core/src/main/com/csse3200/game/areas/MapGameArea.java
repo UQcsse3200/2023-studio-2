@@ -291,7 +291,7 @@ public class MapGameArea extends GameArea{
 
         BotanistConfig botanistConfig = mapConfig.areaEntityConfig.botanist;
         if (botanistConfig != null) {
-            Entity botanist = NPCFactory.createBotanist(botanistConfig);
+            Entity botanist = NPCFactory.createBotanist();
             spawnEntityAt(botanist, botanistConfig.position, false, false);
         }
         //TODO: Implement this?

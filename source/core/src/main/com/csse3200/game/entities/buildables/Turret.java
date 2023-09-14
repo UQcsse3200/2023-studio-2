@@ -104,7 +104,7 @@ public class Turret extends PlaceableEntity{
             System.out.println("Turret ammo refilled!");
         } else {
             System.out.println("Insufficient resources to refill turret ammo.");
-            // You can add additional logic here for handling insufficient resources.
+
         }
     }
 

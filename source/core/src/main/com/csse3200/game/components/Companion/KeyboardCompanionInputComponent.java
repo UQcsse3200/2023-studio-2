@@ -256,7 +256,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
     private void triggerWalkEvent() {
         if (this.getTesting() == 0) {
             if (walkDirection.epsilonEquals(Vector2.Zero)) {
-                entity.getEvents().trigger("moveStop");
+                entity.getEvents().trigger("walkStop");
             } else {
                 if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
                     entity.getEvents().trigger("walkUpLeft");
@@ -275,7 +275,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                 } else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
                     entity.getEvents().trigger("walkRight");
                 }
-                entity.getEvents().trigger("move", walkDirection);
+                entity.getEvents().trigger("walk", walkDirection);
             }
         }
     }

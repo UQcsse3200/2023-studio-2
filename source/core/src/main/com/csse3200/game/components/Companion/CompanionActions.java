@@ -92,7 +92,7 @@ public class CompanionActions extends Component {
             MAX_NORMAL_SPEED.set(8f,8f);
         } else {
             speedBoostActive = false;
-            MAX_NORMAL_SPEED.set(4f, 4f);
+            MAX_NORMAL_SPEED.set(5f, 5f);
         }
     }
     //functionality for basic player tracking

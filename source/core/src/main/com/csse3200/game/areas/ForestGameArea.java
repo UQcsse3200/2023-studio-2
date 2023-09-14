@@ -84,6 +84,16 @@ public class ForestGameArea extends GameArea {
       "images/TurretTwo.png",
       "images/rangeEnemy.png",
       "images/stone_wall.png",
+       "images/companionSS.png",
+          "images/companionSS_0.png",
+          "images/companionSS_1.png",
+          "images/companionSS_2.png",
+          "images/companionSS_03.png",
+      "images/player.png",
+          "images/Potion1re.png",
+          "images/Potion3re.png",
+          "images/Potion2re.png",
+          "images/Potion4re.png",
       "images/companionSS.png",
       "images/companionSS_0.png",
       "images/companionSS_1.png",
@@ -126,6 +136,7 @@ public class ForestGameArea extends GameArea {
   private GdxGame game;
 
   private Entity player;
+  private Entity companion;
   private Entity botanist;
   private DialogueBox dialogueBox;
 
@@ -255,6 +266,7 @@ public class ForestGameArea extends GameArea {
 
     spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
     targetables.add(newCompanion);
+    companion = newCompanion;
     return newCompanion;
   }
 

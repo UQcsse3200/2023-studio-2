@@ -31,12 +31,32 @@ class PlaceableEntityTest {
 
     @Mock
     private PlaceableComponent placeable;
+    @Mock
+    private PlaceableComponent2 placeable2;
+    @Mock
+    private PlaceableComponent3 placeable3;
+
+    @Mock
+    private Component notPlaceable;
 
     @Test
     void placed() {
         placeableEntity.placed();
 
         verify(placeable, times(1)).placed();
+        verify(placeable2, times(1)).placed();
+        verify(placeable3, times(1)).placed();
+        verifyNoInteractions(notPlaceable);
+    }
+
+    @Test
+    void willPlace() {
+        placeableEntity.willPlace();
+
+        verify(placeable, times(1)).willPlace();
+        verify(placeable2, times(1)).willPlace();
+        verify(placeable3, times(1)).willPlace();
+        verifyNoInteractions(notPlaceable);
     }
 
     @Test
@@ -44,12 +64,33 @@ class PlaceableEntityTest {
         placeableEntity.removed();
 
         verify(placeable, times(1)).removed();
+        verify(placeable2, times(1)).removed();
+        verify(placeable3, times(1)).removed();
+        verifyNoInteractions(notPlaceable);
+    }
+
+    @Test
+    void willRemove() {
+        placeableEntity.willRemove();
+
+        verify(placeable, times(1)).willRemove();
+        verify(placeable2, times(1)).willRemove();
+        verify(placeable3, times(1)).willRemove();
+        verifyNoInteractions(notPlaceable);
     }
 
     @BeforeEach
     void before() {
         placeableEntity = new PlaceableEntity();
         placeableEntity.addComponent(placeable);
+        placeableEntity.addComponent(placeable2);
+        placeableEntity.addComponent(placeable3);
+        placeableEntity.addComponent(notPlaceable);
+
+        reset(placeable);
+        reset(placeable2);
+        reset(placeable3);
+        reset(notPlaceable);
     }
 
     @AfterEach
@@ -57,16 +98,13 @@ class PlaceableEntityTest {
         ServiceLocator.clear();
     }
 
-    class PlaceableComponent extends Component implements Placeable {
+    private class PlaceableComponent extends Component implements Placeable {
 
-        @Override
-        public void placed() {
+    }
+    private class PlaceableComponent2 extends Component implements Placeable {
 
-        }
+    }
+    private class PlaceableComponent3 extends Component implements Placeable {
 
-        @Override
-        public void removed() {
-
-        }
     }
 }

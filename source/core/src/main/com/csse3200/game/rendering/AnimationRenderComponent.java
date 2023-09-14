@@ -165,6 +165,21 @@ public class AnimationRenderComponent extends RenderComponent {
     return currentAnimation != null && currentAnimation.isAnimationFinished(animationPlayTime);
   }
 
+  /**
+   * Returns the total duration of a given animation.
+   *
+   * @param name Name of the animation.
+   * @return The total duration of the animation in seconds, or -1 if the animation is not found.
+   */
+  public float getAnimationDuration(String name) {
+    Animation<TextureRegion> animation = animations.getOrDefault(name, null);
+    if (animation == null) {
+      logger.error("Animation {} not found.", name);
+      return -1;
+    }
+    return animation.getAnimationDuration();
+  }
+
   @Override
   protected void draw(SpriteBatch batch) {
     if (currentAnimation == null) {

@@ -12,7 +12,7 @@ float
   index: 0
 float
   rotate: false
-  xy: 0, 0
+  xy: 500, 0
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
@@ -33,7 +33,7 @@ angry_float
   index: 0
 angry_float
   rotate: false
-  xy: 0, 0
+  xy: 500, 0
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
@@ -48,6 +48,20 @@ explode
 explode
   rotate: false
   xy: 1500, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+stand
+  rotate: false
+  xy: 0, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+stand
+  rotate: false
+  xy: 500, 0
   size: 500, 500
   orig: 500, 500
   offset: 0, 0

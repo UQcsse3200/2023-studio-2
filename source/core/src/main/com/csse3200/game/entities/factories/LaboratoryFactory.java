@@ -14,39 +14,54 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-
-
+/**
+ * The LaboratoryFactory class is responsible for creating laboratory entities in the game.
+ */
 public class LaboratoryFactory {
-    public static Entity createLaboratory(){
-        Entity Laboratory =
-                new Entity()
-                        .addComponent(new TextureRenderComponent("images/laboratory.png"))
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.LABORATORY))
-                        .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.LABORATORY))
-                        .addComponent( new CombatStatsComponent(4,0,0,false));
-        Laboratory.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        Laboratory.getComponent(TextureRenderComponent.class).scaleEntity();
-        Laboratory.setScale(4f, 4.0f);
-        PhysicsUtils.setScaledCollider(Laboratory, 0.6f, 0.4f);
-        Laboratory.scaleHeight(2.0f);
-        Laboratory.getComponent(CombatStatsComponent.class).setHealth(0);
 
-        InteractLabel interactLabel = new InteractLabel(); //code for interaction prompt
-        Laboratory.addComponent(new DistanceCheckComponent(5f, interactLabel));
-        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
+    /**
+     * Creates a new laboratory entity with default properties.
+     *
+     * @return The created laboratory entity.
+     */
+    public static Entity createLaboratory() {
+        // Create a new entity for the laboratory
+        Entity laboratory = new Entity()
+                .addComponent(new TextureRenderComponent("images/laboratory.png"))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.LABORATORY))
+                .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.LABORATORY))
+                .addComponent(new CombatStatsComponent(4, 0, 0, false));
 
-        Laboratory.addComponent(new InteractableComponent(entity -> {
-            CombatStatsComponent healthStats = Laboratory.getComponent(CombatStatsComponent.class);
+        // Set the laboratory's body type and scale
+        laboratory.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+        laboratory.getComponent(TextureRenderComponent.class).scaleEntity();
+        laboratory.setScale(4f, 4.0f);
+        PhysicsUtils.setScaledCollider(laboratory, 0.6f, 0.4f);
+        laboratory.scaleHeight(2.0f);
 
+        // Set the laboratory's initial health
+        laboratory.getComponent(CombatStatsComponent.class).setHealth(0);
 
+        // Add an interactable component to the laboratory
+        laboratory.addComponent(new InteractableComponent(entity -> {
+            CombatStatsComponent healthStats = laboratory.getComponent(CombatStatsComponent.class);
+
+            // Check if the laboratory is dead
             if (healthStats.isDead()) {
-                LabWindow minigame = LabWindow.MakeNewLaboratory(Laboratory);
-                ServiceLocator.getRenderService().getStage().addActor(minigame);
+                LabWindow labWindow = LabWindow.MakeNewLaboratory(laboratory);
+                ServiceLocator.getRenderService().getStage().addActor(labWindow);
             }
         }, 5f));
-        return Laboratory;
+
+        return laboratory;
     }
+
+    /**
+     * Private constructor to prevent instantiation.
+     *
+     * @throws IllegalStateException If an attempt is made to instantiate this utility class.
+     */
     private LaboratoryFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }

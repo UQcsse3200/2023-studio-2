@@ -47,8 +47,9 @@ import static com.csse3200.game.ui.UIComponent.skin;
  * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class MainGameScreen extends ScreenAdapter {
-  private TitleBox titleBox;
-  private static boolean alive = true;
+private TitleBox titleBox;
+private static boolean alive = true;
+private static boolean companionalive = true;
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png",
           "images/structure-icons/wall.png",
@@ -60,6 +61,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final PhysicsEngine physicsEngine;
 
   private Entity player;
+  private Entity companion;
 
   private GameArea gameArea;
   private TerrainFactory terrainFactory;
@@ -70,6 +72,7 @@ public class MainGameScreen extends ScreenAdapter {
   public MainGameScreen(GdxGame game) {
     this.game = game;
     this.alive = true;
+    this.companionalive = true;
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -100,9 +103,8 @@ public class MainGameScreen extends ScreenAdapter {
     gameArea.create();
     player = ((EarthGameArea) gameArea).getPlayer();
     player.getEvents().addListener("deathscreen", this::initiateDeathScreen);
-    player = ((MapGameArea) gameArea).getPlayer();
-    player.getEvents().addListener("death", this::initiateDeathScreen); //todo: ?
-    titleBox = new TitleBox(game, "Title", skin);
+    companion = ((EarthGameArea) gameArea).getCompanion();
+    companion.getEvents().addListener("death", this::initiateCompanionDeathScreen);
 
     itemBox = new ItemBox(((EarthGameArea) gameArea).getExtractorIcon(), renderer);
     InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -131,6 +133,9 @@ public class MainGameScreen extends ScreenAdapter {
   public void initiateDeathScreen() {
     alive = false;
   }
+  public void initiateCompanionDeathScreen() {
+    companionalive = false;
+  }
 
   @Override
   public void render(float delta) {
@@ -150,6 +155,9 @@ public class MainGameScreen extends ScreenAdapter {
     if (alive == false) {
       logger.info("Launching player death screen");
       game.setScreen(GdxGame.ScreenType.PLAYER_DEATH);
+    } else if (companionalive == false) {
+      logger.info("Launching companion death screen");
+      game.setScreen(GdxGame.ScreenType.COMPANION_DEATH);
     }
 
   }

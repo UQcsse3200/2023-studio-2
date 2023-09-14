@@ -19,8 +19,8 @@ public class InventoryComponent extends Component {
   private final HashMap<Integer, WeaponType> equippedWMap = new HashMap<Integer, WeaponType>();
 
   public void create() {
-    equippedWMap.put(1, WeaponType.MELEE_WRENCH);
-    equippedWMap.put(2, WeaponType.RANGED_SLINGSHOT);
+    equippedWMap.put(1, WeaponType.MELEE_KATANA);
+    equippedWMap.put(2, WeaponType.RANGED_BOOMERANG);
     equippedWMap.put(3, WeaponType.WOODHAMMER);
   }
 

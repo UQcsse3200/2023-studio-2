@@ -26,7 +26,7 @@ public class GameAreaConfig {
 
     public AreaEntityConfig areaEntityConfig = null;
 
-    public String[] getTextures() {
+    public String[] getEntityTextures() {
         List<String> textures = new ArrayList<>();
 
         if (areaEntityConfig != null) {

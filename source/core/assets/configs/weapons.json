@@ -1,39 +1,77 @@
 {
-  "SLING_SHOT": {
-    "weaponSpeed": 3,
-    "weaponDuration": 2500,
-    "rotationSpeed": 0,
-    "initialRotationOffset": 0,
-    "imageRotationOffset": 45,
-    "spritePath": "images/sling_shot.atlas",
-    "imageScale" : 0.2,
-    "type": "SLING_SHOT",
-    "iconPath" : "images/sling_shot.png"
-  },
-
-  "ELEC_WRENCH": {
-    "weaponSpeed": 0.75,
-    "weaponDuration": 50,
-    "rotationSpeed": 6,
-    "initialRotationOffset": 90,
-    "imageRotationOffset": 45,
-    "attackCooldown": 10,
-    "spritePath": "images/wrench.atlas",
-    "imageScale" : 1,
-    "type": "ELEC_WRENCH",
-    "iconPath" : "images/wrench.png"
-  },
-
-  "THROW_ELEC_WRENCH": {
+  "RANGED_SLINGSHOT": {
     "weaponSpeed": 10,
     "weaponDuration": 50,
     "rotationSpeed": 0,
     "initialRotationOffset": 0,
     "imageRotationOffset": 45,
-    "spritePath": "images/wrench.atlas",
+    "textureAtlas": "images/weapons/slingshot.atlas",
     "imageScale" : 1,
-    "type": "THROW_ELEC_WRENCH",
-    "iconPath" : "images/wrench.png"
+    "animationType" : 1,
+    "imagePath" : "images/weapons/slingshotStatic.png"
+  },
+
+  "RANGED_BOOMERANG": {
+    "weaponSpeed": 4,
+    "weaponDuration": 155,
+    "rotationSpeed": 2,
+    "initialRotationOffset": 0,
+    "imageRotationOffset": 45,
+    "textureAtlas": "images/weapons/boomerang.atlas",
+    "imageScale" : 0.5,
+    "animationType" : 1,
+    "imagePath" : "images/weapons/boomerangStatic.png"
+  },
+
+  "RANGED_HOMING": {
+    "weaponSpeed": 3,
+    "weaponDuration": 300,
+    "rotationSpeed": 0,
+    "initialRotationOffset": 0,
+    "imageRotationOffset": 45,
+    "textureAtlas": "images/weapons/rocket.atlas",
+    "imageScale" : 1.2,
+    "animationType" : 8,
+    "imagePath" : "images/weapons/rocketImage.png"
+  },
+
+  "MELEE_WRENCH": {
+    "weaponSpeed": 10,
+    "weaponDuration": 10,
+    "rotationSpeed": 1,
+    "initialRotationOffset": -90,
+    "imageRotationOffset": 45,
+    "attackCooldown": 100,
+    "textureAtlas": "images/weapons/wrench.atlas",
+    "imageScale" : 0.8,
+    "animationType" : 1,
+    "imagePath" : "images/weapons/wrench.png"
+  },
+
+  "MELEE_KATANA": {
+    "weaponSpeed": 4,
+    "weaponDuration": 20,
+    "rotationSpeed": 1,
+    "initialRotationOffset": -90,
+    "imageRotationOffset": 45,
+    "attackCooldown": 100,
+    "textureAtlas": "images/weapons/sword.atlas",
+    "imageScale" : 0.8,
+    "animationType" : 4,
+    "imagePath" : "images/upgradetree/sword.png"
+  },
+
+  "MELEE_BEE_STING": {
+    "weaponSpeed": 4,
+    "weaponDuration": 45,
+    "rotationSpeed": 0,
+    "initialRotationOffset": 0,
+    "imageRotationOffset": 45,
+    "attackCooldown": 10,
+    "textureAtlas": "images/weapons/sword.atlas",
+    "imageScale" : 0.6,
+    "animationType" : 4,
+    "imagePath" : "images/weapons/beeSting.png"
   },
 
   "STICK": {
@@ -43,34 +81,26 @@
     "initialRotationOffset": 90,
     "imageRotationOffset": 45,
     "attackCooldown": 10,
-    "spritePath": "images/upgradetree/stick.png",
+    "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
-    "type": "STICK"
-  },
-
-  "KATANA": {
-    "weaponSpeed": 0.75,
-    "weaponDuration": 50,
-    "rotationSpeed": 6,
-    "initialRotationOffset": 90,
-    "imageRotationOffset": 45,
-    "attackCooldown": 10,
-    "spritePath": "images/upgradetree/sword.png",
-    "imageScale" : 1
+    "imagePath" : "images/upgradetree/stick.png"
   },
 
   "WOODHAMMER": {
-    "spritePath": "images/upgradetree/hammer1.png",
-    "imageScale" : 1
+    "textureAtlas": "images/weapons/sword.atlas",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer1.png"
   },
 
   "STONEHAMMER": {
-    "spritePath": "images/upgradetree/hammer2.png",
-    "imageScale" : 1
+    "textureAtlas": "images/weapons/sword.atlas",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer2.png"
   },
 
   "STEELHAMMER": {
-    "spritePath": "images/upgradetree/hammer2.png",
-    "imageScale" : 1
+    "textureAtlas": "images/weapons/sword.atlas",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer2.png"
   }
 }

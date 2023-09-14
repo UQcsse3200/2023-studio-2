@@ -52,7 +52,7 @@ public class DeathScreenDisplay extends UIComponent {
 
         // Create buttons for restart and exit options
         TextButton exitBtn = new TextButton("Exit to Main Menu", skin);
-        TextButton restartBtn = new TextButton("Restart Level", skin);
+        TextButton respawnBtn = new TextButton("Respawn", skin);
 
         exitBtn.addListener(
                 new ChangeListener() {
@@ -62,7 +62,7 @@ public class DeathScreenDisplay extends UIComponent {
                         entity.getEvents().trigger("exit");
                     }
                 });
-        restartBtn.addListener(
+        respawnBtn.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -73,7 +73,7 @@ public class DeathScreenDisplay extends UIComponent {
 
         // Arrange UI elements in a table layout
         tableImage.add(titleImage);
-        tableButtons.add(restartBtn).padBottom(50f);
+        tableButtons.add(respawnBtn).padBottom(50f);
         tableButtons.row();
         tableButtons.add(exitBtn).padBottom(300f);
 

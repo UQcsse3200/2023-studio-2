@@ -155,12 +155,6 @@ public class TouchAttackComponent extends Component {
       }, 2000);
       targetStats.hit(combatStats);
 
-
-//      if (entity.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.WEAPON) {
-//        System.out.println("Hit");
-//        return;
-//      }
-
       // Apply knockback
       PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
       if (physicsComponent != null && knockbackForce > 0f) {

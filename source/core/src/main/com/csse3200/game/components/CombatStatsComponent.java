@@ -5,6 +5,7 @@
  */
 package com.csse3200.game.components;
 
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,7 @@ public class CombatStatsComponent extends Component {
   private final int maxHealth;
   private int attackMultiplier;
   private Boolean isImmune;
+  private int lives;
 
   /**
    * Initializes a CombatStatsComponent with specified attributes.
@@ -40,6 +42,7 @@ public class CombatStatsComponent extends Component {
     this.setAttackMultiplier(attackMultiplier);
     this.setImmunity(isImmune);
   }
+
   /**
    * Returns true if the entity's health is 0 or less, indicating that it's dead; otherwise, returns false.
    *
@@ -83,11 +86,13 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       if (isDead() && entity.getEntityType().equals("player")) {
+        entity.getComponent(KeyboardPlayerInputComponent.class).playerDead();
+        entity.getEvents().trigger("playerDeath");
         final Timer timer = new Timer();
         TimerTask killPlayer = new TimerTask() {
           @Override
           public void run() {
-            entity.getEvents().trigger("death");
+            entity.getEvents().trigger("deathscreen");
             timer.cancel();
             timer.purge();
           }
@@ -104,6 +109,7 @@ public class CombatStatsComponent extends Component {
             }
           };
           timer1.schedule(killCompanion,500);
+
       } else if (isDead() && entity.getEntityType().equals("playerWeapon")) {
         entity.getEvents().trigger("death", 0);
       }
@@ -207,6 +213,34 @@ public class CombatStatsComponent extends Component {
    */
   public int getAttack() {
     return getBaseAttack() * getAttackMultiplier();
+  }
+
+  /**
+   * Sets the number of lives player has left.
+   * @param lives
+   */
+  public void setLives(int lives) {
+    this.lives = lives;
+  }
+
+  /**
+   * Subtracts one life from player lives.
+   */
+  public void minusLife() {
+    this.lives -= 1;
+  }
+  /**
+   * Adds one life to player lives.
+   */
+  public void addLife() {
+    this.lives += 1;
+  }
+  /**
+   * returns number of lives player has left.
+   * @return number of lives
+   */
+  public int getLives() {
+    return this.lives;
   }
 
   /**

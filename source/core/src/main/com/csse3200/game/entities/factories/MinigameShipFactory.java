@@ -12,6 +12,7 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.files.FileLoader;
@@ -27,29 +28,16 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.csse3200.game.components.ships.ShipAnimationController;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
-/*
-public class ShipFactory {
-    private static final ShipConfig stats =
-            FileLoader.readClass(ShipConfig.class, "configs/ship.json");
-
- */
 
 public class MinigameShipFactory {
-    private static final MinigameConfigs minigameConfigs =
-            FileLoader.readClass(MinigameConfigs.class, "configs/minigame.json");
+
     private static final ShipConfig stats = FileLoader.readClass(ShipConfig.class, "configs/ship.json");
-
-    //TODO: REMOVE - LEGACY
-    public static Entity createMinigameShip() {
-        return createMinigameShip(minigameConfigs.ship);
-    }
-
     /**
      * Creates a new minigame ship to match the config file
      * @param config Configuration file to match ship to
      * @return Created minigame ship
      */
-    public static Entity createMinigameShip(BaseEntityConfig config) {
+    public static Entity createMinigameShip() {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForShip();
 
@@ -79,7 +67,8 @@ public class MinigameShipFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SHIP))
                         .addComponent(new ShipActions(stats.health, stats.fuel, stats.acceleration))
                         .addComponent(new ShipStatDisplay())
-                        .addComponent(inputComponent);
+                        .addComponent(inputComponent)
+                        .addComponent(new InteractionControllerComponent(false));
                         //.addComponent(new ShipStatsComponent(stats.health))
                         //.addComponent(new InventoryComponent(stats.gold))
                         //.addComponent(new TextureRenderComponent("images/Ship.png"))
@@ -90,12 +79,13 @@ public class MinigameShipFactory {
 
         PhysicsUtils.setScaledCollider(ship, 0.6f, 0.3f);
         ship.getComponent(ColliderComponent.class).setDensity(1.5f);
+        ship.getComponent(ShipStatDisplay.class).setShipActions(ship.getComponent(ShipActions.class));
         //ship.getComponent(TextureRenderComponent.class).scaleEntity();
 
         //Edited by Foref, changes physics to reflect space environment
         //With fixed rotation off, ship will spin without additional customization of shipactions
         //ship.getComponent(PhysicsComponent.class).getBody().setFixedRotation(false);
-        //Will disable fixed rotation once movement in a straight line is solved
+        //rotation too janky
         ship.getComponent(PhysicsComponent.class).getBody().setGravityScale(0);
 
         animator.startAnimation("Ship_UpStill");

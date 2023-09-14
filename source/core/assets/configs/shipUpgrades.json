@@ -1,0 +1,10 @@
+{
+  "healthUpgrade": {
+    "spritePath": "images/healthpowerup.png",
+    "type": "HEALTH_UPGRADE"
+  },
+  "fuelUpgrade": {
+    "spritePath": "images/speedpowerup.png",
+    "type": "FUEL_UPGRADE"
+  }
+}

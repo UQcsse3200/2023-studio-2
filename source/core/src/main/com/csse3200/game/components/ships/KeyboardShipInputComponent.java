@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.components.player.InteractionControllerComponent;
 
 /**
  * Input handler for the ship for keyboard.
@@ -27,15 +28,12 @@ public class KeyboardShipInputComponent extends InputComponent {
         switch (keycode) {
             case Keys.W, Keys.UP -> {
                 flyDirection.add(Vector2Utils.UP);
-                //flyDirection.add(Vector2Utils.RIGHT);
                 triggerFlyEvent();
-                //triggerAccelerateEvent();
                 return true;
             }
             case Keys.A,Keys.LEFT -> {
                 flyDirection.add(Vector2Utils.LEFT);
                 triggerFlyEvent();
-                //triggerLeftEvent();
                 return true;
             }
             case Keys.S,Keys.DOWN -> {
@@ -46,6 +44,16 @@ public class KeyboardShipInputComponent extends InputComponent {
             case Keys.D,Keys.RIGHT -> {
                 flyDirection.add(Vector2Utils.RIGHT);
                 triggerFlyEvent();
+                return true;
+            }
+
+            case Keys.F -> {
+                InteractionControllerComponent interactionController = entity
+                        .getComponent(InteractionControllerComponent.class);
+
+                if (interactionController != null) {
+                    interactionController.interact();
+                }
                 return true;
             }
 
@@ -68,15 +76,13 @@ public class KeyboardShipInputComponent extends InputComponent {
 
             case Keys.W, Keys.UP -> {
                 flyDirection.sub(Vector2Utils.UP);
-                //flyDirection.add(Vector2Utils.RIGHT);
                 triggerFlyEvent();
-                //triggerAccelerateEvent();
                 return true;
             }
             case Keys.A,Keys.LEFT-> {
                 flyDirection.sub(Vector2Utils.LEFT);
                 triggerFlyEvent();
-                //triggerLeftEvent();
+
                 return true;
             }
             case Keys.S,Keys.DOWN -> {
@@ -102,7 +108,6 @@ public class KeyboardShipInputComponent extends InputComponent {
                 return true;
             }
 
-
             default -> {
                 return false;
             }
@@ -118,14 +123,6 @@ public class KeyboardShipInputComponent extends InputComponent {
         }
     }
 
-    private void triggerAccelerateEvent() {
-        if (flyDirection.epsilonEquals(Vector2.Zero)) {
-            entity.getEvents().trigger("flyStop");
-        } else {
-            entity.getEvents().trigger("boostRight", flyDirection);
-        }
-    }
-
     private void triggerBrakeOnEvent() {
         entity.getEvents().trigger("brakeOn");
     }
@@ -134,8 +131,10 @@ public class KeyboardShipInputComponent extends InputComponent {
         entity.getEvents().trigger("brakeOff");
     }
 
+    /* Rotation attempt 1 was a Failure
     private void triggerLeftEvent() {
         entity.getEvents().trigger("turnLeft");
     }
+     */
 }
 

@@ -46,11 +46,8 @@ public class ShipActions extends Component {
         animator = entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("fly", this::fly);
         entity.getEvents().addListener("flystop", this::flystop);
-        entity.getEvents().addListener("boostRight", this::thrustersOn);
         entity.getEvents().addListener("brakeOn", this::brakeOn);
         entity.getEvents().addListener("brakeOff", this::brakeOff);
-
-        entity.getEvents().addListener("turnLeft", this::turnLeft);
 
         body = physicsComponent.getBody();
         body.setLinearDamping(0); //prevents the ship from stopping for no physical reason
@@ -74,7 +71,6 @@ public class ShipActions extends Component {
         //impulse = (desiredVel - currentVel) * mass
         //uses impulse to apply velocity instantly
 
-        //if acceleration? how does one do it?
         //Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         //body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
         //body.applyForceToCenter(desiredVelocity.scl(3), true);
@@ -95,23 +91,6 @@ public class ShipActions extends Component {
      */
     void fly(Vector2 direction) {
         this.flyDirection = direction;
-        //this.currentVelocity = this.flyDirection.cpy();
-        //body.applyForceToCenter(this.currentVelocity.scl(this.currentAcceleration * 5), true);
-        moving = true;
-    }
-
-    void turnLeft() {
-        body.applyTorque(2, true);
-        moving = true;
-    }
-
-    /**
-     * BOOST
-     */
-    void thrustersOn(Vector2 direction) {
-        this.flyDirection = direction;
-        //this.currentVelocity = this.flyDirection.cpy();
-        //body.applyForceToCenter(this.currentVelocity.scl(this.currentAcceleration), true);
         moving = true;
     }
 
@@ -143,7 +122,7 @@ public class ShipActions extends Component {
     }
 
     void playAnimation(Vector2 direction) {
-        //double currentOrientation = Vector2Utils.angleTo(direction);
+
         double currentOrientation = Vector2Utils.angleTo(direction);
 
         if (currentOrientation == up) {
@@ -174,6 +153,47 @@ public class ShipActions extends Component {
 
 
     }
+
+    /**
+     * Changes the max available fuel for the ship
+     *
+     * @param fuel
+     */
+    public void setFuel(int fuel) {
+        this.maxFuel = fuel;
+    }
+
+    /**
+     * Changes the max health of the ship
+     *
+     * @param health
+     */
+    public void setHealth(int health) {
+        this.maxHealth = health;
+    }
+
+    /**
+     * get the amount of fuel
+     * @return maxFuel
+     */
+    public int getMaxFuel() {return this.maxFuel;}
+
+    /**
+     * get the amount of health
+     * @return maxHealth
+     */
+    public int getMaxHealth() {return this.maxHealth;}
+
+    /**
+     * Inform ShipStatsDisplay about new health value
+     */
+    public void updatedHealth() {entity.getEvents().trigger("updateShipHealth");}
+
+    /**
+     * Inform ShipStatsDisplay about new fuel value
+     */
+    public void updatedFuel() {entity.getEvents().trigger("updateShipFuel");}
+
 
 
 }

@@ -108,7 +108,8 @@ public class EarthGameArea extends GameArea {
             "images/solstite.png",
             "images/durasteel.png",
             "images/f_button.png",
-            "images/ExtractorAnimation.png"
+            "images/ExtractorAnimation.png",
+            "images/botanist.atlas"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -131,7 +132,8 @@ public class EarthGameArea extends GameArea {
             "images/player.atlas",
             "images/enemy/bull.atlas",
             "images/enemy/Night.atlas",
-            "images/ExtractorAnimation.atlas"
+            "images/ExtractorAnimation.atlas",
+            "images/botanist.atlas"
 
     };
     private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
@@ -234,7 +236,6 @@ public class EarthGameArea extends GameArea {
         // Arguments: entity, position, isCentered, isLocal
         spawnEntityAt(botanist, spawnPosition, true, false);
     }
-
     private void spawnAsteroids() {
         //Extra Spicy Asteroids
         GridPoint2 posAs = new GridPoint2(8, 8);

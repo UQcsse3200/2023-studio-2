@@ -19,4 +19,3 @@ public class InteractableComponent extends Component {
     }
 
 }
-

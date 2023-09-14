@@ -70,7 +70,8 @@ public class PlanetScreen extends ScreenAdapter {
             "images/structures/stone_wall.png",
             "images/structures/TurretOne.png",
             "images/structures/TurretTwo.png",
-            "images/structures/heal_icon.png"
+            "images/structures/heal_icon.png",
+            "images/botanist.png"
     };
 
     /**

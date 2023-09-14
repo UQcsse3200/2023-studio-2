@@ -7,6 +7,11 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.entities.Portal;
 
+/**
+ * Factory to create Portal entities.
+ *
+ * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
+ */
 public class PortalFactory {
 
     /**

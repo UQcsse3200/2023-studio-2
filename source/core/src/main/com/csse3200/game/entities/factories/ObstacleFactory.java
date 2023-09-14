@@ -22,14 +22,6 @@ import com.csse3200.game.entities.buildables.Wall;
 public class ObstacleFactory {
   protected static TerrainComponent terrain;
 
-
-  private static final WallConfigs configs =
-          FileLoader.readClass(WallConfigs.class, "configs/walls.json");
-
-  private static final AsteroidConfig asteroidCustom =
-          FileLoader.readClass(AsteroidConfig.class, "configs/asteroid.json");
-
-
   /**
    * Creates a tree entity.
    * @return entity

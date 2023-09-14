@@ -4,7 +4,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.HealthBarComponent;
@@ -21,7 +20,8 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.CombatStatsComponent;
 
 /**
- * Action component for interacting with the player. Player events should be initialised in create()
+ * Action component for interacting with the player. Player events should be
+ * initialised in create()
  * and when triggered should call methods within this class.
  */
 public class PlayerActions extends Component {
@@ -32,6 +32,7 @@ public class PlayerActions extends Component {
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
     private GameStateInteraction gameStateInteraction;
+    private int attackCooldown;
 
     @Override
     public void create() {
@@ -44,12 +45,16 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("remove", this::removeWall);
         entity.getEvents().addListener("dodged", this::dodged);
         entity.getEvents().addListener("repair", this::repairWall);
+        entity.getEvents().addListener("inventory", this::updateInventory);
         gameStateInteraction = new GameStateInteraction();
+        attackCooldown = 0;
     }
-
 
     @Override
     public void update() {
+        if (attackCooldown > 0) {
+            attackCooldown--;
+        }
         if (moving) {
             updateSpeed();
         }
@@ -95,12 +100,28 @@ public class PlayerActions extends Component {
         attackSound.play();
     }
 
-
     /**
      * Changes player's immunity status while dodging.
      */
     void dodged() {
         entity.getComponent(CombatStatsComponent.class).changeImmunityStatus();
+    }
+
+    void updateInventory(int i) {
+        switch (i) {
+            case 1:
+                entity.getComponent(InventoryComponent.class).setEquipped(1);
+                break;
+            case 2:
+                entity.getComponent(InventoryComponent.class).setEquipped(2);
+                break;
+            case 3:
+                entity.getComponent(InventoryComponent.class).setEquipped(3);
+                break;
+            default:
+                entity.getComponent(InventoryComponent.class).cycleEquipped();
+                break;
+        }
     }
 
     /**
@@ -123,7 +144,8 @@ public class PlayerActions extends Component {
     }
 
     /**
-     * Converts the screen coords to a grid position and then places a wall if a wall
+     * Converts the screen coords to a grid position and then places a wall if a
+     * wall
      * doesn't exist at the grid position, otherwise upgrades the wall.
      *
      * @param screenX - the x coord of the screen
@@ -156,7 +178,6 @@ public class PlayerActions extends Component {
 
         // does nothing if the existing structure is not a wall.
     }
-
 
     /**
      * Converts the screen coords to a grid position and then places a gate at the
@@ -208,7 +229,8 @@ public class PlayerActions extends Component {
     }
 
     /**
-     * Converts screen coords to grid coords and then repairs the wall at the grid position.
+     * Converts screen coords to grid coords and then repairs the wall at the grid
+     * position.
      *
      * @param screenX - the x coord of the screen
      * @param screenY - the y coord of teh screen
@@ -219,9 +241,11 @@ public class PlayerActions extends Component {
         Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
 
         if (existingWall != null) {
-            if (existingWall.getComponent(CombatStatsComponent.class).getHealth() < existingWall.getComponent(CombatStatsComponent.class).getMaxHealth()) {
+            if (existingWall.getComponent(CombatStatsComponent.class).getHealth() < existingWall
+                    .getComponent(CombatStatsComponent.class).getMaxHealth()) {
                 updateResources(-1);
-                entity.getComponent(HealthBarComponent.class).updateHealth(entity.getComponent(CombatStatsComponent.class).getMaxHealth());
+                entity.getComponent(HealthBarComponent.class)
+                        .updateHealth(entity.getComponent(CombatStatsComponent.class).getMaxHealth());
             }
         }
     }
@@ -235,4 +259,12 @@ public class PlayerActions extends Component {
         gameStateInteraction.updateResource(Resource.Solstite.toString(), change);
 
     }
- }
+
+    public void setAttackCooldown(int cooldown) {
+        this.attackCooldown = cooldown;
+    }
+
+    public int getAttackCooldown() {
+        return this.attackCooldown;
+    }
+}

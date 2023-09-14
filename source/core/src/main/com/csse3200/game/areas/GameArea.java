@@ -51,6 +51,10 @@ public abstract class GameArea implements Disposable {
     ServiceLocator.registerStructurePlacementService(structurePlacementService);
     handler.addListener("spawnExtractor", this::spawnExtractor);
     handler.addListener("placeStructure", this::spawnEntity);
+    handler.addListener("fireBullet",
+            (StructurePlacementService.SpawnEntityAtVectorArgs args) ->
+                    spawnEntityAtVector(args.entity, args.worldPos)
+  );
     handler.addListener("placeStructureAt",
             (StructurePlacementService.PlaceStructureAtArgs args) ->
                     spawnEntityAt(args.entity, args.tilePos, args.centerX, args.centerY)
@@ -153,4 +157,8 @@ public abstract class GameArea implements Disposable {
     return player;
   }
 
+  protected void spawnEntityAtVector(Entity entity, Vector2 worldPos) {
+    entity.setPosition(worldPos);
+    spawnEntity(entity);
+  }
 }

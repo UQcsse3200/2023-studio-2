@@ -31,7 +31,7 @@ public class Entity {
   private static final Logger logger = LoggerFactory.getLogger(Entity.class);
   private static int nextId = 0;
   private static final String EVT_NAME_POS = "setPosition";
-
+  private String entityType;
   private final int id;
   private final IntMap<Component> components;
   private final EventHandler eventHandler;
@@ -45,6 +45,7 @@ public class Entity {
 
 
   public Entity() {
+    this.entityType = "";
     id = nextId;
     nextId++;
     this.rotation = 0;
@@ -109,6 +110,22 @@ public class Entity {
     this.position.x = x;
     this.position.y = y;
     getEvents().trigger(EVT_NAME_POS, position.cpy());
+  }
+
+  /**
+   * Sets the type of entity
+   * @param type type of entity being created eg. player
+   */
+  public void setEntityType(String type) {
+    this.entityType = type;
+  }
+
+  /**
+   * Returns the type of entityS
+   * @return type of entity eg. player
+   */
+  public String getEntityType() {
+    return this.entityType;
   }
 
   /**
@@ -204,16 +221,16 @@ public class Entity {
   public Entity addComponent(Component component) {
     if (created) {
       logger.error(
-          "Adding {} to {} after creation is not supported and will be ignored", component, this);
+              "Adding {} to {} after creation is not supported and will be ignored", component, this);
       return this;
     }
     ComponentType componentType = ComponentType.getFrom(component.getClass());
     if (components.containsKey(componentType.getId())) {
       logger.error(
-          "Attempted to add multiple components of class {} to {}. Only one component of a class "
-              + "can be added to an entity, this will be ignored.",
-          component,
-          this);
+              "Attempted to add multiple components of class {} to {}. Only one component of a class "
+                      + "can be added to an entity, this will be ignored.",
+              component,
+              this);
       return this;
     }
     components.put(componentType.getId(), component);
@@ -237,8 +254,8 @@ public class Entity {
   public void create() {
     if (created) {
       logger.error(
-          "{} was created twice. Entity should only be registered with the entity service once.",
-          this);
+              "{} was created twice. Entity should only be registered with the entity service once.",
+              this);
       return;
     }
     createdComponents = components.values().toArray();
@@ -283,6 +300,10 @@ public class Entity {
     return id;
   }
 
+  public Vector2 getPosition1() {
+    return position;
+  }
+
   /**
    * Get the event handler attached to this entity. Can be used to trigger events from an attached
    * component, or listen to events from a component.
@@ -308,3 +329,8 @@ public class Entity {
     return String.format("Entity{id=%d}", id);
   }
 }
+
+
+
+
+

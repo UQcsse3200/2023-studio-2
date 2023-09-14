@@ -8,6 +8,7 @@ import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.ForestGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.LushGameArea;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
@@ -42,6 +43,7 @@ import static com.csse3200.game.ui.UIComponent.skin;
  */
 public class MainGameScreen extends ScreenAdapter {
   private TitleBox titleBox;
+private static boolean alive = true;
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -52,8 +54,12 @@ public class MainGameScreen extends ScreenAdapter {
 
   private Entity player;
 
+  private GameArea gameArea;
+  private TerrainFactory terrainFactory;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
+    this.alive = true;
 
     logger.debug("Initialising main game screen services");
     ServiceLocator.registerTimeSource(new GameTime());
@@ -86,8 +92,16 @@ public class MainGameScreen extends ScreenAdapter {
     //lushGameArea.create();
     //player = lushGameArea.getPlayer();
     player = GameArea.getPlayer();
+    player.getEvents().addListener("death", this::initiateDeathScreen);
     titleBox = new TitleBox(game, "Title", skin);
 
+  }
+
+  /**
+   * When player dies, the PlayerDeath screen is launched.
+   */
+  public void initiateDeathScreen() {
+    alive = false;
   }
 
   @Override
@@ -96,6 +110,10 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().update();
     followPlayer();
     renderer.render();
+    if (alive == false) {
+      logger.info("Launching player death screen");
+      game.setScreen(GdxGame.ScreenType.PLAYER_DEATH);
+    }
   }
 
   @Override
@@ -184,4 +202,5 @@ public class MainGameScreen extends ScreenAdapter {
     //Set new position
     renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
   }
+
 }

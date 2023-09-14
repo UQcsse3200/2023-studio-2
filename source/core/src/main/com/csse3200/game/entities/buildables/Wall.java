@@ -9,6 +9,7 @@ import com.csse3200.game.entities.configs.WallConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.components.joinable.JoinableComponent;
 import com.csse3200.game.components.joinable.JoinLayer;
@@ -53,6 +54,7 @@ public class Wall extends Entity {
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
+        addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
         addComponent(new CombatStatsComponent(config.health, 0,0,false));
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));

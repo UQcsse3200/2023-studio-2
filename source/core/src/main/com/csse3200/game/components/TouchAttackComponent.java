@@ -15,6 +15,8 @@ import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.areas.ForestGameArea;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.csse3200.game.ui.UIComponent.skin;
 
@@ -35,6 +37,8 @@ public class TouchAttackComponent extends Component {
   private float knockbackForce = 0f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
+  private boolean leftContact;
+  private Timer triggerTimer;
 
   /**
    * Creates a TouchAttackComponent that attacks entities on collision, without knockback.
@@ -56,14 +60,20 @@ public class TouchAttackComponent extends Component {
     this.knockbackForce = knockback;
   }
 
+  /**
+   * Creates listener that checks if current entity and a target entity come into contact.
+   */
   @Override
   public void create() {
     // Listen for collision events
     entity.getEvents().addListener("collisionStart", this::onCollisionStart);
+    entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
 
     // Retrieve necessary components
     combatStats = entity.getComponent(CombatStatsComponent.class);
     hitboxComponent = entity.getComponent(HitboxComponent.class);
+    leftContact = true;
+
   }
 
   /**
@@ -71,6 +81,13 @@ public class TouchAttackComponent extends Component {
    *
    * @param me The fixture associated with this entity's hitbox.
    * @param other The fixture of the colliding entity.
+   */
+  /**
+   * Initial collision between current entity and target entity.
+   * Deals single instance of damage when hit by enemy.
+   * Deals Damage over time if enemy hits a destructible and still in contact with entity.
+   * @param me The current entity as a Fixture
+   * @param other The Target entity as a Fixture
    */
   private void onCollisionStart(Fixture me, Fixture other) {
     if (hitboxComponent.getFixture() != me) {
@@ -82,17 +99,65 @@ public class TouchAttackComponent extends Component {
       // Doesn't match our target layer, ignore
       return;
     }
+    // Has come into contact
 
-    // Try to attack target.
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     Entity source = ((BodyUserData) me.getBody().getUserData()).entity;
     DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+    leftContact = false;
+    
+    // Targeting STRUCTURE entity type
+    if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+      // Damage Structure while still in contact
+      triggerTimer = new Timer();
+      // Schedule the trigger every 2 seconds
+      triggerTimer.scheduleAtFixedRate(new TimerTask() {
+        @Override
+        public void run() {
+          if (!leftContact) {
+            hitOnce(target, targetStats);
+          }
+        }
+      }, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
+    } else {
+      //hit once, push away
+      hitOnce(target, targetStats);
+    }
+  }
+
+  /**
+   * Helper Method that deals damage and knockback to Target
+   * @param target The Targeted Entity, usually the Player Entity
+   * @param targetStats The Targeted Entity's stats
+   */
+  private void hitOnce(Entity target, CombatStatsComponent targetStats){
     if (targetStats != null) {
 //      if(dialogue != null) {
 //        dialogue.showdialogue("You hit a Ghost");
 //      }
+      //targetStats.hit(combatStats);
+
+      // Valid damage dealt
+      entity.getEvents().trigger("enemyAttack");
       targetStats.hit(combatStats);
+
+
+//      if (entity.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.WEAPON) {
+//        System.out.println("Hit");
+//        return;
+//      }
+
+
+      // Gives a delay every time there is a collision for the
+      // attack animation to complete
+      Timer timer = new Timer();
+      timer.schedule(new TimerTask() {
+        @Override
+        public void run() {
+
+        }
+      }, 2000);
     }
 
     // Apply knockback
@@ -103,5 +168,15 @@ public class TouchAttackComponent extends Component {
       Vector2 impulse = direction.setLength(knockbackForce);
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
+  }
+
+  /**
+   * Indicates when current entity loses contact with target entity.
+   * @param me The current Entity's Fixture
+   * @param other The Target Entity's Fixture
+   */
+  private void onCollisionEnd(Fixture me, Fixture other) {
+    // Stop dealing tick damage
+    leftContact = true;
   }
 }

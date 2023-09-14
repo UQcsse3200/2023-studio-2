@@ -19,8 +19,8 @@ public class InventoryComponent extends Component {
   private final HashMap<Integer, WeaponType> equippedWMap = new HashMap<Integer, WeaponType>();
 
   public void create() {
-    equippedWMap.put(1, WeaponType.ELEC_WRENCH);
-    equippedWMap.put(2, WeaponType.SLING_SHOT);
+    equippedWMap.put(1, WeaponType.MELEE_KATANA);
+    equippedWMap.put(2, WeaponType.RANGED_BOOMERANG);
     equippedWMap.put(3, WeaponType.WOODHAMMER);
   }
 
@@ -36,6 +36,8 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Changes active inventory slot to a specific slot
+   * 
    * @param i - the weapon to be equipped
    */
   public void setEquipped(int i) {
@@ -45,7 +47,7 @@ public class InventoryComponent extends Component {
   /**
    * Replaces the specified slot with a given weapon.
    *
-   * @param slot the slot to be updated
+   * @param slot       the slot to be updated
    * @param weaponType the weapon type to be placed in the slot
    */
   public void replaceSlotWithWeapon(int slot, WeaponType weaponType) {
@@ -58,12 +60,12 @@ public class InventoryComponent extends Component {
 
   public void placeInSlot(WeaponType weaponType) {
     int slot = switch (weaponType) {
-        case STICK, KATANA, ELEC_WRENCH -> 1;           // melee
-        case SLING_SHOT, THROW_ELEC_WRENCH -> 2;        // ranged
-        case WOODHAMMER, STONEHAMMER, STEELHAMMER -> 3; // building
-        default -> throw new IllegalArgumentException("Slot not assigned: " + weaponType);
+      case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING -> 1; // melee
+      case RANGED_SLINGSHOT, RANGED_BOOMERANG, RANGED_HOMING -> 2; // ranged
+      case WOODHAMMER, STONEHAMMER, STEELHAMMER -> 3; // building
+      default -> throw new IllegalArgumentException("Slot not assigned: " + weaponType);
     };
-      replaceSlotWithWeapon(slot, weaponType);
+    replaceSlotWithWeapon(slot, weaponType);
   }
 
   /**
@@ -78,6 +80,8 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Returns the equipped weapon type
+   * 
    * @return WeaponType - Type of cureently equiped weapon
    */
   public WeaponType getEquippedType() {
@@ -85,9 +89,12 @@ public class InventoryComponent extends Component {
   }
 
   /**
+   * Updates weapon of the active inventory slot
+   * 
    * @param weaponType - Type of the new weapon
    */
   public void changeEquipped(WeaponType weaponType) {
+    System.out.println(weaponType);
     WeaponType equippedType = getEquippedType();
     this.equippedWMap.remove(equippedType);
     this.equippedWMap.put(getEquipped(), weaponType);

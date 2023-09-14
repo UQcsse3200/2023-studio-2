@@ -17,8 +17,7 @@ public class WeaponTargetComponent extends Component {
     /**
      * Class to store variables of a spawned weapon
      */
-    public WeaponTargetComponent(WeaponType weaponType,
-                                                Entity entity) {
+    public WeaponTargetComponent(WeaponType weaponType, Entity entity) {
         this.weaponType = weaponType;
         this.entity = entity;
         this.trackPrev = entity.getPosition();
@@ -32,22 +31,21 @@ public class WeaponTargetComponent extends Component {
         Vector2 pos;
 
         switch (this.weaponType) {
-            case SLING_SHOT -> {
+            case RANGED_HOMING:
                 KeyboardPlayerInputComponent keyboardPlayerInputComponent = entity.getComponent(KeyboardPlayerInputComponent.class);
                 //if (keyboardPlayerInputComponent == null) {return null;}
                 pos = keyboardPlayerInputComponent.getLastMousePos();
                 Vector2 eScl = entity.getScale();
-                return new Vector2(pos.x + eScl.x / 2 - 0.1f, pos.y + eScl.y / 2 - 0.1f);
-            }
-            case ELEC_WRENCH, KATANA -> {
+                return new Vector2(pos.x + eScl.x/2 - 0.1f, pos.y + eScl.y/2 - 0.1f);
+            case STATIC_WEAPON, MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING, RANGED_BOOMERANG:
                 var delta = entity.getPosition().sub(this.trackPrev);
                 this.trackPrev = entity.getPosition();
                 return delta;
-            }
-            default -> {
+
+            default:
                 return new Vector2(0, 0);
-            }
         }
     }
 }
+
 

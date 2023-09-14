@@ -24,7 +24,6 @@ import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.components.structures.StructurePicker;
 
-import java.util.ArrayList;
 
 /**
  * Factory to create a player entity.
@@ -56,7 +55,7 @@ public class PlayerFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/player.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/player/player.atlas", TextureAtlas.class));
     animator.addAnimation("Character_StandDown", 0.2f);
     animator.addAnimation("Character_StandUp", 0.2f);
     animator.addAnimation("Character_StandLeft", 0.2f);

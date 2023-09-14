@@ -85,7 +85,7 @@ public class UpgradeDisplay extends Window {
 
         setupWindowDimensions();
 
-        Label materialsLabel = createMaterialsLabel();
+        materialsLabel = createMaterialsLabel();
         Button exitButton = createExitButton();
         Group group = createUpgradeButtons();
 
@@ -104,31 +104,36 @@ public class UpgradeDisplay extends Window {
      * These trees dictate the progression of weapons that can be unlocked.
      */
     private void buildTrees() {
-        WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.ELEC_WRENCH);
-        WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.KATANA);
-        WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.SLING_SHOT);
-        WeaponConfig rangedWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.THROW_ELEC_WRENCH);
+        // todo: make this less bad
+        WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
+        WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA);
+        WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_SLINGSHOT);
+        WeaponConfig boomerangConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BOOMERANG);
         WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
         WeaponConfig stonehammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.STONEHAMMER);
+        WeaponConfig rocketConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_HOMING);
+        WeaponConfig beeConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_BEE_STING);
 
         // Melee Tree
-        UpgradeNode meleeRoot = new UpgradeNode(meleeWrench, WeaponType.ELEC_WRENCH);
-        UpgradeNode swordNode = new UpgradeNode(katanaConfig, WeaponType.KATANA);
-        meleeRoot.addChild(swordNode);
-        trees.add(meleeRoot);
+        UpgradeNode swordNode = new UpgradeNode(katanaConfig, WeaponType.MELEE_KATANA);
+        UpgradeNode wrenchNode = new UpgradeNode(meleeWrench, WeaponType.MELEE_WRENCH);
+        UpgradeNode beeNode = new UpgradeNode(beeConfig, WeaponType.MELEE_BEE_STING);
+        swordNode.addChild(wrenchNode);
+        swordNode.addChild(beeNode);
+        trees.add(swordNode);
 
         // Ranged Tree
-        UpgradeNode rangedRoot = new UpgradeNode(slingshotConfig, WeaponType.SLING_SHOT);
-        UpgradeNode wrenchNode2 = new UpgradeNode(rangedWrenchConfig, WeaponType.THROW_ELEC_WRENCH);
-        rangedRoot.addChild(wrenchNode2);
-        trees.add(rangedRoot);
+        UpgradeNode slingShot = new UpgradeNode(slingshotConfig, WeaponType.RANGED_SLINGSHOT);
+        UpgradeNode rocket = new UpgradeNode(rocketConfig, WeaponType.RANGED_HOMING);
+        UpgradeNode boomerang = new UpgradeNode(boomerangConfig, WeaponType.RANGED_BOOMERANG);
+        boomerang.addChild(slingShot);
+        slingShot.addChild(rocket);
+        trees.add(boomerang);
 
         // Build Tree
         buildRoot = new UpgradeNode(woodhammerConfig, WeaponType.WOODHAMMER);
         UpgradeNode hammer2 = new UpgradeNode(stonehammerConfig, WeaponType.STONEHAMMER);
-        UpgradeNode hammer3 = new UpgradeNode(stonehammerConfig, WeaponType.STEELHAMMER);
         buildRoot.addChild(hammer2);
-        buildRoot.addChild(hammer3);
         trees.add(buildRoot);
     }
 
@@ -408,7 +413,7 @@ public class UpgradeDisplay extends Window {
         stats.subtractMaterials(node.getNodeCost());
         stats.unlockWeapon(node.getWeaponType());
         weaponButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
-        materialsLabel.setText(String.format("Materials: %d", stats.getMaterials())); // todo: make dynamic
+        materialsLabel.setText(String.format(MATERIALS_FORMAT, stats.getMaterials())); // todo: make dynamic
 
         StructurePicker structurePicker = player.getComponent(StructurePicker.class);
         // Update the StructurePickers level
@@ -474,16 +479,5 @@ public class UpgradeDisplay extends Window {
         shapeRenderer.end();
 
         batch.begin();
-    }
-
-    /**
-     * Draws the UpgradeDisplay and its children.
-     *
-     * @param batch       The batch used for rendering.
-     * @param parentAlpha The parent alpha value, for transparency.
-     */
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
     }
 }

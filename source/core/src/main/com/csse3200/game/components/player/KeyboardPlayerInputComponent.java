@@ -26,7 +26,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
   private static final float DODGE_SPEED = 3f;
   private static final float WALK_SPEED = 1f;
-  private static final int DODGE_COOLDOWN = 3000;
+  private static final int DODGE_COOLDOWN = 300;
   private static final int DODGE_DURATION = 300;
 
   private Vector2 walkDirection = Vector2.Zero.cpy();
@@ -58,7 +58,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
     }
   /**
-   *
+   * Returns the last known position of the users cursor
    */
   public Vector2 getLastMousePos() {
     return this.lastMousePos.cpy();
@@ -75,7 +75,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   /**
    * Sets value for testing.
-   * 
    * @param testing
    */
   public void setTesting(int testing) {
@@ -151,9 +150,35 @@ public class KeyboardPlayerInputComponent extends InputComponent {
               triggerWalkEvent();
               return true;
           }
-          default -> {
+          case Keys.NUMPAD_0 -> {
+              playerInventory.changeEquipped(WeaponType.MELEE_WRENCH);
+              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+              return true;
+          } case Keys.NUMPAD_1 -> {
+              playerInventory.changeEquipped(WeaponType.MELEE_KATANA);
+              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+              return true;
+          } case Keys.NUMPAD_2 -> {
+              playerInventory.changeEquipped(WeaponType.MELEE_BEE_STING);
+              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+              return true;
+          } case Keys.NUMPAD_3 -> {
+              playerInventory.changeEquipped(WeaponType.RANGED_SLINGSHOT);
+              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+              return true;
+          } case Keys.NUMPAD_4 -> {
+              playerInventory.changeEquipped(WeaponType.RANGED_BOOMERANG);
+              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+              return true;
+          } case Keys.NUMPAD_5 -> {
+              playerInventory.changeEquipped(WeaponType.RANGED_HOMING);
+              entity.getEvents().trigger("changeWeapon", playerInventory.getEquippedType());
+              return true;
+          } default -> {
               return false;
           }
+
+
       }
   }
 
@@ -179,9 +204,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   /**
-   * TODO this is barely works
    * Function to repond to player mouse press
-   *
    * @param screenX - X position on screen that mouse was pressed
    * @param screenY - Y position on screen that mouse was pressed
    * @param pointer -
@@ -194,21 +217,28 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     this.lastMousePos = position.cpy();
     player = ServiceLocator.getEntityService().getPlayer();
     playerInventory = player.getComponent(InventoryComponent.class);
-    PlayerActions playerActions = entity.getComponent(PlayerActions.class);
-    int cooldown = playerActions.getAttackCooldown();
+    WeaponComponent weaponComponent = entity.getComponent(WeaponComponent.class);
+    int cooldown = weaponComponent.getAttackCooldown();
     if (cooldown != 0) {
       return false;
     }
 
-    double initRot = calcRotationAngleInDegrees(entity.getPosition(), position);
-
     switch (playerInventory.getEquipped()) {
       // melee/ranged
-      case 1, 2:
-        if (button == Input.Buttons.LEFT) {
-          entity.getEvents().trigger("weaponAttack", entity.getPosition(), playerInventory.getEquippedType(), (float) initRot);
-        }
-        break;
+        case 1, 2:
+            if (button == Input.Buttons.LEFT) {
+                InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+                WeaponType weapon = invComp.getEquippedType();
+
+                if (weapon == WeaponType.MELEE_BEE_STING) {
+                    for (int i = 0; i < 8; i++) {
+                        entity.getEvents().trigger("weaponAttack", weapon, position);
+                    }
+                } else {
+                    entity.getEvents().trigger("weaponAttack", weapon, position);
+                }
+            }
+            break;
       // building
       case 3:
         if (button == Input.Buttons.LEFT) {
@@ -224,12 +254,22 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     return true;
   }
 
+  /**
+   * Update location of known mouse position
+   * @param screenX, screenY Location of mouse press
+   * @return - false
+   */
   public boolean touchDragged(int screenX, int screenY, int pointer) {
     Vector2 position = mouseToGamePos(screenX, screenY);
     this.lastMousePos = position.cpy();
     return false;
   }
 
+    /**
+     * Update location of known mouse position
+     * @param screenX, screenY Location of mouse press
+     * @return - false
+     */
   public boolean mouseMoved(int screenX, int screenY) {
     Vector2 position = mouseToGamePos(screenX, screenY);
     this.lastMousePos = position.cpy();
@@ -276,7 +316,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   /**
    * Triggers dodge event.
    * Immunity is applied for 200 milliseconds whilst player moves.
-   *
    * @return
    */
   public int triggerDodgeEvent() {
@@ -311,8 +350,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     return this.DODGE_DURATION;
   }
 
+  
+  /** 
+   * Triggers inventory events
+   * @param i - sets inventory event type
+   */
   private void triggerInventoryEvent(int i) {
-      entity.getEvents().trigger("inventory", i);
+    entity.getEvents().trigger("inventory", i);
+    InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+    entity.getEvents().trigger("changeWeapon", invComp.getEquippedType());
   }
 
   /**
@@ -334,37 +380,31 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     timer.schedule(makeDodgeAvailable, DODGE_COOLDOWN);
   }
 
-  /**
-   * Calcuate angle between 2 points from the center point to the target point,
-   * angle is
-   * in degrees with 0degrees being in the direction of the positive x-axis going
-   * counter clockwise
-   * up to 359.9... until wrapping back around
-   * 
-   * @param centerPt - point from where angle is calculated from
-   * @param targetPt - Tart point to where angle is calculated to
-   * @return return angle between points in degrees from the positive x-axis
-   */
-  // https://stackoverflow.com/questions/9970281/java-calculating-the-angle-between-two-points-in-degrees
-  private double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt) {
-    double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
-    if (angle < 0) {
-      angle += 360;
-    }
-    return angle;
-  }
-
+    /**
+     * FUnction to known if a key is currently being pressed
+     * @param keycode - key to test if pressed
+     * @return true if the key is pressed otherwise false
+     */
   private boolean is_pressed(int keycode) {
     return keyFlags.getOrDefault(keycode, 0) == 1;
   }
 
-  // TODO this code needs to be looked over
+    /**
+     * Function to convert a mouse position to a game location
+     * @param screenX x of mouse  location
+     * @param screenY y of mouse location
+     * @return game position of mouse location
+     */
   private Vector2 mouseToGamePos(int screenX, int screenY) {
     Vector2 entityScale = entity.getScale();
     Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
     return new Vector2(mouse.x / 2 - entityScale.x / 2, (mouse.y) / 2 - entityScale.y / 2);
   }
 
+    /**
+     * returns a scaled vector the direction should be moving based on current key presses
+     * @return direction play should move
+     */
   private Vector2 keysToVector() {
     float xCom = (is_pressed(Keys.D) ? Vector2Utils.RIGHT.x : 0f) + (is_pressed(Keys.A) ? Vector2Utils.LEFT.x : 0f);
     float yCom = (is_pressed(Keys.W) ? Vector2Utils.UP.y : 0f) + (is_pressed(Keys.S) ? Vector2Utils.DOWN.y : 0f);
@@ -372,6 +412,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     return new Vector2(xCom, yCom).scl(mag);
   }
 
+    /**
+     * Convert the keys currently being pressed to a direction
+     * @return direction enum based on current key pressed
+     */
   private directions keysToDirection() {
     int dirFlags =  0b0101 +
             ((is_pressed(Keys.W) ? 1 : 0) << 2) - ((is_pressed(Keys.S) ? 1 : 0) << 2) +
@@ -389,6 +433,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       };
   }
 
+    /**
+     * Enum of each possible direction including no direction
+     */
   private enum directions {
     None,
     Up,

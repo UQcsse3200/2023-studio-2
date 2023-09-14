@@ -32,7 +32,6 @@ public class PlayerActions extends Component {
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
     private GameStateInteraction gameStateInteraction;
-    private int attackCooldown;
 
     @Override
     public void create() {
@@ -47,14 +46,10 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("change_structure", this::changeStructure);
         entity.getEvents().addListener("inventory", this::updateInventory);
         gameStateInteraction = new GameStateInteraction();
-        attackCooldown = 0;
     }
 
     @Override
     public void update() {
-        if (attackCooldown > 0) {
-            attackCooldown--;
-        }
         if (moving) {
             updateSpeed();
         }
@@ -103,6 +98,11 @@ public class PlayerActions extends Component {
         entity.getComponent(CombatStatsComponent.class).changeImmunityStatus();
     }
 
+
+    /**
+     * Updates inventory
+     * @param i - used for determining inventory action
+     */
     void updateInventory(int i) {
         switch (i) {
             case 1:
@@ -140,14 +140,8 @@ public class PlayerActions extends Component {
     }
 
     /**
-<<<<<<< HEAD
      * Converts the screen coords to a grid position and then places the selected structure
      * doesn't exist at the grid position, otherwise upgrades the existing structure.
-=======
-     * Converts the screen coords to a grid position and then places a wall if a
-     * wall
-     * doesn't exist at the grid position, otherwise upgrades the wall.
->>>>>>> feature/player
      *
      * @param screenX - the x coord of the screen
      * @param screenY - the y coord of teh screen
@@ -208,11 +202,5 @@ public class PlayerActions extends Component {
         picker.show();
     }
 
-    public void setAttackCooldown(int cooldown) {
-        this.attackCooldown = cooldown;
-    }
 
-    public int getAttackCooldown() {
-        return this.attackCooldown;
-    }
 }

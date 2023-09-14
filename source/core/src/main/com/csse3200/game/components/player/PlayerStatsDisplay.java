@@ -21,7 +21,7 @@ public class PlayerStatsDisplay extends UIComponent {
   Table table1;
   private Image heartImage;
   private Label healthLabel;
-  private ProgressBar healthBar;
+  public ProgressBar healthBar;
   private ProgressBar DodgeBar;
   private Label DodgeLabel;
   private Label livesLabel;
@@ -35,7 +35,7 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
 
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
-    entity.getEvents().addListener("updateDodgeCool down", this::updateDodgeBarUI);
+    entity.getEvents().addListener("updateDodgeCooldown", this::updateDodgeBarUI);
   }
 
   /**
@@ -64,9 +64,9 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.setValue(100);
 
     //setting the position of health Bar
-    healthBar.setPosition(10, Gdx.graphics.getHeight()  - healthBar.getHeight());
     healthBar.setWidth(healthWidth);
     healthBar.setDebug(true);
+    healthBar.setPosition(10, Gdx.graphics.getHeight()  - healthBar.getHeight());
 
     // Heart image
     float heartSideLength = 30f;
@@ -99,10 +99,11 @@ public class PlayerStatsDisplay extends UIComponent {
     livesLabel = new Label(livesText, skin, "large");
     table.add(heartImage).size(heartSideLength).pad(5);
     table.add(healthLabel);
-    table.add(healthBar);
-    table1.add(DodgeLabel);
-    table1.add(DodgeBar);
-    table2.add(livesLabel);
+    table.add(healthBar).padLeft(20);
+
+//    table1.add(DodgeLabel); todo: rachel / aman fix
+//    table1.add(DodgeBar);
+//    table2.add(livesLabel);
     stage.addActor(table);
     stage.addActor(table1);
     stage.addActor(table2);

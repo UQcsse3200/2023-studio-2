@@ -1,10 +1,5 @@
 package com.csse3200.game.entities.factories;
-/**different types of attacks
- * Each weapon: melee component: rotation, life, swing speed
- *              Animation:    image atlas
- *              Combat stats: damage, (Health = 1, Is immue = True, attack multiplier = 1)
- *              //Or use player combat stast
-*/
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -15,6 +10,7 @@ import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.Weapons.WeaponTargetComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.PlayerActions;
+import com.csse3200.game.components.player.WeaponComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.configs.*;
@@ -44,47 +40,73 @@ public class AttackFactory {
    */
   public static Entity createAttack(WeaponType weaponType, float initRot, Entity player) {
     WeaponConfig config = configs.GetWeaponConfig(weaponType);
+    WeaponComponent weaponComponent = player.getComponent(WeaponComponent.class);
+    weaponComponent.setAttackCooldown(config.attackCooldown);
 
-    PlayerActions playerActions = player.getComponent(PlayerActions.class);
-    playerActions.setAttackCooldown(config.attackCooldown);
+    int direction = 1;
+    switch (weaponType) {
+      case MELEE_WRENCH, MELEE_KATANA:
+        if (initRot > 120 && initRot < 300) {direction = -1;}
+        break;
+      default:
+    }
 
-    WeaponControllerComponent weaponController = new WeaponControllerComponent(
-            weaponType,
-            initRot + config.initialRotationOffset,
-            config.weaponSpeed,
+    WeaponControllerComponent weaponController = new WeaponControllerComponent(weaponType,
             config.weaponDuration,
-            config.rotationSpeed,
+            initRot + config.initialRotationOffset,
+            config.weaponSpeed * direction,
+            config.rotationSpeed * direction,
+            config.animationType,
             config.imageRotationOffset);
 
-    Entity attack =
-            new Entity()
+    Entity attack =new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WEAPON))
-                    .addComponent(new TouchAttackComponent((short)
-                            (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.NPC)))
+                    .addComponent(new TouchAttackComponent((short) (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.NPC)))
                     .addComponent(weaponController);
     attack.setEntityType("playerWeapon");
 
     TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
     AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
 
-    animator.addAnimation("attack", 0.1f, Animation.PlayMode.LOOP_PINGPONG);
-
-    //TODO make this use player
-    attack
-            .addComponent(animator)
-            .addComponent(new CombatStatsComponent(1, 10, 1, false));
-
-    //TODO animations to control rotational apperance
-    animator.startAnimation("attack");
-    attack.scaleWidth(config.imageScale);
-
-    switch (weaponType) {
-      case SLING_SHOT, ELEC_WRENCH, KATANA:
-        attack.addComponent(new WeaponTargetComponent(weaponType, player));
-        break;
+    switch (config.animationType) {
+      case 8:
+        animator.addAnimation("LEFT3", 0.07f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("RIGHT3", 0.07f, Animation.PlayMode.NORMAL);
+      case 6:
+        animator.addAnimation("LEFT2", 0.07f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("RIGHT2", 0.07f, Animation.PlayMode.NORMAL);
+      case 4:
+        animator.addAnimation("LEFT1", 0.07f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("RIGHT1", 0.07f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("DOWN", 0.07f, Animation.PlayMode.NORMAL);
+      default:
+        animator.addAnimation("UP", 0.07f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("STATIC", 0.07f, Animation.PlayMode.NORMAL);
     }
 
+    attack.addComponent(animator)
+            .addComponent(new CombatStatsComponent(30, 10, 1, false));
+
+    if (weaponType == WeaponType.MELEE_KATANA || weaponType == WeaponType.MELEE_BEE_STING) {
+      int dir = (int) Math.floor(initRot / 60);
+      switch (dir) {
+        case 0, 5 -> animator.startAnimation("RIGHT1");
+        case 1 -> animator.startAnimation("UP");
+        case 2, 3 -> animator.startAnimation("LEFT1");
+        case 4 -> animator.startAnimation("DOWN");
+      }
+    } else if (weaponType == WeaponType.RANGED_BOOMERANG) {
+      animator.removeAnimation("UP");
+      animator.addAnimation("UP", 0.07f, Animation.PlayMode.LOOP);
+      animator.startAnimation("UP");
+    } else {
+      animator.startAnimation("UP");
+    }
+
+    attack.scaleWidth(config.imageScale);
+
+    attack.addComponent(new WeaponTargetComponent(weaponType, player));
     return attack;
   }
 
@@ -92,3 +114,5 @@ public class AttackFactory {
     throw new IllegalStateException("Instantiating static util class");
   }
 }
+
+

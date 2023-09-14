@@ -1,3 +1,7 @@
+/**
+ * The `BotanistAnimationController` class is responsible for controlling and updating
+ * animations for a botanist character in the game.
+ */
 package com.csse3200.game.components.npc;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -15,6 +19,9 @@ public class BotanistAnimationController extends Component {
     private float animationTimer = 0f;
     private float animationDuration = 10f; // Adjust this to control animation speed.
 
+    /**
+     * Creates a new BotanistAnimationController with an AssetManager for managing assets.
+     */
     public BotanistAnimationController() {
         this.assetManager = new AssetManager();
     }
@@ -32,11 +39,12 @@ public class BotanistAnimationController extends Component {
         // Start with the default animation.
         animator.startAnimation("row-1-column-1");
     }
+
     @Override
     public void update() {
         super.update();
 
-//         Update the animation based on a timer.
+        // Update the animation based on a timer.
         animationTimer += 0.1f;
 
         if (animationTimer >= animationDuration) {
@@ -58,5 +66,4 @@ public class BotanistAnimationController extends Component {
             }
         }
     }
-
 }

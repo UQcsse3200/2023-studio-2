@@ -1,18 +1,17 @@
 package com.csse3200.game.components.mainmenu;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.screens.MainGameScreen;
+import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.MainAlert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.AlertBox;
 
-import static com.csse3200.game.screens.MainMenuScreen.logger;
 import com.csse3200.game.ui.TitleBox;
 
 
@@ -43,13 +42,14 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
     entity.getEvents().addListener("space map", this::onSpaceMap);
-
+    entity.getEvents().addListener("upgrade shop", this::onShop);
   }
 
   /**
    * Swaps to the Main Game screen.
    */
   private void onStart() {
+
     logger.info("Loading Story");
 //    TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
 //    titleBox.showDialog(stage);
@@ -86,7 +86,6 @@ public class MainMenuActions extends Component {
     mainAlertBox.showDialog(stage, () -> {
       game.setScreen(GdxGame.ScreenType.SPACEMINI_SCREEN);
     });
-
   }
   private void onExtractor(){
     logger.info("starting extractor");
@@ -95,9 +94,16 @@ public class MainMenuActions extends Component {
 
   private void onSpaceMap() {
     logger.info("Launching space map screen");
+    ServiceLocator.registerGameStateObserverService(new GameStateObserver());
+    ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", new PlanetScreen(game, "Earth"));
+    //TODO: Remove once map button is removed from main menu
     game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
   }
 
+  private void onShop() {
+    logger.info("Launching Upgrade Shop screen");
+    game.setScreen(GdxGame.ScreenType.UPGRADE_SHOP);
+  }
 }
 
 

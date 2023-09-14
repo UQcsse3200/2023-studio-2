@@ -113,7 +113,7 @@ public class ResourceService implements Disposable {
    * @param <T>       type
    */
   private <T> void loadAsset(String assetName, Class<T> type) {
-    logger.debug("Loading {}: {}", type.getSimpleName(), assetName);
+     logger.debug("Loading {}: {}", type.getSimpleName(), assetName);
     try {
       assetManager.load(assetName, type);
     } catch (Exception e) {
@@ -130,6 +130,25 @@ public class ResourceService implements Disposable {
    */
   private <T> void loadAssets(String[] assetNames, Class<T> type) {
     for (String resource : assetNames) {
+      loadAsset(resource, type);
+    }
+  }
+
+  /**
+   * Loads multiple assets of different types into the asset manager.
+   * Supported types are texture and .atlas files
+   *
+   * @param assetNames list of asset names
+   * @param <T>        type
+   */
+  public <T> void loadDynamicAssets(String[] assetNames) {
+    for (String resource : assetNames) {
+      String[] parts = resource.split("\\.");
+      Class type = Texture.class;
+      if (parts[parts.length - 1].equals("atlas")) {
+        type = TextureAtlas.class;
+      }
+
       loadAsset(resource, type);
     }
   }

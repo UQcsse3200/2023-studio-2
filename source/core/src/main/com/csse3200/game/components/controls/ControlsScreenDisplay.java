@@ -29,8 +29,8 @@ public class ControlsScreenDisplay extends UIComponent {
     }
 
     private void addActors() {
-//        table = new Table();
-//        table.setFillParent(true);
+        table = new Table();
+        table.setFillParent(true);
 
         storyImages = new ArrayList<>();
         storyImages.add("images/Controls.png");

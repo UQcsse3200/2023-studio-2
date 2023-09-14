@@ -299,19 +299,15 @@ public class StructureFactory {
      * Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map
      *
      * @param targets the targets the entities that spawn will target
-     * @param spawnRate the frequency of the enemy spawning
-     * @param type the type of enemy to spawn
-     * @param behaviour the behaviour type of the enemy to spawn
-     * @param count the maximum amount of enemies the spawner will spawn
      * @return
      */
-    public static Entity createSpawner(List<Entity> targets, long spawnRate, EnemyType type, EnemyBehaviour behaviour, int count) {
+    public static Entity createSpawner(ArrayList<Entity> targets) {
         Entity spawner =
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/Spawner.png"))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                         .addComponent(new ColliderComponent())
-                        .addComponent(new SpawnerComponent(targets, spawnRate, type, behaviour, count));
+                        .addComponent(new SpawnerComponent(targets));
 
         spawner.getComponent(TextureRenderComponent.class).scaleEntity();
         spawner.scaleHeight(1.5f);

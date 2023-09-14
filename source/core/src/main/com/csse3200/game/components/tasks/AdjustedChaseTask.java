@@ -10,12 +10,13 @@ import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.lang.Math.abs;
+
 /** Chases a target entity until they get too far away or line of sight is lost */
-public class ChaseTask extends DefaultTask implements PriorityTask {
+public class AdjustedChaseTask extends DefaultTask implements PriorityTask {
   private final Entity target;
   private final int priority;
   private final float viewDistance;
@@ -25,6 +26,8 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
   private MovementTask movementTask;
+  private Vector2 lastPos;
+  boolean isStuck = false;
 
   /**
    * @param target The entity to chase.
@@ -32,31 +35,12 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
    * @param viewDistance Maximum distance from the entity at which chasing can start.
    * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
    */
-  public ChaseTask(Entity target, int priority, float viewDistance, float maxChaseDistance) {
+  public AdjustedChaseTask(Entity target, int priority, float viewDistance, float maxChaseDistance) {
     this.target = target;
     this.priority = priority;
     this.viewDistance = viewDistance;
     this.maxChaseDistance = maxChaseDistance;
     this.shootDistance = 0;
-    physics = ServiceLocator.getPhysicsService().getPhysics();
-    debugRenderer = ServiceLocator.getRenderService().getDebug();
-  }
-
-  /**
-   * Creates a new chase task which will stop once the entity is within a certain distance of the target.
-   *
-   * @param target The entity to chase.
-   * @param priority Task priority when chasing (0 when not chasing).
-   * @param viewDistance Maximum distance from the entity at which chasing can start.
-   * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
-   * @param shootDistance The distance where the entity stops to shoot at the target.
-   */
-  public ChaseTask(Entity target, int priority, float viewDistance, float maxChaseDistance, float shootDistance) {
-    this.target = target;
-    this.priority = priority;
-    this.viewDistance = viewDistance;
-    this.maxChaseDistance = maxChaseDistance;
-    this.shootDistance = shootDistance;
     physics = ServiceLocator.getPhysicsService().getPhysics();
     debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
@@ -67,6 +51,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     movementTask = new MovementTask(target.getPosition());
     movementTask.create(owner);
     movementTask.start();
+    lastPos = owner.getEntity().getPosition();
     char direction = getDirection(target.getPosition());
     if(direction == '<'){
       this.owner.getEntity().getEvents().trigger("chaseLeft");
@@ -87,10 +72,20 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   @Override
   public void update() {
-    movementTask.setTarget(target.getPosition());
-    movementTask.update();
-    if (movementTask.getStatus() != Status.ACTIVE) {
-      movementTask.start();
+    if (isStuck && movementTask.getStatus() != Status.FINISHED) {
+
+    } else {
+      if (lastPos.epsilonEquals(owner.getEntity().getPosition())) {
+        isStuck = true;
+        movementTask.setTarget(stuckMovement());
+      } else {
+        isStuck = false;
+        movementTask.setTarget(target.getPosition());
+      }
+      movementTask.update();
+      if (movementTask.getStatus() != Status.ACTIVE) {
+        movementTask.start();
+      }
     }
   }
 
@@ -151,4 +146,33 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     }
     return '=';
   }
+
+  /**
+   * Calculates the vector position the entity should move to so that it is not stuck anymore.
+   *
+   * @return The vector position entity should move to get un stuck.
+   */
+  public Vector2 stuckMovement() {
+    Vector2 currentPos = owner.getEntity().getPosition();
+    Vector2 targetPos = owner.getEntity().getPosition();
+
+    Vector2 newPos = owner.getEntity().getPosition();
+
+    if (abs(currentPos.x - targetPos.x) > abs(currentPos.y - targetPos.y)) {
+      if (currentPos.y > targetPos.y) {
+        newPos.y -= 1;
+      } else {
+        newPos.y += 1;
+      }
+    } else {
+      if (currentPos.x > targetPos.x) {
+        newPos.x -= 1;
+      } else {
+        newPos.x += 1;
+      }
+    }
+
+    return newPos;
+  }
+
 }

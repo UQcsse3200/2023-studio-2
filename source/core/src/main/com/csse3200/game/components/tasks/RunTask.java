@@ -6,21 +6,20 @@ import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.utils.math.Vector2Utils;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/** Chases a target entity until they get too far away or line of sight is lost */
-public class ChaseTask extends DefaultTask implements PriorityTask {
+/** Runs away from target entity if it gets too close */
+public class RunTask extends DefaultTask implements PriorityTask {
   private final Entity target;
   private final int priority;
-  private final float viewDistance;
-  private final float maxChaseDistance;
-  private float shootDistance;
+  private final float runDistance;
   private final PhysicsEngine physics;
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
@@ -29,34 +28,11 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   /**
    * @param target The entity to chase.
    * @param priority Task priority when chasing (0 when not chasing).
-   * @param viewDistance Maximum distance from the entity at which chasing can start.
-   * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
    */
-  public ChaseTask(Entity target, int priority, float viewDistance, float maxChaseDistance) {
+  public RunTask(Entity target, int priority, float runDistance) {
     this.target = target;
     this.priority = priority;
-    this.viewDistance = viewDistance;
-    this.maxChaseDistance = maxChaseDistance;
-    this.shootDistance = 0;
-    physics = ServiceLocator.getPhysicsService().getPhysics();
-    debugRenderer = ServiceLocator.getRenderService().getDebug();
-  }
-
-  /**
-   * Creates a new chase task which will stop once the entity is within a certain distance of the target.
-   *
-   * @param target The entity to chase.
-   * @param priority Task priority when chasing (0 when not chasing).
-   * @param viewDistance Maximum distance from the entity at which chasing can start.
-   * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
-   * @param shootDistance The distance where the entity stops to shoot at the target.
-   */
-  public ChaseTask(Entity target, int priority, float viewDistance, float maxChaseDistance, float shootDistance) {
-    this.target = target;
-    this.priority = priority;
-    this.viewDistance = viewDistance;
-    this.maxChaseDistance = maxChaseDistance;
-    this.shootDistance = shootDistance;
+    this.runDistance = runDistance;
     physics = ServiceLocator.getPhysicsService().getPhysics();
     debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
@@ -64,10 +40,11 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   @Override
   public void start() {
     super.start();
-    movementTask = new MovementTask(target.getPosition());
+    owner.getEntity().getComponent(PhysicsMovementComponent.class).changeMaxSpeed(new Vector2(2f, 2f));
+    movementTask = new MovementTask(getVectorTo());
     movementTask.create(owner);
     movementTask.start();
-    char direction = getDirection(target.getPosition());
+    char direction = getDirection(getVectorTo());
     if(direction == '<'){
       this.owner.getEntity().getEvents().trigger("chaseLeft");
     }
@@ -87,7 +64,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   @Override
   public void update() {
-    movementTask.setTarget(target.getPosition());
+    movementTask.setTarget(getVectorTo());
     movementTask.update();
     if (movementTask.getStatus() != Status.ACTIVE) {
       movementTask.start();
@@ -96,6 +73,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   @Override
   public void stop() {
+    owner.getEntity().getComponent(PhysicsMovementComponent.class).changeMaxSpeed(Vector2Utils.ONE);
     super.stop();
     movementTask.stop();
   }
@@ -115,7 +93,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   private int getActivePriority() {
     float dst = getDistanceToTarget();
-    if (dst > maxChaseDistance || dst < shootDistance || !isTargetVisible()) {
+    if (dst > runDistance) {
       return -1; // Too far, stop chasing
     }
     return priority;
@@ -123,26 +101,13 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   private int getInactivePriority() {
     float dst = getDistanceToTarget();
-    if (dst < viewDistance && dst > shootDistance && isTargetVisible()) {
+    if (dst < runDistance) {
       return priority;
     }
     return -1;
   }
 
-  private boolean isTargetVisible() {
-    Vector2 from = owner.getEntity().getCenterPosition();
-    Vector2 to = target.getCenterPosition();
-
-    // If there is an obstacle in the path to the player, not visible.
-    if (physics.raycast(from, to, PhysicsLayer.OBSTACLE, hit)) {
-      debugRenderer.drawLine(from, hit.point);
-      return false;
-    }
-    debugRenderer.drawLine(from, to);
-    return true;
-  }
-
-  public char getDirection(Vector2 destination) {
+  private char getDirection(Vector2 destination) {
     if (owner.getEntity().getPosition().x - destination.x < 0) {
       return '>';
     }
@@ -151,4 +116,24 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     }
     return '=';
   }
+
+  /**
+   * Calculates the desired vector position to move away from the target
+   *
+   * @return The vector position.
+   */
+  private Vector2 getVectorTo(){
+    float currentX = owner.getEntity().getPosition().x;
+    float currentY = owner.getEntity().getPosition().y;
+
+    float targetX = target.getPosition().x;
+    float targetY = target.getPosition().y;
+
+    float newX = currentX + (currentX - targetX);
+    float newY = currentY + (currentY - targetY);
+
+    Vector2 newPos = new Vector2(newX, newY);
+    return newPos;
+  }
 }
+

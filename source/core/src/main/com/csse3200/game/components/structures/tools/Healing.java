@@ -16,14 +16,14 @@ public class Healing extends Tool {
     public boolean interact(Entity player, GridPoint2 position) {
         // For checking whether the player has clicked on an entity
         Entity clickedEntity = determineSelectedEntity(position);
-
+        // If no entity is clicked, return false
         if (clickedEntity == null) {
             return false;
         }
 
         // For checking whether the clicked entity has a CombatStatsComponent
         CombatStatsComponent combatStats = clickedEntity.getComponent(CombatStatsComponent.class);
-
+        // If the clicked entity does not have a CombatStatsComponent, return false
         if (combatStats == null) {
             return false;
         }
@@ -32,11 +32,9 @@ public class Healing extends Tool {
         combatStats.setHealth(combatStats.getMaxHealth());
         return true;
     }
-
+    // Determine the selected entity based on the player's click position
     private Entity determineSelectedEntity(GridPoint2 position) {
         return ServiceLocator.getStructurePlacementService().getStructureAt(position);
     }
 }
-
-
 

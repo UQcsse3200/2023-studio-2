@@ -52,8 +52,7 @@ private static boolean alive = true;
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png",
           "images/structure-icons/wall.png",
-          "images/structure-icons/turret.png",
-          "images/structure-icons/wall.png"}; //TODO: Refactor this to be dynamic? Like game area
+          "images/structure-icons/turret.png"}; //TODO: Refactor this to be dynamic? Like game area
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
   private final GdxGame game;

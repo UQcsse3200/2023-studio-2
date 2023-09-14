@@ -41,7 +41,7 @@ class InventoryComponentTest {
     void testChangeEquippedType() {
     InventoryComponent inventory = new InventoryComponent();
     inventory.setEquipped(3);
-    inventory.changeEquipped(WeaponType.KATANA);
-    assertEquals(WeaponType.KATANA, inventory.getEquippedType());
+    inventory.changeEquipped(WeaponType.MELEE_KATANA);
+    assertEquals(WeaponType.MELEE_KATANA, inventory.getEquippedType());
     }
 }

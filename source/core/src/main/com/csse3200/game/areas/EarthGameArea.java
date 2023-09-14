@@ -49,7 +49,7 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_MELEE_PTE = 2;
     private static final int NUM_MELEE_DTE = 2;
     private static final int NUM_RANGE_PTE = 2;
-    private static final int NUM_POWERUPS = 3;
+    private static final int NUM_POWERUPS = 5;
     private static final int NUM_Laboratory = 4;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(9, 9);
@@ -91,10 +91,7 @@ public class EarthGameArea extends GameArea {
             "images/ExtractorminiGameBackground.png",
             "images/player_blank.png",
             "images/wrench.png",
-            //"images/durastell.png",
-            //"images/nebulite.png",
             "images/uparrow.png",
-            "images/solsite.png",
             "images/resourcebar_background.png",
             "images/resourcebar_durasteel.png",
             "images/resourcebar_foreground.png",
@@ -115,6 +112,7 @@ public class EarthGameArea extends GameArea {
             "images/upgradetree/hammer2.png",
             "images/upgradetree/stick.png",
             "images/upgradetree/exit.png",
+            "images/player/player.png",
             "images/player.png",
             "images/deathpotion.png",
             "images/potion2.png",
@@ -131,7 +129,8 @@ public class EarthGameArea extends GameArea {
             "images/solstite.png",
             "images/durasteel.png",
             "images/f_button.png",
-            "images/ExtractorAnimation.png"
+            "images/ExtractorAnimation.png",
+            "images/player/player.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -141,7 +140,6 @@ public class EarthGameArea extends GameArea {
             "images/enemy/base_enemy.atlas",
             "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
-            "images/playerSS.atlas",
             "images/wrench.atlas",
             "images/baseballbat.atlas",
             "images/structures/closed_gate.atlas",
@@ -151,13 +149,14 @@ public class EarthGameArea extends GameArea {
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
+            "images/player/player.atlas",
             "images/player.atlas",
             "images/companionSS.atlas",
             "images/enemy/bull.atlas",
             "images/enemy/Night.atlas",
             "images/ExtractorAnimation.atlas"
-
     };
+
     private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.wav";
     private static final String[] earthMusic = {backgroundMusic};
@@ -263,8 +262,12 @@ public class EarthGameArea extends GameArea {
     }
 
     private void spawnUpgradeBench() {
+        // spawns next to ship
+        GridPoint2 spawnPosition = new GridPoint2(
+                7*terrain.getMapBounds(0).sub(3, 1).x/12,
+                2*terrain.getMapBounds(0).sub(1, 1).y/3);
         Entity upgradeBench = StructureFactory.createUpgradeBench();
-        spawnEntityAt(upgradeBench, new GridPoint2(20, 40), true, true);
+        spawnEntityAt(upgradeBench, spawnPosition, false, false);
     }
 
     private void spawnExtractors() {

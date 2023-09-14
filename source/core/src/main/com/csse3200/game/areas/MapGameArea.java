@@ -72,7 +72,7 @@ public class MapGameArea extends GameArea{
         playMusic();
     }
 
-    //TODO: is this needed?
+    //TODO: is this needed? - ServiceLocator.getEntityService.getPlayer()
     public Entity getPlayer() {
         return this.playerEntity;
     }

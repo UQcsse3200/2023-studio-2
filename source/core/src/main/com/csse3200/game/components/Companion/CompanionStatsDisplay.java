@@ -93,14 +93,14 @@ public class CompanionStatsDisplay extends UIComponent {
         // ADD THE COMPANIONS HEALTH INFORMATION
         int companionHealth = entity.getComponent(CombatStatsComponent.class).getHealth();
         CharSequence companionHealthText = String.format("Health: %d", companionHealth);
-        companionHealthLabel = new Label(companionHealthText, skin, "large");
+        companionHealthLabel = new Label(companionHealthText, skin, "small");
         companionStatisticsUI.add(companionHealthLabel);
         companionStatisticsUI.row();
 
 
         // ADD THE COMPANIONS MODE INFORMATION
         CharSequence companionModeText = "Mode: Normal";
-        companionModeLabel = new Label(companionModeText, skin, "large");
+        companionModeLabel = new Label(companionModeText, skin, "small");
         companionStatisticsUI.add(companionModeLabel);
         companionStatisticsUI.row();
 
@@ -178,7 +178,7 @@ public class CompanionStatsDisplay extends UIComponent {
 
         // plate up the low player health string
         CharSequence playerLowHealthString = String.format("Player Low Health: %d", health);
-        playerLowHealthLabel = new Label(playerLowHealthString, skin, "large");
+        playerLowHealthLabel = new Label(playerLowHealthString, skin, "small");
 
 
         playerLowHealthAlert.add(playerLowHealthLabel);

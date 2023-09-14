@@ -40,7 +40,7 @@ public class UpgradeDisplay extends Window {
     private static final int EXIT_BUTTON_X = 1450;
     private static final int EXIT_BUTTON_Y = 620;
     private static final float SIZE = 64f;
-    private static final String SKIN_PATH = "flat-earth/skin/flat-earth-ui.json";
+    private static final String SKIN_PATH = "kenney-rpg-expansion/kenneyrpg.json";
     private static final String MATERIALS_FORMAT = "Materials: %d";
     private final InputOverrideComponent inputOverrideComponent;
     private final Entity upgradeBench;

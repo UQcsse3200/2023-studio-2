@@ -33,12 +33,10 @@ import java.util.List;
  * The class extends the Window class from libGDX to represent a pop-up or overlay menu in the game.
  */
 public class UpgradeDisplay extends Window {
-    private static final float WINDOW_WIDTH_SCALE = 0.8f;
+    private static final float WINDOW_WIDTH_SCALE = 0.65f;
+
     private static final float WINDOW_HEIGHT_SCALE = 0.65f;
-    private static final int MATERIAL_LABEL_X = 50;  // todo: un-hardcode material / exit labels
-    private static final int MATERIAL_LABEL_Y = 650;
-    private static final int EXIT_BUTTON_X = 1450;
-    private static final int EXIT_BUTTON_Y = 620;
+
     private static final float SIZE = 64f;
     private static final String SKIN_PATH = "flat-earth/skin/flat-earth-ui.json";
     private static final String MATERIALS_FORMAT = "Materials: %d";
@@ -49,12 +47,13 @@ public class UpgradeDisplay extends Window {
     private final Entity player;
     private UpgradeNode buildRoot;
     private final Skin skin;
+    private Stage stage;
 
     // Tree stuff
     private final List<UpgradeNode> trees = new ArrayList<>();
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private static final float VERTICAL_SPACING = 175;
-    private static final float HORIZONTAL_SPACING = 150f;
+    private float nodeYSpacing; // 175
+    private float nodeXSpacing; // 150
 
     /**
      * Factory method for creating an instance of UpgradeDisplay.
@@ -86,13 +85,13 @@ public class UpgradeDisplay extends Window {
 
         setupWindowDimensions();
 
-        materialsLabel = createMaterialsLabel();
-        Button exitButton = createExitButton();
+        Table materialsTable = createMaterialsLabel();
+        Table exitTable = createExitButton();
         Group group = createUpgradeButtons();
 
         addActor(group);
-        addActor(materialsLabel);
-        addActor(exitButton);
+        addActor(materialsTable);
+        addActor(exitTable);
 
         // Override all normal user input
         inputOverrideComponent = new InputOverrideComponent();
@@ -144,13 +143,17 @@ public class UpgradeDisplay extends Window {
      * @return A group containing all the upgrade buttons.
      */
     private Group createUpgradeButtons() {
+
         Group group = new Group();
 
         buildTrees();
 
+        nodeXSpacing = (getWidth() * getScaleX()) / (trees.size() * 2);
+        nodeYSpacing = (getHeight() * getScaleY()) / 4;
+
         for (UpgradeNode treeRoot : trees) {
-            float treeX = (trees.indexOf(treeRoot) + 1) * getWidth() / (trees.size() + 1);
-            float startY = getHeight() - getHeight() / 3;  // start near the top
+            float treeX = (trees.indexOf(treeRoot) + 1) * getWidth() * getScaleX() / (trees.size() + 1);
+            float startY = getHeight() - (getHeight() / 3);
             createAndPositionNodes(treeRoot, treeX, startY, group, 0);
         }
 
@@ -180,15 +183,15 @@ public class UpgradeDisplay extends Window {
         group.addActor(button);
 
         int childCount = node.getChildren().size();
-        float totalWidth = childCount * HORIZONTAL_SPACING;
-        float currentX = x - totalWidth / 2 + HORIZONTAL_SPACING / 2;
+        float totalWidth = childCount * nodeXSpacing;
+        float currentX = x - totalWidth / 2 + nodeXSpacing / 2;
 
         for (UpgradeNode child : node.getChildren()) {
             float childX = currentX;
-            float childY = y - VERTICAL_SPACING;
+            float childY = y - nodeYSpacing;
 
             createAndPositionNodes(child, childX, childY, group, depth + 1);
-            currentX += HORIZONTAL_SPACING;
+            currentX += nodeXSpacing;
         }
     }
 
@@ -241,7 +244,7 @@ public class UpgradeDisplay extends Window {
      * Sets up the window dimensions.
      */
     private void setupWindowDimensions() {
-        Stage stage = ServiceLocator.getRenderService().getStage();
+        stage = ServiceLocator.getRenderService().getStage();
         setWidth(stage.getWidth() * WINDOW_WIDTH_SCALE);
         setHeight(stage.getHeight() * WINDOW_HEIGHT_SCALE);
         setPosition(
@@ -267,17 +270,22 @@ public class UpgradeDisplay extends Window {
      *
      * @return The created exit button.
      */
-    private Button createExitButton() {
+    private Table createExitButton() {
         TextureRegionDrawable exitTexture = createTextureRegionDrawable("images/upgradetree/exit.png", 100f);
         Button exitButton = new Button(exitTexture);
-        exitButton.setPosition(EXIT_BUTTON_X, EXIT_BUTTON_Y);
+
+        Table table = new Table();
+        table.add(exitButton);
+        table.setPosition(((float) (getWidth() * getScaleX() * 0.98)),
+                (float) (getHeight() * getScaleY() * 0.95));
+
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 exitUpgradeTree();
             }
         });
-        return exitButton;
+        return table;
     }
 
     /**
@@ -285,13 +293,17 @@ public class UpgradeDisplay extends Window {
      *
      * @return The created materials label.
      */
-    private Label createMaterialsLabel() {
+    private Table createMaterialsLabel() {
         int materials = upgradeBench.getComponent(UpgradeTree.class).getMaterials();
-
         String str = String.format(MATERIALS_FORMAT, materials);
         this.materialsLabel = new Label(str, skin);
-        materialsLabel.setPosition(MATERIAL_LABEL_X, MATERIAL_LABEL_Y);
-        return materialsLabel;
+
+        Table table = new Table();
+        table.add(materialsLabel);
+        table.setPosition(((getWidth() * getScaleX() / 2)),
+                (float) (getHeight() * getScaleY() * 0.95));
+
+        return table;
     }
 
     /**
@@ -414,7 +426,7 @@ public class UpgradeDisplay extends Window {
         stats.subtractMaterials(node.getNodeCost());
         stats.unlockWeapon(node.getWeaponType());
         weaponButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
-        materialsLabel.setText(String.format(MATERIALS_FORMAT, stats.getMaterials())); // todo: make dynamic
+        materialsLabel.setText(String.format(MATERIALS_FORMAT, stats.getMaterials()));
 
         StructureToolPicker structurePicker = player.getComponent(StructureToolPicker.class);
 

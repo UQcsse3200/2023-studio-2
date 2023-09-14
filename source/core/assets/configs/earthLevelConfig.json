@@ -49,7 +49,6 @@
     "images/terrain_iso_grass.atlas",
     "images/ghost.atlas",
     "images/ghostKing.atlas",
-    "images/base_enemy.atlas",
     "images/troll_enemy.atlas",
     "images/rangeEnemy.atlas",
     "images/structures/stone_wall.atlas",
@@ -77,9 +76,15 @@
       "threshold": 100
     }
   ],
-  "playerSpawn": {
-    "x": 10,
-    "y": 10
+  "playerConfig": {
+    "position": {
+      "x": 10,
+      "y": 10
+    },
+    "health": 100,
+    "baseAttack": 10,
+    "attackMultiplier": 1,
+    "isImmune": false
   },
   "areaEntityConfig": {
     "ship": {
@@ -95,7 +100,7 @@
         "baseAttack": 10,
         "speed": 5,
         "behaviour": "PTE",
-        "spritePath": "images/base_enemy.atlas",
+        "spritePath": "images/enemy/base_enemy.atlas",
         "position": {
           "x": 40,
           "y": 40
@@ -106,7 +111,7 @@
         "baseAttack": 10,
         "speed": 5,
         "behaviour": "PTE",
-        "spritePath": "images/base_enemy.atlas",
+        "spritePath": "images/enemy/base_enemy.atlas",
         "position": {
           "x": 20,
           "y": 20

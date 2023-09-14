@@ -52,12 +52,12 @@ public abstract class GameArea implements Disposable {
     handler.addListener("spawnExtractor", this::spawnExtractor);
     handler.addListener("placeStructure", this::spawnEntity);
     handler.addListener("fireBullet",
-            (StructurePlacementService.SpawnEntityAtVectorArgs args) ->
-                    spawnEntityAtVector(args.entity, args.worldPos)
+            (StructurePlacementService.spawnEntityAtVectorArgs args) ->
+                    spawnEntityAtVector(args.getEntity(), args.getWorldPos())
   );
     handler.addListener("placeStructureAt",
-            (StructurePlacementService.PlaceStructureAtArgs args) ->
-                    spawnEntityAt(args.entity, args.tilePos, args.centerX, args.centerY)
+            (StructurePlacementService.placeStructureAtArgs args) ->
+                    spawnEntityAt(args.getEntity(), args.getTilePos(), args.isCenterX(), args.isCenterY())
     );
   }
 

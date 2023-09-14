@@ -13,6 +13,7 @@ import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.EnemyAnimationController;
+import com.csse3200.game.components.structures.TurretTargetableComponent;
 import com.csse3200.game.components.tasks.AimTask;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
@@ -29,9 +30,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.ui.DialogComponent;
-import com.csse3200.game.ui.DialogueBox;
-
+import java.util.List;
 /**
  * Factory to create non-playable enemies entities with predefined components.
  *
@@ -71,7 +70,7 @@ public class EnemyFactory {
     // Cycles through all targets
     //TODO: This should probably be contained in its own AITask -
     // this doesn't allow for new entities after enemy creation
-    Array<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
+    List<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
     for (Entity target : targets) {
       // Adds the specific behaviour to entity
       EnemyBehaviourSelector(target, config.type, config.behaviour, aiComponent);
@@ -97,7 +96,8 @@ public class EnemyFactory {
                     PhysicsLayer.STRUCTURE |
                     PhysicsLayer.WEAPON),
                     1.5f))
-            .addComponent(new DialogComponent(dialogueBox));
+            .addComponent(new DialogComponent(dialogueBox))
+            .addComponent(new TurretTargetableComponent());
 
     if (config.type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);

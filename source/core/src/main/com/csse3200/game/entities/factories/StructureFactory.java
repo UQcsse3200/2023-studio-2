@@ -52,6 +52,14 @@ import java.util.List;
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
 public class StructureFactory {
+    private StructureFactory() {
+        throw new IllegalStateException("Factory class");
+    }
+    // * @param health the max and initial health of the extractor
+    // * @param producedResource the resource type produced by the extractor
+    // * @param tickRate the frequency at which the extractor ticks (produces resources)
+    // * @param tickSize the amount of the resource produced at each tick
+
     //Default configs
     public static final UpgradeBenchConfig defaultUpgradeBench =
             FileLoader.readClass(UpgradeBenchConfig.class, "configs/upgradeBench.json");
@@ -297,7 +305,7 @@ public class StructureFactory {
      * @param count the maximum amount of enemies the spawner will spawn
      * @return
      */
-    public static Entity createSpawner(ArrayList<Entity> targets, long spawnRate, EnemyType type, EnemyBehaviour behaviour, int count) {
+    public static Entity createSpawner(List<Entity> targets, long spawnRate, EnemyType type, EnemyBehaviour behaviour, int count) {
         Entity spawner =
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/Spawner.png"))

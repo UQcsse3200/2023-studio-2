@@ -12,7 +12,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.structures.StructurePicker;
+import com.csse3200.game.components.structures.StructureToolPicker;
 
 /**
  * Action component for interacting with the player. Player events should be
@@ -152,8 +152,8 @@ public class PlayerActions extends Component {
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
         GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
 
-        var structurePicker = getEntity().getComponent(StructurePicker.class);
-        structurePicker.interact(entity, gridPosition);
+        var structurePicker = getEntity().getComponent(StructureToolPicker.class);
+        structurePicker.interact(gridPosition);
     }
 
     /**
@@ -193,7 +193,7 @@ public class PlayerActions extends Component {
     }
 
     void changeStructure() {
-        var picker = entity.getComponent(StructurePicker.class);
+        var picker = entity.getComponent(StructureToolPicker.class);
 
         if (picker == null) {
             return;

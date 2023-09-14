@@ -9,7 +9,7 @@ import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SpawnerComponent extends Component {
     // Timer used to track time since last tick
@@ -22,7 +22,7 @@ public class SpawnerComponent extends Component {
     long lastTime;
 
     // The enemy this spawns
-    ArrayList<Entity> targets;
+    List<Entity> targets;
 
     EnemyType type;
 
@@ -41,7 +41,7 @@ public class SpawnerComponent extends Component {
      * @param type the type of enemy e.g.(Melee, Ranged) (Recommend to use for just small enemies)
      * @param behaviour the behaviour of the enemy, what it will prioritise
      */
-    public SpawnerComponent(ArrayList<Entity> targets, long tickRate, EnemyType type, EnemyBehaviour behaviour, int count) {
+    public SpawnerComponent(List<Entity> targets, long tickRate, EnemyType type, EnemyBehaviour behaviour, int count) {
         this.timer = new GameTime();
         this.tickRate = tickRate;
         this.lastTime = timer.getTime();
@@ -62,8 +62,10 @@ public class SpawnerComponent extends Component {
         Vector2 worldPos;
         while (this.timer.getTimeSince(this.lastTime) >= this.tickRate && spawnedAmount < count) {
                 worldPos = entity.getCenterPosition();
+
                 Entity enemy = EnemyFactory.createEnemy(type, behaviour);
-                ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
+                ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemy, worldPos);
+
                 spawnedAmount += 1;
                 System.out.println(spawnedAmount);
                 this.lastTime += this.tickRate;

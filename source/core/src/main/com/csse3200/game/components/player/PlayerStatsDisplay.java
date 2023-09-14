@@ -21,7 +21,7 @@ public class PlayerStatsDisplay extends UIComponent {
   Table table1;
   private Image heartImage;
   private Label healthLabel;
-  private ProgressBar healthBar;
+  public ProgressBar healthBar;
   private ProgressBar DodgeBar;
   private Label DodgeLabel;
   private Label livesLabel;
@@ -35,7 +35,7 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
 
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
-    entity.getEvents().addListener("updateDodgeCool down", this::updateDodgeBarUI);
+    entity.getEvents().addListener("updateDodgeCooldown", this::updateDodgeBarUI);
   }
 
   /**

@@ -51,7 +51,7 @@ public class ShipUpgradesFactoryTest {
      */
     @Test
     public void testCreateUpgrade() {
-        Entity shipUpgrade = ShipUpgradesFactory.createHealthUpgrade(configs.healthUpgrade);
+        Entity shipUpgrade = ShipUpgradesFactory.createHealthUpgrade();
         ShipUpgradesType type = shipUpgrade.getComponent(ShipUpgradesComponent.class).getType();
 
         assertNotNull(shipUpgrade);

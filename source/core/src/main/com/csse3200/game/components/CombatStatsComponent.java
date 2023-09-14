@@ -43,15 +43,6 @@ public class CombatStatsComponent extends Component {
     this.setImmunity(isImmune);
   }
 
-//  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune, int lives) {
-//    this.maxHealth = health;
-//    this.setHealth(health);
-//    this.setBaseAttack(baseAttack);
-//    this.setAttackMultiplier(attackMultiplier);
-//    this.setImmunity(isImmune);
-//    this.lives = lives;
-//  }
-
   /**
    * Returns true if the entity's health is 0 or less, indicating that it's dead; otherwise, returns false.
    *

@@ -81,7 +81,7 @@
     "initialRotationOffset": 90,
     "imageRotationOffset": 45,
     "attackCooldown": 10,
-    "textureAtlas": "images/upgradetree/stick.png",
+    "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
     "imagePath" : "images/upgradetree/stick.png"
   },

@@ -67,7 +67,7 @@ public class AttackFactory {
                     .addComponent(weaponController);
     attack.setEntityType("playerWeapon");
 
-    TextureAtlas atlas = new TextureAtlas(config.spritePath);
+    TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
     AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
 
     switch (config.animationType) {

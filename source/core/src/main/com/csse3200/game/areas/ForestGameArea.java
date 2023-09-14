@@ -5,8 +5,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.buildables.TurretType;
@@ -90,16 +88,20 @@ public class ForestGameArea extends GameArea {
       "images/oldman_down_1.png",
       "images/base_enemy.png",
       "images/Troll.png",
-          "images/TurretOne.png",
-          "images/TurretTwo.png",
+      "images/TurretOne.png",
+      "images/TurretTwo.png",
       "images/rangeEnemy.png",
       "images/stone_wall.png",
-       "images/companionSS.png",
-          "images/companionSS_0.png",
-          "images/companionSS_1.png",
-          "images/companionSS_2.png",
-          "images/companionSS_03.png",
-      "images/player.png"
+      "images/companionSS.png",
+      "images/companionSS_0.png",
+      "images/companionSS_1.png",
+      "images/companionSS_2.png",
+      "images/companionSS_03.png",
+      "images/nebulite.png",
+      "images/solstite.png",
+      "images/durasteel.png",
+      "images/player.png",
+      "images/ExtractorAnimation.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
@@ -117,8 +119,9 @@ public class ForestGameArea extends GameArea {
       "images/dirt_wall.atlas",
       "images/botanist.atlas",
       "images/playerSS.atlas",
-          "images/companionSS.atlas",
-      "images/player.atlas"
+      "images/companionSS.atlas",
+      "images/player.atlas",
+      "images/ExtractorAnimation.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -167,7 +170,6 @@ public class ForestGameArea extends GameArea {
     spawnBoss();
     spawnAsteroids();
     player = spawnPlayer();
-    spawnTurret();
     spawnBotanist();
 
     playMusic();
@@ -191,7 +193,7 @@ public class ForestGameArea extends GameArea {
   private void spawnShip() {
     GridPoint2 spawnPosition = new GridPoint2(terrain.getMapBounds(0).sub(1, 1).x/2,
             terrain.getMapBounds(0).sub(1, 1).y/3);
-    Entity ship = StructureFactory.createShip(game);
+    Entity ship = StructureFactory.createShip(game, null); //Doesn't implement winconditions
     spawnEntityAt(ship, spawnPosition, false, false);
   }
 
@@ -203,7 +205,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain();
+    terrain = terrainFactory.createTerrain("map/base.tmx");
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
@@ -295,25 +297,25 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < NUM_MELEE_ENEMIES_PTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+      Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
     for (int i = 0; i < NUM_MELEE_ENEMIES_DTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Melee, EnemyBehaviour.DTE);
+      Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
     for (int i = 0; i < NUM_RANGE_ENEMIES_PTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity melee = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.DTE);
+      Entity melee = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.DTE);
       spawnEntityAt(melee, randomPos, true, true);
     }
 
     for (int i = 0; i < NUM_RANGE_ENEMIES_DTE; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ranged = EnemyFactory.createEnemy(targetables, EnemyType.Ranged, EnemyBehaviour.PTE);
+      Entity ranged = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
       spawnEntityAt(ranged, randomPos, true, true);
     }
   }
@@ -331,16 +333,9 @@ public class ForestGameArea extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity boss = EnemyFactory.createEnemy(targetables, EnemyType.BossMelee, EnemyBehaviour.PTE);
+    Entity boss = EnemyFactory.createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
     spawnEntityAt(boss, randomPos, true, true);
     //boss.addComponent(new DialogComponent(dialogueBox));
-  }
-
-  public void spawnTurret() {
-    Entity levelOne = ObstacleFactory.createCustomTurret( TurretType.levelOne, player);
-    Entity levelTwo = ObstacleFactory.createCustomTurret(TurretType.levelTwo, player);
-    spawnEntityAt(levelOne, new GridPoint2(10, 10), false, false);
-    spawnEntityAt(levelTwo, new GridPoint2(15, 15), false, false);
   }
 
   private void playMusic() {

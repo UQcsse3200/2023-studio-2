@@ -6,15 +6,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.events.listeners.EventListener1;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
-import com.csse3200.game.entities.factories.StructureFactory;
-import com.csse3200.game.events.EventHandler;
-import com.csse3200.game.events.listeners.EventListener1;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,13 +23,18 @@ import java.util.Map;
  */
 public abstract class GameArea implements Disposable {
   protected TerrainComponent terrain;
-  private Entity companion;
   protected Map<GridPoint2, Entity> areaEntities;
+  protected Entity companion;
+  protected Entity player;
   protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;
 
   public GameArea() {
     areaEntities = new HashMap<>();
+  }
+
+  public Entity getPlayer() {
+    return player;
   }
 
   /** Create the game area in the world. */
@@ -63,12 +62,12 @@ public abstract class GameArea implements Disposable {
     handler.addListener("spawnExtractor", this::spawnExtractor);
     handler.addListener("placeStructure", this::spawnEntity);
     handler.addListener("fireBullet",
-            (StructurePlacementService.SpawnEntityAtVectorArgs args) ->
-                    spawnEntityAtVector(args.entity, args.worldPos)
+            (StructurePlacementService.spawnEntityAtVectorArgs args) ->
+                    spawnEntityAtVector(args.getEntity(), args.getWorldPos())
   );
     handler.addListener("placeStructureAt",
-            (StructurePlacementService.PlaceStructureAtArgs args) ->
-                    spawnEntityAt(args.entity, args.tilePos, args.centerX, args.centerY)
+            (StructurePlacementService.placeStructureAtArgs args) ->
+                    spawnEntityAt(args.getEntity(), args.getTilePos(), args.isCenterX(), args.isCenterY())
     );
   }
 

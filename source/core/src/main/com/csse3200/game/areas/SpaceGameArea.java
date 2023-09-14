@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ShipFactory;
+import com.csse3200.game.entities.factories.MinigameShipFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -225,7 +225,7 @@ public class SpaceGameArea extends GameArea {
      */
     private void spawnShip()
     {
-        Entity newShip = ShipFactory.createShip();
+        Entity newShip = MinigameShipFactory.createMinigameShip();
         spawnEntityAt(newShip, SHIP_SPAWN, true, true);
         targetables.add(newShip);
     }

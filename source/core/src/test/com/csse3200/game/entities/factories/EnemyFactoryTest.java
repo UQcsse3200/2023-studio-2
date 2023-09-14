@@ -2,13 +2,17 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.configs.EnemyConfig;
+import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsService;
@@ -21,6 +25,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 import java.util.ArrayList;
 
@@ -34,6 +40,10 @@ public class EnemyFactoryTest {
     @Mock
     Box2DDebugRenderer physicsRenderer;
     DebugRenderer debugRenderer;
+
+    private static final NPCConfigs configs =
+            FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
+
     @BeforeEach
     void setUp() {
         debugRenderer = new DebugRenderer(physicsRenderer, shapeRenderer);
@@ -43,6 +53,8 @@ public class EnemyFactoryTest {
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerRenderService(new RenderService());
     }
+
+    // TODO: Remove - Legacy tests
 
     /**
      * Test method for the getEnemyscale method in the EnemyFactory class.
@@ -77,7 +89,7 @@ public class EnemyFactoryTest {
         Entity newPlayer = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
         targetList.add(newPlayer);
         // List should contain one empty Entity
-        Entity enemy = createEnemy(targetList, EnemyType.Melee, EnemyBehaviour.PTE);
+        Entity enemy = createEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
 
         // Checking Health matches PTE Melee Enemy
         assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 20);
@@ -101,7 +113,7 @@ public class EnemyFactoryTest {
         Entity structure = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
         targetList.add(structure);
         // List should contain one empty Entity
-        Entity enemy = createEnemy(targetList, EnemyType.Melee, EnemyBehaviour.DTE);
+        Entity enemy = createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
         // Checking Health matches PTE Melee Enemy
         assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 50);
         // Checking Base Attack matches PTE Melee Enemy
@@ -124,12 +136,13 @@ public class EnemyFactoryTest {
         Entity structure = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
         targetList.add(structure);
         // List should contain one empty Entity
-        Entity enemy = createEnemy(targetList, EnemyType.Ranged, EnemyBehaviour.PTE);
+        Entity enemy = createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
         // Checking Health matches PTE Melee Enemy
         assertEquals(enemy.getComponent(CombatStatsComponent.class).getHealth(), 40);
         // Checking Base Attack matches PTE Melee Enemy
         assertEquals(enemy.getComponent(CombatStatsComponent.class).getBaseAttack(), 10);
     }
+
     /**
      * Creates new boss with the following stats:
      * "meleeBossPTE":
@@ -146,10 +159,72 @@ public class EnemyFactoryTest {
         Entity structure = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
         targetList.add(structure);
         // List should contain one empty Entity
-        Entity boss = createEnemy(targetList, EnemyType.BossMelee, EnemyBehaviour.PTE);
+        Entity boss = createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
         // Checking Health matches PTE Melee Enemy
         assertEquals(boss.getComponent(CombatStatsComponent.class).getHealth(), 100);
         // Checking Base Attack matches PTE Melee Enemy
         assertEquals(boss.getComponent(CombatStatsComponent.class).getBaseAttack(), 15);
     }
+
+    @Test
+    void createEnemyMeleePTEConfigTest(){
+        EnemyConfig config = configs.GetEnemyConfig(EnemyType.Melee, EnemyBehaviour.PTE);
+        Entity enemy = createEnemy(config);
+
+        // Check Health & BaseAttack was set appropriately based on type and behaviour
+        assertEquals(20, enemy.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(10, enemy.getComponent(CombatStatsComponent.class).getBaseAttack());
+    }
+
+    @Test
+    void createEnemyMeleeDTEConfigTest() {
+        EnemyConfig config = configs.GetEnemyConfig(EnemyType.Melee, EnemyBehaviour.DTE);
+        Entity enemy = createEnemy(config);
+
+        // Check Health & BaseAttack was set appropriately based on type and behaviour
+        assertEquals(50, enemy.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(5, enemy.getComponent(CombatStatsComponent.class).getBaseAttack());
+    }
+
+    @Test
+    void createEnemyRangedPTEConfigTest(){
+        EnemyConfig config = configs.GetEnemyConfig(EnemyType.Ranged, EnemyBehaviour.PTE);
+        Entity enemy = createEnemy(config);
+
+        // Check Health & BaseAttack was set appropriately based on type and behaviour
+        assertEquals(40, enemy.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(10, enemy.getComponent(CombatStatsComponent.class).getBaseAttack());
+    }
+
+    @Test
+    void createEnemyRangedDTEConfigTest() {
+        EnemyConfig config = configs.GetEnemyConfig(EnemyType.Ranged, EnemyBehaviour.DTE);
+        Entity enemy = createEnemy(config);
+
+        // Check Health & BaseAttack was set appropriately based on type and behaviour
+        assertEquals(40, enemy.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(10, enemy.getComponent(CombatStatsComponent.class).getBaseAttack());
+    }
+
+    @Test
+    void createBossEnemyMeleePTEConfigTest() {
+        EnemyConfig config = configs.GetEnemyConfig(EnemyType.BossMelee, EnemyBehaviour.PTE);
+        Entity enemy = createEnemy(config);
+
+        // Check Health & BaseAttack was set appropriately based on type and behaviour
+        assertEquals(100, enemy.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(25, enemy.getComponent(CombatStatsComponent.class).getBaseAttack());
+    }
+
+    @Test
+    void createBossEnemyRangedPTEConfigTest() {
+        EnemyConfig config = configs.GetEnemyConfig(EnemyType.BossRanged, EnemyBehaviour.PTE);
+        Entity enemy = createEnemy(config);
+
+        // Check Health & BaseAttack was set appropriately based on type and behaviour
+        assertEquals(100, enemy.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(25, enemy.getComponent(CombatStatsComponent.class).getBaseAttack());
+    }
+
+
 }

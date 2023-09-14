@@ -54,7 +54,7 @@ public class ShootTask extends DefaultTask {
         } else {
             spawn.x -= 0.5;
         }
-        ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawn);
+        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(bullet, spawn);
     }
 
     @Override

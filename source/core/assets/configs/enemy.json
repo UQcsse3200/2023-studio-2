@@ -3,41 +3,47 @@
     "health": 20,
     "baseAttack": 10,
     "speed": 5,
-    "specialAttack": 0,
-    "atlas": "images/enemy/base_enemy.atlas"
+    "behaviour": "PTE",
+    "type": "Melee",
+    "spritePath": "images/base_enemy.atlas"
   },
 
   "meleeEnemyDTE": {
     "health": 50,
     "baseAttack": 5,
     "speed": 5,
-    "specialAttack": 0,
-    "atlas": "images/enemy/bull.atlas"
-
+    "behaviour": "DTE",
+    "type": "Melee",
+    "spritePath": "images/troll_enemy.atlas"
   },
 
   "rangeEnemyPTE": {
     "health": 40,
     "baseAttack": 10,
     "speed": 5,
-    "specialAttack": 0,
-    "atlas": "images/enemy/necromancer.atlas"
+    "behaviour": "PTE",
+    "type": "Ranged",
+    "spritePath": "images/rangeEnemy.atlas"
   },
 
   "rangeEnemyDTE": {
     "health": 40,
     "baseAttack": 10,
     "speed": 5,
-    "specialAttack": 0,
-    "atlas": "images/rangeEnemy.atlas"
+    "behaviour": "DTE",
+    "type": "Ranged",
+    "spritePath": "images/rangeEnemy.atlas"
   },
 
   "meleeBossPTE": {
     "health": 100,
-    "baseAttack": 15,
-    "speed": 10,
+    "baseAttack": 25,
+    "speed": 8,
     "specialAttack": 40,
-    "atlas": "images/enemy/Night.atlas"
+    "behaviour": "PTE",
+    "type": "Melee",
+    "spritePath": "images/boss_enemy.atlas",
+    "isBoss": true
   },
 
   "rangeBossPTE": {
@@ -45,6 +51,9 @@
     "baseAttack": 25,
     "speed": 8,
     "specialAttack": 40,
-    "atlas": "images/boss_enemy.atlas"
+    "behaviour": "PTE",
+    "type": "Ranged",
+    "spritePath": "images/boss_enemy.atlas",
+    "isBoss": true
   }
 }

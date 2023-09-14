@@ -2,11 +2,15 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.BotanistConfig;
+import com.csse3200.game.entities.configs.NPCConfigs;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -14,7 +18,6 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 
@@ -34,7 +37,7 @@ public class NPCFactory {
   public static DialogueBox dialogueBox;
 
   /** Configuration class for NPC properties. */
-  //private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+  private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
   /** Asset manager to load and manage assets. */
   public AssetManager assetManager;
@@ -95,19 +98,26 @@ public class NPCFactory {
 //    PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.4f);
 //    return botanist;
 //  }
+  //TODO: REMOVE - LEGACY
   /**
    * Creates a generic Botanist NPC entity.
-   *
    * @return The created Botanist NPC entity.
    */
   public static Entity createBotanist() {
+    return createBotanist(configs.botanist);
+  }
+
+  /**
+   * Creates a Botanist NPC to match the config file
+   * @return The created Botanist NPC entity.
+   */
+  public static Entity createBotanist(BotanistConfig config) {
     Entity botanist =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/oldman_down_1.png"))
+                    .addComponent(new TextureRenderComponent(config.spritePath))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE));
-       //FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
     botanist.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     botanist.getComponent(TextureRenderComponent.class).scaleEntity();
@@ -115,6 +125,7 @@ public class NPCFactory {
     PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.7f);
     return botanist;
   }
+
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    *

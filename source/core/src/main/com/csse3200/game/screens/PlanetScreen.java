@@ -11,6 +11,7 @@ import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
@@ -154,6 +155,11 @@ public class PlanetScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().update();
         followPlayer();
         renderer.render();
+
+        ProximityControllerComponent proximityController = player.getComponent(ProximityControllerComponent.class);
+        if (proximityController != null) {
+            proximityController.checkAllEntitiesProximity();   //checks whether the player is near an intractable entity to show the prompt
+        }
     }
 
     @Override
@@ -176,8 +182,7 @@ public class PlanetScreen extends ScreenAdapter {
      * Do not dispose of all services and renderers on screen switch. Preserve state
      */
     @Override
-    public void dispose() {
-    }
+    public void dispose() { }
 
     /**
      * Dispose of the entire game screen.

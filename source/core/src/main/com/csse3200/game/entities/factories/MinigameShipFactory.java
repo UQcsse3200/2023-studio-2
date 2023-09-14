@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.components.ships.ShipActions;
+import com.csse3200.game.components.ships.ShipStatDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.BaseEntityConfig;
 import com.csse3200.game.entities.configs.MinigameConfigs;
@@ -33,7 +34,9 @@ public class MinigameShipFactory {
                 ServiceLocator.getInputService().getInputFactory().createForShip();
 
         Entity ship =
-                new Entity()
+                new Entity().addComponent(new TextureRenderComponent("images/Ship.png"))
+                        //.addComponent(new TextureRenderComponent("images/LeftShip.png"))Dont add 2 of the same component class
+                        .addComponent(new ShipStatDisplay())
                         .addComponent(new TextureRenderComponent(config.spritePath))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())

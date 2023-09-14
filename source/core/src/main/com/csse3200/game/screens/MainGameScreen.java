@@ -151,11 +151,6 @@ private static boolean alive = true;
       game.setScreen(GdxGame.ScreenType.PLAYER_DEATH);
     }
 
-    ProximityControllerComponent proximityController = player.getComponent(ProximityControllerComponent.class);
-    if (proximityController != null) {
-      proximityController.checkAllEntitiesProximity();   //checks whether the player is near an intractable entity to show the prompt
-    }
-
   }
 
   @Override

@@ -5,7 +5,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.MainAlertBox;
+import com.csse3200.game.ui.SpaceMiniTransition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,7 @@ public class MainGameActionss extends MainGameActions {
      */
     protected void onReturnPlanet() {
         logger.info("Exiting main game screen");
-        MainAlertBox mainAlertBox = new MainAlertBox(game, "Return to planet", skin, "Game Over");
+        SpaceMiniTransition mainAlertBox = new SpaceMiniTransition(game, "Return to planet", skin, "Game Over");
         mainAlertBox.showDialog(stage,()-> game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet")));
     }
 }

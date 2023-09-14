@@ -23,8 +23,7 @@ class PlayerDeathScreenTest {
         GdxGame game = mock(GdxGame.class);
         Entity player = new Entity();
         player.setEntityType("player");
-        player.addComponent(CombatStatsComponent(10, 10, 10, false));
-        player.getComponent(CombatStatsComponent.class).setHealth(0);
+        player.addComponent(new CombatStatsComponent(0, 10, 10, false));
         final Timer timer = new Timer();
         java.util.TimerTask testScreen = new java.util.TimerTask() {
             @Override

@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.areas.GameArea">Fields inherited from class&nbsp;com.csse3200.game.areas.<a href="GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></h3>
-<code><a href="GameArea.html#areaEntities">areaEntities</a>, <a href="GameArea.html#companion">companion</a>, <a href="GameArea.html#entityPlacementService">entityPlacementService</a>, <a href="GameArea.html#player">player</a>, <a href="GameArea.html#structurePlacementService">structurePlacementService</a>, <a href="GameArea.html#terrain">terrain</a></code></div>
+<code><a href="GameArea.html#areaEntities">areaEntities</a>, <a href="GameArea.html#entityPlacementService">entityPlacementService</a>, <a href="GameArea.html#structurePlacementService">structurePlacementService</a>, <a href="GameArea.html#terrain">terrain</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -151,12 +151,18 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCompanion(com.csse3200.game.entities.Entity)" class="member-name-link">setCompanion</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;Companion)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#spawnPlatform()" class="member-name-link">spawnPlatform</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#spawnPotion(com.csse3200.game.components.PotionType)" class="member-name-link">spawnPotion</a><wbr>(<a href="../components/PotionType.html" title="enum class in com.csse3200.game.components">PotionType</a>&nbsp;potionType)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.areas.GameArea">Methods inherited from class&nbsp;com.csse3200.game.areas.<a href="GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></h3>
-<code><a href="GameArea.html#placeEntityAt(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.Vector2)">placeEntityAt</a>, <a href="GameArea.html#registerEntityPlacementService()">registerEntityPlacementService</a>, <a href="GameArea.html#registerStructurePlacementService()">registerStructurePlacementService</a>, <a href="GameArea.html#spawnEntity(com.csse3200.game.entities.Entity)">spawnEntity</a>, <a href="GameArea.html#spawnEntityAt(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.GridPoint2,boolean,boolean)">spawnEntityAt</a>, <a href="GameArea.html#spawnEntityAtVector(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.Vector2)">spawnEntityAtVector</a>, <a href="GameArea.html#spawnExtractor(com.csse3200.game.entities.Entity)">spawnExtractor</a></code></div>
+<code><a href="GameArea.html#getAreaEntities()">getAreaEntities</a>, <a href="GameArea.html#getTerrain()">getTerrain</a>, <a href="GameArea.html#placeEntityAt(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.Vector2)">placeEntityAt</a>, <a href="GameArea.html#registerEntityPlacementService()">registerEntityPlacementService</a>, <a href="GameArea.html#registerStructurePlacementService()">registerStructurePlacementService</a>, <a href="GameArea.html#spawnEntity(com.csse3200.game.entities.Entity)">spawnEntity</a>, <a href="GameArea.html#spawnEntityAt(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.GridPoint2,boolean,boolean)">spawnEntityAt</a>, <a href="GameArea.html#spawnEntityAtVector(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.Vector2)">spawnEntityAtVector</a>, <a href="GameArea.html#spawnExtractor(com.csse3200.game.entities.Entity)">spawnExtractor</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -220,6 +226,18 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getExtractor()">
 <h3>getExtractor</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">getExtractor</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="spawnPotion(com.csse3200.game.components.PotionType)">
+<h3>spawnPotion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">spawnPotion</span><wbr><span class="parameters">(<a href="../components/PotionType.html" title="enum class in com.csse3200.game.components">PotionType</a>&nbsp;potionType)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="spawnPlatform()">
+<h3>spawnPlatform</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">spawnPlatform</span>()</div>
 </section>
 </li>
 <li>

@@ -79,7 +79,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PotionComponent</span>
 <span class="extends-implements">extends <a href="Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
-<div class="block">Represents a power-up component within the game.</div>
+<div class="block">PotionComponent represents a power-up (potion) in the game, with the ability to apply
+ different effects to entities when consumed.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -102,7 +103,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.components.PotionType)" class="member-name-link">PotionComponent</a><wbr>(<a href="PotionType.html" title="enum class in com.csse3200.game.components">PotionType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Assigns a type and targetLayer value to a given Potion</div>
+<div class="block">Creates a PotionComponent with the specified type.</div>
 </div>
 </div>
 </section>
@@ -119,34 +120,35 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyEffect(com.csse3200.game.entities.Entity)" class="member-name-link">applyEffect</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyEffect(com.csse3200.game.entities.Entity,com.csse3200.game.entities.Entity)" class="member-name-link">applyEffect</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target1,
+ <a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target2)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Applies the effects of the Potion to the specified target entity.</div>
+<div class="block">Applies the effects of the potion to the specified target entities.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Overrides the Component create() function</div>
+<div class="block">Overrides the Component's create() function.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDuration()" class="member-name-link">getDuration</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retrieves the duration for which the Potion effect should last.</div>
+<div class="block">Retrieves the duration for which the potion effect should last.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PotionType.html" title="enum class in com.csse3200.game.components">PotionType</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retrieves the type of the Potion.</div>
+<div class="block">Retrieves the type of the potion.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDuration(long)" class="member-name-link">setDuration</a><wbr>(long&nbsp;duration)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the duration for which the Potion effect should last.</div>
+<div class="block">Sets the duration for which the potion effect should last.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setType(com.csse3200.game.components.PotionType)" class="member-name-link">setType</a><wbr>(<a href="PotionType.html" title="enum class in com.csse3200.game.components">PotionType</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the type of the Potion.</div>
+<div class="block">Sets the type of the potion.</div>
 </div>
 </div>
 </div>
@@ -172,7 +174,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(com.csse3200.game.components.PotionType)">
 <h3>PotionComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PotionComponent</span><wbr><span class="parameters">(<a href="PotionType.html" title="enum class in com.csse3200.game.components">PotionType</a>&nbsp;type)</span></div>
-<div class="block">Assigns a type and targetLayer value to a given Potion</div>
+<div class="block">Creates a PotionComponent with the specified type.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>type</code> - The type of the potion.</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -187,7 +193,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block">Overrides the Component create() function</div>
+<div class="block">Overrides the Component's create() function.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
@@ -195,13 +201,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="applyEffect(com.csse3200.game.entities.Entity)">
+<section class="detail" id="applyEffect(com.csse3200.game.entities.Entity,com.csse3200.game.entities.Entity)">
 <h3>applyEffect</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">applyEffect</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target)</span></div>
-<div class="block">Applies the effects of the Potion to the specified target entity.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">applyEffect</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target1,
+ <a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;target2)</span></div>
+<div class="block">Applies the effects of the potion to the specified target entities.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>target</code> - The entity receiving the Potion effect.</dd>
+<dd><code>target1</code> - The first entity receiving the potion effect.</dd>
+<dd><code>target2</code> - The second entity receiving the potion effect.</dd>
 </dl>
 </section>
 </li>
@@ -209,7 +217,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setDuration(long)">
 <h3>setDuration</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDuration</span><wbr><span class="parameters">(long&nbsp;duration)</span></div>
-<div class="block">Sets the duration for which the Potion effect should last.</div>
+<div class="block">Sets the duration for which the potion effect should last.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>duration</code> - Duration in milliseconds.</dd>
@@ -220,7 +228,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getDuration()">
 <h3>getDuration</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getDuration</span>()</div>
-<div class="block">Retrieves the duration for which the Potion effect should last.</div>
+<div class="block">Retrieves the duration for which the potion effect should last.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>Duration in milliseconds.</dd>
@@ -231,10 +239,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getType()">
 <h3>getType</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PotionType.html" title="enum class in com.csse3200.game.components">PotionType</a></span>&nbsp;<span class="element-name">getType</span>()</div>
-<div class="block">Retrieves the type of the Potion.</div>
+<div class="block">Retrieves the type of the potion.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>The current Potion type.</dd>
+<dd>The current potion type.</dd>
 </dl>
 </section>
 </li>
@@ -242,7 +250,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setType(com.csse3200.game.components.PotionType)">
 <h3>setType</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setType</span><wbr><span class="parameters">(<a href="PotionType.html" title="enum class in com.csse3200.game.components">PotionType</a>&nbsp;type)</span></div>
-<div class="block">Sets the type of the Potion.</div>
+<div class="block">Sets the type of the potion.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>type</code> - The type to set.</dd>

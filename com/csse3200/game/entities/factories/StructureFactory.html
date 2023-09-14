@@ -146,11 +146,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a ship entity that matches the config file</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createSpawner(java.util.List,long,com.csse3200.game.entities.enemies.EnemyType,com.csse3200.game.entities.enemies.EnemyBehaviour,int)" class="member-name-link">createSpawner</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;targets,
- long&nbsp;spawnRate,
- <a href="../enemies/EnemyType.html" title="enum class in com.csse3200.game.entities.enemies">EnemyType</a>&nbsp;type,
- <a href="../enemies/EnemyBehaviour.html" title="enum class in com.csse3200.game.entities.enemies">EnemyBehaviour</a>&nbsp;behaviour,
- int&nbsp;count)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createSpawner(java.util.ArrayList)" class="member-name-link">createSpawner</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;targets)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map</div>
 </div>
@@ -281,21 +277,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="createSpawner(java.util.List,long,com.csse3200.game.entities.enemies.EnemyType,com.csse3200.game.entities.enemies.EnemyBehaviour,int)">
+<section class="detail" id="createSpawner(java.util.ArrayList)">
 <h3>createSpawner</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createSpawner</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;targets,
- long&nbsp;spawnRate,
- <a href="../enemies/EnemyType.html" title="enum class in com.csse3200.game.entities.enemies">EnemyType</a>&nbsp;type,
- <a href="../enemies/EnemyBehaviour.html" title="enum class in com.csse3200.game.entities.enemies">EnemyBehaviour</a>&nbsp;behaviour,
- int&nbsp;count)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createSpawner</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;targets)</span></div>
 <div class="block">Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>targets</code> - the targets the entities that spawn will target</dd>
-<dd><code>spawnRate</code> - the frequency of the enemy spawning</dd>
-<dd><code>type</code> - the type of enemy to spawn</dd>
-<dd><code>behaviour</code> - the behaviour type of the enemy to spawn</dd>
-<dd><code>count</code> - the maximum amount of enemies the spawner will spawn</dd>
 <dt>Returns:</dt>
 </dl>
 </section>

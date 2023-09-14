@@ -79,6 +79,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">LaboratoryInventoryComponent</span>
 <span class="extends-implements">extends <a href="Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
+<div class="block">LaboratoryInventoryComponent handles the inventory of a laboratory,
+ specifically the number of potions it contains.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -100,7 +102,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">LaboratoryInventoryComponent</a><wbr>(int&nbsp;potion)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Initializes a LaboratoryInventoryComponent with the specified initial number of potions.</div>
+</div>
 </div>
 </section>
 </li>
@@ -116,17 +120,25 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addpotion(int)" class="member-name-link">addpotion</a><wbr>(int&nbsp;potion)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPotion(int)" class="member-name-link">addPotion</a><wbr>(int&nbsp;potion)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a certain number of potions to the laboratory's inventory.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getpotion()" class="member-name-link">getpotion</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPotion()" class="member-name-link">getPotion</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the current number of potions in the laboratory.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#haspotion(int)" class="member-name-link">haspotion</a><wbr>(int&nbsp;potion)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasPotion(int)" class="member-name-link">hasPotion</a><wbr>(int&nbsp;potion)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks if the laboratory has at least a certain number of potions.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setpotion(int)" class="member-name-link">setpotion</a><wbr>(int&nbsp;potion)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPotion(int)" class="member-name-link">setPotion</a><wbr>(int&nbsp;potion)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the number of potions in the laboratory.</div>
+</div>
 </div>
 </div>
 </div>
@@ -151,6 +163,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(int)">
 <h3>LaboratoryInventoryComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">LaboratoryInventoryComponent</span><wbr><span class="parameters">(int&nbsp;potion)</span></div>
+<div class="block">Initializes a LaboratoryInventoryComponent with the specified initial number of potions.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>potion</code> - The initial number of potions in the laboratory.</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -162,27 +179,49 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="getpotion()">
-<h3>getpotion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getpotion</span>()</div>
+<section class="detail" id="getPotion()">
+<h3>getPotion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getPotion</span>()</div>
+<div class="block">Gets the current number of potions in the laboratory.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The current number of potions.</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="haspotion(int)">
-<h3>haspotion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">haspotion</span><wbr><span class="parameters">(int&nbsp;potion)</span></div>
+<section class="detail" id="hasPotion(int)">
+<h3>hasPotion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">hasPotion</span><wbr><span class="parameters">(int&nbsp;potion)</span></div>
+<div class="block">Checks if the laboratory has at least a certain number of potions.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>potion</code> - The number of potions to check.</dd>
+<dt>Returns:</dt>
+<dd>True if the laboratory has at least the specified number of potions, false otherwise.</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="setpotion(int)">
-<h3>setpotion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setpotion</span><wbr><span class="parameters">(int&nbsp;potion)</span></div>
+<section class="detail" id="setPotion(int)">
+<h3>setPotion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPotion</span><wbr><span class="parameters">(int&nbsp;potion)</span></div>
+<div class="block">Sets the number of potions in the laboratory.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>potion</code> - The new number of potions.</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="addpotion(int)">
-<h3>addpotion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addpotion</span><wbr><span class="parameters">(int&nbsp;potion)</span></div>
+<section class="detail" id="addPotion(int)">
+<h3>addPotion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addPotion</span><wbr><span class="parameters">(int&nbsp;potion)</span></div>
+<div class="block">Adds a certain number of potions to the laboratory's inventory.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>potion</code> - The number of potions to add.</dd>
+</dl>
 </section>
 </li>
 </ul>

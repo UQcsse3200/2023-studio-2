@@ -99,15 +99,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.List,long,com.csse3200.game.entities.enemies.EnemyType,com.csse3200.game.entities.enemies.EnemyBehaviour,int)" class="member-name-link">SpawnerComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;targets,
- long&nbsp;tickRate,
- <a href="../../entities/enemies/EnemyType.html" title="enum class in com.csse3200.game.entities.enemies">EnemyType</a>&nbsp;type,
- <a href="../../entities/enemies/EnemyBehaviour.html" title="enum class in com.csse3200.game.entities.enemies">EnemyBehaviour</a>&nbsp;behaviour,
- int&nbsp;count)</code></div>
-<div class="col-last even-row-color">
-<div class="block">SpawnerComponent allows an entity to spawn enemies on some real time interval and send them to
- the gameState and event handler.</div>
-</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.ArrayList)" class="member-name-link">SpawnerComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;targets)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -127,6 +120,44 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called when the entity is created and registered.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEnemiesSpawned()" class="member-name-link">getEnemiesSpawned</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEnemiesToSpawn()" class="member-name-link">getEnemiesToSpawn</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMeleeEnemiesToSpawn()" class="member-name-link">getMeleeEnemiesToSpawn</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRangedEnemiesToSpawn()" class="member-name-link">getRangedEnemiesToSpawn</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isSpawning()" class="member-name-link">isSpawning</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEnemiesSpawned(int)" class="member-name-link">setEnemiesSpawned</a><wbr>(int&nbsp;enemiesSpawned)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEnemiesToSpawn(int)" class="member-name-link">setEnemiesToSpawn</a><wbr>(int&nbsp;enemiesToSpawn)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMeleeEnemiesToSpawn(int)" class="member-name-link">setMeleeEnemiesToSpawn</a><wbr>(int&nbsp;meleeEnemiesToSpawn)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRangedEnemiesToSpawn(int)" class="member-name-link">setRangedEnemiesToSpawn</a><wbr>(int&nbsp;rangedEnemiesToSpawn)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSpawning(boolean)" class="member-name-link">setSpawning</a><wbr>(boolean&nbsp;spawning)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#spawnEnemies(int,int)" class="member-name-link">spawnEnemies</a><wbr>(int&nbsp;meleeCount,
+ int&nbsp;rangedCount)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#spawnEnemy(com.csse3200.game.entities.enemies.EnemyType,com.csse3200.game.entities.enemies.EnemyBehaviour)" class="member-name-link">spawnEnemy</a><wbr>(<a href="../../entities/enemies/EnemyType.html" title="enum class in com.csse3200.game.entities.enemies">EnemyType</a>&nbsp;enemyType,
+ <a href="../../entities/enemies/EnemyBehaviour.html" title="enum class in com.csse3200.game.entities.enemies">EnemyBehaviour</a>&nbsp;behaviour)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -153,22 +184,9 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.util.List,long,com.csse3200.game.entities.enemies.EnemyType,com.csse3200.game.entities.enemies.EnemyBehaviour,int)">
+<section class="detail" id="&lt;init&gt;(java.util.ArrayList)">
 <h3>SpawnerComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SpawnerComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;targets,
- long&nbsp;tickRate,
- <a href="../../entities/enemies/EnemyType.html" title="enum class in com.csse3200.game.entities.enemies">EnemyType</a>&nbsp;type,
- <a href="../../entities/enemies/EnemyBehaviour.html" title="enum class in com.csse3200.game.entities.enemies">EnemyBehaviour</a>&nbsp;behaviour,
- int&nbsp;count)</span></div>
-<div class="block">SpawnerComponent allows an entity to spawn enemies on some real time interval and send them to
- the gameState and event handler.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>targets</code> - the list of enemy targets</dd>
-<dd><code>tickRate</code> - the amount of seconds between ticks (not guaranteed but catchup is performed if a tick is missed)</dd>
-<dd><code>type</code> - the type of enemy e.g.(Melee, Ranged) (Recommend to use for just small enemies)</dd>
-<dd><code>behaviour</code> - the behaviour of the enemy, what it will prioritise</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SpawnerComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;&nbsp;targets)</span></div>
 </section>
 </li>
 </ul>
@@ -180,6 +198,66 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="isSpawning()">
+<h3>isSpawning</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSpawning</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setSpawning(boolean)">
+<h3>setSpawning</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSpawning</span><wbr><span class="parameters">(boolean&nbsp;spawning)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getEnemiesSpawned()">
+<h3>getEnemiesSpawned</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getEnemiesSpawned</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setEnemiesSpawned(int)">
+<h3>setEnemiesSpawned</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setEnemiesSpawned</span><wbr><span class="parameters">(int&nbsp;enemiesSpawned)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getEnemiesToSpawn()">
+<h3>getEnemiesToSpawn</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getEnemiesToSpawn</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setEnemiesToSpawn(int)">
+<h3>setEnemiesToSpawn</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setEnemiesToSpawn</span><wbr><span class="parameters">(int&nbsp;enemiesToSpawn)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getMeleeEnemiesToSpawn()">
+<h3>getMeleeEnemiesToSpawn</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMeleeEnemiesToSpawn</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setMeleeEnemiesToSpawn(int)">
+<h3>setMeleeEnemiesToSpawn</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMeleeEnemiesToSpawn</span><wbr><span class="parameters">(int&nbsp;meleeEnemiesToSpawn)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRangedEnemiesToSpawn()">
+<h3>getRangedEnemiesToSpawn</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRangedEnemiesToSpawn</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setRangedEnemiesToSpawn(int)">
+<h3>setRangedEnemiesToSpawn</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRangedEnemiesToSpawn</span><wbr><span class="parameters">(int&nbsp;rangedEnemiesToSpawn)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
@@ -190,6 +268,20 @@ loadScripts(document, 'script');</script>
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="spawnEnemies(int,int)">
+<h3>spawnEnemies</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">spawnEnemies</span><wbr><span class="parameters">(int&nbsp;meleeCount,
+ int&nbsp;rangedCount)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="spawnEnemy(com.csse3200.game.entities.enemies.EnemyType,com.csse3200.game.entities.enemies.EnemyBehaviour)">
+<h3>spawnEnemy</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">spawnEnemy</span><wbr><span class="parameters">(<a href="../../entities/enemies/EnemyType.html" title="enum class in com.csse3200.game.entities.enemies">EnemyType</a>&nbsp;enemyType,
+ <a href="../../entities/enemies/EnemyBehaviour.html" title="enum class in com.csse3200.game.entities.enemies">EnemyBehaviour</a>&nbsp;behaviour)</span></div>
 </section>
 </li>
 <li>

@@ -180,6 +180,7 @@ public class EarthGameArea extends GameArea {
         spawnLaboratory();
         spawnUpgradeBench();
         spawnShip();
+        spawnPlatform();
         player = spawnPlayer();
         companion = spawnCompanion(player);
         spawnTurret();
@@ -387,23 +388,29 @@ public class EarthGameArea extends GameArea {
             case DEATH_POTION:
                newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION,player,companion);
                itemsOnMap.add(newPotion);
-               GridPoint2 pos = new GridPoint2(34, 18);
+               GridPoint2 pos = new GridPoint2(39, 21);
                spawnEntityAt(newPotion, pos, true, false);
                return newPotion;
             case SPEED_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION,player,companion);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos2 = new GridPoint2(37, 18);
+                GridPoint2 pos2 = new GridPoint2(40, 21);
                 spawnEntityAt(newPotion, pos2, true, false);
                 return newPotion;
             case HEALTH_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION,player,companion);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos3 = new GridPoint2(40, 18);
+                GridPoint2 pos3 = new GridPoint2(41, 21);
                 spawnEntityAt(newPotion, pos3, true, false);
                 return newPotion;
-            default: throw new IllegalArgumentException("You must assign a valid PowerupType");
+            default: throw new IllegalArgumentException("You must assign a valid PotionType");
         }
+    }
+    public Entity spawnPlatform(){
+        Entity newPlatform = PlatformFactory.createPlatform();
+        GridPoint2 pos = new GridPoint2(40,20);
+        spawnEntityAt(newPlatform,pos,true,false);
+        return newPlatform;
     }
 
 

@@ -50,8 +50,8 @@ public class LabWindow extends Window {
 
         Table exit = new Table();
         Texture potion1Image = new Texture("images/Potion3re.png");
-        Texture potion2Image = new Texture("images/Potion2re.png");
-        Texture potion3Image = new Texture("images/Potion4re.png");
+        Texture potion2Image = new Texture("images/Potion4re.png");
+        Texture potion3Image = new Texture("images/Potion2re.png");
         Texture potion4Image = new Texture("images/Potion1re.png");
         Image potion1ImageWidget = new Image(potion1Image);
         Image potion2ImageWidget = new Image(potion2Image);
@@ -61,7 +61,7 @@ public class LabWindow extends Window {
         TextButton potion2 = new TextButton("Speed", skin);
         TextButton potion3 = new TextButton("Health", skin);
         TextButton potion4 = new TextButton("Potion", skin);
-        TextButton button = new TextButton("Exit", skin);
+        TextButton returnToGameButton = new TextButton("Return to Game", skin);
         float buttonWidth = 200f; // Adjust as needed
         float buttonHeight = 200f;
         potion1.setWidth(buttonWidth);
@@ -75,6 +75,10 @@ public class LabWindow extends Window {
 
         potion4.setWidth(buttonWidth);
         potion4.setHeight(buttonHeight);
+
+        returnToGameButton.setWidth(buttonWidth);
+        returnToGameButton.setHeight(buttonHeight);
+
         potion1.add(potion1ImageWidget).width(60).height(64);
         potion2.add(potion2ImageWidget).width(60).height(64);
         potion3.add(potion3ImageWidget).width(60).height(64);
@@ -85,11 +89,16 @@ public class LabWindow extends Window {
         buttonTable.add(potion3).padTop(100).padLeft(165);
         buttonTable.add(potion4).padTop(100).padLeft(180);
         buttonTable.row(); //Move to the next row
-        buttonTable.row();
-        exit.add(button).bottom().right().padBottom(70).padLeft(2400);
+        exit.add(returnToGameButton).bottom().right().padBottom(70).padLeft(2800);
         addActor(buttonTable);
         addActor(exit);
 
+        returnToGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                failLaboratory();
+            }
+        });
         potion1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event,float x, float y){
@@ -115,7 +124,6 @@ public class LabWindow extends Window {
         potion4.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("SpawnPotion");
                 failLaboratory();
             }
         });
@@ -126,7 +134,7 @@ public class LabWindow extends Window {
     }
 
     /**
-     * Call this method to exit the Laboratory without repairing the extractor.
+     * Call this method to exit the Laboratory
      */
     private void failLaboratory() {
         remove();

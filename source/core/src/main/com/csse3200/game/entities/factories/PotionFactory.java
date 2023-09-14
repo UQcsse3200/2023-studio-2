@@ -27,7 +27,7 @@ public class PotionFactory {
         Entity potion = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
-                .addComponent(new ItemPickupComponent(PhysicsLayer.COMPANION))
+                .addComponent(new ItemPickupComponent(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
                 .addComponent(new CombatStatsComponent(80, 10, 2, true));
         potion.setScale(0.4f, 0.4f);
         switch (type) {

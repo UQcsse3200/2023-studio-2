@@ -88,6 +88,26 @@ public class Turret extends PlaceableEntity{
         } else {
         }
     }
+    /**
+     * Interact with the turret. This method can be called by a player entity to perform an interaction.
+     *
+     * @param player The player entity interacting with the turret.
+     */
+    public void interact(Entity player) {
+        int requiredAmmo = maxAmmo - currentAmmo;
+        var gameStateObserver = ServiceLocator.getGameStateObserverService();
+        int availableResources = (int) gameStateObserver.getStateData("resource/nebulite");
+
+        if (availableResources >= requiredAmmo) {
+            gameStateObserver.trigger("resourceAdd", "nebulite", -requiredAmmo);
+            refillAmmo(requiredAmmo);
+            System.out.println("Turret ammo refilled!");
+        } else {
+            System.out.println("Insufficient resources to refill turret ammo.");
+            // You can add additional logic here for handling insufficient resources.
+        }
+    }
+
 
 
     @Override

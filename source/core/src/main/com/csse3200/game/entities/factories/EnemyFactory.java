@@ -206,8 +206,8 @@ public class EnemyFactory {
     boolean matchingBehaviour = isPlayer && behaviour == EnemyBehaviour.PTE || isStructure && behaviour == EnemyBehaviour.DTE;
 
     int priority = matchingBehaviour ? 10 : 0; //Matching behaviour and target gives priority 10
-    float viewDistance = 3f;
-    float maxChaseDistance = 4f;
+    float viewDistance = 100f;
+    float maxChaseDistance = 100f;
 
     if (type == EnemyType.Melee && !isPlayer && !matchingBehaviour) priority = 5; //Special case for player targeting melee
 
@@ -216,8 +216,8 @@ public class EnemyFactory {
       float aimDelay = 2f;
       float range = 3f;
       float shootDistance = 3f;
-      viewDistance = 6f;
-      maxChaseDistance = 6f;
+      viewDistance = 100f;
+      maxChaseDistance = 100f;
 
       aiTaskComponent.addTask(new AimTask(aimDelay, target, range));
       aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));

@@ -180,6 +180,7 @@ public class EarthGameArea extends GameArea {
         spawnBoss();
         spawnAsteroids();
         spawnBotanist();
+        spawnSpawner();
 
         playMusic();
     }

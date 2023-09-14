@@ -56,7 +56,7 @@
     "images/botanist.atlas",
     "images/boss_enemy.atlas",
     "images/botanist.atlas",
-    "images/player.atlas",
+    "images/player/player.atlas",
     "images/weapons/wrench.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
@@ -83,7 +83,8 @@
     "health": 100,
     "baseAttack": 10,
     "attackMultiplier": 1,
-    "isImmune": false
+    "isImmune": false,
+    "spritePath": "images/player/player.atlas"
   },
   "areaEntityConfig": {
     "ship": {

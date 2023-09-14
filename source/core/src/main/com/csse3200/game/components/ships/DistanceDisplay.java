@@ -9,16 +9,27 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+/**
+ * Class for creating the UI Component
+ * for displaying distance
+ */
 public class DistanceDisplay extends UIComponent {
     private Table table;
     private Label distanceLabel;
 
+    /**
+     * Method for creating
+     * actors to go on stage
+     */
     @Override
     public void create() {
         super.create();
         addActors();
     }
 
+    /**
+     * Method for displaying the distance in the minigame
+     */
     private void addActors() {
         table = new Table();
 
@@ -35,16 +46,28 @@ public class DistanceDisplay extends UIComponent {
         stage.addActor(table);
     }
 
+    /**
+     * Method for drawing handled by the stage
+     * @param batch Batch to render to.
+     */
     @Override
     public void draw(SpriteBatch batch) {
         // Drawing is handled by the stage
     }
 
+    /**
+     * Method for updating distance UI in the minigame
+     * @param distance Distance to be displayed
+     */
     public void updateDistanceUI(float distance) {
         CharSequence text = String.format("Distance: %.2f", distance);
         distanceLabel.setText(text);
     }
 
+    /**
+     * Method for disposing and
+     * removing the distance label
+     */
     @Override
     public void dispose() {
         super.dispose();

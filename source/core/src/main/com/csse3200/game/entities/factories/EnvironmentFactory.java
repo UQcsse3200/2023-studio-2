@@ -14,6 +14,7 @@ public class EnvironmentFactory {
     private static final int tileSize = 16;
 
     private static final float scaleSize = 0.5f;
+    private static final float xyShift = 0.3f;
 
     public static void createEnvironment(TiledMapTileLayer layer) {
         StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
@@ -28,8 +29,8 @@ public class EnvironmentFactory {
                     if (objects.getCount() >= 1) {
                         RectangleMapObject object = (RectangleMapObject) objects.get(0);
                         Rectangle collisionBox = object.getRectangle();
-                        float collisionX = scaleSize - collisionBox.x / tileSize;
-                        float collisionY = scaleSize - collisionBox.y / tileSize;
+                        float collisionX = xyShift - collisionBox.x / tileSize;
+                        float collisionY = xyShift - collisionBox.y / tileSize;
                         float collisionWidth = scaleSize * (collisionBox.width / tileSize);
                         float collisionHeight = scaleSize * (collisionBox.height / tileSize);
                         environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);

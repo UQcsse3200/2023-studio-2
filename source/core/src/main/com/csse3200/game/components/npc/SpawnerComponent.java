@@ -47,8 +47,8 @@ public class SpawnerComponent extends Component {
 
     private void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {
         Vector2 worldPos = entity.getCenterPosition();
-        Entity enemy = EnemyFactory.createEnemy(targets, enemyType, behaviour);
-        ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
+        Entity enemy = EnemyFactory.createEnemy(enemyType, behaviour);
+        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemy, worldPos);
     }
 
     @Override

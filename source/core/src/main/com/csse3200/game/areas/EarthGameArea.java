@@ -115,6 +115,8 @@ public class EarthGameArea extends GameArea {
             "images/rangeEnemy.atlas",
             "images/botanist.atlas",
             "images/enemy/boss_enemy.atlas",
+            "images/enemy/base_enemy.atlas",
+            "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
             "images/playerSS.atlas",
             "images/wrench.atlas",

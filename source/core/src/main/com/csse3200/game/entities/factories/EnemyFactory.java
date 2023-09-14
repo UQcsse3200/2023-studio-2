@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.*;
 import com.csse3200.game.ui.DialogComponent;
@@ -20,7 +21,7 @@ import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.EnemyConfig;
-import com.csse3200.game.entities.configs.EnemyConfigs;
+import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
@@ -43,8 +44,8 @@ import java.util.List;
  * similar characteristics.
  */
 public class EnemyFactory {
-  private static final EnemyConfigs configs =
-      FileLoader.readClass(EnemyConfigs.class, "configs/enemy.json");
+  private static final NPCConfigs configs =
+      FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
   public static DialogueBox dialogueBox;
 
   /**
@@ -92,6 +93,7 @@ public class EnemyFactory {
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new DeathComponent())
+            .addComponent(new HitboxComponent())
             .addComponent(new HealthBarComponent(false))
             .addComponent(new TouchAttackComponent((short) (
                     PhysicsLayer.PLAYER |
@@ -105,21 +107,20 @@ public class EnemyFactory {
                     baseAttack,
                     1,
                     false))
-            .addComponent(new DialogComponent(dialogueBox));
+            .addComponent(new DialogComponent(dialogueBox))
             .addComponent(new TurretTargetableComponent());
 
     if (config.type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     } else {
-      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.NPC);
+      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
     }
     enemy.addComponent(aiComponent);
 
     // TYPE
-    EnemyTypeSelector(enemy, type);
+    EnemyTypeSelector(enemy, config.type);
 
     // ANIMATIONS
-    AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
     animator.addAnimation("float", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("left",0.2f,Animation.PlayMode.LOOP);
@@ -142,7 +143,7 @@ public class EnemyFactory {
     // UI adjustments
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
-    enemy.scaleHeight(getEnemyscale(type));
+    enemy.scaleHeight(getEnemyscale(config.type));
 
     return enemy;
   }

@@ -169,8 +169,6 @@ public class TouchAttackComponent extends Component {
         Vector2 impulse = direction.setLength(knockbackForce);
         targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
       }
-      System.out.print(source.getComponent(CombatStatsComponent.class).getHealth());
-      System.out.println(target.getComponent(CombatStatsComponent.class).getHealth());
     }
   }
 

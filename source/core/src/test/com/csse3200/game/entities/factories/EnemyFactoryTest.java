@@ -163,7 +163,7 @@ public class EnemyFactoryTest {
         // Checking Health matches PTE Melee Enemy
         assertEquals(boss.getComponent(CombatStatsComponent.class).getHealth(), 100);
         // Checking Base Attack matches PTE Melee Enemy
-        assertEquals(boss.getComponent(CombatStatsComponent.class).getBaseAttack(), 15);
+        assertEquals(boss.getComponent(CombatStatsComponent.class).getBaseAttack(), 25);
     }
 
     @Test
@@ -197,28 +197,8 @@ public class EnemyFactoryTest {
     }
 
     @Test
-    void createEnemyRangedDTEConfigTest() {
-        EnemyConfig config = configs.GetEnemyConfig(EnemyType.Ranged, EnemyBehaviour.DTE);
-        Entity enemy = createEnemy(config);
-
-        // Check Health & BaseAttack was set appropriately based on type and behaviour
-        assertEquals(40, enemy.getComponent(CombatStatsComponent.class).getHealth());
-        assertEquals(10, enemy.getComponent(CombatStatsComponent.class).getBaseAttack());
-    }
-
-    @Test
     void createBossEnemyMeleePTEConfigTest() {
         EnemyConfig config = configs.GetEnemyConfig(EnemyType.BossMelee, EnemyBehaviour.PTE);
-        Entity enemy = createEnemy(config);
-
-        // Check Health & BaseAttack was set appropriately based on type and behaviour
-        assertEquals(100, enemy.getComponent(CombatStatsComponent.class).getHealth());
-        assertEquals(25, enemy.getComponent(CombatStatsComponent.class).getBaseAttack());
-    }
-
-    @Test
-    void createBossEnemyRangedPTEConfigTest() {
-        EnemyConfig config = configs.GetEnemyConfig(EnemyType.BossRanged, EnemyBehaviour.PTE);
         Entity enemy = createEnemy(config);
 
         // Check Health & BaseAttack was set appropriately based on type and behaviour

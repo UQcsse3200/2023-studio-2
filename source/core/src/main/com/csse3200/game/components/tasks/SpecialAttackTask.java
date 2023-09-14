@@ -67,7 +67,7 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
         }
         for (int i = 0; i < numPositions; i++) {
             Entity bullet = ProjectileFactory.createEnemyBullet(positions[i], owner.getEntity());
-            ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(bullet, spawns[i]);
+            ServiceLocator.getStructurePlacementService().spawnEntityAtVector(bullet, spawns[i]);
         }
     }
 

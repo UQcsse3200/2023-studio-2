@@ -7,6 +7,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.Random;
 import java.util.Timer;
@@ -80,7 +81,7 @@ public class DeathComponent extends Component {
                         powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
                     }
 
-                    ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(powerup, enemyBody);
+                    ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody);
                 }
             }, delay); // Delay based on the death animation duration
         }

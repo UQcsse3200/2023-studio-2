@@ -137,6 +137,11 @@ public class AdjustedChaseTask extends DefaultTask implements PriorityTask {
     return true;
   }
 
+  /**
+   *
+   * @param destination
+   * @return '>', '<' or '='
+   */
   public char getDirection(Vector2 destination) {
     if (owner.getEntity().getPosition().x - destination.x < 0) {
       return '>';

@@ -18,6 +18,9 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.csse3200.game.screens.MainMenuScreen;
 
 /**
  * The UI component responsible for rendering and managing the main menu interface.
@@ -30,9 +33,17 @@ public class MainMenuDisplay extends UIComponent {
     private static final float Z_INDEX = 2f;
     private Table table;
 
+    public static int frame;
+    private Image transitionFrames;
+    private long lastFrameTime;
+    private int fps = 17;
+    private final long frameDuration =  (long)(800 / fps);
+
     @Override
     public void create() {
+        frame=1;
         super.create();
+        transitionFrames = new Image();
         addActors();
     }
     //created a checkbox group for single/multi player functionality
@@ -59,7 +70,8 @@ public class MainMenuDisplay extends UIComponent {
         TextButton miniBtn = new TextButton("Space Minigame", skin);
         TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
         TextButton spaceMapBtn = new TextButton("Space Map", skin);
-        TextButton upgradeShip = new TextButton("Upgrade Ship", skin);
+
+
         // Attach listeners to buttons
         startBtn.addListener(
                 new ChangeListener() {
@@ -121,14 +133,6 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("exit");
                     }
                 });
-        upgradeShip.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Upgrade Ship button clicked");
-                        entity.getEvents().trigger("upgrade shop");
-                    }
-                });
 
         // Arrange UI elements in a table layout
         table.add(titleImage);
@@ -145,13 +149,33 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(spaceMapBtn).padTop(15f).padLeft(1200f);
         table.row();
-
         table.add(exitBtn).padTop(15f).padLeft(1200f);
-        table.row();
-        table.add(upgradeShip).padTop(15f).padLeft(1200f);
-        table.row();
+
         stage.addActor(titleImage);
+        AmendAnimation();
+
+        stage.addActor(transitionFrames);
         stage.addActor(table);
+    }
+
+    private void AmendAnimation() {
+        if (frame < MainMenuScreen.MountedFrames) {
+            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
+            transitionFrames.setWidth(Gdx.graphics.getWidth());
+            transitionFrames.setHeight(Gdx.graphics.getHeight());
+            transitionFrames.setPosition(0, 0);
+            frame++;
+            lastFrameTime = System.currentTimeMillis();
+        } else {
+            frame = 1;
+        }
+    }
+
+    public void update() {
+        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+            AmendAnimation();
+        }
     }
 
     @Override

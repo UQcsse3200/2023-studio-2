@@ -84,6 +84,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CostComponent</span>
 <span class="extends-implements">extends <a href="../Component.html" title="class in com.csse3200.game.components">Component</a>
 implements <a href="Placeable.html" title="interface in com.csse3200.game.components.structures">Placeable</a></span></div>
+<div class="block">Used to charge the player resources when a structure is placed and refund
+ the player resources when a structure is picked up.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -105,7 +107,9 @@ implements <a href="Placeable.html" title="interface in com.csse3200.game.compon
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.utils.ObjectMap)" class="member-name-link">CostComponent</a><wbr>(com.badlogic.gdx.utils.ObjectMap&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;cost)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new CostComponent with the given cost.</div>
+</div>
 </div>
 </section>
 </li>
@@ -122,10 +126,15 @@ implements <a href="Placeable.html" title="interface in com.csse3200.game.compon
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#placed()" class="member-name-link">placed</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Charges the player the specified cost of the structure.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removed()" class="member-name-link">removed</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Refunds the player the specified cost of the structure proportional to the
+ percentage of health remaining.</div>
+</div>
 </div>
 </div>
 </div>
@@ -153,6 +162,11 @@ implements <a href="Placeable.html" title="interface in com.csse3200.game.compon
 <section class="detail" id="&lt;init&gt;(com.badlogic.gdx.utils.ObjectMap)">
 <h3>CostComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CostComponent</span><wbr><span class="parameters">(com.badlogic.gdx.utils.ObjectMap&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;cost)</span></div>
+<div class="block">Creates a new CostComponent with the given cost.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>cost</code> - - the cost to charge the player when placed.</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -167,6 +181,7 @@ implements <a href="Placeable.html" title="interface in com.csse3200.game.compon
 <section class="detail" id="placed()">
 <h3>placed</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">placed</span>()</div>
+<div class="block">Charges the player the specified cost of the structure.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Placeable.html#placed()">placed</a></code>&nbsp;in interface&nbsp;<code><a href="Placeable.html" title="interface in com.csse3200.game.components.structures">Placeable</a></code></dd>
@@ -177,6 +192,8 @@ implements <a href="Placeable.html" title="interface in com.csse3200.game.compon
 <section class="detail" id="removed()">
 <h3>removed</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removed</span>()</div>
+<div class="block">Refunds the player the specified cost of the structure proportional to the
+ percentage of health remaining.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Placeable.html#removed()">removed</a></code>&nbsp;in interface&nbsp;<code><a href="Placeable.html" title="interface in com.csse3200.game.components.structures">Placeable</a></code></dd>

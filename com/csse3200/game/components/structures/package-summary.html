@@ -86,7 +86,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CostComponent.html" title="class in com.csse3200.game.components.structures">CostComponent</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Used to charge the player resources when a structure is placed and refund
+ the player resources when a structure is picked up.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ExtractorAnimationController.html" title="class in com.csse3200.game.components.structures">ExtractorAnimationController</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">This class listens to events relating to the state of the extractor and plays
@@ -113,19 +116,41 @@ loadScripts(document, 'script');</script>
 <div class="block">Used by JoinableComponent to check if two entities should be joined.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="Placeable.html" title="interface in com.csse3200.game.components.structures">Placeable</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">This interface defines methods components can implement which will be called when a structure
+ is placed or removed via the StructurePlacementService.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab3"><a href="Rotation.html" title="enum class in com.csse3200.game.components.structures">Rotation</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">
+<div class="block">Used by the RotationRenderComponent to indicate which atlasRegion to display.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="RotationRenderComponent.html" title="class in com.csse3200.game.components.structures">RotationRenderComponent</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">This component can be used to display different AtlasRegions depending on the
+ compass rotation of the entity.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StructureDestroyComponent.html" title="class in com.csse3200.game.components.structures">StructureDestroyComponent</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StructureOption.html" title="class in com.csse3200.game.components.structures">StructureOption</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StructureOptions.html" title="class in com.csse3200.game.components.structures">StructureOptions</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StructurePicker.html" title="class in com.csse3200.game.components.structures">StructurePicker</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">This component can be placed on PlaceableEntities and will destroy the structure
+ if it runs out of health.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StructureToolPicker.html" title="class in com.csse3200.game.components.structures">StructureToolPicker</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">This component can be placed onto the player and allows them to select and interact
+ with structure tools.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ToolConfig.html" title="class in com.csse3200.game.components.structures">ToolConfig</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">This class is used to read in the structure tools config file.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ToolsConfig.html" title="class in com.csse3200.game.components.structures">ToolsConfig</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">This class is used to read in the structure tools config file.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="TurretTargetableComponent.html" title="class in com.csse3200.game.components.structures">TurretTargetableComponent</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">This component allows a turret to target the entity it is placed on.</div>
+</div>
 </div>
 </div>
 </div>

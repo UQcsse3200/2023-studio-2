@@ -87,6 +87,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">RotationRenderComponent</span>
 <span class="extends-implements">extends <a href="../../rendering/AtlasRenderComponent.html" title="class in com.csse3200.game.rendering">AtlasRenderComponent</a></span></div>
+<div class="block">This component can be used to display different AtlasRegions depending on the
+ compass rotation of the entity.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -116,9 +118,14 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.components.structures.Rotation)" class="member-name-link">RotationRenderComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlasPath,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureAtlas,com.csse3200.game.components.structures.Rotation)" class="member-name-link">RotationRenderComponent</a><wbr>(com.badlogic.gdx.graphics.g2d.TextureAtlas&nbsp;atlas,
  <a href="Rotation.html" title="enum class in com.csse3200.game.components.structures">Rotation</a>&nbsp;rotation)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.csse3200.game.components.structures.Rotation)" class="member-name-link">RotationRenderComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlasPath,
+ <a href="Rotation.html" title="enum class in com.csse3200.game.components.structures">Rotation</a>&nbsp;rotation)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a RotationRenderComponent with the given atlasPath and rotation.</div>
+</div>
 </div>
 </section>
 </li>
@@ -135,10 +142,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Rotation.html" title="enum class in com.csse3200.game.components.structures">Rotation</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRotation()" class="member-name-link">getRotation</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the current rotation of the atlas.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRotation(com.csse3200.game.components.structures.Rotation)" class="member-name-link">setRotation</a><wbr>(<a href="Rotation.html" title="enum class in com.csse3200.game.components.structures">Rotation</a>&nbsp;rotation)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the current rotation of the atlas.</div>
+</div>
 </div>
 </div>
 </div>
@@ -184,6 +195,19 @@ loadScripts(document, 'script');</script>
 <h3>RotationRenderComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">RotationRenderComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlasPath,
  <a href="Rotation.html" title="enum class in com.csse3200.game.components.structures">Rotation</a>&nbsp;rotation)</span></div>
+<div class="block">Creates a RotationRenderComponent with the given atlasPath and rotation.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>atlasPath</code> - - the path to the atlas to use.</dd>
+<dd><code>rotation</code> - - the rotation to begin with.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.graphics.g2d.TextureAtlas,com.csse3200.game.components.structures.Rotation)">
+<h3>RotationRenderComponent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">RotationRenderComponent</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.TextureAtlas&nbsp;atlas,
+ <a href="Rotation.html" title="enum class in com.csse3200.game.components.structures">Rotation</a>&nbsp;rotation)</span></div>
 </section>
 </li>
 </ul>
@@ -198,12 +222,22 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setRotation(com.csse3200.game.components.structures.Rotation)">
 <h3>setRotation</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRotation</span><wbr><span class="parameters">(<a href="Rotation.html" title="enum class in com.csse3200.game.components.structures">Rotation</a>&nbsp;rotation)</span></div>
+<div class="block">Sets the current rotation of the atlas.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>rotation</code> - - the rotation to set the atlas too.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getRotation()">
 <h3>getRotation</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Rotation.html" title="enum class in com.csse3200.game.components.structures">Rotation</a></span>&nbsp;<span class="element-name">getRotation</span>()</div>
+<div class="block">Gets the current rotation of the atlas.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the current rotation.</dd>
+</dl>
 </section>
 </li>
 </ul>

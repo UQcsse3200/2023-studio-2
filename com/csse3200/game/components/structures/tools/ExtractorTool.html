@@ -44,7 +44,7 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
@@ -84,6 +84,15 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-com.csse3200.game.components.structures.tools.Tool">Fields inherited from class&nbsp;com.csse3200.game.components.structures.tools.<a href="Tool.html" title="class in com.csse3200.game.components.structures.tools">Tool</a></h3>
+<code><a href="Tool.html#cost">cost</a></code></div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -109,7 +118,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createEntity(com.csse3200.game.entities.Entity)" class="member-name-link">createEntity</a><wbr>(<a href="../../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createStructure(com.csse3200.game.entities.Entity)" class="member-name-link">createStructure</a><wbr>(<a href="../../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Creates a new extractor producing the resource of the location it is being placed, and increments the total amount of
  tracked extractors of this type</div>
@@ -132,7 +141,10 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.components.structures.tools.PlacementTool">Methods inherited from class&nbsp;com.csse3200.game.components.structures.tools.<a href="PlacementTool.html" title="class in com.csse3200.game.components.structures.tools">PlacementTool</a></h3>
-<code><a href="PlacementTool.html#interact(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.GridPoint2)">interact</a></code></div>
+<code><a href="PlacementTool.html#hasEnoughResources()">hasEnoughResources</a>, <a href="PlacementTool.html#interact(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.GridPoint2)">interact</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.csse3200.game.components.structures.tools.Tool">Methods inherited from class&nbsp;com.csse3200.game.components.structures.tools.<a href="Tool.html" title="class in com.csse3200.game.components.structures.tools">Tool</a></h3>
+<code><a href="Tool.html#getCost()">getCost</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -176,14 +188,14 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="createEntity(com.csse3200.game.entities.Entity)">
-<h3>createEntity</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></span>&nbsp;<span class="element-name">createEntity</span><wbr><span class="parameters">(<a href="../../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</span></div>
+<section class="detail" id="createStructure(com.csse3200.game.entities.Entity)">
+<h3>createStructure</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></span>&nbsp;<span class="element-name">createStructure</span><wbr><span class="parameters">(<a href="../../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</span></div>
 <div class="block">Creates a new extractor producing the resource of the location it is being placed, and increments the total amount of
  tracked extractors of this type</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="PlacementTool.html#createEntity(com.csse3200.game.entities.Entity)">createEntity</a></code>&nbsp;in class&nbsp;<code><a href="PlacementTool.html" title="class in com.csse3200.game.components.structures.tools">PlacementTool</a></code></dd>
+<dd><code><a href="PlacementTool.html#createStructure(com.csse3200.game.entities.Entity)">createStructure</a></code>&nbsp;in class&nbsp;<code><a href="PlacementTool.html" title="class in com.csse3200.game.components.structures.tools">PlacementTool</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>player</code> - The player creating the extractor</dd>
 <dt>Returns:</dt>

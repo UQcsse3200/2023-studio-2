@@ -77,6 +77,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Placeable</span></div>
+<div class="block">This interface defines methods components can implement which will be called when a structure
+ is placed or removed via the StructurePlacementService.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -93,16 +95,24 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#placed()" class="member-name-link">placed</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Called after the structure is placed into the grid map.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#removed()" class="member-name-link">removed</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Called after the structure is removed from the grid map.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#willPlace()" class="member-name-link">willPlace</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Called just before the structure is placed into the grid map.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#willRemove()" class="member-name-link">willRemove</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Called just before the structure is removed from the grid map.</div>
+</div>
 </div>
 </div>
 </div>
@@ -121,24 +131,28 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="willPlace()">
 <h3>willPlace</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">willPlace</span>()</div>
+<div class="block">Called just before the structure is placed into the grid map.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="placed()">
 <h3>placed</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">placed</span>()</div>
+<div class="block">Called after the structure is placed into the grid map.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="removed()">
 <h3>removed</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removed</span>()</div>
+<div class="block">Called after the structure is removed from the grid map.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="willRemove()">
 <h3>willRemove</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">willRemove</span>()</div>
+<div class="block">Called just before the structure is removed from the grid map.</div>
 </section>
 </li>
 </ul>

@@ -1,10 +1,5 @@
 package com.csse3200.game.entities.factories;
-/**different types of attacks
- * Each weapon: melee component: rotation, life, swing speed
- *              Animation:    image atlas
- *              Combat stats: damage, (Health = 1, Is immue = True, attack multiplier = 1)
- *              //Or use player combat stast
-*/
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -73,8 +68,6 @@ public class AttackFactory {
 
     TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
     AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
-
-    System.out.println(config.animationType);
 
     switch (config.animationType) {
       case 8:

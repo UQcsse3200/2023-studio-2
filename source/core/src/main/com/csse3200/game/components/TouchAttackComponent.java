@@ -142,13 +142,6 @@ public class TouchAttackComponent extends Component {
       entity.getEvents().trigger("enemyAttack");
       targetStats.hit(combatStats);
 
-
-//      if (entity.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.WEAPON) {
-//        System.out.println("Hit");
-//        return;
-//      }
-
-
       // Gives a delay every time there is a collision for the
       // attack animation to complete
       Timer timer = new Timer();

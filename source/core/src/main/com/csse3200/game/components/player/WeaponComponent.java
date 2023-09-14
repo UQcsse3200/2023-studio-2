@@ -15,9 +15,11 @@ import com.csse3200.game.services.ServiceLocator;
  * respond to an enemy attack use an attack factory to generate a weapon entity
  */
 public class WeaponComponent extends Component {
-    /* Variable to hold reference to animation render component */
+    /* Variable to store current duration before play can attack again */
     private int attackCooldown;
+    /* Entity reference to projectile that follows */
     private Entity holdingWeapon;
+
 
     @Override
     public void update() {
@@ -39,9 +41,8 @@ public class WeaponComponent extends Component {
     /**
      * Core function to respond to weapon attacks takes a position and a rotation and spawn an entity
      * in that direction and begin the animation of the weapon
-     * @param position - click position
-     * @param initRot - direction in which mouse is relative to the player in degrees
-     *                  0<=initRot<=360, East:0, North:90: West:180, South:270
+     * @param weaponType - click position
+     * @param clickPosition - click location of mouse
      */
     private void playerAttacking(WeaponType weaponType, Vector2 clickPosition) {
         float initialRotation = calcRotationAngleInDegrees(entity.getPosition(), clickPosition);
@@ -49,7 +50,6 @@ public class WeaponComponent extends Component {
             initialRotation = (initialRotation + (float) ((Math.random() - 0.5) * 270)) % 360;
         }
 
-        //TODO directional calculation
         int spawnAngleOffset = 0;
         switch (weaponType) {
             case MELEE_WRENCH, MELEE_KATANA:
@@ -71,8 +71,11 @@ public class WeaponComponent extends Component {
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
     }
 
+    /**
+     * Creates a new static weapon for the player
+     * @param weapon
+     */
     private void makeNewHolding(WeaponType weapon) {
-        System.out.println("Here0");
         if (this.holdingWeapon != null) {this.holdingWeapon.dispose();}
 
         this.holdingWeapon = PlayerWeaponFactory.createPlayerWeapon(weapon, entity);
@@ -81,6 +84,14 @@ public class WeaponComponent extends Component {
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(this.holdingWeapon, placePos);
     }
 
+    /**
+     * Returns the game position in a given direction at a given distance relative to the player
+     * to center a given attack entity
+     * @param direction direction the position should be in
+     * @param distance distance infront of the player
+     * @param attack the entity
+     * @return position in the given direction at the distance
+     */
     private Vector2 positionInDirection(double direction, float distance, Entity attack) {
         double radians = Math.toRadians(direction);
         float xOffset = (float) Math.cos(radians) * distance;
@@ -93,6 +104,10 @@ public class WeaponComponent extends Component {
                 position.y + yOffset + playerScale.y/2 - weaponScale.y/2 );
     }
 
+    /**
+     * sets atatck cooldown
+     * @param cooldown to set attack cooldown to
+     */
     public void setAttackCooldown(int cooldown) {
         this.attackCooldown = cooldown;
     }
@@ -100,6 +115,7 @@ public class WeaponComponent extends Component {
     public int getAttackCooldown() {
         return this.attackCooldown;
     }
+
     /**
      * Calcuate angle between 2 points from the center point to the target point,
      * angle is

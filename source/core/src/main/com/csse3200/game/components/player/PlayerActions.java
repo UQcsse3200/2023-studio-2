@@ -140,14 +140,8 @@ public class PlayerActions extends Component {
     }
 
     /**
-<<<<<<< HEAD
      * Converts the screen coords to a grid position and then places the selected structure
      * doesn't exist at the grid position, otherwise upgrades the existing structure.
-=======
-     * Converts the screen coords to a grid position and then places a wall if a
-     * wall
-     * doesn't exist at the grid position, otherwise upgrades the wall.
->>>>>>> feature/player
      *
      * @param screenX - the x coord of the screen
      * @param screenY - the y coord of teh screen

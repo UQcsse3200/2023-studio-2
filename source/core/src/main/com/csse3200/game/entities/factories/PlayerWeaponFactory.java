@@ -1,10 +1,4 @@
 package com.csse3200.game.entities.factories;
-/**different types of attacks
- * Each weapon: melee component: rotation, life, swing speed
- *              Animation:    image atlas
- *              Combat stats: damage, (Health = 1, Is immue = True, attack multiplier = 1)
- *              //Or use player combat stast
-*/
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -24,7 +18,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 /**
- * Class to create weapons when the player attacks
+ * Class to create weapons for the player to hold
  */
 public class PlayerWeaponFactory {
   private static final WeaponConfigs configs =
@@ -32,7 +26,7 @@ public class PlayerWeaponFactory {
   /**
    * Static function to create a new weapon entity
    * @param weaponType - the type of weapon entity to be made
-   * @param initRot - the initial rotation of the player
+   * @param player - player entity to track
    * @return A reference to the created weapon entity
    */
   public static Entity createPlayerWeapon(WeaponType weaponType, Entity player) {
@@ -48,8 +42,6 @@ public class PlayerWeaponFactory {
     AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
 
     animator.addAnimation("STATIC", 0.1f, Animation.PlayMode.NORMAL);
-    //animator.addAnimation("nonstatic", 0.1f, Animation.PlayMode.NORMAL);
-
     attack.addComponent(animator)
             .addComponent(new CombatStatsComponent(1, 0, 0, true));
 

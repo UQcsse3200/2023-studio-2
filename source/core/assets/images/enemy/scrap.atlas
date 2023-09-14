@@ -1,0 +1,84 @@
+attackLeft
+  rotate: false
+  xy: 0, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 80, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 160, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 240, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 320, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 400, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 480, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 560, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 640, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 720, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 800, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0
+attackLeft
+  rotate: false
+  xy: 880, 320
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: 0

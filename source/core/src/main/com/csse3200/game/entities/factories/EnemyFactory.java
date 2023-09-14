@@ -43,6 +43,7 @@ import java.util.List;
  * <p>If needed, this factory can be separated into more specific factories for entities with
  * similar characteristics.
  */
+
 public class EnemyFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");

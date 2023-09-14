@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.InteractableComponent;
+import com.csse3200.game.components.PowerUpDisplayHUD;
 import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.entities.Entity;
@@ -16,11 +17,15 @@ public class PowerupFactory {
     public static final PowerupConfigs configs
             = FileLoader.readClass(PowerupConfigs.class, "configs/powerups.json");
 
+    private PowerupFactory() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static Entity createPowerup(PowerupConfig config) {
         // Initialise and resize a new Powerup
         Entity powerup = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new PowerupComponent(config.type, PhysicsLayer.PLAYER))
+                .addComponent(new PowerupComponent(config.type))
                 .addComponent(new TextureRenderComponent(config.spritePath));
 
         powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));
@@ -45,7 +50,8 @@ public class PowerupFactory {
         // Initialise and resize a new Powerup
         Entity powerup = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new PowerupComponent(type, PhysicsLayer.PLAYER));
+                .addComponent(new PowerupComponent(type));
+        powerup.addComponent(new PowerUpDisplayHUD(type));
 
         powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));
         powerup.setScale(0.6f, 0.6f);

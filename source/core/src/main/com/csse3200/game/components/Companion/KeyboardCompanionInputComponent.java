@@ -3,17 +3,22 @@
  * It implements the InputProcessor interface to handle keyboard input events.
  */
 package com.csse3200.game.components.Companion;
+
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
-public class KeyboardCompanionInputComponent extends InputComponent {
+/**
+ * The KeyboardCompanionInputComponent class handles keyboard input for controlling a companion character.
+ */
+public class KeyboardCompanionInputComponent extends InputComponent implements InputProcessor {
 
-  AnimationRenderComponent animator;
+    AnimationRenderComponent animator;
     private final Vector2 walkDirection = Vector2.Zero.cpy();
     private int flagW = 0;
     private int flagA = 0;
@@ -21,16 +26,24 @@ public class KeyboardCompanionInputComponent extends InputComponent {
     private int flagD = 0;
     private int flagMul = 0;
 
+    private final CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay();
+
     private int testing = 0;
 
-
     /**
-     * Returns value for testing.
-     * @return int
+     * Returns the value for testing.
+     *
+     * @return The testing value.
      */
     public int getTesting() {
         return testing;
     }
+
+    /**
+     * Sets the testing value.
+     *
+     * @param testing The value to set for testing.
+     */
     public void setTesting(int testing) {
         this.testing = testing;
     }
@@ -38,15 +51,20 @@ public class KeyboardCompanionInputComponent extends InputComponent {
     private boolean leftCtrlFlag = false;
 
     /**
-     * @return int
+     * Returns the sum of movement flags (W, A, S, D).
+     *
+     * @return The sum of movement flags.
      */
     private int getMovFlagSum() {
         return flagW + flagA + flagS + flagD;
     }
 
+    /**
+     * Handles diagonal movement.
+     */
     private void diagonal() {
         int movFlagSum = getMovFlagSum();
-        if (movFlagSum >= 3){
+        if (movFlagSum >= 3) {
             walkDirection.set(Vector2.Zero);
         }
         if (movFlagSum == 2) {
@@ -81,20 +99,22 @@ public class KeyboardCompanionInputComponent extends InputComponent {
      *
      * @param keycode The keycode of the pressed key.
      * @return True if the input was processed, false otherwise.
-     * @see InputProcessor#keyDown(int)
      */
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Keys.N -> {
-                entity.getEvents().trigger("attack");
+                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("attack");
                 return true;
             }
+
+            case Keys.H -> {
+                companionStatsDisplay.toggleInfiniteHealth();
+                companionStatsDisplay.toggleInvincibility();
+                return true;
+            }
+
             case Keys.I -> {
-//                walkDirection.add(Vector2Utils.UP);
-//                entity.getEvents().trigger("walkUp");
-//                triggerWalkEvent();
-//                return true;
                 flagW = 1;
                 if (getMovFlagSum() == 1) {
                     walkDirection.scl(0);
@@ -107,10 +127,6 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                 return true;
             }
             case Keys.J -> {
-//                walkDirection.add(Vector2Utils.LEFT);
-//                entity.getEvents().trigger("walkLeft");
-//                triggerWalkEvent();
-//                return true;
                 flagA = 1;
                 if (getMovFlagSum() == 1) {
                     walkDirection.scl(0);
@@ -123,11 +139,6 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                 return true;
             }
             case Keys.K -> {
-//                walkDirection.add(Vector2Utils.DOWN);
-//                entity.getEvents().trigger("walkDown");;
-//                triggerWalkEvent();
-//                return true;
-
                 flagS = 1;
                 if (getMovFlagSum() == 1) {
                     walkDirection.scl(0);
@@ -140,11 +151,6 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                 return true;
             }
             case Keys.L -> {
-//                walkDirection.add(Vector2Utils.RIGHT);
-//                entity.getEvents().trigger("walkRight");
-//                triggerWalkEvent();
-//                return true;
-
                 flagD = 1;
                 if (getMovFlagSum() == 1) {
                     walkDirection.scl(0);
@@ -154,6 +160,13 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                     diagonal();
                 }
                 triggerWalkEvent();
+                return true;
+            }
+            case Keys.M -> {
+                InteractionControllerComponent interactionController = entity.getComponent(InteractionControllerComponent.class);
+                if (interactionController != null) {
+                    interactionController.interact();
+                }
                 return true;
             }
             default -> {
@@ -167,30 +180,25 @@ public class KeyboardCompanionInputComponent extends InputComponent {
      *
      * @param keycode The keycode of the released key.
      * @return True if the input was processed, false otherwise.
-     * @see InputProcessor#keyUp(int)
      */
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
             case Keys.I -> {
-//                walkDirection.sub(Vector2Utils.UP);
-//                triggerWalkEvent();
-//                return true;
                 flagW = 0;
                 diagonal();
                 if (getMovFlagSum() == 2) {
                     diagonal();
                 }
                 if (getMovFlagSum() == 0) {
+
+
                     walkDirection.scl(0);
                 }
                 triggerWalkEvent();
                 return true;
             }
             case Keys.J -> {
-//                walkDirection.sub(Vector2Utils.LEFT);
-//                triggerWalkEvent();
-//                return true;
                 flagA = 0;
                 diagonal();
                 if (getMovFlagSum() == 2) {
@@ -203,9 +211,6 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                 return true;
             }
             case Keys.K -> {
-//                walkDirection.sub(Vector2Utils.DOWN);
-//                triggerWalkEvent();
-//                return true;
                 flagS = 0;
                 diagonal();
                 if (getMovFlagSum() == 2) {
@@ -218,9 +223,6 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                 return true;
             }
             case Keys.L -> {
-//                walkDirection.sub(Vector2Utils.RIGHT);
-//                triggerWalkEvent();
-//                return true;
                 flagD = 0;
                 diagonal();
                 if (getMovFlagSum() == 2) {
@@ -231,14 +233,6 @@ public class KeyboardCompanionInputComponent extends InputComponent {
                 }
                 triggerWalkEvent();
                 return true;
-            }case Keys.M-> {
-                System.out.println("M pressed");
-                InteractionControllerComponent interactionController = entity.getComponent(InteractionControllerComponent.class);
-                if (interactionController != null) {
-                    System.out.println("pressed");
-                    interactionController.interact();
-                }
-                return true;
             }
             default -> {
                 return false;
@@ -246,7 +240,12 @@ public class KeyboardCompanionInputComponent extends InputComponent {
         }
     }
 
-    public Vector2 getDirection(){
+    /**
+     * Gets the current walking direction.
+     *
+     * @return The walking direction vector.
+     */
+    public Vector2 getDirection() {
         return this.walkDirection;
     }
 
@@ -255,42 +254,40 @@ public class KeyboardCompanionInputComponent extends InputComponent {
      * If the walk direction is zero, it triggers the walkStop event.
      */
     private void triggerWalkEvent() {
-            if (this.getTesting() == 0){
-                if (walkDirection.epsilonEquals(Vector2.Zero)) {
-                    entity.getEvents().trigger("walkStop");
-                } else {
-                    if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
-                        entity.getEvents().trigger("walkUpLeft");
-                    }
-                    else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
-                        entity.getEvents().trigger("walkUpRight");
-                    }
-                    else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
-                        entity.getEvents().trigger("walkUp");
-                    }
-                    else if (walkDirection.epsilonEquals(Vector2Utils.DOWN)) {
-                        entity.getEvents().trigger("walkDown");
-                    }
-                    else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_LEFT)) {
-                        entity.getEvents().trigger("walkDownLeft");
-                    }
-                    else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_RIGHT)) {
-                        entity.getEvents().trigger("walkDownRight");
-                    }
-                    else if (walkDirection.epsilonEquals(Vector2Utils.LEFT)) {
-                        entity.getEvents().trigger("walkLeft");
-                    }
-                    else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
-                        entity.getEvents().trigger("walkRight");
-                    }
-                    entity.getEvents().trigger("walk", walkDirection);
+        if (this.getTesting() == 0) {
+            if (walkDirection.epsilonEquals(Vector2.Zero)) {
+                entity.getEvents().trigger("walkStop");
+            } else {
+                if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
+                    entity.getEvents().trigger("walkUpLeft");
+                } else if (walkDirection.epsilonEquals(Vector2Utils.UP_RIGHT)) {
+                    entity.getEvents().trigger("walkUpRight");
+                } else if (walkDirection.epsilonEquals(Vector2Utils.UP)) {
+                    entity.getEvents().trigger("walkUp");
+                } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN)) {
+                    entity.getEvents().trigger("walkDown");
+                } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_LEFT)) {
+                    entity.getEvents().trigger("walkDownLeft");
+                } else if (walkDirection.epsilonEquals(Vector2Utils.DOWN_RIGHT)) {
+                    entity.getEvents().trigger("walkDownRight");
+                } else if (walkDirection.epsilonEquals(Vector2Utils.LEFT)) {
+                    entity.getEvents().trigger("walkLeft");
+                } else if (walkDirection.epsilonEquals(Vector2Utils.RIGHT)) {
+                    entity.getEvents().trigger("walkRight");
                 }
+                entity.getEvents().trigger("walk", walkDirection);
             }
-
-
+        }
     }
 
-    private double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt)  {
+    /**
+     * Calculates the rotation angle in degrees between two points.
+     *
+     * @param centerPt The center point.
+     * @param targetPt The target point.
+     * @return The rotation angle in degrees.
+     */
+    private double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt) {
         double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
         if (angle < 0) {
             angle += 360;

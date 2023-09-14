@@ -30,3 +30,7 @@ javadoc {
         tags = ['require', 'requires', 'ensure', 'ensures']
     }
 }
+
+dependencies {
+    testImplementation 'org.testng:testng:7.1.0'
+}

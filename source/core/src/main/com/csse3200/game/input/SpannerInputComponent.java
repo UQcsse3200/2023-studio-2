@@ -40,4 +40,6 @@ public class SpannerInputComponent extends InputComponent {
     public void dispose() {
         super.dispose();
     }
+
 }
+

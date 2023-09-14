@@ -15,7 +15,8 @@ import java.util.TimerTask;
 
 import static java.lang.Math.abs;
 
-/** Chases a target entity until they get too far away or line of sight is lost */
+/** Chases a target entity until they get too far away or line of sight is lost. Additional functionality
+ * so that it actively checks if entity is stuck behind an object when chasing and adjusts movement. */
 public class AdjustedChaseTask extends DefaultTask implements PriorityTask {
   private final Entity target;
   private final int priority;

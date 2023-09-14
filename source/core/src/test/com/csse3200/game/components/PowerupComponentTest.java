@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.physics.PhysicsLayer;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -37,7 +36,7 @@ public class PowerupComponentTest {
     public void testApplyHealthEffect() {
         // Initialise player
         Gdx.app = mock(Application.class);
-        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST, PhysicsLayer.PLAYER);
+        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
         Entity player = mock(Entity.class);
         CombatStatsComponent playerStats = mock(CombatStatsComponent.class);
 
@@ -55,7 +54,7 @@ public class PowerupComponentTest {
     public void testApplySpeedEffect() {
         // Initialise player
         Gdx.app = mock(Application.class);
-        PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST, PhysicsLayer.PLAYER);
+        PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST);
         Entity player = mock(Entity.class);
         PlayerActions playerActions = mock(PlayerActions.class);
 
@@ -72,8 +71,8 @@ public class PowerupComponentTest {
     @Test
     public void testGetType() {
         // Initialise Health and Speed Powerups
-        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST, PhysicsLayer.PLAYER);
-        PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST, PhysicsLayer.NONE);
+        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
+        PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST);
 
         // Test Health PowerupType
         assertNotNull(healthpowerup);
@@ -95,8 +94,8 @@ public class PowerupComponentTest {
      */
     @Test
     public void testSetType() {
-        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST, PhysicsLayer.ALL);
-        PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST, PhysicsLayer.ALL);
+        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
+        PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST);
 
         // Test setting health powerup
         healthpowerup.setType(PowerupType.SPEED_BOOST);
@@ -119,7 +118,7 @@ public class PowerupComponentTest {
      */
     @Test
     public void testSetDuration() {
-        PowerupComponent powerup = new PowerupComponent(PowerupType.HEALTH_BOOST, PhysicsLayer.ALL);
+        PowerupComponent powerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
         long testDuration1 = 100;
         long testDuration2 = 1000;
 
@@ -138,7 +137,7 @@ public class PowerupComponentTest {
      */
     @Test
     public void testGetDuration() {
-        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST, PhysicsLayer.ALL);
+        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
         healthpowerup.setDuration(100);
         long initialDuration = healthpowerup.getDuration();
 

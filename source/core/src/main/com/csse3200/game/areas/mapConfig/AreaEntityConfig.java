@@ -9,7 +9,7 @@ import java.util.List;
  * Class that contains data on all the entities for a given game area
  */
 public class AreaEntityConfig {
-    public List<EnemyConfig> asteroids = new ArrayList<>();
+    public List<AsteroidConfig> asteroids = new ArrayList<>();
     public List<BaseEntityConfig> baseEntities = new ArrayList<>();
     public BotanistConfig botanist = null;
     public CompanionConfig companion = null;

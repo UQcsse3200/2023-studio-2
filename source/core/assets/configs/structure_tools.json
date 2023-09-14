@@ -37,7 +37,6 @@
       "level": 0,
       "name": "Heal",
       "cost": {
-        "Durasteel": 0
       },
       "texture": "images/structures/heal_icon.png"
     },
@@ -45,7 +44,6 @@
       "level": 0,
       "name": "extractor",
       "cost": {
-        "unobtanium": 0
       },
       "texture": "images/refinedExtractor2.png"
     }

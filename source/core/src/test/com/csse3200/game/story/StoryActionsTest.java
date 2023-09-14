@@ -42,6 +42,7 @@ public class StoryActionsTest {
         Method onSkipMethod = StoryActions.class.getDeclaredMethod("onSkip");
         onSkipMethod.setAccessible(true);
 
+
         onSkipMethod.invoke(storyActions);
 
         verify(game).setScreen(GdxGame.ScreenType.MAIN_GAME);

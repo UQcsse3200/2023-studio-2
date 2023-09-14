@@ -1,5 +1,7 @@
 package com.csse3200.game.components;
 
+import com.csse3200.game.components.Component;
+
 public class ExtractorRepairPartComponent extends Component {
     private int collectedCount = 0;
 

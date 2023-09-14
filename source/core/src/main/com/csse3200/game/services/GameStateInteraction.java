@@ -2,6 +2,7 @@ package com.csse3200.game.services;
 
 import java.util.Map;
 
+import static java.lang.Math.max;
 
 
 /**
@@ -48,13 +49,6 @@ public class GameStateInteraction {
      */
     public Object get(String key) {
         return gameState.get(key);
-    }
-
-    /**
-     * Clears the game state data.
-     */
-    public void clear() {
-        gameState.clear();
     }
 
     /**

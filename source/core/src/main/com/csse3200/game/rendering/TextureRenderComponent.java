@@ -9,8 +9,7 @@ import com.csse3200.game.services.ServiceLocator;
 /** Render a static texture. */
 public class TextureRenderComponent extends RenderComponent {
   private final Texture texture;
-  private float rotation = 0.0f;
-  private float alpha = 1.0f;
+  private float alpha = 1.0F;
 
   /**
    * @param texturePath Internal path of static texture to render.
@@ -30,9 +29,6 @@ public class TextureRenderComponent extends RenderComponent {
     entity.setScale(1f, (float) texture.getHeight() / texture.getWidth());
   }
 
-  public void setRotation(float degrees) {
-      rotation = degrees;
-  }
   /**
    * Sets the alpha of the spritebatch
    * @param alpha the alpha to set
@@ -41,14 +37,12 @@ public class TextureRenderComponent extends RenderComponent {
     this.alpha = alpha;
   }
 
-    @Override
-    protected void draw(SpriteBatch batch) {
-        Vector2 position = entity.getPosition();
-        Vector2 scale = entity.getScale();
-
-        Color colour = batch.getColor() == null ? Color.valueOf("FFFFFF") : batch.getColor();
-        batch.setColor(colour.r, colour.g, colour.b, this.alpha);
-
-        batch.draw(texture, position.x, position.y, scale.x / 2, scale.y / 2, scale.x, scale.y, 1, 1, rotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
-    }
+  @Override
+  protected void draw(SpriteBatch batch) {
+    Vector2 position = entity.getPosition();
+    Vector2 scale = entity.getScale();
+    Color colour = batch.getColor() == null ? Color.valueOf("FFFFFF") : batch.getColor();
+    batch.setColor(colour.r, colour.g, colour.b, this.alpha);
+    batch.draw(texture, position.x, position.y, scale.x, scale.y);
+  }
 }

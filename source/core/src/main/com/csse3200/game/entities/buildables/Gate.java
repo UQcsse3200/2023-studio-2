@@ -8,7 +8,6 @@ import com.csse3200.game.components.ProximityActivationComponent;
 import com.csse3200.game.components.structures.JoinLayer;
 import com.csse3200.game.components.structures.JoinableComponent;
 import com.csse3200.game.components.structures.JoinableComponentShapes;
-import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.GateConfig;
@@ -39,9 +38,8 @@ public class Gate extends PlaceableEntity {
         addComponent(new CombatStatsComponent(config.health, 0,0,false));
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(closedAtlas,JoinLayer.WALLS, shapes));
-        addComponent(new StructureDestroyComponent());
-
         getComponent(JoinableComponent.class).scaleEntity();
+
     }
 
     /**

@@ -28,30 +28,30 @@ public class ProjectileFactory {
     static final ProjectileConfigs configs =
             FileLoader.readClass(ProjectileConfigs.class, "configs/projectile.json");
 
-    //TODO: Remove target location and shooter in exchange for a vector and damage properties in config?
     /**
-     * Creates a projectile, using the stats of the shooter which will fire towards a certain location.
+     * Creates A projectile, using the stats of the shooter which will fire towards a certain location.
      *
      * @param targetLocation The location where the projectile is aimed
      * @param shooter The entity which fired the projectile
-     * @param config The configuration file to match the bullet to
      * @return The projectile entity
      */
-    public static Entity createEnemyBullet(Vector2 targetLocation, Entity shooter, EnemyBulletConfig config) {
+    public static Entity createEnemyBullet(Vector2 targetLocation, Entity shooter) {
         int damage = shooter.getComponent(CombatStatsComponent.class).getAttack();
 
         Entity enemy = createBaseBullet();
 
         AITaskComponent aiComponent = new AITaskComponent();
 
-        //TODO: Change this to a vector?
         aiComponent.addTask(new ProjectileMovementTask(targetLocation, 10, 100f, 100f));
 
-        TextureAtlas atlas = new TextureAtlas(config.spritePath);
+        EnemyBulletConfig config = configs.GetProjectileConfig();
+
+        TextureAtlas atlas = new TextureAtlas(config.atlas);
 
         // Animations for the bullet
         AnimationRenderComponent animator =
-                new AnimationRenderComponent(atlas);
+                new AnimationRenderComponent(
+                        atlas);
         animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("explode",0.3f, Animation.PlayMode.LOOP);
@@ -66,18 +66,6 @@ public class ProjectileFactory {
         enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
 
         return enemy;
-    }
-
-    //TODO: REMOVE - LEGACY
-    /**
-     * Creates A projectile, using the stats of the shooter which will fire towards a certain location.
-     *
-     * @param targetLocation The location where the projectile is aimed
-     * @param shooter The entity which fired the projectile
-     * @return The projectile entity
-     */
-    public static Entity createEnemyBullet(Vector2 targetLocation, Entity shooter) {
-        return createEnemyBullet(targetLocation, shooter, configs.GetProjectileConfig());
     }
 
     /**

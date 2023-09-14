@@ -1,9 +1,11 @@
 package com.csse3200.game.components.ships;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Action component for interacting with the player. Ship events should be initialised in create()

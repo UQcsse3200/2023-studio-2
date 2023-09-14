@@ -1,13 +1,22 @@
 package com.csse3200.game.entities.factories;
 
-import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.entities.factories.PlayerFactory;
+import com.csse3200.game.entities.factories.CompanionFactory;
+import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.components.Companion.CompanionActions;
+import com.csse3200.game.entities.configs.CompanionConfig;
+import com.csse3200.game.components.Companion.CompanionStatsDisplay;
+import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.FollowComponent;
 
-//TODO: REMOVE?
 public class BoxFactory {
 
 

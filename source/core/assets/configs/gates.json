@@ -1,5 +1,5 @@
 {
   "health": 100,
-  "openTextureAtlas": "images/structures/open_gate.atlas",
-  "closedTextureAtlas": "images/structures/closed_gate.atlas"
+  "openTextureAtlas": "images/open_gate.atlas",
+  "closedTextureAtlas": "images/closed_gate.atlas"
 }

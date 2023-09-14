@@ -5,7 +5,7 @@ import com.csse3200.game.components.Weapons.WeaponType;
 /**
  * Defines each entries properties stored in wall config file to be loaded by the Wall Factory.
  */
-public class WeaponConfig extends BaseEntityConfig {
+public class WeaponConfig {
     //Direction Speed
     public float weaponSpeed = 0;
     //Ticks before despawn
@@ -21,7 +21,8 @@ public class WeaponConfig extends BaseEntityConfig {
 
     public float imageScale = 1;
 
-    public WeaponType type;
+    //Texture
+    public String textureAtlas;
 
-    public String iconPath;
+    public String imagePath;
 }

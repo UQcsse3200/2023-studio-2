@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.spacenavigation.NavigationBackground;
-import com.csse3200.game.services.PlanetTravel;
 
 /**
  * Represents the navigation screen for the game, allowing the user to navigate
@@ -36,15 +35,12 @@ public class SpaceNavigationScreen implements Screen {
     /** Names of the planets */
     private final String[] planetNames = {"Verdant Haven", "Chronos", "Rusterra", "Pyroterra", "Crimsona", "Novara", "Pyralis", "Luminae", "Aquelar"};
 
-    private final PlanetTravel planetTravel;
-
     /**
      * Constructs a new SpaceNavigationScreen with a reference to the main game.
      * @param game The main game instance.
      */
     public SpaceNavigationScreen(GdxGame game) {
         this.game = game;
-        this.planetTravel = new PlanetTravel(game);
     }
 
     /**
@@ -69,7 +65,6 @@ public class SpaceNavigationScreen implements Screen {
 
         // Initialise a stage for the scene
         stage = new Stage(new ScreenViewport());
-
 
         // Animated background
         NavigationBackground animatedBackground = new NavigationBackground();
@@ -228,7 +223,7 @@ public class SpaceNavigationScreen implements Screen {
                 // Currently there is only one planet/map.
                 // For now, clicking any planet will take users to the one available map.
                 // When new maps are made, they should b integrated here.
-                planetTravel.beginPlanetTransition(planetNames[planetIndex]);
+                game.setScreen(GdxGame.ScreenType.MAIN_GAME);
             }
 
             @Override

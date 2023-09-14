@@ -1,6 +1,5 @@
 package com.csse3200.game.services;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
@@ -45,16 +44,6 @@ public class StructurePlacementService {
         handler.trigger("placeStructureAt", new PlaceStructureAtArgs(entity, tilePos, centerX, centerY));
         entity.placed();
     }
-
-    public void ReplaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
-        removeStructureAt(tilePos);
-
-        entity.willPlace();
-        placedStructures.put(tilePos, entity);
-        handler.trigger("placeStructureAt", new PlaceStructureAtArgs(entity, tilePos, centerX, centerY));
-        entity.placed();
-    }
-
     public void SpawnEntityAtVector(Entity entity, Vector2 worldPos) {
         handler.trigger("fireBullet", new SpawnEntityAtVectorArgs(entity, worldPos));
     }
@@ -68,9 +57,9 @@ public class StructurePlacementService {
 
         entity.willRemove();
         placedStructures.remove(tilePos);
-        entity.removed();
 
-        Gdx.app.postRunnable(entity::dispose);
+        ServiceLocator.getEntityService().unregister(entity);
+        entity.removed();
     }
     public PlaceableEntity getStructureAt(GridPoint2 position) {
         return placedStructures.get(position);

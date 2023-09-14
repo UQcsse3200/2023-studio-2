@@ -3,15 +3,24 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
-
+import com.csse3200.game.ui.TitleBox;
+import com.csse3200.game.ui.DialogueBox;
+import com.csse3200.game.areas.ForestGameArea;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.csse3200.game.ui.UIComponent.skin;
+
+import java.util.logging.Logger;
 
 /**
  * TouchAttackComponent is responsible for dealing damage and applying knockback to entities when

@@ -5,10 +5,9 @@
     "rotationSpeed": 0,
     "initialRotationOffset": 0,
     "imageRotationOffset": 45,
-    "spritePath": "images/sling_shot.atlas",
+    "textureAtlas": "images/sling_shot.atlas",
     "imageScale" : 0.2,
-    "type": "SLING_SHOT",
-    "iconPath" : "images/sling_shot.png"
+    "imagePath" : "images/sling_shot.png"
   },
 
   "ELEC_WRENCH": {
@@ -18,10 +17,9 @@
     "initialRotationOffset": 90,
     "imageRotationOffset": 45,
     "attackCooldown": 10,
-    "spritePath": "images/wrench.atlas",
+    "textureAtlas": "images/baseballbat.atlas",
     "imageScale" : 1,
-    "type": "ELEC_WRENCH",
-    "iconPath" : "images/wrench.png"
+    "imagePath" : "images/wrench.png"
   },
 
   "THROW_ELEC_WRENCH": {
@@ -30,10 +28,9 @@
     "rotationSpeed": 0,
     "initialRotationOffset": 0,
     "imageRotationOffset": 45,
-    "spritePath": "images/wrench.atlas",
+    "textureAtlas": "images/wrench.atlas",
     "imageScale" : 1,
-    "type": "THROW_ELEC_WRENCH",
-    "iconPath" : "images/wrench.png"
+    "imagePath" : "images/wrench.png"
   },
 
   "STICK": {
@@ -43,9 +40,9 @@
     "initialRotationOffset": 90,
     "imageRotationOffset": 45,
     "attackCooldown": 10,
-    "spritePath": "images/upgradetree/stick.png",
+    "textureAtlas": "images/upgradetree/stick.png",
     "imageScale" : 1,
-    "type": "STICK"
+    "imagePath" : "images/upgradetree/stick.png"
   },
 
   "KATANA": {
@@ -55,22 +52,26 @@
     "initialRotationOffset": 90,
     "imageRotationOffset": 45,
     "attackCooldown": 10,
-    "spritePath": "images/upgradetree/sword.png",
-    "imageScale" : 1
+    "textureAtlas": "images/upgradetree/sword.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/sword.png"
   },
 
   "WOODHAMMER": {
-    "spritePath": "images/upgradetree/hammer1.png",
-    "imageScale" : 1
+    "textureAtlas": "images/upgradetree/hammer1.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer1.png"
   },
 
   "STONEHAMMER": {
-    "spritePath": "images/upgradetree/hammer2.png",
-    "imageScale" : 1
+    "textureAtlas": "images/upgradetree/hammer2.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer2.png"
   },
 
   "STEELHAMMER": {
-    "spritePath": "images/upgradetree/hammer2.png",
-    "imageScale" : 1
+    "textureAtlas": "images/upgradetree/hammer2.png",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer2.png"
   }
 }

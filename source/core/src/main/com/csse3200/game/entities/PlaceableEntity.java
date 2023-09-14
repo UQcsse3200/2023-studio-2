@@ -1,6 +1,12 @@
 package com.csse3200.game.entities;
 
 import com.csse3200.game.components.structures.Placeable;
+import com.csse3200.game.services.GameStateInteraction;
+import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.ServiceLocator;
+
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
+import java.util.Map;
 
 public class PlaceableEntity extends Entity {
     /**

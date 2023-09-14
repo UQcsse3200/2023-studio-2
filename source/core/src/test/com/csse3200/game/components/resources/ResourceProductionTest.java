@@ -3,7 +3,6 @@ package com.csse3200.game.components.resources;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +38,7 @@ class ResourceProductionTest{
 
     @BeforeEach
     void beforeEach() {
-        ServiceLocator.registerGameStateObserverService(new GameStateObserver(new GameStateInteraction()));
+        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
         productionComponent = new ProductionComponent(Resource.Solstite, tickRate, tickSize);
         combatStatsComponent = new CombatStatsComponent(maxHealth, 0, 1, false);
         when(gameTime.getTime()).thenReturn(0L);

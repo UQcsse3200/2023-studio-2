@@ -2,10 +2,7 @@ package com.csse3200.game.components;
 
 import com.csse3200.game.entities.Entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This component can be used to call an entry or exit method when on of the tracking

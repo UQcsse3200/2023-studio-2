@@ -4,12 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Scaling;
 import com.csse3200.game.components.structures.tools.Tool;
 import com.csse3200.game.entities.Entity;
@@ -36,7 +33,6 @@ public class StructurePicker extends UIComponent {
         super();
         buttons = new ArrayList<>();
         logger = LoggerFactory.getLogger(StructurePicker.class);
-        table = new Table();
     }
 
     /**
@@ -45,6 +41,8 @@ public class StructurePicker extends UIComponent {
     @Override
     public void create() {
         super.create();
+
+        table = new Table();
         addActors();
     }
 
@@ -55,9 +53,8 @@ public class StructurePicker extends UIComponent {
     private void addActors() {
         table.clear();
 
-        table.align(Align.center);
         table.center();
-        table.setFillParent(true);
+        table.setFillParent(false);
 
         for (var option : structureOptions.structureOptions) {
             var optionValue = option.value;
@@ -67,7 +64,7 @@ public class StructurePicker extends UIComponent {
                 continue;
             }
 
-            var tool = getTool(option.key, optionValue.cost);
+            var tool = getTool(option.key);
 
             if (tool == null) {
                 continue;
@@ -89,16 +86,20 @@ public class StructurePicker extends UIComponent {
             table.add(button).size(50, 50).pad(5);
         }
 
+
+
+        table.setPosition(stage.getWidth()/2, stage.getHeight()/2, Align.center);
+
         stage.addActor(table);
 
         table.setVisible(false);
     }
 
-    private Tool getTool(String key, ObjectMap<String, Integer> cost) {
+    private Tool getTool(String key) {
         try {
             Class<?> cls = Class.forName(key);
 
-            Object obj = cls.getDeclaredConstructor(ObjectMap.class).newInstance(cost);
+            Object obj = cls.getDeclaredConstructor().newInstance();
 
             if (obj instanceof Tool) {
                 return (Tool) obj;
@@ -111,14 +112,6 @@ public class StructurePicker extends UIComponent {
             logger.error(key + " cannot be instantiated");
             return null;
         }
-    }
-
-    public void setSelectedTool(Tool tool) {
-        this.selectedTool = tool;
-    }
-
-    public Tool getSelectedTool() {
-        return selectedTool;
     }
 
     public void setLevel(int level) {
@@ -146,9 +139,6 @@ public class StructurePicker extends UIComponent {
 
     public void hide() {
         table.setVisible(false);
-    }
-    public boolean isVisible() {
-        return table.isVisible();
     }
 
     public void interact(Entity player, GridPoint2 location) {

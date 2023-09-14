@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.*;
-import com.csse3200.game.services.UpgradeShip;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,8 +102,6 @@ public class GdxGame extends Game {
         return new ControlsScreen(this);
       case NAVIGATION_SCREEN:
         return new SpaceNavigationScreen(this);
-      case UPGRADE_SHOP:
-        return new UpgradeShopScreen(this);
       default:
         return null;
     }
@@ -112,7 +109,8 @@ public class GdxGame extends Game {
 
   public enum ScreenType {
 
-    MAIN_MENU, MAIN_GAME, SETTINGS,CONTROLS_SCREEN, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME, GAME_STORY, ENDGAME,SPACEMINI_SCREEN, NAVIGATION_SCREEN,INITIAL_SCREEN, PLAYER_DEATH, UPGRADE_SHOP
+    MAIN_MENU, MAIN_GAME, SETTINGS,CONTROLS_SCREEN, TITLE_SCREEN,SPACE_MAP ,EXTRACTOR_GAME, GAME_STORY, ENDGAME,SPACEMINI_SCREEN, NAVIGATION_SCREEN,INITIAL_SCREEN, PLAYER_DEATH
+
 
 
   }

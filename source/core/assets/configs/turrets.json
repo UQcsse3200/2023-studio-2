@@ -1,14 +1,14 @@
 {
   "levelOne": {
     "health": 200,
-    "spritePath": "images/structures/TurretOne.png",
+    "texture": "images/TurretOne.png",
     "maxAmmo": 50,
-    "damage": 2
+    "damage": 10
   },
   "levelTwo": {
     "health": 500,
-    "spritePath": "images/structures/TurretTwo.png",
+    "texture": "images/TurretTwo.png",
     "maxAmmo": 100,
-    "damage": 5
+    "damage": 20
   }
 }

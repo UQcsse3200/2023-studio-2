@@ -70,7 +70,8 @@ public class MainMenuDisplay extends UIComponent {
         TextButton miniBtn = new TextButton("Space Minigame", skin);
         TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
         TextButton spaceMapBtn = new TextButton("Space Map", skin);
-        TextButton upgradeShip = new TextButton("Upgrade Ship", skin);
+
+
         // Attach listeners to buttons
         startBtn.addListener(
                 new ChangeListener() {
@@ -132,14 +133,6 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("exit");
                     }
                 });
-        upgradeShip.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Upgrade Ship button clicked");
-                        entity.getEvents().trigger("upgrade shop");
-                    }
-                });
 
         // Arrange UI elements in a table layout
         table.add(titleImage);
@@ -156,11 +149,8 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(spaceMapBtn).padTop(15f).padLeft(1200f);
         table.row();
-
         table.add(exitBtn).padTop(15f).padLeft(1200f);
-        table.row();
-        table.add(upgradeShip).padTop(15f).padLeft(1200f);
-        table.row();
+
         stage.addActor(titleImage);
         AmendAnimation();
 

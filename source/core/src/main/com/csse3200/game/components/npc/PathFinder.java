@@ -1,10 +1,7 @@
 package com.csse3200.game.components.npc;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;

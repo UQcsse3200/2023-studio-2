@@ -1,7 +1,7 @@
 package com.csse3200.game.components.structures;
 
 import com.badlogic.gdx.utils.ObjectMap;
-import com.csse3200.game.components.structures.tools.*;
+import com.csse3200.game.components.structures.tools.Tool;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
 import org.junit.jupiter.api.Test;

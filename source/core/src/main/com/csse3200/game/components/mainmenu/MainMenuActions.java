@@ -7,12 +7,11 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.MainAlert;
+import com.csse3200.game.ui.TitleBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.ui.AlertBox;
-
-import com.csse3200.game.ui.TitleBox;
 
 
 /**

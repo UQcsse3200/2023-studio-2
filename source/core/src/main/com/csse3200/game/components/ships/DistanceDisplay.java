@@ -1,13 +1,10 @@
 package com.csse3200.game.components.ships;
 
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.ui.UIComponent;
-import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Class for creating the UI Component

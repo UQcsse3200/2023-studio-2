@@ -1,6 +1,5 @@
 package com.csse3200.game.components.ships;
 
-import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 

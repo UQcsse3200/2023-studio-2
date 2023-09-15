@@ -3,7 +3,6 @@ package com.csse3200.game.components.ships;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.csse3200.game.components.ships.ShipActions;
 import com.csse3200.game.ui.UIComponent;
 
 /**

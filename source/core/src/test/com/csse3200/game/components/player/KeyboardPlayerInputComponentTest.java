@@ -1,17 +1,10 @@
 package com.csse3200.game.components.player;
 
-import org.junit.jupiter.api.Test;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.utils.math.Vector2Utils;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Input;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class KeyboardPlayerInputComponentTest {
 

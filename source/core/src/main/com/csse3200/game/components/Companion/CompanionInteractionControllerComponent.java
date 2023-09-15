@@ -4,13 +4,11 @@
  */
 package com.csse3200.game.components.Companion;
 
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CompanionInteractionControllerComponent extends Component {

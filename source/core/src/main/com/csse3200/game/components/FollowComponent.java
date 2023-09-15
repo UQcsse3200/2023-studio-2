@@ -1,9 +1,9 @@
 package com.csse3200.game.components;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.PlayerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

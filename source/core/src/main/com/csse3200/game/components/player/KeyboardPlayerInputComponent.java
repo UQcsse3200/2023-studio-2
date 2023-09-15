@@ -7,13 +7,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
-
-//Testing:
-import com.csse3200.game.components.Weapons.WeaponType;
 
 import java.util.HashMap;
 import java.util.Timer;

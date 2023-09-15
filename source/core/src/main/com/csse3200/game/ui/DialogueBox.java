@@ -20,7 +20,6 @@ public class DialogueBox extends Dialog {
 
     private TitleBox titleBox;
     private Label dialogueLabel;
-    private Label titleLabel;
 
     /**
      * Creates a new DialogueBox instance.
@@ -31,7 +30,7 @@ public class DialogueBox extends Dialog {
     public DialogueBox(String title, String message, Skin skin) {
         super("",skin);
 
-        titleLabel = new Label(title, skin);
+        Label titleLabel = new Label(title, skin);
         this.dialogueLabel = new Label(message, skin);
 
         titleLabel.setAlignment(Align.top);

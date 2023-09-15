@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class ControlsScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreenDisplay.class);
     private Table table;
-    private ArrayList<String> storyImages;
 
     @Override
     public void create() {
@@ -33,7 +32,7 @@ public class ControlsScreenDisplay extends UIComponent {
         table = new Table();
         table.setFillParent(true);
 
-        storyImages = new ArrayList<>();
+        ArrayList<String> storyImages = new ArrayList<>();
         storyImages.add("images/Controls.png");
         int start = 0;
 

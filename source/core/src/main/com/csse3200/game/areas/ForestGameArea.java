@@ -130,8 +130,6 @@ public class ForestGameArea extends GameArea {
   private final ArrayList<Entity> targetables;
   private GdxGame game;
 
-  private Entity player;
-  private Entity companion;
   private Entity botanist;
   private DialogueBox dialogueBox;
 
@@ -167,7 +165,7 @@ public class ForestGameArea extends GameArea {
     spawnCompanion(playerEntity);
     spawnEnemies();
     spawnBoss();
-    player = spawnPlayer();
+    Entity player = spawnPlayer();
     spawnBotanist();
 
     playMusic();
@@ -252,7 +250,6 @@ public class ForestGameArea extends GameArea {
 
     spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
     targetables.add(newCompanion);
-    companion = newCompanion;
     return newCompanion;
   }
 

@@ -25,7 +25,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private ProgressBar DodgeBar;
   private Label DodgeLabel;
   private Label livesLabel;
-  private float healthWidth = 1000f;
+
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -64,6 +64,7 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.setValue(100);
 
     //setting the position of health Bar
+    float healthWidth = 1000f;
     healthBar.setWidth(healthWidth);
     healthBar.setDebug(true);
     healthBar.setPosition(10, Gdx.graphics.getHeight()  - healthBar.getHeight());

@@ -27,8 +27,6 @@ public class SpaceMiniTransition extends Actor {
     private Sprite transitionSprite;
     private float transitionX = 0f; // X-axis position for the transition
     private float transitionY = 0f; // Y-axis position for the transition
-    private float transitionSpeedX = 450f; // Adjust the speed of the X-axis transition
-    private float transitionSpeedY = 450f; // Adjust the speed of the Y-axis transition
     private boolean isExit = false;
 
     /**
@@ -66,7 +64,11 @@ public class SpaceMiniTransition extends Actor {
     public void act(float delta) {
         if (isTransitioning) {
             // Move the transition image diagonally
+            // Adjust the speed of the X-axis transition
+            float transitionSpeedX = 450f;
             transitionX += transitionSpeedX * delta;
+            // Adjust the speed of the Y-axis transition
+            float transitionSpeedY = 450f;
             transitionY += transitionSpeedY * delta;
             if (transitionX >= Gdx.graphics.getWidth() && transitionY >= Gdx.graphics.getHeight()) {
                 // Transition is complete

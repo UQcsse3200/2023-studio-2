@@ -25,12 +25,10 @@ public class MainMenuActionsTest {
     @Mock
     private EventHandler events; // Mock the EventHandler object
 
-    private MainMenuActions mainMenuActions;
-
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mainMenuActions = new MainMenuActions(game, stage, skin);
+        MainMenuActions mainMenuActions = new MainMenuActions(game, stage, skin);
 
         // Mock the behavior of entity.getEvents()
         when(entity.getEvents()).thenReturn(events);

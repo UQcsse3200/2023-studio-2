@@ -12,8 +12,6 @@ public class ShipStatDisplay extends UIComponent {
     Table table;
     private Label fuelLabel;
     private Label healthLabel;
-    private CharSequence fuelText;
-    private CharSequence healthText;
 
     private int health;
     private int fuel;
@@ -70,7 +68,7 @@ public class ShipStatDisplay extends UIComponent {
     public void updateShipHealthUI() {
 
         this.health = shipActions.getMaxHealth();
-        healthText = String.format("Health: %d", this.health);
+        CharSequence healthText = String.format("Health: %d", this.health);
         healthLabel.setText(healthText);
 
 
@@ -82,7 +80,7 @@ public class ShipStatDisplay extends UIComponent {
     public void updateShipFuelUI() {
 
         this.fuel = shipActions.getMaxFuel();
-        fuelText = String.format("Fuel: %d", this.fuel);
+        CharSequence fuelText = String.format("Fuel: %d", this.fuel);
         fuelLabel.setText(fuelText);
 
 

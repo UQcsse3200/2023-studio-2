@@ -14,11 +14,8 @@ import java.util.ArrayList;
 public class SpawnerComponent extends Component {
     private GameTime timer;
     private long lastTime;
-    private ArrayList<Entity> targets;
     private int currentWave;
-    private long waveDelay = 20000; // 20 second delay between enemy waves
     private boolean isSpawning;
-    private long spawnDelay = 3000; // 3 second delay between enemy spawns
     private int enemiesToSpawn;
     private int enemiesSpawned;
 
@@ -29,7 +26,6 @@ public class SpawnerComponent extends Component {
     public SpawnerComponent(ArrayList<Entity> targets) {
         this.timer = new GameTime();
         this.lastTime = timer.getTime();
-        this.targets = targets;
     }
     public boolean isSpawning() {
         return isSpawning;
@@ -95,6 +91,8 @@ public class SpawnerComponent extends Component {
         super.update();
         long currentTime = timer.getTime();
 
+        // 20 second delay between enemy waves
+        long waveDelay = 20000;
         if (!isSpawning && currentTime - lastTime >= waveDelay) {
             switch (currentWave) {
                 case 0:
@@ -112,6 +110,8 @@ public class SpawnerComponent extends Component {
             lastTime = currentTime;
         }
 
+        // 3 second delay between enemy spawns
+        long spawnDelay = 3000;
         if (isSpawning && enemiesSpawned < getEnemiesToSpawn() && currentTime - lastTime >= spawnDelay) {
             if (getMeleeEnemiesToSpawn() > 0) {
                 spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);

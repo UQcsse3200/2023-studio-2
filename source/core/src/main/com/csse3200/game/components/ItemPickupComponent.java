@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
 public class ItemPickupComponent extends Component {
 
     private static Logger logger;
-    private HitboxComponent hitboxComponent;
-    private short targetLayer;
 
     /**
      * Constructs an ItemPickupComponent with the specified target layer for item collisions.
@@ -24,7 +22,6 @@ public class ItemPickupComponent extends Component {
      * @param targetLayer The layer to target for item collisions.
      */
     public ItemPickupComponent(short targetLayer) {
-        this.targetLayer = targetLayer;
     }
 
     /**
@@ -43,7 +40,7 @@ public class ItemPickupComponent extends Component {
      */
     private void pickUp(Fixture me, Fixture other) {
 
-        hitboxComponent = entity.getComponent(HitboxComponent.class);
+        HitboxComponent hitboxComponent = entity.getComponent(HitboxComponent.class);
 
         Entity entityOfComponent = getEntity();
         EarthGameArea.removeItemOnMap(entityOfComponent);

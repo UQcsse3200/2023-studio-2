@@ -18,19 +18,11 @@ public class ShipActions extends Component {
     private int currentAcceleration;
 
 
-    private PhysicsComponent physicsComponent;
     private Body body;
     private Vector2 flyDirection = Vector2.Zero.cpy();
     private boolean moving = false;
-    private Vector2 currentVelocity = Vector2.Zero.cpy();
     private AnimationRenderComponent animator;
 
-
-    private double up = 90;
-    private double down = -90;
-    private double left = 180;
-    private double right = 0;
-    private double left2 = -180;
 
     public ShipActions(int health, int fuel, int acceleration) {
         this.maxHealth = health;
@@ -40,7 +32,7 @@ public class ShipActions extends Component {
 
     @Override
     public void create() {
-        physicsComponent = entity.getComponent(PhysicsComponent.class);
+        PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
         animator = entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("fly", this::fly);
         entity.getEvents().addListener("flystop", this::flystop);
@@ -72,8 +64,8 @@ public class ShipActions extends Component {
         //Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         //body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
         //body.applyForceToCenter(desiredVelocity.scl(3), true);
-        this.currentVelocity = this.flyDirection.cpy();
-        body.applyForceToCenter(this.currentVelocity.scl(this.currentAcceleration), true);
+        Vector2 currentVelocity = this.flyDirection.cpy();
+        body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration), true);
         this.playAnimation(body.getLinearVelocity());
 
 
@@ -123,6 +115,11 @@ public class ShipActions extends Component {
 
         double currentOrientation = Vector2Utils.angleTo(direction);
 
+        double left2 = -180;
+        double right = 0;
+        double left = 180;
+        double down = -90;
+        double up = 90;
         if (currentOrientation == up) {
             //
             animator.startAnimation("Ship_UpStill");

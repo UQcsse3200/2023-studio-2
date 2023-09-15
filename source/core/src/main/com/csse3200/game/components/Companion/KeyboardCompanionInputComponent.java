@@ -24,7 +24,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
     private int flagA = 0;
     private int flagS = 0;
     private int flagD = 0;
-    private int flagMul = 0;
 
     private final CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay();
 
@@ -67,6 +66,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         if (movFlagSum >= 3) {
             walkDirection.set(Vector2.Zero);
         }
+        int flagMul = 0;
         if (movFlagSum == 2) {
             flagMul = 1;
             walkDirection.scl(new Vector2(0.707f, 0.707f));

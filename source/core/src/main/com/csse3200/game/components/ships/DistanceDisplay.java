@@ -11,7 +11,6 @@ import com.csse3200.game.ui.UIComponent;
  * for displaying distance
  */
 public class DistanceDisplay extends UIComponent {
-    private Table table;
     private Label distanceLabel;
 
     /**
@@ -28,7 +27,7 @@ public class DistanceDisplay extends UIComponent {
      * Method for displaying the distance in the minigame
      */
     private void addActors() {
-        table = new Table();
+        Table table = new Table();
 
         table.center().bottom();
         table.setFillParent(true);

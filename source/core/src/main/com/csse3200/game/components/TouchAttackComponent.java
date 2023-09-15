@@ -24,12 +24,11 @@ import java.util.TimerTask;
  */
 public class TouchAttackComponent extends Component {
 
-  private short targetLayer;
+  private final short targetLayer;
   private float knockbackForce = 1f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
   private boolean leftContact;
-  private Timer triggerTimer;
 
   /**
    * Creates a TouchAttackComponent that attacks entities on collision, without knockback.
@@ -104,7 +103,7 @@ public class TouchAttackComponent extends Component {
     }
     // Targeting STRUCTURE entity type
     if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-      triggerTimer = new Timer();
+      Timer triggerTimer = new Timer();
       // Schedule the trigger every 2 seconds
       triggerTimer.scheduleAtFixedRate(new TimerTask() {
         @Override

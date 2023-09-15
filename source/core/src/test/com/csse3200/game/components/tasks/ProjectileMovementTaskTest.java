@@ -25,7 +25,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(GameExtension.class)
 public class ProjectileMovementTaskTest {
-    private Entity newPlayer;
     private Entity projectile;
     private ProjectileMovementTask task;
     @BeforeEach
@@ -40,7 +39,7 @@ public class ProjectileMovementTaskTest {
         ServiceLocator.registerPhysicsService(new PhysicsService());
 
         // Creating Player
-        newPlayer = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
+        Entity newPlayer = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
         // Projectile Setup
         projectile = new Entity()
                         .addComponent(new PhysicsComponent())

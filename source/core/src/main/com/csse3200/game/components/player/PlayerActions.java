@@ -26,7 +26,6 @@ public class PlayerActions extends Component {
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
-    private GameStateInteraction gameStateInteraction;
 
     @Override
     public void create() {
@@ -40,7 +39,7 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("repair", this::repairWall);
         entity.getEvents().addListener("change_structure", this::changeStructure);
         entity.getEvents().addListener("inventory", this::updateInventory);
-        gameStateInteraction = new GameStateInteraction();
+        GameStateInteraction gameStateInteraction = new GameStateInteraction();
     }
 
     @Override

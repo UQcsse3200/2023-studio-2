@@ -5,7 +5,9 @@
  */
 package com.csse3200.game.components;
 
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,7 +94,7 @@ public class CombatStatsComponent extends Component {
         TimerTask killPlayer = new TimerTask() {
           @Override
           public void run() {
-            entity.getEvents().trigger("deathscreen");
+            entity.getEvents().trigger("death");
             timer.cancel();
             timer.purge();
           }

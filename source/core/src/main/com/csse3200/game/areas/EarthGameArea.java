@@ -186,10 +186,10 @@ public class EarthGameArea extends GameArea {
         player = spawnPlayer();
         this.companion = spawnCompanion(player);
         spawnPotion(companion,laboratory);
-        //spawnEnemies();
+        spawnEnemies();
         //spawnSecretEnemies();
         spawnBoss();
-        spawnSecretBoss();
+        //spawnSecretBoss();
         spawnAsteroids();
         spawnTreeTopLayer();
         spawnBotanist();
@@ -626,6 +626,10 @@ public class EarthGameArea extends GameArea {
         super.dispose();
         ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
         this.unloadAssets();
+    }
+
+    public static Entity getPlayer() {
+        return player;
     }
 
   public void setCompanion(Entity Companion){companion=Companion;}

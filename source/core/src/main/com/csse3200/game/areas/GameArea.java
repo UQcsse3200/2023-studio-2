@@ -123,8 +123,8 @@ public abstract class GameArea implements Disposable {
     TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
     Vector2 playerPos = getPlayer().getPosition();
     TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
-    Object speedMult = cell.getTile().getProperties().get("speedMult");
-
+    //Object speedMult = cell.getTile().getProperties().get("speedMult");
+    Object speedMult = null;
     return speedMult != null ? (float)speedMult : 1f;
   }
 

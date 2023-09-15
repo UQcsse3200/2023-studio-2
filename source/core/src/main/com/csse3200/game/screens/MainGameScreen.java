@@ -98,7 +98,11 @@ private static boolean alive = true;
 
     gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
     gameArea.create();
-    player = gameArea.getPlayer();
+    //EarthGameArea earthGameArea = new EarthGameArea(terrainFactory, game);
+    //earthGameArea.create();
+    //LushGameArea lushGameArea = new LushGameArea(terrainFactory, game);
+    //lushGameArea.create();
+    player = EarthGameArea.getPlayer();
     player.getEvents().addListener("death", this::initiateDeathScreen);
     titleBox = new TitleBox(game, "Title", skin);
 

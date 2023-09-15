@@ -58,34 +58,21 @@ public class EarthGameArea extends GameArea {
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] earthTextures = {
-            //TO BE REMOVED indicates that those with merge conflicts can check if the extra files are
-            // unnecessary,
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
             "images/extractor.png",
-            //"images/broken_extractor.png", TO BE REMOVED
             "images/refinedExtractor2.png",
             "images/refinedBrokenExtractor.png",
-            //"images/box_boy_leaf.png", TO BE REMOVED
             "images/LeftShip.png",
-            //"images/wall.png", TO BE REMOVED
-            //"images/wall2.png", TO BE REMOVED
-            //"images/gate_close.png", TO BE REMOVED
             "images/structures/closed_gate.png",
-            //"images/gate_open.png", TO BE REMOVED
             "images/structures/open_gate.png",
             "images/companion_DOWN.png",
             "images/ghost_1.png",
-            //"images/base_enemy.png", TO BE REMOVED
-            //"images/Troll.png", TO BE REMOVED
-            //"images/rangeEnemy.png", TO BE REMOVED
-            //"images/enemy/base_enemy.png", TO BE REMOVED
             "images/enemy/baseEnemyMelee.png",
             "images/enemy/Troll.png",
             "images/enemy/rangenemy.png", // Weird spelling, check if asset need to be renamed
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/refinedShip.png",
-            //"images/stone_wall.png", TO BE REMOVED
             "images/structures/stone_wall.png",
             "images/botanist.png",
             "images/fire.png",
@@ -95,8 +82,6 @@ public class EarthGameArea extends GameArea {
             "images/extinguisher.png",
             "images/spannerCursor.png",
             "images/ExtractorminiGameBackground.png",
-            //"images/player_blank.png", TO BE REMOVED
-            //"images/wrench.png", TO BE REMOVED
             "images/weapons/wrench.png",
             "images/uparrow.png",
             "images/resourcebar_background.png",
@@ -105,11 +90,8 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
-            //"images/TurretOne.png", TO BE REMOVED
             "images/structures/TurretOne.png",
-            //"images/TurretTwo.png", TO BE REMOVED
             "images/structures/TurretTwo.png",
-            //"images/playerSS_6.png", TO BE REMOVED
             "images/enemy/Bull.png",
             "images/laboratory.png",
             "images/Potion.png",
@@ -121,7 +103,6 @@ public class EarthGameArea extends GameArea {
             "images/upgradetree/hammer2.png",
             "images/upgradetree/stick.png",
             "images/upgradetree/exit.png",
-            //"images/player.png", TO BE REMOVED
             "images/deathpotion.png",
             "images/potion2.png",
             "images/potion3.png","images/companionSS_1.png","images/companionSS_0.png",
@@ -156,10 +137,8 @@ public class EarthGameArea extends GameArea {
             "images/structures/stone_wall.atlas",
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
-            //"images/sling_shot.atlas", TO BE REMOVED
             "images/weapons/slingshot.atlas",
             "images/player/player.atlas",
-            //"images/player.atlas",
             "images/companionSS.atlas",
             "images/enemy/bull.atlas",
             "images/enemy/Night.atlas",
@@ -169,7 +148,6 @@ public class EarthGameArea extends GameArea {
 
     private static final String[] earthSounds = {
             "sounds/Impact4.wav",
-            //"sounds/Impact.ogg", TO BE REMOVED
             "sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.wav";
     private static final String[] earthMusic = {backgroundMusic};

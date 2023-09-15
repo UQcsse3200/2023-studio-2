@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.ProximityControllerComponent;

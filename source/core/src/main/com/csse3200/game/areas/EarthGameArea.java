@@ -257,6 +257,7 @@ public class EarthGameArea extends GameArea {
         TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
         Entity environment;
 
+
         for (int y = 0; y < layer.getHeight(); y++) {
             for (int x = 0; x < layer.getWidth(); x++) {
                 TiledMapTileLayer.Cell cell = layer.getCell(x, layer.getHeight() - 1 - y);
@@ -660,10 +661,6 @@ public class EarthGameArea extends GameArea {
         super.dispose();
         ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
         this.unloadAssets();
-    }
-
-    public static Entity getPlayer() {
-        return player;
     }
 
   public void setCompanion(Entity Companion){companion=Companion;}

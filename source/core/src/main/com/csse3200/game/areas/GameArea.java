@@ -115,18 +115,7 @@ public abstract class GameArea implements Disposable {
     ServiceLocator.getEntityService().register(entity);
   }
 
-  /**
-   * Retrieves the speedMult property defined in the terrain's .tsx file
-   * @return Multiplier to modify the player's speed
-   */
-  public static float getSpeedMult() {
-    TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
-    Vector2 playerPos = getPlayer().getPosition();
-    TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
-    //Object speedMult = cell.getTile().getProperties().get("speedMult");
-    Object speedMult = null;
-    return speedMult != null ? (float)speedMult : 1f;
-  }
+
 
   /**
    * Spawns the player entity and adds them to the list of targetable entities
@@ -161,10 +150,6 @@ public abstract class GameArea implements Disposable {
 
     entity.setPosition(worldPos);
     spawnEntity(entity);
-  }
-
-  public static Entity getPlayer() {
-    return player;
   }
 
   protected void spawnEntityAtVector(Entity entity, Vector2 worldPos) {

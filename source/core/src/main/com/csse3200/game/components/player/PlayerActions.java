@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.entities.Entity;
@@ -57,7 +58,8 @@ public class PlayerActions extends Component {
     private void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
-        float speedMult = GameArea.getSpeedMult();
+        //float speedMult = MapGameArea.getSpeedMult();
+        float speedMult = 1.0f;
         Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(MAX_SPEED.x * speedMult, MAX_SPEED.y * speedMult));
         // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());

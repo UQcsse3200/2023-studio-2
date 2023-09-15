@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
+import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
@@ -37,7 +38,7 @@ public class MapGameArea extends GameArea{
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
-    private Entity playerEntity;
+    private static Entity playerEntity;
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
         //TODO: Check if this causes an error from diff run locations
@@ -73,8 +74,8 @@ public class MapGameArea extends GameArea{
     }
 
     //TODO: is this needed? - ServiceLocator.getEntityService.getPlayer()
-    public Entity getPlayer() {
-        return this.playerEntity;
+    public static Entity getPlayer() {
+        return playerEntity;
     }
 
     /**
@@ -238,6 +239,19 @@ public class MapGameArea extends GameArea{
             spawnEntityAt(ship, shipConfig.position, false, false);
         }
     }
+
+    /**
+     * Retrieves the speedMult property defined in the terrain's .tsx file
+     * @return Multiplier to modify the player's speed
+     */
+    //public static float getSpeedMult() {
+      //  TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+      //  System.out.println(collisionLayer);
+      //  Vector2 playerPos = getPlayer().getPosition();
+     //   TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+      //  Object speedMult = cell.getTile().getProperties().get("speedMult");
+      //  return speedMult != null ? (float)speedMult : 1f;
+ //   }
 
     /**
      * Spawns the player at the position given by the config file.

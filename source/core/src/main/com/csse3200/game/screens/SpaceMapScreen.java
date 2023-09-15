@@ -104,6 +104,7 @@ public class SpaceMapScreen extends ScreenAdapter {
     public void Exitonc(float d)
     {
         if(d < 1.0) {
+            this.unloadAssets();
             game.setScreen(GdxGame.ScreenType.MAIN_MENU);
         }
     }
@@ -140,6 +141,7 @@ public class SpaceMapScreen extends ScreenAdapter {
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.clearAllAssets();
     }
 
     /**

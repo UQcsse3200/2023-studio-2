@@ -61,17 +61,12 @@ public class ShipActions extends Component {
         //impulse = (desiredVel - currentVel) * mass
         //uses impulse to apply velocity instantly
 
-        //Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
-        //body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
-        //body.applyForceToCenter(desiredVelocity.scl(3), true);
         Vector2 currentVelocity = this.flyDirection.cpy();
         body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration), true);
         this.playAnimation(body.getLinearVelocity());
 
 
         //scl(scalar) basically multiply the Vector2 velocity of body by a scalar. Belongs to Vector2.
-        //body.applyForceToCenter(this.currentVelocity.scl(this.currentAcceleration), true);
-        //body.applyLinearImpulse(this.currentVelocity.scl(this.currentAcceleration), body.getWorldCenter(), true);
     }
 
     /**

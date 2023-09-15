@@ -86,41 +86,5 @@ public class SpawnerComponentTest {
         assertEquals(0, spawner.getEnemiesSpawned());
     }
 
-   /*  @Mock
-    EnemyFactory enemyFactory = mock(EnemyFactory.class);
-    @Test
-    public void testSpawnEnemy() {
-
-        // Mock dependencies
-        //EnemyCreator enemyCreator = mock(EnemyCreator.class);
-        //GameTime gameTime = mock(GameTime.class);
-
-        // Pass mocks
-        SpawnerComponent spawner = new SpawnerComponent(targets);
-
-        // Mock entity
-        Entity entity = mock(Entity.class);
-        when(entity.getCenterPosition()).thenReturn(new Vector2(1,2));
-
-        // Mock enemy creation
-        Entity enemy = mock(Entity.class);
-        when(enemyFactory.createEnemy(
-                any(), any(), any()))
-                .thenReturn(enemy);
-
-        // Test values
-        EnemyType type = EnemyType.Melee;
-        EnemyBehaviour behaviour = EnemyBehaviour.PTE;
-
-        // Call method under test
-        spawner.spawnEnemy(type, behaviour);
-
-        // Assertions
-        verify(enemyFactory).createEnemy(
-                any(), eq(type), eq(behaviour));
-
-        verify(entity).getCenterPosition();
-
-    } */
 }
 

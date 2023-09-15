@@ -71,20 +71,4 @@ public class ProjectileMovementTaskTest {
     /**
      *
      */
-//    @Test
-//    void sendProjectileTest() {
-//        // Arbitrary Projectile
-//        float initialDistance = projectile.getPosition().dst(newPlayer.getPosition());
-//        task.create(() -> projectile);
-//        task.start();
-//        // Run the game for a few cycles
-//        for (int i = 0; i < 3; i++) {
-//            projectile.earlyUpdate();
-//            projectile.update();
-//            ServiceLocator.getPhysicsService().getPhysics().update();
-//        }
-//        float newDistance = projectile.getPosition().dst(newPlayer.getPosition());
-//        System.out.println(initialDistance + "->" + newDistance);
-//        Assertions.assertTrue(newDistance < initialDistance);
-//    }
 }

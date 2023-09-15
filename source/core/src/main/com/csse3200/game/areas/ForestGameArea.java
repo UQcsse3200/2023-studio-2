@@ -268,17 +268,6 @@ public class ForestGameArea extends GameArea {
       spawnEntityAt(speedPowerup, randomPos2, true, false);
     }
   }
-  //  private void spawnBotanist() { // TODO: Temp
-//    GridPoint2 minPos = new GridPoint2(0, 0);
-//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-//
-//
-////      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//      GridPoint2 BOTANIST_SPAWN = new GridPoint2(14, 10);
-//      Entity botanist = NPCFactory.createBotanist();
-//      spawnEntityAt(botanist, BOTANIST_SPAWN, true, true);
-//
-//  }
   private void spawnEnemies() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);

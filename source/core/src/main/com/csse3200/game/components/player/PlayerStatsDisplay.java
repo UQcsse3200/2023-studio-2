@@ -103,8 +103,6 @@ public class PlayerStatsDisplay extends UIComponent {
     table.add(healthBar).padLeft(20);
 
 //    table1.add(DodgeLabel); todo: rachel / aman fix
-//    table1.add(DodgeBar);
-//    table2.add(livesLabel);
     stage.addActor(table);
     stage.addActor(table1);
     stage.addActor(table2);

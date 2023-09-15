@@ -1,0 +1,202 @@
+{
+  "BitmapFont": {
+    "thick_black": {
+      "file": "Jura-Bold.fnt",
+      "scaledSize": 12,
+      "markupEnabled": false,
+      "flip": false
+    },
+    "thick_white": {
+      "file": "Jura-Bold-white.fnt",
+      "scaledSize": 12,
+      "markupEnabled": false,
+      "flip": false
+    },
+    "thin_black": {
+      "file": "Jura-Light.fnt",
+      "scaledSize": 15,
+      "markupEnabled": true,
+      "flip": false
+    },
+    "thin_white": {
+      "file": "Jura-Light-white.fnt",
+      "scaledSize": 15,
+      "markupEnabled": false,
+      "flip": false
+    },
+    "title_black": {
+      "file": "Jura-Regular.fnt",
+      "scaledSize": 18,
+      "markupEnabled": false,
+      "flip": false
+    },
+    "title_white": {
+      "file": "Jura-Regular-white.fnt",
+      "scaledSize": 18,
+      "markupEnabled": false,
+      "flip": false
+    }
+  },
+  "Color": {
+    "black": {
+      "hex": "000000ff"
+    },
+    "blue": {
+      "hex": "1ea7e1ff"
+    },
+    "brown":{
+      "hex": "8B4513"
+    }
+    "red": {
+      hex: "#bd0015ff"
+    }
+    "darkGrey": {
+      "hex": "444849ff"
+    },
+    "white": {
+      "hex": "fbffffff"
+    }
+  },
+  "TintedDrawable": {
+    "default_progress": {
+      "name": "grey_sliderHorizontal",
+      "color": "red"
+    },
+    "default_progress_v": {
+      "name": "grey_sliderVertical",
+      "color": "red"
+    },
+    "grey_button_hover": {
+      "name": "buttonLong_grey_pressed.png",
+      "color": {
+        "hex": "e9e9e9ff"
+      }
+    }
+  },
+  "ButtonStyle": {
+    "default": {
+      "up": "buttonLong_grey_pressed.png",
+      "down": "buttonLong_grey.png",
+      "over": "grey_button_hover"
+    }
+  },
+  "CheckBoxStyle": {
+    "default": {
+      "checkboxOn": "iconCheck_beige.png",
+      "checkboxOff": "grey_box",
+      "font": "thin_white",
+      "fontColor": "white"
+    }
+    "cross_default": {
+      "checkboxOn": "iconCross_beige.png",
+      "checkboxOff": "grey_box",
+      "font": "thin_white"
+    }
+  },
+  "ImageTextButtonStyle": {
+    "default": {
+      "font": "thick_black"
+    }
+  },
+  "LabelStyle": {
+    "default": {
+      "font": "thin_white"
+    },
+    "title": {
+      "font": "title_white"
+    },
+    "thick": {
+      "font": "thick_white"
+    },
+    "small": {
+      "font": "thin_white"
+    },
+    "large": {
+      "font": "thick_black"
+    }
+  },
+  "ListStyle": {
+    "default": {
+      "font": "thin_white",
+      "fontColorSelected": "white",
+      "fontColorUnselected": "black",
+      "selection": "buttonLong_beige.png",
+      "background": "buttonLong_grey.png"
+    }
+  },
+  "ProgressBarStyle": {
+    "default-horizontal": {
+      "background": "grey_sliderHorizontal",
+      "knobBefore": "default_progress"
+    },
+    "default-vertical": {
+      "background": "grey_sliderVertical",
+      "knob": "default_progress_v"
+    }
+  },
+  "ScrollPaneStyle": {
+    "default": {
+      "hScrollKnob": "buttonSquare_beige.png",
+      "vScrollKnob": "buttonSquare_beige.png"
+    }
+  },
+  "SelectBoxStyle": {
+    "default": {
+      "font": "thin_white",
+      "fontColor": "black",
+      "overFontColor": "white",
+      "background": "buttonLong_grey.png",
+      "scrollStyle": "default",
+      "listStyle": "default",
+      "backgroundOver": "buttonLong_beige.png",
+      "backgroundOpen": "buttonLong_beige.png"
+    }
+  },
+  "SliderStyle": {
+    "default-horizontal": {
+      "background": "grey_sliderHorizontal",
+      "knob": "buttonSquare_beige.png"
+    },
+    "default-vertical": {
+      "background": "grey_sliderVertical",
+      "knob": "buttonSquare_beige.png"
+    }
+  },
+  "TextButtonStyle": {
+    "default": {
+      "font": "thick_white",
+      "fontColor": "black",
+      "downFontColor": "red",
+      "overFontColor": "darkGrey",
+      "up": "buttonLong_grey_pressed.png",
+      "down": "buttonLong_grey.png",
+      "over": "grey_button_hover"
+    }
+  },
+  "TextFieldStyle": {
+    "default": {
+      "font": "thin_white",
+      "fontColor": "black",
+      "background": "buttonLong_grey_pressed.png",
+      "focusedBackground": "buttonLong_grey.png"
+    }
+  },
+  "TextTooltipStyle": {
+    "default": {
+      "label": "default",
+      "background": "buttonLong_beige.png"
+    }
+  },
+  "TreeStyle": {
+    "default": {
+      "plus": "arrowBlue_left.png",
+      "minus": "arrowSilver_left.png"
+    }
+  },
+  "WindowStyle": {
+    "default": {
+      "background": "metalPanel_red",
+      "titleFont": "thick_white"
+    }
+  }
+}

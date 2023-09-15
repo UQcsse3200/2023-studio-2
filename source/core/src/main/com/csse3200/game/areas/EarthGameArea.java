@@ -81,7 +81,7 @@ public class EarthGameArea extends GameArea {
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/refinedShip.png",
             "images/stone_wall.png",
-            "images/oldman_down_1.png",
+            "images/botanist.png",
             "images/fire.png",
             "images/Hole.png",
             "images/spanner.png",
@@ -154,7 +154,8 @@ public class EarthGameArea extends GameArea {
             "images/companionSS.atlas",
             "images/enemy/bull.atlas",
             "images/enemy/Night.atlas",
-            "images/ExtractorAnimation.atlas"
+            "images/ExtractorAnimation.atlas",
+            "images/botanist.atlas"
     };
 
     private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
@@ -271,8 +272,8 @@ public class EarthGameArea extends GameArea {
     }
 
     private void spawnExtractors() {
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) 100);
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) 500);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) 1000);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) 1000);
         ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) 1000);
         ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Nebulite.toString(),  (int) 0);
         ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Durasteel.toString(),  (int) 0);

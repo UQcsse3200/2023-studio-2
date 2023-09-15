@@ -23,7 +23,7 @@ public class ShipUpgradesComponent extends Component {
     /**
      * Applies the effects of the Powerup to the specified target entity.
      *
-     * @param target  The entity receiving the Powerup effect.
+     * @param ship - the ship to apply the upgrade to
      */
     public void applyUpgrade(Entity ship) {
         shipActions = ship.getComponent(ShipActions.class);

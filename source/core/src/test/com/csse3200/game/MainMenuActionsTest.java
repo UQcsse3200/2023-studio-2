@@ -27,7 +27,7 @@ public class MainMenuActionsTest {
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         MainMenuActions mainMenuActions = new MainMenuActions(game, stage, skin);
 
         // Mock the behavior of entity.getEvents()

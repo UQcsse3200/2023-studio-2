@@ -132,12 +132,18 @@ public class SpaceMapScreen extends ScreenAdapter {
         unloadAssets();
     }
 
+    /**
+     * Loads all assets
+     */
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         ServiceLocator.getResourceService().loadAll();
     }
 
+    /**
+     * Unloads all assets
+     */
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();

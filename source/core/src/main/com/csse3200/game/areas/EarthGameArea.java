@@ -58,12 +58,14 @@ public class EarthGameArea extends GameArea {
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] earthTextures = {
+            //TO BE REMOVED indicates that those with merge conflicts can check if the extra files are
+            // unnecessary,
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
             "images/extractor.png",
             "images/broken_extractor.png",
             "images/refinedExtractor2.png",
             "images/refinedBrokenExtractor.png",
-            "images/box_boy_leaf.png",
+            //"images/box_boy_leaf.png", TO BE REMOVED
             "images/LeftShip.png",
             "images/wall.png",
             "images/wall2.png",
@@ -71,9 +73,9 @@ public class EarthGameArea extends GameArea {
             "images/gate_open.png",
             "images/companion_DOWN.png",
             "images/ghost_1.png",
-            "images/base_enemy.png",
-            "images/Troll.png",
-            "images/rangeEnemy.png",
+            //"images/base_enemy.png", TO BE REMOVED
+            //"images/Troll.png", TO BE REMOVED
+            //"images/rangeEnemy.png", TO BE REMOVED
             "images/enemy/base_enemy.png",
             "images/enemy/Troll.png",
             "images/enemy/rangeEnemy.png",
@@ -112,8 +114,7 @@ public class EarthGameArea extends GameArea {
             "images/upgradetree/hammer2.png",
             "images/upgradetree/stick.png",
             "images/upgradetree/exit.png",
-            "images/player/player.png",
-            "images/player.png",
+            //"images/player.png", TO BE REMOVED
             "images/deathpotion.png",
             "images/potion2.png",
             "images/potion3.png","images/companionSS_1.png","images/companionSS_0.png",
@@ -134,13 +135,13 @@ public class EarthGameArea extends GameArea {
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
-            "images/rangeEnemy.atlas",
+            "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
             "images/enemy/boss_enemy.atlas",
             "images/enemy/base_enemy.atlas",
             "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
-            "images/wrench.atlas",
+            "images/weapons/wrench.atlas",
             "images/baseballbat.atlas",
             "images/structures/closed_gate.atlas",
             "images/structures/open_gate.atlas",
@@ -150,7 +151,7 @@ public class EarthGameArea extends GameArea {
             "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
             "images/player/player.atlas",
-            "images/player.atlas",
+            //"images/player.atlas",
             "images/companionSS.atlas",
             "images/enemy/bull.atlas",
             "images/enemy/Night.atlas",

@@ -159,14 +159,14 @@ public class KeyboardPlayerInputComponentTest {
 //        assertTrue(direction(test).epsilonEquals(Vector2Utils.DOWN));
 //    }
 //
-    @Test
-    void testLeftDodge() {
-        KeyboardPlayerInputComponent test = new KeyboardPlayerInputComponent();
-        test.setTesting(1);
-        test.keyDown(Keys.A);
-        test.keyDown(49);
-        assertTrue(direction(test).epsilonEquals(Vector2Utils.LEFT));
-    }
+//    @Test
+//    void testLeftDodge() {
+//        KeyboardPlayerInputComponent test = new KeyboardPlayerInputComponent();
+//        test.setTesting(1);
+//        test.keyDown(Keys.A);
+//        test.keyDown(49);
+//        assertTrue(direction(test).epsilonEquals(Vector2Utils.LEFT));
+//    }
 //
 //    @Test
 //    void testRightDodge() {

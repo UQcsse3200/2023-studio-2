@@ -15,11 +15,13 @@ public class WeaponConfig extends BaseEntityConfig {
     //How far off is projectile fired from player click angle (used for melee swings)
     public int initialRotationOffset = 0;
     /* Image rotation of +x */
+    public int attackCooldown = 300;
+
+    public int animationType = 0;
     public int imageRotationOffset = 45;
-
-    public int attackCooldown = 0;
-
     public float imageScale = 1;
+    public String textureAtlas;
+    public String imagePath;
 
     public WeaponType type;
 

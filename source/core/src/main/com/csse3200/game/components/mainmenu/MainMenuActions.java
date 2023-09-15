@@ -70,6 +70,8 @@ public class MainMenuActions extends Component {
   private void onLoad() {
     logger.info("Load game");
     //game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+    game.setScreen(GdxGame.ScreenType.GAME_STORY);
+
   }
 
   /**
@@ -111,5 +113,3 @@ public class MainMenuActions extends Component {
     game.setScreen(GdxGame.ScreenType.UPGRADE_SHOP);
   }
 }
-
-

@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.PotionComponent;
+import com.csse3200.game.components.PotionType;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.tasks.BossTask;
@@ -50,25 +52,24 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_MELEE_PTE = 2;
     private static final int NUM_MELEE_DTE = 2;
     private static final int NUM_RANGE_PTE = 2;
-    private static final int NUM_RANGE_DTE = 2;
-    private static final int NUM_POWERUPS = 3;
+    private static final int NUM_POWERUPS = 5;
     private static final int NUM_Laboratory = 4;
-    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 40);
-    private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(8, 8);
+    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(9, 9);
     private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(35, 2);
     private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 40);
     private static final GridPoint2 PORTAL_ONE = new GridPoint2(30, 40);
     private static final GridPoint2 PORTAL_TWO = new GridPoint2(78, 10);
     private static final float WALL_WIDTH = 0.1f;
-    private static final float ASTEROID_SIZE = 0.9f;
     private static final String mapPath = "map/base.tmx";
-    private List<Entity> spawnedTreeTopEntities = new ArrayList<>();
+    private final List<Entity> spawnedTreeTopEntities = new ArrayList<>();
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
+            "images/extractor.png",
+            "images/broken_extractor.png",
             "images/refinedExtractor2.png",
             "images/refinedBrokenExtractor.png",
-            "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/box_boy_leaf.png",
             "images/LeftShip.png",
             "images/wall.png",
@@ -76,21 +77,28 @@ public class EarthGameArea extends GameArea {
             "images/gate_close.png",
             "images/gate_open.png",
             "images/companion_DOWN.png",
+            "images/ghost_1.png",
+            "images/base_enemy.png",
+            "images/Troll.png",
+            "images/rangeEnemy.png",
             "images/enemy/base_enemy.png",
             "images/enemy/Troll.png",
             "images/enemy/rangeEnemy.png",
-            "images/stone_wall.png",
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/refinedShip.png",
             "images/stone_wall.png",
-            "images/oldman_down_1.png",
+            "images/botanist.png",
+            "images/fire.png",
+            "images/Hole.png",
+            "images/spanner.png",
+            "images/extinguisherCoursor.png",
+            "images/extinguisher.png",
+            "images/spannerCursor.png",
+            "images/ExtractorminiGameBackground.png",
             "images/player_blank.png",
             "images/wrench.png",
-            "images/durastell.png",
-            "images/nebulite.png",
             "images/uparrow.png",
-            "images/solsite.png",
             "images/resourcebar_background.png",
             "images/resourcebar_durasteel.png",
             "images/resourcebar_foreground.png",
@@ -113,12 +121,25 @@ public class EarthGameArea extends GameArea {
             "images/upgradetree/hammer2.png",
             "images/upgradetree/stick.png",
             "images/upgradetree/exit.png",
+            "images/player/player.png",
             "images/player.png",
+            "images/deathpotion.png",
+            "images/potion2.png",
+            "images/potion3.png","images/companionSS_1.png","images/companionSS_0.png",
+            "images/companionSS.png",
+            "images/Potion1re.png",
+            "images/Potion2re.png",
+            "images/Potion3re.png",
+            "images/Potion3re.png",
+            "images/Potion4re.png",
+            "images/platform.png",
+            "images/companiondeathscreen.png",
             "images/nebulite.png",
             "images/solstite.png",
             "images/durasteel.png",
             "images/f_button.png",
-            "images/ExtractorAnimation.png"
+            "images/ExtractorAnimation.png",
+            "images/player/player.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -128,7 +149,6 @@ public class EarthGameArea extends GameArea {
             "images/enemy/base_enemy.atlas",
             "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
-            "images/playerSS.atlas",
             "images/wrench.atlas",
             "images/baseballbat.atlas",
             "images/structures/closed_gate.atlas",
@@ -138,18 +158,24 @@ public class EarthGameArea extends GameArea {
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
             "images/sling_shot.atlas",
+            "images/player/player.atlas",
             "images/player.atlas",
+            "images/companionSS.atlas",
             "images/enemy/bull.atlas",
             "images/enemy/Night.atlas",
-            "images/ExtractorAnimation.atlas"
-
+            "images/ExtractorAnimation.atlas",
+            "images/botanist.atlas"
     };
+
     private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.wav";
     private static final String[] earthMusic = {backgroundMusic};
 
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
+    private Entity player;
+
+    private Entity companion;
     private Entity laboratory;
     private GdxGame game;
 
@@ -180,21 +206,20 @@ public class EarthGameArea extends GameArea {
         spawnEnvironment();
         spawnPowerups();
         spawnExtractors();
-        laboratory = spawnLaboratory();
+        spawnLaboratory();
         spawnUpgradeBench();
         spawnShip();
-        player = spawnPlayer();
+        spawnPlatform();
+        this.player = spawnPlayer();
         this.companion = spawnCompanion(player);
-        spawnPotion(companion,laboratory);
+        /*spawnTurret();*/
         spawnEnemies();
         //spawnSecretEnemies();
         spawnBoss();
-        //spawnSecretBoss();
-        spawnAsteroids();
         spawnTreeTopLayer();
         spawnBotanist();
+        companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
         spawnSpawner();
-
         playMusic();
 
         spawnPortal(PORTAL_ONE, 40, 5);
@@ -292,29 +317,18 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(botanist, spawnPosition, true, false);
     }
 
-    /**
-     * Spawns a movable asteroid entity which the player can push
-     */
-    private void spawnAsteroids() {
-        //Extra Spicy Asteroids
-        GridPoint2 posAs = new GridPoint2(8, 8);
-        spawnEntityAt(
-                ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
-
-    }
-
-    /**
-     * Spawns three extractors next to each other in the world and adds them to the list of
-     * targetable entities
-     */
     private void spawnUpgradeBench() {
+        // spawns next to ship
+        GridPoint2 spawnPosition = new GridPoint2(
+                7*terrain.getMapBounds(0).sub(3, 1).x/12,
+                2*terrain.getMapBounds(0).sub(1, 1).y/3);
         Entity upgradeBench = StructureFactory.createUpgradeBench();
-        spawnEntityAt(upgradeBench, new GridPoint2(20, 40), true, true);
+        spawnEntityAt(upgradeBench, spawnPosition, false, false);
     }
 
     private void spawnExtractors() {
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) 100);
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) 500);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) 1000);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) 1000);
         ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) 1000);
         ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Nebulite.toString(),  (int) 0);
         ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Durasteel.toString(),  (int) 0);
@@ -480,12 +494,38 @@ public class EarthGameArea extends GameArea {
             spawnEntityAt(speedPowerup, randomPos2, true, false);
         }
     }
-    private void spawnPotion(Entity companionEntity ,Entity laboratoryEntity){
-        Entity newPotion = PotionFactory.createDeathPotion(companionEntity, laboratoryEntity);
-        itemsOnMap.add(newPotion);
-        GridPoint2 pos = new GridPoint2(34, 18);
-        spawnEntityAt(newPotion, pos, true, false);
+
+    public Entity spawnPotion(PotionType potionType){
+        Entity newPotion;
+        switch (potionType){
+            case DEATH_POTION:
+               newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION,player,companion);
+               itemsOnMap.add(newPotion);
+               GridPoint2 pos = new GridPoint2(39, 21);
+               spawnEntityAt(newPotion, pos, true, false);
+               return newPotion;
+            case SPEED_POTION:
+                newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION,player,companion);
+                itemsOnMap.add(newPotion);
+                GridPoint2 pos2 = new GridPoint2(40, 21);
+                spawnEntityAt(newPotion, pos2, true, false);
+                return newPotion;
+            case HEALTH_POTION:
+                newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION,player,companion);
+                itemsOnMap.add(newPotion);
+                GridPoint2 pos3 = new GridPoint2(41, 21);
+                spawnEntityAt(newPotion, pos3, true, false);
+                return newPotion;
+            default: throw new IllegalArgumentException("You must assign a valid PotionType");
+        }
     }
+    public Entity spawnPlatform(){
+        Entity newPlatform = PlatformFactory.createPlatform();
+        GridPoint2 pos = new GridPoint2(40,20);
+        spawnEntityAt(newPlatform,pos,true,false);
+        return newPlatform;
+    }
+
 
     /**
      * Spawns all the enemies detailed in the Game Area.
@@ -539,13 +579,6 @@ public class EarthGameArea extends GameArea {
             spawnEntityAt(melee, randomPos, true, true);
             //melee.addComponent(new DialogComponent(dialogueBox));
         }
-
-        for (int i = 0; i < NUM_RANGE_DTE; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity ranged = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
-            spawnEntityAt(ranged, randomPos, true, true);
-            //ranged.addComponent(new DialogComponent(dialogueBox));
-        }
     }
 
     private void spawnSecretBoss() {
@@ -588,6 +621,7 @@ public class EarthGameArea extends GameArea {
         resourceService.loadTextures(earthTextures);
         resourceService.loadTextureAtlases(earthTextureAtlases);
         resourceService.loadSounds(earthSounds);
+        resourceService.loadMusic(earthMusic);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen

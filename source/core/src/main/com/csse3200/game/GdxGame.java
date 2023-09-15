@@ -83,8 +83,6 @@ public class GdxGame extends Game {
         return new MainMenuScreen(this);
       case GAME_STORY:
         return new StoryScreen(this);
-      case MAIN_GAME:
-        return new MainGameScreen(this);
       case SETTINGS:
         return new SettingsScreen(this);
       case SPACE_MAP:
@@ -93,20 +91,26 @@ public class GdxGame extends Game {
         return new ExtractorMiniGameScreen(this);
       case PLAYER_DEATH:
         return new PlayerDeathScreen(this);
-
+      case COMPANION_DEATH:
+        return new CompanionDeathScreen(this);
+      case INITIAL_SCREEN:
+        return new MiniScreen(this);
       case SPACEMINI_SCREEN:
         return new MiniScreen(this);
       case NAVIGATION_SCREEN:
         return new SpaceNavigationScreen(this);
       case UPGRADE_SHOP:
         return new UpgradeShopScreen(this);
+      case CONTROL_SCREEN:
+        return new ControlsScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, TITLE_SCREEN, SPACE_MAP, EXTRACTOR_GAME,  GAME_STORY, PLAYER_DEATH, NAVIGATION_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP
+    MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME, GAME_STORY,
+    PLAYER_DEATH, COMPANION_DEATH, NAVIGATION_SCREEN, INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP
 
   }
   /**

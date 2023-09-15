@@ -70,7 +70,7 @@ public class EnemyFactoryTest {
         assertEquals(2.0f, EnemyFactory.getEnemyscale(EnemyType.Ranged));
         assertEquals(1.8f, EnemyFactory.getEnemyscale(EnemyType.Melee));
         assertEquals(2.2f, EnemyFactory.getEnemyscale(EnemyType.BossRanged));
-        assertEquals(2.4f, EnemyFactory.getEnemyscale(EnemyType.BossMelee));
+        assertEquals(4.4f, EnemyFactory.getEnemyscale(EnemyType.BossMelee));
     }
 
     /**

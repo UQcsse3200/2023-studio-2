@@ -186,8 +186,8 @@ public class EarthGameArea extends GameArea {
         player = spawnPlayer();
         this.companion = spawnCompanion(player);
         spawnPotion(companion,laboratory);
-        spawnEnemies();
-        spawnSecretEnemies();
+        //spawnEnemies();
+        //spawnSecretEnemies();
         spawnBoss();
         spawnSecretBoss();
         spawnAsteroids();
@@ -207,7 +207,7 @@ public class EarthGameArea extends GameArea {
      */
     private void spawnPortal(GridPoint2 position, float x, float y) {
         StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
-        PlaceableEntity portal = (PlaceableEntity) PortalFactory.createPortal(x, y, player);
+        Entity portal = PortalFactory.createPortal(x, y, player);
         spawnEntityAt(portal, position, false, false);
     }
     public static void removeItemOnMap(Entity entityToRemove) {

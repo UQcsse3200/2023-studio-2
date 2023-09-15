@@ -124,7 +124,7 @@ public class PlanetScreen extends ScreenAdapter {
         } else {
             // TODO: Extend
             // Only one planet game area atm, needs to be extended for further planets
-            this.gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
+            this.gameArea = new MapGameArea("configs/lushLevelConfig.json", terrainFactory, game);
             this.nextPlanetName = "Earth";
         }
     }

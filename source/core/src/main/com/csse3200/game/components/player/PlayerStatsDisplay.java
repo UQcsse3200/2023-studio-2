@@ -74,12 +74,12 @@ public class PlayerStatsDisplay extends UIComponent {
 
     // Health text
     CharSequence healthText = String.format("Health: %d", health);
-    healthLabel = new Label(healthText, skin, "large");
+    healthLabel = new Label(healthText, skin, "small");
 
     // Dodge Text for cool down
     int dodge = entity.getComponent(KeyboardPlayerInputComponent.class).triggerDodgeEvent();
     CharSequence dodgeText = String.format("Dodge Cool down : %d" , dodge);
-    DodgeLabel = new Label(dodgeText, skin, "large");
+    DodgeLabel = new Label(dodgeText, skin, "small");
 
 
     // Dodge Cool down Bar
@@ -96,7 +96,7 @@ public class PlayerStatsDisplay extends UIComponent {
     //Player lives text
     int lives = entity.getComponent(CombatStatsComponent.class).getLives();
     CharSequence livesText = String.format("Lives Left: %d", lives);
-    livesLabel = new Label(livesText, skin, "large");
+    livesLabel = new Label(livesText, skin, "small");
     table.add(heartImage).size(heartSideLength).pad(5);
     table.add(healthLabel);
     table.add(healthBar).padLeft(20);

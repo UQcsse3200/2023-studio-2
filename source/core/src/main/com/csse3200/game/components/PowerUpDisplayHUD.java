@@ -65,7 +65,7 @@ public class PowerUpDisplayHUD extends UIComponent {
         float powerUpLength = 40f;
         String powerUp = " ";
         CharSequence powerUpText = String.format("Current PowerUp : %s",powerUp);
-        PowerUpLabel = new Label(powerUpText, skin,"large");
+        PowerUpLabel = new Label(powerUpText, skin,"small");
         table.add(PowerUpLabel);
 
         if (selectPowerUp() == HealthUpImage) {

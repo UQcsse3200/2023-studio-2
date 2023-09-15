@@ -167,7 +167,10 @@ public class EarthGameArea extends GameArea {
             "images/botanist.atlas"
     };
 
-    private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
+    private static final String[] earthSounds = {
+            "sounds/Impact4.wav",
+            //"sounds/Impact.ogg", TO BE REMOVED
+            "sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.wav";
     private static final String[] earthMusic = {backgroundMusic};
 

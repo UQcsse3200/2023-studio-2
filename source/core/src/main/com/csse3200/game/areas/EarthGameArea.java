@@ -36,7 +36,7 @@ import java.util.List;
 public class EarthGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     //private DialogueBox dialogueBox;
-    private static List<Entity> itemsOnMap = new ArrayList<>();
+    private static final List<Entity> itemsOnMap = new ArrayList<>();
     private static final int NUM_TREES = 7;
     private static final int NUM_MELEE_PTE = 2;
     private static final int NUM_MELEE_DTE = 2;
@@ -160,7 +160,7 @@ public class EarthGameArea extends GameArea {
 
     private Entity companion;
     private Entity laboratory;
-    private GdxGame game;
+    private final GdxGame game;
 
     /**
      * Initialise this EarthGameArea to use the provided TerrainFactory.

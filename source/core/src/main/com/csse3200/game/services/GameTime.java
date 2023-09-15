@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /** Controls the game time */
 public class GameTime {
-  private static Logger logger = LoggerFactory.getLogger(GameTime.class);
+  private static final Logger logger = LoggerFactory.getLogger(GameTime.class);
   private final long startTime;
   private float timeScale = 1f;
 

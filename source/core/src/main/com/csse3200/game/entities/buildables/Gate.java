@@ -26,9 +26,9 @@ public class Gate extends PlaceableEntity {
 
     private static final JoinableComponentShapes shapes =
             FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
-    private TextureAtlas openAtlas;
+    private final TextureAtlas openAtlas;
 
-    private TextureAtlas closedAtlas;
+    private final TextureAtlas closedAtlas;
 
     public Gate(Entity player) {
         openAtlas = ServiceLocator.getResourceService().getAsset(config.openTextureAtlas, TextureAtlas.class);

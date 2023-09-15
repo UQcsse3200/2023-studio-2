@@ -22,8 +22,8 @@ public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
 
   public static GdxGame game;
-  private Stage stage; // Add the stage
-  private Skin skin;   // Add the skin
+  private final Stage stage; // Add the stage
+  private final Skin skin;   // Add the skin
 
   public MainMenuActions(GdxGame game, Stage stage, Skin skin) { // Modify the constructor
     this.game = game;

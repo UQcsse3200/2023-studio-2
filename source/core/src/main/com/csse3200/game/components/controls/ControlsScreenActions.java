@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ControlsScreenActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreenActions.class);
-    private GdxGame game;
+    private final GdxGame game;
 
     /**
      * Creates a new instance of ControlsScreenActions.

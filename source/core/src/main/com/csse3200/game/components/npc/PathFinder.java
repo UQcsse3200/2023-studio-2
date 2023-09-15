@@ -86,10 +86,10 @@ public class PathFinder {
     }
 
     private static class Node implements Comparable<Node> {
-        private int moveCost;
-        private int heuristic;
-        private int gridX;
-        private int gridY;
+        private final int moveCost;
+        private final int heuristic;
+        private final int gridX;
+        private final int gridY;
         private int totalCost;
         private Node parent;
 

@@ -34,13 +34,13 @@ public class SpaceMapScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SpaceMapScreen.class);
 
     private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
-    private Entity ship;
-    private Entity goal;
+    private final Entity ship;
+    private final Entity goal;
     private final GdxGame game;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
     private Label distanceLabel;
-    private DistanceDisplay distanceDisplay;
+    private final DistanceDisplay distanceDisplay;
 
     /**
      * Method for creating the space map screen for the obstacle minigame

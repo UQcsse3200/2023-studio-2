@@ -33,7 +33,7 @@ public class MainMenuDisplay extends UIComponent {
     public static int frame;
     private Image transitionFrames;
     private long lastFrameTime;
-    private int fps = 17;
+    private final int fps = 17;
     private final long frameDuration =  (long)(800 / fps);
 
     @Override

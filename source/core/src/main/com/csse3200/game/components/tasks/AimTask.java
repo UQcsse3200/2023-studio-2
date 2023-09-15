@@ -20,7 +20,7 @@ public class AimTask extends DefaultTask implements PriorityTask {
   private ShootTask aimTask;
   private final Entity target;
   private final float range;
-  private GameTime timer;
+  private final GameTime timer;
   private long lastShotTime;
   private int numshots = 0;
 

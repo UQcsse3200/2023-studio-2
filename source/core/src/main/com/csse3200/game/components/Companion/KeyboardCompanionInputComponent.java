@@ -47,7 +47,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         this.testing = testing;
     }
 
-    private boolean leftCtrlFlag = false;
+    private final boolean leftCtrlFlag = false;
 
     /**
      * Returns the sum of movement flags (W, A, S, D).

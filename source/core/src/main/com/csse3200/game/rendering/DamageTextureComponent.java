@@ -13,7 +13,7 @@ import java.util.Map;
  * A Rendering component used to switch between different textures based on the current entity's health.
  */
 public class DamageTextureComponent extends RenderComponent {
-    private Map<Integer, Texture> thresholds;
+    private final Map<Integer, Texture> thresholds;
 
     /**
      * Creates a DamageTextureComponent with the given texture

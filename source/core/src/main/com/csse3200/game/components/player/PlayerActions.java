@@ -22,7 +22,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class PlayerActions extends Component {
     private static Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
-    private EntityService entityService = new EntityService();
+    private final EntityService entityService = new EntityService();
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;

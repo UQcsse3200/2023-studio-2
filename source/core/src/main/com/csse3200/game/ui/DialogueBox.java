@@ -19,7 +19,7 @@ public class DialogueBox extends Dialog {
     //private final InputOverrideComponent inputOverrideComponent;
 
     private TitleBox titleBox;
-    private Label dialogueLabel;
+    private final Label dialogueLabel;
 
     /**
      * Creates a new DialogueBox instance.

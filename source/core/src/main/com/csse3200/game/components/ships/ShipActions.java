@@ -15,7 +15,7 @@ public class ShipActions extends Component {
     private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
     private int maxHealth;
     private int maxFuel;
-    private int currentAcceleration;
+    private final int currentAcceleration;
 
 
     private Body body;

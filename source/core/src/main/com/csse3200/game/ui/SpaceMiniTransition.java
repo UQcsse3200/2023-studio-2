@@ -19,12 +19,12 @@ import com.csse3200.game.GdxGame;
  */
 public class SpaceMiniTransition extends Actor {
 
-    private GdxGame game;
+    private final GdxGame game;
     private Runnable callback;
     private boolean isTransitioning = false;
-    private Texture transitionImage;
-    private SpriteBatch spriteBatch;
-    private Sprite transitionSprite;
+    private final Texture transitionImage;
+    private final SpriteBatch spriteBatch;
+    private final Sprite transitionSprite;
     private float transitionX = 0f; // X-axis position for the transition
     private float transitionY = 0f; // Y-axis position for the transition
     private boolean isExit = false;

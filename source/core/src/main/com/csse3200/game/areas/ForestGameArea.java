@@ -128,7 +128,7 @@ public class ForestGameArea extends GameArea {
 
   private final TerrainFactory terrainFactory;
   private final ArrayList<Entity> targetables;
-  private GdxGame game;
+  private final GdxGame game;
 
   private Entity botanist;
   private DialogueBox dialogueBox;

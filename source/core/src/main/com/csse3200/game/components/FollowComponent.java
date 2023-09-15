@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 
 public class FollowComponent extends Component{
-    private Entity followEntity;
+    private final Entity followEntity;
     private float followSpeed;
 
     /**

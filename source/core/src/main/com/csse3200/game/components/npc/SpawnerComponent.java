@@ -12,7 +12,7 @@ import com.csse3200.game.services.ServiceLocator;
 import java.util.ArrayList;
 
 public class SpawnerComponent extends Component {
-    private GameTime timer;
+    private final GameTime timer;
     private long lastTime;
     private int currentWave;
     private boolean isSpawning;

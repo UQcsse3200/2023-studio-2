@@ -15,7 +15,6 @@ import static com.csse3200.game.ui.UIComponent.skin;
 public class DialogComponent extends Component {
     public Stage stage = ServiceLocator.getRenderService().getStage();
     private DialogueBox dialogueBox;
-    private GdxGame game = MainMenuActions.game;
 
     /**
      * Creates a new DialogComponent with the given DialogueBox instance.

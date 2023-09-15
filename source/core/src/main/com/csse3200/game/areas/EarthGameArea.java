@@ -62,37 +62,42 @@ public class EarthGameArea extends GameArea {
             // unnecessary,
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
             "images/extractor.png",
-            "images/broken_extractor.png",
+            //"images/broken_extractor.png", TO BE REMOVED
             "images/refinedExtractor2.png",
             "images/refinedBrokenExtractor.png",
             //"images/box_boy_leaf.png", TO BE REMOVED
             "images/LeftShip.png",
-            "images/wall.png",
-            "images/wall2.png",
-            "images/gate_close.png",
-            "images/gate_open.png",
+            //"images/wall.png", TO BE REMOVED
+            //"images/wall2.png", TO BE REMOVED
+            //"images/gate_close.png", TO BE REMOVED
+            "images/structures/closed_gate.png",
+            //"images/gate_open.png", TO BE REMOVED
+            "images/structures/open_gate.png",
             "images/companion_DOWN.png",
             "images/ghost_1.png",
             //"images/base_enemy.png", TO BE REMOVED
             //"images/Troll.png", TO BE REMOVED
             //"images/rangeEnemy.png", TO BE REMOVED
-            "images/enemy/base_enemy.png",
+            //"images/enemy/base_enemy.png", TO BE REMOVED
+            "images/enemy/baseEnemyMelee.png",
             "images/enemy/Troll.png",
-            "images/enemy/rangeEnemy.png",
+            "images/enemy/rangenemy.png", // Weird spelling, check if asset need to be renamed
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/refinedShip.png",
-            "images/stone_wall.png",
+            //"images/stone_wall.png", TO BE REMOVED
+            "images/structures/stone_wall.png",
             "images/botanist.png",
             "images/fire.png",
             "images/Hole.png",
             "images/spanner.png",
-            "images/extinguisherCoursor.png",
+            "images/extinguisherCursor.png",
             "images/extinguisher.png",
             "images/spannerCursor.png",
             "images/ExtractorminiGameBackground.png",
-            "images/player_blank.png",
-            "images/wrench.png",
+            //"images/player_blank.png", TO BE REMOVED
+            //"images/wrench.png", TO BE REMOVED
+            "images/weapons/wrench.png",
             "images/uparrow.png",
             "images/resourcebar_background.png",
             "images/resourcebar_durasteel.png",
@@ -100,9 +105,11 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
-            "images/TurretOne.png",
-            "images/TurretTwo.png",
-            "images/playerSS_6.png",
+            //"images/TurretOne.png", TO BE REMOVED
+            "images/structures/TurretOne.png",
+            //"images/TurretTwo.png", TO BE REMOVED
+            "images/structures/TurretTwo.png",
+            //"images/playerSS_6.png", TO BE REMOVED
             "images/enemy/Bull.png",
             "images/laboratory.png",
             "images/Potion.png",
@@ -149,7 +156,8 @@ public class EarthGameArea extends GameArea {
             "images/structures/stone_wall.atlas",
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
-            "images/sling_shot.atlas",
+            //"images/sling_shot.atlas", TO BE REMOVED
+            "images/weapons/slingshot.atlas",
             "images/player/player.atlas",
             //"images/player.atlas",
             "images/companionSS.atlas",

@@ -15,6 +15,7 @@ public class AreaEntityConfig {
     public CompanionConfig companion = null;
     public List<EnemyBulletConfig> bullets = new ArrayList<>();
     public List<EnemyConfig> enemies = new ArrayList<>();
+    public List<PortalConfig> portals = new ArrayList<>();
     public List<ExtractorConfig> extractors = new ArrayList<>();
     public List<GateConfig> gates = new ArrayList<>();
     public List<PowerupConfig> powerups = new ArrayList<>();
@@ -35,6 +36,7 @@ public class AreaEntityConfig {
         if (botanist != null) entities.add(botanist);
         if (companion != null) entities.add(companion);
         entities.addAll(bullets);
+        entities.addAll(portals);
         entities.addAll(enemies);
         entities.addAll(extractors);
         entities.addAll(gates);

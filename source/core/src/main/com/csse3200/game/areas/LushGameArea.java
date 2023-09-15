@@ -157,9 +157,8 @@ public class LushGameArea extends GameArea {
      * Spawns a portal that sends the player to a new location
      */
     private void spawnPortal(GridPoint2 position, float x, float y) {
-        StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
-        PlaceableEntity portal = (PlaceableEntity) PortalFactory.createPortal(x, y, player);
-        placementService.placeStructureAt(portal, position, false, false);
+        //Entity portal = PortalFactory.createPortal(player, x , y);
+        //spawnEntityAt(portal, position, false, false);
     }
 
     /**

@@ -43,7 +43,8 @@
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
-    "images/sling_shot.png"
+    "images/sling_shot.png",
+    "map/portal.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -78,7 +79,7 @@
   "playerConfig": {
     "position": {
       "x": 10,
-      "y": 10
+      "y": 40
     },
     "health": 100,
     "baseAttack": 10,
@@ -94,6 +95,24 @@
         "y": 40
       }
     },
+    "portals": [
+      {
+        "teleportX" : 40,
+        "teleportY" : 5,
+        "position": {
+          "x": 30,
+          "y": 40
+        }
+      },
+      {
+        "teleportX" : 16,
+        "teleportY" : 20,
+        "position": {
+          "x": 78,
+          "y": 10
+        }
+      }
+    ],
     "enemies": [
       {
         "health": 20,

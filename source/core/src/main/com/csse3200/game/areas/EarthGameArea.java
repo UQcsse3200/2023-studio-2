@@ -231,9 +231,8 @@ public class EarthGameArea extends GameArea {
      * Spawns a portal that sends the player to a new location
      */
     private void spawnPortal(GridPoint2 position, float x, float y) {
-        StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
-        Entity portal = PortalFactory.createPortal(x, y, player);
-        spawnEntityAt(portal, position, false, false);
+        //Entity portal = PortalFactory.createPortal(player, x , y);
+        //spawnEntityAt(portal, position, false, false);
     }
     public static void removeItemOnMap(Entity entityToRemove) {
         entityToRemove.setEnabled(false);

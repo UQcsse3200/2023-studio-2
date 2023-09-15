@@ -66,6 +66,7 @@ public class MapGameArea extends GameArea{
         spawnShip();
         playerEntity = spawnPlayer();
         spawnCompanion(playerEntity);
+        spawnPortal(playerEntity);
 
         spawnEnemies();
         spawnBotanist();
@@ -110,6 +111,18 @@ public class MapGameArea extends GameArea{
         mapConfig.mapName = mapConfig.mapName == null ? "" : mapConfig.mapName;
         ui.addComponent(new GameAreaDisplay(mapConfig.mapName));
         spawnEntity(ui);
+    }
+
+    /**
+     * Spawns a portal that sends the player to a new location
+     */
+    private void spawnPortal(Entity playerEntity) {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        for (PortalConfig portalConfig : mapConfig.areaEntityConfig.portals) {
+            Entity portal = PortalFactory.createPortal(playerEntity, portalConfig);
+            spawnEntityAt(portal, portalConfig.position, false, false);
+        }
     }
 
     /**

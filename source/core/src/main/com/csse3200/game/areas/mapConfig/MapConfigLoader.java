@@ -14,6 +14,9 @@ public class MapConfigLoader {
     private static final String PLAYER_PATH = "player.json";
     private static final String ENTITIES_PATH = "entities.json";
 
+    private static final String FAIL_MESSAGE = "Failed to load config of type ";
+    private static final String FAIL_ENTITY = "Failed to load entities config";
+
     /**
      * Loads a GameArea from a single .json file containing all game area data.
      * Note this may not have the best error messages
@@ -23,7 +26,7 @@ public class MapConfigLoader {
      */
     public static GameAreaConfig loadMapFile(String filePath) throws InvalidConfigException {
         GameAreaConfig gameArea = FileLoader.readClass(GameAreaConfig.class, filePath, FileLoader.Location.INTERNAL);
-        if (gameArea == null) throw new InvalidConfigException();
+        if (gameArea == null) throw new InvalidConfigException("Failed to load map");
         return gameArea;
     }
 
@@ -54,7 +57,7 @@ public class MapConfigLoader {
         try {
             return loadConfigFile(loadPath, AreaEntityConfig.class);
         } catch (InvalidConfigException exception) {
-            throw new InvalidConfigException("Failed to load entities");
+            throw new InvalidConfigException(FAIL_ENTITY);
         }
     }
 
@@ -68,7 +71,7 @@ public class MapConfigLoader {
      */
     public static <T> T loadConfigFile(String configPath, Class<T> target) throws InvalidConfigException {
         T outClass = FileLoader.readClass(target, configPath, FileLoader.Location.INTERNAL);
-        if (outClass == null) throw new InvalidConfigException("Failed to load config of type " + target);
+        if (outClass == null) throw new InvalidConfigException(FAIL_MESSAGE + target);
         return outClass;
     }
 

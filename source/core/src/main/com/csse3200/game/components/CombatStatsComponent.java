@@ -89,7 +89,7 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       if (isDead() && entity.getEntityType().equals("player")) {
-        entity.getComponent(KeyboardPlayerInputComponent.class).playerDead();
+        entity.getComponent(KeyboardPlayerInputComponent.class).playerDead(); // Stop player from walking
         final Timer timer = new Timer();
         entity.getEvents().trigger("playerDeath"); // Trigger death animation
         TimerTask killPlayer = new TimerTask() {

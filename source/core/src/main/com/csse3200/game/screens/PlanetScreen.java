@@ -115,8 +115,10 @@ public class PlanetScreen extends ScreenAdapter {
      *
      * @param name  The name of the game area.
      */
-    public void setAreaName(String name) {
+    public void setCurrentArea(String name) {
+        this.allGameAreas.get(currentAreaName).dispose();
         this.currentAreaName = name;
+        this.allGameAreas.get(currentAreaName).create();
     }
 
     /**

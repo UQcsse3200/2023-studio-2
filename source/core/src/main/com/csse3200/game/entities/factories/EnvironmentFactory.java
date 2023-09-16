@@ -5,12 +5,12 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
+import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.files.FileLoader;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.StructurePlacementService;
+import com.csse3200.game.entities.TileEntity;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Factory to create all environmental entities on the map
@@ -30,8 +30,8 @@ public class EnvironmentFactory {
      *
      * @param layer The layer in which all the environmental entities will need to be created.
      */
-    public static void createEnvironment(TiledMapTileLayer layer) {
-        StructurePlacementService placementService = ServiceLocator.getStructurePlacementService();
+    public static List<TileEntity> createEnvironment(TiledMapTileLayer layer) {
+        List<TileEntity> environments = new ArrayList<>();
         Entity environment;
 
         for (int y = 0; y < layer.getHeight(); y++) {
@@ -48,12 +48,17 @@ public class EnvironmentFactory {
                         float collisionWidth = scaleSize * (collisionBox.width / tileSize);
                         float collisionHeight = scaleSize * (collisionBox.height / tileSize);
                         environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
+                        TileEntity tileEntity = new TileEntity(tilePosition, environment);
+                        environments.add(tileEntity);
                     } else {
                         environment = ObstacleFactory.createEnvironment();
+                        TileEntity tileEntity = new TileEntity(tilePosition, environment);
+                        environments.add(tileEntity);
+
                     }
-                    //placementService.placeStructureAt(environment, tilePosition, false, false);
                 }
             }
         }
+        return environments;
     }
 }

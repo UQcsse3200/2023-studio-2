@@ -17,6 +17,7 @@ import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.tasks.BossTask;
 import com.csse3200.game.entities.PlaceableEntity;
+import com.csse3200.game.entities.TileEntity;
 import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.components.resources.ResourceDisplay;
@@ -236,38 +237,11 @@ public class EarthGameArea extends GameArea {
      * based on the dimensions defined in the .tsx file
      */
     private void spawnEnvironment() {
-        int tileSize = 16;
-
-        /** The scale used when importing the map into the game. */
-       float scaleSize = 0.5f;
-
-        /** The constant used to improve collision hit boxes. */
-        float xyShift = 0.3f;
-
         TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
-        Entity environment;
+        List<TileEntity> environments = EnvironmentFactory.createEnvironment(layer);
 
-
-        for (int y = 0; y < layer.getHeight(); y++) {
-            for (int x = 0; x < layer.getWidth(); x++) {
-                TiledMapTileLayer.Cell cell = layer.getCell(x, layer.getHeight() - 1 - y);
-                if (cell != null) {
-                    MapObjects objects = cell.getTile().getObjects();
-                    GridPoint2 tilePosition = new GridPoint2(x, layer.getHeight() - 1 - y);
-                    if (objects.getCount() >= 1) {
-                        RectangleMapObject object = (RectangleMapObject) objects.get(0);
-                        Rectangle collisionBox = object.getRectangle();
-                        float collisionX = xyShift - collisionBox.x / tileSize;
-                        float collisionY = xyShift - collisionBox.y / tileSize;
-                        float collisionWidth = scaleSize * (collisionBox.width / tileSize);
-                        float collisionHeight = scaleSize * (collisionBox.height / tileSize);
-                        environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
-                    } else {
-                        environment = ObstacleFactory.createEnvironment();
-                    }
-                    spawnEntityAt(environment, tilePosition, false, false);
-                }
-            }
+        for (TileEntity tileEntity : environments) {
+            spawnEntityAt(tileEntity.getEntity(), tileEntity.getTilePosition(), false, false);
         }
     }
 

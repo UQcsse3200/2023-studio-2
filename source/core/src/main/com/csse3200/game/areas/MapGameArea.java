@@ -16,6 +16,7 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.TileEntity;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.files.UserSettings;
@@ -27,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * A Base Game Area for any level.
@@ -176,29 +178,11 @@ public class MapGameArea extends GameArea{
      * Spawns the game environment
      */
     private void spawnEnvironment() {
-        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
-        Entity environment;
-        for (int y = 0; y < collisionLayer.getHeight(); y++) {
-            for (int x = 0; x < collisionLayer.getWidth(); x++) {
-                TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, collisionLayer.getHeight() - 1 - y);
-                if (cell != null) {
-                    MapObjects objects = cell.getTile().getObjects();
-                    GridPoint2 tilePosition = new GridPoint2(x, collisionLayer.getHeight() - 1 - y);
-                    if (objects.getCount() >= 1) {
-                        RectangleMapObject object = (RectangleMapObject) objects.get(0);
-                        Rectangle collisionBox = object.getRectangle();
-                        float collisionX = 0.5f-collisionBox.x / 16;
-                        float collisionY = 0.5f-collisionBox.y / 16;
-                        float collisionWidth = collisionBox.width / 32;
-                        float collisionHeight = collisionBox.height / 32;
-                        environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
-                    }
-                    else {
-                        environment = ObstacleFactory.createEnvironment();
-                    }
-                    spawnEntityAt(environment, tilePosition, false, false);
-                }
-            }
+        TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
+        List<TileEntity> environments = EnvironmentFactory.createEnvironment(layer);
+
+        for (TileEntity tileEntity : environments) {
+            spawnEntityAt(tileEntity.getEntity(), tileEntity.getTilePosition(), false, false);
         }
     }
 

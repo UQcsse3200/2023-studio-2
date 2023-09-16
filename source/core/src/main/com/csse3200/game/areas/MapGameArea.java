@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -257,6 +258,10 @@ public class MapGameArea extends GameArea{
      */
     private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer(mapConfig.playerConfig);
+        newPlayer.getEvents().addListener("death", () ->
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
+        );
+        ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", newPlayer);
         if (mapConfig.playerConfig != null && mapConfig.playerConfig.position != null) {
             spawnEntityAt(newPlayer, mapConfig.playerConfig.position, true, true);
         } else {

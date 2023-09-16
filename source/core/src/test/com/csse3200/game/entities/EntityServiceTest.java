@@ -77,7 +77,7 @@ class EntityServiceTest {
     Assertions.assertEquals(entityService.getEntitiesByComponent(PerformanceDisplay.class).size(), 0);
 
     List<Entity> entity =  entityService.getEntitiesByComponent(CombatStatsComponent.class);
-    assertEquals(0, entity.size());
+    Assertions.assertEquals(0, entity.size());
 
   }
 // Creates test as in general
@@ -105,7 +105,7 @@ class EntityServiceTest {
     entityService.register(entityB);
 
     List<Entity> test =  entityService.getEntitiesByComponent(componentA.getClass());
-    assertEquals(2, test.size());
+    Assertions.assertEquals(2, test.size());
 
   }
 

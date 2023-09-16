@@ -2,6 +2,7 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
@@ -28,7 +29,7 @@ public class FOVComponentTest {
         fovComponent.entity.setPosition(new Vector2(0.0f, 0.0f));
 
         // Test if the enemy is within FOV
-        assertTrue(fovComponent.enemyIsInFOV(mockEnemy));
+        Assertions.assertTrue(fovComponent.enemyIsInFOV(mockEnemy));
     }
 
     @Test

@@ -48,7 +48,7 @@ public class PlanetScreen extends ScreenAdapter {
     private String nextPlanetName;
 
     private Entity player;
-    private MapGameArea gameArea; //TODO: Extend with new MapArea
+    private GameArea gameArea; //TODO: Extend with new MapArea
 
     /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -98,7 +98,7 @@ public class PlanetScreen extends ScreenAdapter {
         this.gameArea.create();
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
-        this.player = MapGameArea.getPlayer();
+        this.player = this.gameArea.getPlayer();
     }
 
     /**
@@ -124,7 +124,7 @@ public class PlanetScreen extends ScreenAdapter {
         } else {
             // TODO: Extend
             // Only one planet game area atm, needs to be extended for further planets
-            this.gameArea = new MapGameArea("configs/lushLevelConfig.json", terrainFactory, game);
+            this.gameArea = new MapGameArea("levels/lush/main-area", terrainFactory, game);
             this.nextPlanetName = "Earth";
         }
     }

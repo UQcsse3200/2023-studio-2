@@ -157,4 +157,8 @@ public abstract class GameArea implements Disposable {
     spawnEntity(entity);
   }
  public Entity getCompanion(){return companion;}
+
+  public static Entity getPlayer() {
+    return player;
+  }
 }

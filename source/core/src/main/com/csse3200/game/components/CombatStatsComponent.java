@@ -29,6 +29,7 @@ public class CombatStatsComponent extends Component {
   private Boolean isImmune;
   private int lives;
 
+
   /**
    * Initializes a CombatStatsComponent with specified attributes.
    *
@@ -89,11 +90,12 @@ public class CombatStatsComponent extends Component {
     if (entity != null) {
       if (isDead() && entity.getEntityType().equals("player")) {
         entity.getComponent(KeyboardPlayerInputComponent.class).playerDead();
-        entity.getEvents().trigger("playerDeath");
         final Timer timer = new Timer();
+        entity.getEvents().trigger("playerDeath"); // Trigger death animation
         TimerTask killPlayer = new TimerTask() {
           @Override
           public void run() {
+            entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn
             entity.getEvents().trigger("death");
             timer.cancel();
             timer.purge();

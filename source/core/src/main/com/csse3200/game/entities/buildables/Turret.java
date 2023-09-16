@@ -29,8 +29,6 @@ public class Turret extends PlaceableEntity{
 
     private long start = System.currentTimeMillis(); // start time
 
-    private static TurretConfigs turretConfigs;
-
     TurretType type; // turret type
     public int currentAmmo; // current ammo
 
@@ -45,7 +43,7 @@ public class Turret extends PlaceableEntity{
      *               (used to get position and rotation)
      */
     public Turret(TurretType type, Entity player) {
-        this(turretConfigs.GetTurretConfig(type)); // create turret with config file
+        this(FileLoader.readClass(TurretConfigs.class, "configs/turrets.json").GetTurretConfig(type)); // create turret with config file
     }
 
     /**
@@ -54,8 +52,6 @@ public class Turret extends PlaceableEntity{
      */
     public Turret(TurretConfig turretConfig) {
         super();
-
-        turretConfigs = FileLoader.readClass(TurretConfigs.class, "configs/turrets.json");
 
         maxAmmo = turretConfig.maxAmmo; // set max ammo
         currentAmmo = maxAmmo;

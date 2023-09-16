@@ -1,20 +1,26 @@
 package com.csse3200.game.entities.buildables;
 
-import com.csse3200.game.components.resources.Resource;
+import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.entities.configs.TurretConfig;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.physics.PhysicsEngine;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.BeforeAll;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class TurretTest {
 
     private Turret turret;
@@ -22,16 +28,30 @@ public class TurretTest {
     @Mock
     ResourceService resourceService;
 
-    @Before
-    public void setUp() {
-        ServiceLocator.registerResourceService(resourceService);
+    @Mock
+    PhysicsService physicsService;
 
+    @Mock
+    RenderService renderService;
+
+    @BeforeEach
+    public void setUp() {
         TurretConfig turretConfig = new TurretConfig();
         turretConfig.maxAmmo = 10;
+
+        resourceService = mock(ResourceService.class);
+        when(resourceService.getAsset(turretConfig.spritePath, Texture.class)).thenReturn(null);
+        ServiceLocator.registerResourceService(resourceService);
+
+        physicsService = mock(PhysicsService.class);
+        when(physicsService.getPhysics()).thenReturn(new PhysicsEngine());
+        ServiceLocator.registerPhysicsService(physicsService);
+
+        renderService = mock(RenderService.class);
+        ServiceLocator.registerRenderService(renderService);
+
         turret = new Turret(turretConfig);
     }
-
-
 
     @Test
     public void testRefillAmmo() {

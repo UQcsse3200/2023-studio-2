@@ -5,9 +5,7 @@
 package com.csse3200.game.ui;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.services.ServiceLocator;
 
 import static com.csse3200.game.ui.UIComponent.skin;

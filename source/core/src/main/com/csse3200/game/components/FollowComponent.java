@@ -39,7 +39,7 @@ public class FollowComponent extends Component{
     /**
      * Update the entity following the followEntity.
      * Check if it exists, and if it does, apply our saved speed movement towards/away from that entity
-     *
+     * <p>
      * Firstly, get the 'moving' property from the CompanionActions
      * If the moving property is true, don't suck in.
      * If the moving property is false, then suck in.

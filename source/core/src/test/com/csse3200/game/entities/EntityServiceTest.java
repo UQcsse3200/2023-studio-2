@@ -14,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
-import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.*;
 
 

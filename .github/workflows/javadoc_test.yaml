@@ -1,10 +1,10 @@
-name: Publish Javadoc to web
+name: Build Javadoc
 
 on: [push, pull_request]
 
 # Should only build javadocs - not publish to pages
 jobs:
-  build_and_publish_jdoc:
+  build_jdoc:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3 # Checkout repo to remote machine

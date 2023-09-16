@@ -83,8 +83,6 @@ public class GdxGame extends Game {
         return new MainMenuScreen(this);
       case GAME_STORY:
         return new StoryScreen(this);
-      case MAIN_GAME:
-        return new MainGameScreen(this);
       case SETTINGS:
         return new SettingsScreen(this);
       case SPACE_MAP:
@@ -113,7 +111,9 @@ public class GdxGame extends Game {
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME,  GAME_STORY, PLAYER_DEATH,COMPANION_DEATH, NAVIGATION_SCREEN ,INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIALL_SCREEN
+
+    MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME,
+    GAME_STORY, PLAYER_DEATH,COMPANION_DEATH, NAVIGATION_SCREEN ,INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIALL_SCREEN
 
   }
   /**

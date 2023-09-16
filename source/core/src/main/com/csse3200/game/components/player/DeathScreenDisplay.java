@@ -46,6 +46,8 @@ public class DeathScreenDisplay extends UIComponent {
 
         // Display game title image
         Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/deathscreen.png", Texture.class));
+
+        // Resize to fit window
         titleImage.setWidth(Gdx.graphics.getWidth());
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);
@@ -73,13 +75,19 @@ public class DeathScreenDisplay extends UIComponent {
 
         // Arrange UI elements in a table layout
         tableImage.add(titleImage);
-        tableButtons.add(respawnBtn).padBottom(50f);
+        tableButtons.add(respawnBtn).padBottom(Gdx.graphics.getHeight() * 0.05f);
         tableButtons.row();
-        tableButtons.add(exitBtn).padBottom(300f);
+        tableButtons.add(exitBtn).padBottom(Gdx.graphics.getHeight() * 0.3f);
 
         stage.addActor(titleImage);
         stage.addActor(tableImage);
         stage.addActor(tableButtons);
+    }
+
+    public void resize() {
+        tableImage.clear();
+        tableButtons.clear();
+        addActors();
     }
 
     @Override

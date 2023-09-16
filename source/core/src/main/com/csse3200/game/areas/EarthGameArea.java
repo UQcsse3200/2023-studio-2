@@ -60,37 +60,29 @@ public class EarthGameArea extends GameArea {
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
             "images/extractor.png",
-            "images/broken_extractor.png",
             "images/refinedExtractor2.png",
             "images/refinedBrokenExtractor.png",
-            "images/box_boy_leaf.png",
             "images/LeftShip.png",
-            "images/wall.png",
-            "images/wall2.png",
-            "images/gate_close.png",
-            "images/gate_open.png",
+            "images/structures/closed_gate.png",
+            "images/structures/open_gate.png",
             "images/companion_DOWN.png",
             "images/ghost_1.png",
-            "images/base_enemy.png",
-            "images/Troll.png",
-            "images/rangeEnemy.png",
-            "images/enemy/base_enemy.png",
+            "images/enemy/baseEnemyMelee.png",
             "images/enemy/Troll.png",
-            "images/enemy/rangeEnemy.png",
+            "images/enemy/rangenemy.png", // Weird spelling, check if asset need to be renamed
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/refinedShip.png",
-            "images/stone_wall.png",
+            "images/structures/stone_wall.png",
             "images/botanist.png",
             "images/fire.png",
             "images/Hole.png",
             "images/spanner.png",
-            "images/extinguisherCoursor.png",
+            "images/extinguisherCursor.png",
             "images/extinguisher.png",
             "images/spannerCursor.png",
             "images/ExtractorminiGameBackground.png",
-            "images/player_blank.png",
-            "images/wrench.png",
+            "images/weapons/wrench.png",
             "images/uparrow.png",
             "images/resourcebar_background.png",
             "images/resourcebar_durasteel.png",
@@ -98,9 +90,8 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
-            "images/TurretOne.png",
-            "images/TurretTwo.png",
-            "images/playerSS_6.png",
+            "images/structures/TurretOne.png",
+            "images/structures/TurretTwo.png",
             "images/enemy/Bull.png",
             "images/laboratory.png",
             "images/Potion.png",
@@ -112,8 +103,6 @@ public class EarthGameArea extends GameArea {
             "images/upgradetree/hammer2.png",
             "images/upgradetree/stick.png",
             "images/upgradetree/exit.png",
-            "images/player/player.png",
-            "images/player.png",
             "images/deathpotion.png",
             "images/potion2.png",
             "images/potion3.png","images/companionSS_1.png","images/companionSS_0.png",
@@ -134,18 +123,21 @@ public class EarthGameArea extends GameArea {
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
-            "images/rangeEnemy.atlas",
+            "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
             "images/enemy/boss_enemy.atlas",
             "images/enemy/base_enemy.atlas",
             "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
+            "images/weapons/wrench.atlas",
+            "images/baseballbat.atlas",
             "images/structures/closed_gate.atlas",
             "images/structures/open_gate.atlas",
             "images/structures/dirt_wall.atlas",
             "images/structures/stone_wall.atlas",
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
+            "images/weapons/slingshot.atlas",
             "images/player/player.atlas",
             "images/companionSS.atlas",
             "images/enemy/bull.atlas",
@@ -154,7 +146,9 @@ public class EarthGameArea extends GameArea {
             "images/botanist.atlas"
     };
 
-    private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
+    private static final String[] earthSounds = {
+            "sounds/Impact4.wav",
+            "sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.wav";
     private static final String[] earthMusic = {backgroundMusic};
 

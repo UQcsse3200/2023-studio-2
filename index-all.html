@@ -214,7 +214,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/ships/ShipUpgradesComponent.html#applyUpgrade(com.csse3200.game.entities.Entity)" class="member-name-link">applyUpgrade(Entity)</a> - Method in class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/ShipUpgradesComponent.html" title="class in com.csse3200.game.components.ships">ShipUpgradesComponent</a></dt>
 <dd>
-<div class="block">Applies the effects of the Powerup to the specified target entity.</div>
+<div class="block">Applies the effects of the Upgrade to the specified target entity,
+ preferably a ship</div>
 </dd>
 <dt><a href="com/csse3200/game/areas/GameArea.html#areaEntities" class="member-name-link">areaEntities</a> - Variable in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></dt>
 <dd>&nbsp;</dd>
@@ -853,7 +854,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Main method for calling all the methods in the class</div>
 </dd>
 <dt><a href="com/csse3200/game/components/ships/ShipActions.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/ShipActions.html" title="class in com.csse3200.game.components.ships">ShipActions</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Initialize animation and physics of the ship</div>
+</dd>
 <dt><a href="com/csse3200/game/components/ships/ShipAnimationController.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/ShipAnimationController.html" title="class in com.csse3200.game.components.ships">ShipAnimationController</a></dt>
 <dd>
 <div class="block">Changes animation based on ship velocity</div>
@@ -3458,7 +3461,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/obstacleMinigame/ObstacleMiniGameActions.html#onReturnPlanet()" class="member-name-link">onReturnPlanet()</a> - Method in class com.csse3200.game.components.obstacleMinigame.<a href="com/csse3200/game/components/obstacleMinigame/ObstacleMiniGameActions.html" title="class in com.csse3200.game.components.obstacleMinigame">ObstacleMiniGameActions</a></dt>
 <dd>
-<div class="block">Swaps to the Main Menu screen.</div>
+<div class="block">Called when exit screen is triggered, display a dialog before switching the screen</div>
 </dd>
 <dt><a href="com/csse3200/game/services/GameState.StateChangeListener.html#onStateChange(java.util.concurrent.ConcurrentHashMap)" class="member-name-link">onStateChange(ConcurrentHashMap&lt;String, Object&gt;)</a> - Method in interface com.csse3200.game.services.<a href="com/csse3200/game/services/GameState.StateChangeListener.html" title="interface in com.csse3200.game.services">GameState.StateChangeListener</a></dt>
 <dd>
@@ -4354,6 +4357,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">set the companion mode to normal</div>
 </dd>
+<dt><a href="com/csse3200/game/screens/PlanetScreen.html#setCurrentArea(java.lang.String)" class="member-name-link">setCurrentArea(String)</a> - Method in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/PlanetScreen.html" title="class in com.csse3200.game.screens">PlanetScreen</a></dt>
+<dd>
+<div class="block">Sets the current game area the player is on.</div>
+</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsUtils.html#setCustomCollider(com.csse3200.game.entities.Entity,float,float,float,float)" class="member-name-link">setCustomCollider(Entity, float, float, float, float)</a> - Static method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsUtils.html" title="class in com.csse3200.game.physics">PhysicsUtils</a></dt>
 <dd>
 <div class="block">Modifies the collider of an entity to be a rectangle of a specified size with the corner
@@ -4651,7 +4658,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Action component for interacting with the player.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/ships/ShipActions.html#%3Cinit%3E(int,int,int)" class="member-name-link">ShipActions(int, int, int)</a> - Constructor for class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/ShipActions.html" title="class in com.csse3200.game.components.ships">ShipActions</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Initialize the health, fuel and acceleration of the ship</div>
+</dd>
 <dt><a href="com/csse3200/game/components/ships/ShipAnimationController.html" class="type-name-link" title="class in com.csse3200.game.components.ships">ShipAnimationController</a> - Class in <a href="com/csse3200/game/components/ships/package-summary.html">com.csse3200.game.components.ships</a></dt>
 <dd>
 <div class="block">This class listens to events relevant to a ship's state and plays the animation
@@ -4675,7 +4684,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ships/ShipUpgradesComponent.html" class="type-name-link" title="class in com.csse3200.game.components.ships">ShipUpgradesComponent</a> - Class in <a href="com/csse3200/game/components/ships/package-summary.html">com.csse3200.game.components.ships</a></dt>
 <dd>
-<div class="block">Represents a power-up component within the game.</div>
+<div class="block">Represents the upgrades for ship</div>
 </dd>
 <dt><a href="com/csse3200/game/components/ships/ShipUpgradesComponent.html#%3Cinit%3E(com.csse3200.game.components.ships.ShipUpgradesType,short)" class="member-name-link">ShipUpgradesComponent(ShipUpgradesType, short)</a> - Constructor for class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/ShipUpgradesComponent.html" title="class in com.csse3200.game.components.ships">ShipUpgradesComponent</a></dt>
 <dd>
@@ -4690,7 +4699,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/factories/ShipUpgradesFactory.html#%3Cinit%3E()" class="member-name-link">ShipUpgradesFactory()</a> - Constructor for class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/ShipUpgradesFactory.html" title="class in com.csse3200.game.entities.factories">ShipUpgradesFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ships/ShipUpgradesType.html" class="type-name-link" title="enum class in com.csse3200.game.components.ships">ShipUpgradesType</a> - Enum Class in <a href="com/csse3200/game/components/ships/package-summary.html">com.csse3200.game.components.ships</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">contains types of upgrades for ships</div>
+</dd>
 <dt><a href="com/csse3200/game/components/tasks/ShootTask.html" class="type-name-link" title="class in com.csse3200.game.components.tasks">ShootTask</a> - Class in <a href="com/csse3200/game/components/tasks/package-summary.html">com.csse3200.game.components.tasks</a></dt>
 <dd>
 <div class="block">Shoots a projectile at a target in game.</div>
@@ -5482,7 +5493,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/settingsmenu/SettingsMenuDisplay.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.settingsmenu.<a href="com/csse3200/game/components/settingsmenu/SettingsMenuDisplay.html" title="class in com.csse3200.game.components.settingsmenu">SettingsMenuDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/ships/ShipActions.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.ships.<a href="com/csse3200/game/components/ships/ShipActions.html" title="class in com.csse3200.game.components.ships">ShipActions</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Called each render call.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/structures/StructureDestroyComponent.html#update()" class="member-name-link">update()</a> - Method in class com.csse3200.game.components.structures.<a href="com/csse3200/game/components/structures/StructureDestroyComponent.html" title="class in com.csse3200.game.components.structures">StructureDestroyComponent</a></dt>
 <dd>
 <div class="block">Checks whether the structure should be destroyed.</div>

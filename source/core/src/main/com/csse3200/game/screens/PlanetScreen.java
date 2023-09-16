@@ -47,7 +47,7 @@ public class PlanetScreen extends ScreenAdapter {
     private final String name;
     private String nextPlanetName;
 
-    private static Entity player;
+    private Entity player;
     private MapGameArea gameArea; //TODO: Extend with new MapArea
 
     /** Starting position of the camera */
@@ -117,7 +117,7 @@ public class PlanetScreen extends ScreenAdapter {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
         if ("Earth".equals(name)) {
-            this.gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
+            this.gameArea = new MapGameArea("levels/earth/main-area", terrainFactory, game);
             //this.gameArea = new MapGameArea("configs/lushLevelConfig.json", terrainFactory, game);
             this.nextPlanetName = "Not Earth"; //TODO: Extend
             // Only on game area, needs to be extended to go to other areas

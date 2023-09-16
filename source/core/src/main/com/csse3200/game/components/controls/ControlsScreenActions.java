@@ -33,8 +33,11 @@ public class ControlsScreenActions extends Component {
     /**
      * Action to handle the 'exit' event, returning the game to the main menu.
      */
-    private void onExit() {
+     void onExit() {
         logger.info("Game returned to the main menu");
         game.setScreen(GdxGame.ScreenType.SETTINGS);
+    }
+
+    public void getLogger() {
     }
 }

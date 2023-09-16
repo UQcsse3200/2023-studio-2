@@ -48,7 +48,7 @@ public class PlanetScreen extends ScreenAdapter {
     private String nextPlanetName;
 
     private Entity player;
-    private GameArea gameArea; //TODO: Extend with new MapArea
+    private MapGameArea gameArea; //TODO: Extend with new MapArea
 
     /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -82,6 +82,7 @@ public class PlanetScreen extends ScreenAdapter {
     public PlanetScreen(GdxGame game, String name) {
         this.game = game;
         this.name = name;
+        System.out.println(player);
     }
 
     /**
@@ -96,9 +97,9 @@ public class PlanetScreen extends ScreenAdapter {
 
         setGameArea();
         this.gameArea.create();
+        player = MapGameArea.getPlayer();
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
-        this.player = this.gameArea.getPlayer();
     }
 
     /**

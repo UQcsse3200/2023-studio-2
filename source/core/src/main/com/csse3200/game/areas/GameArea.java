@@ -27,7 +27,7 @@ public abstract class GameArea implements Disposable {
   protected static TerrainComponent terrain;
   protected Map<GridPoint2, Entity> areaEntities;
   protected Entity companion;
-  protected Entity player;
+  protected static Entity player;
   protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;
   protected ArrayList<Entity> targetables;
@@ -35,10 +35,6 @@ public abstract class GameArea implements Disposable {
   public GameArea() {
     areaEntities = new HashMap<>();
     this.targetables = new ArrayList<>();
-  }
-
-  public Entity getPlayer() {
-    return player;
   }
 
   /** Create the game area in the world. */

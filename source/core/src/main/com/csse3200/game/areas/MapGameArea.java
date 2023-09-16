@@ -38,7 +38,6 @@ public class MapGameArea extends GameArea{
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
-    private Entity playerEntity;
     private boolean validLoad = true;
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
@@ -50,6 +49,15 @@ public class MapGameArea extends GameArea{
         }
         this.game = game;
         this.terrainFactory = terrainFactory;
+    }
+
+    public static float getSpeedMult() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+        Object speedMult = cell.getTile().getProperties().get("speedMult");
+
+        return speedMult != null ? (float)speedMult : 1f;
     }
 
     /**
@@ -74,19 +82,14 @@ public class MapGameArea extends GameArea{
         spawnUpgradeBench();
         spawnExtractors();
         spawnShip();
-        playerEntity = spawnPlayer();
-        spawnCompanion(playerEntity);
-        spawnPortal(playerEntity);
+        player = spawnPlayer();
+        spawnCompanion(player);
+        spawnPortal(player);
 
         spawnEnemies();
         spawnBotanist();
 
         playMusic();
-    }
-
-    //TODO: is this needed? - ServiceLocator.getEntityService.getPlayer()
-    public Entity getPlayer() {
-        return this.playerEntity;
     }
 
     /**
@@ -278,6 +281,10 @@ public class MapGameArea extends GameArea{
             spawnEntityAt(newPlayer, pos, true, true);
         }
         return newPlayer;
+    }
+
+    public static Entity getPlayer() {
+        return player;
     }
 
     /**

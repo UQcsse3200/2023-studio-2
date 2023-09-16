@@ -1,5 +1,6 @@
 {
   "botanist": {
-    "spritePath": "images/oldman_down_1.png"
+    "health": 50,
+    "healingAbility": 15
   }
 }

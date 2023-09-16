@@ -14,10 +14,11 @@ public class PowerupComponent extends Component {
     private PlayerActions playerActions;
     private long duration;
 
+
     /**
      * Assigns a type and targetLayer value to a given Powerup
      */
-    public PowerupComponent(PowerupType type, short targetLayer) {
+    public PowerupComponent(PowerupType type) {
         this.type = type;
     }
 

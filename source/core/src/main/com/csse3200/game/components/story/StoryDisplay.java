@@ -52,12 +52,12 @@ public class StoryDisplay extends UIComponent {
         table.bottom().right();
 
         storyImages = new ArrayList<>();
-        storyImages.add("images/P1_B.png");
-        storyImages.add("images/P2_B.png");
-        storyImages.add("images/P3_B.png");
-        storyImages.add("images/P4_B.png");
-        storyImages.add("images/P5_B.png");
-        storyImages.add("images/P6_B.png");
+        storyImages.add("images/Story_1.png");
+        storyImages.add("images/Story_2.png");
+        storyImages.add("images/Story_3.png");
+        storyImages.add("images/Story_4.png");
+        storyImages.add("images/Story_5.png");
+        storyImages.add("images/Story_6.png");
         start = 0;
         end = 6;
 

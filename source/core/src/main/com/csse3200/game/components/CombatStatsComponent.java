@@ -5,6 +5,9 @@
  */
 package com.csse3200.game.components;
 
+import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,14 +15,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
-<<<<<<< HEAD
- * CombatStatsComponent handles combat-related attributes for entities, including health, attack,
- * attack multiplier, and immunity.
-=======
  * Component used to store information related to combat such as health, attack, etc. Any entities
  * which engage in combat should have an instance of this class registered. This class can be
  * extended for more specific combat needs.
->>>>>>> 52e926db9f1112ecb09f187635cc18832766d3df
  */
 public class CombatStatsComponent extends Component {
 
@@ -29,6 +27,8 @@ public class CombatStatsComponent extends Component {
   private final int maxHealth;
   private int attackMultiplier;
   private Boolean isImmune;
+  private int lives;
+
 
   /**
    * Initializes a CombatStatsComponent with specified attributes.
@@ -45,6 +45,7 @@ public class CombatStatsComponent extends Component {
     this.setAttackMultiplier(attackMultiplier);
     this.setImmunity(isImmune);
   }
+
   /**
    * Returns true if the entity's health is 0 or less, indicating that it's dead; otherwise, returns false.
    *
@@ -88,10 +89,13 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       if (isDead() && entity.getEntityType().equals("player")) {
+        entity.getComponent(KeyboardPlayerInputComponent.class).playerDead(); // Stop player from walking
         final Timer timer = new Timer();
+        entity.getEvents().trigger("playerDeath"); // Trigger death animation
         TimerTask killPlayer = new TimerTask() {
           @Override
           public void run() {
+            entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn
             entity.getEvents().trigger("death");
             timer.cancel();
             timer.purge();
@@ -109,6 +113,7 @@ public class CombatStatsComponent extends Component {
             }
           };
           timer1.schedule(killCompanion,500);
+
       } else if (isDead() && entity.getEntityType().equals("playerWeapon")) {
         entity.getEvents().trigger("death", 0);
       }
@@ -116,9 +121,6 @@ public class CombatStatsComponent extends Component {
   }
 
   /**
-<<<<<<< HEAD
-   * Adds the specified amount to the entity's health. The amount can be negative.
-=======
    * sets the entity's health to maximum if H-Key is pressed on the keyboard.
    * @param newHealth
    * @param isHKeyPressed
@@ -132,7 +134,6 @@ public class CombatStatsComponent extends Component {
 
   /**
    * Adds to the player's health. The amount added can be negative.
->>>>>>> 52e926db9f1112ecb09f187635cc18832766d3df
    *
    * @param health The health to add.
    */
@@ -216,6 +217,34 @@ public class CombatStatsComponent extends Component {
    */
   public int getAttack() {
     return getBaseAttack() * getAttackMultiplier();
+  }
+
+  /**
+   * Sets the number of lives player has left.
+   * @param lives
+   */
+  public void setLives(int lives) {
+    this.lives = lives;
+  }
+
+  /**
+   * Subtracts one life from player lives.
+   */
+  public void minusLife() {
+    this.lives -= 1;
+  }
+  /**
+   * Adds one life to player lives.
+   */
+  public void addLife() {
+    this.lives += 1;
+  }
+  /**
+   * returns number of lives player has left.
+   * @return number of lives
+   */
+  public int getLives() {
+    return this.lives;
   }
 
   /**

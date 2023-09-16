@@ -8,33 +8,25 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
+import com.csse3200.game.areas.mapConfig.InvalidConfigException;
+import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.*;
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.entities.factories.*;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.csse3200.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * A Base Game Area for any level.
@@ -42,15 +34,20 @@ import java.util.stream.Collectors;
  */
 public class MapGameArea extends GameArea{
 
-    private final GameAreaConfig mapConfig;
+    private GameAreaConfig mapConfig = null;
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
     private Entity playerEntity;
+    private boolean validLoad = true;
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
-        //TODO: Check if this causes an error from diff run locations
-        mapConfig = FileLoader.readClass(GameAreaConfig.class, configPath, FileLoader.Location.INTERNAL);
+        try {
+            mapConfig = MapConfigLoader.loadMapDirectory(configPath);
+        } catch (InvalidConfigException exception) {
+            logger.error("FAILED TO LOAD GAME - RETURNING TO MAIN MENU", exception);
+            validLoad = false;
+        }
         this.game = game;
         this.terrainFactory = terrainFactory;
     }
@@ -60,6 +57,11 @@ public class MapGameArea extends GameArea{
      */
     @Override
     public void create() {
+        if (!validLoad) {
+            logger.error("FAILED TO LOAD GAME - RETURNING TO MAIN MENU");
+            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+            return;
+        }
         loadAssets();
         displayUI();
 
@@ -81,7 +83,7 @@ public class MapGameArea extends GameArea{
         playMusic();
     }
 
-    //TODO: is this needed?
+    //TODO: is this needed? - ServiceLocator.getEntityService.getPlayer()
     public Entity getPlayer() {
         return this.playerEntity;
     }
@@ -93,7 +95,7 @@ public class MapGameArea extends GameArea{
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
-        resourceService.loadDynamicAssets(mapConfig.getTextures());
+        resourceService.loadDynamicAssets(mapConfig.getEntityTextures());
         if (mapConfig.texturePaths != null)
             resourceService.loadTextures(mapConfig.texturePaths);
         if (mapConfig.textureAtlasPaths != null)
@@ -254,9 +256,9 @@ public class MapGameArea extends GameArea{
      * @return The player entity created
      */
     private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer(); //TODO: Fix config for player?
-        if (mapConfig.playerSpawn != null) {
-            spawnEntityAt(newPlayer, mapConfig.playerSpawn, true, true);
+        Entity newPlayer = PlayerFactory.createPlayer(mapConfig.playerConfig);
+        if (mapConfig.playerConfig != null && mapConfig.playerConfig.position != null) {
+            spawnEntityAt(newPlayer, mapConfig.playerConfig.position, true, true);
         } else {
             //If no position specified spawn in middle of map.
             GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);

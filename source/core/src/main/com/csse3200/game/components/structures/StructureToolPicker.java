@@ -1,11 +1,13 @@
 package com.csse3200.game.components.structures;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -78,10 +80,26 @@ public class StructureToolPicker extends UIComponent {
                 continue;
             }
             var button = new Button(skin);
+            var buttonTable = new Table();
+            buttonTable.center();
+            var nameLabel = new Label(optionValue.name, skin);
+            nameLabel.setColor(Color.BLACK);
             var image = new Image(ServiceLocator.getResourceService().getAsset(optionValue.texture, Texture.class));
 
+            buttonTable.add(image).size(30,30);
+            buttonTable.add(nameLabel).padLeft(10);
+
+            for (var cost : optionValue.cost) {
+                var costLabel = new Label(String.format("%s - %d", cost.key, cost.value), skin);
+                costLabel.setColor(Color.BLACK);
+                costLabel.setFontScale(0.9f);
+
+                buttonTable.row().colspan(2);
+                buttonTable.add(costLabel).padTop(10).center();
+            }
+
             image.setScaling(Scaling.fill);
-            button.add(image);
+            button.add(buttonTable);
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -89,9 +107,9 @@ public class StructureToolPicker extends UIComponent {
                     hide();
                 }
             });
-            button.setSize(10, 10);
             buttons.add(button);
-            table.add(button).size(50, 50).pad(5);
+            table.row().padTop(10);
+            table.add(button).width(250);
         }
 
         stage.addActor(table);

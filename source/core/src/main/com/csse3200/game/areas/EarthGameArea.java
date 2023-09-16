@@ -13,7 +13,9 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.PotionComponent;
 import com.csse3200.game.components.PotionType;
+import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.components.tasks.BossTask;
 import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.components.resources.ResourceDisplay;
@@ -47,62 +49,60 @@ public class EarthGameArea extends GameArea {
     private static final int NUM_MELEE_PTE = 2;
     private static final int NUM_MELEE_DTE = 2;
     private static final int NUM_RANGE_PTE = 2;
-    private static final int NUM_POWERUPS = 3;
+    private static final int NUM_POWERUPS = 5;
     private static final int NUM_Laboratory = 4;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(9, 9);
-    /*private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);*/
+    private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(35, 2);
+    private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
     private static final float WALL_WIDTH = 0.1f;
-    private static final float ASTEROID_SIZE = 0.9f;
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
+            "images/extractor.png",
             "images/refinedExtractor2.png",
             "images/refinedBrokenExtractor.png",
-            "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-            "images/box_boy_leaf.png",
             "images/LeftShip.png",
-            "images/wall.png",
-            "images/wall2.png",
-            "images/gate_close.png",
-            "images/gate_open.png",
-            "images/ghost_king.png",
+            "images/structures/closed_gate.png",
+            "images/structures/open_gate.png",
             "images/companion_DOWN.png",
             "images/ghost_1.png",
-            "images/base_enemy.png",
-            "images/Troll.png",
-            "images/rangeEnemy.png",
-            "images/stone_wall.png",
+            "images/enemy/baseEnemyMelee.png",
+            "images/enemy/Troll.png",
+            "images/enemy/rangenemy.png", // Weird spelling, check if asset need to be renamed
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/refinedShip.png",
-            "images/stone_wall.png",
-            "images/oldman_down_1.png",
-            "images/player_blank.png",
-            "images/wrench.png",
-            "images/durastell.png",
-            "images/nebulite.png",
+            "images/structures/stone_wall.png",
+            "images/botanist.png",
+            "images/fire.png",
+            "images/Hole.png",
+            "images/spanner.png",
+            "images/extinguisherCursor.png",
+            "images/extinguisher.png",
+            "images/spannerCursor.png",
+            "images/ExtractorminiGameBackground.png",
+            "images/weapons/wrench.png",
             "images/uparrow.png",
-            "images/solsite.png",
             "images/resourcebar_background.png",
             "images/resourcebar_durasteel.png",
             "images/resourcebar_foreground.png",
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
-            "images/TurretOne.png",
-            "images/TurretTwo.png",
-            "images/playerSS_6.png",
+            "images/structures/TurretOne.png",
+            "images/structures/TurretTwo.png",
+            "images/enemy/Bull.png",
             "images/laboratory.png",
             "images/Potion.png",
             "images/upgradetree/exit.png",
             "images/upgradetree/background.png",
             "images/upgradetree/upgradebench.png",
+            "images/Spawner.png",
             "images/upgradetree/hammer1.png",
             "images/upgradetree/hammer2.png",
             "images/upgradetree/stick.png",
             "images/upgradetree/exit.png",
-            "images/player.png",
             "images/deathpotion.png",
             "images/potion2.png",
             "images/potion3.png","images/companionSS_1.png","images/companionSS_0.png",
@@ -118,20 +118,18 @@ public class EarthGameArea extends GameArea {
             "images/solstite.png",
             "images/durasteel.png",
             "images/f_button.png",
-            "images/ExtractorAnimation.png"
+            "images/ExtractorAnimation.png",
+            "images/player/player.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
-            "images/ghost.atlas",
-            "images/ghostKing.atlas",
-            "images/base_enemy.atlas",
-            "images/troll_enemy.atlas",
-            "images/rangeEnemy.atlas",
+            "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
-            "images/boss_enemy.atlas",
+            "images/enemy/boss_enemy.atlas",
+            "images/enemy/base_enemy.atlas",
+            "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
-            "images/playerSS.atlas",
-            "images/wrench.atlas",
+            "images/weapons/wrench.atlas",
             "images/baseballbat.atlas",
             "images/structures/closed_gate.atlas",
             "images/structures/open_gate.atlas",
@@ -139,13 +137,18 @@ public class EarthGameArea extends GameArea {
             "images/structures/stone_wall.atlas",
             "images/botanist.atlas",
             "images/comp_spritesheet.atlas",
-            "images/sling_shot.atlas",
-            "images/player.atlas",
+            "images/weapons/slingshot.atlas",
+            "images/player/player.atlas",
             "images/companionSS.atlas",
-            "images/ExtractorAnimation.atlas"
-
+            "images/enemy/bull.atlas",
+            "images/enemy/Night.atlas",
+            "images/ExtractorAnimation.atlas",
+            "images/botanist.atlas"
     };
-    private static final String[] earthSounds = {"sounds/Impact4.wav, sounds/Impact.ogg, sounds/Impact4.ogg"};
+
+    private static final String[] earthSounds = {
+            "sounds/Impact4.wav",
+            "sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.wav";
     private static final String[] earthMusic = {backgroundMusic};
 
@@ -188,14 +191,14 @@ public class EarthGameArea extends GameArea {
         spawnUpgradeBench();
         spawnShip();
         spawnPlatform();
-        player = spawnPlayer();
-        companion = spawnCompanion(player);
+        this.player = spawnPlayer();
+        this.companion = spawnCompanion(player);
         /*spawnTurret();*/
         spawnEnemies();
         spawnBoss();
-        spawnAsteroids();
         spawnBotanist();
         companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
+        spawnSpawner();
         playMusic();
     }
     public static void removeItemOnMap(Entity entityToRemove) {
@@ -249,22 +252,18 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(botanist, spawnPosition, true, false);
     }
 
-    private void spawnAsteroids() {
-        //Extra Spicy Asteroids
-        GridPoint2 posAs = new GridPoint2(8, 8);
-        spawnEntityAt(
-                ObstacleFactory.createAsteroid(ASTEROID_SIZE, ASTEROID_SIZE), posAs, false, false);
-
-    }
-
     private void spawnUpgradeBench() {
+        // spawns next to ship
+        GridPoint2 spawnPosition = new GridPoint2(
+                7*terrain.getMapBounds(0).sub(3, 1).x/12,
+                2*terrain.getMapBounds(0).sub(1, 1).y/3);
         Entity upgradeBench = StructureFactory.createUpgradeBench();
-        spawnEntityAt(upgradeBench, new GridPoint2(20, 40), true, true);
+        spawnEntityAt(upgradeBench, spawnPosition, false, false);
     }
 
     private void spawnExtractors() {
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) 100);
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) 500);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) 1000);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) 1000);
         ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) 1000);
         ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Nebulite.toString(),  (int) 0);
         ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Durasteel.toString(),  (int) 0);
@@ -320,6 +319,11 @@ public class EarthGameArea extends GameArea {
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
         Entity ship = StructureFactory.createShip(game, null); //Doesn't implement windconditions
         spawnEntityAt(ship, spawnPosition, false, false);
+    }
+
+    private void spawnSpawner() {
+        Entity spawner = StructureFactory.createSpawner(targetables);
+        spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
     }
 
     private void displayUI() {
@@ -380,7 +384,9 @@ public class EarthGameArea extends GameArea {
     private Entity spawnPlayer() {
         //TODO: Think of solution for sharing player between screens (Currently it keeps getting disposed!!)
         this.player = PlayerFactory.createPlayer();
-        this.player.getEvents().addListener("death", () -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH));
+        this.player.getEvents().addListener("death", () ->
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
+        );
         ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", this.player);
         spawnEntityAt(this.player, PLAYER_SPAWN, true, true);
         targetables.add(this.player);
@@ -392,6 +398,9 @@ public class EarthGameArea extends GameArea {
         //calculate the player position
         Vector2 playerPosition = playerPhysics.getBody().getPosition();
         spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
+//        newCompanion.getEvents().addListener("death", () ->
+//                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.COMPANION_DEATH)) // todo: Team 9
+//        );
         targetables.add(newCompanion);
         return newCompanion;
     }
@@ -530,6 +539,7 @@ public class EarthGameArea extends GameArea {
     public Entity getPlayer() {
         return player;
   }
+
   public void setCompanion(Entity Companion){companion=Companion;}
     public Entity getCompanion() {
         return companion;

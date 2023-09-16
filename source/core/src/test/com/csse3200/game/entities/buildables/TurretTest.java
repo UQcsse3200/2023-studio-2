@@ -32,6 +32,7 @@ public class TurretTest {
     }
 
 
+
     public void testCanFire() {
         assertTrue(turret.Canfire());
 
@@ -58,11 +59,6 @@ public class TurretTest {
         turret.refillAmmo(5);
         assertEquals(5, turret.currentAmmo);
     }
-
-
-
-
-
 
 }
 

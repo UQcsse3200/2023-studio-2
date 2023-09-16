@@ -148,7 +148,7 @@ public class NPCFactory {
     botanist.addComponent(new InteractableComponent(entity -> {
       botanist.getComponent(DialogComponent.class).showdialogue("\"Greetings, I am the botanist!\"  \n" +
               "My name is Adam\nI'm here to help you\nunderstand the planet's flora and fauna", "");
-    },7f));
+    },10f));
 
     botanist.scaleHeight(6.1f);
     return botanist;

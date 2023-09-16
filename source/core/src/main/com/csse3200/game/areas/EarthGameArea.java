@@ -384,7 +384,9 @@ public class EarthGameArea extends GameArea {
     private Entity spawnPlayer() {
         //TODO: Think of solution for sharing player between screens (Currently it keeps getting disposed!!)
         this.player = PlayerFactory.createPlayer();
-        this.player.getEvents().addListener("death", () -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH));
+        this.player.getEvents().addListener("death", () ->
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
+        );
         ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", this.player);
         spawnEntityAt(this.player, PLAYER_SPAWN, true, true);
         targetables.add(this.player);
@@ -396,6 +398,9 @@ public class EarthGameArea extends GameArea {
         //calculate the player position
         Vector2 playerPosition = playerPhysics.getBody().getPosition();
         spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
+//        newCompanion.getEvents().addListener("death", () ->
+//                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.COMPANION_DEATH)) // todo: Team 9
+//        );
         targetables.add(newCompanion);
         return newCompanion;
     }

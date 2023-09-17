@@ -139,7 +139,7 @@ public class NPCFactory {
             new Entity()
                     .addComponent(animator)
                     .addComponent(new BotanistAnimationController())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())

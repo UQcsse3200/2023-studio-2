@@ -22,12 +22,6 @@ public class DeathComponent extends Component {
     private Boolean notkilled;
 
     /**
-     * The Death Component holding Physical Interaction Stats, and facilitates listeners for entity death
-     */
-    public DeathComponent() {
-    }
-
-    /**
      * Creates a new listener on an entity to wait for kill condition
      */
     @Override
@@ -76,12 +70,12 @@ public class DeathComponent extends Component {
 
                     Entity powerup = null;
 
-                    if (powerupRandomiser < 7) {                // 7/15 chance of speed boost
+                    if (powerupRandomiser < 5) {                 // 1/3 chance of speed boost
                         powerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
-                    } else if (powerupRandomiser == 14) {        // 1/15 chance of speed boost
+                    } else if (powerupRandomiser == 7) {        // 1/15 chance of speed boost
                         powerup = PowerupFactory.createPowerup(PowerupType.EXTRA_LIFE);
                     }
-                    else {                                       // 7/15 chance of health boost
+                    else if (powerupRandomiser > 9){            // 1/3 chance of health boost
                         powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
                     }
 

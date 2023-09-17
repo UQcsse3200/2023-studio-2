@@ -28,7 +28,7 @@ public class DeathScreenDisplay extends UIComponent {
     private Table tableImage;
     private Table tableButtons;
     private int lives;
-    private static final String[] deathScreenTextures = {"images/deathscreens/deathscreen_0.png", "images/deathscreens/deathscreen_1.png", "images/deathscreens/deathscreen_2.png", "images/deathscreens/deathscreen_3.png"};
+    private static final String[] deathScreenTextures = {"images/deathscreens/deathscreen_0.jpg", "images/deathscreens/deathscreen_1.jpg", "images/deathscreens/deathscreen_2.jpg", "images/deathscreens/deathscreen_3.jpg"};
 
     public DeathScreenDisplay(int lives) {
         this.lives = lives;

@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.PotionComponent;
 import com.csse3200.game.components.PotionType;
 import com.csse3200.game.components.Weapons.WeaponType;
@@ -165,20 +166,22 @@ public class EarthGameArea extends GameArea {
     private Entity companion;
     private Entity laboratory;
     private GdxGame game;
+    private int lives;
 
     /**
      * Initialise this EarthGameArea to use the provided TerrainFactory.
      * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
+     * @param playerLives Number of lives remaining from previous spawn.
      * @requires terrainFactory != null
      */
-    public EarthGameArea(TerrainFactory terrainFactory, GdxGame game) {
+    public EarthGameArea(TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         super();
         this.game = game;
+        this.lives = playerLives;
         this.terrainFactory = terrainFactory;
         this.targetables = new ArrayList<>();
         ServiceLocator.registerGameArea(this);
     }
-
     /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
     @Override
     public void create() {
@@ -390,9 +393,8 @@ public class EarthGameArea extends GameArea {
     private Entity spawnPlayer() {
         //TODO: Think of solution for sharing player between screens (Currently it keeps getting disposed!!)
         this.player = PlayerFactory.createPlayer();
-        this.player.getEvents().addListener("death", () ->
-                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
-        );
+        this.player.getComponent(CombatStatsComponent.class).setLives(lives); // Ensures previous number of lives is maintained.
+        this.player.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", this.player);
         spawnEntityAt(this.player, PLAYER_SPAWN, true, true);
         targetables.add(this.player);
@@ -544,9 +546,32 @@ public class EarthGameArea extends GameArea {
 
     public Entity getPlayer() {
         return player;
-  }
+    }
 
-  public void setCompanion(Entity Companion){companion=Companion;}
+    /**
+     * Triggers the death screen.
+     * @return Death screen, specfic to the number of lives player has remaining.
+     */
+    private boolean initiateDeathScreen() {
+        int lives = getPlayer().getComponent(CombatStatsComponent.class).getLives();
+        switch (lives) {
+            case 0:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_0));
+                return true;
+            case 1:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_1));
+                return true;
+            case 2:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_2));
+                return true;
+            case 3:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_3));
+                return true;
+            default:
+                return false;
+        }
+    }
+    public void setCompanion(Entity Companion){companion=Companion;}
     public Entity getCompanion() {
         return companion;
     }

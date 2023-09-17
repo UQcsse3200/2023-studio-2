@@ -27,7 +27,12 @@ public class DeathScreenDisplay extends UIComponent {
     private static final float Z_INDEX = 2f;
     private Table tableImage;
     private Table tableButtons;
+    private int lives;
+    private static final String[] deathScreenTextures = {"images/deathscreens/deathscreen_0.png", "images/deathscreens/deathscreen_1.png", "images/deathscreens/deathscreen_2.png", "images/deathscreens/deathscreen_3.png"};
 
+    public DeathScreenDisplay(int lives) {
+        this.lives = lives;
+    }
     @Override
     public void create() {
         super.create();
@@ -44,15 +49,15 @@ public class DeathScreenDisplay extends UIComponent {
         tableImage.setFillParent(true);
         tableButtons.setFillParent(true);
 
-        // Display game title image
-        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/deathscreen.png", Texture.class));
+        // Display death screen image
+        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset(deathScreenTextures[lives], Texture.class));
 
         // Resize to fit window
         titleImage.setWidth(Gdx.graphics.getWidth());
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);
 
-        // Create buttons for restart and exit options
+        // Create buttons for respawn and exit options
         TextButton exitBtn = new TextButton("Exit to Main Menu", skin);
         TextButton respawnBtn = new TextButton("Respawn", skin);
 
@@ -68,16 +73,22 @@ public class DeathScreenDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                    logger.debug("Restart button clicked");
-                    entity.getEvents().trigger("restart");
+                    logger.debug("Respawn button clicked");
+                    entity.getEvents().trigger("respawn");
                      }
                 });
 
         // Arrange UI elements in a table layout
         tableImage.add(titleImage);
-        tableButtons.add(respawnBtn).padBottom(Gdx.graphics.getHeight() * 0.05f);
-        tableButtons.row();
-        tableButtons.add(exitBtn).padBottom(Gdx.graphics.getHeight() * 0.3f);
+        if (lives > 0) {
+            tableButtons.add(respawnBtn).padBottom(Gdx.graphics.getHeight() * 0.05f);
+            tableButtons.row();
+            tableButtons.add(exitBtn).padBottom(Gdx.graphics.getHeight() * 0.2f);
+        } else {
+            tableButtons.row();
+            tableButtons.add(exitBtn).padBottom(Gdx.graphics.getHeight() * 0.3f);
+        }
+
 
         stage.addActor(titleImage);
         stage.addActor(tableImage);

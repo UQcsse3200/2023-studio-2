@@ -25,7 +25,7 @@ class EarthGameAreaTest {
         GdxGame gdxGame = mock(GdxGame.class);
         MapLayers mapLayers = mock(MapLayers.class); // Mock MapLayers
 
-        EarthGameArea earthGameArea = new EarthGameArea(terrainFactory, gdxGame);
+        EarthGameArea earthGameArea = new EarthGameArea(terrainFactory, gdxGame, gdxGame.getPlayerLives());
         earthGameArea.terrain = mock(TerrainComponent.class);
         when(earthGameArea.terrain.getMap()).thenReturn(tiledMap);
         when(tiledMap.getLayers()).thenReturn(mapLayers); // Return the mock MapLayers

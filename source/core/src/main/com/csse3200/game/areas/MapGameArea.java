@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
@@ -37,13 +39,21 @@ public class MapGameArea extends GameArea{
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
+    private int playerLives;
     private Entity playerEntity;
 
-    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
+    /**
+     * Creates generic base game.
+     * @param configPath Specific configuration of game area.
+     * @param terrainFactory TerrainFactory used to create the terrain for the GameArea.
+     * @param playerLives Number of lives remaining from previous spawn.
+     */
+    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         //TODO: Check if this causes an error from diff run locations
         mapConfig = FileLoader.readClass(GameAreaConfig.class, configPath, FileLoader.Location.INTERNAL);
         this.game = game;
         this.terrainFactory = terrainFactory;
+        this.playerLives = playerLives;
     }
 
     /**
@@ -246,6 +256,8 @@ public class MapGameArea extends GameArea{
      */
     private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer(mapConfig.playerConfig);
+        newPlayer.getComponent(CombatStatsComponent.class).setLives(playerLives); // Ensures previous number of lives is maintained.
+        newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         if (mapConfig.playerConfig != null && mapConfig.playerConfig.position != null) {
             spawnEntityAt(newPlayer, mapConfig.playerConfig.position, true, true);
         } else {
@@ -341,5 +353,29 @@ public class MapGameArea extends GameArea{
             resourceService.unloadAssets(mapConfig.soundPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.unloadAssets(new String[] {mapConfig.backgroundMusicPath});
+    }
+
+    /**
+     * Triggers the death screen.
+     * @return death screen, specfic to the number of lives player has remaining.
+     */
+    private boolean initiateDeathScreen() {
+        int lives = getPlayer().getComponent(CombatStatsComponent.class).getLives();
+        switch (lives) {
+            case 0:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_0));
+                return true;
+            case 1:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_1));
+                return true;
+            case 2:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_2));
+                return true;
+            case 3:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_3));
+                return true;
+            default:
+                return false;
+        }
     }
 }

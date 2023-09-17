@@ -34,13 +34,6 @@ public class PlayerFactory {
 
   private static DialogueBox dialogueBox;
 
-  private int playerLives = 3;
-  public int getPlayerLives() {
-    return playerLives;
-  }
-  public void setPlayerLives(int lives) {
-    playerLives = lives;
-  }
   private static final PlayerConfig config =
       FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
@@ -93,7 +86,7 @@ public class PlayerFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
             .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())

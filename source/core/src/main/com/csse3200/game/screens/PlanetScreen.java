@@ -94,7 +94,7 @@ public class PlanetScreen extends ScreenAdapter {
         loadAssets();
         createUI();
 
-        setGameArea();
+        setGameArea(game.getPlayerLives());
         this.gameArea.create();
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
@@ -113,17 +113,17 @@ public class PlanetScreen extends ScreenAdapter {
     /**
      * Set the corresponding planets game area based on its name.
      */
-    private void setGameArea() {
+    private void setGameArea(int lives) {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
         if ("Earth".equals(name)) {
-            this.gameArea = new EarthGameArea(terrainFactory, game);
+            this.gameArea = new EarthGameArea(terrainFactory, game, lives);
             this.nextPlanetName = "Not Earth"; //TODO: Extend
             // Only on game area, needs to be extended to go to other areas
         } else {
             // TODO: Extend
             // Only one planet game area atm, needs to be extended for further planets
-            this.gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game);
+            this.gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game, lives);
             this.nextPlanetName = "Earth";
         }
     }

@@ -28,6 +28,7 @@ public class CombatStatsComponent extends Component {
   private int attackMultiplier;
   private Boolean isImmune;
   private int lives;
+  private boolean dead = false;
 
 
   /**
@@ -46,6 +47,23 @@ public class CombatStatsComponent extends Component {
     this.setImmunity(isImmune);
   }
 
+  /**
+   * Initializes a CombatStatsComponent for a player with specified attributes.
+   *
+   * @param health           The initial health of the entity.
+   * @param baseAttack       The base attack damage of the entity.
+   * @param attackMultiplier The attack multiplier of the entity.
+   * @param isImmune         A flag indicating whether the entity is immune to attacks.
+   * @param lives            Number of lives the player has remaining.
+   */
+  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune, int lives) {
+    this.maxHealth = health;
+    this.setHealth(health);
+    this.setBaseAttack(baseAttack);
+    this.setAttackMultiplier(attackMultiplier);
+    this.setImmunity(isImmune);
+    this.lives = lives;
+  }
   /**
    * Returns true if the entity's health is 0 or less, indicating that it's dead; otherwise, returns false.
    *
@@ -88,20 +106,22 @@ public class CombatStatsComponent extends Component {
       entity.getEvents().trigger("updateHealth", this.health);
     }
     if (entity != null) {
-      if (isDead() && entity.getEntityType().equals("player")) {
+      if (isDead() && entity.getEntityType().equals("player") && dead == false) {
+        dead = true;
         entity.getComponent(KeyboardPlayerInputComponent.class).playerDead(); // Stop player from walking
+        entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn
         final Timer timer = new Timer();
         entity.getEvents().trigger("playerDeath"); // Trigger death animation
         TimerTask killPlayer = new TimerTask() {
           @Override
           public void run() {
-            entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn
-            entity.getEvents().trigger("death");
+            minusLife();
+            entity.getEvents().trigger("deathScreen");
             timer.cancel();
             timer.purge();
           }
         };
-        timer.schedule(killPlayer, 500);
+        timer.schedule(killPlayer, 1000); // Animation lasts for 1 second before death screen is triggered
       } else if (isDead() && entity.getEntityType().equals("companion")) {
           final Timer timer1 = new Timer();
           TimerTask killCompanion = new TimerTask() {
@@ -225,6 +245,7 @@ public class CombatStatsComponent extends Component {
    */
   public void setLives(int lives) {
     this.lives = lives;
+    entity.getEvents().trigger("updateLives", getLives());
   }
 
   /**
@@ -233,12 +254,14 @@ public class CombatStatsComponent extends Component {
   public void minusLife() {
     this.lives -= 1;
   }
+
   /**
    * Adds one life to player lives.
    */
   public void addLife() {
     this.lives += 1;
   }
+
   /**
    * returns number of lives player has left.
    * @return number of lives

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Timer;
 
-import static com.csse3200.game.GdxGame.ScreenType.PLAYER_DEATH;
+import static com.csse3200.game.GdxGame.ScreenType.PLAYER_DEATH_3;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 /**
@@ -28,7 +28,7 @@ class PlayerDeathScreenTest {
         java.util.TimerTask testScreen = new java.util.TimerTask() {
             @Override
             public void run() {
-                assertEquals(PLAYER_DEATH, game.getScreenType());
+                assertEquals(PLAYER_DEATH_3, game.getScreenType());
                 timer.cancel();
                 timer.purge();
             }

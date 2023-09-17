@@ -156,7 +156,7 @@ public class PlayerStatsDisplay extends UIComponent {
     maxLivesAlert = new Table();
     maxLivesAlert.top().left();
     maxLivesAlert.setFillParent(true);
-    maxLivesLabel = new Label("Max Player Lives Reached (3)", skin, "small");
+    maxLivesLabel = new Label("Max Player Lives Reached", skin, "small");
 
     maxLivesAlert.add(maxLivesLabel).padTop(250).padLeft(5f);
     //launch the table onto the screen

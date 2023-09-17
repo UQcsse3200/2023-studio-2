@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class DeathScreenActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(DeathScreenActions.class);
 
-    public static GdxGame game;
+    private GdxGame game;
     private int lives;
     private static final PlayerConfig config =
             FileLoader.readClass(PlayerConfig.class, "configs/player.json");

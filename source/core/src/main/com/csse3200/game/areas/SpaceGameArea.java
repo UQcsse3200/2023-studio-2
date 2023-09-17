@@ -1,6 +1,5 @@
 package com.csse3200.game.areas;
 import com.badlogic.gdx.audio.Music;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.files.UserSettings;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -17,8 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.csse3200.game.components.ships.DistanceDisplay;
-import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 
 /**

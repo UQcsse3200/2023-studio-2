@@ -5,10 +5,7 @@
  */
 package com.csse3200.game.components;
 
-import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
-import com.csse3200.game.components.player.PlayerStatsDisplay;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,7 +104,7 @@ public class CombatStatsComponent extends Component {
       entity.getEvents().trigger("updateHealth", this.health);
     }
     if (entity != null) {
-      if (isDead() && entity.getEntityType().equals("player") && dead == false) {
+      if (isDead() && entity.getEntityType().equals("player") && !dead) {
         dead = true;
         entity.getComponent(KeyboardPlayerInputComponent.class).playerDead(); // Stop player from walking
         entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn

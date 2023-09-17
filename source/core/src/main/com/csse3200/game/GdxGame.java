@@ -3,11 +3,8 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.*;
-import com.csse3200.game.services.UpgradeShip;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -91,7 +91,6 @@ public class PowerUpDisplayHUD extends UIComponent {
      * @param batch Batch to render to.
      */
 
-    @Override
     protected void draw(SpriteBatch batch) {
     }
 
@@ -105,6 +104,7 @@ public class PowerUpDisplayHUD extends UIComponent {
         selectPowerUp();
     }
 
+    @Override
     public void dispose() {
         super.dispose();
         PowerUpLabel.remove();

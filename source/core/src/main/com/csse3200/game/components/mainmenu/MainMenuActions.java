@@ -21,7 +21,7 @@ import com.csse3200.game.ui.TitleBox;
  */
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
-  private GdxGame game;
+  public static GdxGame game;
   private Stage stage; // Add the stage
   private Skin skin;   // Add the skin
 

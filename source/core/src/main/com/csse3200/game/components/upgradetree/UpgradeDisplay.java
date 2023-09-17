@@ -47,7 +47,6 @@ public class UpgradeDisplay extends Window {
     private final Entity player;
     private UpgradeNode buildRoot;
     private final Skin skin;
-    private Stage stage;
 
     // Tree stuff
     private final List<UpgradeNode> trees = new ArrayList<>();
@@ -244,7 +243,7 @@ public class UpgradeDisplay extends Window {
      * Sets up the window dimensions.
      */
     private void setupWindowDimensions() {
-        stage = ServiceLocator.getRenderService().getStage();
+        Stage stage = ServiceLocator.getRenderService().getStage();
         setWidth(stage.getWidth() * WINDOW_WIDTH_SCALE);
         setHeight(stage.getHeight() * WINDOW_HEIGHT_SCALE);
         setPosition(
@@ -300,7 +299,7 @@ public class UpgradeDisplay extends Window {
 
         Table table = new Table();
         table.add(materialsLabel);
-        table.setPosition(((getWidth() * getScaleX() / 2)),
+        table.setPosition((getWidth() * getScaleX() / 2),
                 (float) (getHeight() * getScaleY() * 0.95));
 
         return table;

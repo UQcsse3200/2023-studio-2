@@ -1,5 +1,5 @@
 {
-  "health": 100,
+  "health": 10000000,
   "baseAttack": 10,
   "attackMultiplier": 1,
   "isImmune": false,

@@ -22,7 +22,7 @@
     "images/structure-icons/gate.png",
     "images/healthpowerup.png",
     "images/speedpowerup.png",
-    "images/Ship.png",
+    "images/refinedShip.png",
     "images/oldman_down_1.png",
     "images/player_blank.png",
     "images/wrench.png",
@@ -83,10 +83,10 @@
   },
   "areaEntityConfig": {
     "ship": {
-      "spritePath": "images/LeftShip.png",
+      "spritePath": "images/refinedShip.png",
       "position": {
         "x": 35,
-        "y": 40
+        "y": 39
       }
     },
     "enemies": [

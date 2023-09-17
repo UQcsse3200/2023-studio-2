@@ -260,7 +260,7 @@ public class CombatStatsComponent extends Component {
    * Adds one life to player lives.
    */
   public void addLife() {
-    if (this.lives < 3) {
+    if (this.lives < 4) {
       this.lives += 1;
     } else {
       entity.getComponent(PlayerStatsDisplay.class).maxLivesReached();

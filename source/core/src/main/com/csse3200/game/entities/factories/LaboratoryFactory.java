@@ -36,9 +36,8 @@ public class LaboratoryFactory {
         // Set the laboratory's body type and scale
         laboratory.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         laboratory.getComponent(TextureRenderComponent.class).scaleEntity();
-        laboratory.setScale(4f, 4.0f);
-        PhysicsUtils.setScaledCollider(laboratory, 0.6f, 0.4f);
-        laboratory.scaleHeight(2.0f);
+        laboratory.setScale(3f, 3.0f);
+        PhysicsUtils.setScaledCollider(laboratory, 1f, 0.8f);
 
         // Set the laboratory's initial health
         laboratory.getComponent(CombatStatsComponent.class).setHealth(0);

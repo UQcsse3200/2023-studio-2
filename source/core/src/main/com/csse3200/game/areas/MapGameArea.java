@@ -44,6 +44,7 @@ public class MapGameArea extends GameArea{
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
         try {
             mapConfig = MapConfigLoader.loadMapDirectory(configPath);
+            logger.info("Successfully loaded map {}", configPath);
         } catch (InvalidConfigException exception) {
             logger.error("FAILED TO LOAD GAME - RETURNING TO MAIN MENU", exception);
             validLoad = false;
@@ -260,6 +261,7 @@ public class MapGameArea extends GameArea{
         if (mapConfig.playerConfig != null && mapConfig.playerConfig.position != null) {
             spawnEntityAt(newPlayer, mapConfig.playerConfig.position, true, true);
         } else {
+            logger.info("Failed to load player position - created player at middle of map");
             //If no position specified spawn in middle of map.
             GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);
             spawnEntityAt(newPlayer, pos, true, true);

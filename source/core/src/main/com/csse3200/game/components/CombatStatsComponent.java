@@ -7,6 +7,7 @@ package com.csse3200.game.components;
 
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -259,7 +260,14 @@ public class CombatStatsComponent extends Component {
    * Adds one life to player lives.
    */
   public void addLife() {
-    this.lives += 1;
+    if (this.lives < 3) {
+      this.lives += 1;
+    } else {
+      entity.getComponent(PlayerStatsDisplay.class).maxLivesReached();
+    }
+    if (entity != null) {
+      entity.getEvents().trigger("updateLives", this.lives);
+    }
   }
 
   /**

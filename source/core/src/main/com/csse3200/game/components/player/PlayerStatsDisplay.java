@@ -156,9 +156,9 @@ public class PlayerStatsDisplay extends UIComponent {
     maxLivesAlert = new Table();
     maxLivesAlert.top().left();
     maxLivesAlert.setFillParent(true);
-    maxLivesLabel = new Label("Max of Three Player Lives Reached", skin, "small");
+    maxLivesLabel = new Label("Max Player Lives Reached (3)", skin, "small");
 
-    maxLivesAlert.add(maxLivesLabel);
+    maxLivesAlert.add(maxLivesLabel).padTop(250).padLeft(5f);
     //launch the table onto the screen
     stage.addActor(maxLivesAlert);
   }
@@ -178,7 +178,7 @@ public class PlayerStatsDisplay extends UIComponent {
         timer.purge();
       }
     };
-    timer.schedule(removeAlert, 1000); // removes alert after 1 second
+    timer.schedule(removeAlert, 3000); // removes alert after 1 second
   }
 
     @Override

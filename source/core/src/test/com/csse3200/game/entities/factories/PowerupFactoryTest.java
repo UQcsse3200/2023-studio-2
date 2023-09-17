@@ -40,7 +40,7 @@ public class PowerupFactoryTest {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ResourceService resourceService = new ResourceService();
         ServiceLocator.registerResourceService(resourceService);
-        String[] powerupTextures = {"images/healthpowerup.png", "images/speedpowerup.png"};
+        String[] powerupTextures = {"images/healthpowerup.png", "images/speedpowerup.png", "images/extralifepowerup.png"};
         resourceService.loadTextures(powerupTextures);
         resourceService.loadAll();
     }

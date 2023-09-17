@@ -60,6 +60,7 @@ public class PowerupFactory {
         switch (type) {
             case HEALTH_BOOST -> powerup.addComponent(new TextureRenderComponent("images/healthpowerup.png"));
             case SPEED_BOOST -> powerup.addComponent(new TextureRenderComponent("images/speedpowerup.png"));
+            case EXTRA_LIFE -> powerup.addComponent(new TextureRenderComponent("images/extralifepowerup.png"));
             default -> throw new IllegalArgumentException("You must assign a valid PowerupType");
         }
         return powerup;
@@ -81,6 +82,9 @@ public class PowerupFactory {
      */
     public static Entity createSpeedPowerup() {
         return createPowerup(configs.speedPowerup);
+    }
+    public static Entity createExtraLifePowerup() {
+        return createPowerup(configs.extraLifePowerup);
     }
 }
 

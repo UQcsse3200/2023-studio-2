@@ -212,7 +212,7 @@ public class CompanionStatsDisplay extends UIComponent {
                     playerLowHealthLabel.remove();
                     update = false;
                 }
-            }, 3.0f);
+            }, 3000);
         }
     }
 

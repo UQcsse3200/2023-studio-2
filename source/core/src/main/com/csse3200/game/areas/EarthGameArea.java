@@ -80,6 +80,7 @@ public class EarthGameArea extends GameArea {
             "images/enemy/rangeEnemy.png",
             "images/healthpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/speedpowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
+            "images/extralifepowerup.png", // Free to use - https://merchant-shade.itch.io/16x16-mixed-rpg-icons
             "images/refinedShip.png",
             "images/stone_wall.png",
             "images/botanist.png",

@@ -59,6 +59,7 @@ public class PowerupComponent extends Component {
                 };
                 new java.util.Timer().schedule(speedUp, getDuration());
             }
+            case EXTRA_LIFE -> playerCombatStats.addLife();
             default -> throw new IllegalArgumentException("You must specify a valid PowerupType");
         }
 

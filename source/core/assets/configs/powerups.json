@@ -6,5 +6,9 @@
   "speedPowerup": {
     "spritePath": "images/speedpowerup.png",
     "type": "SPEED_BOOST"
+  },
+  "extraLifePowerup": {
+    "spritePath": "images/extralifepowerup.png",
+    "type": "EXTRA_LIFE"
   }
 }

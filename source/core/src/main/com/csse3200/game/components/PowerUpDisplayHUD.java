@@ -21,6 +21,7 @@ public class PowerUpDisplayHUD extends UIComponent {
 
     Image SpeedUpImage = null;
     Image HealthUpImage = null;
+    Image ExtraLifeImage = null;
 
     public PowerUpDisplayHUD(PowerupType powerUpEntity) {
         this.powerUpEntity = powerUpEntity;
@@ -48,6 +49,11 @@ public class PowerUpDisplayHUD extends UIComponent {
             SpeedUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/speedpowerup.png", Texture.class));
             return SpeedUpImage;
         }
+
+        if (powerUpEntity == PowerupType.EXTRA_LIFE) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/extralifepowerup.png", Texture.class));
+            return ExtraLifeImage;
+        }
         else return null;
     }
 
@@ -74,6 +80,9 @@ public class PowerUpDisplayHUD extends UIComponent {
         else if (selectPowerUp() == SpeedUpImage) {
             // timer task on applyEffect
             table.add(SpeedUpImage).size(powerUpLength).pad(5);
+        }
+        else if (selectPowerUp() == ExtraLifeImage) {
+            table.add(ExtraLifeImage).size(powerUpLength).pad(5);
         }
         // stage.addActor(table); todo: fix
     }

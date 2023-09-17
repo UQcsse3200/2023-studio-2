@@ -72,14 +72,16 @@ public class DeathComponent extends Component {
                     Gdx.app.postRunnable(entity::dispose);
 
                     Random rand = new Random();
-                    int powerupRandomiser = rand.nextInt(2);
+                    int powerupRandomiser = rand.nextInt(9);
 
                     Entity powerup = null;
 
-                    if (powerupRandomiser ==  0) {
+                    if (powerupRandomiser < 4) {                // 4/9 chance of speed boost
                         powerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
+                    } else if (powerupRandomiser == 8) {        // 1/9 chance of speed boost
+                        powerup = PowerupFactory.createPowerup(PowerupType.EXTRA_LIFE);
                     }
-                    else {
+                    else {                                       // 4/9 chance of health boost
                         powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
                     }
 

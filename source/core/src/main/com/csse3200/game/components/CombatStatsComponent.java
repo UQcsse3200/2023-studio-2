@@ -263,7 +263,7 @@ public class CombatStatsComponent extends Component {
     if (this.lives < 4) {
       this.lives += 1;
     } else {
-      entity.getComponent(PlayerStatsDisplay.class).maxLivesReached();
+      entity.getEvents().trigger("maxLivesAlert");
     }
     if (entity != null) {
       entity.getEvents().trigger("updateLives", this.lives);

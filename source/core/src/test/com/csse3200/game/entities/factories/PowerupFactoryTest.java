@@ -73,9 +73,29 @@ public class PowerupFactoryTest {
         assertEquals(type, PowerupType.SPEED_BOOST);
     }
 
+    /**
+     * Test the creation of an extra life powerup entity.
+     * This test verifies that the entity created by PowerupFactory is not null
+     * and is of the expected extra life type.
+     */
+    @Test
+    public void testCreateExtraLifePowerup() {
+        Entity powerup = PowerupFactory.createExtraLifePowerup();
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(type, PowerupType.EXTRA_LIFE);
+    }
+
+    /**
+     * Test the creation of a health powerup config.
+     * This test verifies that the config created by PowerupConfig is not null
+     * and is of the expected health type.
+     */
     @Test
     void createHealthPowerupConfigTest() {
         PowerupConfig config = configs.healthPowerup;
+        assertNotNull(config);
         Entity powerup = PowerupFactory.createPowerup(config);
 
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
@@ -84,14 +104,37 @@ public class PowerupFactoryTest {
         assertEquals(type, PowerupType.HEALTH_BOOST);
     }
 
+    /**
+     * Test the creation of a speed powerup config.
+     * This test verifies that the config created by PowerupConfig is not null
+     * and is of the expected speed type.
+     */
     @Test
     void createSpeedPowerupConfigTest() {
         PowerupConfig config = configs.speedPowerup;
+        assertNotNull(config);
         Entity powerup = PowerupFactory.createPowerup(config);
 
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
         assertEquals(type, PowerupType.SPEED_BOOST);
+    }
+
+    /**
+     * Test the creation of an extra life powerup config.
+     * This test verifies that the config created by PowerupConfig is not null
+     * and is of the expected extra life type.
+     */
+    @Test
+    void createExtraLifePowerupConfigTest() {
+        PowerupConfig config = configs.extraLifePowerup;
+        assertNotNull(config);
+        Entity powerup = PowerupFactory.createPowerup(config);
+
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(type, PowerupType.EXTRA_LIFE);
     }
 }

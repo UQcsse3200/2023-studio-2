@@ -71,7 +71,7 @@ public class DialogueBox extends Dialog {
         Table customButtonTable = new Table();
         customButtonTable.add(startButton).pad(20f); // Add padding as needed
 
-        TextButton info = new TextButton("INFO", skin);
+        TextButton info = new TextButton("Information", skin);
         button(info, true);
         entity.getEvents().addListener("info", this::oninfo);
         info.addListener(

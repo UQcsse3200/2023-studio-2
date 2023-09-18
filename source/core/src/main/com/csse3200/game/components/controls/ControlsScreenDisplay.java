@@ -32,6 +32,8 @@ public class ControlsScreenDisplay extends UIComponent {
         table = new Table();
         table.setFillParent(true);
 
+
+
         storyImages = new ArrayList<>();
         storyImages.add("images/Controls.png");
         int start = 0;
@@ -47,7 +49,7 @@ public class ControlsScreenDisplay extends UIComponent {
         TextButton ABtn = new TextButton("A", skin);
         TextButton SBtn = new TextButton("S", skin);
         TextButton DBtn = new TextButton("D", skin);
-
+        TextButton FBtn = new TextButton("F", skin);
         WBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -80,18 +82,28 @@ public class ControlsScreenDisplay extends UIComponent {
 
             }
         });
+        FBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("F button clicked");
+                entity.getEvents().trigger("f");
+
+            }
+        });
 
         float tablePaddingTop = 350f;  // Adjust this value to move the table higher or lower
 
         table.padBottom(tablePaddingTop);  // Set padding for the top of the table
         table.row();
-        table.add(WBtn).expandX().top().padBottom(40f).padRight(1200f);
+        table.add(WBtn).expandX().top().padBottom(40f).padRight(900f);
         table.row();
-        table.add(ABtn).expandX().top().padBottom(40f).padRight(1200f);
+        table.add(ABtn).expandX().top().padBottom(40f).padRight(900f);
         table.row();
-        table.add(SBtn).expandX().top().padBottom(40f).padRight(1200f);
+        table.add(SBtn).expandX().top().padBottom(40f).padRight(900f);
         table.row();
-        table.add(DBtn).expandX().top().padBottom(40f).padRight(1200f);
+        table.add(DBtn).expandX().top().padBottom(40f).padRight(900f);
+        table.row();
+        table.add(FBtn).expandX().top().padBottom(40f).padRight(900f);
 
 
 
@@ -112,6 +124,72 @@ public class ControlsScreenDisplay extends UIComponent {
         });
 
         stage.addActor(exitBtn);
+
+
+        Table table2 = new Table();
+        TextButton SpaceBtn = new TextButton("Space", skin);
+        TextButton OneBtn = new TextButton("1", skin);
+        TextButton TwoBtn = new TextButton("2", skin);
+        TextButton ThreeBtn = new TextButton("3", skin);
+        TextButton FourBtn = new TextButton("4", skin);
+
+        float newTablePaddingTop = 1710f;
+        table2.padBottom(newTablePaddingTop);
+        table2.row();
+        table2.add(SpaceBtn).expandX().top().padTop(40f).padLeft(2500f);
+        table2.row();
+        table2.add(OneBtn).expandX().top().padTop(40f).padLeft(2500f);
+        table2.row();
+        table2.add(TwoBtn).expandX().top().padTop(40f).padLeft(2500f);
+        table2.row();
+        table2.add(ThreeBtn).expandX().top().padTop(40f).padLeft(2500f);
+        table2.row();
+        table2.add(FourBtn).expandX().top().padTop(40f).padLeft(2500f);
+        SpaceBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("Space key clicked");
+                entity.getEvents().trigger("Space");
+
+            }
+        });
+        OneBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("1 key clicked");
+                entity.getEvents().trigger("1");
+
+            }
+        });
+        TwoBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("2 key clicked");
+                entity.getEvents().trigger("2");
+
+            }
+        });
+        ThreeBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("3 key clicked");
+                entity.getEvents().trigger("3");
+
+            }
+        });
+        FourBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("4 key clicked");
+                entity.getEvents().trigger("4");
+
+            }
+        });
+
+
+
+        stage.addActor(table2);
+
     }
 
     @Override

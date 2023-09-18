@@ -43,6 +43,58 @@ public class ControlsScreenDisplay extends UIComponent {
 
         InsertButtons bothButtons = new InsertButtons();
 
+        TextButton WBtn = new TextButton("W", skin);
+        TextButton ABtn = new TextButton("A", skin);
+        TextButton SBtn = new TextButton("S", skin);
+        TextButton DBtn = new TextButton("D", skin);
+
+        WBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("W button clicked");
+                entity.getEvents().trigger("w");
+
+            }
+        });
+        ABtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("A button clicked");
+                entity.getEvents().trigger("a");
+
+            }
+        });
+        SBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("S button clicked");
+                entity.getEvents().trigger("s");
+
+            }
+        });
+        DBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("D button clicked");
+                entity.getEvents().trigger("d");
+
+            }
+        });
+
+        float tablePaddingTop = 350f;  // Adjust this value to move the table higher or lower
+
+        table.padBottom(tablePaddingTop);  // Set padding for the top of the table
+        table.row();
+        table.add(WBtn).expandX().top().padBottom(40f).padRight(1200f);
+        table.row();
+        table.add(ABtn).expandX().top().padBottom(40f).padRight(1200f);
+        table.row();
+        table.add(SBtn).expandX().top().padBottom(40f).padRight(1200f);
+        table.row();
+        table.add(DBtn).expandX().top().padBottom(40f).padRight(1200f);
+
+
+
 
         String exitTexture = "images/on_exit.png";
         String exitTextureHover = "images/on_exit_hover.PNG";

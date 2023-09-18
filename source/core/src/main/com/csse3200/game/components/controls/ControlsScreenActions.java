@@ -26,7 +26,29 @@ public class ControlsScreenActions extends Component {
      */
     @Override
     public void create() {
-        entity.getEvents().addListener("exit", this::onExit);
+        entity.getEvents().addListener("exit", this::onExit);     entity.getEvents().addListener("w", this::onW);
+        entity.getEvents().addListener("a", this::onA);
+        entity.getEvents().addListener("s", this::onS);
+        entity.getEvents().addListener("d", this::onD);
+
+    }
+
+
+    private void onW() {
+        logger.info("W clicked");
+
+    }
+    private void onA() {
+        logger.info("A clicked");
+
+    }
+    private void onS() {
+        logger.info("S clicked");
+
+    }
+    private void onD() {
+        logger.info("D clicked");
+
     }
 
 

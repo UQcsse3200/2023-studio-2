@@ -82,7 +82,7 @@ class MapGameAreaTest {
     }
 
     @Test
-    void loadEntityTextures() {
+    void loadAndUnloadEntityTextures() {
         gameAreaConfig = spy(GameAreaConfig.class);
         when(gameAreaConfig.getEntityTextures()).thenReturn(new String[] {"Texture1.png", "Texture2.atlas"});
         //Load the gameAreaConfig regardless of method.
@@ -94,12 +94,16 @@ class MapGameAreaTest {
         MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
         mapGameArea.loadAssets();
 
-        ResourceService resourceService = ServiceLocator.getResourceService();
         verify(assetManager).load("Texture1.png", Texture.class);
+        verify(assetManager).load("Texture2.atlas", TextureAtlas.class);
+
+        mapGameArea.unloadAssets();
+        verify(assetManager).unload("Texture1.png");
+        verify(assetManager).unload("Texture2.atlas");
     }
 
     @Test
-    void loadTexturePaths() {
+    void loadAnUnloadTexturePaths() {
         gameAreaConfig.texturePaths = new String[] {"Texture3.png", "Texture4.png"};
         //Load the gameAreaConfig regardless of method.
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapDirectory(any())).thenReturn(gameAreaConfig);
@@ -112,10 +116,14 @@ class MapGameAreaTest {
 
         verify(assetManager).load("Texture3.png", Texture.class);
         verify(assetManager).load("Texture4.png", Texture.class);
+
+        mapGameArea.unloadAssets();
+        verify(assetManager).unload("Texture3.png");
+        verify(assetManager).unload("Texture4.png");
     }
 
     @Test
-    void loadTextureAtlasPaths() {
+    void loadAndUnloadTextureAtlasPaths() {
         gameAreaConfig.textureAtlasPaths = new String[] {"Texture5.atlas", "Texture6.atlas"};
         //Load the gameAreaConfig regardless of method.
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapDirectory(any())).thenReturn(gameAreaConfig);
@@ -130,10 +138,13 @@ class MapGameAreaTest {
         verify(assetManager).load("Texture5.atlas", TextureAtlas.class);
         verify(assetManager).load("Texture6.atlas", TextureAtlas.class);
 
+        mapGameArea.unloadAssets();
+        verify(assetManager).unload("Texture5.atlas");
+        verify(assetManager).unload("Texture6.atlas");
     }
 
     @Test
-    void loadSoundEffects() {
+    void loadAndUnloadSoundEffects() {
         gameAreaConfig.soundPaths = new String[] {"soundeffect.wav", "music.ogg"};
         //Load the gameAreaConfig regardless of method.
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapDirectory(any())).thenReturn(gameAreaConfig);
@@ -146,10 +157,14 @@ class MapGameAreaTest {
 
         verify(assetManager).load("soundeffect.wav", Sound.class);
         verify(assetManager).load("music.ogg", Sound.class);
+
+        mapGameArea.unloadAssets();
+        verify(assetManager).unload("soundeffect.wav");
+        verify(assetManager).unload("music.ogg");
     }
 
     @Test
-    void loadBackgroundMusic() {
+    void loadAndUnloadBackgroundMusic() {
         gameAreaConfig.backgroundMusicPath = "backgroundMusic.wav";
         //Load the gameAreaConfig regardless of method.
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapDirectory(any())).thenReturn(gameAreaConfig);
@@ -161,5 +176,8 @@ class MapGameAreaTest {
         mapGameArea.loadAssets();
 
         verify(assetManager).load("backgroundMusic.wav", Music.class);
+
+        mapGameArea.unloadAssets();
+        verify(assetManager).unload("backgroundMusic.wav");
     }
 }

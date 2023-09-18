@@ -334,18 +334,12 @@ public class MapGameArea extends GameArea{
     /**
      * Unloads all assets from config file
      */
-    private void unloadAssets() {
+    protected void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
-        if (mapConfig.areaEntityConfig != null) {
-            String[] textures = mapConfig.areaEntityConfig.getAllConfigs().stream()
-                    .map(BaseEntityConfig::getTextures)
-                    .flatMap(Collection::stream)
-                    .distinct()
-                    .toArray(String[]::new);
-            resourceService.unloadAssets(textures);
-        }
+        if (mapConfig.getEntityTextures() != null)
+            resourceService.unloadAssets(mapConfig.getEntityTextures());
         if (mapConfig.texturePaths != null)
             resourceService.unloadAssets(mapConfig.texturePaths);
         if (mapConfig.textureAtlasPaths != null)

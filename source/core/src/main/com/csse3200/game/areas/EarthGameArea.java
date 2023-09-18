@@ -130,7 +130,11 @@ public class EarthGameArea extends GameArea {
             "images/durasteel.png",
             "images/f_button.png",
             "images/ExtractorAnimation.png",
-            "images/player/player.png"
+            "images/player/player.png",
+            "images/player/statbar.png",
+            "images/player/widestatbar.png",
+            "images/player/planet-frame.png",
+            "images/player/bar-fill.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",

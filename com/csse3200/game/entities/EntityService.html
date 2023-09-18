@@ -79,7 +79,7 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Provides a global access point for entities to register themselves. This allows for iterating
  over entities to perform updates each loop. All game entities should be registered here.
- <p>
+
  Avoid adding additional state here! Global access is often the easy but incorrect answer to
  sharing data.</div>
 </section>
@@ -186,7 +186,7 @@ loadScripts(document, 'script');</script>
 <h3>getEntitiesByComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</span>&nbsp;<span class="element-name">getEntitiesByComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="../components/Component.html" title="class in com.csse3200.game.components">Component</a>&gt;&nbsp;componentClass)</span></div>
 <div class="block">Gets all entities belonging to a specified component class.
- <p>
+
  Example:
     getEntitiesByComponent(PowerupComponent.class) will return a list
     of all registered powerup entities.</div>

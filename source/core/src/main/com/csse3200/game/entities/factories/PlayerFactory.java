@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.ProximityControllerComponent;
@@ -21,6 +22,7 @@ import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 import com.csse3200.game.components.structures.StructureToolPicker;
 
+
 /**
  * Factory to create a player entity.
  *
@@ -31,6 +33,14 @@ import com.csse3200.game.components.structures.StructureToolPicker;
 public class PlayerFactory {
 
   private static DialogueBox dialogueBox;
+
+  private int playerLives = 3;
+  public int getPlayerLives() {
+    return playerLives;
+  }
+  public void setPlayerLives(int lives) {
+    playerLives = lives;
+  }
   private static final PlayerConfig config =
       FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
@@ -55,6 +65,7 @@ public class PlayerFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class));
+
     animator.addAnimation("Character_StandDown", 0.2f);
     animator.addAnimation("Character_StandUp", 0.2f);
     animator.addAnimation("Character_StandLeft", 0.2f);
@@ -73,6 +84,7 @@ public class PlayerFactory {
     animator.addAnimation("Character_RollRight", 0.1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("Character_RollLeft", 0.1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("Character_RollUp", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Character_Death", 0.2f, Animation.PlayMode.NORMAL);
 
 
     Entity player =

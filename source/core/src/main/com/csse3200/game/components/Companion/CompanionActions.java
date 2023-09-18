@@ -25,15 +25,27 @@ import java.util.Objects;
 public class CompanionActions extends Component {
     private String bulletTexturePath;
 
-    private static Vector2 MAX_NORMAL_SPEED = new Vector2(4f, 4f); // Metres per second
+    private static Vector2 COMPANION_SPEED = new Vector2(4f, 4f); // Metres per second
+
 
     private static final float ROTATION_SPEED = 10.0f;
     private float currentRotation = 5.0f;
+    private Entity playerEntity;
 
     private PhysicsComponent physicsComponent;
     public Vector2 walkDirection = Vector2.Zero.cpy();
     public boolean moving = false;
-    private boolean speedBoostActive = false;
+
+    // ALL CODE PERTAINING TO COMPANION MODES
+
+    public String companionMode;
+    public final static String COMPANION_MODE_ATTACK = "COMPANION_MODE_ATTACK";
+    public final static String COMPANION_MODE_NORMAL = "COMPANION_MODE_NORMAL";
+
+    public final static Vector2 COMPANION_ATTACK_MODE_SPEED = new Vector2(8f, 8f);
+    public final static Vector2 COMPANION_NORMAL_MODE_SPEED = new Vector2(4f, 4f);
+
+
 
     /**
      * Initialise the companion to be facing the player.
@@ -45,6 +57,7 @@ public class CompanionActions extends Component {
         entity.getEvents().addListener("walk", this::walk);
         entity.getEvents().addListener("walkStop", this::stopWalking);
         entity.getEvents().addListener("attack", this::attack);
+        setCompanionModeNormal();
 
         // Initialize currentRotation based on the initial orientation of the companion
         currentRotation = physicsComponent.getBody().getAngle()*MathUtils.radiansToDegrees;
@@ -53,7 +66,7 @@ public class CompanionActions extends Component {
             physicsComponent.getBody().setTransform(playerPosition, currentRotation * MathUtils.degreesToRadians);
         }
     }
-    private Entity playerEntity;
+
     /**
      * Set the player entity, binding it to the companion.
      *
@@ -64,6 +77,38 @@ public class CompanionActions extends Component {
         this.playerEntity = playerEntity;
     }
 
+    public String getCompanionMode() {
+        return this.companionMode;
+    }
+
+    /**
+     * Set companion mode to attack
+     */
+    public void setCompanionModeAttack() {
+        // set the mode
+        companionMode = COMPANION_MODE_ATTACK;
+        // adjust the speed
+        COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
+        entity.getEvents().trigger("companionModeChange","Attack");
+
+    }
+
+    /**
+     * set the companion mode to normal
+     */
+    public void setCompanionModeNormal() {
+        // set the mode
+        companionMode = COMPANION_MODE_NORMAL;
+        // adjust the speed
+        COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
+        entity.getEvents().trigger("companionModeChange","Normal");
+
+
+    }
+
+    public boolean isCompanionBeingMoved() {
+        return this.moving;
+    }
 
     /**
      * Set the bullet texture path.
@@ -81,61 +126,21 @@ public class CompanionActions extends Component {
      */
     @Override
     public void update() {
-        if (playerEntity != null && moving) {
-            updateFollowPlayer();
-        } else if (moving) {
-            updateSpeed();
-        }
+        updateSpeed();
 
+        // How to switch between attack mode and normal mode. Binary toggle
         if (Gdx.input.isKeyPressed(Input.Keys.B)){
-            speedBoostActive = true;
-            MAX_NORMAL_SPEED.set(8f,8f);
-        } else {
-            speedBoostActive = false;
-            MAX_NORMAL_SPEED.set(5f, 5f);
+            if (Objects.equals(companionMode, COMPANION_MODE_ATTACK)) {
+                //if you're in attack, go to normal
+                setCompanionModeNormal();
+            } else {
+                //if you're in normal, go to attack
+                setCompanionModeAttack();
+            }
+
         }
     }
-    //functionality for basic player tracking
-    public void updateFollowPlayer() {
-        Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
-        Vector2 companionPosition = physicsComponent.getBody().getPosition();
 
-        // Calculate direction vector towards the player
-        Vector2 directionToPlayer = playerPosition.cpy().sub(companionPosition);
-        float distanceToPlayer = directionToPlayer.len();
-
-        double minDistanceThreshold = 50.0f;
-        if (distanceToPlayer < minDistanceThreshold) {
-            physicsComponent.getBody().setActive(false); // Disable physics simulation
-        } else {
-            physicsComponent.getBody().setActive(true); // Enable physics simulation
-            updateSpeed(); // Only apply speed if physics is active
-        }
-
-        // Check if any movement key is pressed
-        boolean isMovementKeyPressed = isMovementKeyPressed();
-
-        if (!isMovementKeyPressed) {
-            // Calculate direction vector towards the player
-            walkDirection = playerPosition.cpy().sub(companionPosition).nor();
-            // Move the companion towards the player
-            walkDirection.nor();
-            updateSpeed();
-
-            // Calculate the rotation angle towards the player
-            float targetRotation = walkDirection.angleDeg() + 90;
-
-            // Interpolate the rotation angle smoothly
-            currentRotation = MathUtils.lerpAngleDeg(currentRotation, targetRotation, ROTATION_SPEED * Gdx.graphics.getDeltaTime());
-
-            // Set the new rotation for the companion
-            physicsComponent.getBody().setTransform(companionPosition, currentRotation * MathUtils.degreesToRadians);
-
-        } else {
-            // Stop the companion from walking when movement keys are pressed
-            stopWalking();
-        }
-    }
     private boolean isMovementKeyPressed() {
         // Check if any of the movement keys are pressed (I, J, K, L)
         return Gdx.input.isKeyPressed(Input.Keys.I) || Gdx.input.isKeyPressed(Input.Keys.J) ||
@@ -145,7 +150,7 @@ public class CompanionActions extends Component {
     public void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
-        Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_NORMAL_SPEED);
+        Vector2 desiredVelocity = walkDirection.cpy().scl(COMPANION_SPEED);
         // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
@@ -186,6 +191,6 @@ public class CompanionActions extends Component {
      * @param y - how fast in y direction
      */
     public void setSpeed(float x, float y) {
-        MAX_NORMAL_SPEED = new Vector2(x, y);
+        COMPANION_SPEED = new Vector2(x, y);
     }
 }

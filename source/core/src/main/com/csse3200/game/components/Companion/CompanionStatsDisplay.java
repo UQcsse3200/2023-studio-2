@@ -36,6 +36,7 @@ public class CompanionStatsDisplay extends UIComponent {
     public Label companionHealthLabel; //this is the label for the companions health displayed
 
     public Label companionUIHeaderLabel; // label for the header of the UI component.
+    public Label companionModeLabel; // label for the companions mode
 
     private boolean isInvincible = true;
     private boolean isInfiniteHealth = true;
@@ -66,6 +67,7 @@ public class CompanionStatsDisplay extends UIComponent {
         // Listen for events related to health updates
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
         playerEntity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+        entity.getEvents().addListener("companionModeChange", this::updateCompanionModeUI);
     }
 
     /**
@@ -91,8 +93,18 @@ public class CompanionStatsDisplay extends UIComponent {
         // ADD THE COMPANIONS HEALTH INFORMATION
         int companionHealth = entity.getComponent(CombatStatsComponent.class).getHealth();
         CharSequence companionHealthText = String.format("Health: %d", companionHealth);
-        companionHealthLabel = new Label(companionHealthText, skin, "large");
+        companionHealthLabel = new Label(companionHealthText, skin, "small");
         companionStatisticsUI.add(companionHealthLabel);
+        companionStatisticsUI.row();
+
+
+        // ADD THE COMPANIONS MODE INFORMATION
+        CharSequence companionModeText = "Mode: Normal";
+        companionModeLabel = new Label(companionModeText, skin, "small");
+        companionStatisticsUI.add(companionModeLabel);
+        companionStatisticsUI.row();
+
+        //finally
         stage.addActor(companionStatisticsUI);
     }
 
@@ -166,7 +178,7 @@ public class CompanionStatsDisplay extends UIComponent {
 
         // plate up the low player health string
         CharSequence playerLowHealthString = String.format("Player Low Health: %d", health);
-        playerLowHealthLabel = new Label(playerLowHealthString, skin, "large");
+        playerLowHealthLabel = new Label(playerLowHealthString, skin, "small");
 
 
         playerLowHealthAlert.add(playerLowHealthLabel);
@@ -210,8 +222,17 @@ public class CompanionStatsDisplay extends UIComponent {
      * @param health The updated health value to display.
      */
     public void updateCompanionHealthUI(int health) {
-        CharSequence text = String.format("Companion Health: %d", health);
+        CharSequence text = String.format("Health: %d", health);
         companionHealthLabel.setText(text);
+    }
+
+    /**
+     * updating the companion UI to include the mode
+     * @param newMode - the mode sent by the CompanionActions trigger to be put on screen
+     */
+    public void updateCompanionModeUI(String newMode) {
+        CharSequence companionModeText = String.format("Mode: %s", newMode);
+        companionModeLabel.setText(companionModeText);
     }
 
     /**
@@ -221,7 +242,7 @@ public class CompanionStatsDisplay extends UIComponent {
     public void dispose() {
         super.dispose();
         companionHealthLabel.remove();
-        playerLowHealthLabel.remove();
+        if (playerLowHealthLabel != null) playerLowHealthLabel.remove();
         companionUIHeaderLabel.remove();
     }
 }

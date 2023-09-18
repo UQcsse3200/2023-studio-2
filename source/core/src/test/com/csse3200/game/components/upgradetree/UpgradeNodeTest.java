@@ -10,6 +10,7 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +23,7 @@ public class UpgradeNodeTest {
     private WeaponConfigs weaponConfigs;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         Gdx.files = mock(Files.class);
         weaponConfigs = mock(WeaponConfigs.class);
 
@@ -31,29 +32,29 @@ public class UpgradeNodeTest {
         WeaponConfig woodHammerConfig = mock(WeaponConfig.class);
         when(weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER)).thenReturn(woodHammerConfig);
         WeaponConfig katanaConfig = mock(WeaponConfig.class);
-        when(weaponConfigs.GetWeaponConfig(WeaponType.KATANA)).thenReturn(katanaConfig);
+        when(weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA)).thenReturn(katanaConfig);
         WeaponConfig elecWrenchConfig = mock(WeaponConfig.class);
-        when(weaponConfigs.GetWeaponConfig(WeaponType.ELEC_WRENCH)).thenReturn(elecWrenchConfig);
+        when(weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH)).thenReturn(elecWrenchConfig);
 
         node = new UpgradeNode(stickConfig, WeaponType.STICK);
     }
 
     @Test
-    public void testAddChild() {
+    void testAddChild() {
         UpgradeNode child = new UpgradeNode(weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER), WeaponType.WOODHAMMER);
         node.addChild(child);
         assertTrue(node.getChildren().contains(child));
     }
 
     @Test
-    public void testMultipleChildren() {
+    void testAddMultipleChildren() {
         WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
-        WeaponConfig elecWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.ELEC_WRENCH);
-        WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.KATANA);
+        WeaponConfig elecWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
+        WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA);
 
         UpgradeNode child1 = new UpgradeNode(woodhammerConfig, WeaponType.STONEHAMMER);
-        UpgradeNode child2 = new UpgradeNode(elecWrenchConfig, WeaponType.ELEC_WRENCH);
-        UpgradeNode child3 = new UpgradeNode(katanaConfig, WeaponType.KATANA);
+        UpgradeNode child2 = new UpgradeNode(elecWrenchConfig, WeaponType.MELEE_WRENCH);
+        UpgradeNode child3 = new UpgradeNode(katanaConfig, WeaponType.MELEE_KATANA);
 
         node.addChild(child1);
         node.addChild(child2);
@@ -68,19 +69,81 @@ public class UpgradeNodeTest {
     }
 
     @Test
-    public void testSetXAndGetX() {
+    void testGetSingleChild() {
+        WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
+        UpgradeNode child1 = new UpgradeNode(woodhammerConfig, WeaponType.WOODHAMMER);
+        ArrayList<UpgradeNode> dummy = new ArrayList<>();
+
+        node.addChild(child1);
+        dummy.add(child1);
+
+        // Ensures node and dummy have the same child
+        assertEquals(node.getChildren(), dummy);
+    }
+
+    @Test
+    void testGetMultipleChildren() {
+        WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
+        WeaponConfig elecWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
+        WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA);
+
+        UpgradeNode child1 = new UpgradeNode(woodhammerConfig, WeaponType.STONEHAMMER);
+        UpgradeNode child2 = new UpgradeNode(elecWrenchConfig, WeaponType.MELEE_WRENCH);
+        UpgradeNode child3 = new UpgradeNode(katanaConfig, WeaponType.MELEE_KATANA);
+        ArrayList<UpgradeNode> dummy = new ArrayList<>();
+
+        node.addChild(child1);
+        node.addChild(child2);
+        node.addChild(child3);
+        dummy.add(child1);
+        dummy.add(child2);
+        dummy.add(child3);
+
+        // Ensures node and dummy have the same children
+        assertEquals(node.getChildren(), dummy);
+    }
+
+    @Test
+    void testRootCost() {
+        int baseCost = 50;
+
+        // Ensure root cost is: base cost * (depth=0 + 1)
+        assertEquals(baseCost, node.getNodeCost());
+    }
+
+    @Test
+    void testMultipleDepthsCost() {
+        // int baseCost = 50;
+        WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
+        WeaponConfig elecWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
+
+        // Ensures depth1 cost is: base cost * (depth=1 + 1)
+        UpgradeNode child1 = new UpgradeNode(woodhammerConfig, WeaponType.STONEHAMMER);
+        node.addChild(child1);
+        child1.setDepth(1);
+        assertEquals(100, child1.getNodeCost());
+
+        // Ensures depth1 cost is: base cost * (depth=2 + 1)
+        UpgradeNode child2 = new UpgradeNode(elecWrenchConfig, WeaponType.MELEE_WRENCH);
+        child1.addChild(child2);
+        child2.setDepth(2);
+        assertEquals(150, child2.getNodeCost());
+    }
+
+    @Test
+    void testSetXAndGetX() {
         node.setX(5.0f);
         assertEquals(5.0f, node.getX());
     }
 
     @Test
-    public void testSetYAndGetY() {
+    void testSetYAndGetY() {
         node.setY(10.0f);
         assertEquals(10.0f, node.getY());
     }
 
     @Test
-    public void testGetWeaponType() {
+    void testGetWeaponType() {
         assertEquals(WeaponType.STICK, node.getWeaponType());
     }
 }

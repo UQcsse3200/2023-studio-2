@@ -81,7 +81,7 @@ public class Renderer implements Disposable {
       DebugRenderer debugRenderer) {
  
       vertexShader = Gdx.files.internal("shaders/default.vert").readString();
-      fragmentShader = Gdx.files.internal("shaders/greyscale.frag").readString();
+      fragmentShader = Gdx.files.internal("shaders/default.frag").readString();
       shaderProgram = new ShaderProgram(vertexShader,fragmentShader);
 
       if (shaderProgram.getLog().length()!=0){

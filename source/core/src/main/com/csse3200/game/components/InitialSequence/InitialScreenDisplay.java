@@ -13,7 +13,10 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.AlertBox;
+import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +29,7 @@ public class InitialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(InitialScreenDisplay.class);
     private final GdxGame game;
     private BitmapFont font;
-    private static float textAnimationDuration = 50;
+    private static float textAnimationDuration = 30;
     private float spaceSpeed = 5;
     private float planetToTextPadding = 150;
     private Image background;
@@ -113,12 +116,24 @@ public class InitialScreenDisplay extends UIComponent {
         rootTable.add(storyLabel).expandX().center().padTop(150f);
         rootTable.row().padTop(30f);
 
-        // Create a TextButton for continuing
+
         TextButton continueButton = new TextButton("Continue", skin);
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Continue button clicked");
+                String startPlanetName = "Earth";
+                logger.info(String.format("Start game, go to %s", startPlanetName));
+                PlanetScreen planetScreen = new PlanetScreen(game, startPlanetName);
+                ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", planetScreen);
+                game.setScreen(planetScreen);
+
+                AlertBox alertBox = new AlertBox(game," Alert Box", skin);
+                alertBox.showDialog(stage);
+
+                logger.info("Loading Story");
+                TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
+                titleBox.showDialog(stage);
                 game.setScreen(ScreenType.GAME_STORY);
             }
         });

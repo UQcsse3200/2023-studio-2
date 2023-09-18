@@ -9,7 +9,6 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.BotanistAnimationController;
-import com.csse3200.game.components.npc.FireAnimationController;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
@@ -147,31 +146,11 @@ public class NPCFactory {
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
     botanist.addComponent(new InteractableComponent(entity -> {
-      botanist.getComponent(DialogComponent.class).showdialogue("\"Greetings, I am the botanist!\"  \n" +
-              "My name is Adam\nI'm here to help you\nunderstand the planet's flora and fauna", "");
+      botanist.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
     },10f));
 
     botanist.scaleHeight(6.1f);
     return botanist;
-  }
-
-  public static Entity createFire() {
-    AnimationRenderComponent animator =
-            new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/fire.atlas", TextureAtlas.class));
-    animator.addAnimation("image_part1", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("image_part2", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("image_part3", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("image_part4", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("image_part5", 0.01f, Animation.PlayMode.LOOP);
-
-
-    Entity fire =
-            new Entity()
-                    .addComponent(animator)
-                    .addComponent(new FireAnimationController(new AssetManager()));
-
-    return fire;
   }
 
   /**

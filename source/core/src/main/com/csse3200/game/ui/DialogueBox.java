@@ -71,14 +71,14 @@ public class DialogueBox extends Dialog {
         Table customButtonTable = new Table();
         customButtonTable.add(startButton).pad(20f); // Add padding as needed
 
-        TextButton info = new TextButton("Information", skin);
+        TextButton info = new TextButton("Next", skin);
         button(info, true);
         entity.getEvents().addListener("info", this::oninfo);
         info.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("INFO button clicked");
+                        logger.debug("Next button clicked");
                         entity.getEvents().trigger("info");
                     }
                 });
@@ -126,6 +126,14 @@ public class DialogueBox extends Dialog {
     }
 
     private void oninfo(){
+        String nextTitle = "I am here to help you!";
+        String nextMessage = "";
+        DialogueBox nextDialog = new DialogueBox(nextTitle, nextMessage, getSkin());
+
+        // Show the new dialogue box
+        nextDialog.showDialog(getStage());
+
+        // Remove the current dialogue box
         remove();
 
     }

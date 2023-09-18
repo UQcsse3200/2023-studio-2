@@ -141,7 +141,11 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     debugRenderer.drawLine(from, to);
     return true;
   }
-
+  /**
+   * This get method returns a char indicating the position of the target relative to the enemy.
+   * @param destination
+   * @return
+   */
   public char getDirection(Vector2 destination) {
     if (owner.getEntity().getPosition().x - destination.x < 0) {
       return '>';

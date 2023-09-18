@@ -80,6 +80,7 @@ public class Entity {
     this.enabled = enabled;
   }
 
+
   /**
    * Get the entity's game position.
    *

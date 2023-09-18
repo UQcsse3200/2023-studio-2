@@ -133,7 +133,7 @@ public class ProjectileAttackComponent extends Component {
         Gdx.app.postRunnable(entity::dispose);
       }
     }, delay); // Delay based on the dispose animation duration
-
+    timer.cancel();
   }
 
   /**

@@ -176,6 +176,12 @@ public class TouchAttackComponent extends Component {
     leftContact = true;
   }
 
+  /**
+   * This get method returns a char indicating the position of the target relative to the enemy.
+   * @param destination
+   * @return
+   */
+
   public char getDirection(Vector2 destination) {
     if (entity.getPosition().x - destination.x < 0) {
       return '>';

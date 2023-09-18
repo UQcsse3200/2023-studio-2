@@ -92,7 +92,7 @@ public class MapGameArea extends GameArea{
     /**
      * Loads all assets listed in the config file
      */
-    private void loadAssets() {
+    protected void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 

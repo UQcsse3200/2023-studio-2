@@ -9,6 +9,7 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.BotanistAnimationController;
+import com.csse3200.game.components.npc.FireAnimationController;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
@@ -151,6 +152,25 @@ public class NPCFactory {
 
     botanist.scaleHeight(6.1f);
     return botanist;
+  }
+
+  public static Entity createFire() {
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/fire.atlas", TextureAtlas.class));
+    animator.addAnimation("image_part1", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("image_part2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("image_part3", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("image_part4", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("image_part5", 0.01f, Animation.PlayMode.LOOP);
+
+
+    Entity fire =
+            new Entity()
+                    .addComponent(animator)
+                    .addComponent(new FireAnimationController(new AssetManager()));
+
+    return fire;
   }
 
   /**

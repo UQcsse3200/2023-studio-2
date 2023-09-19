@@ -109,7 +109,6 @@ public class EarthGameArea extends GameArea {
             "images/Potion1re.png",
             "images/Potion2re.png",
             "images/Potion3re.png",
-            "images/Potion3re.png",
             "images/Potion4re.png",
             "images/platform.png",
             "images/companiondeathscreen.png",
@@ -442,6 +441,12 @@ public class EarthGameArea extends GameArea {
                 itemsOnMap.add(newPotion);
                 GridPoint2 pos3 = new GridPoint2(41, 21);
                 spawnEntityAt(newPotion, pos3, true, false);
+                return newPotion;
+            case INVINCIBILITY_POTION:
+                newPotion = PotionFactory.createPotion(PotionType.INVINCIBILITY_POTION,player,companion);
+                itemsOnMap.add(newPotion);
+                GridPoint2 pos4 = new GridPoint2(42, 21);
+                spawnEntityAt(newPotion, pos4, true, false);
                 return newPotion;
             default: throw new IllegalArgumentException("You must assign a valid PotionType");
         }

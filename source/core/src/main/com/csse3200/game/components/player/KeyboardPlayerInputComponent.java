@@ -308,7 +308,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         entity.getEvents().trigger("walkStopAnimation", lastDir);
 
 //        the below function call is checking the flag which is in playerWalkSound.java,
-//          whether the player is in static position or walking
+//         whether player is in static position or walking
         playerWalkSound.stopWalking();
         return;
       }

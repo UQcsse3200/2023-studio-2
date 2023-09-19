@@ -27,7 +27,7 @@ public class LabWindow extends Window {
     Table buttonTable;
     Table exit;
 
-    public static LabWindow MakeNewLaboratory(Entity deathpotion) {
+    public static LabWindow MakeNewLaboratory() {
         Texture background = new Texture("images/inventorynew.png");
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new LabWindow(background);

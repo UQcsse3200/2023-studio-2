@@ -48,7 +48,7 @@ public class LaboratoryFactory {
 
             // Check if the laboratory is dead
             if (healthStats.isDead()) {
-                LabWindow labWindow = LabWindow.MakeNewLaboratory(laboratory);
+                LabWindow labWindow = LabWindow.MakeNewLaboratory();
                 ServiceLocator.getRenderService().getStage().addActor(labWindow);
             }
         }, 5f));

@@ -30,7 +30,7 @@ public class PortalFactory {
 
         Entity portal = new Portal(player)
                 .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE))
                 .addComponent(new TextureRenderComponent(config.spritePath));
         portal.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         portal.setScale(1.0f, 1.0f);

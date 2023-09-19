@@ -28,37 +28,35 @@ import com.csse3200.game.services.ServiceLocator;
  * Factory to create a companion entity.
  */
 public class CompanionFactory {
-    private static final CompanionConfig companionConfig =
+    private static final CompanionConfig Config =
             FileLoader.readClass(CompanionConfig.class, "configs/companion.json");
-
     //TODO: REMOVE - LEGACY
     /**
      * Create a Companion entity.
      *
-     * @param playerEntity The player entity to which the companion is associated.
      * @return The created companion entity.
      */
-    public static Entity createCompanion(Entity playerEntity) {
-        return createCompanion(playerEntity, companionConfig);
+    public static Entity createCompanion() {
+        return createCompanion(Config);
     }
 
     /**
      * Create a Companion entity matching the config file
-     * @param playerEntity The player entity to which the companion is associated.
      * @param config Configuration file to match companion to
      * @return The created companion entity.
      */
     // Added a player reference for basic player tracking
-    public static Entity createCompanion(Entity playerEntity, CompanionConfig config) {
+    public static Entity createCompanion(CompanionConfig config) {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForCompanion();
         /*AnimationRenderComponent infanimator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/companionSS.atlas", TextureAtlas.class));*/
+        Entity player = ServiceLocator.getGameArea().getPlayer();
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/Companion_spritesheet.atlas", TextureAtlas.class));
+                        ServiceLocator.getResourceService().getAsset(Config.spritePath, TextureAtlas.class));
         animator.addAnimation("Companion_DownLeft", 0.2f, Animation.PlayMode.LOOP);
         animator.addAnimation("Companion_UpRight", 0.2f, Animation.PlayMode.LOOP);
         animator.addAnimation("Companion_Up", 0.2f, Animation.PlayMode.LOOP);
@@ -85,10 +83,10 @@ public class CompanionFactory {
                         .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
-                        .addComponent(new FollowComponent(playerEntity, 3f))
+                        .addComponent(new FollowComponent(player, 3f))
                         .addComponent(animator)
                         /*.addComponent(infanimator)*/
-                        .addComponent(new CompanionStatsDisplay(playerEntity))
+                        .addComponent(new CompanionStatsDisplay(player))
                         .addComponent(new KeyboardCompanionInputComponent())
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new InteractionControllerComponent(false));

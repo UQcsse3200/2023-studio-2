@@ -105,7 +105,8 @@ public class ForestGameArea extends GameArea {
       "images/solstite.png",
       "images/durasteel.png",
       "images/player.png",
-      "images/ExtractorAnimation.png"
+      "images/ExtractorAnimation.png",
+          "images/Companion_spritesheet.png"
   };
   private static final String[] forestTextureAtlases = {
       "images/terrain_iso_grass.atlas",
@@ -125,7 +126,8 @@ public class ForestGameArea extends GameArea {
       "images/companionSS.atlas",
       "images/player/player.atlas",
       "images/companionSS.atlas",
-      "images/ExtractorAnimation.atlas"
+      "images/ExtractorAnimation.atlas",
+          "images/Companion_spritesheet.atlas"
   };
 
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
@@ -251,7 +253,7 @@ public class ForestGameArea extends GameArea {
   }
 
   private Entity spawnCompanion(Entity playerEntity) {
-    Entity newCompanion = CompanionFactory.createCompanion(playerEntity);
+    Entity newCompanion = CompanionFactory.createCompanion();
     PhysicsComponent playerPhysics = playerEntity.getComponent(PhysicsComponent.class);
     //calculate the player position
     Vector2 playerPosition = playerPhysics.getBody().getPosition();

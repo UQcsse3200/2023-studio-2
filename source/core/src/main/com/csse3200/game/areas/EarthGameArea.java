@@ -191,7 +191,7 @@ public class EarthGameArea extends GameArea {
         spawnShip();
         spawnPlatform();
         this.player = spawnPlayer();
-        this.companion = spawnCompanion(player);
+        this.companion = spawnCompanion();
         /*spawnTurret();*/
         spawnEnemies();
         spawnBoss();
@@ -391,17 +391,14 @@ public class EarthGameArea extends GameArea {
         targetables.add(this.player);
         return this.player;
     }
-    private Entity spawnCompanion(Entity playerEntity) {
-        Entity newCompanion = CompanionFactory.createCompanion(playerEntity);
-        PhysicsComponent playerPhysics = playerEntity.getComponent(PhysicsComponent.class);
-        //calculate the player position
-        Vector2 playerPosition = playerPhysics.getBody().getPosition();
-        spawnEntityAt(newCompanion, COMPANION_SPAWN, true, true);
+    private Entity spawnCompanion() {
+        this.companion = CompanionFactory.createCompanion();
+        spawnEntityAt(this.companion, COMPANION_SPAWN, true, true);
 //        newCompanion.getEvents().addListener("death", () ->
 //                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.COMPANION_DEATH)) // todo: Team 9
 //        );
-        targetables.add(newCompanion);
-        return newCompanion;
+        targetables.add(this.companion);
+        return this.companion;
     }
 
 

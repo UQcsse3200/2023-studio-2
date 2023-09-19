@@ -1,5 +1,6 @@
 package com.csse3200.game.areas.mapConfig;
 
+import com.csse3200.game.entities.configs.CompanionConfig;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 
@@ -12,6 +13,7 @@ import java.util.StringJoiner;
 public class MapConfigLoader {
     private static final String MAIN_PATH = "main.json";
     private static final String PLAYER_PATH = "player.json";
+    private static final String COMPANION_PATH = "companion.json";
     private static final String ENTITIES_PATH = "entities.json";
 
     private static final String FAIL_MESSAGE = "Failed to load config of type ";
@@ -39,9 +41,11 @@ public class MapConfigLoader {
     public static GameAreaConfig loadMapDirectory(String mapDirPath) throws InvalidConfigException {
         String mainPath = joinPath(mapDirPath, MAIN_PATH);
         String playerPath = joinPath(mapDirPath, PLAYER_PATH);
+        String companionPath = joinPath(mapDirPath, COMPANION_PATH);
         String entitiesPath = joinPath(mapDirPath, ENTITIES_PATH);
         GameAreaConfig gameAreaConfig = loadConfigFile(mainPath, GameAreaConfig.class);
         gameAreaConfig.playerConfig = loadConfigFile(playerPath, PlayerConfig.class);
+        gameAreaConfig.companionConfig = loadConfigFile(companionPath, CompanionConfig.class);
         gameAreaConfig.areaEntityConfig = loadEntities(entitiesPath);
         return gameAreaConfig;
     }

@@ -6,7 +6,7 @@ import com.csse3200.game.components.ships.ShipActions;
 import com.csse3200.game.entities.Entity;
 
 /**
- * Represents a power-up component within the game.
+ * Represents the upgrades for ship
  */
 public class ShipUpgradesComponent extends Component {
 
@@ -21,7 +21,8 @@ public class ShipUpgradesComponent extends Component {
     }
 
     /**
-     * Applies the effects of the Powerup to the specified target entity.
+     * Applies the effects of the Upgrade to the specified target entity,
+     * preferably a ship
      *
      * @param ship - the ship to apply the upgrade to
      */

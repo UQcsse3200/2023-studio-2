@@ -46,10 +46,10 @@
     },
     "brown":{
       "hex": "8B4513"
-    }
+    },
     "red": {
-      hex: "#bd0015ff"
-    }
+      "hex": "#bd0015ff"
+    },
     "darkGrey": {
       "hex": "444849ff"
     },
@@ -86,7 +86,7 @@
       "checkboxOff": "grey_box",
       "font": "thin_white",
       "fontColor": "white"
-    }
+    },
     "cross_default": {
       "checkboxOn": "iconCross_beige.png",
       "checkboxOff": "grey_box",

@@ -242,7 +242,7 @@ public class CompanionStatsDisplay extends UIComponent {
     public void dispose() {
         super.dispose();
         companionHealthLabel.remove();
-        playerLowHealthLabel.remove();
+        if (playerLowHealthLabel != null) playerLowHealthLabel.remove();
         companionUIHeaderLabel.remove();
     }
 }

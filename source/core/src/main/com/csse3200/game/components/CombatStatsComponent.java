@@ -5,7 +5,9 @@
  */
 package com.csse3200.game.components;
 
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ public class CombatStatsComponent extends Component {
   private int attackMultiplier;
   private Boolean isImmune;
   private int lives;
+
 
   /**
    * Initializes a CombatStatsComponent with specified attributes.
@@ -86,13 +89,14 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       if (isDead() && entity.getEntityType().equals("player")) {
-        entity.getComponent(KeyboardPlayerInputComponent.class).playerDead();
-        entity.getEvents().trigger("playerDeath");
+        entity.getComponent(KeyboardPlayerInputComponent.class).playerDead(); // Stop player from walking
         final Timer timer = new Timer();
+        entity.getEvents().trigger("playerDeath"); // Trigger death animation
         TimerTask killPlayer = new TimerTask() {
           @Override
           public void run() {
-            entity.getEvents().trigger("deathscreen");
+            entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn
+            entity.getEvents().trigger("death");
             timer.cancel();
             timer.purge();
           }

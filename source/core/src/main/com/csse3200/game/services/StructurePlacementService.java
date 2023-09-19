@@ -38,7 +38,6 @@ public class StructurePlacementService {
 
         return null;
     }
-
     public void placeStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
         entity.willPlace();
         placedStructures.put(tilePos, entity);

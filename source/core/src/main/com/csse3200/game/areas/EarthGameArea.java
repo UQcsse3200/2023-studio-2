@@ -211,7 +211,6 @@ public class EarthGameArea extends GameArea {
         spawnTreeTopLayer();
         spawnBotanist();
         companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
-        spawnSpawner();
         playMusic();
 
         spawnPortal(PORTAL_ONE, 40, 5);
@@ -352,11 +351,6 @@ public class EarthGameArea extends GameArea {
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
         Entity ship = StructureFactory.createShip(game, null); //Doesn't implement windconditions
         spawnEntityAt(ship, spawnPosition, false, false);
-    }
-
-    private void spawnSpawner() {
-        Entity spawner = StructureFactory.createSpawner(targetables);
-        spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
     }
 
     /**

@@ -3,6 +3,7 @@ package com.csse3200.game.components.npc;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.SpawnerConfig;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.entities.factories.EnemyFactory;
@@ -13,8 +14,9 @@ import java.util.ArrayList;
 
 public class SpawnerComponent extends Component {
     private GameTime timer;
+
+    private SpawnerConfig config;
     private long lastTime;
-    private ArrayList<Entity> targets;
     private int currentWave;
     private long waveDelay = 20000; // 20 second delay between enemy waves
     private boolean isSpawning;
@@ -26,10 +28,10 @@ public class SpawnerComponent extends Component {
 
     private int rangedEnemiesToSpawn;
 
-    public SpawnerComponent(ArrayList<Entity> targets) {
+    public SpawnerComponent(SpawnerConfig config) {
         this.timer = new GameTime();
         this.lastTime = timer.getTime();
-        this.targets = targets;
+        this.config = config;
     }
     public boolean isSpawning() {
         return isSpawning;
@@ -98,13 +100,13 @@ public class SpawnerComponent extends Component {
         if (!isSpawning && currentTime - lastTime >= waveDelay) {
             switch (currentWave) {
                 case 0:
-                    spawnEnemies(10, 0);
+                    spawnEnemies(config.wave1[0], config.wave1[1]);
                     break;
                 case 1:
-                    spawnEnemies(10, 5);
+                    spawnEnemies(config.wave2[0], config.wave2[1]);
                     break;
                 case 2:
-                    spawnEnemies(10, 10);
+                    spawnEnemies(config.wave3[0], config.wave3[1]);
                     break;
             }
 

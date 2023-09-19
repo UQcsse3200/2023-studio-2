@@ -296,6 +296,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   /**
    * Triggers walk event
+   * and also trigger the walking sound
    */
   private void triggerWalkEvent() {
     Vector2 lastDir = this.walkDirection.cpy();
@@ -305,6 +306,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       if (dir == directions.None) {
         entity.getEvents().trigger("walkStop");
         entity.getEvents().trigger("walkStopAnimation", lastDir);
+
+//        the below function call is checking the flag which is in playerWalkSound.java,
+//          whether the player is in static postion or walking
         playerWalkSound.stopWalking();
         return;
       }
@@ -320,6 +324,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case DownRight -> entity.getEvents().trigger("walkDownRight");
       }
       entity.getEvents().trigger("walk", walkDirection);
+
+      // play the sound when player starts walking
       playerWalkSound.startWalking();
 
     }

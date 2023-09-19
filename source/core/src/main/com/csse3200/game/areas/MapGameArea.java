@@ -39,6 +39,7 @@ public class MapGameArea extends GameArea{
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
     private Entity playerEntity;
+    private Entity companionEntity;
     private boolean validLoad = true;
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
@@ -75,8 +76,8 @@ public class MapGameArea extends GameArea{
         spawnExtractors();
         spawnShip();
         playerEntity = spawnPlayer();
-        spawnCompanion(playerEntity);
-
+        companionEntity = spawnCompanion();
+        spawnLaboratory();
         spawnEnemies();
         spawnBotanist();
 
@@ -87,6 +88,7 @@ public class MapGameArea extends GameArea{
     public Entity getPlayer() {
         return this.playerEntity;
     }
+    public Entity getCompanion(){return this.companionEntity;}
 
     /**
      * Loads all assets listed in the config file
@@ -249,6 +251,12 @@ public class MapGameArea extends GameArea{
             spawnEntityAt(ship, shipConfig.position, false, false);
         }
     }
+    private void spawnLaboratory(){
+
+        GridPoint2 randomPos = new GridPoint2(34,19);
+        Entity newLaboratory = LaboratoryFactory.createLaboratory();
+        spawnEntityAt(newLaboratory, randomPos, true,false);
+    }
 
     /**
      * Spawns the player at the position given by the config file.
@@ -269,17 +277,15 @@ public class MapGameArea extends GameArea{
 
     /**
      * Spawns the companion at the position given by the config file
-     * @param playerEntity - player that will be accompanied
      */
-    private void spawnCompanion(Entity playerEntity) {
-        if (mapConfig.areaEntityConfig == null) return;
-
+    private Entity spawnCompanion() {
         //Could spawn companion next to player if no position is specified.
         CompanionConfig companionConfig = mapConfig.areaEntityConfig.companion;
+        Entity newCompanion = CompanionFactory.createCompanion(playerEntity, companionConfig);
         if (companionConfig != null) {
-            Entity newCompanion = CompanionFactory.createCompanion(playerEntity, companionConfig);
             spawnEntityAt(newCompanion, companionConfig.position, true, true);
         }
+        return newCompanion;
     }
 
     /**

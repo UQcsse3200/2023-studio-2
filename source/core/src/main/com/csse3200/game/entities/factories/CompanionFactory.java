@@ -6,6 +6,7 @@
  */
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.*;
@@ -51,25 +52,29 @@ public class CompanionFactory {
     public static Entity createCompanion(Entity playerEntity, CompanionConfig config) {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForCompanion();
-        AnimationRenderComponent infanimator =
+        /*AnimationRenderComponent infanimator =
                 new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/companionSS.atlas", TextureAtlas.class));
+                        ServiceLocator.getResourceService().getAsset("images/companionSS.atlas", TextureAtlas.class));*/
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/comp_spritesheet.atlas", TextureAtlas.class));
-        animator.addAnimation("UP", 1f);
-        animator.addAnimation("DOWN", 1f);
-        animator.addAnimation("LEFT", 1f);
-        animator.addAnimation("RIGHT", 1f);
-        animator.addAnimation("UP_RIGHT", 1f);
-        animator.addAnimation("UP_LEFT", 1f);
-        animator.addAnimation("DOWN_RIGHT", 1f);
-        animator.addAnimation("DOWN_LEFT", 1f);
-        infanimator.addAnimation("UP_1", 1f);
+                        ServiceLocator.getResourceService().getAsset("images/Companion_spritesheet.atlas", TextureAtlas.class));
+        animator.addAnimation("Companion_DownLeft", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_UpRight", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_Up", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_Left", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_DownRight", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_Down", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_UpLeft", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_Right", 0.2f, Animation.PlayMode.LOOP);
+      /*  animator.addAnimation("Companion_StandDown", 0.2f);
+        animator.addAnimation("Companion_StandUp", 0.2f);
+        animator.addAnimation("Companion_StandLeft", 0.2f);
+        animator.addAnimation("Companion_StandRight", 0.2f);*/
+       /* infanimator.addAnimation("UP_1", 1f);
         infanimator.addAnimation("DOWN_1", 1f);
         infanimator.addAnimation("RIGHT_1", 1f);
-        infanimator.addAnimation("LEFT_1", 1f);
+        infanimator.addAnimation("LEFT_1", 1f);*/
 
         Entity companion =
                 new Entity()
@@ -80,16 +85,17 @@ public class CompanionFactory {
                         .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
-                        .addComponent(new FollowComponent(playerEntity, 1.4f))
+                        .addComponent(new FollowComponent(playerEntity, 3f))
                         .addComponent(animator)
-                        .addComponent(infanimator)
+                        /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay(playerEntity))
                         .addComponent(new KeyboardCompanionInputComponent())
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new InteractionControllerComponent(false));
 
-//        animator.startAnimation("DOWN");
-        infanimator.startAnimation("RIGHT_1");
+       /* animator.startAnimation("Companion_StandDown");*/
+        animator.startAnimation("Companion_Down");
+
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
         companion.scaleHeight(0.9f);

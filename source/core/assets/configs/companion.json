@@ -5,5 +5,5 @@
   "attackMultiplier": 1,
   "isImmune": false,
   "gold": 10,
-  "spritePath": "images/comp_spritesheet.atlas"
+  "spritePath": "images/Companion_spritesheet.atlas"
 }

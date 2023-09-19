@@ -253,10 +253,11 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
      * Triggers the walk event for the companion based on the current walk direction.
      * If the walk direction is zero, it triggers the walkStop event.
      */
-    private void triggerWalkEvent() {
+    private void triggerWalkEvent() {;
         if (this.getTesting() == 0) {
             if (walkDirection.epsilonEquals(Vector2.Zero)) {
                 entity.getEvents().trigger("walkStop");
+                /*entity.getEvents().trigger("walkStopAnimation");*/
             } else {
                 if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
                     entity.getEvents().trigger("walkUpLeft");
@@ -294,4 +295,5 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         }
         return angle;
     }
+
 }

@@ -47,6 +47,14 @@ public class playerActionSound {
     }
 
     /**
+     * playDodgeSound plays the sound when player do dodge
+     */
+    public void playDodgeSound() {
+//        playing Dodge Sound
+        dodgeSound.play();
+    }
+
+    /**
      * The dispose method should be called when the sound manager
      * is no longer needed to release system resources.
      */

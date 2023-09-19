@@ -342,7 +342,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * @return
    */
   public int triggerDodgeEvent() {
-    final Timer timer = new Timer();
+
+      final Timer timer = new Timer();
     this.walkDirection = keysToVector().scl(DODGE_SPEED);
     directions dir = keysToDirection();
 
@@ -359,6 +360,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
     entity.getEvents().trigger("walk", walkDirection);
     entity.getEvents().trigger("dodged");
+
+//  play the sound when player starts dodging
+    playerDodgeSound.playDodgeSound();
 
     java.util.TimerTask stopDodge = new java.util.TimerTask() {
       @Override

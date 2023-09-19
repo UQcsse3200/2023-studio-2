@@ -113,7 +113,7 @@ public class CompanionStatsDisplay extends UIComponent {
      */
     public void setInvincibleImage() {
         AnimationRenderComponent infanimator = ServiceLocator.getGameArea().getCompanion().getComponent(AnimationRenderComponent.class);
-        infanimator.startAnimation("LEFT");
+        infanimator.startAnimation("LEFT_1");
     }
 
     /**

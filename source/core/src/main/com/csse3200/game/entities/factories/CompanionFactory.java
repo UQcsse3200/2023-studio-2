@@ -88,7 +88,7 @@ public class CompanionFactory {
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new InteractionControllerComponent(false));
 
-        animator.startAnimation("DOWN");
+//        animator.startAnimation("DOWN");
         infanimator.startAnimation("RIGHT_1");
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);

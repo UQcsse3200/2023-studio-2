@@ -105,8 +105,7 @@ public class EarthGameArea extends GameArea {
             "images/upgradetree/exit.png",
             "images/deathpotion.png",
             "images/potion2.png",
-            "images/potion3.png","images/companionSS_1.png","images/companionSS_0.png",
-            "images/companionSS.png",
+            "images/potion3.png",
             "images/Potion1re.png",
             "images/Potion2re.png",
             "images/Potion3re.png",
@@ -119,7 +118,8 @@ public class EarthGameArea extends GameArea {
             "images/durasteel.png",
             "images/f_button.png",
             "images/ExtractorAnimation.png",
-            "images/player/player.png"
+            "images/player/player.png",
+            "images/Companion_spritesheet.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",
@@ -136,14 +136,13 @@ public class EarthGameArea extends GameArea {
             "images/structures/dirt_wall.atlas",
             "images/structures/stone_wall.atlas",
             "images/botanist.atlas",
-            "images/comp_spritesheet.atlas",
             "images/weapons/slingshot.atlas",
             "images/player/player.atlas",
-            "images/companionSS.atlas",
             "images/enemy/bull.atlas",
             "images/enemy/Night.atlas",
             "images/ExtractorAnimation.atlas",
-            "images/botanist.atlas"
+            "images/botanist.atlas",
+            "images/Companion_spritesheet.atlas"
     };
 
     private static final String[] earthSounds = {

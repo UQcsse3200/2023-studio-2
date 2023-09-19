@@ -4,6 +4,13 @@ size: 1024, 32
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+Companion_StandUp
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 Companion_Up
   rotate: false
   xy: 0, 0
@@ -56,6 +63,13 @@ Companion_UpLeft
 Companion_UpLeft
   rotate: false
   xy: 224, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Companion_StandLeft
+  rotate: false
+  xy: 256, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -116,6 +130,13 @@ Companion_DownLeft
   orig: 32, 32
   offset: 0, 0
   index: -1
+Companion_StandDown
+  rotate: false
+  xy: 512, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 Companion_Down
   rotate: false
   xy: 512, 0
@@ -172,9 +193,9 @@ Companion_DownRight
   orig: 32, 32
   offset: 0, 0
   index: -1
-Companion_Right
+Companion_StandRight
   rotate: false
-  xy: 768, 0
+  xy: 800, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

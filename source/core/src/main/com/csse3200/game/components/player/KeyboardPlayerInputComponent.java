@@ -293,6 +293,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * Triggers walk event
    */
   private void triggerWalkEvent() {
+      Entity companion = ServiceLocator.getGameArea().getCompanion();
     Vector2 lastDir = this.walkDirection.cpy();
     this.walkDirection = keysToVector().scl(WALK_SPEED);
     if (this.getTesting() == 0) {
@@ -304,14 +305,23 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       }
 
       switch (dir) {
-        case Up -> entity.getEvents().trigger("walkUp");
-        case Down -> entity.getEvents().trigger("walkDown");
-        case Left -> entity.getEvents().trigger("walkLeft");
-        case Right -> entity.getEvents().trigger("walkRight");
-        case UpLeft -> entity.getEvents().trigger("walkUpLeft");
-        case UpRight -> entity.getEvents().trigger("walkUpRight");
-        case DownLeft -> entity.getEvents().trigger("walkDownLeft");
-        case DownRight -> entity.getEvents().trigger("walkDownRight");
+        case Up -> {entity.getEvents().trigger("walkUp");
+            companion.getEvents().trigger("walkUp");}
+        case Down -> {entity.getEvents().trigger("walkDown");
+            companion.getEvents().trigger("walkDown");}
+        case Left -> {
+            entity.getEvents().trigger("walkLeft");
+            companion.getEvents().trigger("walkLeft");}
+        case Right -> {entity.getEvents().trigger("walkRight");
+            companion.getEvents().trigger("walkRight");}
+        case UpLeft -> {entity.getEvents().trigger("walkUpLeft");
+            companion.getEvents().trigger("walkUpLeft");}
+        case UpRight -> {entity.getEvents().trigger("walkUpRight");
+          companion.getEvents().trigger("walkUpRight");}
+        case DownLeft ->{ entity.getEvents().trigger("walkDownLeft");
+            companion.getEvents().trigger("walkDownLeft");}
+        case DownRight ->{ entity.getEvents().trigger("walkDownRight");
+            companion.getEvents().trigger("walkDownLeft");}
       }
       entity.getEvents().trigger("walk", walkDirection);
     }

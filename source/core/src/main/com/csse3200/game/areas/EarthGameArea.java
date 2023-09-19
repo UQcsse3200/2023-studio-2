@@ -393,6 +393,9 @@ public class EarthGameArea extends GameArea {
     }
     private Entity spawnCompanion() {
         this.companion = CompanionFactory.createCompanion();
+        /*this.companion.getEvents().addListener("death", () ->
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.COMPANION_DEATH))
+        );*/
         spawnEntityAt(this.companion, COMPANION_SPAWN, true, true);
 //        newCompanion.getEvents().addListener("death", () ->
 //                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.COMPANION_DEATH)) // todo: Team 9

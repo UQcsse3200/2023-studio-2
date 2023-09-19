@@ -12,6 +12,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.*;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
+import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionConfig;
 import com.csse3200.game.files.FileLoader;
@@ -65,10 +66,10 @@ public class CompanionFactory {
         animator.addAnimation("Companion_Down", 0.2f, Animation.PlayMode.LOOP);
         animator.addAnimation("Companion_UpLeft", 0.2f, Animation.PlayMode.LOOP);
         animator.addAnimation("Companion_Right", 0.2f, Animation.PlayMode.LOOP);
-      /*  animator.addAnimation("Companion_StandDown", 0.2f);
+        animator.addAnimation("Companion_StandDown", 0.2f);
         animator.addAnimation("Companion_StandUp", 0.2f);
         animator.addAnimation("Companion_StandLeft", 0.2f);
-        animator.addAnimation("Companion_StandRight", 0.2f);*/
+        animator.addAnimation("Companion_StandRight", 0.2f);
        /* infanimator.addAnimation("UP_1", 1f);
         infanimator.addAnimation("DOWN_1", 1f);
         infanimator.addAnimation("RIGHT_1", 1f);
@@ -88,11 +89,11 @@ public class CompanionFactory {
                         /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay(player))
                         .addComponent(new KeyboardCompanionInputComponent())
-                        .addComponent(new CompanionAnimationController())
+                        .addComponent(new PlayerAnimationController())
                         .addComponent(new InteractionControllerComponent(false));
 
        /* animator.startAnimation("Companion_StandDown");*/
-        animator.startAnimation("Companion_Down");
+        animator.startAnimation("Companion_StandDown");
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
         companion.scaleHeight(0.9f);

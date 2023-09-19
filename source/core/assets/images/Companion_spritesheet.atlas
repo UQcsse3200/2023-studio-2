@@ -195,7 +195,14 @@ Companion_DownRight
   index: -1
 Companion_StandRight
   rotate: false
-  xy: 800, 0
+  xy: 768, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Companion_Right
+  rotate: false
+  xy: 768, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

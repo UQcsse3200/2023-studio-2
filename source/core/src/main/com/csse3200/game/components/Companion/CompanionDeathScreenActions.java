@@ -2,6 +2,7 @@ package com.csse3200.game.components.Companion;
 
 import com.badlogic.gdx.math.Plane;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.ServiceLocator;
@@ -50,6 +51,11 @@ public class CompanionDeathScreenActions extends Component {
      */
     private void onRespawn() {
         logger.info("Relaunching main game screen");
-        game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+
+        // Get the current planet screen from the GameStateObserverService.
+        PlanetScreen currentPlanetScreen = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
+            game.setScreen(currentPlanetScreen);
+            ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setHealth(100);
+
     }
 }

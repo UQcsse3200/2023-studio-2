@@ -36,6 +36,7 @@ public class CompanionAnimationController extends Component {
         entity.getEvents().addListener("walkUpRight", this::animateUpRight);
         entity.getEvents().addListener("walkDownLeft", this::animateDownLeft);
         entity.getEvents().addListener("walkDownRight", this::animateDownRight);
+        entity.getEvents().addListener("walkStopAnimation", this::animateStop);
        /* entity.getEvents().addListener("walkStopAnimation", this::animateStop);*/
     }
 
@@ -122,7 +123,7 @@ public class CompanionAnimationController extends Component {
     void animateDownRight() {
         animator.startAnimation("Companion_DownRight");
     }
-   /* void animateStop(Vector2 lastDirection) {
+    void animateStop(Vector2 lastDirection) {
         if (lastDirection.x < -0.1) {
             animator.startAnimation("Companion_StandLeft");
         } else if (lastDirection.x > 0.1) {
@@ -132,5 +133,5 @@ public class CompanionAnimationController extends Component {
         } else if (lastDirection.y < -0.1){
             animator.startAnimation("Companion_StandDown");
         }
-    }*/
+    }
 }

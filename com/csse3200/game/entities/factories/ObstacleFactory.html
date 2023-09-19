@@ -92,9 +92,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static float</code></div>
-<div class="col-second even-row-color"><code><a href="#WALL_SIZE" class="member-name-link">WALL_SIZE</a></code></div>
+<div class="col-first even-row-color"><code>protected static <a href="../../areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></code></div>
+<div class="col-second even-row-color"><code><a href="#terrain" class="member-name-link">terrain</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static float</code></div>
+<div class="col-second odd-row-color"><code><a href="#WALL_SIZE" class="member-name-link">WALL_SIZE</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -180,9 +183,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a tree entity.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createWall(float,float)" class="member-name-link">createWall</a><wbr>(float&nbsp;width,
- float&nbsp;height)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTreeTop()" class="member-name-link">createTreeTop</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a tree top entity.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createWall(float,float)" class="member-name-link">createWall</a><wbr>(float&nbsp;width,
+ float&nbsp;height)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates an invisible physics wall.</div>
 </div>
 </div>
@@ -206,6 +214,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="WALL_SIZE">
 <h3>WALL_SIZE</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">WALL_SIZE</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="terrain">
+<h3>terrain</h3>
+<div class="member-signature"><span class="modifiers">protected static</span>&nbsp;<span class="return-type"><a href="../../areas/terrain/TerrainComponent.html" title="class in com.csse3200.game.areas.terrain">TerrainComponent</a></span>&nbsp;<span class="element-name">terrain</span></div>
 </section>
 </li>
 </ul>
@@ -265,6 +279,17 @@ loadScripts(document, 'script');</script>
 <dd><code>posY</code> - the relative y coordinate of the top left corner of the collision box</dd>
 <dt>Returns:</dt>
 <dd>Environment entity with the set collision box</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createTreeTop()">
+<h3>createTreeTop</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createTreeTop</span>()</div>
+<div class="block">Creates a tree top entity.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>entity</dd>
 </dl>
 </section>
 </li>

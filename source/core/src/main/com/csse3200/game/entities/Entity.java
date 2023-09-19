@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
-import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -42,6 +41,7 @@ public class Entity {
   private Vector2 scale = new Vector2(1, 1);
   private float rotation = 0;
   private Array<Component> createdComponents;
+
 
   public Entity() {
     this.entityType = "";

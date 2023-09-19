@@ -43,9 +43,8 @@
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
-    "map/portal.png",
     "images/sling_shot.png",
-    "images/fireAnim.png"
+    "map/portal.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -57,12 +56,12 @@
     "images/structures/dirt_wall.atlas",
     "images/botanist.atlas",
     "images/boss_enemy.atlas",
+    "images/botanist.atlas",
     "images/player/player.atlas",
     "images/weapons/wrench.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
-    "images/botanist.atlas",
-    "images/fire.atlas"
+    "images/botanist.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav"
@@ -70,7 +69,7 @@
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 
   "mapName": "Planet Earth",
-  "terrainPath": "map/base.tmx",
+  "terrainPath": "map/map1.tmx",
   "winConditions": [
     {
       "resource": "Solstite",

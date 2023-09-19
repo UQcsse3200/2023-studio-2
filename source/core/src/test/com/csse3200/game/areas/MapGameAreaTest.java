@@ -103,7 +103,7 @@ class MapGameAreaTest {
     }
 
     @Test
-    void loadAnUnloadTexturePaths() {
+    void loadAndUnloadTexturePaths() {
         gameAreaConfig.texturePaths = new String[] {"Texture3.png", "Texture4.png"};
         //Load the gameAreaConfig regardless of method.
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapDirectory(any())).thenReturn(gameAreaConfig);

@@ -111,17 +111,17 @@ public class CompanionStatsDisplay extends UIComponent {
     /**
      * Set the companion's image to an invincible state.
      */
-    public void setInvincibleImage() {
+    /*public void setInvincibleImage() {
         AnimationRenderComponent infanimator = ServiceLocator.getGameArea().getCompanion().getComponent(AnimationRenderComponent.class);
         infanimator.startAnimation("LEFT_1");
-    }
+    }*/
 
     /**
      * Toggle invincibility for the companion.
      */
     public void toggleInvincibility() {
         if (isInvincible) {
-            setInvincibleImage();
+            /*setInvincibleImage();*/
             isInvincible = false;
 
             // Schedule a task to reset the image after a delay (e.g., 10 seconds)
@@ -147,9 +147,6 @@ public class CompanionStatsDisplay extends UIComponent {
      */
     public void toggleInfiniteHealth() {
         if (isInfiniteHealth) {
-            int maxHealth = Integer.MAX_VALUE;
-//            ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setHealth(maxHealth);
-//            ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).setHealth(maxHealth);
             ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setImmunity(true);
             ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(true);
             isInfiniteHealth = false;

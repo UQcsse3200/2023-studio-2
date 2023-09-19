@@ -213,12 +213,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   /**
-   * Function to repond to player mouse press
+   * Function to respond to player mouse press
    * @param screenX - X position on screen that mouse was pressed
    * @param screenY - Y position on screen that mouse was pressed
    * @param pointer -
    * @param button  - Button that pas pressed
-   * @return - True or false based on if an acction occured
+   * @return - True or false based on if an action occurred
    */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -381,8 +381,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   /**
    * Responsible for dodge action
-   * Triggers when the spacebar is clicked.
-   * Cooldown of 3000 ms.
+   * Triggers when the spacer is clicked.
+   * Cool down of 3000 ms.
    */
   public void dodge() {
     dodge_available = false;

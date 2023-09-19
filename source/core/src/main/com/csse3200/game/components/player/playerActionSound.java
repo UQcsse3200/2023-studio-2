@@ -8,17 +8,20 @@ import com.badlogic.gdx.audio.Sound;
  * It provides the method such as start, stop and dispose of the sound
  */
 
-public class playerWalkSound {
+public class playerActionSound {
     private Sound walkingSound; // sound object for walking sound effect
+
+    private Sound dodgeSound; // sound object for dodging sound effect
     private boolean isWalking; // Flag to track whether the player is currently walking
 
     /**
      *
-     * @param walkSoundFile
-     * this parameter denotes the walking sound audio file
+     * @param SoundFile
+     * this parameter denotes the walking and dodging audio file
      */
-    public playerWalkSound(String walkSoundFile) {
-        walkingSound = Gdx.audio.newSound(Gdx.files.internal(walkSoundFile));
+    public playerActionSound(String SoundFile) {
+        walkingSound = Gdx.audio.newSound(Gdx.files.internal(SoundFile));
+        dodgeSound = Gdx.audio.newSound(Gdx.files.internal(SoundFile));
     }
 
     /**
@@ -33,7 +36,7 @@ public class playerWalkSound {
     }
 
     /**
-     * This stoptWalking method is checking whether the player is walking or not.
+     * This stopWalking method is checking whether the player is walking or not.
      * of player is not walking, the below method will stop the sound.
      */
     public void stopWalking() {
@@ -49,5 +52,6 @@ public class playerWalkSound {
      */
     public void dispose() {
         walkingSound.dispose();
+        dodgeSound.dispose();
     }
 }

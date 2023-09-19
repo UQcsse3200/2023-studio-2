@@ -2,6 +2,7 @@ package com.csse3200.game.areas.mapConfig;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.entities.configs.BaseEntityConfig;
+import com.csse3200.game.entities.configs.CompanionConfig;
 import com.csse3200.game.entities.configs.PlayerConfig;
 
 import java.util.*;
@@ -20,6 +21,7 @@ public class GameAreaConfig {
     public String terrainPath = "map/base.tmx";
     public List<ResourceCondition> winConditions = null;
     public PlayerConfig playerConfig = null;
+    public CompanionConfig companionConfig = null;
 
     public AreaEntityConfig areaEntityConfig = null;
 
@@ -55,6 +57,7 @@ public class GameAreaConfig {
         if (!Objects.equals(terrainPath, that.terrainPath)) return false;
         if (!Objects.equals(winConditions, that.winConditions))
             return false;
+        if (!Objects.equals(companionConfig, that.companionConfig)) return false;
         if (!Objects.equals(playerConfig, that.playerConfig)) return false;
         return Objects.equals(areaEntityConfig, that.areaEntityConfig);
     }
@@ -69,6 +72,7 @@ public class GameAreaConfig {
         result = 31 * result + (terrainPath != null ? terrainPath.hashCode() : 0);
         result = 31 * result + (winConditions != null ? winConditions.hashCode() : 0);
         result = 31 * result + (playerConfig != null ? playerConfig.hashCode() : 0);
+        result = 31 * result + (companionConfig != null ? companionConfig.hashCode() : 0);
         result = 31 * result + (areaEntityConfig != null ? areaEntityConfig.hashCode() : 0);
         return result;
     }

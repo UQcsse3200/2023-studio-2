@@ -280,10 +280,9 @@ public class MapGameArea extends GameArea{
      */
     private Entity spawnCompanion() {
         //Could spawn companion next to player if no position is specified.
-        CompanionConfig companionConfig = mapConfig.areaEntityConfig.companion;
-        Entity newCompanion = CompanionFactory.createCompanion(playerEntity, companionConfig);
-        if (companionConfig != null) {
-            spawnEntityAt(newCompanion, companionConfig.position, true, true);
+        Entity newCompanion = CompanionFactory.createCompanion(mapConfig.companionConfig);
+        if (mapConfig.companionConfig != null) {
+            spawnEntityAt(newCompanion, mapConfig.companionConfig.position, true, true);
         }
         return newCompanion;
     }

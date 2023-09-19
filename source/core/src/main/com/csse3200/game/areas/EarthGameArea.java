@@ -134,7 +134,8 @@ public class EarthGameArea extends GameArea {
             "images/player/statbar.png",
             "images/player/widestatbar.png",
             "images/player/planet-frame.png",
-            "images/player/bar-fill.png"
+            "images/player/bar-fill.png",
+            "images/space_navigation_planet_0.png"
     };
     private static final String[] earthTextureAtlases = {
             "images/terrain_iso_grass.atlas",

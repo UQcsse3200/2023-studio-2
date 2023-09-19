@@ -96,7 +96,7 @@ public class PlayerFactory {
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
             .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
-            .addComponent(new PlayerStatsDisplay())
+            .addComponent(new PlayerStatsDisplay(config.mapName))
             .addComponent(animator)
             .addComponent(new PlayerAnimationController())
             .addComponent(new WeaponComponent())

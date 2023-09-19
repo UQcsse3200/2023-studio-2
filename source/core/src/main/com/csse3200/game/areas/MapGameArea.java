@@ -258,13 +258,22 @@ public class MapGameArea extends GameArea{
      * @return The player entity created
      */
     private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer(mapConfig.playerConfig);
+        Entity newPlayer;
+        if (mapConfig.areaEntityConfig != null &&
+                mapConfig.areaEntityConfig.player != null) {
+            newPlayer = PlayerFactory.createPlayer(mapConfig.areaEntityConfig.player);
+        } else {
+            logger.info("Player not found in config file - creating generic player");
+            newPlayer = PlayerFactory.createPlayer();
+        }
+
         newPlayer.getEvents().addListener("death", () ->
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
         );
         ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", newPlayer);
-        if (mapConfig.playerConfig != null && mapConfig.playerConfig.position != null) {
-            spawnEntityAt(newPlayer, mapConfig.playerConfig.position, true, true);
+
+        if (mapConfig.areaEntityConfig.player.position != null) {
+            spawnEntityAt(newPlayer, mapConfig.areaEntityConfig.player.position, true, true);
         } else {
             //If no position specified spawn in middle of map.
             GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);

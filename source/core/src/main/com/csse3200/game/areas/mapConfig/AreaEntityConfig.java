@@ -25,6 +25,7 @@ public class AreaEntityConfig {
     public UpgradeBenchConfig upgradeBench = null;
     public List<WallConfig> walls = new ArrayList<>();
     public List<WeaponConfig> weapons = new ArrayList<>();
+    public PlayerConfig player = new PlayerConfig();
 
     /**
      * Returns a list of all config entities in the game area
@@ -47,6 +48,7 @@ public class AreaEntityConfig {
         if (upgradeBench != null) entities.add(upgradeBench);
         entities.addAll(walls);
         entities.addAll(weapons);
+        if (player != null) entities.add(player);
         return entities;
     }
 

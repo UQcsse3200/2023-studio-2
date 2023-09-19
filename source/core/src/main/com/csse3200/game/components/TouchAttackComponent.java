@@ -9,9 +9,7 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.ui.DialogComponent;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.badlogic.gdx.utils.Timer;
 
 /**
  * TouchAttackComponent is responsible for dealing damage and applying knockback to entities when
@@ -29,7 +27,6 @@ public class TouchAttackComponent extends Component {
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
   private boolean leftContact;
-  private Timer triggerTimer;
 
   /**
    * Creates a TouchAttackComponent that attacks entities on collision, without knockback.
@@ -66,13 +63,7 @@ public class TouchAttackComponent extends Component {
     leftContact = true;
 
   }
-
-  /**
-   * Handles collision start events and applies damage and knockback to the target entity.
-   *
-   * @param me The fixture associated with this entity's hitbox.
-   * @param other The fixture of the colliding entity.
-   */
+  
   /**
    * Initial collision between current entity and target entity.
    * Deals single instance of damage when hit by enemy.
@@ -103,7 +94,22 @@ public class TouchAttackComponent extends Component {
       return;
     }
 
-    hitOnce(target, source, sourceStats, targetStats);
+    // Targeting STRUCTURE entity type
+    if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+      // Schedule the trigger every 2 seconds
+      Timer.Task task = new Timer.Task() {
+        @Override
+        public void run() {
+          if (!leftContact) {
+            hitOnce(target, source, sourceStats, targetStats);
+          }
+        }
+      };
+      Timer.schedule(task, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
+    } else {
+      // hit once, push away
+      hitOnce(target, source, sourceStats, targetStats);
+    }
   }
 
   /**

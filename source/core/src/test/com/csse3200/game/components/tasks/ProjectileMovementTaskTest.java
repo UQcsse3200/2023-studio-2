@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.ai.tasks.Task;
-import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.ProjectileAttackComponent;
 import com.csse3200.game.entities.Entity;

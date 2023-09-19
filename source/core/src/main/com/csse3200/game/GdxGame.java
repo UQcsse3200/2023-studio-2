@@ -103,14 +103,17 @@ public class GdxGame extends Game {
         return new UpgradeShopScreen(this);
       case CONTROL_SCREEN:
         return new ControlsScreen(this);
+      case INITIALL_SCREEN:
+        return new InitialScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME, GAME_STORY,
-    PLAYER_DEATH, COMPANION_DEATH, NAVIGATION_SCREEN, INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP
+
+    MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME,
+    GAME_STORY, PLAYER_DEATH,COMPANION_DEATH, NAVIGATION_SCREEN ,INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIALL_SCREEN
 
   }
   /**

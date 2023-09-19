@@ -28,7 +28,7 @@ class PlayerDeathScreenTest {
         java.util.TimerTask testScreen = new java.util.TimerTask() {
             @Override
             public void run() {
-                // assertEquals(PLAYER_DEATH, game.getScreenType());
+                assertEquals(PLAYER_DEATH, game.getScreenType());
                 timer.cancel();
                 timer.purge();
             }

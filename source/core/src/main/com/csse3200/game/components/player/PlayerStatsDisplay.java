@@ -3,10 +3,7 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -27,16 +24,21 @@ public class PlayerStatsDisplay extends UIComponent {
   private ProgressBar DodgeBar;
   private float healthWidth = 1000f;
 
+  private Label mapLabel;
   private Label healthLabel;
   private Label dodgeLabel;
   private Label livesLabel;
 
   private Image planetImageFrame;
+  private Image planetImage;
   private Image healthBarFrame;
+  private Image healthBarFill;
   private Image dodgeBarFrame;
   private Image livesBarFrame;
 
-
+  public PlayerStatsDisplay(String mapName) {
+    mapLabel = new Label(mapName, skin, "small");
+  }
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -58,7 +60,7 @@ public class PlayerStatsDisplay extends UIComponent {
     container = new Table();
     container.top().left();
     container.setFillParent(true);
-    container.padTop(45f).padLeft(5f);
+    container.padTop(5f).padLeft(5f);
 
     planetTable = new Table();
 
@@ -79,10 +81,11 @@ public class PlayerStatsDisplay extends UIComponent {
 
     //ADDING IMAGES
     planetImageFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/planet-frame.png", Texture.class));
+    planetImage = new Image(ServiceLocator.getResourceService().getAsset("images/space_navigation_planet_0.png", Texture.class));
     healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
+    healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
     dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
-
 
 
     //health Bar
@@ -105,18 +108,10 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.setDebug(true);
     healthBar.setPosition(10, Gdx.graphics.getHeight()  - healthBar.getHeight());
 
-    // Heart image
-    float heartSideLength = 30f;
-    heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
-
-    // Health text
-
-
     // Dodge Text for cool down
     //int dodge = entity.getComponent(KeyboardPlayerInputComponent.class).triggerDodgeEvent();
     //CharSequence dodgeText = String.format("Dodge Cool down : %d" , dodge);
     //DodgeLabel = new Label(dodgeText, skin, "small");
-
 
     // Dodge Cool down Bar
     //DodgeBar = new ProgressBar(0, 100, 1, false, skin);
@@ -129,19 +124,28 @@ public class PlayerStatsDisplay extends UIComponent {
     //DodgeBar.setWidth(200f);
     //DodgeBar.setDebug(true);
 
-    planetTable.add(planetImageFrame).size(150f, 190f).pad(5);
-
-
     //Player lives text
     //int lives = entity.getComponent(CombatStatsComponent.class).getLives();
     //CharSequence livesText = String.format("Lives Left: %d", lives);
     //livesLabel = new Label(livesText, skin, "small");
 
-    //statsTable.add(heartImage).size(heartSideLength).pad(5);
-    //
-    //statsTable.add(healthBar).padLeft(20);
 
-    statsTable.add(healthBarFrame).size(300f, 40f).pad(5);
+
+    Table labelTable = new Table();
+    labelTable.add(planetImage).size(140f).padLeft(5f).padBottom(8f).padTop(-2f);
+    labelTable.row();
+    labelTable.add(mapLabel);
+
+    Stack planetStack = new Stack();
+    planetStack.add(planetImageFrame);
+    planetStack.add(labelTable);
+    planetTable.add(planetStack).size(180f, 225f);
+    planetTable.row();
+
+    Stack healthStack = new Stack();
+    healthStack.add(healthBarFrame);
+    healthStack.add(healthBarFill);
+    statsTable.add(healthStack).size(300f, 40f).pad(5);
     statsTable.add(healthLabel).left();
 
     statsTable.row();
@@ -152,15 +156,9 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable.add(livesBarFrame).size(300f, 58f).pad(5);
 
 
-//    table1.add(DodgeLabel);
-//    table1.add(DodgeBar);
-//    table2.add(livesLabel);
-
     container.add(planetTable);
     container.add(statsTable);
     stage.addActor(container);
-    //stage.addActor(table1);
-    //stage.addActor(table2);
   }
 
   @Override

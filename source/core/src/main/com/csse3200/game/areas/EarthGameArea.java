@@ -339,7 +339,7 @@ public class EarthGameArea extends GameArea {
 
     private void displayUI() {
         Entity ui = new Entity();
-        ui.addComponent(new GameAreaDisplay("Planet Earth"));
+        //ui.addComponent(new GameAreaDisplay("Planet Earth"));
         spawnEntity(ui);
     }
 

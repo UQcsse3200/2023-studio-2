@@ -37,11 +37,16 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     private InventoryComponent playerInventory;
     private int testing = 0;
 
+    private playerWalkSound playerWalkSound;
+
     static HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
     Vector2 lastMousePos = new Vector2(0, 0);
 
     public KeyboardPlayerInputComponent() {
         super(5);
+
+//        Initialisation of the playerWalkSound with the correct sound file
+        playerWalkSound = new playerWalkSound("sounds/footStepsInTheForestGround.mp3");
     }
 
     /**
@@ -300,6 +305,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       if (dir == directions.None) {
         entity.getEvents().trigger("walkStop");
         entity.getEvents().trigger("walkStopAnimation", lastDir);
+        playerWalkSound.stopWalking();
         return;
       }
 
@@ -314,6 +320,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case DownRight -> entity.getEvents().trigger("walkDownRight");
       }
       entity.getEvents().trigger("walk", walkDirection);
+      playerWalkSound.startWalking();
+
     }
     }
 

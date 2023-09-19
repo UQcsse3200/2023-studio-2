@@ -102,22 +102,8 @@ public class TouchAttackComponent extends Component {
     if (target.getComponent(HitboxComponent.class) == null) {
       return;
     }
-    // Targeting STRUCTURE entity type
-    if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-      triggerTimer = new Timer();
-      // Schedule the trigger every 2 seconds
-      triggerTimer.scheduleAtFixedRate(new TimerTask() {
-        @Override
-        public void run() {
-          if (!leftContact) {
-            hitOnce(target, source, sourceStats, targetStats);
-          }
-        }
-      }, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
-    } else {
-      //hit once, push away
-      hitOnce(target, source, sourceStats, targetStats);
-    }
+
+    hitOnce(target, source, sourceStats, targetStats);
   }
 
   /**
@@ -144,15 +130,6 @@ public class TouchAttackComponent extends Component {
         }
       }
 
-      // Gives a delay every time there is a collision for the
-      // attack animation to complete
-      Timer timer = new Timer();
-      timer.schedule(new TimerTask() {
-        @Override
-        public void run() {
-          targetStats.hit(combatStats);
-        }
-      }, 2000);
       targetStats.hit(combatStats);
 
       // Apply knockback

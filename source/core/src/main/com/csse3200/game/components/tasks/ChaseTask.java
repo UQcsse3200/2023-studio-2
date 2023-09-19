@@ -9,10 +9,8 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
-
+import com.badlogic.gdx.utils.Timer;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /** Chases a target entity until they get too far away or line of sight is lost */
 public class ChaseTask extends DefaultTask implements PriorityTask {
@@ -74,8 +72,8 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     if(direction == '>'||direction == '='){
       this.owner.getEntity().getEvents().trigger("chaseStart");
     }
-    Timer timer = new Timer();
-    timer.schedule(new TimerTask() {
+
+    Timer.schedule(new Timer.Task(){
       @Override
       public void run() {
         if(getDirection(target.getPosition() )!= direction){

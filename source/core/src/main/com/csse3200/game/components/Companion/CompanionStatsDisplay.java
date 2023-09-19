@@ -113,7 +113,7 @@ public class CompanionStatsDisplay extends UIComponent {
      */
     public void setInvincibleImage() {
         AnimationRenderComponent infanimator = ServiceLocator.getGameArea().getCompanion().getComponent(AnimationRenderComponent.class);
-        infanimator.startAnimation("LEFT");
+        infanimator.startAnimation("LEFT_1");
     }
 
     /**
@@ -148,16 +148,21 @@ public class CompanionStatsDisplay extends UIComponent {
     public void toggleInfiniteHealth() {
         if (isInfiniteHealth) {
             int maxHealth = Integer.MAX_VALUE;
-            ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setHealth(maxHealth);
+//            ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setHealth(maxHealth);
+//            ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).setHealth(maxHealth);
+            ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setImmunity(true);
+            ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(true);
             isInfiniteHealth = false;
 
             // Schedule a task to reset health to a normal value after a delay (e.g., 10 seconds)
             Timer.schedule(new Task() {
                 @Override
                 public void run() {
-                    ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setHealth(50);
+                    ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setImmunity(false);
+                    ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
+
                 }
-            }, 10.0f);
+            }, 8.0f);
         }
     }
 

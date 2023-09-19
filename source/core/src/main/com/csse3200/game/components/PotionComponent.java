@@ -6,6 +6,7 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Companion.CompanionActions;
+import com.csse3200.game.components.Companion.CompanionStatsDisplay;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.Entity;
@@ -23,6 +24,8 @@ public class PotionComponent extends Component {
     private CombatStatsComponent companionCombatStats;
     private PlayerActions playerActions;
     private CompanionActions companionActions;
+    private final CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay();
+
 
     /**
      * Creates a PotionComponent with the specified type.
@@ -93,6 +96,11 @@ public class PotionComponent extends Component {
                     }
                 };
                 new java.util.Timer().schedule(speedUp, getDuration());
+            }
+            case INVINCIBILITY_POTION -> {
+
+                companionStatsDisplay.toggleInfiniteHealth();
+                companionStatsDisplay.toggleInvincibility();
             }
             default -> throw new IllegalArgumentException("Invalid PotionType");
         }

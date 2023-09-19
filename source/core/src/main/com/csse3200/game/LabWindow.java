@@ -59,7 +59,7 @@ public class LabWindow extends Window {
         TextButton potion1 = new TextButton("Death", skin);
         TextButton potion2 = new TextButton("Speed", skin);
         TextButton potion3 = new TextButton("Health", skin);
-        TextButton potion4 = new TextButton("Potion", skin);
+        TextButton potion4 = new TextButton("Invincibility", skin);
         TextButton returnToGameButton = new TextButton("Return to Game", skin);
         float buttonWidth = 200f; // Adjust as needed
         float buttonHeight = 200f;
@@ -123,10 +123,10 @@ public class LabWindow extends Window {
         potion4.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("SpawnPotion",PotionType.INVINCIBILITY_POTION);
                 failLaboratory();
             }
         });
-
         // Override all normal user input
         inputOverrideComponent = new InputOverrideComponent();
         ServiceLocator.getInputService().register(inputOverrideComponent);

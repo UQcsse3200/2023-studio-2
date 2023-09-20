@@ -54,5 +54,12 @@
       "x": 20,
       "y": 15
     }
+  },
+  "Astro": {
+    "spritePath": "images/Astro_NPC.atlas",
+    "position" : {
+      "x": 25,
+      "y": 15
+    }
   }
 }

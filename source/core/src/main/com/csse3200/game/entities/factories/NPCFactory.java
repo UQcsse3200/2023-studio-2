@@ -158,10 +158,14 @@ public class NPCFactory {
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
+                    .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(aiComponent);
 
     Astro.getComponent(ColliderComponent.class).setDensity(1.5f);
+    Astro.addComponent(new InteractableComponent(entity -> {
+      Astro.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
+    },3f));
     animator.startAnimation("Astro_Down");
     return Astro;
   }

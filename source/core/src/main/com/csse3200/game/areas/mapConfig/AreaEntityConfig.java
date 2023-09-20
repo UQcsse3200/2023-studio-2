@@ -13,6 +13,7 @@ public class AreaEntityConfig {
     public List<AsteroidConfig> asteroids = new ArrayList<>();
     public List<BaseEntityConfig> baseEntities = new ArrayList<>();
     public BotanistConfig botanist = null;
+    public AstroConfig Astro = null;
     public CompanionConfig companion = null;
     public List<EnemyBulletConfig> bullets = new ArrayList<>();
     public List<EnemyConfig> enemies = new ArrayList<>();
@@ -34,6 +35,7 @@ public class AreaEntityConfig {
         entities.addAll(asteroids);
         entities.addAll(baseEntities);
         if (botanist != null) entities.add(botanist);
+        if (Astro != null) entities.add(Astro);
         if (companion != null) entities.add(companion);
         entities.addAll(bullets);
         entities.addAll(enemies);
@@ -58,6 +60,7 @@ public class AreaEntityConfig {
         if (!Objects.equals(asteroids, that.asteroids)) return false;
         if (!Objects.equals(baseEntities, that.baseEntities)) return false;
         if (!Objects.equals(botanist, that.botanist)) return false;
+        if (!Objects.equals(Astro, that.Astro)) return false;
         if (!Objects.equals(companion, that.companion)) return false;
         if (!Objects.equals(bullets, that.bullets)) return false;
         if (!Objects.equals(enemies, that.enemies)) return false;
@@ -76,6 +79,7 @@ public class AreaEntityConfig {
         int result = asteroids != null ? asteroids.hashCode() : 0;
         result = 31 * result + (baseEntities != null ? baseEntities.hashCode() : 0);
         result = 31 * result + (botanist != null ? botanist.hashCode() : 0);
+        result = 31 * result + (Astro != null ? Astro.hashCode() : 0);
         result = 31 * result + (companion != null ? companion.hashCode() : 0);
         result = 31 * result + (bullets != null ? bullets.hashCode() : 0);
         result = 31 * result + (enemies != null ? enemies.hashCode() : 0);

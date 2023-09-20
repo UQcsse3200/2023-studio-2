@@ -75,12 +75,13 @@ public class MapGameArea extends GameArea{
         spawnUpgradeBench();
         spawnExtractors();
         spawnShip();
+        spawnAstro();
         playerEntity = spawnPlayer();
         spawnCompanion(playerEntity);
 
         spawnEnemies();
       //  spawnFire();
-        spawnBotanist();
+//        spawnBotanist();
 
         playMusic();
     }
@@ -313,6 +314,17 @@ public class MapGameArea extends GameArea{
         }
         //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
+    }
+
+    private void spawnAstro() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        AstroConfig astroConfig = mapConfig.areaEntityConfig.Astro;
+        if (astroConfig != null) {
+            Entity Astro = NPCFactory.createAstro();
+            spawnEntityAt(Astro, astroConfig.position, false, false);
+        }
+
     }
 
     private void spawnFire(){

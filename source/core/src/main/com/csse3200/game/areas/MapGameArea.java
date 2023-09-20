@@ -2,11 +2,8 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
@@ -90,7 +87,7 @@ public class MapGameArea extends GameArea{
         spawnCompanion(player);
         spawnPortal(player);
 
-        spawnEnemies();
+        spawnSpawners();
       //  spawnFire();
         spawnBotanist();
 
@@ -308,14 +305,14 @@ public class MapGameArea extends GameArea{
     }
 
     /**
-     * Spawns all the enemies detailed in the Game Area.
+     * Spawns all the spawners detailed in the Game Area.
      */
-    private void spawnEnemies() {
+    private void spawnSpawners() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (EnemyConfig enemyConfig : mapConfig.areaEntityConfig.enemies) {
-            Entity enemy = EnemyFactory.createEnemy(enemyConfig);
-            spawnEntityAt(enemy, enemyConfig.position, true, true);
+        for (SpawnerConfig spawnerConfig : mapConfig.areaEntityConfig.spawners) {
+            Entity spawner = StructureFactory.createSpawner(spawnerConfig);
+            spawnEntityAt(spawner, spawnerConfig.position, true, true);
         }
     }
 

@@ -47,5 +47,12 @@
       "x": 20,
       "y": 40
     }
+  },
+  "botanist": {
+    "spritePath": "images/botanist.atlas",
+    "position" : {
+      "x": 20,
+      "y": 15
+    }
   }
 }

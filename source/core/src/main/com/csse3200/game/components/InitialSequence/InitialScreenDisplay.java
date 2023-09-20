@@ -1,15 +1,16 @@
 package com.csse3200.game.components.InitialSequence;
 
-import aurelienribon.tweenengine.*;
-import aurelienribon.tweenengine.equations.Quint;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.files.UserSettings;
@@ -20,7 +21,6 @@ import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.graphics.Color;
 
 /**
  * The user interface component responsible for displaying the initial story sequence.
@@ -29,13 +29,11 @@ public class InitialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(InitialScreenDisplay.class);
     private final GdxGame game;
     private BitmapFont font;
-    private static float textAnimationDuration = 30;
     private float spaceSpeed = 5;
     private float planetToTextPadding = 150;
     private Image background;
     private Image planet;
     private Table rootTable;
-    private TweenManager tweenManager;
     private Label storyLabel;
 
     /**
@@ -46,7 +44,6 @@ public class InitialScreenDisplay extends UIComponent {
     public InitialScreenDisplay(GdxGame game) {
         super();
         this.game = game;
-        tweenManager = new TweenManager();
     }
 
     @Override
@@ -63,59 +60,43 @@ public class InitialScreenDisplay extends UIComponent {
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/InitialScreenImage.png", Texture.class));
+        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background.setPosition(0, 0);
-        // Scale the height of the background to maintain the original aspect ratio of the image
-        // This prevents distortion of the image.
-        float scaledHeight = Gdx.graphics.getWidth() * (background.getHeight() / background.getWidth());
-        background.setHeight(scaledHeight);
 
         // Load the animated planet
         planet =
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/InitialScreenBG.png", Texture.class));
-        planet.setSize(200, 200); // Set to a reasonable fixed size
+        planet.setSize(2500, 400); // Set to a reasonable fixed size
 
         // The planet moves at a constant speed, so to make it appear at the right time,
         // it is to be placed at the right y coordinate above the screen.
         // The height is informed by the length of the text animation and the game's target FPS.
-        float planetOffset = textAnimationDuration * UserSettings.get().fps;
-        planet.setPosition((float) Gdx.graphics.getWidth() / 2, planetOffset, Align.center);
+        // Set the initial position to the top of the screen
+        float planetInitialY = Gdx.graphics.getHeight() - planet.getHeight() + 320;
+        planet.setPosition((float) Gdx.graphics.getWidth() / 2, planetInitialY, Align.center);
 
         // Create a Table for layout
         rootTable = new Table();
         rootTable.setFillParent(true); // Make the table fill the screen
         rootTable.center(); // Center-align content vertically
 
-        // The {TOKENS} in the String below are used by TypingLabel to create the requisite animation effects
-        String story = """
-            Earth has become a desolate wasteland ravaged by a deadly virus. Civilisation as we know has crumbled,and humanity's
-             
-            last hope lies among the stars. You are one of the few survivors who have managed to secure a spot on a spaceship built
-             
-            with the hopes of finding a cure or a new home on distant planets. The spaceship belongs to Dr Emily Carter, a brilliant
-             
-            scientist determined to find a cure for the virus and make the earth habitable again. But the cosmos is a vast and 
-            
-            dangerous place, filled with unknown challenges and mysteries, from alien encounters to unexpected phenomena.
-            
-            
-            Your journey begins now as you board the spaceship "Aurora" and venture into the unknown.
-            """;
+        // The initial text you want to display
+        String story = "Earth has become a desolate wasteland ravaged by a deadly virus. Civilization as we know has crumbled, and humanity's\n" +
+                "last hope lies among the stars. You are one of the few survivors who have managed to secure a spot on a spaceship built\n";
 
         // Configure the Label
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
-        storyLabel = new Label(story, labelStyle);
+        labelStyle.font.getData().setScale(0.4f); // Set the font size (adjust the scale as needed)
+        storyLabel = new Label("", labelStyle);
         storyLabel.setAlignment(Align.center);
         storyLabel.setWrap(false); // Allow text wrapping
         storyLabel.setWidth(Gdx.graphics.getWidth());
 
-        storyLabel.setEllipsis("[RED]Your journey begins now as you board the spaceship \"Aurora\" and venture into the unknown.[RED]");
-
         // Add the storyLabel to the rootTable and make it expand
-        rootTable.add(storyLabel).expandX().center().padTop(150f);
+        rootTable.add(storyLabel).expandX().center().padTop(990f);
         rootTable.row().padTop(30f);
-
 
         TextButton continueButton = new TextButton("Continue", skin);
         continueButton.addListener(new ChangeListener() {
@@ -128,11 +109,11 @@ public class InitialScreenDisplay extends UIComponent {
                 ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", planetScreen);
                 game.setScreen(planetScreen);
 
-                AlertBox alertBox = new AlertBox(game," Alert Box", skin);
+                AlertBox alertBox = new AlertBox(game, "Alert Box", skin);
                 alertBox.showDialog(stage);
 
                 logger.info("Loading Story");
-                TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
+                TitleBox titleBox = new TitleBox(game, "Story Introduction", skin);
                 titleBox.showDialog(stage);
                 game.setScreen(ScreenType.GAME_STORY);
             }
@@ -146,22 +127,40 @@ public class InitialScreenDisplay extends UIComponent {
         stage.addActor(planet);
         stage.addActor(rootTable);
 
-        // Start the text animation
-        setupTextAnimation();
+        RepeatAction repeatAction = Actions.forever(
+                Actions.sequence(
+                        Actions.moveBy(0, planetToTextPadding, 4.0f), // Move up
+                        Actions.moveBy(0, -planetToTextPadding, 4.0f) // Move down
+                )
+        );
+
+        // Apply the RepeatAction to the planet image
+        planet.addAction(repeatAction);
+
+        // Start printing text letter by letter
+        printTextLetterByLetter(story, storyLabel, 0.035f, 0.5f);
     }
 
-    private void setupTextAnimation() {
-        // Configure the text animation
-        Tween.registerAccessor(Label.class, new LabelAccessor());
+    private void printTextLetterByLetter(final String text, final Label label, final float speed, final float initialDelay) {
+        label.setText(""); // Clear the label text initially
+        Timer.schedule(new Timer.Task() {
+            int charIndex = 0;
 
-        // Set the initial alpha value to 0
-        storyLabel.getColor().a = 0f;
-
-        Tween.to(storyLabel, LabelAccessor.ALPHA, textAnimationDuration)
-                .target(1f)
-                .ease(Quint.OUT)
-                .start(tweenManager);
+            @Override
+            public void run() {
+                if (charIndex < text.length()) {
+                    char currentChar = text.charAt(charIndex);
+                    label.setText(label.getText().toString() + currentChar);
+                    charIndex++;
+                } else {
+                    // Stop the Timer when all characters are printed
+                    this.cancel();
+                }
+            }
+        }, initialDelay, speed, text.length() - 1);
     }
+
+
 
     @Override
     protected void draw(SpriteBatch batch) {
@@ -170,20 +169,17 @@ public class InitialScreenDisplay extends UIComponent {
 
     @Override
     public void update() {
-        tweenManager.update(Gdx.graphics.getDeltaTime());
-
         // This movement logic is triggered on every frame until the middle of the planet hits its target position on the screen.
-        if (planet.getY(Align.center) >= rootTable.getY() + planetToTextPadding) {
-            planet.setY(planet.getY() - spaceSpeed); // Move the planet
-            background.setY(background.getY() - spaceSpeed); // Move the background
-        }
+//        if (planet.getY(Align.center) >= rootTable.getY() + planetToTextPadding) {
+//            planet.setY(planet.getY() - spaceSpeed); // Move the planet
+//            background.setY(background.getY() - spaceSpeed); // Move the background
+//        }
         stage.act(Gdx.graphics.getDeltaTime());
     }
 
     @Override
     public void dispose() {
         font.dispose();
-        tweenManager.killAll();
         rootTable.clear();
         planet.clear();
         background.clear();

@@ -1,6 +1,7 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.resources.PopupComponent;
@@ -19,6 +20,7 @@ public class ActionFeedbackComponent extends Component {
         super.create();
 
         entity.getEvents().addListener("displayWarning", this::displayWarning);
+        entity.getEvents().addListener("displayWarningAtPosition", this::displayWarningAtPosition);
         entity.getEvents().addListener("displayError", this::displayError);
     }
 
@@ -31,9 +33,22 @@ public class ActionFeedbackComponent extends Component {
 
         alertEntity.addComponent(alertUIComponent);
 
-        alertEntity.addComponent(new PopupComponent(2000, 0.2));
+        alertEntity.addComponent(new PopupComponent(2000, 0.001));
 
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(alertEntity, this.entity.getPosition());
+
+
+    }
+
+    public void displayWarningAtPosition(String alert, Vector2 position) {
+        Entity alertEntity = new Entity();
+        AlertUIComponent alertUIComponent = new AlertUIComponent(alert);
+
+        alertEntity.addComponent(alertUIComponent);
+
+        alertEntity.addComponent(new PopupComponent(2000, 0.001));
+
+        ServiceLocator.getEntityPlacementService().PlaceEntityAt(alertEntity, position);
 
 
     }

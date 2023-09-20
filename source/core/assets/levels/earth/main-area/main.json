@@ -45,7 +45,9 @@
     "images/upgradetree/exit.png",
     "map/portal.png",
     "images/sling_shot.png",
-    "images/fireAnim.png"
+    "images/fireAnim.png",
+    "images/white_color_texture.png",
+    "images/ActionFeedback/warning.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",

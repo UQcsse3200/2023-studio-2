@@ -61,7 +61,9 @@
     "images/weapons/wrench.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
-    "images/botanist.atlas"
+    "images/botanist.atlas",
+    "images/white_color_texture.png",
+    "images/ActionFeedback/warning.png"
   ],
   "soundPaths": [
     "sounds/Impact4.wav"

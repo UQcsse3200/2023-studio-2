@@ -3,11 +3,14 @@ package com.csse3200.game.rendering;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.components.CameraComponent;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +29,9 @@ public class Renderer implements Disposable {
   private Stage stage;
   private RenderService renderService;
   private DebugRenderer debugRenderer;
+  String vertexShader;
+  String fragmentShader;
+  ShaderProgram shaderProgram;
 
   /**
    * Create a new renderer with default settings
@@ -73,6 +79,14 @@ public class Renderer implements Disposable {
       Stage stage,
       RenderService renderService,
       DebugRenderer debugRenderer) {
+ 
+      vertexShader = Gdx.files.internal("shaders/default.vert").readString();
+      fragmentShader = Gdx.files.internal("shaders/default.frag").readString();
+      shaderProgram = new ShaderProgram(vertexShader,fragmentShader);
+
+      if (shaderProgram.getLog().length()!=0){
+        System.out.println(shaderProgram.getLog());
+      }
 
     this.camera = camera;
     this.gameWidth = gameWidth;
@@ -94,9 +108,13 @@ public class Renderer implements Disposable {
   public void render() {
     Matrix4 projMatrix = camera.getProjectionMatrix();
     batch.setProjectionMatrix(projMatrix);
+
+    Gdx.gl.glClearColor(1, 0, 0, 1); // shader code
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+    batch.setShader(shaderProgram); // shader code
     batch.begin();
+
     renderService.render(batch);
     batch.end();
     debugRenderer.render(projMatrix);

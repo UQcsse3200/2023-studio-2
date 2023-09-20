@@ -3,6 +3,15 @@ package com.csse3200.game.entities;
 import com.csse3200.game.components.structures.Placeable;
 
 public class PlaceableEntity extends Entity {
+
+    public PlaceableEntity() {
+        super();
+    }
+
+    public PlaceableEntity(Entity player) {
+        super();
+    }
+
     /**
      * This function is called when a PlaceableEntity is placed via the structure
      * placement service. Override this method to implement specific functionality

@@ -2,11 +2,8 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
@@ -17,6 +14,7 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.TileEntity;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.files.UserSettings;
@@ -28,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * A Base Game Area for any level.
@@ -39,7 +38,6 @@ public class MapGameArea extends GameArea{
     private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
-    private Entity playerEntity;
     private boolean validLoad = true;
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
@@ -51,6 +49,15 @@ public class MapGameArea extends GameArea{
         }
         this.game = game;
         this.terrainFactory = terrainFactory;
+    }
+
+    public static float getSpeedMult() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+        Object speedMult = cell.getTile().getProperties().get("speedMult");
+
+        return speedMult != null ? (float)speedMult : 1f;
     }
 
     /**
@@ -75,18 +82,15 @@ public class MapGameArea extends GameArea{
         spawnUpgradeBench();
         spawnExtractors();
         spawnShip();
-        playerEntity = spawnPlayer();
-        spawnCompanion(playerEntity);
+        player = spawnPlayer();
+        spawnCompanion(player);
+        spawnPortal(player);
 
-        spawnEnemies();
+        spawnSpawners();
+      //  spawnFire();
         spawnBotanist();
 
         playMusic();
-    }
-
-    //TODO: is this needed? - ServiceLocator.getEntityService.getPlayer()
-    public Entity getPlayer() {
-        return this.playerEntity;
     }
 
     /**
@@ -121,6 +125,18 @@ public class MapGameArea extends GameArea{
         mapConfig.mapName = mapConfig.mapName == null ? "" : mapConfig.mapName;
         ui.addComponent(new GameAreaDisplay(mapConfig.mapName));
         spawnEntity(ui);
+    }
+
+    /**
+     * Spawns a portal that sends the player to a new location
+     */
+    private void spawnPortal(Entity playerEntity) {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        for (PortalConfig portalConfig : mapConfig.areaEntityConfig.portals) {
+            Entity portal = PortalFactory.createPortal(playerEntity, portalConfig);
+            spawnEntityAt(portal, portalConfig.position, false, false);
+        }
     }
 
     /**
@@ -161,29 +177,11 @@ public class MapGameArea extends GameArea{
      * Spawns the game environment
      */
     private void spawnEnvironment() {
-        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
-        Entity environment;
-        for (int y = 0; y < collisionLayer.getHeight(); y++) {
-            for (int x = 0; x < collisionLayer.getWidth(); x++) {
-                TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, collisionLayer.getHeight() - 1 - y);
-                if (cell != null) {
-                    MapObjects objects = cell.getTile().getObjects();
-                    GridPoint2 tilePosition = new GridPoint2(x, collisionLayer.getHeight() - 1 - y);
-                    if (objects.getCount() >= 1) {
-                        RectangleMapObject object = (RectangleMapObject) objects.get(0);
-                        Rectangle collisionBox = object.getRectangle();
-                        float collisionX = 0.5f-collisionBox.x / 16;
-                        float collisionY = 0.5f-collisionBox.y / 16;
-                        float collisionWidth = collisionBox.width / 32;
-                        float collisionHeight = collisionBox.height / 32;
-                        environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
-                    }
-                    else {
-                        environment = ObstacleFactory.createEnvironment();
-                    }
-                    spawnEntityAt(environment, tilePosition, false, false);
-                }
-            }
+        TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
+        List<TileEntity> environments = EnvironmentFactory.createEnvironment(layer);
+
+        for (TileEntity tileEntity : environments) {
+            spawnEntityAt(tileEntity.getEntity(), tileEntity.getTilePosition(), false, false);
         }
     }
 
@@ -272,6 +270,10 @@ public class MapGameArea extends GameArea{
         return newPlayer;
     }
 
+    public static Entity getPlayer() {
+        return player;
+    }
+
     /**
      * Spawns the companion at the position given by the config file
      * @param playerEntity - player that will be accompanied
@@ -288,14 +290,14 @@ public class MapGameArea extends GameArea{
     }
 
     /**
-     * Spawns all the enemies detailed in the Game Area.
+     * Spawns all the spawners detailed in the Game Area.
      */
-    private void spawnEnemies() {
+    private void spawnSpawners() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (EnemyConfig enemyConfig : mapConfig.areaEntityConfig.enemies) {
-            Entity enemy = EnemyFactory.createEnemy(enemyConfig);
-            spawnEntityAt(enemy, enemyConfig.position, true, true);
+        for (SpawnerConfig spawnerConfig : mapConfig.areaEntityConfig.spawners) {
+            Entity spawner = StructureFactory.createSpawner(spawnerConfig);
+            spawnEntityAt(spawner, spawnerConfig.position, true, true);
         }
     }
 
@@ -313,6 +315,14 @@ public class MapGameArea extends GameArea{
         //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
     }
+
+    private void spawnFire(){
+        if (mapConfig.areaEntityConfig == null) return;
+
+        ShipConfig shipConfig = mapConfig.areaEntityConfig.ship;
+            Entity fire = NPCFactory.createFire();
+            spawnEntityAt(fire,shipConfig.position , false, false);
+        }
 
     /**
      * Plays the game music loaded from the config file

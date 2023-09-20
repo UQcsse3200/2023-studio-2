@@ -16,17 +16,18 @@ import com.csse3200.game.components.PotionType;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.tasks.BossTask;
+import com.csse3200.game.entities.PlaceableEntity;
+import com.csse3200.game.entities.TileEntity;
 import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.components.resources.ResourceDisplay;
+import com.csse3200.game.concurrency.JobSystem;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.PlayerFactory;
-import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -38,6 +39,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.csse3200.game.entities.factories.EnvironmentFactory.createEnvironment;
 
 
 /** Planet Earth area for the demo game with trees, a player, and some enemies. */
@@ -55,8 +59,12 @@ public class EarthGameArea extends GameArea {
     private static final GridPoint2 COMPANION_SPAWN = new GridPoint2(9, 9);
     private static final GridPoint2 SPAWNER_SPAWN = new GridPoint2(35, 2);
     private static final GridPoint2 BOX_SPAWN = new GridPoint2(10, 10);
-    private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 10);
+    private static final GridPoint2 SHIP_SPAWN = new GridPoint2(10, 40);
+    private static final GridPoint2 PORTAL_ONE = new GridPoint2(30, 40);
+    private static final GridPoint2 PORTAL_TWO = new GridPoint2(78, 10);
     private static final float WALL_WIDTH = 0.1f;
+    private static final String mapPath = "map/base.tmx";
+    private final List<Entity> spawnedTreeTopEntities = new ArrayList<>();
     private static final String[] earthTextures = {
             "images/SpaceMiniGameBackground.png", // Used as a basic texture for repair minigame
             "images/extractor.png",
@@ -90,6 +98,9 @@ public class EarthGameArea extends GameArea {
             "images/resourcebar_nebulite.png",
             "images/resourcebar_solstite.png",
             "images/resourcebar_lights.png",
+            "map/treetop.png",
+            "map/portal.png",
+            "images/playerSS_6.png",
             "images/structures/TurretOne.png",
             "images/structures/TurretTwo.png",
             "images/enemy/Bull.png",
@@ -195,43 +206,61 @@ public class EarthGameArea extends GameArea {
         this.companion = spawnCompanion(player);
         /*spawnTurret();*/
         spawnEnemies();
+        //spawnSecretEnemies();
         spawnBoss();
+        spawnTreeTopLayer();
         spawnBotanist();
         companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
-        spawnSpawner();
         playMusic();
+
+        spawnPortal(PORTAL_ONE, 40, 5);
+        spawnPortal(PORTAL_TWO, 16, 20);
+
+    }
+
+    /**
+     * Spawns a portal that sends the player to a new location
+     */
+    private void spawnPortal(GridPoint2 position, float x, float y) {
+        //Entity portal = PortalFactory.createPortal(player, x , y);
+        //spawnEntityAt(portal, position, false, false);
     }
     public static void removeItemOnMap(Entity entityToRemove) {
         entityToRemove.setEnabled(false);
         itemsOnMap.remove(entityToRemove);
         Gdx.app.postRunnable(entityToRemove::dispose);
     }
+
+    /**
+     * Spawns objects defined on the collision layer with a custom sized collision box determined
+     * based on the dimensions defined in the .tsx file
+     */
     private void spawnEnvironment() {
-        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
-        Entity environment;
-        for (int y = 0; y < collisionLayer.getHeight(); y++) {
-            for (int x = 0; x < collisionLayer.getWidth(); x++) {
-                TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, collisionLayer.getHeight() - 1 - y);
-                if (cell != null) {
-                    MapObjects objects = cell.getTile().getObjects();
-                    GridPoint2 tilePosition = new GridPoint2(x, collisionLayer.getHeight() - 1 - y);
-                    if (objects.getCount() >= 1) {
-                        RectangleMapObject object = (RectangleMapObject) objects.get(0);
-                        Rectangle collisionBox = object.getRectangle();
-                        float collisionX = 0.5f-collisionBox.x / 16;
-                        float collisionY = 0.5f-collisionBox.y / 16;
-                        float collisionWidth = collisionBox.width / 32;
-                        float collisionHeight = collisionBox.height / 32;
-                        environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
-                    }
-                    else {
-                        environment = ObstacleFactory.createEnvironment();
-                    }
-                    spawnEntityAt(environment, tilePosition, false, false);
-                }
-            }
+        TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
+        List<TileEntity> environments = EnvironmentFactory.createEnvironment(layer);
+
+        for (TileEntity tileEntity : environments) {
+            spawnEntityAt(tileEntity.getEntity(), tileEntity.getTilePosition(), false, false);
         }
     }
+
+    /**
+     * Places the sprite for the top of a tree on a higher layer so that the player appears behind
+     * tree when walking over it
+     */
+    private void spawnTreeTopLayer() {
+        GridPoint2 spawnTreeTop = new GridPoint2(0, 30);
+        Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
+        spawnEntityAt(treeTop, spawnTreeTop, false, false);
+
+        // Add the spawned tree top entity to the list
+        spawnedTreeTopEntities.add(treeTop);
+    }
+    public List<Entity> getSpawnedTreeTopEntities() {
+        return spawnedTreeTopEntities;
+    }
+
+
     /**
      * Spawns a Botanist NPC entity at a predefined spawn position on the terrain.
      * The Botanist entity is created using the NPCFactory.createBotanist() method.
@@ -314,6 +343,9 @@ public class EarthGameArea extends GameArea {
         return extractor;
     }
 
+    /**
+     * Spawns the player's ship, which will act as the exit point of the map
+     */
     private void spawnShip() {
         GridPoint2 spawnPosition = new GridPoint2(7*terrain.getMapBounds(0).sub(1, 1).x/12,
                 2*terrain.getMapBounds(0).sub(1, 1).y/3);
@@ -321,21 +353,21 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(ship, spawnPosition, false, false);
     }
 
-    private void spawnSpawner() {
-        Entity spawner = StructureFactory.createSpawner(targetables);
-        spawnEntityAt(spawner, SPAWNER_SPAWN, true, true);
-    }
-
+    /**
+     * Display the UI elements for the current level
+     */
     private void displayUI() {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Planet Earth"));
         spawnEntity(ui);
     }
 
-
+    /**
+     * Creates the background graphics and invisible walls for the edges of the map
+     */
     private void spawnTerrain() {
         // Background terrain
-        terrain = terrainFactory.createTerrain("map/base.tmx");
+        terrain = terrainFactory.createTerrain(mapPath);
         spawnEntity(new Entity().addComponent(terrain));
 
         // Terrain walls
@@ -369,6 +401,7 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(newLaboratory, randomPos, true,false);
         return newLaboratory;
     }
+
 
     private void spawnTrees() {
         GridPoint2 minPos = new GridPoint2(0, 0);
@@ -405,6 +438,9 @@ public class EarthGameArea extends GameArea {
         return newCompanion;
     }
 
+    /**
+     * Spawns a set number of health and speed powerups at random locations
+     */
 
 
     private void spawnPowerups() {
@@ -482,6 +518,42 @@ public class EarthGameArea extends GameArea {
         }
     }
 
+    private void spawnSecretEnemies() {
+        GridPoint2 minPos = new GridPoint2(71, 1);
+        GridPoint2 maxPos = new GridPoint2(89, 19);
+
+
+        for (int i = 0; i < NUM_MELEE_PTE; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
+            spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
+        }
+
+        for (int i = 0; i < NUM_MELEE_DTE; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity melee = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
+            spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
+        }
+
+        for (int i = 0; i < NUM_RANGE_PTE; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity melee = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.DTE);
+            spawnEntityAt(melee, randomPos, true, true);
+            //melee.addComponent(new DialogComponent(dialogueBox));
+        }
+    }
+
+    private void spawnSecretBoss() {
+        GridPoint2 minPos = new GridPoint2(71, 1);
+        GridPoint2 maxPos = new GridPoint2(89, 19);
+
+        GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+        Entity boss = EnemyFactory.createEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
+        spawnEntityAt(boss, randomPos, true, true);
+    }
+
     /**
      * Spawns the boss for the Game Area's map.
      */
@@ -509,6 +581,7 @@ public class EarthGameArea extends GameArea {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+        JobSystem.launchBlocking(() -> this.readMusic(earthMusic));
         resourceService.loadTextures(earthTextures);
         resourceService.loadTextureAtlases(earthTextureAtlases);
         resourceService.loadSounds(earthSounds);
@@ -518,6 +591,23 @@ public class EarthGameArea extends GameArea {
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
         }
+    }
+
+    /**
+     * Loads music files which are typically very large in a parallel thread
+     * @param files an array of music files
+     * @return array of loaded music
+     */
+    private Music[] readMusic(String[] files) {
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        Music[] music = new Music[files.length];
+        for (int i = 0; i < files.length; i++) {
+            resourceService.loadMusic(new String[]{files[i]});
+            music[i] = resourceService.getAsset(files[i], Music.class);
+        }
+
+        resourceService.loadAll();
+        return music;
     }
 
     private void unloadAssets() {
@@ -535,10 +625,6 @@ public class EarthGameArea extends GameArea {
         ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
         this.unloadAssets();
     }
-
-    public Entity getPlayer() {
-        return player;
-  }
 
   public void setCompanion(Entity Companion){companion=Companion;}
     public Entity getCompanion() {

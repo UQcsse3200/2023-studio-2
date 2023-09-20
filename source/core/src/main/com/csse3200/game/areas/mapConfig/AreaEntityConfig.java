@@ -15,7 +15,8 @@ public class AreaEntityConfig {
     public BotanistConfig botanist = null;
     public CompanionConfig companion = null;
     public List<EnemyBulletConfig> bullets = new ArrayList<>();
-    public List<EnemyConfig> enemies = new ArrayList<>();
+    public List<SpawnerConfig> spawners = new ArrayList<>();
+    public List<PortalConfig> portals = new ArrayList<>();
     public List<ExtractorConfig> extractors = new ArrayList<>();
     public List<GateConfig> gates = new ArrayList<>();
     public List<PowerupConfig> powerups = new ArrayList<>();
@@ -36,7 +37,8 @@ public class AreaEntityConfig {
         if (botanist != null) entities.add(botanist);
         if (companion != null) entities.add(companion);
         entities.addAll(bullets);
-        entities.addAll(enemies);
+        entities.addAll(portals);
+        entities.addAll(spawners);
         entities.addAll(extractors);
         entities.addAll(gates);
         entities.addAll(powerups);
@@ -60,7 +62,8 @@ public class AreaEntityConfig {
         if (!Objects.equals(botanist, that.botanist)) return false;
         if (!Objects.equals(companion, that.companion)) return false;
         if (!Objects.equals(bullets, that.bullets)) return false;
-        if (!Objects.equals(enemies, that.enemies)) return false;
+        if (!Objects.equals(portals, that.portals)) return false;
+        if (!Objects.equals(spawners, that.spawners)) return false;
         if (!Objects.equals(extractors, that.extractors)) return false;
         if (!Objects.equals(gates, that.gates)) return false;
         if (!Objects.equals(powerups, that.powerups)) return false;
@@ -77,8 +80,9 @@ public class AreaEntityConfig {
         result = 31 * result + (baseEntities != null ? baseEntities.hashCode() : 0);
         result = 31 * result + (botanist != null ? botanist.hashCode() : 0);
         result = 31 * result + (companion != null ? companion.hashCode() : 0);
+        result = 31 * result + (portals != null ? portals.hashCode() : 0);
         result = 31 * result + (bullets != null ? bullets.hashCode() : 0);
-        result = 31 * result + (enemies != null ? enemies.hashCode() : 0);
+        result = 31 * result + (spawners != null ? spawners.hashCode() : 0);
         result = 31 * result + (extractors != null ? extractors.hashCode() : 0);
         result = 31 * result + (gates != null ? gates.hashCode() : 0);
         result = 31 * result + (powerups != null ? powerups.hashCode() : 0);

@@ -11,6 +11,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.extensions.GameExtension;
@@ -29,6 +30,7 @@ class EntityTest {
 
     entity.setPosition(0f, 0f);
     assertEquals(Vector2.Zero, entity.getPosition());
+    assertEquals(new GridPoint2(0, 0), entity.getGridPosition());
   }
 
   @Test

@@ -55,6 +55,31 @@ public class TerrainComponent extends RenderComponent {
     }
   }
 
+  public GridPoint2 worldPositionToTile(Vector2 vector) {
+    return worldPositionToTile(vector.x, vector.y);
+  }
+
+  public GridPoint2 worldPositionToTile(float x, float y) {
+    int gridX;
+    int gridY;
+    switch (orientation) {
+      case HEXAGONAL:
+        float hexLength = tileSize / 2;
+        gridX = (int) (x * 2 / (tileSize + hexLength));
+        float yOffset = (gridX % 2 == 0) ? 0.5f * tileSize : 0f;
+        gridY = (int) (y - yOffset);
+        return new GridPoint2(gridX, gridY);
+      case ISOMETRIC:
+        gridX = (int) (((x * 2 / tileSize) - (y * 2 / tileSize)) / 2);
+        gridY = (int) ((y * 2 / tileSize) + gridX);
+        return new GridPoint2(gridX, gridY);
+      case ORTHOGONAL:
+        return new GridPoint2((int) (x / tileSize), (int) (y / tileSize));
+      default:
+        return null;
+    }
+  }
+
   public float getTileSize() {
     return tileSize;
   }

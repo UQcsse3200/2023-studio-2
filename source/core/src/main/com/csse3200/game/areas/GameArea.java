@@ -111,7 +111,7 @@ public abstract class GameArea implements Disposable {
    * @param entity Entity (not yet registered)
    */
   protected void spawnEntity(Entity entity) {
-    areaEntities.put(entity.getGridPosition(), entity);
+    areaEntities.put(terrain.worldPositionToTile(entity.getPosition()), entity);
     ServiceLocator.getEntityService().register(entity);
   }
 

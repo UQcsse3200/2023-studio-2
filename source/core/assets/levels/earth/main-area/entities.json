@@ -1,68 +1,25 @@
 {
-  "ship": {
-    "spritePath": "images/LeftShip.png",
-    "position": {
-      "x": 33,
-      "y": 67
-    }
-  },
   "spawners": [
     {
       "wave1" : [
-        10,
+        1,
         0,
         0
       ],
       "wave2" : [
-        10,
-        5,
+        0,
+        0,
         0
       ],
       "wave3" : [
-        10,
-        10,
+        0,
+        0,
         0
       ],
       "position": {
-        "x": 40,
-        "y": 40
-      }
-    }
-  ],
-  "portals": [
-    {
-      "teleportX" : 40,
-      "teleportY" : 5,
-      "position": {
-        "x": 30,
-        "y": 40
-      }
-    },
-    {
-      "teleportX" : 16,
-      "teleportY" : 20,
-      "position": {
-        "x": 78,
-        "y": 10
-      }
-    }
-  ],
-  "extractors": [
-    {
-      "resource": "Solstite",
-      "health": 200,
-      "tickRate": 1000,
-      "tickSize": 10,
-      "position": {
         "x": 20,
-        "y": 30
+        "y": 40
       }
     }
-  ],
-  "upgradeBench": {
-    "position" : {
-      "x": 20,
-      "y": 40
-    }
-  }
+  ]
 }

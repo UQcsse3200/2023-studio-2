@@ -20,6 +20,8 @@ public class PhysicsLayer {
   // NPC enemy colliders
   public static final short ENEMY_RANGE = (1 << 6);
   public static final short ENEMY_MELEE = (1 << 8);
+
+  public static final short ENEMY_PROJECTILE = (1 << 9);
   public static final short STRUCTURE = (1 << 5);
   public static final short WALL = (1 << 4);
   public static final short TURRET = (1<<4);

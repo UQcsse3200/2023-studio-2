@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.csse3200.game.extensions.GameExtension;
@@ -32,6 +33,27 @@ class TerrainComponentTest {
 
   @Test
   void shouldConvertPositionHexagonal() {
+    TerrainComponent component = makeComponent(TerrainOrientation.HEXAGONAL, 3f);
+  }
+
+  @Test
+  void shouldConvertGridOrthogonal() {
+    TerrainComponent component = makeComponent(TerrainOrientation.ORTHOGONAL, 3f);
+    assertEquals(new GridPoint2(0, 0), component.worldPositionToTile(0f, 0f));
+    assertEquals(new GridPoint2(2, 4), component.worldPositionToTile(6f, 12f));
+    assertEquals(new GridPoint2(-5, -3), component.worldPositionToTile(-15f, -9f));
+  }
+
+  @Test
+  void shouldConvertGridIsometric() {
+    TerrainComponent component = makeComponent(TerrainOrientation.ISOMETRIC, 3f);
+    assertEquals(new GridPoint2(0, 0), component.worldPositionToTile(0f, 0f));
+    assertEquals(new GridPoint2(2, 4), component.worldPositionToTile(9f, 3f));
+    assertEquals(new GridPoint2(-5, -3), component.worldPositionToTile(-12f, 3f));
+  }
+
+  @Test
+  void shouldConvertGridHexagonal() {
     TerrainComponent component = makeComponent(TerrainOrientation.HEXAGONAL, 3f);
   }
 

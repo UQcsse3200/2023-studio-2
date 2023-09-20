@@ -1,6 +1,5 @@
 package com.csse3200.game.entities;
 
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
@@ -37,7 +36,6 @@ public class Entity {
   private boolean enabled = true;
   private boolean created = false;
   private Vector2 position = Vector2.Zero.cpy();
-  private GridPoint2 gridPosition = new GridPoint2(0,0);
   private Vector2 scale = new Vector2(1, 1);
   private float rotation = 0;
   private Array<Component> createdComponents;
@@ -91,22 +89,12 @@ public class Entity {
   }
 
   /**
-   * Get the entity's game position.
-   *
-   * @return position
-   */
-  public GridPoint2 getGridPosition() {
-    return gridPosition.cpy(); // Cpy gives us pass-by-value to prevent bugs
-  }
-
-  /**
    * Set the entity's game position.
    *
    * @param position new position.
    */
   public void setPosition(Vector2 position) {
     this.position = position.cpy();
-    this.gridPosition = new GridPoint2((int) Math.floor(position.cpy().x), (int) Math.floor(position.cpy().y));
     getEvents().trigger(EVT_NAME_POS, position.cpy());
   }
 
@@ -119,8 +107,6 @@ public class Entity {
   public void setPosition(float x, float y) {
     this.position.x = x;
     this.position.y = y;
-    this.gridPosition.x = (int) Math.floor(x);
-    this.gridPosition.y = (int) Math.floor(y);
     getEvents().trigger(EVT_NAME_POS, position.cpy());
   }
 
@@ -148,7 +134,6 @@ public class Entity {
    */
   public void setPosition(Vector2 position, boolean notify) {
     this.position = position;
-    this.gridPosition = new GridPoint2((int) Math.floor(position.x), (int) Math.floor(position.y));
     if (notify) {
       getEvents().trigger(EVT_NAME_POS, position);
     }

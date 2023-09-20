@@ -90,6 +90,7 @@ public class MapGameArea extends GameArea{
         spawnPortal(player);
 
         spawnEnemies();
+      //  spawnFire();
         spawnBotanist();
 
         playMusic();
@@ -317,6 +318,14 @@ public class MapGameArea extends GameArea{
         //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
     }
+
+    private void spawnFire(){
+        if (mapConfig.areaEntityConfig == null) return;
+
+        ShipConfig shipConfig = mapConfig.areaEntityConfig.ship;
+            Entity fire = NPCFactory.createFire();
+            spawnEntityAt(fire,shipConfig.position , false, false);
+        }
 
     /**
      * Plays the game music loaded from the config file

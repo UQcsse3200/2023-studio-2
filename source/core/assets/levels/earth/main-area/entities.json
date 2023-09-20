@@ -65,5 +65,15 @@
       "x": 20,
       "y": 40
     }
+  },
+  "treetop": {
+    "position": {
+      "x": 0,
+      "y": 30
+    },
+    "spritePath": "map/treetop.png",
+    "scaleH": 30,
+    "scaleX": 0.5,
+    "scaleY": 0.2
   }
 }

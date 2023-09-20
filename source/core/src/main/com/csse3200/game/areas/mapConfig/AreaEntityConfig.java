@@ -25,6 +25,7 @@ public class AreaEntityConfig {
     public UpgradeBenchConfig upgradeBench = null;
     public List<WallConfig> walls = new ArrayList<>();
     public List<WeaponConfig> weapons = new ArrayList<>();
+    public TreeTopConfig treetop = null;
 
     /**
      * Returns a list of all config entities in the game area
@@ -41,6 +42,7 @@ public class AreaEntityConfig {
         entities.addAll(enemies);
         entities.addAll(extractors);
         entities.addAll(gates);
+        if (treetop != null) entities.add(treetop);
         entities.addAll(powerups);
         if (ship != null) entities.add(ship);
         entities.addAll(turrets);
@@ -63,6 +65,7 @@ public class AreaEntityConfig {
         if (!Objects.equals(companion, that.companion)) return false;
         if (!Objects.equals(bullets, that.bullets)) return false;
         if (!Objects.equals(portals, that.portals)) return false;
+        if (!Objects.equals(treetop, that.treetop)) return false;
         if (!Objects.equals(enemies, that.enemies)) return false;
         if (!Objects.equals(extractors, that.extractors)) return false;
         if (!Objects.equals(gates, that.gates)) return false;
@@ -83,6 +86,7 @@ public class AreaEntityConfig {
         result = 31 * result + (portals != null ? portals.hashCode() : 0);
         result = 31 * result + (bullets != null ? bullets.hashCode() : 0);
         result = 31 * result + (enemies != null ? enemies.hashCode() : 0);
+        result = 31 * result + (treetop != null ? treetop.hashCode() : 0);
         result = 31 * result + (extractors != null ? extractors.hashCode() : 0);
         result = 31 * result + (gates != null ? gates.hashCode() : 0);
         result = 31 * result + (powerups != null ? powerups.hashCode() : 0);

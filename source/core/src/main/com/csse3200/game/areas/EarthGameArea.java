@@ -3,31 +3,21 @@ package com.csse3200.game.areas;
 import com.badlogic.gdx.Gdx;
 import java.util.List;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.PotionComponent;
 import com.csse3200.game.components.PotionType;
-import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
-import com.csse3200.game.components.tasks.BossTask;
-import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.TileEntity;
-import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.concurrency.JobSystem;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.entities.enemies.*;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.services.StructurePlacementService;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
@@ -39,9 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static com.csse3200.game.entities.factories.EnvironmentFactory.createEnvironment;
 
 
 /** Planet Earth area for the demo game with trees, a player, and some enemies. */
@@ -208,7 +195,7 @@ public class EarthGameArea extends GameArea {
         spawnEnemies();
         //spawnSecretEnemies();
         spawnBoss();
-        spawnTreeTopLayer();
+        //spawnTreeTopLayer();
         spawnBotanist();
         companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
         spawnSpawner();
@@ -249,14 +236,14 @@ public class EarthGameArea extends GameArea {
      * Places the sprite for the top of a tree on a higher layer so that the player appears behind
      * tree when walking over it
      */
-    private void spawnTreeTopLayer() {
-        GridPoint2 spawnTreeTop = new GridPoint2(0, 30);
-        Entity treeTop = ObstacleFactory.createTreeTop(); // You need to define this factory method
-        spawnEntityAt(treeTop, spawnTreeTop, false, false);
-
-        // Add the spawned tree top entity to the list
-        spawnedTreeTopEntities.add(treeTop);
-    }
+//    private void spawnTreeTopLayer() {
+//        GridPoint2 spawnTreeTop = new GridPoint2(0, 30);
+//        Entity treeTop = ObstacleFactory.createTreeTop(treeTopConfig); // You need to define this factory method
+//        spawnEntityAt(treeTop, spawnTreeTop, false, false);
+//
+//        // Add the spawned tree top entity to the list
+//        spawnedTreeTopEntities.add(treeTop);
+//    }
     public List<Entity> getSpawnedTreeTopEntities() {
         return spawnedTreeTopEntities;
     }

@@ -75,6 +75,7 @@ public class EarthGameArea extends GameArea {
             "images/refinedShip.png",
             "images/structures/stone_wall.png",
             "images/botanist.png",
+            "images/Astro_NPC.png",
             "images/fire.png",
             "images/Hole.png",
             "images/spanner.png",
@@ -129,6 +130,7 @@ public class EarthGameArea extends GameArea {
             "images/enemy/base_enemy.atlas",
             "images/enemy/rangeEnemy.atlas",
             "images/botanist.atlas",
+            "images/Astro_NPC.atlas",
             "images/weapons/wrench.atlas",
             "images/baseballbat.atlas",
             "images/structures/closed_gate.atlas",
@@ -197,6 +199,7 @@ public class EarthGameArea extends GameArea {
         spawnEnemies();
         spawnBoss();
         spawnBotanist();
+        spawnAstro();
         companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
         spawnSpawner();
         playMusic();
@@ -252,6 +255,19 @@ public class EarthGameArea extends GameArea {
         spawnEntityAt(botanist, spawnPosition, true, false);
     }
 
+    private void spawnAstro() {
+        // Calculate the spawn position based on terrain bounds
+        GridPoint2 spawnPosition = new GridPoint2(
+                7*terrain.getMapBounds(0).sub(3, 5).x/12,
+                2*terrain.getMapBounds(0).sub(1, 1).y/3);
+
+        // Create the Botanist NPC entity
+        Entity Astro = NPCFactory.createAstro();
+
+        // Spawn the entity at the calculated position
+        // Arguments: entity, position, isCentered, isLocal
+        spawnEntityAt(Astro, spawnPosition, false, false);
+    }
     private void spawnUpgradeBench() {
         // spawns next to ship
         GridPoint2 spawnPosition = new GridPoint2(

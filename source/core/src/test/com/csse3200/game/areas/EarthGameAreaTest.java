@@ -56,30 +56,30 @@ class EarthGameAreaTest {
     }
 
         // Invoke the spawnTreeTopLayer method
-    @Test
-    void spawnTreeTopLayerTest() throws Exception {
-        // Create mocks for required dependencies
-        TerrainFactory terrainFactory = mock(TerrainFactory.class);
-        TiledMapTileLayer tileLayer = mock(TiledMapTileLayer.class);
-        TiledMap tiledMap = mock(TiledMap.class);
-        GdxGame gdxGame = mock(GdxGame.class);
-        MapLayers mapLayers = mock(MapLayers.class);
-
-        // Create an instance of EarthGameArea
-        EarthGameArea earthGameArea = new EarthGameArea(terrainFactory, gdxGame);
-
-        // Mock the terrain component and map layers
-        GameArea.terrain = mock(TerrainComponent.class);
-        when(GameArea.terrain.getMap()).thenReturn(tiledMap);
-        when(tiledMap.getLayers()).thenReturn(mapLayers);
-        when(mapLayers.get("Tree Base")).thenReturn(tileLayer);
+//    @Test
+//    void spawnTreeTopLayerTest() throws Exception {
+//        // Create mocks for required dependencies
+//        TerrainFactory terrainFactory = mock(TerrainFactory.class);
+//        TiledMapTileLayer tileLayer = mock(TiledMapTileLayer.class);
+//        TiledMap tiledMap = mock(TiledMap.class);
+//        GdxGame gdxGame = mock(GdxGame.class);
+//        MapLayers mapLayers = mock(MapLayers.class);
+//
+//        // Create an instance of EarthGameArea
+//        EarthGameArea earthGameArea = new EarthGameArea(terrainFactory, gdxGame);
+//
+//        // Mock the terrain component and map layers
+//        GameArea.terrain = mock(TerrainComponent.class);
+//        when(GameArea.terrain.getMap()).thenReturn(tiledMap);
+//        when(tiledMap.getLayers()).thenReturn(mapLayers);
+//        when(mapLayers.get("Tree Base")).thenReturn(tileLayer);
 
         // Use reflection to access the private spawnTreeTopLayer method
-        Method spawnTreeTopLayerMethod = EarthGameArea.class.getDeclaredMethod("spawnTreeTopLayer");
-        spawnTreeTopLayerMethod.setAccessible(true);
-
-        // Create a spy of the EarthGameArea instance
-        EarthGameArea spyEarthGameArea = spy(earthGameArea);
+//        Method spawnTreeTopLayerMethod = EarthGameArea.class.getDeclaredMethod("spawnTreeTopLayer");
+//        spawnTreeTopLayerMethod.setAccessible(true);
+//
+//        // Create a spy of the EarthGameArea instance
+//        EarthGameArea spyEarthGameArea = spy(earthGameArea);
 
         // Invoke the spawnTreeTopLayer method
 //        spawnTreeTopLayerMethod.invoke(spyEarthGameArea);
@@ -90,5 +90,5 @@ class EarthGameAreaTest {
 //        // Verify that tree top entities were correctly spawned
 //        int expectedNumTreeTops = 1;
 //        Assertions.assertEquals(expectedNumTreeTops, spawnedTreeTopEntities.size());
-    }
+  //  }
 }

@@ -112,6 +112,8 @@ class IntermediateWallToolTest {
 
         when(structurePlacementService.getStructureAt(position)).thenReturn(mock(Wall.class));
 
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
+
         tool.interact(player, position);
 
         verify(structurePlacementService, atLeastOnce()).getStructureAt(position);
@@ -134,6 +136,8 @@ class IntermediateWallToolTest {
         var position = new GridPoint2(0, 0);
 
         when(structurePlacementService.getStructureAt(position)).thenReturn(mock(Wall.class));
+
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
         tool.interact(player, position);
 

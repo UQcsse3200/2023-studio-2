@@ -33,10 +33,12 @@ public abstract class PlacementTool extends Tool {
     @Override
     public boolean interact(Entity player, GridPoint2 position) {
         if (!isPositionValid(position)) {
+            player.getEvents().trigger("displayWarning", "Invalid position");
             return false;
         }
 
         if (!hasEnoughResources()) {
+            player.getEvents().trigger("displayWarning", "Insufficient resources");
             return false;
         }
 

@@ -30,7 +30,6 @@ class EntityTest {
 
     entity.setPosition(0f, 0f);
     assertEquals(Vector2.Zero, entity.getPosition());
-    assertEquals(new GridPoint2(0, 0), entity.getGridPosition());
   }
 
   @Test

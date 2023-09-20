@@ -794,8 +794,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/npc/FireAnimationController.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/FireAnimationController.html" title="class in com.csse3200.game.components.npc">FireAnimationController</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/obstacleMinigame/ObstacleMiniGameActions.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.obstacleMinigame.<a href="com/csse3200/game/components/obstacleMinigame/ObstacleMiniGameActions.html" title="class in com.csse3200.game.components.obstacleMinigame">ObstacleMiniGameActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/DeathScreenActions.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/DeathScreenActions.html" title="class in com.csse3200.game.components.player">DeathScreenActions</a></dt>
@@ -1141,7 +1139,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/factories/StructureFactory.html#createSpanner(com.csse3200.game.areas.terrain.TerrainComponent,com.csse3200.game.areas.ExtractorMiniGameArea)" class="member-name-link">createSpanner(TerrainComponent, ExtractorMiniGameArea)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/StructureFactory.html" title="class in com.csse3200.game.entities.factories">StructureFactory</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/entities/factories/StructureFactory.html#createSpawner(java.util.ArrayList)" class="member-name-link">createSpawner(ArrayList&lt;Entity&gt;)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/StructureFactory.html" title="class in com.csse3200.game.entities.factories">StructureFactory</a></dt>
+<dt><a href="com/csse3200/game/entities/factories/StructureFactory.html#createSpawner(com.csse3200.game.entities.configs.SpawnerConfig)" class="member-name-link">createSpawner(SpawnerConfig)</a> - Static method in class com.csse3200.game.entities.factories.<a href="com/csse3200/game/entities/factories/StructureFactory.html" title="class in com.csse3200.game.entities.factories">StructureFactory</a></dt>
 <dd>
 <div class="block">Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map</div>
 </dd>
@@ -1615,8 +1613,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/components/Component.html#enabled" class="member-name-link">enabled</a> - Variable in class com.csse3200.game.components.<a href="com/csse3200/game/components/Component.html" title="class in com.csse3200.game.components">Component</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsContactListener.html#endContact(com.badlogic.gdx.physics.box2d.Contact)" class="member-name-link">endContact(Contact)</a> - Method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsContactListener.html" title="class in com.csse3200.game.physics">PhysicsContactListener</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/areas/mapConfig/AreaEntityConfig.html#enemies" class="member-name-link">enemies</a> - Variable in class com.csse3200.game.areas.mapConfig.<a href="com/csse3200/game/areas/mapConfig/AreaEntityConfig.html" title="class in com.csse3200.game.areas.mapConfig">AreaEntityConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsLayer.html#ENEMY_MELEE" class="member-name-link">ENEMY_MELEE</a> - Static variable in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsLayer.html" title="class in com.csse3200.game.physics">PhysicsLayer</a></dt>
 <dd>&nbsp;</dd>
@@ -2105,13 +2101,17 @@ loadScripts(document, 'script');</script>
 <div class="block">Converts the Vector2 positions to one of a few characters that represent certain directions.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/tasks/ChaseTask.html#getDirection(com.badlogic.gdx.math.Vector2)" class="member-name-link">getDirection(Vector2)</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/ChaseTask.html" title="class in com.csse3200.game.components.tasks">ChaseTask</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">This get method returns a char indicating the position of the target relative to the enemy.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/tasks/WanderTask.html#getDirection(com.badlogic.gdx.math.Vector2)" class="member-name-link">getDirection(Vector2)</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/WanderTask.html" title="class in com.csse3200.game.components.tasks">WanderTask</a></dt>
 <dd>
 <div class="block">Determines the direction from the entity's current position to the destination position.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/TouchAttackComponent.html#getDirection(com.badlogic.gdx.math.Vector2)" class="member-name-link">getDirection(Vector2)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/TouchAttackComponent.html" title="class in com.csse3200.game.components">TouchAttackComponent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">This get method returns a char indicating the position of the target relative to the enemy.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/PotionComponent.html#getDuration()" class="member-name-link">getDuration()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/PotionComponent.html" title="class in com.csse3200.game.components">PotionComponent</a></dt>
 <dd>
 <div class="block">Retrieves the duration for which the potion effect should last.</div>
@@ -2120,10 +2120,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Retrieves the duration for which the Powerup effect should last.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#getEnemiesSpawned()" class="member-name-link">getEnemiesSpawned()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#getEnemiesToSpawn()" class="member-name-link">getEnemiesToSpawn()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/NPCConfigs.html#GetEnemyConfig(com.csse3200.game.entities.enemies.EnemyType,com.csse3200.game.entities.enemies.EnemyBehaviour)" class="member-name-link">GetEnemyConfig(EnemyType, EnemyBehaviour)</a> - Method in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/NPCConfigs.html" title="class in com.csse3200.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/Terminal.html#getEnteredMessage()" class="member-name-link">getEnteredMessage()</a> - Method in class com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/Terminal.html" title="class in com.csse3200.game.ui.terminal">Terminal</a></dt>
@@ -2280,8 +2276,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">get the amount of health</div>
 </dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#getMeleeEnemiesToSpawn()" class="member-name-link">getMeleeEnemiesToSpawn()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/movement/MovementController.html#getMoving()" class="member-name-link">getMoving()</a> - Method in interface com.csse3200.game.ai.movement.<a href="com/csse3200/game/ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/components/PhysicsMovementComponent.html#getMoving()" class="member-name-link">getMoving()</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsMovementComponent.html" title="class in com.csse3200.game.physics.components">PhysicsMovementComponent</a></dt>
@@ -2360,8 +2354,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Not required for game, unimplemented</div>
 </dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#getRangedEnemiesToSpawn()" class="member-name-link">getRangedEnemiesToSpawn()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/GameTime.html#getRawDeltaTime()" class="member-name-link">getRawDeltaTime()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/GameTime.html" title="class in com.csse3200.game.services">GameTime</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/services/ServiceLocator.html#getRenderService()" class="member-name-link">getRenderService()</a> - Static method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ServiceLocator.html" title="class in com.csse3200.game.services">ServiceLocator</a></dt>
@@ -2890,8 +2882,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Checks whether the structure can be placed at the given position.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#isSpawning()" class="member-name-link">isSpawning()</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/tasks/BossTask.html#isUnleashed()" class="member-name-link">isUnleashed()</a> - Method in class com.csse3200.game.components.tasks.<a href="com/csse3200/game/components/tasks/BossTask.html" title="class in com.csse3200.game.components.tasks">BossTask</a></dt>
 <dd>
 <div class="block">Used to check if Boss has used special attack outside of class</div>
@@ -4438,10 +4428,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/physics/components/PhysicsComponent.html#setEnabled(boolean)" class="member-name-link">setEnabled(boolean)</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsComponent.html" title="class in com.csse3200.game.physics.components">PhysicsComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#setEnemiesSpawned(int)" class="member-name-link">setEnemiesSpawned(int)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#setEnemiesToSpawn(int)" class="member-name-link">setEnemiesToSpawn(int)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/terminal/Terminal.html#setEnteredMessage(java.lang.String)" class="member-name-link">setEnteredMessage(String)</a> - Method in class com.csse3200.game.ui.terminal.<a href="com/csse3200/game/ui/terminal/Terminal.html" title="class in com.csse3200.game.ui.terminal">Terminal</a></dt>
 <dd>
 <div class="block">Sets the text shown on the terminal</div>
@@ -4513,8 +4499,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the number of lives player has left.</div>
 </dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#setMeleeEnemiesToSpawn(int)" class="member-name-link">setMeleeEnemiesToSpawn(int)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/movement/MovementController.html#setMoving(boolean)" class="member-name-link">setMoving(boolean)</a> - Method in interface com.csse3200.game.ai.movement.<a href="com/csse3200/game/ai/movement/MovementController.html" title="interface in com.csse3200.game.ai.movement">MovementController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/components/PhysicsMovementComponent.html#setMoving(boolean)" class="member-name-link">setMoving(boolean)</a> - Method in class com.csse3200.game.physics.components.<a href="com/csse3200/game/physics/components/PhysicsMovementComponent.html" title="class in com.csse3200.game.physics.components">PhysicsMovementComponent</a></dt>
@@ -4556,8 +4540,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the number of potions in the laboratory.</div>
 </dd>
 <dt><a href="com/csse3200/game/input/InputComponent.html#setPriority(int)" class="member-name-link">setPriority(int)</a> - Method in class com.csse3200.game.input.<a href="com/csse3200/game/input/InputComponent.html" title="class in com.csse3200.game.input">InputComponent</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#setRangedEnemiesToSpawn(int)" class="member-name-link">setRangedEnemiesToSpawn(int)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/rendering/AtlasRenderComponent.html#setRegion(java.lang.String,boolean)" class="member-name-link">setRegion(String, boolean)</a> - Method in class com.csse3200.game.rendering.<a href="com/csse3200/game/rendering/AtlasRenderComponent.html" title="class in com.csse3200.game.rendering">AtlasRenderComponent</a></dt>
 <dd>
@@ -4610,8 +4592,6 @@ loadScripts(document, 'script');</script>
 <div class="block">This method responsible for setting the Shop place (new Map)
  By Vy (gonna delete this later)</div>
 </dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#setSpawning(boolean)" class="member-name-link">setSpawning(boolean)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/Companion/CompanionActions.html#setSpeed(float,float)" class="member-name-link">setSpeed(float, float)</a> - Method in class com.csse3200.game.components.Companion.<a href="com/csse3200/game/components/Companion/CompanionActions.html" title="class in com.csse3200.game.components.Companion">CompanionActions</a></dt>
 <dd>
 <div class="block">Set the speed to a set number.</div>
@@ -4867,10 +4847,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/input/SpannerInputComponent.html#%3Cinit%3E(com.csse3200.game.areas.terrain.TerrainComponent,com.csse3200.game.areas.ExtractorMiniGameArea)" class="member-name-link">SpannerInputComponent(TerrainComponent, ExtractorMiniGameArea)</a> - Constructor for class com.csse3200.game.input.<a href="com/csse3200/game/input/SpannerInputComponent.html" title="class in com.csse3200.game.input">SpannerInputComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#spawnEnemies(int,int)" class="member-name-link">spawnEnemies(int, int)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#spawnEnemy(com.csse3200.game.entities.enemies.EnemyType,com.csse3200.game.entities.enemies.EnemyBehaviour)" class="member-name-link">spawnEnemy(EnemyType, EnemyBehaviour)</a> - Method in class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/GameArea.html#spawnEntity(com.csse3200.game.entities.Entity)" class="member-name-link">spawnEntity(Entity)</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/GameArea.html" title="class in com.csse3200.game.areas">GameArea</a></dt>
 <dd>
 <div class="block">Spawn entity at its current position</div>
@@ -4887,7 +4863,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html" class="type-name-link" title="class in com.csse3200.game.components.npc">SpawnerComponent</a> - Class in <a href="com/csse3200/game/components/npc/package-summary.html">com.csse3200.game.components.npc</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#%3Cinit%3E(java.util.ArrayList)" class="member-name-link">SpawnerComponent(ArrayList&lt;Entity&gt;)</a> - Constructor for class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
+<dt><a href="com/csse3200/game/components/npc/SpawnerComponent.html#%3Cinit%3E(com.csse3200.game.entities.configs.SpawnerConfig)" class="member-name-link">SpawnerComponent(SpawnerConfig)</a> - Constructor for class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/SpawnerComponent.html" title="class in com.csse3200.game.components.npc">SpawnerComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/SpawnerConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">SpawnerConfig</a> - Class in <a href="com/csse3200/game/entities/configs/package-summary.html">com.csse3200.game.entities.configs</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/SpawnerConfig.html#%3Cinit%3E()" class="member-name-link">SpawnerConfig()</a> - Constructor for class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/SpawnerConfig.html" title="class in com.csse3200.game.entities.configs">SpawnerConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/areas/mapConfig/AreaEntityConfig.html#spawners" class="member-name-link">spawners</a> - Variable in class com.csse3200.game.areas.mapConfig.<a href="com/csse3200/game/areas/mapConfig/AreaEntityConfig.html" title="class in com.csse3200.game.areas.mapConfig">AreaEntityConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/areas/ExtractorMiniGameArea.html#spawnExtinguisher()" class="member-name-link">spawnExtinguisher()</a> - Method in class com.csse3200.game.areas.<a href="com/csse3200/game/areas/ExtractorMiniGameArea.html" title="class in com.csse3200.game.areas">ExtractorMiniGameArea</a></dt>
 <dd>&nbsp;</dd>
@@ -6040,6 +6022,12 @@ the order they are declared.</div>
 <dd>
 <div class="block">Creates a new WanderTask.</div>
 </dd>
+<dt><a href="com/csse3200/game/entities/configs/SpawnerConfig.html#wave1" class="member-name-link">wave1</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/SpawnerConfig.html" title="class in com.csse3200.game.entities.configs">SpawnerConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/SpawnerConfig.html#wave2" class="member-name-link">wave2</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/SpawnerConfig.html" title="class in com.csse3200.game.entities.configs">SpawnerConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/SpawnerConfig.html#wave3" class="member-name-link">wave3</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/SpawnerConfig.html" title="class in com.csse3200.game.entities.configs">SpawnerConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsLayer.html#WEAPON" class="member-name-link">WEAPON</a> - Static variable in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsLayer.html" title="class in com.csse3200.game.physics">PhysicsLayer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/WeaponComponent.html" class="type-name-link" title="class in com.csse3200.game.components.player">WeaponComponent</a> - Class in <a href="com/csse3200/game/components/player/package-summary.html">com.csse3200.game.components.player</a></dt>

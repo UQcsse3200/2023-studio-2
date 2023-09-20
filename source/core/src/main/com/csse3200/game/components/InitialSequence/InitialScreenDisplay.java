@@ -74,7 +74,7 @@ public class InitialScreenDisplay extends UIComponent {
         // it is to be placed at the right y coordinate above the screen.
         // The height is informed by the length of the text animation and the game's target FPS.
         // Set the initial position to the top of the screen
-        float planetInitialY = Gdx.graphics.getHeight() - planet.getHeight() + 320;
+        float planetInitialY = Gdx.graphics.getHeight() - planet.getHeight() + 370;
         planet.setPosition((float) Gdx.graphics.getWidth() / 2, planetInitialY, Align.center);
 
         // Create a Table for layout
@@ -83,8 +83,8 @@ public class InitialScreenDisplay extends UIComponent {
         rootTable.center(); // Center-align content vertically
 
         // The initial text you want to display
-        String story = "Earth has become a desolate wasteland ravaged by a deadly virus. Civilization as we know has crumbled, and humanity's\n" +
-                "last hope lies among the stars. You are one of the few survivors who have managed to secure a spot on a spaceship built\n";
+        String story = "Earth has become a desolate wasteland ravaged by a deadly virus.\n" +
+                "last hope lies among the stars. You are one of the few survivors.";
 
         // Configure the Label
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
@@ -95,7 +95,7 @@ public class InitialScreenDisplay extends UIComponent {
         storyLabel.setWidth(Gdx.graphics.getWidth());
 
         // Add the storyLabel to the rootTable and make it expand
-        rootTable.add(storyLabel).expandX().center().padTop(990f);
+        rootTable.add(storyLabel).expandX().center().padTop(850f);
         rootTable.row().padTop(30f);
 
         TextButton continueButton = new TextButton("Continue", skin);

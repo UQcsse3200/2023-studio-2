@@ -44,7 +44,8 @@
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
     "images/sling_shot.png",
-    "map/portal.png"
+    "map/portal.png",
+    "map/treetoplush.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",

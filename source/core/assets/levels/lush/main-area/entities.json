@@ -65,5 +65,15 @@
       "x": 20,
       "y": 40
     }
+  },
+  "treetop": {
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "spritePath": "map/treetoplush.png",
+    "scaleH": 50,
+    "scaleX": 0.5,
+    "scaleY": 0.2
   }
 }

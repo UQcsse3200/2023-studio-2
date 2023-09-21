@@ -4,7 +4,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.InteractableComponent;
@@ -157,7 +156,7 @@ public class NPCFactory {
                     .addComponent(new AstroAnimationController(new AssetManager()))
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
-                    .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
+                    .addComponent(new PhysicsComponent())
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new PhysicsMovementComponent());
 //                    .addComponent(aiComponent);
@@ -224,9 +223,9 @@ public class NPCFactory {
                     .addComponent(animator)
                     .addComponent(new JailAnimationController(new AssetManager()))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setAsBox(new Vector2(1.5f, 1.5f),new Vector2(23, 50)))
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new PhysicsMovementComponent());
+
     Jail.scaleHeight(1.7f);
     animator.startAnimation("jail_close");
     return Jail;

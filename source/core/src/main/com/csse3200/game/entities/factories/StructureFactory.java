@@ -19,6 +19,7 @@ import com.csse3200.game.components.structures.ExtractorAnimationController;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.SpawnerConfig;
 import com.csse3200.game.input.ExtinguisherInputComponent;
 import com.csse3200.game.input.FireInputComponent;
 import com.csse3200.game.input.HoleInputComponent;
@@ -298,20 +299,15 @@ public class StructureFactory {
 
      * Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map
      *
-     * @param targets the targets the entities that spawn will target
+     * @param config the config file to read and select the waves for the spawner to activate
      * @return
      */
-    public static Entity createSpawner(ArrayList<Entity> targets) {
+    public static Entity createSpawner(SpawnerConfig config) {
         Entity spawner =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/Spawner.png"))
-                        .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                        .addComponent(new ColliderComponent())
-                        .addComponent(new SpawnerComponent(targets));
+                        .addComponent(new SpawnerComponent(config));
 
-        spawner.getComponent(TextureRenderComponent.class).scaleEntity();
         spawner.scaleHeight(1.5f);
-        PhysicsUtils.setScaledCollider(spawner, 0.001f, 0.001f);
         return spawner;
     }
 }

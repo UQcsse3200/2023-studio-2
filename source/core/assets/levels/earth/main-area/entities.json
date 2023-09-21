@@ -2,31 +2,48 @@
   "ship": {
     "spritePath": "images/LeftShip.png",
     "position": {
-      "x": 35,
-      "y": 40
+      "x": 33,
+      "y": 67
     }
   },
-  "enemies": [
+  "spawners": [
     {
-      "health": 20,
-      "baseAttack": 10,
-      "speed": 5,
-      "behaviour": "PTE",
-      "spritePath": "images/enemy/base_enemy.atlas",
+      "wave1" : [
+        10,
+        0,
+        0
+      ],
+      "wave2" : [
+        10,
+        5,
+        0
+      ],
+      "wave3" : [
+        10,
+        10,
+        0
+      ],
       "position": {
         "x": 40,
         "y": 40
       }
+    }
+  ],
+  "portals": [
+    {
+      "teleportX" : 40,
+      "teleportY" : 5,
+      "position": {
+        "x": 30,
+        "y": 40
+      }
     },
     {
-      "health": 20,
-      "baseAttack": 10,
-      "speed": 5,
-      "behaviour": "PTE",
-      "spritePath": "images/enemy/base_enemy.atlas",
+      "teleportX" : 16,
+      "teleportY" : 20,
       "position": {
-        "x": 20,
-        "y": 20
+        "x": 78,
+        "y": 10
       }
     }
   ],
@@ -46,6 +63,27 @@
     "position" : {
       "x": 20,
       "y": 40
+    }
+  },
+  "botanist": {
+    "spritePath": "images/botanist.atlas",
+    "position" : {
+      "x": 20,
+      "y": 15
+    }
+  },
+  "Astro": {
+    "spritePath": "images/Astro_NPC.atlas",
+    "position" : {
+      "x": 24,
+      "y": 50
+    }
+  },
+  "Jail": {
+    "spritePath": "images/Jail/jail.atlas",
+    "position" : {
+      "x": 23,
+      "y": 50
     }
   }
 }

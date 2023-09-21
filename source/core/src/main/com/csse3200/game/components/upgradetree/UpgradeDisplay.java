@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.structures.StructureToolPicker;
@@ -21,6 +22,7 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputOverrideComponent;
+import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
@@ -78,7 +80,7 @@ public class UpgradeDisplay extends Window {
 
         this.upgradeBench = upgradeBench;
 
-        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000); // todo: remove this - testing line
+        // upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000); // todo: remove this - testing line
 
         skin = new Skin(Gdx.files.internal(SKIN_PATH));
         weaponConfigs = FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
@@ -325,6 +327,16 @@ public class UpgradeDisplay extends Window {
         table.add(materialsLabel);
         table.setPosition((getWidth() * getScaleX() / 2),
                 (float) (getHeight() * getScaleY() * 0.95));
+
+        // update the materials label every second
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                int updatedMaterials = upgradeBench.getComponent(UpgradeTree.class).getMaterials();
+                String updatedStr = String.format(MATERIALS_FORMAT, updatedMaterials);
+                materialsLabel.setText(updatedStr);
+            }
+        }, 1, 1);
 
         return table;
     }

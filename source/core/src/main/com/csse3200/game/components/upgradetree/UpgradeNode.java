@@ -34,7 +34,7 @@ public class UpgradeNode {
     private int depth;
 
     /** Cost of the root node in Nebulite materials **/
-    private static final int BASE_COST = 50;
+    private static final int BASE_COST = 100;
 
     /** Sets the parent of the current node**/
     public void setParent(UpgradeNode parent) {

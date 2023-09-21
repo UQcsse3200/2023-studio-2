@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.InteractableComponent;
@@ -156,7 +157,7 @@ public class NPCFactory {
                     .addComponent(new AstroAnimationController(new AssetManager()))
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
-                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new PhysicsMovementComponent());
 //                    .addComponent(aiComponent);

@@ -253,7 +253,7 @@ public class MapGameArea extends GameArea{
     }
 
     private void spawnTreeTop(){
-        if (mapConfig.areaEntityConfig == null) return;
+        if (mapConfig.areaEntityConfig.treetop == null) return;
 
         TreeTopConfig treeTopConfig = mapConfig.areaEntityConfig.treetop;
         Entity treeTop = ObstacleFactory.createTreeTop(treeTopConfig);

@@ -132,6 +132,9 @@ public class PlanetScreen extends ScreenAdapter {
         } else if ("Chronos".equals(name)) {
             this.nextPlanetName = "Rusterra";
             generateGameArea("primary", "levels/lush/main-area");
+        } else if ("Rusterra".equals(name)) {
+            this.nextPlanetName = "Pyroterra";
+            generateGameArea("primary", "levels/frozen/main-area");
         } else {
             // TODO: Extend
             this.nextPlanetName = "Earth";

@@ -59,6 +59,13 @@
       }
     }
   ],
+  "astronaut": {
+    "spritePath": "images/astronaut_npc.atlas",
+    "position": {
+      "x": 15,
+      "y": 39
+    }
+  },
   "upgradeBench": {
     "position" : {
       "x": 20,

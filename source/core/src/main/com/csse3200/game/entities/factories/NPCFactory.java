@@ -8,14 +8,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.TouchAttackComponent;
-import com.csse3200.game.components.npc.AstroAnimationController;
-import com.csse3200.game.components.npc.BotanistAnimationController;
-import com.csse3200.game.components.npc.FireAnimationController;
-import com.csse3200.game.components.npc.JailAnimationController;
+import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.AstronautConfig;
 import com.csse3200.game.entities.configs.BotanistConfig;
 import com.csse3200.game.entities.configs.AstroConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
@@ -169,6 +167,49 @@ public class NPCFactory {
     },3f));
     animator.startAnimation("Astro_Down");
     return Astro;
+  }
+  public static Entity createAstronaut(AstronautConfig astronautConfig) {
+
+    AITaskComponent aiComponent = new AITaskComponent();
+    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/astronaut_npc.atlas", TextureAtlas.class));
+    animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-4", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-1", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-3", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-4", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-1", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-3", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-4", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-1", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-3", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-4", 0.01f, Animation.PlayMode.LOOP);
+
+
+    Entity astronaut =
+            new Entity()
+                    .addComponent(animator)
+                    .addComponent(new AstronautAnimationController())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
+                    .addComponent(new DialogComponent(dialogueBox))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new InteractionControllerComponent(true))
+                    .addComponent(aiComponent);
+    astronaut.addComponent(new InteractableComponent(entity -> {
+      astronaut.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
+    },10f));
+
+    astronaut.scaleHeight(1f);
+    return astronaut;
   }
   public static Entity createJail() {
 

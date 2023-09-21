@@ -44,7 +44,8 @@
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
     "images/sling_shot.png",
-    "map/portal.png"
+    "map/portal.png",
+    "images/astronaut_npc.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -61,7 +62,8 @@
     "images/weapons/wrench.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
-    "images/botanist.atlas"
+    "images/botanist.atlas",
+    "images/astronaut_npc.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav"

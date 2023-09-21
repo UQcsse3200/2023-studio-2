@@ -88,6 +88,7 @@ public class MapGameArea extends GameArea{
         spawnPortal(player);
         spawnAstro();
         spawnSpawners();
+        spawnAstronaut();
         spawnJail();
       //  spawnFire();
 //        spawnBotanist();
@@ -330,6 +331,15 @@ public class MapGameArea extends GameArea{
         }
         //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
+    }
+    private void spawnAstronaut() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+       AstronautConfig astronautConfig = mapConfig.areaEntityConfig.astronaut;
+        if (astronautConfig != null) {
+            Entity astronaut = NPCFactory.createAstronaut(astronautConfig);
+            spawnEntityAt(astronaut, astronautConfig.position, false, false);
+        }
     }
 
     private void spawnAstro() {

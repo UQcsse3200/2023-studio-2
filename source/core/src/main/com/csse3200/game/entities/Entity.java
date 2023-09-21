@@ -1,5 +1,6 @@
 package com.csse3200.game.entities;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
@@ -86,6 +87,10 @@ public class Entity {
    */
   public Vector2 getPosition() {
     return position.cpy(); // Cpy gives us pass-by-value to prevent bugs
+  }
+
+  public GridPoint2 getGridPosition() {
+    return ServiceLocator.getGameArea().getTerrain().worldPositionToTile(position.cpy());
   }
 
   /**

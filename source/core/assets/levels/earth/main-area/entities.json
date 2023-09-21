@@ -17,8 +17,20 @@
         0
       ],
       "position": {
-        "x": 20,
-        "y": 40
+        "x": 5,
+        "y": 45
+      }
+    }
+  ],
+  "extractors": [
+    {
+      "resource": "Solstite",
+      "health": 200,
+      "tickRate": 1000,
+      "tickSize": 10,
+      "position": {
+        "x": 10,
+        "y": 50
       }
     }
   ]

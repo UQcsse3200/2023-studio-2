@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
@@ -39,6 +40,7 @@ class GameAreaTest {
       assertEquals(testTerrain, ServiceLocator.getGameArea().getTerrain());
   }
 
+  @Test
   void shouldSpawnEntities() {
     ServiceLocator.registerEntityService(new EntityService());
     Entity entity = mock(Entity.class);

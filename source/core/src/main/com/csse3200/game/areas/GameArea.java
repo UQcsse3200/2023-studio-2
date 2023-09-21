@@ -114,7 +114,10 @@ public abstract class GameArea implements Disposable {
     if (terrain == null) {
       areaEntities.put(null, entity);
     } else {
-      areaEntities.put(terrain.worldPositionToTile(entity.getPosition()), entity);
+      float entitySizeX = entity.getPosition().x + entity.getScale().x;
+      float entitySizeY = entity.getPosition().y + entity.getScale().y;
+      Vector2 entityTrueSize = new Vector2(entitySizeX, entitySizeY);
+      areaEntities.put(terrain.worldPositionToTile(entityTrueSize), entity);
     }
     ServiceLocator.getEntityService().register(entity);
   }

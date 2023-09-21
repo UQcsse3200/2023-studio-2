@@ -25,7 +25,7 @@ import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
  * Forest area for the demo game with trees, a player, and some enemies.
  */
 public class SpaceGameArea extends GameArea {
-    private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(5, 10);
     private static final float ASTEROID_SIZE = 0.9f;
     private static final float STATIC_ASTEROID_SIZE =0.9f;

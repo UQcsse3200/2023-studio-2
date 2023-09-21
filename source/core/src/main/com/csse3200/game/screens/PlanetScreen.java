@@ -4,7 +4,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -132,7 +131,7 @@ public class PlanetScreen extends ScreenAdapter {
         } else {
             // TODO: Extend
             this.nextPlanetName = "Earth";
-            this.allGameAreas.put("primary", new EarthGameArea(terrainFactory, game));
+            this.allGameAreas.put("primary", new MapGameArea("levels/lush/main-area", terrainFactory, game));
         }
     }
 
@@ -272,9 +271,9 @@ public class PlanetScreen extends ScreenAdapter {
 
         // Define the minimum and maximum allowed camera positions based on map boundaries
         float minX = halfViewportWidth;
-        float maxX = 60 * 0.5f - halfViewportWidth;
+        float maxX = 90 * 0.5f - halfViewportWidth;
         float minY = halfViewportHeight;
-        float maxY = 60 * 0.5f - halfViewportHeight;
+        float maxY = 90 * 0.5f - halfViewportHeight;
 
         // Calculate the camera's new X and Y positions within map boundaries
         float cameraX = Math.min(maxX, Math.max(minX, player.getPosition().x));

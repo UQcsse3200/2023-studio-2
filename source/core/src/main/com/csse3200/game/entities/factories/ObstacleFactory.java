@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.buildables.TurretType;
@@ -35,6 +36,7 @@ public class ObstacleFactory {
 
   private static final BaseEntityConfig treeConfig =
           FileLoader.readClass(BaseEntityConfig.class, "configs/tree.json");
+  protected static TerrainComponent terrain;
 
   /**
    * Creates a tree entity.
@@ -92,6 +94,24 @@ public class ObstacleFactory {
     environment.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     PhysicsUtils.setCustomCollider(environment, sizeX, sizeY, posX, posY);
     return environment;
+  }
+
+  /**
+   * Creates a tree top entity.
+   * @return entity
+   */
+  public static Entity createTreeTop() {
+    Entity treeTop =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("map/treetop.png")) // Replace with the path to your tree top texture
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE));
+
+    treeTop.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    treeTop.getComponent(TextureRenderComponent.class).scaleEntity();
+    treeTop.scaleHeight(30f);
+    PhysicsUtils.setScaledCollider(treeTop, 0.5f, 0.2f);
+    return treeTop;
   }
 
   /**

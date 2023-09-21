@@ -7,6 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.components.Companion.CompanionActions;
+import com.csse3200.game.components.Component;
+import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.*;
@@ -157,15 +160,18 @@ public class NPCFactory {
                     .addComponent(new AstroAnimationController(new AssetManager()))
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
-                    .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
+                    .addComponent(new PhysicsComponent())
                     .addComponent(new InteractionControllerComponent(true))
-                    .addComponent(new PhysicsMovementComponent());
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new FollowComponent(ServiceLocator.getEntityService().getPlayer(),0f))
+                    .addComponent(new CompanionActions());
 //                    .addComponent(aiComponent);
 
     Astro.getComponent(ColliderComponent.class).setDensity(1.5f);
     Astro.addComponent(new InteractableComponent(entity -> {
-      Astro.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
-    },3f));
+    Astro.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
+      Astro.getComponent(FollowComponent.class).setEntity(Astro);
+      Astro.getComponent(FollowComponent.class).setFollowSpeed(3f);},3f));
     animator.startAnimation("Astro_Down");
     return Astro;
   }
@@ -226,6 +232,7 @@ public class NPCFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new PhysicsMovementComponent());
+    Jail.addComponent(new InteractableComponent(entity -> {Jail.dispose();},5f));
 
     Jail.scaleHeight(1.7f);
     animator.startAnimation("jail_close");

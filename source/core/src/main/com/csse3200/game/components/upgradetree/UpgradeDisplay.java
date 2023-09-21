@@ -188,6 +188,7 @@ public class UpgradeDisplay extends Window {
         float currentX = x - totalWidth / 2 + nodeXSpacing / 2;
 
         for (UpgradeNode child : node.getChildren()) {
+            child.setParent(node);
             float childX = currentX;
             float childY = y - nodeYSpacing;
 
@@ -212,7 +213,15 @@ public class UpgradeDisplay extends Window {
         float rectSize = SIZE + dx;
         float offsetX = this.getX() - (dx / 2);
         float offsetY = this.getY() - (dx / 2);
+        float blackRectSize = rectSize * 1.1f;
+        float blackOffsetX = offsetX - (blackRectSize - rectSize) / 2;
+        float blackOffsetY = offsetY - (blackRectSize - rectSize) / 2;
 
+        // Draw black square outline
+        shapeRenderer.setColor(Color.BLACK);
+        shapeRenderer.rect(node.getX() + blackOffsetX, node.getY() + blackOffsetY, blackRectSize, blackRectSize);
+
+        // Draws weapon background
         shapeRenderer.setColor(Color.GRAY);
         shapeRenderer.rect(node.getX() + offsetX, node.getY() + offsetY, rectSize, rectSize);
 
@@ -286,13 +295,14 @@ public class UpgradeDisplay extends Window {
     private Table createExitButton() {
         TextureRegionDrawable exitTexture = createTextureRegionDrawable("images/upgradetree/exit.png", 100f);
         Button exitButton = new Button(exitTexture);
+        TextButton exitButtonn = new TextButton("X", skin);
 
         Table table = new Table();
-        table.add(exitButton);
-        table.setPosition(((float) (getWidth() * getScaleX() * 0.98)),
+        table.add(exitButtonn).height(32f).width(32f);
+        table.setPosition(((float) (getWidth() * getScaleX() * 0.975)),
                 (float) (getHeight() * getScaleY() * 0.95));
 
-        exitButton.addListener(new ChangeListener() {
+        exitButtonn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 exitUpgradeTree();
@@ -431,7 +441,10 @@ public class UpgradeDisplay extends Window {
      */
     private void handleWeaponUnlocking(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton, Image lockImage, TextButton costButton) {
 
-        if (stats.isWeaponUnlocked(node.getWeaponType()) || stats.getMaterials() < node.getNodeCost()) {
+        // Ensure locked, sufficient materials, and parent is unlocked
+        if (stats.isWeaponUnlocked(node.getWeaponType())
+                || stats.getMaterials() < node.getNodeCost()
+                || !stats.isWeaponUnlocked(node.getParent().getWeaponType())) {
             return;
         }
 

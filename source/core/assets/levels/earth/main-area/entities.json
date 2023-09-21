@@ -75,8 +75,8 @@
   "Astro": {
     "spritePath": "images/Astro_NPC.atlas",
     "position" : {
-      "x": 25,
-      "y": 15
+      "x": 24,
+      "y": 50
     }
   }
 }

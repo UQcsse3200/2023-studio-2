@@ -25,6 +25,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
   private MovementTask movementTask;
+  private char direction;
 
   /**
    * @param target The entity to chase.
@@ -67,30 +68,30 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     movementTask = new MovementTask(target.getPosition());
     movementTask.create(owner);
     movementTask.start();
-    char direction = getDirection(target.getPosition());
+    direction = getDirection(target.getPosition());
+
+    direction = getDirection(target.getPosition());
+
     if(direction == '<'){
       this.owner.getEntity().getEvents().trigger("chaseLeft");
     }
     if(direction == '>'||direction == '='){
       this.owner.getEntity().getEvents().trigger("chaseStart");
     }
-    Timer timer = new Timer();
-    timer.schedule(new TimerTask() {
-      @Override
-      public void run() {
-        if(getDirection(target.getPosition() )!= direction){
-          start();
-        }
-      }
-    },500);
   }
+
 
   @Override
   public void update() {
+    char direction2 = getDirection(target.getPosition());
     movementTask.setTarget(target.getPosition());
     movementTask.update();
+
     if (movementTask.getStatus() != Status.ACTIVE) {
       movementTask.start();
+    }
+    if (direction != direction2){
+      start();
     }
   }
 

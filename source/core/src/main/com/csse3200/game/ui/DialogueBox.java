@@ -101,7 +101,7 @@ public class DialogueBox extends Dialog {
 
 
         // Size and positioning of the dialog
-        setSize(600f, 350f); // Adjust the size as needed
+        setSize(600f, 370f); // Adjust the size as needed
         setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, Gdx.graphics.getHeight() - getHeight() - 700); // Adjust the Y position as needed
 
     }
@@ -131,8 +131,8 @@ public class DialogueBox extends Dialog {
 
     private void oninfo() {
 
-        String[] nextTitles = {"Thank you for saving me!", "I was hiding here due to the \n Virus spread around ", "I am also not feeling so well"};
-        String[] nextMessages = {"", "", ""};
+        String[] nextTitles = {"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected.", "Emily: We can handle it. \nLead the way!"};
+        String[] nextMessages = {"", ""};
 
         // Increment the index for the next click
         nextIndex++;

@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.screens.PlanetScreen;
@@ -40,17 +41,19 @@ public class ShipInteractionPopup extends Window {
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
 
-        Label titleLabel = new Label("WELCOME!!", labelStyle);
+        Label titleLabel = new Label("", labelStyle);
         titleLabel.setColor(Color.RED);
         add(titleLabel).padTop(20).center().top().expandX();
         row();
 
-        descriptionLabel = new Label("Welcome aboard the 'Phoenix,' travelers. I am the ship's AI, here to assist you on your cosmic journey. Destination coordinates are to be set, awaiting your command to initiate departure", labelStyle);
+        descriptionLabel = new Label("Player: (Breathing heavily) That was tough, but we did it.\n\nEmily: (Nodding) Yeah, and now we need to get this spaceship up and running.\n\n(Sadly, the skilled astronaut NPC who had been helping them collapses)\n\nAstronaut NPC: (Weakly) I... I can't go on. The infection from that cut... it's too much." +
+                "\nPlayer: (Gently) You've been a great help. Can you tell us about the planet we need to visit?\n\nAstronaut NPC: (Coughing) You must go to... the planet Verdant Heaven. It's... it's the only place where you can find... use this cosmic element dropped by the boss. Use the ship's AI to control it. I'll give you...", labelStyle);
+        descriptionLabel.setAlignment(Align.center);
         descriptionLabel.setWidth(popupWidth * 0.9f);  // Using 90% of the popup width
         descriptionLabel.setWrap(true); //helps the text to stay within the bounds of the popup
-        add(descriptionLabel).width(popupWidth * 0.9f).padTop(20).padLeft(popupWidth * 0.05f).expand().fill();
+        add(descriptionLabel).width(popupWidth * 0.9f).padTop(20f).padLeft(popupWidth * 0.05f).expand().fill();
 
-        TextButton okButton = new TextButton("Take Off", skin);
+        TextButton okButton = new TextButton("Start Journey", skin);
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -59,7 +62,7 @@ public class ShipInteractionPopup extends Window {
                 game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
             }
         });
-        okButton.setSize(100, 50);
+        okButton.setSize(200, 50);
         okButton.setPosition((getWidth() - okButton.getWidth()) / 2, 20);
         this.addActor(okButton);
 
@@ -74,7 +77,7 @@ public class ShipInteractionPopup extends Window {
         return super.remove();
     }
     private static TextureRegionDrawable getBrownBackgroundStatic() {
-        Texture texture = createColoredTextureStatic(1, 1, Color.BROWN);
+        Texture texture = createColoredTextureStatic(1, 1, Color.BLACK);
         return new TextureRegionDrawable(new TextureRegion(texture));
     }
 

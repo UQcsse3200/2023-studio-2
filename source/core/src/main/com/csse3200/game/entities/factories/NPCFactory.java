@@ -169,7 +169,6 @@ public class NPCFactory {
 
     Astro.getComponent(ColliderComponent.class).setDensity(1.5f);
     Astro.addComponent(new InteractableComponent(entity -> {
-    Astro.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
       Astro.getComponent(FollowComponent.class).setEntity(Astro);
       Astro.getComponent(FollowComponent.class).setFollowSpeed(3f);},3f));
     animator.startAnimation("Astro_Down");
@@ -231,9 +230,10 @@ public class NPCFactory {
                     .addComponent(new JailAnimationController(new AssetManager()))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new InteractionControllerComponent(true))
+                    .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsMovementComponent());
-    Jail.addComponent(new InteractableComponent(entity -> {Jail.dispose();},5f));
-
+    Jail.addComponent(new InteractableComponent(entity -> {Jail.dispose();
+      Jail.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");},5f));
     Jail.scaleHeight(1.7f);
     animator.startAnimation("jail_close");
     return Jail;

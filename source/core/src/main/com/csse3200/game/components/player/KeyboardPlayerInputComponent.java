@@ -293,7 +293,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * Triggers walk event
    */
   private void triggerWalkEvent() {
-      Entity companion = ServiceLocator.getGameArea().getCompanion();
+      Entity companion = ServiceLocator.getEntityService().getCompanion();
     Vector2 lastDir = this.walkDirection.cpy();
     this.walkDirection = keysToVector().scl(WALK_SPEED);
     if (this.getTesting() == 0) {

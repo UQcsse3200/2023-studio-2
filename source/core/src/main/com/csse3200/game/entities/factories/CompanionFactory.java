@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.*;
 import com.csse3200.game.components.FollowComponent;
+import com.csse3200.game.components.PotionComponent;
+import com.csse3200.game.components.PotionType;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;
@@ -23,7 +25,10 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Objects;
 
 /**
  * Factory to create a companion entity.
@@ -40,6 +45,7 @@ public class CompanionFactory {
     public static Entity createCompanion() {
         return createCompanion(Config);
     }
+    private Entity companion = ServiceLocator.getEntityService().getCompanion();
 
     /**
      * Create a Companion entity matching the config file
@@ -53,7 +59,7 @@ public class CompanionFactory {
         /*AnimationRenderComponent infanimator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/companionSS.atlas", TextureAtlas.class));*/
-        Entity player = ServiceLocator.getGameArea().getPlayer();
+        Entity player = ServiceLocator.getEntityService().getPlayer();
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
@@ -84,14 +90,12 @@ public class CompanionFactory {
                         .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
-                        .addComponent(new FollowComponent(player, 3f))
                         .addComponent(animator)
                         /*.addComponent(infanimator)*/
-                        .addComponent(new CompanionStatsDisplay(player))
-                        .addComponent(new KeyboardCompanionInputComponent())
-                        .addComponent(new PlayerAnimationController())
+                        .addComponent(new CompanionStatsDisplay())
+                        .addComponent(new CompanionAnimationController())
+                        .addComponent(new FollowComponent(player,3f))
                         .addComponent(new InteractionControllerComponent(false));
-
        /* animator.startAnimation("Companion_StandDown");*/
         animator.startAnimation("Companion_StandDown");
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
@@ -100,7 +104,6 @@ public class CompanionFactory {
         companion.setEntityType("companion");
         return companion;
     }
-
     private CompanionFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }

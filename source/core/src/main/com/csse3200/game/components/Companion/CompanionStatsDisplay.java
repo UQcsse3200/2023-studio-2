@@ -26,7 +26,7 @@ public class CompanionStatsDisplay extends UIComponent {
     /**
      * The player entity associated with this CompanionStatsDisplay.
      */
-    public Entity playerEntity;
+    public Entity player = ServiceLocator.getEntityService().getPlayer();
 
     /**
      * The UI playerLowHealthLabel for displaying the companion's health.
@@ -46,16 +46,6 @@ public class CompanionStatsDisplay extends UIComponent {
      */
     public CompanionStatsDisplay() {
     }
-
-    /**
-     * Constructor for CompanionStatsDisplay with a player entity.
-     *
-     * @param playerEntity The player entity to associate with this UI component.
-     */
-    public CompanionStatsDisplay(Entity playerEntity) {
-        this.playerEntity = playerEntity;
-    }
-
     /**
      * Creates reusable UI styles and adds actors to the stage.
      */
@@ -66,7 +56,7 @@ public class CompanionStatsDisplay extends UIComponent {
 
         // Listen for events related to health updates
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
-        playerEntity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+        player.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
         entity.getEvents().addListener("companionModeChange", this::updateCompanionModeUI);
     }
 
@@ -138,7 +128,7 @@ public class CompanionStatsDisplay extends UIComponent {
      * Reset the companion's image.
      */
     public void resetImage() {
-        AnimationRenderComponent animator = ServiceLocator.getGameArea().getCompanion().getComponent(AnimationRenderComponent.class);
+        AnimationRenderComponent animator = ServiceLocator.getEntityService().getCompanion().getComponent(AnimationRenderComponent.class);
         animator.startAnimation("RIGHT");
     }
 
@@ -147,16 +137,16 @@ public class CompanionStatsDisplay extends UIComponent {
      */
     public void toggleInfiniteHealth() {
         if (isInfiniteHealth) {
-            ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setImmunity(true);
-            ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(true);
+            ServiceLocator.getEntityService().getCompanion().getComponent(CombatStatsComponent.class).setImmunity(true);
+            ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(true);
             isInfiniteHealth = false;
 
             // Schedule a task to reset health to a normal value after a delay (e.g., 10 seconds)
             Timer.schedule(new Task() {
                 @Override
                 public void run() {
-                    ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setImmunity(false);
-                    ServiceLocator.getGameArea().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
+                    ServiceLocator.getEntityService().getCompanion().getComponent(CombatStatsComponent.class).setImmunity(false);
+                    ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
 
                 }
             }, 8.0f);

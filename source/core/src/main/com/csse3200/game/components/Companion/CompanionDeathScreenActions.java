@@ -55,7 +55,7 @@ public class CompanionDeathScreenActions extends Component {
         // Get the current planet screen from the GameStateObserverService.
         PlanetScreen currentPlanetScreen = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
             game.setScreen(currentPlanetScreen);
-            ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setHealth(100);
+            ServiceLocator.getEntityService().getCompanion().getComponent(CombatStatsComponent.class).setHealth(100);
 
     }
 }

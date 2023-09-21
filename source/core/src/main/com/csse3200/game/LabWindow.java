@@ -101,21 +101,21 @@ public class LabWindow extends Window {
         potion1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event,float x, float y){
-                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("SpawnPotion",PotionType.DEATH_POTION);
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.DEATH_POTION);
                 failLaboratory();
             }
         });
         potion2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("SpawnPotion",PotionType.HEALTH_POTION);
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.SPEED_POTION);
                 failLaboratory();
             }
         });
         potion3.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("SpawnPotion",PotionType.SPEED_POTION);
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.HEALTH_POTION);
                 failLaboratory();
             }
         });
@@ -123,7 +123,7 @@ public class LabWindow extends Window {
         potion4.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("SpawnPotion",PotionType.INVINCIBILITY_POTION);
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.INVINCIBILITY_POTION);
                 failLaboratory();
             }
         });

@@ -25,11 +25,9 @@ public class PotionFactory {
      * Creates a potion entity of the specified type.
      *
      * @param type      The type of potion to create.
-     * @param player    The player entity in the game.
-     * @param companion The companion entity in the game.
      * @return A newly created potion entity.
      */
-    public static Entity createPotion(PotionType type, Entity player, Entity companion) {
+    public static Entity createPotion(PotionType type) {
         Entity potion = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
@@ -45,18 +43,15 @@ public class PotionFactory {
             }
             case HEALTH_POTION -> {
                 potion.addComponent(new TextureRenderComponent("images/Potion4re.png"))
-                        .addComponent(new PotionComponent(PotionType.DEATH_POTION))
-                        .getComponent(PotionComponent.class).applyEffect(player, companion);
+                        .addComponent(new PotionComponent(PotionType.HEALTH_POTION));
             }
             case SPEED_POTION -> {
                 potion.addComponent(new TextureRenderComponent("images/Potion2re.png"))
-                        .addComponent(new PotionComponent(PotionType.SPEED_POTION))
-                        .getComponent(PotionComponent.class).applyEffect(player, companion);
+                        .addComponent(new PotionComponent(PotionType.SPEED_POTION));
             }
             case INVINCIBILITY_POTION -> {
                 potion.addComponent(new TextureRenderComponent("images/Potion1re.png"))
-                        .addComponent(new PotionComponent(PotionType.INVINCIBILITY_POTION))
-                        .getComponent(PotionComponent.class).applyEffect(player, companion);
+                        .addComponent(new PotionComponent(PotionType.INVINCIBILITY_POTION));
             }
             default -> throw new IllegalArgumentException("You must assign a valid PotionType");
         }

@@ -104,15 +104,17 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Keys.N -> {
-                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("attack");
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("attack");
                 return true;
             }
+/*
 
             case Keys.H -> {
                 companionStatsDisplay.toggleInfiniteHealth();
                 companionStatsDisplay.toggleInvincibility();
                 return true;
             }
+*/
 
             case Keys.I -> {
                 flagW = 1;

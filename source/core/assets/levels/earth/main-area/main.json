@@ -43,7 +43,14 @@
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
     "images/sling_shot.png",
-    "images/Companion_spritesheet.png"
+    "images/Companion_spritesheet.png",
+    "images/laboratory.png",
+    "images/potion2.png",
+    "images/potion3.png",
+    "images/Potion1re.png",
+    "images/Potion2re.png",
+    "images/Potion3re.png",
+    "images/Potion4re.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",

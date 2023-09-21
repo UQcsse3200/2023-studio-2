@@ -10,6 +10,7 @@ import com.csse3200.game.components.Companion.CompanionStatsDisplay;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
 
 
 /**
@@ -20,13 +21,8 @@ public class PotionComponent extends Component {
 
     private PotionType type;
     private long duration;
-    private CombatStatsComponent playerCombatStats;
-    private CombatStatsComponent companionCombatStats;
-    private PlayerActions playerActions;
-    private CompanionActions companionActions;
-    private final CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay();
-
-
+    private Entity player = ServiceLocator.getEntityService().getPlayer();
+    private Entity companion = ServiceLocator.getEntityService().getCompanion();
     /**
      * Creates a PotionComponent with the specified type.
      *
@@ -40,22 +36,12 @@ public class PotionComponent extends Component {
      * Overrides the Component's create() function.
      */
     @Override
-    public void create() {
-        playerCombatStats = entity.getComponent(CombatStatsComponent.class);
-        companionCombatStats = entity.getComponent(CombatStatsComponent.class);
-    }
+    public void create() {}
 
     /**
      * Applies the effects of the potion to the specified target entities.
-     *
-     * @param target1 The first entity receiving the potion effect.
-     * @param target2 The second entity receiving the potion effect.
      */
-    public void applyEffect(Entity target1, Entity target2) {
-        playerCombatStats = target1.getComponent(CombatStatsComponent.class);
-        playerActions = target1.getComponent(PlayerActions.class);
-        companionCombatStats = target2.getComponent(CombatStatsComponent.class);
-        companionActions = target2.getComponent(CompanionActions.class);
+    public void applyEffect() {
 
         switch (type) {
             case DEATH_POTION -> {
@@ -64,25 +50,13 @@ public class PotionComponent extends Component {
                 return;
             }
             case HEALTH_POTION -> {
-                if (playerActions == null && companionActions == null) {
-                    return;
-                }
-                // Store current health values
-                int currentHealthPlayer = playerCombatStats.getHealth();
-                int currentHealthCompanion = companionCombatStats.getHealth();
-
-                // Set health to a specific value temporarily
-                playerCombatStats.setHealth(100);
-                companionCombatStats.setHealth(50);
+                player.getComponent(CombatStatsComponent.class).setHealth(100);
+                companion.getComponent(CombatStatsComponent.class).setHealth(50);
 
             }
             case SPEED_POTION -> {
-                if (playerActions == null && companionActions == null) {
-                    return;
-                }
-                // Adjust the speed of player and companion
-                playerActions.setSpeed(6, 6);
-                companionActions.setSpeed(7, 7);
+                player.getComponent(PlayerActions.class).setSpeed(6,6);
+                companion.getComponent(CompanionActions.class).setSpeed(7,7);
 
                 // Set the duration for speed effect
                 this.setDuration(10000);
@@ -91,16 +65,16 @@ public class PotionComponent extends Component {
                 java.util.TimerTask speedUp = new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        playerActions.setSpeed(3, 3);
-                        companionActions.setSpeed(4, 4);
+                        player.getComponent(PlayerActions.class).setSpeed(3,3);
+                        companion.getComponent(CompanionActions.class).setSpeed(4,4);
                     }
                 };
                 new java.util.Timer().schedule(speedUp, getDuration());
             }
             case INVINCIBILITY_POTION -> {
 
-                companionStatsDisplay.toggleInfiniteHealth();
-                companionStatsDisplay.toggleInvincibility();
+                companion.getComponent(CompanionStatsDisplay.class).toggleInfiniteHealth();
+                companion.getComponent(CompanionStatsDisplay.class).toggleInvincibility();
             }
             default -> throw new IllegalArgumentException("Invalid PotionType");
         }

@@ -199,11 +199,7 @@ public class EarthGameArea extends GameArea {
         spawnSpawner();
         playMusic();
     }
-    public static void removeItemOnMap(Entity entityToRemove) {
-        entityToRemove.setEnabled(false);
-        itemsOnMap.remove(entityToRemove);
-        Gdx.app.postRunnable(entityToRemove::dispose);
-    }
+
     private void spawnEnvironment() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
         Entity environment;
@@ -425,25 +421,25 @@ public class EarthGameArea extends GameArea {
         Entity newPotion;
         switch (potionType){
             case DEATH_POTION:
-               newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION,player,companion);
+               newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION);
                itemsOnMap.add(newPotion);
                GridPoint2 pos = new GridPoint2(39, 21);
                spawnEntityAt(newPotion, pos, true, false);
                return newPotion;
             case SPEED_POTION:
-                newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION,player,companion);
+                newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION);
                 itemsOnMap.add(newPotion);
                 GridPoint2 pos2 = new GridPoint2(40, 21);
                 spawnEntityAt(newPotion, pos2, true, false);
                 return newPotion;
             case HEALTH_POTION:
-                newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION,player,companion);
+                newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION);
                 itemsOnMap.add(newPotion);
                 GridPoint2 pos3 = new GridPoint2(41, 21);
                 spawnEntityAt(newPotion, pos3, true, false);
                 return newPotion;
             case INVINCIBILITY_POTION:
-                newPotion = PotionFactory.createPotion(PotionType.INVINCIBILITY_POTION,player,companion);
+                newPotion = PotionFactory.createPotion(PotionType.INVINCIBILITY_POTION);
                 itemsOnMap.add(newPotion);
                 GridPoint2 pos4 = new GridPoint2(42, 21);
                 spawnEntityAt(newPotion, pos4, true, false);

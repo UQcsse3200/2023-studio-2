@@ -97,5 +97,13 @@ public class EntityService {
       entity.dispose();
     }
   }
+  public Entity getCompanion() {
+    for (Entity entity : entities) {
+      if (entity.getEntityType().equals("companion")) {
+        return entity;
+      }
+    }
+    return null;
+  }
 
 }

@@ -1,7 +1,7 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.areas.EarthGameArea;
+import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Companion.CompanionInventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PotionFactory;
@@ -45,10 +45,10 @@ public class ItemPickupComponent extends Component {
     private void pickUp(Fixture me, Fixture other) {
 
         hitboxComponent = entity.getComponent(HitboxComponent.class);
-
+        entity.getComponent(PotionComponent.class).applyEffect();
         Entity entityOfComponent = getEntity();
-        EarthGameArea.removeItemOnMap(entityOfComponent);
+        MapGameArea.removeItemOnMap(entityOfComponent);
         logger.info("Item picked up");
-        ServiceLocator.getGameArea().getCompanion().getComponent(CompanionInventoryComponent.class).addItem(entityOfComponent);
+        ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class).addItem(entityOfComponent);
     }
 }

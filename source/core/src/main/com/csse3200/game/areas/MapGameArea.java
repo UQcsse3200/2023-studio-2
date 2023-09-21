@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -12,6 +13,7 @@ import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.PotionType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
@@ -26,7 +28,9 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * A Base Game Area for any level.
@@ -35,12 +39,14 @@ import java.util.Collection;
 public class MapGameArea extends GameArea{
 
     private GameAreaConfig mapConfig = null;
-    private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
+    private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
     private Entity playerEntity;
     private Entity companionEntity;
+
     private boolean validLoad = true;
+    private static List<Entity> itemsOnMap = new ArrayList<>();
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
         try {
@@ -75,20 +81,15 @@ public class MapGameArea extends GameArea{
         spawnUpgradeBench();
         spawnExtractors();
         spawnShip();
-        playerEntity = spawnPlayer();
+        player = spawnPlayer();
         companionEntity = spawnCompanion();
         spawnLaboratory();
         spawnEnemies();
         spawnBotanist();
+        companionEntity.getEvents().addListener("SpawnPotion",this::spawnPotion);
 
         playMusic();
     }
-
-    //TODO: is this needed? - ServiceLocator.getEntityService.getPlayer()
-    public Entity getPlayer() {
-        return this.playerEntity;
-    }
-    public Entity getCompanion(){return this.companionEntity;}
 
     /**
      * Loads all assets listed in the config file
@@ -156,6 +157,12 @@ public class MapGameArea extends GameArea{
         spawnEntityAt(
                 ObstacleFactory.createWall(worldBounds.x, ObstacleFactory.WALL_SIZE), GridPoint2Utils.ZERO, false, false);
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
+    }
+
+    public static void removeItemOnMap(Entity entityToRemove) {
+        entityToRemove.setEnabled(false);
+        itemsOnMap.remove(entityToRemove);
+        Gdx.app.postRunnable(entityToRemove::dispose);
     }
 
     /**
@@ -251,12 +258,7 @@ public class MapGameArea extends GameArea{
             spawnEntityAt(ship, shipConfig.position, false, false);
         }
     }
-    private void spawnLaboratory(){
 
-        GridPoint2 randomPos = new GridPoint2(34,19);
-        Entity newLaboratory = LaboratoryFactory.createLaboratory();
-        spawnEntityAt(newLaboratory, randomPos, true,false);
-    }
 
     /**
      * Spawns the player at the position given by the config file.
@@ -273,6 +275,12 @@ public class MapGameArea extends GameArea{
             spawnEntityAt(newPlayer, pos, true, true);
         }
         return newPlayer;
+    }
+    private void spawnLaboratory(){
+
+        GridPoint2 randomPos = new GridPoint2(34,19);
+        Entity newLaboratory = LaboratoryFactory.createLaboratory();
+        spawnEntityAt(newLaboratory, randomPos, true,false);
     }
 
     /**
@@ -313,6 +321,36 @@ public class MapGameArea extends GameArea{
         //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
     }
+    public Entity spawnPotion(PotionType potionType){
+        Entity newPotion;
+        switch (potionType){
+            case DEATH_POTION:
+                newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION);
+                itemsOnMap.add(newPotion);
+                GridPoint2 pos = new GridPoint2(39, 21);
+                spawnEntityAt(newPotion, pos, true, false);
+                return newPotion;
+            case SPEED_POTION:
+                newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION);
+                itemsOnMap.add(newPotion);
+                GridPoint2 pos2 = new GridPoint2(40, 21);
+                spawnEntityAt(newPotion, pos2, true, false);
+                return newPotion;
+            case HEALTH_POTION:
+                newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION);
+                itemsOnMap.add(newPotion);
+                GridPoint2 pos3 = new GridPoint2(41, 21);
+                spawnEntityAt(newPotion, pos3, true, false);
+                return newPotion;
+            case INVINCIBILITY_POTION:
+                newPotion = PotionFactory.createPotion(PotionType.INVINCIBILITY_POTION);
+                itemsOnMap.add(newPotion);
+                GridPoint2 pos4 = new GridPoint2(42, 21);
+                spawnEntityAt(newPotion, pos4, true, false);
+                return newPotion;
+            default: throw new IllegalArgumentException("You must assign a valid PotionType");
+        }
+    }
 
     /**
      * Plays the game music loaded from the config file
@@ -337,18 +375,12 @@ public class MapGameArea extends GameArea{
     /**
      * Unloads all assets from config file
      */
-    private void unloadAssets() {
+    protected void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
-        if (mapConfig.areaEntityConfig != null) {
-            String[] textures = mapConfig.areaEntityConfig.getAllConfigs().stream()
-                    .map(BaseEntityConfig::getTextures)
-                    .flatMap(Collection::stream)
-                    .distinct()
-                    .toArray(String[]::new);
-            resourceService.unloadAssets(textures);
-        }
+        if (mapConfig.getEntityTextures() != null)
+            resourceService.unloadAssets(mapConfig.getEntityTextures());
         if (mapConfig.texturePaths != null)
             resourceService.unloadAssets(mapConfig.texturePaths);
         if (mapConfig.textureAtlasPaths != null)

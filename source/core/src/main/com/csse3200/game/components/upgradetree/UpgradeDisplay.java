@@ -51,8 +51,8 @@ public class UpgradeDisplay extends Window {
     // Tree stuff
     private final List<UpgradeNode> trees = new ArrayList<>();
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private float nodeYSpacing; // 175
-    private float nodeXSpacing; // 150
+    private float nodeYSpacing;
+    private float nodeXSpacing;
 
     /**
      * Factory method for creating an instance of UpgradeDisplay.
@@ -77,6 +77,8 @@ public class UpgradeDisplay extends Window {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
 
         this.upgradeBench = upgradeBench;
+
+        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000); // todo: remove this - testing line
 
         skin = new Skin(Gdx.files.internal(SKIN_PATH));
         weaponConfigs = FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
@@ -230,9 +232,21 @@ public class UpgradeDisplay extends Window {
         }
 
         Vector2 parentPos = localToStageCoordinates(new Vector2(node.getX() + SIZE/2, node.getY() + SIZE/2));
+        UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
 
         for (UpgradeNode child : node.getChildren()) {
             Vector2 childPos = localToStageCoordinates(new Vector2(child.getX() + SIZE/2, child.getY() + SIZE/2));
+
+            // draw stroke
+            shapeRenderer.setColor(Color.BLACK);
+            shapeRenderer.rectLine(parentPos, childPos, 9);
+
+            // Change line colour based on mutual unlocked / locked status between node and child
+            if (stats.isWeaponUnlocked(node.getWeaponType()) && stats.isWeaponUnlocked(child.getWeaponType())) {
+                shapeRenderer.setColor(new Color(41f/255, 222f/255, 15f/255, 0.5f)); // light green
+            } else {
+                shapeRenderer.setColor(new Color(150f / 255, 18f / 255, 23f / 255, 0.5f)); // dark red
+            }
             shapeRenderer.rectLine(parentPos, childPos, 5);
 
             drawLines(child);

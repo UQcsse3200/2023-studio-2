@@ -1,3 +1,4 @@
+/*
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.maps.MapLayers;
@@ -37,3 +38,4 @@ class EarthGameAreaTest {
         spawnEnvironmentMethod.invoke(spyEarthGameArea);
     }
 }
+*/

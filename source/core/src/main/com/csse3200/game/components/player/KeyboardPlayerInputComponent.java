@@ -47,10 +47,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     public KeyboardPlayerInputComponent() {
         super(5);
 
-//        Initialisation of the playerWalkSound with the correct sound file
+//        Initialisation of the playerWalkSound with the correct audio file
         playerWalkSound = new playerActionSound("sounds/footStepsInTheForestGround.mp3");
 
-//        Initialisation of the playerWalkSound with the correct sound file
+//        Initialisation of the playerWalkSound with the correct audio file
         playerDodgeSound = new playerActionSound("sounds/dodgingAlertSweep.mp3");
     }
 

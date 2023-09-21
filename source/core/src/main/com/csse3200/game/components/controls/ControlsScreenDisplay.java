@@ -50,6 +50,7 @@ public class ControlsScreenDisplay extends UIComponent {
         TextButton SBtn = new TextButton("S", skin);
         TextButton DBtn = new TextButton("D", skin);
         TextButton FBtn = new TextButton("F", skin);
+
         WBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {

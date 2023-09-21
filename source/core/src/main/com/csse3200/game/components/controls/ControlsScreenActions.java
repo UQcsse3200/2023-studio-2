@@ -42,6 +42,7 @@ public class ControlsScreenActions extends Component {
 
 
     private void onW() {
+        game.setScreen(GdxGame.ScreenType.PLAYER_ANIMATION_SCREEN);
         logger.info("W clicked");
 
     }

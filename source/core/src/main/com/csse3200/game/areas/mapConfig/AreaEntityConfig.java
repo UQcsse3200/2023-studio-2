@@ -13,7 +13,9 @@ public class AreaEntityConfig {
     public List<AsteroidConfig> asteroids = new ArrayList<>();
     public List<BaseEntityConfig> baseEntities = new ArrayList<>();
     public BotanistConfig botanist = null;
+    public AstroConfig Astro = null;
     public CompanionConfig companion = null;
+    public JailConfig Jail = null;
     public List<EnemyBulletConfig> bullets = new ArrayList<>();
     public List<SpawnerConfig> spawners = new ArrayList<>();
     public List<PortalConfig> portals = new ArrayList<>();
@@ -36,6 +38,8 @@ public class AreaEntityConfig {
         entities.addAll(asteroids);
         entities.addAll(baseEntities);
         if (botanist != null) entities.add(botanist);
+        if (Astro != null) entities.add(Astro);
+        if (Jail != null) entities.add(Jail);
         if (companion != null) entities.add(companion);
         entities.addAll(bullets);
         entities.addAll(portals);
@@ -62,6 +66,8 @@ public class AreaEntityConfig {
         if (!Objects.equals(asteroids, that.asteroids)) return false;
         if (!Objects.equals(baseEntities, that.baseEntities)) return false;
         if (!Objects.equals(botanist, that.botanist)) return false;
+        if (!Objects.equals(Astro, that.Astro)) return false;
+        if (!Objects.equals(Jail, that.Jail)) return false;
         if (!Objects.equals(companion, that.companion)) return false;
         if (!Objects.equals(bullets, that.bullets)) return false;
         if (!Objects.equals(portals, that.portals)) return false;
@@ -82,6 +88,8 @@ public class AreaEntityConfig {
         int result = asteroids != null ? asteroids.hashCode() : 0;
         result = 31 * result + (baseEntities != null ? baseEntities.hashCode() : 0);
         result = 31 * result + (botanist != null ? botanist.hashCode() : 0);
+        result = 31 * result + (Astro != null ? Astro.hashCode() : 0);
+        result = 31 * result + (Jail != null ? Jail.hashCode() : 0);
         result = 31 * result + (companion != null ? companion.hashCode() : 0);
         result = 31 * result + (portals != null ? portals.hashCode() : 0);
         result = 31 * result + (bullets != null ? bullets.hashCode() : 0);

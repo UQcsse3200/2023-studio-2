@@ -1,15 +1,18 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.StructurePlacementService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,19 +23,17 @@ import java.util.Map;
  * <p>Support for enabling/disabling game areas could be added by making this a Component instead.
  */
 public abstract class GameArea implements Disposable {
-  protected TerrainComponent terrain;
+  protected static TerrainComponent terrain;
   protected Map<GridPoint2, Entity> areaEntities;
   protected Entity companion;
-  protected Entity player;
+  protected static Entity player;
   protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;
+  protected ArrayList<Entity> targetables;
 
   public GameArea() {
     areaEntities = new HashMap<>();
-  }
-
-  public Entity getPlayer() {
-    return player;
+    this.targetables = new ArrayList<>();
   }
 
   /** Create the game area in the world. */
@@ -113,6 +114,19 @@ public abstract class GameArea implements Disposable {
     ServiceLocator.getEntityService().register(entity);
   }
 
+
+
+  /**
+   * Spawns the player entity and adds them to the list of targetable entities
+   */
+  protected void spawnPlayer(GridPoint2 PLAYER_SPAWN) {
+    Entity newPlayer = PlayerFactory.createPlayer();
+    spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    targetables.add(newPlayer);
+    player = newPlayer;
+  }
+
+
   /**
    * Spawn entity on a given tile. Requires the terrain to be set first.
    *
@@ -142,4 +156,8 @@ public abstract class GameArea implements Disposable {
     spawnEntity(entity);
   }
  public Entity getCompanion(){return companion;}
+
+  public static Entity getPlayer() {
+    return player;
+  }
 }

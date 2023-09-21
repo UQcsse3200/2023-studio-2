@@ -4,7 +4,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -31,6 +30,9 @@ import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A screen that represents a single planet of the game with its corresponding game area/s.
  * Determines which game area to generate and the next planet in the chain.
@@ -43,7 +45,9 @@ public class PlanetScreen extends ScreenAdapter {
     private String nextPlanetName;
 
     private Entity player;
-    private GameArea gameArea; //TODO: Extend with new MapArea
+
+    private String currentAreaName = "primary";
+    private final Map<String, GameArea> allGameAreas = new HashMap<>();
 
     /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -88,12 +92,11 @@ public class PlanetScreen extends ScreenAdapter {
 
         loadAssets();
         createUI();
-
-        setGameArea(game.getPlayerLives());
-        this.gameArea.create();
+        generateGameAreas();
+        allGameAreas.get(currentAreaName).create();
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
-        this.player = this.gameArea.getPlayer();
+        this.player = allGameAreas.get(currentAreaName).getPlayer();
     }
 
     /**
@@ -106,21 +109,40 @@ public class PlanetScreen extends ScreenAdapter {
     }
 
     /**
-     * Set the corresponding planets game area based on its name.
+     * Sets the current game area the player is on.
+     *
+     * @param name  The name of the game area.
      */
-    private void setGameArea(int lives) {
-        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+    public void setCurrentArea(String name) {
+        this.allGameAreas.get(currentAreaName).dispose();
+        this.currentAreaName = name;
+        this.allGameAreas.get(currentAreaName).create();
+    }
 
+    /**
+     * Generates all the appropriate game areas for the current planet based on its name.
+     */
+    private void generateGameAreas() {
+        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         if ("Earth".equals(name)) {
-            this.gameArea = new EarthGameArea(terrainFactory, game, lives);
-            this.nextPlanetName = "Not Earth"; //TODO: Extend
-            // Only on game area, needs to be extended to go to other areas
+            this.nextPlanetName = "Not Earth";
+            generateGameArea("primary", "levels/earth/main-area");
         } else {
             // TODO: Extend
-            // Only one planet game area atm, needs to be extended for further planets
-            this.gameArea = new MapGameArea("configs/earthLevelConfig.json", terrainFactory, game, lives);
             this.nextPlanetName = "Earth";
+            this.allGameAreas.put("primary", new MapGameArea("levels/lush/main-area", terrainFactory, game));
         }
+    }
+
+    /**
+     * Initialises a new game area with a given name based upon the config file.
+     *
+     * @param name  The name of the game area to create.
+     * @param configPath    The configPath to load.
+     */
+    private void generateGameArea(String name, String configPath) {
+        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+        this.allGameAreas.put(name, new MapGameArea(configPath, terrainFactory, game));
     }
 
     /**
@@ -178,13 +200,19 @@ public class PlanetScreen extends ScreenAdapter {
      * Do not dispose of all services and renderers on screen switch. Preserve state
      */
     @Override
-    public void dispose() { }
+    public void dispose() {
+        this.clear();
+    }
 
     /**
      * Dispose of the entire game screen.
      */
     public void clear() {
         logger.debug(String.format("Disposing %s screen", this.name));
+
+        for (GameArea area : allGameAreas.values()) {
+            area.dispose();
+        }
 
         renderer.dispose();
         unloadAssets();
@@ -242,9 +270,9 @@ public class PlanetScreen extends ScreenAdapter {
 
         // Define the minimum and maximum allowed camera positions based on map boundaries
         float minX = halfViewportWidth;
-        float maxX = 60 * 0.5f - halfViewportWidth;
+        float maxX = 90 * 0.5f - halfViewportWidth;
         float minY = halfViewportHeight;
-        float maxY = 60 * 0.5f - halfViewportHeight;
+        float maxY = 90 * 0.5f - halfViewportHeight;
 
         // Calculate the camera's new X and Y positions within map boundaries
         float cameraX = Math.min(maxX, Math.max(minX, player.getPosition().x));

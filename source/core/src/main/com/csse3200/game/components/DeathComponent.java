@@ -52,6 +52,7 @@ public class DeathComponent extends Component {
 
             Vector2 enemyBody = entity.getCenterPosition();
 
+
             entity.getEvents().trigger("dispose");
             // Schedule a task to execute entity::dispose after a delay
             // Get the duration of the death animation
@@ -82,6 +83,7 @@ public class DeathComponent extends Component {
                     ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody);
                 }
             }, delay); // Delay based on the death animation duration
+
         }
     }
 }

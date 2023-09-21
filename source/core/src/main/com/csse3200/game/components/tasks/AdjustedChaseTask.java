@@ -9,9 +9,7 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.badlogic.gdx.utils.Timer;
 
 import static java.lang.Math.abs;
 
@@ -60,8 +58,8 @@ public class AdjustedChaseTask extends DefaultTask implements PriorityTask {
     if(direction == '>'||direction == '='){
       this.owner.getEntity().getEvents().trigger("chaseStart");
     }
-    Timer timer = new Timer();
-    timer.schedule(new TimerTask() {
+
+    Timer.schedule(new Timer.Task(){
       @Override
       public void run() {
         if(getDirection(target.getPosition() )!= direction){
@@ -69,6 +67,7 @@ public class AdjustedChaseTask extends DefaultTask implements PriorityTask {
         }
       }
     },500);
+
   }
 
   @Override
@@ -138,6 +137,10 @@ public class AdjustedChaseTask extends DefaultTask implements PriorityTask {
     return true;
   }
 
+  /**
+   *
+   * @param destination
+   */
   public char getDirection(Vector2 destination) {
     if (owner.getEntity().getPosition().x - destination.x < 0) {
       return '>';

@@ -34,25 +34,25 @@ public class TitleBox extends Dialog {
         setResizable(true);
 
         // Story text describing the game's premise
-        String storyText = "Earth has become a desolate wasteland ravaged by a deadly virus. Civilisation as we know  has crumbled, and humanity's last hope lies among the stars. You are one of the few survivors who have managed to secure a spot on a spaceship built with the hopes of finding a cure or a new home on distant planets. The spaceship belongs to Dr Emily Carter, a brilliant scientist determined to find a cure for the virus and make the earth habitable again. But the cosmos is a vast and dangerous place, filled with unknown challenges and mysteries, from alien encounters to unexpected phenomena. Your journey begins now as you board the spaceship \"Aurora\" and venture into the unknown.";
+        String storyText = "ASTRONAUT : HELP ME!";
 
         Label titleLabel = getTitleLabel();
         titleLabel.setText(title);
         titleLabel.setAlignment(Align.center);
-        titleLabel.setFontScale(1.8f); // Adjust font scale as needed
-        titleLabel.setColor(Color.WHITE); // TitleBox Title Colour can be changed here
+        titleLabel.setFontScale(0.3f); // Adjust font scale as needed
+        titleLabel.setColor(Color.BLACK); // TitleBox Title Colour can be changed here
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("large", Label.LabelStyle.class));
-        labelStyle.font.getData().setScale(1.6f); // Set the font scale to make it larger
+        Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("small", Label.LabelStyle.class));
+        labelStyle.font.getData().setScale(0.3f); // Set the font scale to make it larger
 
         Label storyLabel = new Label(storyText, labelStyle);
         storyLabel.setAlignment(Align.center);
         storyLabel.setWrap(true); // Enable text wrapping
-        ScrollPane scrollPane = new ScrollPane(storyLabel, skin);
-        getContentTable().add(scrollPane).width(1300f).height(800f).pad(20f).center(); // Adjust width and height as needed
+//        ScrollPane scrollPane = new ScrollPane(storyLabel, skin);
+//        getContentTable().add(scrollPane).width(1300f).height(800f).pad(20f).center(); // Adjust width and height as needed
 
         // Create an "OK" button to close the dialog
-        TextButton startButton = new TextButton("OK", skin);
+        TextButton startButton = new TextButton("HELP HIM", skin);
         button(startButton, true);
         Entity entity = new Entity();
         entity.getEvents().addListener("ok", this::onOK);
@@ -65,13 +65,17 @@ public class TitleBox extends Dialog {
                     }
                 });
 
-        // Lay out the dialog's components
-        getContentTable().row();
-        getContentTable().add(startButton).pad(20f).center();
+        Table buttonTable = new Table();
+        buttonTable.add(startButton).pad(20f).expandX().center().row();
+
+        buttonTable.padBottom(100f);
+
+        getContentTable().add(storyLabel).width(Gdx.graphics.getWidth() * 0.8f).pad(20f).center().row();
+        getContentTable().add(buttonTable).expandX().center().right();
 
         // Size and positioning of the dialog
-        setSize(1600f, 1080f); // Adjust the size as needed
-        setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, (Gdx.graphics.getHeight() - getHeight()) / 2);
+        setSize(Gdx.graphics.getWidth(), 200f); // Adjust the height as needed
+        setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, 0);
     }
 
     /**

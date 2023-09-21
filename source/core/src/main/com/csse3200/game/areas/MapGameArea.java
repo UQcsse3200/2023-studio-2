@@ -2,11 +2,8 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
@@ -38,7 +35,7 @@ import java.util.List;
 public class MapGameArea extends GameArea{
 
     private GameAreaConfig mapConfig = null;
-    private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
+    private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
     private boolean validLoad = true;
@@ -46,6 +43,7 @@ public class MapGameArea extends GameArea{
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
         try {
             mapConfig = MapConfigLoader.loadMapDirectory(configPath);
+            logger.info("Successfully loaded map {}", configPath);
         } catch (InvalidConfigException exception) {
             logger.error("FAILED TO LOAD GAME - RETURNING TO MAIN MENU", exception);
             validLoad = false;
@@ -89,7 +87,7 @@ public class MapGameArea extends GameArea{
         spawnCompanion(player);
         spawnPortal(player);
         spawnTreeTop();
-        spawnEnemies();
+        spawnSpawners();
       //  spawnFire();
         spawnBotanist();
 
@@ -99,7 +97,7 @@ public class MapGameArea extends GameArea{
     /**
      * Loads all assets listed in the config file
      */
-    private void loadAssets() {
+    protected void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
@@ -223,6 +221,19 @@ public class MapGameArea extends GameArea{
         int steps = 64;
         int maxResource = 1000;
 
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Nebulite.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Durasteel.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Solstite.toString(),  (int) 4);
+
         ResourceDisplay resourceDisplayComponent = new ResourceDisplay(scale, steps, maxResource)
                 .withResource(Resource.Durasteel)
                 .withResource(Resource.Solstite)
@@ -274,6 +285,7 @@ public class MapGameArea extends GameArea{
         if (mapConfig.playerConfig != null && mapConfig.playerConfig.position != null) {
             spawnEntityAt(newPlayer, mapConfig.playerConfig.position, true, true);
         } else {
+            logger.info("Failed to load player position - created player at middle of map");
             //If no position specified spawn in middle of map.
             GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);
             spawnEntityAt(newPlayer, pos, true, true);
@@ -301,14 +313,14 @@ public class MapGameArea extends GameArea{
     }
 
     /**
-     * Spawns all the enemies detailed in the Game Area.
+     * Spawns all the spawners detailed in the Game Area.
      */
-    private void spawnEnemies() {
+    private void spawnSpawners() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (EnemyConfig enemyConfig : mapConfig.areaEntityConfig.enemies) {
-            Entity enemy = EnemyFactory.createEnemy(enemyConfig);
-            spawnEntityAt(enemy, enemyConfig.position, true, true);
+        for (SpawnerConfig spawnerConfig : mapConfig.areaEntityConfig.spawners) {
+            Entity spawner = StructureFactory.createSpawner(spawnerConfig);
+            spawnEntityAt(spawner, spawnerConfig.position, true, true);
         }
     }
 
@@ -358,18 +370,12 @@ public class MapGameArea extends GameArea{
     /**
      * Unloads all assets from config file
      */
-    private void unloadAssets() {
+    protected void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
-        if (mapConfig.areaEntityConfig != null) {
-            String[] textures = mapConfig.areaEntityConfig.getAllConfigs().stream()
-                    .map(BaseEntityConfig::getTextures)
-                    .flatMap(Collection::stream)
-                    .distinct()
-                    .toArray(String[]::new);
-            resourceService.unloadAssets(textures);
-        }
+        if (mapConfig.getEntityTextures() != null)
+            resourceService.unloadAssets(mapConfig.getEntityTextures());
         if (mapConfig.texturePaths != null)
             resourceService.unloadAssets(mapConfig.texturePaths);
         if (mapConfig.textureAtlasPaths != null)

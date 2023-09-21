@@ -102,6 +102,7 @@ public class PlayerFactory {
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     animator.startAnimation("Character_StandDown");
     player.setEntityType("player");
+    player.getComponent(KeyboardPlayerInputComponent.class).clearWalking();
     return player;
   }
 

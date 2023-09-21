@@ -43,7 +43,7 @@ public class MapGameArea extends GameArea{
     private Entity playerEntity;
     private boolean validLoad = true;
 
-    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
+    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
             mapConfig = MapConfigLoader.loadMapDirectory(configPath);
             logger.info("Successfully loaded map {}", configPath);

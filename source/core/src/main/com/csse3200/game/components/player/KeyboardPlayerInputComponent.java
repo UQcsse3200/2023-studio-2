@@ -68,11 +68,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return false;
     }
 
-    public void playerDead() {
-        if (entity.getComponent(CombatStatsComponent.class).isDead()) {
-            keyFlags.clear();
-            triggerWalkEvent();
-        }
+    public void clearWalking() {
+        keyFlags.clear();
+        triggerWalkEvent();
     }
 
     /**

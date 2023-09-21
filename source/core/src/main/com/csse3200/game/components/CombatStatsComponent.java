@@ -106,7 +106,7 @@ public class CombatStatsComponent extends Component {
     if (entity != null) {
       if (isDead() && entity.getEntityType().equals("player") && !dead) {
         dead = true;
-        entity.getComponent(KeyboardPlayerInputComponent.class).playerDead(); // Stop player from walking
+        entity.getComponent(KeyboardPlayerInputComponent.class).clearWalking(); // Stop player from walking
         entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn
         final Timer timer = new Timer();
         entity.getEvents().trigger("playerDeath"); // Trigger death animation

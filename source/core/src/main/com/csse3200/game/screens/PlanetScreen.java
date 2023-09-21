@@ -130,7 +130,7 @@ public class PlanetScreen extends ScreenAdapter {
         } else {
             // TODO: Extend
             this.nextPlanetName = "Earth";
-            this.allGameAreas.put("primary", new MapGameArea("levels/lush/main-area", terrainFactory, game));
+            this.allGameAreas.put("primary", new MapGameArea("levels/lush/main-area", terrainFactory, game, game.getPlayerLives()));
         }
     }
 
@@ -142,7 +142,7 @@ public class PlanetScreen extends ScreenAdapter {
      */
     private void generateGameArea(String name, String configPath) {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        this.allGameAreas.put(name, new MapGameArea(configPath, terrainFactory, game));
+        this.allGameAreas.put(name, new MapGameArea(configPath, terrainFactory, game, game.getPlayerLives()));
     }
 
     /**

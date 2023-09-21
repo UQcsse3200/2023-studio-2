@@ -23,7 +23,7 @@ public class PotionComponent extends Component {
     private long duration;
     private Entity player = ServiceLocator.getEntityService().getPlayer();
     private Entity companion = ServiceLocator.getEntityService().getCompanion();
-    /**
+     /**
      * Creates a PotionComponent with the specified type.
      *
      * @param type The type of the potion.
@@ -45,9 +45,7 @@ public class PotionComponent extends Component {
 
         switch (type) {
             case DEATH_POTION -> {
-                // Handle death potion effect
-                // Currently, no action is taken for this type
-                return;
+               /* enemy.dispose();*/
             }
             case HEALTH_POTION -> {
                 player.getComponent(CombatStatsComponent.class).setHealth(100);

@@ -1,6 +1,6 @@
 {
   "spritePath": "images/laboratory.png",
-  "position": {"x":10,
-               "y": 10
+  "position": {"x":16,
+               "y": 19
   }
 }

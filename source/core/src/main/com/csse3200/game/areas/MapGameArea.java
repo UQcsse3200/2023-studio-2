@@ -299,10 +299,11 @@ public class MapGameArea extends GameArea{
         return newPlayer;
     }
     private void spawnLaboratory(){
-
-        GridPoint2 randomPos = new GridPoint2(34,19);
-        Entity newLaboratory = LaboratoryFactory.createLaboratory();
-        spawnEntityAt(newLaboratory, randomPos, true,false);
+        LaboratoryConfig laboratoryConfig = mapConfig.areaEntityConfig.laboratory;
+        if (laboratoryConfig !=null){
+            Entity newLaboratory = LaboratoryFactory.createLaboratory();
+            spawnEntityAt(newLaboratory, laboratoryConfig.position, true,false);
+        }
     }
 
     public static Entity getPlayer() {
@@ -354,25 +355,26 @@ public class MapGameArea extends GameArea{
                 newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION);
                 itemsOnMap.add(newPotion);
                 GridPoint2 pos = new GridPoint2(39, 21);
-                spawnEntityAt(newPotion, pos, true, false);
+                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position
+                        , true, false);
                 return newPotion;
             case SPEED_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION);
                 itemsOnMap.add(newPotion);
                 GridPoint2 pos2 = new GridPoint2(40, 21);
-                spawnEntityAt(newPotion, pos2, true, false);
+                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
                 return newPotion;
             case HEALTH_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION);
                 itemsOnMap.add(newPotion);
                 GridPoint2 pos3 = new GridPoint2(41, 21);
-                spawnEntityAt(newPotion, pos3, true, false);
+                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
                 return newPotion;
             case INVINCIBILITY_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.INVINCIBILITY_POTION);
                 itemsOnMap.add(newPotion);
                 GridPoint2 pos4 = new GridPoint2(42, 21);
-                spawnEntityAt(newPotion, pos4, true, false);
+                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
                 return newPotion;
             default: throw new IllegalArgumentException("You must assign a valid PotionType");
         }

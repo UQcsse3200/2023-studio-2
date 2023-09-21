@@ -38,15 +38,15 @@ public class PotionFactory {
         potion.setScale(0.4f, 0.4f);
         switch (type) {
             case DEATH_POTION -> {
-                potion.addComponent(new TextureRenderComponent("images/Potion3re.png"));
-                // You may add more components or apply effects here if needed for death potion
+                potion.addComponent(new TextureRenderComponent("images/Potion3re.png"))
+                        .addComponent(new PotionComponent(PotionType.DEATH_POTION));
             }
             case HEALTH_POTION -> {
-                potion.addComponent(new TextureRenderComponent("images/Potion4re.png"))
+                potion.addComponent(new TextureRenderComponent("images/Potion2re.png"))
                         .addComponent(new PotionComponent(PotionType.HEALTH_POTION));
             }
             case SPEED_POTION -> {
-                potion.addComponent(new TextureRenderComponent("images/Potion2re.png"))
+                potion.addComponent(new TextureRenderComponent("images/Potion4re.png"))
                         .addComponent(new PotionComponent(PotionType.SPEED_POTION));
             }
             case INVINCIBILITY_POTION -> {

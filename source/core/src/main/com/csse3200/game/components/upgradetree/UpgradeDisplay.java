@@ -105,7 +105,6 @@ public class UpgradeDisplay extends Window {
      * These trees dictate the progression of weapons that can be unlocked.
      */
     private void buildTrees() {
-        // todo: make this less bad
         WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
         WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA);
         WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_SLINGSHOT);
@@ -153,7 +152,8 @@ public class UpgradeDisplay extends Window {
         nodeYSpacing = (getHeight() * getScaleY()) / 4;
 
         for (UpgradeNode treeRoot : trees) {
-            float treeX = (trees.indexOf(treeRoot) + 1) * getWidth() * getScaleX() / (trees.size() + 1);
+            float treeX = (trees.indexOf(treeRoot) + 1) * getWidth() * getScaleX()
+                    / (trees.size() + 1) - nodeXSpacing / 6;
             float startY = getHeight() - (getHeight() / 3);
             createAndPositionNodes(treeRoot, treeX, startY, group, 0);
         }

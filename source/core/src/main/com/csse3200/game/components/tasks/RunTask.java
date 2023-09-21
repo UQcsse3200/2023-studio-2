@@ -11,9 +11,7 @@ import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.badlogic.gdx.utils.Timer;
 
 /** Runs away from target entity if it gets too close */
 public class RunTask extends DefaultTask implements PriorityTask {
@@ -51,8 +49,7 @@ public class RunTask extends DefaultTask implements PriorityTask {
     if(direction == '>'||direction == '='){
       this.owner.getEntity().getEvents().trigger("chaseStart");
     }
-    Timer timer = new Timer();
-    timer.schedule(new TimerTask() {
+    Timer.schedule(new Timer.Task(){
       @Override
       public void run() {
         if(getDirection(target.getPosition() )!= direction){

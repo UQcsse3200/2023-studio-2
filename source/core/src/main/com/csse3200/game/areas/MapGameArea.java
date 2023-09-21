@@ -88,6 +88,7 @@ public class MapGameArea extends GameArea{
         spawnPortal(player);
         spawnAstro();
         spawnSpawners();
+        spawnJail();
       //  spawnFire();
 //        spawnBotanist();
 
@@ -338,6 +339,17 @@ public class MapGameArea extends GameArea{
         if (astroConfig != null) {
             Entity Astro = NPCFactory.createAstro();
             spawnEntityAt(Astro, astroConfig.position, false, false);
+        }
+
+    }
+
+    private void spawnJail() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        JailConfig jailConfig = mapConfig.areaEntityConfig.Jail;
+        if (jailConfig != null) {
+            Entity Jail = NPCFactory.createJail();
+            spawnEntityAt(Jail, jailConfig.position, false, false);
         }
 
     }

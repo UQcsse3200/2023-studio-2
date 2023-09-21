@@ -78,5 +78,12 @@
       "x": 24,
       "y": 50
     }
+  },
+  "Jail": {
+    "spritePath": "images/Jail/jail.atlas",
+    "position" : {
+      "x": 24,
+      "y": 50
+    }
   }
 }

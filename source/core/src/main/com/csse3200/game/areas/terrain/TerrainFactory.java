@@ -59,7 +59,7 @@ public class TerrainFactory {
 
     TiledMap tiledMap = null;
     try {
-      tiledMap = mapLoader.load(Gdx.files.internal("/Users/yashmittal/Desktop/Github/CSSE3200/2023-studio-2/source/core/assets/" + mapPath).file().getAbsolutePath());
+      tiledMap = mapLoader.load(Gdx.files.internal("source/core/assets/" + mapPath).file().getAbsolutePath());
     } catch (Exception e) {
 
       try {

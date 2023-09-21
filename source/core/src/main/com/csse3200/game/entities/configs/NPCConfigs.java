@@ -10,6 +10,7 @@ public class NPCConfigs {
   public BaseEntityConfig ghost = new BaseEntityConfig();
   public BotanistConfig botanist = new BotanistConfig();
   public AstroConfig Astro = new AstroConfig();
+  public JailConfig Jail = new JailConfig();
   //   Enemies Factory
   public EnemyConfig meleeEnemyPTE = new EnemyConfig();
   public EnemyConfig meleeEnemyDTE = new EnemyConfig();

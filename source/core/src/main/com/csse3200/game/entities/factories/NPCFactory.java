@@ -11,6 +11,7 @@ import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.AstroAnimationController;
 import com.csse3200.game.components.npc.BotanistAnimationController;
 import com.csse3200.game.components.npc.FireAnimationController;
+import com.csse3200.game.components.npc.JailAnimationController;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
@@ -136,8 +137,8 @@ public class NPCFactory {
    */
   public static Entity createAstro() {
 
-    AITaskComponent aiComponent = new AITaskComponent();
-    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
+//    AITaskComponent aiComponent = new AITaskComponent();
+//    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
@@ -159,8 +160,8 @@ public class NPCFactory {
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new InteractionControllerComponent(true))
-                    .addComponent(new PhysicsMovementComponent())
-                    .addComponent(aiComponent);
+                    .addComponent(new PhysicsMovementComponent());
+//                    .addComponent(aiComponent);
 
     Astro.getComponent(ColliderComponent.class).setDensity(1.5f);
     Astro.addComponent(new InteractableComponent(entity -> {
@@ -168,6 +169,28 @@ public class NPCFactory {
     },3f));
     animator.startAnimation("Astro_Down");
     return Astro;
+  }
+  public static Entity createJail() {
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/Jail/jail.atlas", TextureAtlas.class));
+    animator.addAnimation("jail_close", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("jail_open", 0.2f, Animation.PlayMode.LOOP);
+
+    Entity Jail =
+            new Entity()
+                    .addComponent(animator)
+                    .addComponent(new JailAnimationController(new AssetManager()))
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new InteractionControllerComponent(true))
+                    .addComponent(new PhysicsMovementComponent());
+
+    Jail.getComponent(ColliderComponent.class).setDensity(1.5f);
+    Jail.scaleHeight(1.7f);
+    animator.startAnimation("jail_close");
+    return Jail;
   }
   public static Entity createFire() {
     AnimationRenderComponent animator =

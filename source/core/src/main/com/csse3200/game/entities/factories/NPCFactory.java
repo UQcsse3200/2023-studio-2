@@ -176,18 +176,15 @@ public class NPCFactory {
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/Jail/jail.atlas", TextureAtlas.class));
     animator.addAnimation("jail_close", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("jail_open", 0.2f, Animation.PlayMode.LOOP);
 
     Entity Jail =
             new Entity()
                     .addComponent(animator)
                     .addComponent(new JailAnimationController(new AssetManager()))
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new PhysicsMovementComponent());
 
-    Jail.getComponent(ColliderComponent.class).setDensity(1.5f);
     Jail.scaleHeight(1.7f);
     animator.startAnimation("jail_close");
     return Jail;

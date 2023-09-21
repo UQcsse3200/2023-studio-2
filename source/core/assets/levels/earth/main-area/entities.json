@@ -82,7 +82,7 @@
   "Jail": {
     "spritePath": "images/Jail/jail.atlas",
     "position" : {
-      "x": 24,
+      "x": 23,
       "y": 50
     }
   }

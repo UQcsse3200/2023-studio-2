@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public class FollowComponent extends Component{
     private Entity followEntity;
     private float followSpeed;
-    private float minimumDistance = 0.5f;
+    private float minimumDistance = 0.8f;
 
     private static Logger logger; // how to log print
 

@@ -20,7 +20,6 @@ import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.AlertBox;
-import com.csse3200.game.ui.TitleBox;
 
 import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
@@ -77,7 +76,7 @@ public class ShipInteractionPopup extends Window {
         return super.remove();
     }
     private static TextureRegionDrawable getBrownBackgroundStatic() {
-        Texture texture = createColoredTextureStatic(1, 1, Color.BLACK);
+        Texture texture = createColoredTextureStatic(1, 1, Color.BROWN);
         return new TextureRegionDrawable(new TextureRegion(texture));
     }
 

@@ -170,7 +170,7 @@ public class NPCFactory {
     Astro.getComponent(ColliderComponent.class).setDensity(1.5f);
     Astro.addComponent(new InteractableComponent(entity -> {
       Astro.getComponent(FollowComponent.class).setEntity(Astro);
-      Astro.getComponent(FollowComponent.class).setFollowSpeed(3f);},3f));
+      Astro.getComponent(FollowComponent.class).setFollowSpeed(3f);},1f));
     animator.startAnimation("Astro_Down");
     return Astro;
   }
@@ -233,7 +233,7 @@ public class NPCFactory {
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsMovementComponent());
     Jail.addComponent(new InteractableComponent(entity -> {Jail.dispose();
-      Jail.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");},5f));
+      Jail.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");},1f));
     Jail.scaleHeight(1.7f);
     animator.startAnimation("jail_close");
     return Jail;

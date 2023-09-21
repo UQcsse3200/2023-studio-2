@@ -17,7 +17,6 @@ import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.AlertBox;
-import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -113,8 +112,6 @@ public class InitialScreenDisplay extends UIComponent {
                 alertBox.showDialog(stage);
 
                 logger.info("Loading Story");
-                TitleBox titleBox = new TitleBox(game, "Story Introduction", skin);
-                titleBox.showDialog(stage);
                 game.setScreen(ScreenType.GAME_STORY);
             }
         });

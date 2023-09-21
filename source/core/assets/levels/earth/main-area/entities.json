@@ -76,7 +76,7 @@
     "spritePath": "images/Astro_NPC.atlas",
     "position" : {
       "x": 24,
-      "y": 50
+      "y": 51
     }
   },
   "Jail": {

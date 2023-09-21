@@ -106,10 +106,10 @@
       "font": "title_white"
     },
     "thick": {
-      "font": "thick_white"
+      "font": "thick_black"
     },
     "small": {
-      "font": "thin_white"
+      "font": "thin_black"
     },
     "large": {
       "font": "thick_black"
@@ -196,7 +196,7 @@
   "WindowStyle": {
     "default": {
       "background": "metalPanel_red",
-      "titleFont": "thick_white"
+      "titleFont": "thick_black"
     }
   }
 }

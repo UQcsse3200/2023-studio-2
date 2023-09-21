@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.csse3200.game.ui.AlertBox;
 
-import com.csse3200.game.ui.TitleBox;
+
 
 
 /**
@@ -59,8 +59,6 @@ public class MainMenuActions extends Component {
     alertBox.showDialog(stage);
 
     logger.info("Loading Story");
-    TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
-    titleBox.showDialog(stage);
     game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
   }
 

@@ -59,7 +59,7 @@ public class DialogueBox extends Dialog {
         this.getContentTable().add(dialogueLabel).width(500f).height(30f).pad(20f).center(); // Adjust width and height as needed
 
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("large", Label.LabelStyle.class));
+        Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("thick", Label.LabelStyle.class));
         labelStyle.font.getData().setScale(1.6f); // Set the font scale to make it larger
 
 

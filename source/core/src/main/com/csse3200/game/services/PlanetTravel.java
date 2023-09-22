@@ -20,20 +20,17 @@ public class PlanetTravel {
     }
 
     /**
-     * Begin transitioning to the new planet from the current one. Displaying all
+     * Begin transitioning to the next planet from the current one. Displaying all
      * intermediate gameplay in between
-     *
-     * @param targetPlanetName  The name of the planet to transition to.
      */
-    public void beginPlanetTransition(String targetPlanetName) {
-        // Begin the transition.
-        //game.setScreen(GdxGame.ScreenType.SPACEMINI_SCREEN);
+    public void beginFullTravel() {
+        game.setScreen(GdxGame.ScreenType.SPACEMINI_SCREEN);
+    }
 
-        // Play mini-game.
-
-        // End transition period.
-
-        // Finally, go to planet.
+    /**
+     * Travel from the current planet to the next planet instantly.
+     */
+    public void beginInstantTravel() {
         PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
         PlanetScreen nextPlanet = currentPlanet.getNextPlanet();
         ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);

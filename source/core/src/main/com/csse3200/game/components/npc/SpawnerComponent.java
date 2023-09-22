@@ -3,70 +3,112 @@ package com.csse3200.game.components.npc;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.SpawnerConfig;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
-
 public class SpawnerComponent extends Component {
-    // Timer used to track time since last tick
-    GameTime timer;
+    private static final long WAVE_DELAY = 20000;  // 20 seconds
+    private static final long SPAWN_DELAY = 3000;  // 3 seconds
 
-    // The desired amount of time (seconds) between each tick
-    long tickRate;
+    private final GameTime timer;
+    private final SpawnerConfig config;
 
-    // The time of the last tick
-    long lastTime;
+    private long lastTime;
+    private int currentWave = 0;
+    private boolean isSpawning = false;
+    private int enemiesToSpawn = 0;
+    private int enemiesSpawned = 0;
+    private int meleeEnemiesToSpawn = 0;
+    private int rangedEnemiesToSpawn = 0;
 
-    // The enemy this spawns
-    ArrayList<Entity> targets;
-
-    EnemyType type;
-
-    EnemyBehaviour behaviour;
-
-    int count;
-
-    int spawnedAmount = 0;
-
-    /**
-     * SpawnerComponent allows an entity to spawn enemies on some real time interval and send them to
-     * the gameState and event handler.
-     *
-     * @param targets the list of enemy targets
-     * @param tickRate the amount of seconds between ticks (not guaranteed but catchup is performed if a tick is missed)
-     * @param type the type of enemy e.g.(Melee, Ranged) (Recommend to use for just small enemies)
-     * @param behaviour the behaviour of the enemy, what it will prioritise
-     */
-    public SpawnerComponent(ArrayList<Entity> targets, long tickRate, EnemyType type, EnemyBehaviour behaviour, int count) {
+    public SpawnerComponent(SpawnerConfig config) {
         this.timer = new GameTime();
-        this.tickRate = tickRate;
         this.lastTime = timer.getTime();
-        this.targets = targets;
-        this.type = type;
-        this.behaviour = behaviour;
-        this.count = count;
+        this.config = config;
     }
 
-    @Override
-    public void create() {
-        super.create();
-    }
+    // ... [Getter and Setter methods remain unchanged] ...
 
     @Override
     public void update() {
-        super.update();
-        Vector2 worldPos;
-        while (this.timer.getTimeSince(this.lastTime) >= this.tickRate && spawnedAmount < count) {
-                worldPos = entity.getCenterPosition();
-                Entity enemy = EnemyFactory.createEnemy(targets, type, behaviour);
-                ServiceLocator.getStructurePlacementService().SpawnEntityAtVector(enemy, worldPos);
-                spawnedAmount += 1;
-                System.out.println(spawnedAmount);
-                this.lastTime += this.tickRate;
+        long currentTime = timer.getTime();
+        if (shouldSpawnNewWave(currentTime)) {
+            handleNewWave(currentTime);
+        }
+        if (shouldSpawnEnemy(currentTime)) {
+            handleEnemySpawn(currentTime);
+        }
+        if (shouldStopSpawning()) {
+            resetSpawningState();
         }
     }
+
+    private boolean shouldSpawnNewWave(long currentTime) {
+        return !isSpawning && currentTime - lastTime >= WAVE_DELAY;
+    }
+
+    private boolean shouldSpawnEnemy(long currentTime) {
+        return isSpawning && enemiesSpawned < enemiesToSpawn && currentTime - lastTime >= SPAWN_DELAY;
+    }
+
+    private boolean shouldStopSpawning() {
+        return enemiesSpawned >= enemiesToSpawn;
+    }
+
+    private void handleNewWave(long currentTime) {
+        int[] currentConfig;
+        switch (currentWave) {
+            case 0:
+                currentConfig = config.wave1;
+                break;
+            case 1:
+                currentConfig = config.wave2;
+                break;
+            case 2:
+                currentConfig = config.wave3;
+                break;
+            default:
+                return;
+        }
+        spawnEnemies(currentConfig[0], currentConfig[1]);
+        currentWave++;
+        lastTime = currentTime;
+    }
+
+    private void handleEnemySpawn(long currentTime) {
+        if (meleeEnemiesToSpawn > 0) {
+            spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
+            meleeEnemiesToSpawn--;
+        } else if (rangedEnemiesToSpawn > 0) {
+            spawnEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
+            rangedEnemiesToSpawn--;
+        }
+        enemiesSpawned++;
+        lastTime = currentTime;
+    }
+
+    private void resetSpawningState() {
+        isSpawning = false;
+        enemiesToSpawn = 0;
+        enemiesSpawned = 0;
+    }
+
+    private void spawnEnemies(int meleeCount, int rangedCount) {
+        isSpawning = true;
+        enemiesToSpawn = meleeCount + rangedCount;
+        enemiesSpawned = 0;
+        meleeEnemiesToSpawn = meleeCount;
+        rangedEnemiesToSpawn = rangedCount;
+    }
+
+    private void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {
+        Vector2 worldPos = entity.getCenterPosition();
+        Entity enemy = EnemyFactory.createEnemy(enemyType, behaviour);
+        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemy, worldPos);
+    }
 }
+

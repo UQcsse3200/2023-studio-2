@@ -9,6 +9,8 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
+import com.badlogic.gdx.utils.Timer;
+import java.util.ArrayList;
 
 /** Chases a target entity until they get too far away or line of sight is lost */
 public class ChaseTask extends DefaultTask implements PriorityTask {
@@ -63,8 +65,22 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     movementTask = new MovementTask(target.getPosition());
     movementTask.create(owner);
     movementTask.start();
+    char direction = getDirection(target.getPosition());
+    if(direction == '<'){
+      this.owner.getEntity().getEvents().trigger("chaseLeft");
+    }
+    if(direction == '>'||direction == '='){
+      this.owner.getEntity().getEvents().trigger("chaseStart");
+    }
 
-    this.owner.getEntity().getEvents().trigger("chaseStart");
+    Timer.schedule(new Timer.Task(){
+      @Override
+      public void run() {
+        if(getDirection(target.getPosition() )!= direction){
+          start();
+        }
+      }
+    },500);
   }
 
   @Override
@@ -122,5 +138,19 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     }
     debugRenderer.drawLine(from, to);
     return true;
+  }
+  /**
+   * This get method returns a char indicating the position of the target relative to the enemy.
+   * @param destination
+   * @return
+   */
+  public char getDirection(Vector2 destination) {
+    if (owner.getEntity().getPosition().x - destination.x < 0) {
+      return '>';
+    }
+    if (owner.getEntity().getPosition().x - destination.x > 0) {
+      return '<';
+    }
+    return '=';
   }
 }

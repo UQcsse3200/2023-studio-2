@@ -1,17 +1,21 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.StructurePlacementService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents an area in the game, such as a level, indoor area, etc. An area has a terrain and
@@ -20,14 +24,17 @@ import java.util.List;
  * <p>Support for enabling/disabling game areas could be added by making this a Component instead.
  */
 public abstract class GameArea implements Disposable {
-  protected TerrainComponent terrain;
-  protected List<Entity> areaEntities;
-  private Entity companion;
+  protected static TerrainComponent terrain;
+  protected Map<GridPoint2, Entity> areaEntities;
+  protected Entity companion;
+  protected static Entity player;
   protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;
+  protected ArrayList<Entity> targetables;
 
-  protected GameArea() {
-    areaEntities = new ArrayList<>();
+  public GameArea() {
+    areaEntities = new HashMap<>();
+    this.targetables = new ArrayList<>();
   }
 
   /** Create the game area in the world. */
@@ -35,9 +42,17 @@ public abstract class GameArea implements Disposable {
 
   /** Dispose of all internal entities in the area */
   public void dispose() {
-    for (Entity entity : areaEntities) {
-      entity.dispose();
+    for (var entity : areaEntities.entrySet()) {
+      entity.getValue().dispose();
     }
+  }
+
+  public TerrainComponent getTerrain(){
+    return terrain;
+  }
+
+  public Map<GridPoint2, Entity> getAreaEntities() {
+    return areaEntities;
   }
 
   protected void registerStructurePlacementService() {
@@ -47,12 +62,12 @@ public abstract class GameArea implements Disposable {
     handler.addListener("spawnExtractor", this::spawnExtractor);
     handler.addListener("placeStructure", this::spawnEntity);
     handler.addListener("fireBullet",
-            (StructurePlacementService.SpawnEntityAtVectorArgs args) ->
-                    spawnEntityAtVector(args.entity, args.worldPos)
+            (StructurePlacementService.spawnEntityAtVectorArgs args) ->
+                    spawnEntityAtVector(args.getEntity(), args.getWorldPos())
   );
     handler.addListener("placeStructureAt",
-            (StructurePlacementService.PlaceStructureAtArgs args) ->
-                    spawnEntityAt(args.entity, args.tilePos, args.centerX, args.centerY)
+            (StructurePlacementService.placeStructureAtArgs args) ->
+                    spawnEntityAt(args.getEntity(), args.getTilePos(), args.isCenterX(), args.isCenterY())
     );
   }
 
@@ -96,9 +111,22 @@ public abstract class GameArea implements Disposable {
    * @param entity Entity (not yet registered)
    */
   protected void spawnEntity(Entity entity) {
-    areaEntities.add(entity);
+    areaEntities.put(entity.getGridPosition(), entity);
     ServiceLocator.getEntityService().register(entity);
   }
+
+
+
+  /**
+   * Spawns the player entity and adds them to the list of targetable entities
+   */
+  protected void spawnPlayer(GridPoint2 PLAYER_SPAWN) {
+    Entity newPlayer = PlayerFactory.createPlayer();
+    spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    targetables.add(newPlayer);
+    player = newPlayer;
+  }
+
 
   /**
    * Spawn entity on a given tile. Requires the terrain to be set first.
@@ -129,4 +157,8 @@ public abstract class GameArea implements Disposable {
     spawnEntity(entity);
   }
  public Entity getCompanion(){return companion;}
+
+  public static Entity getPlayer() {
+    return player;
+  }
 }

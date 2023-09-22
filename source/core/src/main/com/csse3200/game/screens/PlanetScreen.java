@@ -1,13 +1,11 @@
 package com.csse3200.game.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.EarthGameArea;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
@@ -25,14 +23,15 @@ import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameStateObserver;
-import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.ItemBox;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A screen that represents a single planet of the game with its corresponding game area/s.
@@ -46,7 +45,9 @@ public class PlanetScreen extends ScreenAdapter {
     private String nextPlanetName;
 
     private Entity player;
-    private EarthGameArea gameArea; //TODO: Extend with new MapArea
+
+    private String currentAreaName = "primary";
+    private final Map<String, GameArea> allGameAreas = new HashMap<>();
 
     /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -55,12 +56,10 @@ public class PlanetScreen extends ScreenAdapter {
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
 
-    private ItemBox itemBox;
-    Entity currentExtractor = null;
-
     /** file paths of textures for screen to load. */
     private static final String[] planetTextures = {
             "images/heart.png",
+            "images/structure-icons/gate.png",
             "images/structure-icons/wall.png",
             "images/structure-icons/stone_wall.png",
             "images/structure-icons/turret.png",
@@ -69,7 +68,8 @@ public class PlanetScreen extends ScreenAdapter {
             "images/structures/dirt_wall.png",
             "images/structures/stone_wall.png",
             "images/structures/TurretOne.png",
-            "images/structures/TurretTwo.png"
+            "images/structures/TurretTwo.png",
+            "images/structures/heal_icon.png"
     };
 
     /**
@@ -93,12 +93,11 @@ public class PlanetScreen extends ScreenAdapter {
         loadAssets();
         createUI();
 
-        setGameArea();
-        this.gameArea.create();
+        generateGameAreas();
+        allGameAreas.get(currentAreaName).create();
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
-        createItemBox();
-        this.player = this.gameArea.getPlayer();
+        this.player = allGameAreas.get(currentAreaName).getPlayer();
     }
 
     /**
@@ -111,21 +110,40 @@ public class PlanetScreen extends ScreenAdapter {
     }
 
     /**
-     * Set the corresponding planets game area based on its name.
+     * Sets the current game area the player is on.
+     *
+     * @param name  The name of the game area.
      */
-    private void setGameArea() {
-        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+    public void setCurrentArea(String name) {
+        this.allGameAreas.get(currentAreaName).dispose();
+        this.currentAreaName = name;
+        this.allGameAreas.get(currentAreaName).create();
+    }
 
+    /**
+     * Generates all the appropriate game areas for the current planet based on its name.
+     */
+    private void generateGameAreas() {
+        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         if ("Earth".equals(name)) {
-            this.gameArea = new EarthGameArea(terrainFactory, game);
-            this.nextPlanetName = "Earth"; //TODO: Extend
-            // Only on game area, needs to be extended to go to other areas
+            this.nextPlanetName = "Not Earth";
+            generateGameArea("primary", "levels/earth/main-area");
         } else {
             // TODO: Extend
-            // Only one planet game area atm, needs to be extended for further planets
-            gameArea = new EarthGameArea(terrainFactory, game);
             this.nextPlanetName = "Earth";
+            this.allGameAreas.put("primary", new MapGameArea("levels/lush/main-area", terrainFactory, game));
         }
+    }
+
+    /**
+     * Initialises a new game area with a given name based upon the config file.
+     *
+     * @param name  The name of the game area to create.
+     * @param configPath    The configPath to load.
+     */
+    private void generateGameArea(String name, String configPath) {
+        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+        this.allGameAreas.put(name, new MapGameArea(configPath, terrainFactory, game));
     }
 
     /**
@@ -133,11 +151,6 @@ public class PlanetScreen extends ScreenAdapter {
      */
     private void registerServices() {
         logger.debug(String.format("Initialising %s screen services", this.name));
-        ServiceLocator.registerTimeSource(new GameTime());
-
-        PhysicsService physicsService = new PhysicsService();
-        ServiceLocator.registerPhysicsService(physicsService);
-        physicsEngine = physicsService.getPhysics();
 
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerInputService(new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
@@ -145,36 +158,14 @@ public class PlanetScreen extends ScreenAdapter {
 
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
 
         ServiceLocator.registerGameStateObserverService(new GameStateObserver());
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
-    }
-
-    /**
-     * Create the extractor item box.
-     */
-    private void createItemBox() {
-        itemBox = new ItemBox(gameArea.getExtractorIcon(), renderer);
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(ServiceLocator.getInputService());
-        inputMultiplexer.addProcessor(new InputComponent() {
-            @Override
-            public boolean keyDown(int keycode) {
-                if (keycode == Input.Keys.O) {
-                    itemBox.triggerShow();
-                }
-                return false;
-            }
-            @Override
-            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-                currentExtractor = null;
-                return super.touchUp(screenX, screenY, pointer, button);
-            }
-        });
-        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
@@ -184,13 +175,9 @@ public class PlanetScreen extends ScreenAdapter {
         followPlayer();
         renderer.render();
 
-        itemBox.render();
-        if(itemBox.itemContainMouse() && currentExtractor == null){
-            currentExtractor = gameArea.getExtractor();
-        }
-        if(currentExtractor != null){
-            Vector2 mousePos = renderer.getCamera().getWorldPositionFromScreen(new Vector2(Gdx.input.getX() - 200,Gdx.input.getY() + 200));
-            currentExtractor.setPosition(mousePos.x,mousePos.y);
+        ProximityControllerComponent proximityController = player.getComponent(ProximityControllerComponent.class);
+        if (proximityController != null) {
+            proximityController.checkAllEntitiesProximity();   //checks whether the player is near an intractable entity to show the prompt
         }
 
         ProximityControllerComponent proximityController = player.getComponent(ProximityControllerComponent.class);
@@ -219,7 +206,9 @@ public class PlanetScreen extends ScreenAdapter {
      * Do not dispose of all services and renderers on screen switch. Preserve state
      */
     @Override
-    public void dispose() { }
+    public void dispose() {
+        this.clear();
+    }
 
     /**
      * Dispose of the entire game screen.
@@ -227,14 +216,12 @@ public class PlanetScreen extends ScreenAdapter {
     public void clear() {
         logger.debug(String.format("Disposing %s screen", this.name));
 
+        for (GameArea area : allGameAreas.values()) {
+            area.dispose();
+        }
+
         renderer.dispose();
         unloadAssets();
-
-        ServiceLocator.getEntityService().dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getResourceService().dispose();
-
-        ServiceLocator.clear();
     }
 
     /**
@@ -289,9 +276,9 @@ public class PlanetScreen extends ScreenAdapter {
 
         // Define the minimum and maximum allowed camera positions based on map boundaries
         float minX = halfViewportWidth;
-        float maxX = 60 * 0.5f - halfViewportWidth;
+        float maxX = 90 * 0.5f - halfViewportWidth;
         float minY = halfViewportHeight;
-        float maxY = 60 * 0.5f - halfViewportHeight;
+        float maxY = 90 * 0.5f - halfViewportHeight;
 
         // Calculate the camera's new X and Y positions within map boundaries
         float cameraX = Math.min(maxX, Math.max(minX, player.getPosition().x));

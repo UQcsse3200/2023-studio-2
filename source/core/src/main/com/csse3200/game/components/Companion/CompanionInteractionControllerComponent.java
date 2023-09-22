@@ -10,6 +10,9 @@ import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CompanionInteractionControllerComponent extends Component {
 
     /**
@@ -18,7 +21,7 @@ public class CompanionInteractionControllerComponent extends Component {
      * @param effectAll If true, the interaction will affect all nearby entities; otherwise, only the closest one is affected.
      */
     public void interact(boolean effectAll) {
-        Array<Entity> entities = ServiceLocator.getEntityService().getEntitiesByComponent(InteractableComponent.class);
+        List<Entity> entities = ServiceLocator.getEntityService().getEntitiesByComponent(InteractableComponent.class);
         float minDist = Float.MAX_VALUE;
         Entity closest = null;
 
@@ -40,4 +43,3 @@ public class CompanionInteractionControllerComponent extends Component {
         }
     }
 }
-

@@ -9,9 +9,7 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.ui.DialogComponent;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.badlogic.gdx.utils.Timer;
 
 /**
  * TouchAttackComponent is responsible for dealing damage and applying knockback to entities when
@@ -25,11 +23,10 @@ import java.util.TimerTask;
 public class TouchAttackComponent extends Component {
 
   private short targetLayer;
-  private float knockbackForce = 0f;
+  private float knockbackForce = 1f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
   private boolean leftContact;
-  private Timer triggerTimer;
 
   /**
    * Creates a TouchAttackComponent that attacks entities on collision, without knockback.
@@ -66,13 +63,7 @@ public class TouchAttackComponent extends Component {
     leftContact = true;
 
   }
-
-  /**
-   * Handles collision start events and applies damage and knockback to the target entity.
-   *
-   * @param me The fixture associated with this entity's hitbox.
-   * @param other The fixture of the colliding entity.
-   */
+  
   /**
    * Initial collision between current entity and target entity.
    * Deals single instance of damage when hit by enemy.
@@ -96,24 +87,28 @@ public class TouchAttackComponent extends Component {
     Entity source = ((BodyUserData) me.getBody().getUserData()).entity;
     DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+    CombatStatsComponent sourceStats = source.getComponent(CombatStatsComponent.class);
     leftContact = false;
-    
+    // If No Hitbox
+    if (target.getComponent(HitboxComponent.class) == null) {
+      return;
+    }
+
     // Targeting STRUCTURE entity type
     if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-      // Damage Structure while still in contact
-      triggerTimer = new Timer();
       // Schedule the trigger every 2 seconds
-      triggerTimer.scheduleAtFixedRate(new TimerTask() {
+      Timer.Task task = new Timer.Task() {
         @Override
         public void run() {
           if (!leftContact) {
-            hitOnce(target, targetStats);
+            hitOnce(target, source, sourceStats, targetStats);
           }
         }
-      }, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
+      };
+      Timer.schedule(task, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
     } else {
-      //hit once, push away
-      hitOnce(target, targetStats);
+      // hit once, push away
+      hitOnce(target, source, sourceStats, targetStats);
     }
   }
 
@@ -122,42 +117,35 @@ public class TouchAttackComponent extends Component {
    * @param target The Targeted Entity, usually the Player Entity
    * @param targetStats The Targeted Entity's stats
    */
-  private void hitOnce(Entity target, CombatStatsComponent targetStats){
-    if (targetStats != null) {
+  private void hitOnce(Entity target, Entity source, CombatStatsComponent sourceStats, CombatStatsComponent targetStats){
+    if (targetStats != null && sourceStats != null) {
 //      if(dialogue != null) {
 //        dialogue.showdialogue("You hit a Ghost");
 //      }
       //targetStats.hit(combatStats);
 
       // Valid damage dealt
-      entity.getEvents().trigger("enemyAttack");
+      if (source.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.ENEMY_MELEE ||
+              source.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.ENEMY_RANGE) {
+        char attackDirection = getDirection(target.getPosition());
+        if(attackDirection == '<'){
+          entity.getEvents().trigger("attackLeft");
+        }
+        if(attackDirection == '>'||attackDirection == '='){
+          entity.getEvents().trigger("enemyAttack");
+        }
+      }
+
       targetStats.hit(combatStats);
 
-
-//      if (entity.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.WEAPON) {
-//        System.out.println("Hit");
-//        return;
-//      }
-
-
-      // Gives a delay every time there is a collision for the
-      // attack animation to complete
-      Timer timer = new Timer();
-      timer.schedule(new TimerTask() {
-        @Override
-        public void run() {
-
-        }
-      }, 2000);
-    }
-
-    // Apply knockback
-    PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
-    if (physicsComponent != null && knockbackForce > 0f) {
-      Body targetBody = physicsComponent.getBody();
-      Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
-      Vector2 impulse = direction.setLength(knockbackForce);
-      targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
+      // Apply knockback
+      PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
+      if (physicsComponent != null && knockbackForce > 0f) {
+        Body targetBody = physicsComponent.getBody();
+        Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
+        Vector2 impulse = direction.setLength(knockbackForce);
+        targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
+      }
     }
   }
 
@@ -170,4 +158,21 @@ public class TouchAttackComponent extends Component {
     // Stop dealing tick damage
     leftContact = true;
   }
+
+  /**
+   * This get method returns a char indicating the position of the target relative to the enemy.
+   * @param destination
+   * @return
+   */
+
+  public char getDirection(Vector2 destination) {
+    if (entity.getPosition().x - destination.x < 0) {
+      return '>';
+    }
+    if (entity.getPosition().x - destination.x > 0) {
+      return '<';
+    }
+    return '=';
+  }
+
 }

@@ -2,6 +2,8 @@ package com.csse3200.game.components.story;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +37,7 @@ public class StoryActions extends Component {
      */
     private void onNext() {
         logger.info("Load next");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
     }
 
     /**
@@ -43,6 +45,10 @@ public class StoryActions extends Component {
      */
     private void onSkip() {
         logger.info("Skipping to game");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        String startPlanetName = "Earth";
+        logger.info(String.format("Start game, go to %s", startPlanetName));
+        PlanetScreen planetScreen = new PlanetScreen(game, startPlanetName);
+        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", planetScreen);
+        game.setScreen(planetScreen);
     }
 }

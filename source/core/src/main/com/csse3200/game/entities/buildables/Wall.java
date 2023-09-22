@@ -1,5 +1,4 @@
 package com.csse3200.game.entities.buildables;
-
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -19,6 +18,8 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Objects;
 
 /**
  * Core wall class. Wall inherits entity and adds the required components and functionality for
@@ -52,7 +53,7 @@ public class Wall extends PlaceableEntity {
         this.type = type;
 
         WallConfig config = configs.GetWallConfig(type);
-        var textures = ServiceLocator.getResourceService().getAsset(config.textureAtlas, TextureAtlas.class);
+        var textures = ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class);
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
@@ -72,5 +73,19 @@ public class Wall extends PlaceableEntity {
 
     private void onPlayerExit(Entity player) {
         getComponent(HealthBarComponent.class).hide();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Wall wall = (Wall) o;
+        return type == wall.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), type);
     }
 }

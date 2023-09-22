@@ -25,6 +25,10 @@ public class EnemyAnimationController extends Component {
     entity.getEvents().addListener("dispose", this::animateDeath);
     entity.getEvents().addListener("explode", this::animateExplosion);
     entity.getEvents().addListener("enemyAttack", this::animateAttack);
+    entity.getEvents().addListener("chaseLeft", this::animateChaseLeft);
+    entity.getEvents().addListener("attackLeft",this::animateAttackLeft);
+
+    entity.getEvents().trigger("standing");
   }
 
 
@@ -61,7 +65,9 @@ public class EnemyAnimationController extends Component {
    * Initialise animation
    */
   void animateDeath() {
-    animator.startAnimation("death");
+    if (animator.hasAnimation("death")) {
+      animator.startAnimation("death");
+    }
   }
 
   /**
@@ -76,6 +82,12 @@ public class EnemyAnimationController extends Component {
    */
   void animateExplosion (){
     animator.startAnimation("explode");
+  }
+  void animateChaseLeft (){
+    animator.startAnimation("chaseLeft");
+  }
+  void animateAttackLeft(){
+    animator.startAnimation("attackLeft");
   }
 
 }

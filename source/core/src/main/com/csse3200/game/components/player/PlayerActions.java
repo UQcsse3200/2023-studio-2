@@ -4,6 +4,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.entities.Entity;
@@ -12,7 +14,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.structures.StructurePicker;
+import com.csse3200.game.components.structures.StructureToolPicker;
 
 /**
  * Action component for interacting with the player. Player events should be
@@ -27,7 +29,6 @@ public class PlayerActions extends Component {
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
     private GameStateInteraction gameStateInteraction;
-    private int attackCooldown;
 
     @Override
     public void create() {
@@ -42,23 +43,23 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("change_structure", this::changeStructure);
         entity.getEvents().addListener("inventory", this::updateInventory);
         gameStateInteraction = new GameStateInteraction();
-        attackCooldown = 0;
     }
 
     @Override
     public void update() {
-        if (attackCooldown > 0) {
-            attackCooldown--;
-        }
         if (moving) {
             updateSpeed();
         }
     }
 
+    /**
+     * Updates the player's velocity in the direction they are walking
+     */
     private void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
-        Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_SPEED);
+        float speedMult = MapGameArea.getSpeedMult();
+        Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(MAX_SPEED.x * speedMult, MAX_SPEED.y * speedMult));
         // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
@@ -98,6 +99,11 @@ public class PlayerActions extends Component {
         entity.getComponent(CombatStatsComponent.class).changeImmunityStatus();
     }
 
+
+    /**
+     * Updates inventory
+     * @param i - used for determining inventory action
+     */
     void updateInventory(int i) {
         switch (i) {
             case 1:
@@ -135,14 +141,8 @@ public class PlayerActions extends Component {
     }
 
     /**
-<<<<<<< HEAD
      * Converts the screen coords to a grid position and then places the selected structure
      * doesn't exist at the grid position, otherwise upgrades the existing structure.
-=======
-     * Converts the screen coords to a grid position and then places a wall if a
-     * wall
-     * doesn't exist at the grid position, otherwise upgrades the wall.
->>>>>>> feature/player
      *
      * @param screenX - the x coord of the screen
      * @param screenY - the y coord of teh screen
@@ -152,8 +152,8 @@ public class PlayerActions extends Component {
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
         GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
 
-        var structurePicker = getEntity().getComponent(StructurePicker.class);
-        structurePicker.interact(entity, gridPosition);
+        var structurePicker = getEntity().getComponent(StructureToolPicker.class);
+        structurePicker.interact(gridPosition);
     }
 
     /**
@@ -193,7 +193,7 @@ public class PlayerActions extends Component {
     }
 
     void changeStructure() {
-        var picker = entity.getComponent(StructurePicker.class);
+        var picker = entity.getComponent(StructureToolPicker.class);
 
         if (picker == null) {
             return;
@@ -202,11 +202,5 @@ public class PlayerActions extends Component {
         picker.show();
     }
 
-    public void setAttackCooldown(int cooldown) {
-        this.attackCooldown = cooldown;
-    }
 
-    public int getAttackCooldown() {
-        return this.attackCooldown;
-    }
 }

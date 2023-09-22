@@ -1,6 +1,9 @@
 package com.csse3200.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
@@ -19,6 +22,7 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
@@ -27,7 +31,10 @@ import org.slf4j.LoggerFactory;
 public class ExtractorMiniGameScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ExtractorMiniGameScreen.class);
 
-    private static final String[] fireTexture = {"images/fire.png"};
+    private static final String[] textures =
+            {"images/fire.png", "images/Hole.png", "images/extractor.png", "images/spanner.png",
+                    "images/extinguisher.png", "images/extinguisherCursor.png", "images/spannerCursor.png",
+                    "images/bang.png"};
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
@@ -37,14 +44,6 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
 
     public ExtractorMiniGameScreen(GdxGame game) {
         this.game = game;
-
-        logger.debug("Initialising extractor minigame screen services");
-
-        ServiceLocator.registerInputService(new InputService());
-        ServiceLocator.registerResourceService(new ResourceService());
-
-        ServiceLocator.registerEntityService(new EntityService());
-        ServiceLocator.registerRenderService(new RenderService());
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -67,18 +66,19 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(fireTexture);
+        resourceService.loadTextures(textures);
         ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(fireTexture);
+        resourceService.unloadAssets(textures);
     }
 
     @Override
     public void dispose() {
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
         super.dispose();
         this.unloadAssets();
     }

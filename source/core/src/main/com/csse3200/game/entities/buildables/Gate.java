@@ -18,6 +18,8 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.Objects;
+
 public class Gate extends PlaceableEntity {
     private static final GateConfig config =
             FileLoader.readClass(GateConfig.class, "configs/gates.json");
@@ -66,7 +68,19 @@ public class Gate extends PlaceableEntity {
         getComponent(PhysicsComponent.class).setEnabled(true);
 
         getComponent(JoinableComponent.class).updateTextureAtlas(closedAtlas);
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Gate gate = (Gate) o;
+        return Objects.equals(openAtlas, gate.openAtlas) && Objects.equals(closedAtlas, gate.closedAtlas);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), openAtlas, closedAtlas);
     }
 }

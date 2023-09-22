@@ -2,6 +2,7 @@ package com.csse3200.game.components.tasks;
 
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -16,8 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 class ChaseTaskTest {
@@ -114,6 +114,26 @@ class ChaseTaskTest {
     //When active, should not chase within the shoot distance
     target.setPosition(0f, 1f);
     assertTrue(chaseTask.getPriority() < 0);
+  }
+  @Test
+  void shouldTriggerCorrectAnimation(){
+    Entity target = new Entity();
+    target.setPosition(3f, 0f);
+    Entity entity = makePhysicsEntity();
+    entity.create();
+    entity.setPosition(0f, 0f);
+    ChaseTask chaseTask = new ChaseTask(target, 10, 5, 10, 2f);
+    chaseTask.create(() -> entity);
+
+    EventListener0 callback = mock(EventListener0.class);
+    entity.getEvents().addListener("chaseStart", callback);
+    chaseTask.start();
+    verify(callback).handle();
+
+    target.setPosition(-3f, 0f);
+    entity.getEvents().addListener("chaseLeft", callback);
+    chaseTask.update();
+    verify(callback).handle();
   }
 
   private Entity makePhysicsEntity() {

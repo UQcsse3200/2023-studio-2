@@ -5,6 +5,9 @@ import com.csse3200.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
  * over entities to perform updates each loop. All game entities should be registered here.
@@ -46,10 +49,10 @@ public class EntityService {
    * @param componentClass The component class to search for
    * @return An array of entities who have the specified component
    */
-  public Array<Entity> getEntitiesByComponent(Class<? extends Component> componentClass) {
-    Array<Entity> filteredEntities = new Array<>();
+  public List<Entity> getEntitiesByComponent(Class<? extends Component> componentClass) {
+    List<Entity> filteredEntities = new ArrayList<>();
 
-    for (Entity entity : entities) {
+    for (Entity entity : new  Array.ArrayIterator<>(entities)) {
       if (entity.getComponent(componentClass) != null) {
         filteredEntities.add(entity);
       }

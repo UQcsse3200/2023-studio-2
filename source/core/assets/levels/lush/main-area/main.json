@@ -44,7 +44,12 @@
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
     "images/sling_shot.png",
-    "map/portal.png"
+    "map/portal.png",
+    "images/player/bar-fill.png",
+    "images/player/planet-frame.png",
+    "images/player/statbar.png",
+    "images/player/widestatbar.png",
+    "images/space_navigation_planet_1.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -68,7 +73,8 @@
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 
-  "mapName": "Planet Earth",
+  "mapName": "Planet 2",
+  "planetImage": "images/space_navigation_planet_1.png",
   "terrainPath": "map/map1.tmx",
   "winConditions": [
     {

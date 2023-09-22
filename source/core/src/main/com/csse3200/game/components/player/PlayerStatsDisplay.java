@@ -29,15 +29,12 @@ public class PlayerStatsDisplay extends UIComponent {
 
   private float barWidth;
 
-  private Label mapLabel;
   private Label healthLabel;
   private Label dodgeLabel;
   private Label livesLabel;
 
   int originalHealthBarWidth;
 
-  private Image planetImageFrame;
-  private Image planetImage;
   private Image healthBarFrame;
   private Image healthBarFill;
   private Image dodgeBarFrame;
@@ -47,13 +44,10 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label maxLivesLabel;
 
   public PlayerStatsDisplay(PlayerConfig config) {
-    mapLabel = new Label(config.mapName, skin, "small");
     maxHealth = config.health;
     barWidth = 300f;
 
     //ADDING IMAGES
-    planetImageFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/planet-frame.png", Texture.class));
-    planetImage = new Image(ServiceLocator.getResourceService().getAsset("images/space_navigation_planet_0.png", Texture.class));
     healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
     dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
@@ -87,7 +81,7 @@ public class PlayerStatsDisplay extends UIComponent {
     container = new Table();
     container.top().left();
     container.setFillParent(true);
-    container.padTop(5f).padLeft(5f);
+    container.padTop(20f).padLeft(190f);
 
     planetTable = new Table();
 
@@ -104,8 +98,8 @@ public class PlayerStatsDisplay extends UIComponent {
     healthLabel = new Label(healthText, skin, "small");
     dodgeLabel = new Label("Ready!", skin, "small");
     livesLabel = new Label("Lives:", skin, "small");
-    //healthLabel.setAlignment(Align.left);
-    //dodgeLabel.setAlignment(Align.left);
+    healthLabel.setFontScale(0.25f);
+    dodgeLabel.setFontScale(0.25f);
 
     //setting initial value of health Bar
     healthBar.setValue(100);
@@ -114,17 +108,6 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.setWidth(healthWidth);
     healthBar.setDebug(true);
     healthBar.setPosition(10, Gdx.graphics.getHeight()  - healthBar.getHeight());
-
-    Table labelTable = new Table();
-    labelTable.add(planetImage).size(140f).padLeft(5f).padBottom(8f).padTop(-2f);
-    labelTable.row();
-    labelTable.add(mapLabel);
-
-    Stack planetStack = new Stack();
-    planetStack.add(planetImageFrame);
-    planetStack.add(labelTable);
-    planetTable.add(planetStack).size(180f, 225f);
-    planetTable.row();
 
     Table healthBarTable = new Table();
     healthBarTable.add(healthBarFill).size(260f, 30f).padRight(5).padTop(3);
@@ -142,9 +125,6 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable.row();
     statsTable.add(livesBarFrame).size(300f, 58f).pad(5);
 
-
-
-    container.add(planetTable);
     container.add(statsTable);
     stage.addActor(container);
   }

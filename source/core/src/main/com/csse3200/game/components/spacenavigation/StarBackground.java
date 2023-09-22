@@ -30,10 +30,6 @@ public class StarBackground extends Actor {
      */
     private final float[] stateTimes;  // Time passed for each sprite's animation
 
-    private final TextureRegion[] frames;
-
-    private final String STAR_IMAGE_PATH = "images/navigationmap/stars/";
-
     /**
      * Constructs a new NavigationBackground instance.
      * Loads necessary textures and initializes the star animations and positions.
@@ -41,8 +37,9 @@ public class StarBackground extends Actor {
     public StarBackground() {
 
         int numOfFrames = 8;
-        frames = new TextureRegion[numOfFrames];
+        TextureRegion[] frames = new TextureRegion[numOfFrames];
 
+        String STAR_IMAGE_PATH = "images/navigationmap/stars/";
         for (int i = 0; i < numOfFrames; i++) {
             frames[i] = new TextureRegion(new Texture(Gdx.files.internal(
                     STAR_IMAGE_PATH + "background_star_frame_" + i + ".png")));
@@ -52,23 +49,24 @@ public class StarBackground extends Actor {
         spritePositions = new Vector2[numOfSprites];
         stateTimes = new float[numOfSprites];
 
-        star_displacement();
-    }
-
-    protected void star_displacement() {
         for (int i = 0; i < numOfSprites; i++) {
             animations[i] = new Animation<>(0.1f, frames);
             animations[i].setPlayMode(Animation.PlayMode.LOOP_PINGPONG); // Ping pong effect
 
-            // No stars in the centre third
-            int x = MathUtils.random(0, Gdx.graphics.getWidth());
-            while (x > Gdx.graphics.getWidth() / 3 && x < 2 * (Gdx.graphics.getWidth() / 3)) {
-                x = MathUtils.random(0, Gdx.graphics.getWidth());
-            }
-            spritePositions[i] = new Vector2(x, MathUtils.random(0, Gdx.graphics.getHeight()));
+            // Apply star shift across x and y to create bounding boxes
+            spritePositions[i] = starShift(MathUtils.random(0, Gdx.graphics.getWidth()),
+                    MathUtils.random(0, Gdx.graphics.getHeight()));
             stateTimes[i] = MathUtils.random(0f, 1f);  // Offset animation start times
         }
     }
+
+    protected Vector2 starShift(int x, int y) {
+        while (x > Gdx.graphics.getWidth() / 3 && x < 2 * (Gdx.graphics.getWidth() / 3)) {
+            x = MathUtils.random(0, Gdx.graphics.getWidth());
+        }
+        return new Vector2(x, y);
+    }
+
 
     /**
      * Called when the actor should perform its action.

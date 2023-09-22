@@ -136,7 +136,7 @@ public class MapGameArea extends GameArea{
     private void spawnPortal(Entity playerEntity) {
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (PortalConfig portalConfig : mapConfig.areaEntityConfig.portals) {
+        for (PortalConfig portalConfig : mapConfig.areaEntityConfig.getEntities(PortalConfig.class)) {
             Entity portal = PortalFactory.createPortal(playerEntity, portalConfig);
             spawnEntityAt(portal, portalConfig.position, false, false);
         }
@@ -194,7 +194,7 @@ public class MapGameArea extends GameArea{
     private void spawnPowerups() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.powerups) {
+        for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.getEntities(PowerupConfig.class)) {
             Entity powerup = PowerupFactory.createPowerup(powerupConfig);
             spawnEntityAt(powerup, powerupConfig.position, true, false);
         }
@@ -206,7 +206,7 @@ public class MapGameArea extends GameArea{
     private void spawnUpgradeBench() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        UpgradeBenchConfig upgradeBenchConfig = mapConfig.areaEntityConfig.upgradeBench;
+        UpgradeBenchConfig upgradeBenchConfig = mapConfig.areaEntityConfig.getEntity(UpgradeBenchConfig.class);
         if (upgradeBenchConfig != null) {
             Entity upgradeBench = StructureFactory.createUpgradeBench(upgradeBenchConfig);
             spawnEntityAt(upgradeBench, upgradeBenchConfig.position, true, true);
@@ -233,7 +233,7 @@ public class MapGameArea extends GameArea{
         //Spawn extractors if any in game area
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (ExtractorConfig extractorConfig : mapConfig.areaEntityConfig.extractors) {
+        for (ExtractorConfig extractorConfig : mapConfig.areaEntityConfig.getEntities(ExtractorConfig.class)) {
             Entity extractor = StructureFactory.createExtractor(extractorConfig);
             spawnEntityAt(extractor, extractorConfig.position, true, false);
         }
@@ -245,7 +245,7 @@ public class MapGameArea extends GameArea{
     private void spawnShip() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        ShipConfig shipConfig = mapConfig.areaEntityConfig.ship;
+        ShipConfig shipConfig = mapConfig.areaEntityConfig.getEntity(ShipConfig.class);
         if (shipConfig != null) {
             Entity ship = StructureFactory.createShip(game, mapConfig.winConditions, shipConfig);
             spawnEntityAt(ship, shipConfig.position, false, false);
@@ -259,9 +259,9 @@ public class MapGameArea extends GameArea{
      */
     private Entity spawnPlayer() {
         Entity newPlayer;
-        if (mapConfig.areaEntityConfig != null &&
-                mapConfig.areaEntityConfig.player != null) {
-            newPlayer = PlayerFactory.createPlayer(mapConfig.areaEntityConfig.player);
+        PlayerConfig playerConfig = mapConfig.areaEntityConfig.getEntity(PlayerConfig.class);
+        if (mapConfig.areaEntityConfig != null && playerConfig != null) {
+            newPlayer = PlayerFactory.createPlayer(playerConfig);
         } else {
             logger.info("Player not found in config file - creating generic player");
             newPlayer = PlayerFactory.createPlayer();
@@ -272,8 +272,8 @@ public class MapGameArea extends GameArea{
         );
         ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", newPlayer);
 
-        if (mapConfig.areaEntityConfig.player.position != null) {
-            spawnEntityAt(newPlayer, mapConfig.areaEntityConfig.player.position, true, true);
+        if (playerConfig != null && playerConfig.position != null) {
+            spawnEntityAt(newPlayer, playerConfig.position, true, true);
         } else {
             //If no position specified spawn in middle of map.
             GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);
@@ -294,7 +294,7 @@ public class MapGameArea extends GameArea{
         if (mapConfig.areaEntityConfig == null) return;
 
         //Could spawn companion next to player if no position is specified.
-        CompanionConfig companionConfig = mapConfig.areaEntityConfig.companion;
+        CompanionConfig companionConfig = mapConfig.areaEntityConfig.getEntity(CompanionConfig.class);
         if (companionConfig != null) {
             Entity newCompanion = CompanionFactory.createCompanion(playerEntity, companionConfig);
             spawnEntityAt(newCompanion, companionConfig.position, true, true);
@@ -307,7 +307,7 @@ public class MapGameArea extends GameArea{
     private void spawnEnemies() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (EnemyConfig enemyConfig : mapConfig.areaEntityConfig.enemies) {
+        for (EnemyConfig enemyConfig : mapConfig.areaEntityConfig.getEntities(EnemyConfig.class)) {
             Entity enemy = EnemyFactory.createEnemy(enemyConfig);
             spawnEntityAt(enemy, enemyConfig.position, true, true);
         }
@@ -319,7 +319,7 @@ public class MapGameArea extends GameArea{
     private void spawnBotanist() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        BotanistConfig botanistConfig = mapConfig.areaEntityConfig.botanist;
+        BotanistConfig botanistConfig = mapConfig.areaEntityConfig.getEntity(BotanistConfig.class);
         if (botanistConfig != null) {
             Entity botanist = NPCFactory.createBotanist(botanistConfig);
             spawnEntityAt(botanist, botanistConfig.position, false, false);
@@ -331,7 +331,7 @@ public class MapGameArea extends GameArea{
     private void spawnFire(){
         if (mapConfig.areaEntityConfig == null) return;
 
-        ShipConfig shipConfig = mapConfig.areaEntityConfig.ship;
+        ShipConfig shipConfig = mapConfig.areaEntityConfig.getEntity(ShipConfig.class);
             Entity fire = NPCFactory.createFire();
             spawnEntityAt(fire,shipConfig.position , false, false);
         }
@@ -352,7 +352,9 @@ public class MapGameArea extends GameArea{
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(mapConfig.backgroundMusicPath, Music.class).stop();
+        if (mapConfig != null && mapConfig.backgroundMusicPath != null) {
+            ServiceLocator.getResourceService().getAsset(mapConfig.backgroundMusicPath, Music.class).stop();
+        }
         this.unloadAssets();
     }
 
@@ -362,6 +364,8 @@ public class MapGameArea extends GameArea{
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+
+        if (mapConfig == null) return;
 
         if (mapConfig.areaEntityConfig != null) {
             String[] textures = mapConfig.areaEntityConfig.getAllConfigs().stream()

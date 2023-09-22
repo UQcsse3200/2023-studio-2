@@ -59,11 +59,9 @@ class MapConfigLoaderTest {
         areaEntityConfig = setupEntities();
 
         fullGameAreaConfig = setupGameArea();
-        fullGameAreaConfig.playerConfig = setupPlayer();
         fullGameAreaConfig.areaEntityConfig = setupEntities();
 
         expectedGameArea = setupGameArea();
-        expectedGameArea.playerConfig = setupPlayer();
         expectedGameArea.areaEntityConfig = setupEntities();
     }
 
@@ -90,8 +88,6 @@ class MapConfigLoaderTest {
         try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
             mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
                     .thenReturn(gameAreaConfig);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(PlayerConfig.class), any(), any()))
-                    .thenReturn(playerConfig);
             mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
                     .thenReturn(areaEntityConfig);
 
@@ -103,22 +99,6 @@ class MapConfigLoaderTest {
     void loadInvalidMapDirectoryGameArea() {
         try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
             mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
-                    .thenReturn(null);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(PlayerConfig.class), any(), any()))
-                    .thenReturn(playerConfig);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
-                    .thenReturn(areaEntityConfig);
-
-            assertThrows(InvalidConfigException.class, () -> MapConfigLoader.loadMapDirectory("path/"));
-        }
-    }
-
-    @Test
-    void loadInvalidMapDirectoryPlayer() {
-        try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
-            mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
-                    .thenReturn(gameAreaConfig);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(PlayerConfig.class), any(), any()))
                     .thenReturn(null);
             mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
                     .thenReturn(areaEntityConfig);
@@ -132,8 +112,6 @@ class MapConfigLoaderTest {
         try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
             mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
                     .thenReturn(gameAreaConfig);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(PlayerConfig.class), any(), any()))
-                    .thenReturn(playerConfig);
             mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
                     .thenReturn(null);
 

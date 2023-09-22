@@ -41,7 +41,6 @@ public class MapConfigLoader {
         String playerPath = joinPath(mapDirPath, PLAYER_PATH);
         String entitiesPath = joinPath(mapDirPath, ENTITIES_PATH);
         GameAreaConfig gameAreaConfig = loadConfigFile(mainPath, GameAreaConfig.class);
-        gameAreaConfig.playerConfig = loadConfigFile(playerPath, PlayerConfig.class);
         gameAreaConfig.areaEntityConfig = loadEntities(entitiesPath);
         return gameAreaConfig;
     }

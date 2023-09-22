@@ -20,10 +20,7 @@ import java.util.TimerTask;
  */
 public class PlayerStatsDisplay extends UIComponent {
   Table container;
-  Table planetTable;
   Table statsTable;
-  public ProgressBar healthBar;
-  private float healthWidth = 1000f;
 
   private int maxHealth;
 
@@ -32,8 +29,6 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label healthLabel;
   private Label dodgeLabel;
   private Label livesLabel;
-
-  int originalHealthBarWidth;
 
   private Image healthBarFrame;
   private Image healthBarFill;
@@ -83,31 +78,18 @@ public class PlayerStatsDisplay extends UIComponent {
     container.setFillParent(true);
     container.padTop(20f).padLeft(190f);
 
-    planetTable = new Table();
-
     statsTable = new Table();
     statsTable.top().left();
     container.setFillParent(true);
 
-    //health Bar
-    int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-    healthBar = new ProgressBar(0, 100, 1, false, skin);
-
     //CREATING LABELS
+    int health = entity.getComponent(CombatStatsComponent.class).getHealth();
     CharSequence healthText = String.format("%d", health);
     healthLabel = new Label(healthText, skin, "small");
     dodgeLabel = new Label("Ready!", skin, "small");
     livesLabel = new Label("Lives:", skin, "small");
     healthLabel.setFontScale(0.25f);
     dodgeLabel.setFontScale(0.25f);
-
-    //setting initial value of health Bar
-    healthBar.setValue(100);
-
-    //setting the position of health Bar
-    healthBar.setWidth(healthWidth);
-    healthBar.setDebug(true);
-    healthBar.setPosition(10, Gdx.graphics.getHeight()  - healthBar.getHeight());
 
     Table healthBarTable = new Table();
     healthBarTable.add(healthBarFill).size(260f, 30f).padRight(5).padTop(3);
@@ -141,7 +123,6 @@ public class PlayerStatsDisplay extends UIComponent {
   public void updatePlayerHealthUI(int health) {
     CharSequence text = String.format("%d", health);
     healthLabel.setText(health);
-    //healthBar.setValue(health);
     barWidth = 260f * health / maxHealth;
     healthBarFill.setSize(barWidth, 30f);
   }
@@ -197,9 +178,7 @@ public class PlayerStatsDisplay extends UIComponent {
     @Override
   public void dispose() {
     super.dispose();
-    //heartImage.remove();
     healthLabel.remove();
-    healthBar.remove();
     livesLabel.remove();
   }
 }

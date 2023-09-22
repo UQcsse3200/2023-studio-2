@@ -106,7 +106,7 @@ public class PlayerFactory {
             .addComponent(new StructureToolPicker())
             .addComponent(new ProximityControllerComponent());
 
-    PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
+    PhysicsUtils.setScaledCollider(player, 0.5f, 0.5f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     animator.startAnimation("Character_StandDown");
     player.setEntityType("player");

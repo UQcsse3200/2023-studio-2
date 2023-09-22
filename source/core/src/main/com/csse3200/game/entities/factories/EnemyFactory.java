@@ -98,13 +98,13 @@ public class EnemyFactory {
             .addComponent(new DeathComponent())
             .addComponent(new HitboxComponent())
             .addComponent(new HealthBarComponent(false))
-            .addComponent(new TouchAttackComponent((short) (
-                    PhysicsLayer.PLAYER |
-                    PhysicsLayer.COMPANION |
-                    PhysicsLayer.WALL |
-                    PhysicsLayer.STRUCTURE |
-                    PhysicsLayer.WEAPON),
-                    1.5f))
+//            .addComponent(new TouchAttackComponent((short) (
+//                    PhysicsLayer.PLAYER |
+//                    PhysicsLayer.COMPANION |
+//                    PhysicsLayer.WALL |
+//                    PhysicsLayer.STRUCTURE |
+//                    PhysicsLayer.WEAPON),
+//                    1.5f))
             .addComponent(new CombatStatsComponent(
                     health,
                     baseAttack,
@@ -145,8 +145,9 @@ public class EnemyFactory {
     // Scaling the enemy's visual size
     // UI adjustments
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
-    PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
     enemy.scaleHeight(getEnemyscale(config));
+    PhysicsUtils.setCustomCollider(enemy, 0.1f, 0.1f, enemy.getCenterPosition().x, enemy.getCenterPosition().y);
+
 
     return enemy;
   }
@@ -166,7 +167,7 @@ public class EnemyFactory {
       }
     }
     else if (config.type == EnemyType.Melee) {
-      scale = 1.8f;
+      scale = 1.5f;
       if (config.isBoss){
         scale = 4.4f;
       }

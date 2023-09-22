@@ -33,8 +33,6 @@ public class PathFinder {
                 Entity entityOnGridPoint = map.getAreaEntities().get(new GridPoint2(x, y));
                 // if there is an entity on the grid
                 if (entityOnGridPoint != null) {
-                    System.out.println(entityOnGridPoint);
-                    System.out.println(map.getTerrain().worldPositionToTile(entityOnGridPoint.getPosition()));
                     // if the entity has a hitbox
                     if (entityOnGridPoint.getComponent(HitboxComponent.class) != null) {
                         // if the entity is a bullet or an enemy
@@ -91,8 +89,6 @@ public class PathFinder {
                 }
             }
         } while(!open.isEmpty());
-
-        System.out.println("nothing in the path bro");
         return List.of(start);
     }
 

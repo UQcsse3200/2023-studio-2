@@ -91,7 +91,7 @@ public class TerrainComponent extends RenderComponent {
 
   public boolean gridWithinBounds(int x, int y) {
     GridPoint2 block = new GridPoint2(x, y);
-    return getMapBounds(TERRAIN_LAYER).x > block.x && getMapBounds(TERRAIN_LAYER).y > block.y;
+    return getMapBounds(TERRAIN_LAYER).x > block.x && getMapBounds(TERRAIN_LAYER).y > block.y && block.x >= 0 && block.y >= 0;
   }
 
   public TiledMap getMap() {

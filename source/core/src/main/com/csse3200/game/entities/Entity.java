@@ -90,7 +90,7 @@ public class Entity {
   }
 
   public GridPoint2 getGridPosition() {
-    return ServiceLocator.getGameArea().getTerrain().worldPositionToTile(position.cpy());
+    return ServiceLocator.getGameArea().getTerrain().worldPositionToTile(getPosition());
   }
 
   /**

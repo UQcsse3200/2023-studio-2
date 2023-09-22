@@ -11,7 +11,7 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
 public class SpawnerComponent extends Component {
-    private static final long WAVE_DELAY = 1000;  // 20 seconds
+    private static final long WAVE_DELAY = 3000;  // 20 seconds
     private static final long SPAWN_DELAY = 3000;  // 3 seconds
 
     private final GameTime timer;

@@ -13,7 +13,7 @@ public class NavigationBackground extends StarBackground {
 
     public NavigationBackground() {
         super();
-        spaceBackground = new Texture(Gdx.files.internal("images/navigationmap/space_navigation_background.png"));
+        spaceBackground = new Texture(Gdx.files.internal("images/navigationmap/background.png"));
     }
 
     @Override

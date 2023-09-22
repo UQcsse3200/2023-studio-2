@@ -32,6 +32,8 @@ public class StarBackground extends Actor {
 
     private final TextureRegion[] frames;
 
+    private final String STAR_IMAGE_PATH = "images/navigationmap/stars/";
+
     /**
      * Constructs a new NavigationBackground instance.
      * Loads necessary textures and initializes the star animations and positions.
@@ -42,7 +44,8 @@ public class StarBackground extends Actor {
         frames = new TextureRegion[numOfFrames];
 
         for (int i = 0; i < numOfFrames; i++) {
-            frames[i] = new TextureRegion(new Texture(Gdx.files.internal("images/navigationmap/stars/space_navigation_background_star_frame_" + i + ".png")));
+            frames[i] = new TextureRegion(new Texture(Gdx.files.internal(
+                    STAR_IMAGE_PATH + "background_star_frame_" + i + ".png")));
         }
 
         animations = new Animation[numOfSprites];

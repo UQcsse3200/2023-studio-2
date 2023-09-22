@@ -41,7 +41,7 @@ public class PlanetScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(PlanetScreen.class);
     private final GdxGame game;
 
-    private final String name;
+    public final String name;
     private String nextPlanetName;
 
     private Entity player;

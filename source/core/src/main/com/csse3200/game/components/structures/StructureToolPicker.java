@@ -86,11 +86,11 @@ public class StructureToolPicker extends UIComponent {
             nameLabel.setColor(Color.BLACK);
             var image = new Image(ServiceLocator.getResourceService().getAsset(optionValue.texture, Texture.class));
 
-            buttonTable.add(image).size(30,30);
-            buttonTable.add(nameLabel).padLeft(10);
+            buttonTable.add(image).size(30,30).right();
+            buttonTable.add(nameLabel).padLeft(10).left();
 
             for (var cost : optionValue.cost) {
-                var costLabel = new Label(String.format("%s - %d", cost.key, cost.value), skin, "small");
+                var costLabel = new Label(String.format("%s - %d", cost.key, cost.value), skin);
                 costLabel.setColor(Color.BLACK);
 
                 buttonTable.row().colspan(2);
@@ -108,7 +108,7 @@ public class StructureToolPicker extends UIComponent {
             });
             buttons.add(button);
             table.row().padTop(10);
-            table.add(button).width(250);
+            table.add(button).width(280);
         }
 
         stage.addActor(table);

@@ -3,6 +3,7 @@ package com.csse3200.game.components.player;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -57,6 +58,11 @@ public class InventoryComponent extends Component {
     }
     equippedWMap.remove(slot);
     equippedWMap.put(slot, weaponType);
+  }
+
+  /** Returns the current equipped weapons represented in a hash map **/
+  public HashMap<Integer, WeaponType> getEquippedWeaponMap() {
+    return equippedWMap;
   }
 
   public void placeInSlot(WeaponType weaponType) {

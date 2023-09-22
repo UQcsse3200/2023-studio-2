@@ -11,6 +11,7 @@
     "images/structures_icons/wall.png",
     "images/Companion1.png",
     "images/wall2.png",
+    "images/Jail/jail.png",
     "images/structures/gate_close.png",
     "images/structures/gate_open.png",
     "images/ghost_king.png",
@@ -22,12 +23,12 @@
     "images/structure-icons/gate.png",
     "images/healthpowerup.png",
     "images/speedpowerup.png",
-    "images/extralifepowerup.png",
     "images/Ship.png",
     "images/oldman_down_1.png",
     "images/player_blank.png",
     "images/wrench.png",
-    "images/durastell.png",
+    "images/durasteel.png",
+    "images/Astro_NPC.png",
     "images/nebulite.png",
     "images/uparrow.png",
     "images/solstite.png",
@@ -44,7 +45,9 @@
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
-    "images/sling_shot.png"
+    "map/portal.png",
+    "images/sling_shot.png",
+    "images/fireAnim.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -52,16 +55,18 @@
     "images/ghostKing.atlas",
     "images/troll_enemy.atlas",
     "images/rangeEnemy.atlas",
+    "images/Astro_NPC.atlas",
+    "images/Jail/jail.atlas",
     "images/structures/stone_wall.atlas",
     "images/structures/dirt_wall.atlas",
     "images/botanist.atlas",
     "images/boss_enemy.atlas",
-    "images/botanist.atlas",
     "images/player/player.atlas",
     "images/weapons/wrench.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
-    "images/botanist.atlas"
+    "images/botanist.atlas",
+    "images/fire.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav"
@@ -75,67 +80,5 @@
       "resource": "Solstite",
       "threshold": 100
     }
-  ],
-  "playerConfig": {
-    "position": {
-      "x": 10,
-      "y": 10
-    },
-    "health": 100,
-    "baseAttack": 10,
-    "attackMultiplier": 1,
-    "isImmune": false,
-    "spritePath": "images/player/player.atlas"
-  },
-  "areaEntityConfig": {
-    "ship": {
-      "spritePath": "images/LeftShip.png",
-      "position": {
-        "x": 35,
-        "y": 40
-      }
-    },
-    "enemies": [
-      {
-        "health": 20,
-        "baseAttack": 10,
-        "speed": 5,
-        "behaviour": "PTE",
-        "spritePath": "images/enemy/base_enemy.atlas",
-        "position": {
-          "x": 40,
-          "y": 40
-        }
-      },
-      {
-        "health": 20,
-        "baseAttack": 10,
-        "speed": 5,
-        "behaviour": "PTE",
-        "spritePath": "images/enemy/base_enemy.atlas",
-        "position": {
-          "x": 20,
-          "y": 20
-        }
-      }
-    ],
-    "extractors": [
-      {
-        "resource": "Solstite",
-        "health": 200,
-        "tickRate": 1000,
-        "tickSize": 10,
-        "position": {
-          "x": 20,
-          "y": 30
-        }
-      }
-    ],
-    "upgradeBench": {
-      "position" : {
-        "x": 20,
-        "y": 40
-      }
-    }
-  }
+  ]
 }

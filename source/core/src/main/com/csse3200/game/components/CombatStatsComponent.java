@@ -9,8 +9,7 @@ import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.badlogic.gdx.utils.Timer;
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
@@ -106,31 +105,29 @@ public class CombatStatsComponent extends Component {
     if (entity != null) {
       if (isDead() && entity.getEntityType().equals("player") && !dead) {
         dead = true;
-        entity.getComponent(KeyboardPlayerInputComponent.class).playerDead(); // Stop player from walking
+        entity.getComponent(KeyboardPlayerInputComponent.class).clearWalking(); // Stop player from walking
         entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn
         final Timer timer = new Timer();
         entity.getEvents().trigger("playerDeath"); // Trigger death animation
-        TimerTask killPlayer = new TimerTask() {
+        Timer.Task killPlayer = new Timer.Task() {
           @Override
           public void run() {
             minusLife();
             entity.getEvents().trigger("deathScreen");
-            timer.cancel();
-            timer.purge();
+            timer.clear();
           }
         };
-        timer.schedule(killPlayer, 1000); // Animation lasts for 1 second before death screen is triggered
+        timer.schedule(killPlayer, 1); // Animation lasts for 1 second before death screen is triggered
       } else if (isDead() && entity.getEntityType().equals("companion")) {
-          final Timer timer1 = new Timer();
-          TimerTask killCompanion = new TimerTask() {
-            @Override
-            public void run() {
-              entity.getEvents().trigger("death");
-              timer1.cancel();
-              timer1.purge();
-            }
-          };
-          timer1.schedule(killCompanion,500);
+        final Timer timer1 = new Timer();
+        Timer.Task killCompanion = new Timer.Task() {
+          @Override
+          public void run() {
+            entity.getEvents().trigger("death");
+            timer1.clear();
+          }
+        };
+        timer1.schedule(killCompanion,1);
 
       } else if (isDead() && entity.getEntityType().equals("playerWeapon")) {
         entity.getEvents().trigger("death", 0);

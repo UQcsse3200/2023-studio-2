@@ -6,27 +6,26 @@
       "y": 67
     }
   },
-  "enemies": [
+  "spawners": [
     {
-      "health": 20,
-      "baseAttack": 10,
-      "speed": 5,
-      "behaviour": "PTE",
-      "spritePath": "images/enemy/base_enemy.atlas",
+      "wave1" : [
+        10,
+        0,
+        0
+      ],
+      "wave2" : [
+        10,
+        5,
+        0
+      ],
+      "wave3" : [
+        10,
+        10,
+        0
+      ],
       "position": {
         "x": 40,
         "y": 40
-      }
-    },
-    {
-      "health": 20,
-      "baseAttack": 10,
-      "speed": 5,
-      "behaviour": "PTE",
-      "spritePath": "images/enemy/base_enemy.atlas",
-      "position": {
-        "x": 20,
-        "y": 20
       }
     }
   ],
@@ -64,6 +63,27 @@
     "position" : {
       "x": 20,
       "y": 40
+    }
+  },
+  "botanist": {
+    "spritePath": "images/botanist.atlas",
+    "position" : {
+      "x": 20,
+      "y": 15
+    }
+  },
+  "Astro": {
+    "spritePath": "images/Astro_NPC.atlas",
+    "position" : {
+      "x": 24,
+      "y": 50
+    }
+  },
+  "Jail": {
+    "spritePath": "images/Jail/jail.atlas",
+    "position" : {
+      "x": 23,
+      "y": 50
     }
   }
 }

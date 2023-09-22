@@ -2,11 +2,8 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
@@ -38,7 +35,7 @@ import java.util.List;
 public class MapGameArea extends GameArea{
 
     private GameAreaConfig mapConfig = null;
-    private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
+    private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
     private boolean validLoad = true;
@@ -89,10 +86,11 @@ public class MapGameArea extends GameArea{
         player = spawnPlayer();
         spawnCompanion(player);
         spawnPortal(player);
-
-        spawnEnemies();
+        spawnAstro();
+        spawnSpawners();
+        spawnJail();
       //  spawnFire();
-        spawnBotanist();
+//        spawnBotanist();
 
         playMusic();
     }
@@ -224,6 +222,19 @@ public class MapGameArea extends GameArea{
         int steps = 64;
         int maxResource = 1000;
 
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Nebulite.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Durasteel.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Solstite.toString(),  (int) 4);
+
         ResourceDisplay resourceDisplayComponent = new ResourceDisplay(scale, steps, maxResource)
                 .withResource(Resource.Durasteel)
                 .withResource(Resource.Solstite)
@@ -295,14 +306,14 @@ public class MapGameArea extends GameArea{
     }
 
     /**
-     * Spawns all the enemies detailed in the Game Area.
+     * Spawns all the spawners detailed in the Game Area.
      */
-    private void spawnEnemies() {
+    private void spawnSpawners() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (EnemyConfig enemyConfig : mapConfig.areaEntityConfig.enemies) {
-            Entity enemy = EnemyFactory.createEnemy(enemyConfig);
-            spawnEntityAt(enemy, enemyConfig.position, true, true);
+        for (SpawnerConfig spawnerConfig : mapConfig.areaEntityConfig.spawners) {
+            Entity spawner = StructureFactory.createSpawner(spawnerConfig);
+            spawnEntityAt(spawner, spawnerConfig.position, true, true);
         }
     }
 
@@ -319,6 +330,28 @@ public class MapGameArea extends GameArea{
         }
         //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
+    }
+
+    private void spawnAstro() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        AstroConfig astroConfig = mapConfig.areaEntityConfig.Astro;
+        if (astroConfig != null) {
+            Entity Astro = NPCFactory.createAstro();
+            spawnEntityAt(Astro, astroConfig.position, false, false);
+        }
+
+    }
+
+    private void spawnJail() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        JailConfig jailConfig = mapConfig.areaEntityConfig.Jail;
+        if (jailConfig != null) {
+            Entity Jail = NPCFactory.createJail();
+            spawnEntityAt(Jail, jailConfig.position, false, false);
+        }
+
     }
 
     private void spawnFire(){

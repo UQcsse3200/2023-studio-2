@@ -6,35 +6,36 @@
       "y": 67
     }
   },
-  "spawners": [
+  "enemies": [
     {
-      "wave1" : [
-        1,
-        0,
-        0
-      ],
-      "wave2" : [
-        0,
-        0,
-        0
-      ],
-      "wave3" : [
-        0,
-        0,
-        0
-      ],
+      "health": 20,
+      "baseAttack": 10,
+      "speed": 5,
+      "behaviour": "PTE",
+      "spritePath": "images/enemy/base_enemy.atlas",
+      "position": {
+        "x": 40,
+        "y": 40
+      }
+    },
+    {
+      "health": 20,
+      "baseAttack": 10,
+      "speed": 5,
+      "behaviour": "PTE",
+      "spritePath": "images/enemy/base_enemy.atlas",
       "position": {
         "x": 20,
-        "y": 40
+        "y": 20
       }
     }
   ],
   "portals": [
     {
-      "teleportX" : 37,
+      "teleportX" : 39,
       "teleportY" : 10,
       "position": {
-        "x": 27,
+        "x": 28,
         "y": 40
       }
     },
@@ -42,8 +43,8 @@
       "teleportX" : 15,
       "teleportY" : 20,
       "position": {
-        "x": 75,
-        "y": 18
+        "x": 76,
+        "y": 19
       }
     }
   ],

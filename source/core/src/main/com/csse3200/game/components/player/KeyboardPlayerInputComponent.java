@@ -398,6 +398,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       @Override
       public void run() {
         dodge_available = true;
+        entity.getEvents().trigger("dodgeAvailable");
         timer.cancel();
         timer.purge();
       }

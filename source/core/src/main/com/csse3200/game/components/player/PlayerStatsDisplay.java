@@ -1,11 +1,8 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.services.ServiceLocator;
@@ -32,7 +29,10 @@ public class PlayerStatsDisplay extends UIComponent {
 
   private Image healthBarFrame;
   private Image healthBarFill;
+
   private Image dodgeBarFrame;
+  private Image dodgeBarFill;
+
   private Image livesBarFrame;
 
   private Table maxLivesAlert;
@@ -46,6 +46,7 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
     dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
+    dodgeBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
     livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
   }
 
@@ -58,7 +59,10 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
 
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
-    entity.getEvents().addListener("updateDodgeCooldown", this::updateDodgeBarUI);
+
+    entity.getEvents().addListener("dodged", this::updateDodgeUsed);
+    entity.getEvents().addListener("dodgeAvailable", this::updateDodgeRefreshed);
+
     entity.getEvents().addListener("updateLives", this::updatePlayerLives);
     entity.getEvents().addListener("maxLivesAlert", this::maxLivesReached);
   }
@@ -100,8 +104,14 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable.add(healthStack).size(barWidth, 40f).pad(5);
     statsTable.add(healthLabel).left();
 
+    Table dodgeBarTable = new Table();
+    dodgeBarTable.add(dodgeBarFill).size(260f, 30f).padRight(5).padTop(3);
+
+    Stack dodgeStack = new Stack();
+    dodgeStack.add(dodgeBarFrame);
+    dodgeStack.add(dodgeBarTable);
     statsTable.row();
-    statsTable.add(dodgeBarFrame).size(300f, 40f).pad(5);
+    statsTable.add(dodgeStack).size(barWidth, 40f).pad(5);
     statsTable.add(dodgeLabel).left();
 
     statsTable.row();
@@ -121,7 +131,6 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param health player health
    */
   public void updatePlayerHealthUI(int health) {
-    CharSequence text = String.format("%d", health);
     healthLabel.setText(health);
     barWidth = 260f * health / maxHealth;
     healthBarFill.setSize(barWidth, 30f);
@@ -129,12 +138,17 @@ public class PlayerStatsDisplay extends UIComponent {
 
   /**
    * Updates the Player's Dodge on the UI
-   * @param dodge player Dodge
    */
-  public void updateDodgeBarUI (int dodge) {
-    CharSequence text = String.format("Dodge Cool down : %d", dodge);
-    //DodgeLabel.setText(text);
-    //DodgeBar.setValue(dodge);
+  public void updateDodgeUsed() {
+    CharSequence dodgeText = String.format("");
+    dodgeLabel.setText(dodgeText);
+    dodgeBarFill.setSize(0, 30f);
+  }
+
+  public void updateDodgeRefreshed() {
+    CharSequence dodgeText = String.format("Ready!");
+    dodgeLabel.setText(dodgeText);
+    dodgeBarFill.setSize(260f, 30f);
   }
 
   public void updatePlayerLives(int lives) {

@@ -2,7 +2,6 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.ProximityControllerComponent;
@@ -34,13 +33,6 @@ public class PlayerFactory {
 
   private static DialogueBox dialogueBox;
 
-  private int playerLives = 3;
-  public int getPlayerLives() {
-    return playerLives;
-  }
-  public void setPlayerLives(int lives) {
-    playerLives = lives;
-  }
   private static final PlayerConfig config =
       FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
@@ -93,7 +85,7 @@ public class PlayerFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
             .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
             .addComponent(new InventoryComponent())
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay(config))
@@ -110,6 +102,7 @@ public class PlayerFactory {
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     animator.startAnimation("Character_StandDown");
     player.setEntityType("player");
+    player.getComponent(KeyboardPlayerInputComponent.class).clearWalking();
     return player;
   }
 

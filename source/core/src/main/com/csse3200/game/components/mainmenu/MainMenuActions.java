@@ -21,7 +21,6 @@ import com.csse3200.game.ui.TitleBox;
  */
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
-
   public static GdxGame game;
   private Stage stage; // Add the stage
   private Skin skin;   // Add the skin
@@ -61,6 +60,7 @@ public class MainMenuActions extends Component {
     logger.info("Loading Story");
     TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
     titleBox.showDialog(stage);
+    game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
   }
 
   /**

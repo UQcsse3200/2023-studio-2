@@ -65,6 +65,45 @@ public class PowerupComponentTest {
     }
 
     /**
+     * Tests the effect of applying an extra life power-up to an entity's combat stats.
+     * Ensures that after applying the extra life power-up, the number of entity's
+     * lives is increased by 1.
+     * First increasing from 1 life to 2 lives, then from 2 lives to 3 lives.
+     */
+    @Test
+    public void testExtraLife() {
+        // Initialise player
+        Gdx.app = mock(Application.class);
+        PowerupComponent extralifepowerup = new PowerupComponent(PowerupType.EXTRA_LIFE);
+        Entity player = new Entity();
+        player.addComponent(new CombatStatsComponent(0, 10, 10, false, 1));
+
+        // Test Extra Life Powerup
+        extralifepowerup.applyEffect(player);
+        assertEquals(2, player.getComponent(CombatStatsComponent.class).getLives()); // checks lives increases by 1.
+        extralifepowerup.applyEffect(player);
+        assertEquals(3, player.getComponent(CombatStatsComponent.class).getLives()); // checks lives increases by 1.
+    }
+
+    /**
+     * Tests the effect of applying an extra life power-up to an entity's combat stats
+     * when its number of lives is already at a maximum (4).
+     * Ensures that after applying the extra life power-up, the number of entity's lives
+     * does not change.
+     */
+    @Test
+    public void testExtraLifeMaxReached() {
+        // Initialise player
+        Gdx.app = mock(Application.class);
+        PowerupComponent extralifepowerup = new PowerupComponent(PowerupType.EXTRA_LIFE);
+        Entity player = new Entity();
+        player.addComponent(new CombatStatsComponent(0, 10, 10, false, 4));
+
+        // Test Extra Life Powerup
+        extralifepowerup.applyEffect(player);
+        assertEquals(4, player.getComponent(CombatStatsComponent.class).getLives()); // checks lives does not increase.
+    }
+    /**
      * Tests the retrieval of the type of power-up component.
      * Ensures that the returned power-up type matches the type with which the component was initialized.
      */

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.*;
-import com.csse3200.game.services.UpgradeShip;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +18,7 @@ import static com.badlogic.gdx.Gdx.app;
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   private ScreenType screenType;
+  private int playerLives = 3; // As found in player config files.
 
   @Override
   public void create() {
@@ -30,8 +30,6 @@ public class GdxGame extends Game {
 
     setScreen(ScreenType.MAIN_MENU);
     this.screenType = ScreenType.MAIN_MENU;
-
-
   }
 
   /**
@@ -65,6 +63,23 @@ public class GdxGame extends Game {
     return this.screenType;
   }
 
+  /**
+   * Sets the number of lives player currently has. This is used to store number of
+   * lives between screen changes (eg. respawn, exit etc).
+   * @param lives Number of remaining lives player has.
+   */
+  public void setPlayerLives(int lives) {
+    this.playerLives = lives;
+  }
+
+  /**
+   * Returns the number of lives player currently has. This is accessed when
+   * respawning player between screen changes (eg. respawn/exit etc).
+   * @return Number of remaining lives player has.
+   */
+  public int getPlayerLives() {
+    return this.playerLives;
+  }
 
   @Override
   public void dispose() {
@@ -89,8 +104,14 @@ public class GdxGame extends Game {
         return new SpaceMapScreen(this);
       case EXTRACTOR_GAME:
         return new ExtractorMiniGameScreen(this);
-      case PLAYER_DEATH:
-        return new PlayerDeathScreen(this);
+      case PLAYER_DEATH_0:
+        return new PlayerDeathScreen(this, 0);
+      case PLAYER_DEATH_1:
+        return new PlayerDeathScreen(this, 1);
+      case PLAYER_DEATH_2:
+        return new PlayerDeathScreen(this, 2);
+      case PLAYER_DEATH_3:
+        return new PlayerDeathScreen(this, 3);
       case COMPANION_DEATH:
         return new CompanionDeathScreen(this);
       case INITIAL_SCREEN:
@@ -103,15 +124,17 @@ public class GdxGame extends Game {
         return new UpgradeShopScreen(this);
       case CONTROL_SCREEN:
         return new ControlsScreen(this);
+      case INITIALL_SCREEN:
+        return new InitialScreen(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME, GAME_STORY,
-    PLAYER_DEATH, COMPANION_DEATH, NAVIGATION_SCREEN, INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP
-
+    MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME,
+    GAME_STORY, PLAYER_DEATH,COMPANION_DEATH, NAVIGATION_SCREEN ,INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIALL_SCREEN,
+    PLAYER_DEATH_0, PLAYER_DEATH_1, PLAYER_DEATH_2, PLAYER_DEATH_3
   }
   /**
    * Exit the game.

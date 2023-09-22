@@ -22,6 +22,7 @@
     "images/structure-icons/gate.png",
     "images/healthpowerup.png",
     "images/speedpowerup.png",
+    "images/extralifepowerup.png",
     "images/Ship.png",
     "images/oldman_down_1.png",
     "images/player_blank.png",
@@ -67,8 +68,8 @@
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 
-  "mapName": "Planet Earth",
-  "terrainPath": "map/base.tmx",
+  "mapName": "Planet Lush",
+  "terrainPath": "map/map1.tmx",
   "winConditions": [
     {
       "resource": "Solstite",

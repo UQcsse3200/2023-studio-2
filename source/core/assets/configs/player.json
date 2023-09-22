@@ -4,5 +4,6 @@
   "attackMultiplier": 1,
   "isImmune": false,
   "spritePath": "images/player/player.atlas",
-  "mapName": "Planet Earth"
+  "mapName": "Planet Earth",
+  "lives": 3
 }

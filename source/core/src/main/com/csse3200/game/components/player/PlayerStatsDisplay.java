@@ -11,6 +11,9 @@ import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * An ui component for displaying player stats, e.g. health, healthBar, Dodge Cool-down Bar.
@@ -19,7 +22,6 @@ public class PlayerStatsDisplay extends UIComponent {
   Table container;
   Table planetTable;
   Table statsTable;
-
   public ProgressBar healthBar;
   private float healthWidth = 1000f;
 
@@ -40,6 +42,9 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image healthBarFill;
   private Image dodgeBarFrame;
   private Image livesBarFrame;
+
+  private Table maxLivesAlert;
+  private Label maxLivesLabel;
 
   public PlayerStatsDisplay(PlayerConfig config) {
     mapLabel = new Label(config.mapName, skin, "small");
@@ -65,6 +70,8 @@ public class PlayerStatsDisplay extends UIComponent {
 
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("updateDodgeCooldown", this::updateDodgeBarUI);
+    entity.getEvents().addListener("updateLives", this::updatePlayerLives);
+    entity.getEvents().addListener("maxLivesAlert", this::maxLivesReached);
   }
 
   @Override
@@ -87,8 +94,6 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable = new Table();
     statsTable.top().left();
     container.setFillParent(true);
-
-
 
     //health Bar
     int health = entity.getComponent(CombatStatsComponent.class).getHealth();
@@ -138,6 +143,7 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable.add(livesBarFrame).size(300f, 58f).pad(5);
 
 
+
     container.add(planetTable);
     container.add(statsTable);
     stage.addActor(container);
@@ -175,14 +181,45 @@ public class PlayerStatsDisplay extends UIComponent {
     livesLabel.setText(livesText);
   }
 
-  @Override
+  /**
+   * Alert for when maximum number of lives (3) has been reached. Is placed in the left corner below
+   * number of lives player stats.
+   */
+  private void maxLivesAlert() {
+    maxLivesAlert = new Table();
+    maxLivesAlert.top().left();
+    maxLivesAlert.setFillParent(true);
+    maxLivesLabel = new Label("Max Player Lives Reached", skin, "small");
+
+    maxLivesAlert.add(maxLivesLabel).padTop(250).padLeft(5f);
+    //launch the table onto the screen
+    stage.addActor(maxLivesAlert);
+  }
+
+  /**
+   * Creates an alert for if the maximum number of lives (3) has been reached.
+   * Used when player picks up Powerup ('Plus one life').
+   */
+  public void maxLivesReached() {
+    maxLivesAlert(); // indicates to player that max number of lives has been reached
+    final Timer timer = new Timer();
+    TimerTask removeAlert = new TimerTask() {
+      @Override
+      public void run() {
+        maxLivesLabel.remove();
+        timer.cancel();
+        timer.purge();
+      }
+    };
+    timer.schedule(removeAlert, 3000); // removes alert after 1 second
+  }
+
+    @Override
   public void dispose() {
     super.dispose();
     //heartImage.remove();
     healthLabel.remove();
     healthBar.remove();
-    //DodgeLabel.remove();
-    //DodgeBar.remove();
     livesLabel.remove();
   }
 }

@@ -9,12 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class StarBackgroundComponent extends Actor {
-    /**
-     * The texture for the space background of the navigation screen.
-     */
-    private final Texture spaceBackground;
-
+public class StarBackground extends Actor {
     /**
      * Array of animations for individual star sprites.
      */
@@ -41,8 +36,7 @@ public class StarBackgroundComponent extends Actor {
      * Constructs a new NavigationBackground instance.
      * Loads necessary textures and initializes the star animations and positions.
      */
-    public StarBackgroundComponent() {
-        spaceBackground = new Texture(Gdx.files.internal("images/navigationmap/space_navigation_background.png"));
+    public StarBackground() {
 
         int numOfFrames = 8;
         frames = new TextureRegion[numOfFrames];
@@ -97,7 +91,6 @@ public class StarBackgroundComponent extends Actor {
      */
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(spaceBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         for (int i = 0; i < numOfSprites; i++) {
             TextureRegion currentFrame = animations[i].getKeyFrame(stateTimes[i]);
             batch.draw(currentFrame, spritePositions[i].x, spritePositions[i].y);

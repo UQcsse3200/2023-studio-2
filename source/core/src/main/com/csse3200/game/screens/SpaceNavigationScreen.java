@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.spacenavigation.StarBackgroundComponent;
+import com.csse3200.game.components.spacenavigation.NavigationBackground;
 import com.csse3200.game.services.PlanetTravel;
 
 /**
@@ -72,7 +72,7 @@ public class SpaceNavigationScreen implements Screen {
 
 
         // Animated background
-        StarBackgroundComponent animatedBackground = new StarBackgroundComponent();
+        NavigationBackground animatedBackground = new NavigationBackground();
         stage.addActor(animatedBackground);
 
         // Create Back button

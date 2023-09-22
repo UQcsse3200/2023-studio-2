@@ -90,6 +90,7 @@ public class MapGameArea extends GameArea{
         player = spawnPlayer();
         spawnCompanion(player);
         spawnPortal(player);
+        spawnTreeTop();
         spawnAstro();
         spawnSpawners();
         spawnJail();
@@ -266,6 +267,14 @@ public class MapGameArea extends GameArea{
             Entity ship = StructureFactory.createShip(game, mapConfig.winConditions, shipConfig);
             spawnEntityAt(ship, shipConfig.position, false, false);
         }
+    }
+
+    private void spawnTreeTop(){
+        if (mapConfig.areaEntityConfig.treetop == null) return;
+
+        TreeTopConfig treeTopConfig = mapConfig.areaEntityConfig.treetop;
+        Entity treeTop = ObstacleFactory.createTreeTop(treeTopConfig);
+        spawnEntityAt(treeTop, treeTopConfig.position, false, false);
     }
 
     /**

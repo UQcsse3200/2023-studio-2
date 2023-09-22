@@ -1,0 +1,243 @@
+boss_enemy.png
+size: 3200, 200
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+float
+  rotate: false
+  xy: 0, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 100, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 200, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 300, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 400, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 500, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 600, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+default
+  rotate: false
+  xy: 700, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 800, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 900, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 1000, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 1100, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 1200, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 1300, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 1400, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 1500, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 1600, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 1700, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 1800, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 1900, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 2000, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 2100, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 2200, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 2300, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+stand
+  rotate: false
+  xy: 2400, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+stand
+  rotate: false
+  xy: 2500, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 2600, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 2700, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 2800, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 2900, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 3000, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 3100, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 2400, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 2500, 0
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: 0

@@ -37,6 +37,11 @@ public class PlanetTravel {
         game.setScreen(nextPlanet);
     }
 
+    public void returnToCurrent() {
+        PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
+        game.setScreen(currentPlanet);
+    }
+
     /**
      * Move to the next planet and spawn the minigame screen
      * @param planet - the destination planet

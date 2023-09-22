@@ -3,9 +3,11 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -17,17 +19,20 @@ public class PlayerStatsDisplay extends UIComponent {
   Table container;
   Table planetTable;
   Table statsTable;
-  //Table table2;
-  //Table table1;
-  private Image heartImage;
+
   public ProgressBar healthBar;
-  private ProgressBar DodgeBar;
   private float healthWidth = 1000f;
+
+  private int maxHealth;
+
+  private float barWidth;
 
   private Label mapLabel;
   private Label healthLabel;
   private Label dodgeLabel;
   private Label livesLabel;
+
+  int originalHealthBarWidth;
 
   private Image planetImageFrame;
   private Image planetImage;
@@ -36,8 +41,18 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image dodgeBarFrame;
   private Image livesBarFrame;
 
-  public PlayerStatsDisplay(String mapName) {
-    mapLabel = new Label(mapName, skin, "small");
+  public PlayerStatsDisplay(PlayerConfig config) {
+    mapLabel = new Label(config.mapName, skin, "small");
+    maxHealth = config.health;
+    barWidth = 300f;
+
+    //ADDING IMAGES
+    planetImageFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/planet-frame.png", Texture.class));
+    planetImage = new Image(ServiceLocator.getResourceService().getAsset("images/space_navigation_planet_0.png", Texture.class));
+    healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
+    healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
+    dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
+    livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
   }
 
   /**
@@ -50,6 +65,11 @@ public class PlayerStatsDisplay extends UIComponent {
 
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("updateDodgeCooldown", this::updateDodgeBarUI);
+  }
+
+  @Override
+  public void update() {
+    super.update();
   }
 
   /**
@@ -68,24 +88,6 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable.top().left();
     container.setFillParent(true);
 
-    //table2 = new Table();
-    //table2.top().left();
-    //statsTable.setFillParent(true);
-    //statsTable.padTop(45f).padLeft(5f);
-    //table2.setFillParent(true);
-    //table2.padTop(205f).padLeft(5f);
-    //table1 = new Table();
-    //table1.top().left();
-    //table1.setFillParent(true);
-    //table1.padTop(165f).padLeft(5f);
-
-    //ADDING IMAGES
-    planetImageFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/planet-frame.png", Texture.class));
-    planetImage = new Image(ServiceLocator.getResourceService().getAsset("images/space_navigation_planet_0.png", Texture.class));
-    healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
-    healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
-    dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
-    livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
 
 
     //health Bar
@@ -108,29 +110,6 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.setDebug(true);
     healthBar.setPosition(10, Gdx.graphics.getHeight()  - healthBar.getHeight());
 
-    // Dodge Text for cool down
-    //int dodge = entity.getComponent(KeyboardPlayerInputComponent.class).triggerDodgeEvent();
-    //CharSequence dodgeText = String.format("Dodge Cool down : %d" , dodge);
-    //DodgeLabel = new Label(dodgeText, skin, "small");
-
-    // Dodge Cool down Bar
-    //DodgeBar = new ProgressBar(0, 100, 1, false, skin);
-
-    //Setting initial value of Dodge Cool down  bar
-    //DodgeBar.setValue(100);
-
-    // setting the position of Dodge Cool down Bar
-    //DodgeBar.setPosition(0, Gdx.graphics.getHeight() - healthBar.getHeight());
-    //DodgeBar.setWidth(200f);
-    //DodgeBar.setDebug(true);
-
-    //Player lives text
-    //int lives = entity.getComponent(CombatStatsComponent.class).getLives();
-    //CharSequence livesText = String.format("Lives Left: %d", lives);
-    //livesLabel = new Label(livesText, skin, "small");
-
-
-
     Table labelTable = new Table();
     labelTable.add(planetImage).size(140f).padLeft(5f).padBottom(8f).padTop(-2f);
     labelTable.row();
@@ -142,10 +121,13 @@ public class PlayerStatsDisplay extends UIComponent {
     planetTable.add(planetStack).size(180f, 225f);
     planetTable.row();
 
+    Table healthBarTable = new Table();
+    healthBarTable.add(healthBarFill).size(260f, 30f).padRight(5).padTop(3);
+
     Stack healthStack = new Stack();
     healthStack.add(healthBarFrame);
-    healthStack.add(healthBarFill);
-    statsTable.add(healthStack).size(300f, 40f).pad(5);
+    healthStack.add(healthBarTable);
+    statsTable.add(healthStack).size(barWidth, 40f).pad(5);
     statsTable.add(healthLabel).left();
 
     statsTable.row();
@@ -172,8 +154,10 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   public void updatePlayerHealthUI(int health) {
     CharSequence text = String.format("%d", health);
-    healthLabel.setText(text);
-    healthBar.setValue(health);
+    healthLabel.setText(health);
+    //healthBar.setValue(health);
+    barWidth = 260f * health / maxHealth;
+    healthBarFill.setSize(barWidth, 30f);
   }
 
   /**
@@ -183,7 +167,7 @@ public class PlayerStatsDisplay extends UIComponent {
   public void updateDodgeBarUI (int dodge) {
     CharSequence text = String.format("Dodge Cool down : %d", dodge);
     //DodgeLabel.setText(text);
-    DodgeBar.setValue(dodge);
+    //DodgeBar.setValue(dodge);
   }
 
   public void updatePlayerLives(int lives) {
@@ -194,11 +178,11 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void dispose() {
     super.dispose();
-    heartImage.remove();
+    //heartImage.remove();
     healthLabel.remove();
     healthBar.remove();
     //DodgeLabel.remove();
-    DodgeBar.remove();
+    //DodgeBar.remove();
     livesLabel.remove();
   }
 }

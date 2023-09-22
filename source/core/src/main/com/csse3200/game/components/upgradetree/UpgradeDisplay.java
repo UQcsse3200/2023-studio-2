@@ -26,6 +26,7 @@ import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -80,7 +81,7 @@ public class UpgradeDisplay extends Window {
 
         this.upgradeBench = upgradeBench;
 
-        // upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000); // todo: remove this - testing line
+        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000); // todo: remove this - testing line
 
         skin = new Skin(Gdx.files.internal(SKIN_PATH));
         weaponConfigs = FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
@@ -218,10 +219,21 @@ public class UpgradeDisplay extends Window {
         float blackRectSize = rectSize * 1.1f;
         float blackOffsetX = offsetX - (blackRectSize - rectSize) / 2;
         float blackOffsetY = offsetY - (blackRectSize - rectSize) / 2;
+        float equippedRectSize = rectSize * 1.05f;
+        float equippedOffsetX = offsetX - (equippedRectSize - rectSize) / 2;
+        float equippedOffsetY = offsetY - (equippedRectSize - rectSize) / 2;
 
         // Draw black square outline
         shapeRenderer.setColor(Color.BLACK);
         shapeRenderer.rect(node.getX() + blackOffsetX, node.getY() + blackOffsetY, blackRectSize, blackRectSize);
+
+        // Draw a yellow highlight around all equipped items.
+        HashMap<Integer, WeaponType> equippedWeaponMap = player.getComponent(InventoryComponent.class)
+                .getEquippedWeaponMap();
+        if (equippedWeaponMap.containsValue(node.getWeaponType())) {
+            shapeRenderer.setColor(Color.GOLD);
+            shapeRenderer.rect(node.getX() + equippedOffsetX, node.getY() + equippedOffsetY, equippedRectSize, equippedRectSize);
+        }
 
         // Draws weapon background
         shapeRenderer.setColor(Color.GRAY);
@@ -295,16 +307,13 @@ public class UpgradeDisplay extends Window {
      * @return The created exit button.
      */
     private Table createExitButton() {
-        TextureRegionDrawable exitTexture = createTextureRegionDrawable("images/upgradetree/exit.png", 100f);
-        Button exitButton = new Button(exitTexture);
-        TextButton exitButtonn = new TextButton("X", skin);
-
+        TextButton exitButton = new TextButton("X", skin);
         Table table = new Table();
-        table.add(exitButtonn).height(32f).width(32f);
+        table.add(exitButton).height(32f).width(32f);
         table.setPosition(((float) (getWidth() * getScaleX() * 0.975)),
                 (float) (getHeight() * getScaleY() * 0.95));
 
-        exitButtonn.addListener(new ChangeListener() {
+        exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 exitUpgradeTree();

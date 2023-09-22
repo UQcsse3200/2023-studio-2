@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.spacenavigation.NavigationBackground;
+import com.csse3200.game.components.spacenavigation.StarBackgroundComponent;
 import com.csse3200.game.services.PlanetTravel;
 
 /**
@@ -58,13 +58,13 @@ public class SpaceNavigationScreen implements Screen {
         // Planet icons from:
         // https://www.freepik.com/premium-vector/pixel-planets-set-pixel-art-solar-system_36179935.htm
         for(var i = 0; i < planetTextures.length; i++){
-            planetTextures[i] = new Texture(Gdx.files.internal("images/space_navigation_planet_" + i + ".png"));
+            planetTextures[i] = new Texture(Gdx.files.internal("images/navigationmap/planets/space_navigation_planet_" + i + ".png"));
         }
 
-        arrowTextures[0] = new Texture(Gdx.files.internal("images/space_navigation_arrow_left.png"));
-        arrowTextures[1] = new Texture(Gdx.files.internal("images/space_navigation_arrow_right.png"));
-        arrowTextures[2] = new Texture(Gdx.files.internal("images/space_navigation_arrow_up.png"));
-        arrowTextures[3] = new Texture(Gdx.files.internal("images/space_navigation_arrow_down.png"));
+        arrowTextures[0] = new Texture(Gdx.files.internal("images/navigationmap/arrows/space_navigation_arrow_left.png"));
+        arrowTextures[1] = new Texture(Gdx.files.internal("images/navigationmap/arrows/space_navigation_arrow_right.png"));
+        arrowTextures[2] = new Texture(Gdx.files.internal("images/navigationmap/arrows/space_navigation_arrow_up.png"));
+        arrowTextures[3] = new Texture(Gdx.files.internal("images/navigationmap/arrows/space_navigation_arrow_down.png"));
 
 
         // Initialise a stage for the scene
@@ -72,7 +72,7 @@ public class SpaceNavigationScreen implements Screen {
 
 
         // Animated background
-        NavigationBackground animatedBackground = new NavigationBackground();
+        StarBackgroundComponent animatedBackground = new StarBackgroundComponent();
         stage.addActor(animatedBackground);
 
         // Create Back button
@@ -225,10 +225,7 @@ public class SpaceNavigationScreen implements Screen {
         planet.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Currently there is only one planet/map.
-                // For now, clicking any planet will take users to the one available map.
-                // When new maps are made, they should b integrated here.
-                planetTravel.beginPlanetTransition(planetNames[planetIndex]);
+                planetTravel.beginFullTravel();
             }
 
             @Override

@@ -9,50 +9,56 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class NavigationBackground extends Actor {
+public class StarBackgroundComponent extends Actor {
     /**
      * The texture for the space background of the navigation screen.
      */
-    private Texture spaceBackground;
+    private final Texture spaceBackground;
 
     /**
      * Array of animations for individual star sprites.
      */
-    private Animation<TextureRegion>[] animations;
+    private final Animation<TextureRegion>[] animations;
 
     /**
      * Array of positions for individual star sprites.
      */
-    private Vector2[] spritePositions;
+    private final Vector2[] spritePositions;
 
     /**
      * The number of star sprites in the background.
      */
-    private int numOfSprites = 150;
+    protected int numOfSprites = 150;
 
     /**
      * Array to store the time passed for each sprite's animation.
      */
-    private float[] stateTimes;  // Time passed for each sprite's animation
+    private final float[] stateTimes;  // Time passed for each sprite's animation
+
+    private final TextureRegion[] frames;
 
     /**
      * Constructs a new NavigationBackground instance.
      * Loads necessary textures and initializes the star animations and positions.
      */
-    public NavigationBackground() {
-        spaceBackground = new Texture(Gdx.files.internal("images/space_navigation_background.png"));
+    public StarBackgroundComponent() {
+        spaceBackground = new Texture(Gdx.files.internal("images/navigationmap/space_navigation_background.png"));
 
         int numOfFrames = 8;
-        TextureRegion[] frames = new TextureRegion[numOfFrames];
+        frames = new TextureRegion[numOfFrames];
 
         for (int i = 0; i < numOfFrames; i++) {
-            frames[i] = new TextureRegion(new Texture(Gdx.files.internal("images/space_navigation_background_star_frame_" + i + ".png")));
+            frames[i] = new TextureRegion(new Texture(Gdx.files.internal("images/navigationmap/stars/space_navigation_background_star_frame_" + i + ".png")));
         }
 
         animations = new Animation[numOfSprites];
         spritePositions = new Vector2[numOfSprites];
         stateTimes = new float[numOfSprites];
 
+        star_displacement();
+    }
+
+    protected void star_displacement() {
         for (int i = 0; i < numOfSprites; i++) {
             animations[i] = new Animation<>(0.1f, frames);
             animations[i].setPlayMode(Animation.PlayMode.LOOP_PINGPONG); // Ping pong effect

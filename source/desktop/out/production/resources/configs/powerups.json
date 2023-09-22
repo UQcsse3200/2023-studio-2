@@ -1,0 +1,10 @@
+{
+  "healthPowerup": {
+    "spritePath": "images/healthpowerup.png",
+    "type": "HEALTH_BOOST"
+  },
+  "speedPowerup": {
+    "spritePath": "images/speedpowerup.png",
+    "type": "SPEED_BOOST"
+  }
+}

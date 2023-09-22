@@ -109,10 +109,10 @@ public class Renderer implements Disposable {
     Matrix4 projMatrix = camera.getProjectionMatrix();
     batch.setProjectionMatrix(projMatrix);
 
-    Gdx.gl.glClearColor(1, 0, 0, 1); // shader code
+    //Gdx.gl.glClearColor(1, 0, 0, 1); // shader code
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-    batch.setShader(shaderProgram); // shader code
+    batch.setShader(null); // shader code
     batch.begin();
 
     renderService.render(batch);

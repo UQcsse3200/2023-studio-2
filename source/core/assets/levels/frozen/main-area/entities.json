@@ -31,19 +31,19 @@
   ],
   "portals": [
     {
-      "teleportX" : 40,
-      "teleportY" : 5,
+      "teleportX" : 39,
+      "teleportY" : 10,
       "position": {
-        "x": 30,
+        "x": 28,
         "y": 40
       }
     },
     {
-      "teleportX" : 16,
+      "teleportX" : 15,
       "teleportY" : 20,
       "position": {
-        "x": 78,
-        "y": 10
+        "x": 76,
+        "y": 19
       }
     }
   ],
@@ -63,6 +63,27 @@
     "position" : {
       "x": 20,
       "y": 40
+    }
+  },
+  "botanist": {
+    "spritePath": "images/botanist.atlas",
+    "position" : {
+      "x": 20,
+      "y": 15
+    }
+  },
+  "Astro": {
+    "spritePath": "images/Astro_NPC.atlas",
+    "position" : {
+      "x": 24,
+      "y": 50
+    }
+  },
+  "Jail": {
+    "spritePath": "images/Jail/jail.atlas",
+    "position" : {
+      "x": 23,
+      "y": 50
     }
   }
 }

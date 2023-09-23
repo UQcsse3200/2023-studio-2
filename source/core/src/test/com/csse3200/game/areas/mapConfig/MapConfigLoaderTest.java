@@ -107,15 +107,5 @@ class MapConfigLoaderTest {
         }
     }
 
-    @Test
-    void loadInvalidMapDirectoryEntities() {
-        try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
-            mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
-                    .thenReturn(gameAreaConfig);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
-                    .thenReturn(null);
-
-            assertThrows(InvalidConfigException.class, () -> MapConfigLoader.loadMapDirectory("path/"));
-        }
-    }
+    //TODO: Write tests to cover entity folder structure
 }

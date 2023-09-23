@@ -57,7 +57,7 @@ public class MapConfigLoader {
      * Loads a directory containing entity .json files into an AreaEntityConfig object
      * @param loadPath Path of directory to be loaded from
      * @return Loaded AreaEntityConfig object
-     * @throws InvalidConfigException If the file is unable to be loaded to an AreaEntityConfig
+     * @throws InvalidConfigException If any file in the directory is unable to be loaded
      */
     public static AreaEntityConfig loadEntities(String loadPath) throws InvalidConfigException {
         AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
@@ -69,11 +69,6 @@ public class MapConfigLoader {
             if (entitiesConfigFile == null) continue;
             areaEntityConfig.addEntry(entitiesConfigFile.getMapEntry());
         }
-//        try {
-//            return loadConfigFile(loadPath, AreaEntityConfig.class);
-//        } catch (InvalidConfigException exception) {
-//            throw new InvalidConfigException(FAIL_ENTITY);
-//        }
         return areaEntityConfig;
     }
 

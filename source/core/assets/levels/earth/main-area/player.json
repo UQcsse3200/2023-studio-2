@@ -7,5 +7,10 @@
   "baseAttack": 10,
   "attackMultiplier": 1,
   "isImmune": false,
-  "spritePath": "images/player/player.atlas"
+  "spritePath": "images/player/player.atlas",
+  "sounds": {
+    "soundsMap": {
+      "low_health": "sounds/playerLow_health.mp3"
+    }
+  }
 }

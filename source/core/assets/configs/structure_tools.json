@@ -20,7 +20,7 @@
       "level": 0,
       "name": "Gate",
       "cost": {
-        "Durasteel": 25
+        "Durasteel": 50
       },
       "texture": "images/structure-icons/gate.png"
     },
@@ -37,6 +37,8 @@
       "level": 0,
       "name": "Heal",
       "cost": {
+        "Durasteel": 75,
+        "Solstite": 50
       },
       "texture": "images/structures/heal_icon.png"
     },
@@ -44,7 +46,7 @@
       "level": 0,
       "name": "Extractor",
       "cost": {
-        "Solstite": 0
+        "Solstite": 100
       },
       "texture": "images/refinedExtractor2.png"
     }

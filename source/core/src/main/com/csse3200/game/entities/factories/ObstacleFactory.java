@@ -100,17 +100,17 @@ public class ObstacleFactory {
    * Creates a tree top entity.
    * @return entity
    */
-  public static Entity createTreeTop() {
+  public static Entity createTreeTop(TreeTopConfig treeTopConfig) {
     Entity treeTop =
             new Entity()
-                    .addComponent(new TextureRenderComponent("map/treetop.png")) // Replace with the path to your tree top texture
+                    .addComponent(new TextureRenderComponent(treeTopConfig.spritePath)) // Replace with the path to your tree top texture
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE));
 
     treeTop.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     treeTop.getComponent(TextureRenderComponent.class).scaleEntity();
-    treeTop.scaleHeight(30f);
-    PhysicsUtils.setScaledCollider(treeTop, 0.5f, 0.2f);
+    treeTop.scaleHeight(treeTopConfig.scaleH);
+    PhysicsUtils.setScaledCollider(treeTop, treeTopConfig.scaleX, treeTopConfig.scaleY);
     return treeTop;
   }
 

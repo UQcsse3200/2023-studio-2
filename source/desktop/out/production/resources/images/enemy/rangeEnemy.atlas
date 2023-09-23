@@ -1,0 +1,187 @@
+rangenemy.png
+size: 1500, 333
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+float
+  rotate: false
+  xy: 842, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 751, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 652, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 555 , 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 458, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+default
+  rotate: false
+  xy: 555 , 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 842, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 751, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 652, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 555 , 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 458, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 3, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 100, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 192, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 285, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+left
+  rotate: false
+  xy: 384, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+stand
+  rotate: false
+  xy: 3, 0
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+stand
+  rotate: false
+   xy: 3, 0
+   size: 60, 80
+   orig: 60, 80
+   offset: 0, 0
+   index: 0
+attack
+  rotate: false
+  xy: 538, 105
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 635, 105
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 740, 105
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 825, 105
+  size: 60, 80
+  orig: 60, 80
+  offset: 0, 0
+  index: 0
+dispose
+  rotate: false
+  xy: 11, 105
+  size: 70, 80
+  orig: 70, 80
+  offset: 0, 0
+  index: 0
+dispose
+  rotate: false
+  xy: 108, 105
+  size: 72, 80
+  orig: 72, 80
+  offset: 0, 0
+  index: 0
+dispose
+  rotate: false
+  xy: 205, 105
+  size: 75, 80
+  orig: 75, 80
+  offset: 0, 0
+  index: 0
+dispose
+  rotate: false
+  xy: 304, 105
+  size: 75, 80
+  orig: 75, 80
+  offset: 0, 0
+  index: 0

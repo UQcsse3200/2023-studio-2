@@ -1,0 +1,276 @@
+{
+	"BitmapFont": {
+		"thick_black": {
+			"file": "fonts/kenvector_future.fnt",
+			"scaledSize": -1,
+			"markupEnabled": false,
+			"flip": false
+		},
+		"thick_white": {
+			"file": "fonts/kenvector_future(1).fnt",
+			"scaledSize": 12,
+			"markupEnabled": false,
+			"flip": false
+		},
+		"thin_black": {
+			"file": "fonts/kenvector_future_thin.fnt",
+			"scaledSize": -1,
+			"markupEnabled": true,
+			"flip": false
+		},
+		"thin_white": {
+			"file": "fonts/kenvector_future_thin_white.fnt",
+			"scaledSize": 12,
+			"markupEnabled": false,
+			"flip": false
+		},
+		"title_black": {
+			"file": "fonts/kenvector_future_title.fnt",
+			"scaledSize": -1,
+			"markupEnabled": false,
+			"flip": false
+		},
+		"title_white": {
+			"file": "fonts/kenvector_future_title_white.fnt",
+			"scaledSize": -1,
+			"markupEnabled": false,
+			"flip": false
+		}
+	},
+	"Color": {
+		"black": {
+			"hex": "000000ff"
+		},
+		"blue": {
+			"hex": "1ea7e1ff"
+		},
+		"darkGrey": {
+			"hex": "444849ff"
+		},
+		"orange": {
+			"hex": "e86a17ff"
+		},
+		"white": {
+			"hex": "fbffffff"
+		}
+	},
+	"TintedDrawable": {
+		"default_progress": {
+			"name": "grey_sliderHorizontal",
+			"color": "blue"
+		},
+		"default_progress_v": {
+			"name": "grey_sliderVertical",
+			"color": "blue"
+		},
+		"orange_progress": {
+			"name": "grey_sliderHorizontal",
+			"color": "orange"
+		},
+		"orange_progress_v": {
+			"name": "grey_sliderVertical",
+			"color": "orange"
+		},
+		"grey_button_hover": {
+			"name": "grey_button_high.9",
+			"color": {
+				"hex": "e9e9e9ff"
+			}
+		}
+	},
+	"ButtonStyle": {
+		"default": {
+			"up": "grey_button_high.9",
+			"down": "blue_button_select.9",
+			"over": "grey_button_hover"
+		},
+		"orange": {
+			"up": "grey_button_high.9",
+			"down": "red_button_select.9",
+			"over": "grey_button_hover"
+		}
+	},
+	"CheckBoxStyle": {
+		"default": {
+			"checkboxOn": "blue_boxCheckmark",
+			"checkboxOff": "grey_box",
+			"font": "thin_white",
+			"fontColor": "white"
+		},
+		"orange": {
+			"checkboxOn": "red_boxCheckmark",
+			"checkboxOff": "grey_box",
+			"font": "thin_white"
+		},
+		"cross_default": {
+			"checkboxOn": "blue_boxCross",
+			"checkboxOff": "grey_box",
+			"font": "thin_white"
+		},
+		"cross_orange": {
+			"checkboxOn": "red_boxCross",
+			"checkboxOff": "grey_box",
+			"font": "thin_white"
+		}
+	},
+	"ImageTextButtonStyle": {
+		"default": {
+			"font": "thick_black"
+		}
+	},
+	"LabelStyle": {
+		"default": {
+			"font": "thin_white"
+		},
+		"title": {
+			"font": "title_white"
+		},
+		"thick": {
+			"font": "thick_white"
+		},
+		"small": {
+			"font": "thin_white"
+		},
+		"large": {
+			"font": "thick_black"
+		}
+	},
+	"ListStyle": {
+		"default": {
+			"font": "thin_white",
+			"fontColorSelected": "white",
+			"fontColorUnselected": "black",
+			"selection": "blue_button05",
+			"background": "grey_button_high.9"
+		},
+		"orange": {
+			"font": "thin_white",
+			"fontColorSelected": "white",
+			"fontColorUnselected": "black",
+			"selection": "red_button05.9",
+			"background": "grey_button_high.9"
+		}
+	},
+	"ProgressBarStyle": {
+		"default-horizontal": {
+			"background": "grey_sliderHorizontal",
+			"knobBefore": "default_progress"
+		},
+		"default-vertical": {
+			"background": "grey_sliderVertical",
+			"knob": "default_progress_v"
+		},
+		"orange-horizontal": {
+			"background": "grey_sliderHorizontal",
+			"knobBefore": "orange_progress"
+		},
+		"orange-vertical": {
+			"background": "grey_sliderVertical",
+			"knob": "orange_progress_v"
+		}
+	},
+	"ScrollPaneStyle": {
+		"default": {
+			"hScrollKnob": "squareBlue",
+			"vScrollKnob": "squareBlue"
+		},
+		"orange": {
+			"hScrollKnob": "squareRed",
+			"vScrollKnob": "squareRed"
+		}
+	},
+	"SelectBoxStyle": {
+		"default": {
+			"font": "thin_white",
+			"fontColor": "black",
+			"overFontColor": "white",
+			"background": "blue_button_select.9",
+			"scrollStyle": "default",
+			"listStyle": "default",
+			"backgroundOver": "blue_button05",
+			"backgroundOpen": "blue_button05"
+		},
+		"orange": {
+			"font": "thin_white",
+			"fontColor": "black",
+			"overFontColor": "white",
+			"background": "red_button_select.9",
+			"scrollStyle": "orange",
+			"listStyle": "orange",
+			"backgroundOver": "red_button05.9",
+			"backgroundOpen": "red_button05.9"
+		}
+	},
+	"SliderStyle": {
+		"default-horizontal": {
+			"background": "grey_sliderHorizontal",
+			"knob": "squareBlue"
+		},
+		"default-vertical": {
+			"background": "grey_sliderVertical",
+			"knob": "squareBlue"
+		},
+		"orange-horizontal": {
+			"background": "grey_sliderHorizontal",
+			"knob": "squareRed"
+		},
+		"orange-vertical": {
+			"background": "grey_sliderVertical",
+			"knob": "squareRed"
+		}
+	},
+	"TextButtonStyle": {
+		"default": {
+			"font": "thin_white",
+			"fontColor": "black",
+			"downFontColor": "blue",
+			"overFontColor": "darkGrey",
+			"up": "grey_button_high.9",
+			"down": "blue_button_select.9",
+			"over": "grey_button_hover"
+		},
+		"orange": {
+			"font": "thin_white",
+			"fontColor": "black",
+			"downFontColor": "orange",
+			"overFontColor": "darkGrey",
+			"up": "grey_button_high.9",
+			"down": "red_button_select.9",
+			"over": "grey_button_hover"
+		}
+	},
+	"TextFieldStyle": {
+		"default": {
+			"font": "thin_white",
+			"fontColor": "black",
+			"background": "grey_button_high.9",
+			"focusedBackground": "blue_button_select.9"
+		}
+	},
+	"TextTooltipStyle": {
+		"default": {
+			"label": "default",
+			"background": "blue_button05"
+		},
+		"orange": {
+			"label": "default",
+			"background": "red_button05.9"
+		}
+	},
+	"TreeStyle": {
+		"default": {
+			"plus": "grey_arrowDownGrey",
+			"minus": "grey_arrowDownWhite"
+		}
+	},
+	"WindowStyle": {
+		"default": {
+			"background": "metalPanel_red",
+			"titleFont": "thick_white"
+		},
+		"orange": {
+			"background": "metalPanel_red",
+			"titleFont": "thick_white"
+		}
+	}
+}

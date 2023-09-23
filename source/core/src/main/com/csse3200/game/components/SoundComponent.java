@@ -29,6 +29,8 @@ public class SoundComponent extends Component {
         }
 
         entity.getEvents().addListener("playSound", this::playSound);
+        entity.getEvents().addListener("loopSound", this::loopSound);
+        entity.getEvents().addListener("stopSound", this::stopSound);
     }
 
     public void playSound(String soundName) {
@@ -41,6 +43,29 @@ public class SoundComponent extends Component {
         var settings = UserSettings.get();
         // TODO change to specific volume setting
         sound.play(settings.musicVolume);
+    }
+
+    public void loopSound(String soundName) {
+        var sound = sounds.get(soundName);
+
+        if (sound == null) {
+            return;
+        }
+
+        var settings = UserSettings.get();
+        // TODO change to specific volume setting
+        sound.loop(settings.musicVolume);
+    }
+
+    public void stopSound(String soundName) {
+
+        var sound = sounds.get(soundName);
+
+        if (sound == null) {
+            return;
+        }
+
+        sound.stop();
     }
 
     @Override

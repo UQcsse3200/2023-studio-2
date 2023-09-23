@@ -136,7 +136,7 @@ public class PlanetScreen extends ScreenAdapter {
         } else {
             // TODO: Extend
             this.nextPlanetName = "Earth";
-            this.allGameAreas.put("primary", new MapGameArea("levels/lush/main-area", terrainFactory, game, game.getPlayerLives()));
+            this.allGameAreas.put("primary", new MapGameArea("levels/earth/main-area", terrainFactory, game, game.getPlayerLives()));
         }
     }
 

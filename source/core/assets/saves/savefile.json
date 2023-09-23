@@ -1,0 +1,16 @@
+{
+entities: {
+	PlayerConfig: [
+		{
+			class: com.csse3200.game.entities.configs.PlayerConfig
+			spritePath: images/player/player.atlas
+			position: {
+				x: 19
+				y: 34
+			}
+			health: 100
+			baseAttack: 10
+		}
+	]
+}
+}

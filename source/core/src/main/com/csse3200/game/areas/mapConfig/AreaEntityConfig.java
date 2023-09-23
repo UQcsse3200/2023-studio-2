@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
  * Class that contains data on all the entities for a given game area
  */
 public class AreaEntityConfig {
+    private static final String DUPLICATE_ENTITY_KEY = "Duplicate entity type key in config files";
+
     public HashMap<String, List<Object>> entities = new HashMap<>();
 
     /**
@@ -67,6 +69,24 @@ public class AreaEntityConfig {
         } else {
             entities.get(entityType.getSimpleName()).add(config);
         }
+    }
+
+    /**
+     * Adds the entities to the config
+     * Must have SaveableComponent
+     * @param entities Entities to be added
+     */
+    public <T extends BaseEntityConfig> void addEntities(List<Entity> entities) {
+        for (Entity entity : entities) {
+            addEntity(entity);
+        }
+    }
+
+    /**
+     */
+    public void addEntry(Map.Entry<String, List<Object>> entry) throws InvalidConfigException {
+        if (entities.containsKey(entry.getKey())) throw new InvalidConfigException(DUPLICATE_ENTITY_KEY + entry.getKey());
+        entities.put(entry.getKey(), entry.getValue());
     }
 
     @Override

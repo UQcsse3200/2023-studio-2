@@ -38,7 +38,7 @@ import java.util.List;
 public class MapGameArea extends GameArea{
 
     private GameAreaConfig mapConfig = null;
-    private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
+    private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
     private boolean validLoad = true;

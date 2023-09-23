@@ -21,7 +21,6 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.components.mainmenu.*;
 
 /**
  * The UI component responsible for rendering and managing the main menu interface.
@@ -183,6 +182,7 @@ public class MainMenuDisplay extends UIComponent {
         }
     }
 
+    @Override
     public void update() {
         if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
             AmendAnimation();

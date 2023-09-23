@@ -1,10 +1,8 @@
 package com.csse3200.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,27 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.areas.ExtractorMiniGameArea;
-import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.gamearea.PerformanceDisplay;
-import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.factories.RenderFactory;
-import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.input.*;
-import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.screens.ExtractorMiniGameScreen;
-import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.terminal.Terminal;
-import com.csse3200.game.ui.terminal.TerminalDisplay;
 
 /**
  * This is a window that can be added to a stage to pop up for the extractor minigame.

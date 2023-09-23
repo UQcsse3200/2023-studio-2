@@ -21,15 +21,17 @@ public class PlayerDeathScreen extends ScreenAdapter {
     public static final Logger logger = LoggerFactory.getLogger(PlayerDeathScreen.class);
     private final GdxGame game;
     private final Renderer renderer;
-    private static final String[] deathScreenTextures = {"images/deathscreen.png"};
+    private static final String[] deathScreenTextures = {"images/deathscreens/deathscreen_0.jpg", "images/deathscreens/deathscreen_1.jpg", "images/deathscreens/deathscreen_2.jpg", "images/deathscreens/deathscreen_3.jpg"};
+    private int lives;
 
-    private final DeathScreenDisplay deathScreenDisplay = new DeathScreenDisplay();
+    private final DeathScreenDisplay deathScreenDisplay;
 
-    public PlayerDeathScreen(GdxGame game) {
+    public PlayerDeathScreen(GdxGame game, int lives) {
         this.game = game;
-
+        game.setPlayerLives(lives);
+        this.lives = lives;
+        deathScreenDisplay = new DeathScreenDisplay(lives);
         renderer = RenderFactory.createRenderer();
-
         loadAssets();
         createUI();
     }
@@ -89,7 +91,7 @@ public class PlayerDeathScreen extends ScreenAdapter {
         Entity ui = new Entity();
         ui.addComponent(deathScreenDisplay)
                 .addComponent(new InputDecorator(stage, 10))
-                .addComponent(new DeathScreenActions(game));
+                .addComponent(new DeathScreenActions(game, lives));
         ServiceLocator.getEntityService().register(ui);
     }
 }

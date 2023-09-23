@@ -21,7 +21,6 @@ import com.csse3200.game.ui.TitleBox;
  */
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
-
   public static GdxGame game;
   private Stage stage; // Add the stage
   private Skin skin;   // Add the skin
@@ -49,7 +48,7 @@ public class MainMenuActions extends Component {
    * Swaps to the Main Game screen.
    */
   private void onStart() {
-    String startPlanetName = "Earth";
+    String startPlanetName = "Verdant Haven";
     logger.info(String.format("Start game, go to %s", startPlanetName));
     PlanetScreen planetScreen = new PlanetScreen(game, startPlanetName);
     ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", planetScreen);

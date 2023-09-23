@@ -225,10 +225,11 @@ public class SpaceNavigationScreen implements Screen {
         planet.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                planetTravel.beginPlanetTransition(planetNames[planetIndex]);
                 // Currently there is only one planet/map.
                 // For now, clicking any planet will take users to the one available map.
                 // When new maps are made, they should b integrated here.
-                planetTravel.beginPlanetTransition(planetNames[planetIndex]);
+
             }
 
             @Override

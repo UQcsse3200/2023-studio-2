@@ -4,7 +4,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -93,7 +92,6 @@ public class PlanetScreen extends ScreenAdapter {
 
         loadAssets();
         createUI();
-
         generateGameAreas();
         allGameAreas.get(currentAreaName).create();
 
@@ -126,13 +124,19 @@ public class PlanetScreen extends ScreenAdapter {
      */
     private void generateGameAreas() {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        if ("Earth".equals(name)) {
-            this.nextPlanetName = "Not Earth";
+        if ("Verdant Haven".equals(name)) {
+            this.nextPlanetName = "Chronos";
             generateGameArea("primary", "levels/earth/main-area");
+        } else if ("Chronos".equals(name)) {
+            this.nextPlanetName = "Rusterra";
+            generateGameArea("primary", "levels/lush/main-area");
+        } else if ("Rusterra".equals(name)) {
+            this.nextPlanetName = "Pyroterra";
+            generateGameArea("primary", "levels/frozen/main-area");
         } else {
             // TODO: Extend
             this.nextPlanetName = "Earth";
-            this.allGameAreas.put("primary", new MapGameArea("levels/lush/main-area", terrainFactory, game));
+            this.allGameAreas.put("primary", new MapGameArea("levels/lush/main-area", terrainFactory, game, game.getPlayerLives()));
         }
     }
 
@@ -144,7 +148,7 @@ public class PlanetScreen extends ScreenAdapter {
      */
     private void generateGameArea(String name, String configPath) {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        this.allGameAreas.put(name, new MapGameArea(configPath, terrainFactory, game));
+        this.allGameAreas.put(name, new MapGameArea(configPath, terrainFactory, game, game.getPlayerLives()));
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 
@@ -50,13 +51,12 @@ public class PowerupComponent extends Component {
                 this.setDuration(1500);
 
                 // Speed up for 1.5 seconds, then return to normal speed
-                java.util.TimerTask speedUp = new java.util.TimerTask() {
+                Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
                         playerActions.setSpeed(3, 3);
                     }
-                };
-                new java.util.Timer().schedule(speedUp, getDuration());
+                }, getDuration());
             }
             case EXTRA_LIFE -> playerCombatStats.addLife();
             case TEMP_IMMUNITY -> {

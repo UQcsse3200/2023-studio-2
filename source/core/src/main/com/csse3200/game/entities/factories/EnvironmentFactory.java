@@ -23,7 +23,7 @@ public class EnvironmentFactory {
     private static final float scaleSize = 0.5f;
 
     /** The constant used to improve collision hit boxes. */
-    private static final float xyShift = 0.3f;
+    private static final float xyShift = 0.25f;
 
     /**
      * Creates all entities for a specified layer of the map.
@@ -43,8 +43,8 @@ public class EnvironmentFactory {
                     if (objects.getCount() >= 1) {
                         RectangleMapObject object = (RectangleMapObject) objects.get(0);
                         Rectangle collisionBox = object.getRectangle();
-                        float collisionX = xyShift - collisionBox.x / tileSize;
-                        float collisionY = xyShift - collisionBox.y / tileSize;
+                        float collisionX = collisionBox.x / tileSize + xyShift - (scaleSize * (tileSize - collisionBox.width)/tileSize);
+                        float collisionY = collisionBox.y / tileSize + xyShift - (scaleSize * (tileSize - collisionBox.height)/tileSize);
                         float collisionWidth = scaleSize * (collisionBox.width / tileSize);
                         float collisionHeight = scaleSize * (collisionBox.height / tileSize);
                         environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);

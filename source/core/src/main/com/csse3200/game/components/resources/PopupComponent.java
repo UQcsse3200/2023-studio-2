@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameTime;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.badlogic.gdx.utils.Timer;
 
 public class PopupComponent extends Component {
     GameTime timer;
@@ -42,13 +40,7 @@ public class PopupComponent extends Component {
         lastTime = timer.getTime();
 
         if (lifespan > duration) {
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    Gdx.app.postRunnable(entity::dispose);
-                }
-            }, 2);
+            Gdx.app.postRunnable(entity::dispose);
         }
 
 

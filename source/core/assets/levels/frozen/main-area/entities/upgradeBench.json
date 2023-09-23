@@ -1,0 +1,12 @@
+{
+  "entityType": "UpgradeBenchConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.UpgradeBenchConfig,
+      "position" : {
+        "x": 20,
+        "y": 40
+      }
+    }
+  ]
+}

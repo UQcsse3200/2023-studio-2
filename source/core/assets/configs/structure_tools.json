@@ -42,8 +42,9 @@
     },
     "com.csse3200.game.components.structures.tools.ExtractorTool": {
       "level": 0,
-      "name": "extractor",
+      "name": "Extractor",
       "cost": {
+        "Solstite": 0
       },
       "texture": "images/refinedExtractor2.png"
     }

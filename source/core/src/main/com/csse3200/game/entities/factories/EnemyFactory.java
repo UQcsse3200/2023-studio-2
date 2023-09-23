@@ -146,8 +146,7 @@ public class EnemyFactory {
     // UI adjustments
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     enemy.scaleHeight(getEnemyscale(config));
-    PhysicsUtils.setCustomCollider(enemy, 0.1f, 0.1f, enemy.getCenterPosition().x, enemy.getCenterPosition().y);
-
+    PhysicsUtils.setScaledCollider(enemy, 0.3f, 0.3f);
 
     return enemy;
   }
@@ -167,7 +166,7 @@ public class EnemyFactory {
       }
     }
     else if (config.type == EnemyType.Melee) {
-      scale = 1.5f;
+      scale = 1.2f;
       if (config.isBoss){
         scale = 4.4f;
       }

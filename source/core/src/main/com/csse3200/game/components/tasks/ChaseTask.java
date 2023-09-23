@@ -62,14 +62,8 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   public void start() {
     super.start();
     targetPosition = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition());
-    System.out.printf("Start Function; Enemy position: (%d, %d)%n", owner.getEntity().getGridPosition().x, owner.getEntity().getGridPosition().y);
-    System.out.printf("Start Function; Player position: (%d, %d)%n", targetPosition.x, targetPosition.y);
     //get the list of grids which is the path to take to reach the target
     path = PathFinder.findPath(owner.getEntity().getGridPosition(), targetPosition);
-    System.out.println("Path Finder Grids [start()]");
-    for (GridPoint2 grid : path) {
-      System.out.printf("(%d, %d)%n", grid.x, grid.y);
-    }
     //create the movementTask and input the vector position of the first tile of the path
     movementTask = new MovementTask(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
     movementTask.create(owner);
@@ -85,22 +79,13 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
       targetPosition = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition());
       //check if we're already at the tile or not
       if (!owner.getEntity().getGridPosition().equals(targetPosition)) {
-        System.out.printf("Update Function; Enemy position REACHED GRID NOT AT PLAYER YET: (%d, %d)%n", owner.getEntity().getGridPosition().x, owner.getEntity().getGridPosition().y);
-        System.out.printf("Update Function; Player position REACHED GRID NOT AT PLAYER YET: (%d, %d)%n", targetPosition.x, targetPosition.y);
         //if we are not at the player tile then find the new path
         path = PathFinder.findPath(owner.getEntity().getGridPosition(), targetPosition);
-        System.out.println("Path Finder Grids [update()] Heading to path...");
-        for (GridPoint2 grid : path) {
-          System.out.printf("(%d, %d)%n", grid.x, grid.y);
-        }
         //set a new target to the movementtask
         movementTask.setTarget(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
         //start the movementtask again
         movementTask.start();
       } else {
-        System.out.println("Enemy reached the player!");
-        System.out.printf("ENEMY: (%d, %d)%n", owner.getEntity().getGridPosition().x, owner.getEntity().getGridPosition().y);
-        System.out.printf("PLAYER: (%d, %d)%n", targetPosition.x, targetPosition.y);
         movementTask.update();
       }
     } else {
@@ -114,15 +99,11 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
           movementTask.stop();
           //find the new targetlocation
           targetPosition = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition());
-          System.out.printf("Update Function; Enemy position MOVED BEFORE REACHING GRID NEW START POINT: (%d, %d)%n", owner.getEntity().getGridPosition().x, owner.getEntity().getGridPosition().y);
-          System.out.printf("Update Function; Player position MOVED BEFORE REACHING GRID NEW TARGET POINT: (%d, %d)%n", targetPosition.x, targetPosition.y);
-          path = PathFinder.findPath(owner.getEntity().getGridPosition(), targetPosition);
-          System.out.println("Path Finder Grids [update()] playermoved");
-          for (GridPoint2 grid : path) {
-            System.out.printf("(%d, %d)%n", grid.x, grid.y);
+          if (!owner.getEntity().getGridPosition().equals(targetPosition)) {
+            path = PathFinder.findPath(owner.getEntity().getGridPosition(), targetPosition);
+            movementTask.setTarget(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
+            movementTask.start();
           }
-          movementTask.setTarget(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
-          movementTask.start();
         }
       } else {
         movementTask.update();

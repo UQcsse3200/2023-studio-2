@@ -8,6 +8,10 @@ import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.events.EventHandler;
+import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.StructurePlacementService;
@@ -25,7 +29,8 @@ import java.util.Map;
  */
 public abstract class GameArea implements Disposable {
   protected static TerrainComponent terrain;
-  protected Map<GridPoint2, Entity> areaEntities;
+  protected HashMap<GridPoint2, Entity> gameAreaEntities;
+  protected List<Entity> areaEntities;
   protected Entity companion;
   protected static Entity player;
   protected EntityPlacementService entityPlacementService;
@@ -33,7 +38,8 @@ public abstract class GameArea implements Disposable {
   protected ArrayList<Entity> targetables;
 
   public GameArea() {
-    areaEntities = new HashMap<>();
+    areaEntities = new ArrayList<>();
+    gameAreaEntities = new HashMap<>();
     this.targetables = new ArrayList<>();
   }
 
@@ -42,8 +48,8 @@ public abstract class GameArea implements Disposable {
 
   /** Dispose of all internal entities in the area */
   public void dispose() {
-    for (var entity : areaEntities.entrySet()) {
-      entity.getValue().dispose();
+    for (var entity : areaEntities) {
+      entity.dispose();
     }
   }
 
@@ -51,8 +57,8 @@ public abstract class GameArea implements Disposable {
     return terrain;
   }
 
-  public Map<GridPoint2, Entity> getAreaEntities() {
-    return areaEntities;
+  public HashMap<GridPoint2, Entity> getAreaEntities() {
+    return gameAreaEntities;
   }
 
   protected void registerStructurePlacementService() {
@@ -111,13 +117,32 @@ public abstract class GameArea implements Disposable {
    * @param entity Entity (not yet registered)
    */
   protected void spawnEntity(Entity entity) {
+    areaEntities.add(entity);
     if (terrain == null) {
-      areaEntities.put(null, entity);
+      gameAreaEntities.put(null, entity);
     } else {
-      float entitySizeX = entity.getPosition().x + entity.getScale().x;
-      float entitySizeY = entity.getPosition().y + entity.getScale().y;
-      Vector2 entityTrueSize = new Vector2(entitySizeX, entitySizeY);
-      areaEntities.put(terrain.worldPositionToTile(entityTrueSize), entity);
+      if (entity.getComponent(ColliderComponent.class) != null) {
+        Vector2 position = entity.getPosition();
+        Vector2 scale = entity.getScale();
+
+// Calculate the four corners of the entity
+        Vector2 topRight = new Vector2(position.x + scale.x, position.y + scale.y);
+        Vector2 bottomLeft = new Vector2(position.x, position.y);
+
+// Convert these to grid coordinates using your existing function
+        GridPoint2 gridTopRight = terrain.worldPositionToTile(topRight);
+        GridPoint2 gridBottomLeft = terrain.worldPositionToTile(bottomLeft);
+
+// Iterate through the grid coordinates and add them to the HashMap
+        for (int x = gridBottomLeft.x; x <= gridTopRight.x; x++) {
+          for (int y = gridBottomLeft.y; y <= gridTopRight.y; y++) {
+            GridPoint2 gridPoint = new GridPoint2(x, y);
+            if (!(gameAreaEntities.containsKey(gridPoint))) {
+              gameAreaEntities.put(gridPoint, entity);
+            }
+          }
+        }
+      }
     }
     ServiceLocator.getEntityService().register(entity);
   }

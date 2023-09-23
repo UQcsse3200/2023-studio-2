@@ -88,7 +88,7 @@ public class MapGameArea extends GameArea{
         spawnPortal(player);
 
         spawnSpawners();
-      //  spawnFire();
+//        spawnFire();
         spawnBotanist();
 
         playMusic();

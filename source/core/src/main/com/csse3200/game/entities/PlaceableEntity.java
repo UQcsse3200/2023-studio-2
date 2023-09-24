@@ -4,8 +4,20 @@ import com.csse3200.game.components.structures.Placeable;
 
 public class PlaceableEntity extends Entity {
 
+    boolean irremovable = false;
+
     public PlaceableEntity() {
         super();
+    }
+
+    /**
+     * This function uses the builder pattern to allow the programmer to make a
+     * placeable entity irremovable
+     * @return The placeable entity
+     */
+    public PlaceableEntity irremovable() {
+        this.irremovable = true;
+        return this;
     }
 
     public PlaceableEntity(Entity player) {
@@ -62,5 +74,9 @@ public class PlaceableEntity extends Entity {
                 ((Placeable) component).willRemove();
             }
         }
+    }
+
+    public boolean is_irremovable() {
+        return this.irremovable;
     }
 }

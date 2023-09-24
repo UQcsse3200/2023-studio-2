@@ -61,7 +61,7 @@ public class StructurePlacementService {
     public void removeStructureAt(GridPoint2 tilePos) {
         var entity = placedStructures.get(tilePos);
 
-        if (entity == null) {
+        if (entity == null || entity.is_irremovable()) {
             return;
         }
 

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
  * over entities to perform updates each loop. All game entities should be registered here.
- *
+ * <p>
  * Avoid adding additional state here! Global access is often the easy but incorrect answer to
  * sharing data.
  */
@@ -41,7 +41,7 @@ public class EntityService {
 
   /**
    * Gets all entities belonging to a specified component class.
-   *
+   * <p>
    * Example:
    *    getEntitiesByComponent(PowerupComponent.class) will return a list
    *    of all registered powerup entities.

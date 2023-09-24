@@ -1,11 +1,11 @@
 package com.csse3200.game.components.Companion;
 
-import com.csse3200.game.components.Companion.CompanionAnimationController;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class CompanionAnimationControllerTest {
     private CompanionAnimationController controller;

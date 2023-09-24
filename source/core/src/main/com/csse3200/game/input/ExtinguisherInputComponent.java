@@ -1,13 +1,11 @@
 package com.csse3200.game.input;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.services.ServiceLocator;
 
 public class ExtinguisherInputComponent extends InputComponent {
 

@@ -11,10 +11,8 @@ import com.csse3200.game.entities.Entity;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
 import static org.junit.Assert.assertNotNull;
-import java.util.HashMap;
-import java.util.Map;
-import com.csse3200.game.LabWindow;
 
 class LabWindowTest {
 

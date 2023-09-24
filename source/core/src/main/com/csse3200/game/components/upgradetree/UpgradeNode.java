@@ -12,6 +12,9 @@ import java.util.List;
  */
 public class UpgradeNode {
 
+    /** The current node's parent node **/
+    private UpgradeNode parent;
+
     /** Path to the image that represents the weapon upgrade. */
     private final String imagePath;
 
@@ -30,7 +33,18 @@ public class UpgradeNode {
     /** Depth of the tree */
     private int depth;
 
-    private static final int BASE_COST = 50;
+    /** Cost of the root node in Nebulite materials **/
+    private static final int BASE_COST = 100;
+
+    /** Sets the parent of the current node**/
+    public void setParent(UpgradeNode parent) {
+        this.parent = parent;
+    }
+
+    /** Returns the current node's parent node**/
+    public UpgradeNode getParent() {
+        return parent;
+    }
 
     /**
      * Constructs a new UpgradeNode with the given weapon type and image path.
@@ -43,10 +57,12 @@ public class UpgradeNode {
         this.depth = 0;
     }
 
+    /** Sets the current node's depth **/
     public void setDepth(int depth) {
         this.depth = depth;
     }
 
+    /** Returns the current node's depth **/
     public int getDepth() {
         return depth;
     }
@@ -56,7 +72,8 @@ public class UpgradeNode {
      * @param child The child node to be added.
      */
     public void addChild(UpgradeNode child) {
-        children.add(child);
+        child.setParent(this);
+        this.children.add(child);
     }
 
     /**

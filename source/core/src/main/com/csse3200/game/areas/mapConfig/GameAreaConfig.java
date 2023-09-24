@@ -1,13 +1,11 @@
 package com.csse3200.game.areas.mapConfig;
 
-import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.entities.configs.BaseEntityConfig;
 import com.csse3200.game.entities.configs.CompanionConfig;
 import com.csse3200.game.entities.configs.PlayerConfig;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class GameAreaConfig {
     //Map Assets - all entity specific paths should be defined within the levelConfig file

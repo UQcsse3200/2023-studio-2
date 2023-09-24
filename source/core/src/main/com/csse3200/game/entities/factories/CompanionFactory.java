@@ -36,7 +36,6 @@ import java.util.Objects;
 public class CompanionFactory {
     private static final CompanionConfig Config =
             FileLoader.readClass(CompanionConfig.class, "configs/companion.json");
-    //TODO: REMOVE - LEGACY
     /**
      * Create a Companion entity.
      *
@@ -45,8 +44,6 @@ public class CompanionFactory {
     public static Entity createCompanion() {
         return createCompanion(Config);
     }
-    private Entity companion = ServiceLocator.getEntityService().getCompanion();
-
     /**
      * Create a Companion entity matching the config file
      * @param config Configuration file to match companion to
@@ -54,11 +51,7 @@ public class CompanionFactory {
      */
     // Added a player reference for basic player tracking
     public static Entity createCompanion(CompanionConfig config) {
-        InputComponent inputComponent =
-                ServiceLocator.getInputService().getInputFactory().createForCompanion();
-        /*AnimationRenderComponent infanimator =
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/companionSS.atlas", TextureAtlas.class));*/
+        InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForCompanion();
         Entity player = ServiceLocator.getEntityService().getPlayer();
 
         AnimationRenderComponent animator =
@@ -94,9 +87,8 @@ public class CompanionFactory {
                         /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay())
                         .addComponent(new CompanionAnimationController())
-                        .addComponent(new FollowComponent(player,3f))
+                        .addComponent(new FollowComponent(player,1f))
                         .addComponent(new InteractionControllerComponent(false));
-       /* animator.startAnimation("Companion_StandDown");*/
         animator.startAnimation("Companion_StandDown");
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);

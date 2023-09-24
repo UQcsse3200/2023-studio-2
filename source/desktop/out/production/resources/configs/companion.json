@@ -1,0 +1,9 @@
+
+{
+  "health": 100,
+  "baseAttack": 5,
+  "attackMultiplier": 1,
+  "isImmune": false,
+  "gold": 10,
+  "spritePath": "images/comp_spritesheet.atlas"
+}

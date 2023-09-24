@@ -1,7 +1,7 @@
 {
   "position": {
     "x": 10,
-    "y": 10
+    "y": 50
   },
   "health": 50,
   "baseAttack": 10,

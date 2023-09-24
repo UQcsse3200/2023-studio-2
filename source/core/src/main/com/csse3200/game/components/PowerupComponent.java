@@ -56,6 +56,8 @@ public class PowerupComponent extends Component {
 
                 playerActions.setSpeed(5, 5);
                 this.setDuration(1500);
+                entity.getEvents().trigger("playSound", "boostPowerup");
+
 
                 // Speed up for 1.5 seconds, then return to normal speed
                 Timer.Task speedUp = new Timer.Task() {

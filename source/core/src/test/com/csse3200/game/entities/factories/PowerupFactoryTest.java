@@ -1,16 +1,15 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.entities.configs.PowerupConfig;
 import com.csse3200.game.entities.configs.PowerupConfigs;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
@@ -104,5 +103,36 @@ public class PowerupFactoryTest {
 
         assertNotNull(powerup);
         assertEquals(type, PowerupType.SPEED_BOOST);
+    }
+
+    /**
+     * Test the creation of an extra life powerup entity.
+     * This test verifies that the entity created by PowerupFactory is not null
+     * and is of the expected extra life type.
+     */
+    @Test
+    public void testCreateExtraLifePowerup() {
+        Entity powerup = PowerupFactory.createExtraLifePowerup();
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(PowerupType.EXTRA_LIFE, type);
+    }
+
+    /**
+     * Test the creation of an extra life powerup config.
+     * This test verifies that the config created by PowerupConfig is not null
+     * and is of the expected extra life type.
+     */
+    @Test
+    void createExtraLifePowerupConfigTest() {
+        PowerupConfig config = configs.extraLifePowerup;
+        assertNotNull(config);
+        Entity powerup = PowerupFactory.createPowerup(config);
+
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(PowerupType.EXTRA_LIFE, type);
     }
 }

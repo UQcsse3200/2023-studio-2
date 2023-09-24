@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.Timer;
  * if target entity has a PhysicsComponent.
  */
 public class ProjectileAttackComponent extends Component {
-  private short targetLayer;
+  private final short targetLayer;
   private float knockbackForce = 0f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;

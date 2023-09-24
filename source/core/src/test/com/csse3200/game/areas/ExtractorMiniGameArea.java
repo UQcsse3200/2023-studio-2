@@ -1,11 +1,8 @@
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Cursor;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.StructureFactory;
@@ -14,10 +11,7 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType; //Temporary, for extractor minigame
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ExtractorMiniGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ExtractorMiniGameArea.class);

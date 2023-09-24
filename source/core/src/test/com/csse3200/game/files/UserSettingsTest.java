@@ -1,9 +1,5 @@
 package com.csse3200.game.files;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Graphics.DisplayMode;
@@ -12,6 +8,8 @@ import com.csse3200.game.files.UserSettings.DisplaySettings;
 import com.csse3200.game.files.UserSettings.Settings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 class UserSettingsTest {

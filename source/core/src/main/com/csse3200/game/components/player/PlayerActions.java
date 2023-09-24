@@ -4,17 +4,16 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.structures.StructureToolPicker;
 
 /**
  * Action component for interacting with the player. Player events should be
@@ -24,11 +23,10 @@ import com.csse3200.game.components.structures.StructureToolPicker;
 public class PlayerActions extends Component {
     private static Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
-    private EntityService entityService = new EntityService();
+    private final EntityService entityService = new EntityService();
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
-    private GameStateInteraction gameStateInteraction;
 
     @Override
     public void create() {
@@ -42,7 +40,7 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("repair", this::repairWall);
         entity.getEvents().addListener("change_structure", this::changeStructure);
         entity.getEvents().addListener("inventory", this::updateInventory);
-        gameStateInteraction = new GameStateInteraction();
+        GameStateInteraction gameStateInteraction = new GameStateInteraction();
     }
 
     @Override

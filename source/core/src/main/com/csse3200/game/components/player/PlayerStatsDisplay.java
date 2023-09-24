@@ -32,6 +32,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private Table maxLivesAlert;
   private Label maxLivesLabel;
 
+
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -73,6 +74,7 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.setValue(100);
 
     //setting the position of health Bar
+    float healthWidth = 1000f;
     healthBar.setWidth(healthWidth);
     healthBar.setDebug(true);
     healthBar.setPosition(10, Gdx.graphics.getHeight()  - healthBar.getHeight());
@@ -189,7 +191,6 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.remove();
     DodgeLabel.remove();
     DodgeBar.remove();
-    // maxLivesLabel.remove();
     livesLabel.remove();
   }
 }

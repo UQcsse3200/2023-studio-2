@@ -2,8 +2,6 @@ package com.csse3200.game.entities.configs;
 
 import com.csse3200.game.components.Weapons.WeaponType;
 
-import java.util.Map;
-
 /**
  * Class to return weapon configs
  */

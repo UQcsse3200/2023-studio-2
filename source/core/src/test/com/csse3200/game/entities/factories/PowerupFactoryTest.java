@@ -15,19 +15,28 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * PowerupFactoryTest is a testing class that verifies the correct creation
- * and behavior of powerups (like health and speed) created by the
- * PowerupFactory.
+ * and behavior of powerups (like health and speed) created by the PowerupFactory.
  */
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 public class PowerupFactoryTest {
 
-    private static final PowerupConfigs configs = FileLoader.readClass(PowerupConfigs.class, "configs/powerups.json");
+    private static final PowerupConfigs configs =
+            FileLoader.readClass(PowerupConfigs .class, "configs/powerups.json");
+
+    @Mock
+    ResourceService resourceService;
 
     /**
      * Set up services and resources necessary for the tests.
@@ -35,13 +44,13 @@ public class PowerupFactoryTest {
      */
     @BeforeEach
     void setUp() {
+        resourceService = mock(ResourceService.class);
+        when(resourceService.getAsset(Mockito.any(), Mockito.any())).thenReturn(null);
+        ServiceLocator.registerResourceService(resourceService);
+
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerPhysicsService(new PhysicsService());
-        ResourceService resourceService = new ResourceService();
-        ServiceLocator.registerResourceService(resourceService);
-        String[] powerupTextures = { "images/powerups/health_boost.png", "images/powerups/speed_boost.png",
-                "images/powerups/extra_life.png", "images/powerups/double_cross", "images/powerups/temp_immunity",
-                "images/powerups/double_damage", "images/powerups/snap" };
+        String[] powerupTextures = {"images/healthpowerup.png", "images/speedpowerup.png"};
         resourceService.loadTextures(powerupTextures);
         resourceService.loadAll();
     }
@@ -57,7 +66,7 @@ public class PowerupFactoryTest {
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
-        assertEquals(PowerupType.HEALTH_BOOST, type);
+        assertEquals(type, PowerupType.HEALTH_BOOST);
     }
 
     /**
@@ -71,7 +80,29 @@ public class PowerupFactoryTest {
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
-        assertEquals(PowerupType.SPEED_BOOST, type);
+        assertEquals(type, PowerupType.SPEED_BOOST);
+    }
+
+    @Test
+    void createHealthPowerupConfigTest() {
+        PowerupConfig config = configs.healthPowerup;
+        Entity powerup = PowerupFactory.createPowerup(config);
+
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(type, PowerupType.HEALTH_BOOST);
+    }
+
+    @Test
+    void createSpeedPowerupConfigTest() {
+        PowerupConfig config = configs.speedPowerup;
+        Entity powerup = PowerupFactory.createPowerup(config);
+
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(type, PowerupType.SPEED_BOOST);
     }
 
     /**
@@ -86,40 +117,6 @@ public class PowerupFactoryTest {
 
         assertNotNull(powerup);
         assertEquals(PowerupType.EXTRA_LIFE, type);
-    }
-
-    /**
-     * Test the creation of a health powerup config.
-     * This test verifies that the config created by PowerupConfig is not null
-     * and is of the expected health type.
-     */
-    @Test
-    void createHealthPowerupConfigTest() {
-        PowerupConfig config = configs.healthPowerup;
-        assertNotNull(config);
-        Entity powerup = PowerupFactory.createPowerup(config);
-
-        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
-
-        assertNotNull(powerup);
-        assertEquals(PowerupType.HEALTH_BOOST, type);
-    }
-
-    /**
-     * Test the creation of a speed powerup config.
-     * This test verifies that the config created by PowerupConfig is not null
-     * and is of the expected speed type.
-     */
-    @Test
-    void createSpeedPowerupConfigTest() {
-        PowerupConfig config = configs.speedPowerup;
-        assertNotNull(config);
-        Entity powerup = PowerupFactory.createPowerup(config);
-
-        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
-
-        assertNotNull(powerup);
-        assertEquals(PowerupType.SPEED_BOOST, type);
     }
 
     /**

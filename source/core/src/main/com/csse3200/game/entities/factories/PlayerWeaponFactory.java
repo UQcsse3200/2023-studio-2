@@ -1,22 +1,13 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.Weapons.WeaponTargetComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
 /**

@@ -8,21 +8,13 @@ import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.ReturnToPlanetDisplay;
-import com.csse3200.game.components.ships.ShipActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
-import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsEngine;
-import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.GameStateObserver;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.*;
 import com.csse3200.game.components.obstacleMinigame.ObstacleMiniGameActions;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
@@ -30,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.components.ships.DistanceDisplay;
-import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 
 /**
@@ -105,7 +96,7 @@ public class SpaceMapScreen extends ScreenAdapter {
     {
         if(d < 1.0) {
             this.unloadAssets();
-            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+            new PlanetTravel(game).beginInstantTravel();
         }
     }
 

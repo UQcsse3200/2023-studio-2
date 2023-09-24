@@ -68,7 +68,9 @@
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
-    "sounds/playerLow_health.mp3"
+    "sounds/playerLow_health.mp3",
+    "sounds/dodgingAlertSweep.mp3",
+    "sounds/footStepsInTheForestGround.mp3"
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 

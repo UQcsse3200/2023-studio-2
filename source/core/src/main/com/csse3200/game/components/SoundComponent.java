@@ -6,15 +6,19 @@ import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class SoundComponent extends Component {
     private final SoundsConfig soundsConfig;
     private final Map<String, Sound> sounds;
+    private final Set<String> looping;
 
     public SoundComponent(SoundsConfig soundsConfig) {
         this.soundsConfig = soundsConfig;
         sounds = new HashMap<>();
+        looping = new HashSet<>();
     }
 
     @Override
@@ -42,23 +46,23 @@ public class SoundComponent extends Component {
 
         var settings = UserSettings.get();
         // TODO change to specific volume setting
-        sound.play(settings.musicVolume);
+        sound.play(settings.soundVolume);
     }
 
     public void loopSound(String soundName) {
         var sound = sounds.get(soundName);
 
-        if (sound == null) {
+        if (sound == null || looping.contains(soundName)) {
             return;
         }
 
         var settings = UserSettings.get();
         // TODO change to specific volume setting
-        sound.loop(settings.musicVolume);
+        sound.loop(settings.soundVolume);
+        looping.add(soundName);
     }
 
     public void stopSound(String soundName) {
-
         var sound = sounds.get(soundName);
 
         if (sound == null) {
@@ -66,6 +70,7 @@ public class SoundComponent extends Component {
         }
 
         sound.stop();
+        looping.remove(soundName);
     }
 
     @Override

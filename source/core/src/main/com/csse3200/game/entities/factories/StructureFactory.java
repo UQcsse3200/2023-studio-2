@@ -280,8 +280,8 @@ public class StructureFactory {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new TextureRenderComponent(config.spritePath))
-                .addComponent(new UpgradeTree())
-                .addComponent(new SoundComponent(config.sounds));
+                .addComponent(new UpgradeTree());
+//                .addComponent(new SoundComponent(config.sounds));
 
         InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
         upgradeBench.addComponent(new DistanceCheckComponent(0.5f, interactLabel));

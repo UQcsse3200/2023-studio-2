@@ -57,9 +57,7 @@ public class PowerupComponent extends Component {
                         playerActions.setSpeed(3, 3);
                     }
                 };
-                
                 new Timer().scheduleTask(speedUp, getDuration());
-
             }
             case EXTRA_LIFE -> playerCombatStats.addLife();
 

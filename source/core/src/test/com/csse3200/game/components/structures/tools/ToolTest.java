@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ToolTest {
 

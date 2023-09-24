@@ -4,8 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.components.PhysicsComponent;
-
-
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
 
@@ -17,22 +15,20 @@ public class ShipActions extends Component {
     private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
     private int maxHealth;
     private int maxFuel;
-    private int currentAcceleration;
+    private final int currentAcceleration;
 
 
-    private PhysicsComponent physicsComponent;
     private Body body;
     private Vector2 flyDirection = Vector2.Zero.cpy();
     private boolean moving = false;
-    private Vector2 currentVelocity = Vector2.Zero.cpy();
     private AnimationRenderComponent animator;
 
 
-    private double up = 90;
-    private double down = -90;
-    private double left = 180;
-    private double right = 0;
-    private double left2 = -180;
+    private final double up = 90;
+    private final double down = -90;
+    private final double left = 180;
+    private final double right = 0;
+    private final double left2 = -180;
 
     /**
      * Initialize the health, fuel and acceleration of the ship
@@ -51,7 +47,7 @@ public class ShipActions extends Component {
      */
     @Override
     public void create() {
-        physicsComponent = entity.getComponent(PhysicsComponent.class);
+        PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
         animator = entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("fly", this::fly);
         entity.getEvents().addListener("flystop", this::flystop);
@@ -86,17 +82,12 @@ public class ShipActions extends Component {
         //impulse = (desiredVel - currentVel) * mass
         //uses impulse to apply velocity instantly
 
-        //Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
-        //body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
-        //body.applyForceToCenter(desiredVelocity.scl(3), true);
-        this.currentVelocity = this.flyDirection.cpy();
-        body.applyForceToCenter(this.currentVelocity.scl(this.currentAcceleration), true);
+        Vector2 currentVelocity = this.flyDirection.cpy();
+        body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration), true);
         this.playAnimation(body.getLinearVelocity());
 
 
         //scl(scalar) basically multiply the Vector2 velocity of body by a scalar. Belongs to Vector2.
-        //body.applyForceToCenter(this.currentVelocity.scl(this.currentAcceleration), true);
-        //body.applyLinearImpulse(this.currentVelocity.scl(this.currentAcceleration), body.getWorldCenter(), true);
     }
 
     /**

@@ -1,34 +1,32 @@
 package com.csse3200.game.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 /**
  * The SpaceMiniTransition class represents a screen transition effect used in a LibGDX game.
  * It allows for transitioning between different game screens with a visual effect.
- *
+ * <p>
  * This class extends the LibGDX Actor class and is designed to be used as an actor within a Stage.
  * The transition effect is achieved by moving a transition image diagonally across the screen.
  * When the transition is complete, it can trigger a callback or change to a new game screen.
  */
 public class SpaceMiniTransition extends Actor {
 
-    private GdxGame game;
+    private final GdxGame game;
     private Runnable callback;
     private boolean isTransitioning = false;
-    private Texture transitionImage;
-    private SpriteBatch spriteBatch;
-    private Sprite transitionSprite;
+    private final Texture transitionImage;
+    private final SpriteBatch spriteBatch;
+    private final Sprite transitionSprite;
     private float transitionX = 0f; // X-axis position for the transition
     private float transitionY = 0f; // Y-axis position for the transition
-    private float transitionSpeedX = 450f; // Adjust the speed of the X-axis transition
-    private float transitionSpeedY = 450f; // Adjust the speed of the Y-axis transition
     private boolean isExit = false;
 
     /**
@@ -66,7 +64,11 @@ public class SpaceMiniTransition extends Actor {
     public void act(float delta) {
         if (isTransitioning) {
             // Move the transition image diagonally
+            // Adjust the speed of the X-axis transition
+            float transitionSpeedX = 450f;
             transitionX += transitionSpeedX * delta;
+            // Adjust the speed of the Y-axis transition
+            float transitionSpeedY = 450f;
             transitionY += transitionSpeedY * delta;
             if (transitionX >= Gdx.graphics.getWidth() && transitionY >= Gdx.graphics.getHeight()) {
                 // Transition is complete

@@ -7,8 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Timer;
 
+import static com.csse3200.game.GdxGame.ScreenType.PLAYER_DEATH;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static com.csse3200.game.GdxGame.ScreenType.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 /**
  * Unit tests for the DeathScreen class.

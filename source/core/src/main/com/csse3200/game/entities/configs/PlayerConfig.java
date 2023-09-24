@@ -10,8 +10,9 @@ public class PlayerConfig extends BaseEntityConfig  {
   public int attackMultiplier;
   public boolean isImmune;
   public int lives;
+  public SoundsConfig sounds;
 
-  public PlayerConfig() {
+    public PlayerConfig() {
     this.spritePath = "images/player.atlas";
   }
 

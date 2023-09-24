@@ -43,6 +43,9 @@ public class PlaceableEntity extends Entity {
      * when removed.
      */
     public void removed() {
+        if (irremovable) {
+            return;
+        }
         for (var component : components.values()) {
             if (component instanceof Placeable) {
                 ((Placeable) component).removed();
@@ -69,6 +72,9 @@ public class PlaceableEntity extends Entity {
      * when the entity is about to be removed.
      */
     public void willRemove() {
+        if (irremovable) {
+            return;
+        }
         for (var component : components.values()) {
             if (component instanceof Placeable) {
                 ((Placeable) component).willRemove();

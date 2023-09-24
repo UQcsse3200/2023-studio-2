@@ -229,5 +229,7 @@ public class PlayerStatsDisplay extends UIComponent {
     super.dispose();
     healthLabel.remove();
     livesLabel.remove();
+
+    // TODO
   }
 }

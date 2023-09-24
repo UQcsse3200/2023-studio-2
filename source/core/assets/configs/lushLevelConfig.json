@@ -44,8 +44,7 @@
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
-    "images/sling_shot.png",
-    "images/"
+    "images/sling_shot.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",

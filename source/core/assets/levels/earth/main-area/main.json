@@ -48,8 +48,8 @@
     "map/portal.png",
     "images/sling_shot.png",
     "images/fireAnim.png",
-    "images/white_color_texture.png",
-    "images/ActionFeedback/warning.png",
+    "images/action-feedback/white_color_texture.png",
+    "images/action-feedback/warning.png",
     "map/treetop.png"
   ],
   "textureAtlasPaths": [

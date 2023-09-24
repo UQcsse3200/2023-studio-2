@@ -45,7 +45,9 @@
     "images/upgradetree/exit.png",
     "images/sling_shot.png",
     "map/portal.png",
-    "map/treetoplush.png"
+    "map/treetoplush.png",
+    "images/action-feedback/warning.png",
+    "images/action-feedback/white_color_texture.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -62,9 +64,7 @@
     "images/weapons/wrench.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
-    "images/botanist.atlas",
-    "images/white_color_texture.png",
-    "images/ActionFeedback/warning.png"
+    "images/botanist.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav",

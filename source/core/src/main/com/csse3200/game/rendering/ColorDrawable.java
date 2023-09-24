@@ -25,7 +25,9 @@ public class ColorDrawable extends BaseDrawable implements IAlpha {
         savedBatchColor.set(batch.getColor());
         batch.setColor(r, g, b, a);
         // Draw a white texture with the current batch colour
-        batch.draw(ServiceLocator.getResourceService().getAsset("images/white_color_texture.png", Texture.class), x, y, width, height);
+        batch.draw(ServiceLocator.getResourceService()
+                .getAsset("images/action-feedback/white_color_texture.png", Texture.class),
+                x, y, width, height);
         batch.setColor(savedBatchColor);
     }
 

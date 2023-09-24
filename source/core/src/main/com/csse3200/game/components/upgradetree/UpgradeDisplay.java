@@ -40,7 +40,7 @@ public class UpgradeDisplay extends Window {
     private static final float WINDOW_WIDTH_SCALE = 0.65f;
     private static final float WINDOW_HEIGHT_SCALE = 0.65f;
     private static final float SIZE = 64f;
-    private static final String MATERIALS_FORMAT = "Materials: %d";
+    private static final String MATERIALS_FORMAT = "%d";
     private final InputOverrideComponent inputOverrideComponent;
     private final Entity upgradeBench;
     private Label materialsLabel;
@@ -81,16 +81,20 @@ public class UpgradeDisplay extends Window {
         structurePicker = player.getComponent(StructureToolPicker.class);
         this.upgradeBench = player;
 
-        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000); // todo: remove this - testing line
+        // todo: remove this testing line - just gives max resources in upgrade tree
+        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000);
 
         setupWindowDimensions();
 
+
+        Table titleTable = createTitleTable();
         Table materialsTable = createMaterialsLabel();
         Table exitTable = createExitButton();
         Group group = createUpgradeButtons();
         addActor(group);
         addActor(materialsTable);
         addActor(exitTable);
+        addActor(titleTable);
 
         // Override all normal user input
         inputOverrideComponent = new InputOverrideComponent();
@@ -147,6 +151,21 @@ public class UpgradeDisplay extends Window {
         dirtNode.addChild(stoneNode);
         buildRoot.addChild(turretNode);
         trees.add(buildRoot);
+    }
+
+    /**
+     * Creates a title table containing a label
+     */
+    private Table createTitleTable() {
+        Table titleTable = new Table();
+        Label title = new Label("UPGRADE TREE", skin, "large");
+        title.setColor(Color.BLACK);
+        title.setFontScale(0.5F, 0.5F);
+        titleTable.add(title);
+        titleTable.setPosition((getWidth() * getScaleX() / 2),
+                (float) (getHeight() * getScaleY() * 0.88));
+
+        return titleTable;
     }
 
     /**
@@ -343,14 +362,19 @@ public class UpgradeDisplay extends Window {
     private Table createMaterialsLabel() {
         int materials = upgradeBench.getComponent(UpgradeTree.class).getMaterials();
         String str = String.format(MATERIALS_FORMAT, materials);
-        this.materialsLabel = new Label(str, skin);
+        materialsLabel = new Label(str, skin, "large");
+        materialsLabel.setColor(Color.BLACK);
+        materialsLabel.setFontScale(0.25f);
+        Image nebuliteImage =
+                new Image(ServiceLocator.getResourceService().getAsset("images/nebulite.png", Texture.class));
 
         Table table = new Table();
+        table.add(nebuliteImage).size(64,64);
         table.add(materialsLabel);
-        table.setPosition((getWidth() * getScaleX() / 2),
-                (float) (getHeight() * getScaleY() * 0.95));
+        table.setPosition((float) (getWidth() * getScaleX() * 0.10),
+                (float) (getHeight() * getScaleY() * 0.88));
 
-        // update the materials label every second
+        // update the materials label every 250ms
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
@@ -358,7 +382,7 @@ public class UpgradeDisplay extends Window {
                 String updatedStr = String.format(MATERIALS_FORMAT, updatedMaterials);
                 materialsLabel.setText(updatedStr);
             }
-        }, 1, 1);
+        }, 0.25f, 0.25f);
 
         return table;
     }

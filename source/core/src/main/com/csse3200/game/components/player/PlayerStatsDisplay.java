@@ -3,9 +3,15 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
+import com.csse3200.game.components.upgradetree.UpgradeNode;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -103,9 +109,28 @@ public class PlayerStatsDisplay extends UIComponent {
     createDodgeBar(statsTable);
     statsTable.row();
     createLivesBar(statsTable);
+    statsTable.row();
+    createUpgradeTreeButton(statsTable);
 
     container.add(statsTable);
     stage.addActor(container);
+  }
+
+  public void createUpgradeTreeButton(Table statsTable) {
+    TextButton button = new TextButton("Upgrade Tree", skin);
+
+    button.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        KeyboardPlayerInputComponent keys =
+                ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
+        keys.clearWalking();
+        UpgradeDisplay disp = UpgradeDisplay.createUpgradeDisplay(ServiceLocator.getEntityService().getPlayer());
+        ServiceLocator.getRenderService().getStage().addActor(disp);
+      }
+    });
+
+    statsTable.add(button);
   }
 
   public void createHealthBar(Table statsTable) {

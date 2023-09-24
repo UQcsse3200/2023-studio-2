@@ -44,7 +44,10 @@ public class PowerupComponent extends Component {
         switch (type) {
             case HEALTH_BOOST ->{
                 playerCombatStats.setHealth(100);
-                entity.getEvents().trigger("playSound", "healthPowerup");
+
+                if (entity != null) {
+                    entity.getEvents().trigger("playSound", "healthPowerup"); //plays sound when health powerup selected
+                }
             }
 
 
@@ -56,8 +59,10 @@ public class PowerupComponent extends Component {
 
                 playerActions.setSpeed(5, 5);
                 this.setDuration(1500);
-                entity.getEvents().trigger("playSound", "boostPowerup");
 
+                if (entity != null) {
+                    entity.getEvents().trigger("playSound", "boostPowerup"); //plays sound when boost powerup selected
+                }
 
                 // Speed up for 1.5 seconds, then return to normal speed
                 Timer.Task speedUp = new Timer.Task() {

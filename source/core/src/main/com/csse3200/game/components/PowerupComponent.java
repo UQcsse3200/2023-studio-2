@@ -1,6 +1,7 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 
@@ -50,15 +51,18 @@ public class PowerupComponent extends Component {
                 this.setDuration(1500);
 
                 // Speed up for 1.5 seconds, then return to normal speed
-                java.util.TimerTask speedUp = new java.util.TimerTask() {
+                Timer.Task speedUp = new Timer.Task() {
                     @Override
                     public void run() {
                         playerActions.setSpeed(3, 3);
                     }
                 };
-                new java.util.Timer().schedule(speedUp, getDuration());
+                
+                new Timer().scheduleTask(speedUp, getDuration());
+
             }
             case EXTRA_LIFE -> playerCombatStats.addLife();
+
             case TEMP_IMMUNITY -> {
 
                 if (playerActions == null) {
@@ -67,13 +71,14 @@ public class PowerupComponent extends Component {
 
                 playerCombatStats.setImmunity(true);
                 this.setDuration(6000);
-                java.util.TimerTask speedUp = new java.util.TimerTask() {
+
+                Timer.Task immune = new Timer.Task() {
                     @Override
                     public void run() {
                         playerCombatStats.setImmunity(false);
                     }
                 };
-                new java.util.Timer().schedule(speedUp, getDuration());
+                new Timer().scheduleTask(immune, getDuration());
             }
             case DOUBLE_DAMAGE -> {
                 if (playerActions == null) {
@@ -82,15 +87,17 @@ public class PowerupComponent extends Component {
 
                 playerCombatStats.setAttackMultiplier(2);
                 this.setDuration(12000);
-                java.util.TimerTask speedUp = new java.util.TimerTask() {
+
+                Timer.Task doubleDamage = new Timer.Task() {
                     @Override
                     public void run() {
                         playerCombatStats.setAttackMultiplier(1);
                     }
                 };
-                new java.util.Timer().schedule(speedUp, getDuration());
+
+                new Timer().scheduleTask(doubleDamage, getDuration());
             }
-            
+
             default -> throw new IllegalArgumentException("You must specify a valid PowerupType");
         }
 

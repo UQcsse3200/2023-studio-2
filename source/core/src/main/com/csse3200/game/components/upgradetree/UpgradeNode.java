@@ -14,6 +14,9 @@ import java.util.List;
  */
 public class UpgradeNode {
 
+    /** Represents the name of the weapon/tool as a string **/
+    private final String name;
+
     /** The current node's parent node **/
     private UpgradeNode parent;
 
@@ -53,6 +56,7 @@ public class UpgradeNode {
      * @param config - The weapons config file
      */
     UpgradeNode(WeaponConfig config) {
+        this.name = config.type.toString();
         this.imagePath = config.imagePath;
         this.weaponType = config.type;
         this.children = new ArrayList<>();
@@ -60,10 +64,16 @@ public class UpgradeNode {
     }
 
     UpgradeNode(ToolConfig tool) {
+        this.name = tool.name;
         this.imagePath = tool.texture;
         this.weaponType = null;
         this.children = new ArrayList<>();
         this.depth = 0;
+    }
+
+    /** Gets the name of the tool/weapon **/
+    public String getName() {
+        return this.name;
     }
 
     /** Sets the current node's depth **/

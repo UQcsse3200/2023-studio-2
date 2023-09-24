@@ -46,7 +46,7 @@ public class PowerupComponent extends Component {
                 playerCombatStats.setHealth(100);
 
                 if (entity != null) {
-                    entity.getEvents().trigger("playSound", "healthPowerup");
+                    entity.getEvents().trigger("playSound", "healthPowerup"); //plays sound when health powerup selected
                 }
             }
 
@@ -61,7 +61,7 @@ public class PowerupComponent extends Component {
                 this.setDuration(1500);
 
                 if (entity != null) {
-                    entity.getEvents().trigger("playSound", "boostPowerup");
+                    entity.getEvents().trigger("playSound", "boostPowerup"); //plays sound when boost powerup selected
                 }
 
                 // Speed up for 1.5 seconds, then return to normal speed

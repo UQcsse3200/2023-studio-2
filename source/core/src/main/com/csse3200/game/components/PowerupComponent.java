@@ -33,6 +33,8 @@ public class PowerupComponent extends Component {
     /**
      * Applies the effects of the Powerup to the specified target entity.
      *
+     *
+     *
      * @param target The entity receiving the Powerup effect.
      */
     public void applyEffect(Entity target) {
@@ -40,7 +42,12 @@ public class PowerupComponent extends Component {
         playerActions = target.getComponent(PlayerActions.class);
 
         switch (type) {
-            case HEALTH_BOOST -> playerCombatStats.setHealth(100);
+            case HEALTH_BOOST ->{
+                playerCombatStats.setHealth(100);
+                entity.getEvents().trigger("playSound", "healthPowerup");
+            }
+
+
             case SPEED_BOOST -> {
 
                 if (playerActions == null) {

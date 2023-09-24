@@ -78,7 +78,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="buildables/Gate.html" title="class in com.csse3200.game.entities.buildables">Gate</a></code>, <code><a href="buildables/PreExtractor.html" title="class in com.csse3200.game.entities.buildables">PreExtractor</a></code>, <code><a href="buildables/Turret.html" title="class in com.csse3200.game.entities.buildables">Turret</a></code>, <code><a href="buildables/Wall.html" title="class in com.csse3200.game.entities.buildables">Wall</a></code></dd>
+<dd><code><a href="buildables/Gate.html" title="class in com.csse3200.game.entities.buildables">Gate</a></code>, <code><a href="buildables/Turret.html" title="class in com.csse3200.game.entities.buildables">Turret</a></code>, <code><a href="buildables/Wall.html" title="class in com.csse3200.game.entities.buildables">Wall</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PlaceableEntity</span>
@@ -121,6 +121,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#irremovable()" class="member-name-link">irremovable</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This function uses the builder pattern to allow the programmer to make a
+ placeable entity irremovable</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#is_irremovable()" class="member-name-link">is_irremovable</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#placed()" class="member-name-link">placed</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -186,6 +195,18 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="irremovable()">
+<h3>irremovable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></span>&nbsp;<span class="element-name">irremovable</span>()</div>
+<div class="block">This function uses the builder pattern to allow the programmer to make a
+ placeable entity irremovable</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The placeable entity</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="placed()">
 <h3>placed</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">placed</span>()</div>
@@ -219,6 +240,12 @@ loadScripts(document, 'script');</script>
 <div class="block">This function is called when a PlaceableEntity is going to be removed via the structure
  placement service. Override this method to implement specific functionality
  when the entity is about to be removed.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="is_irremovable()">
+<h3>is_irremovable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">is_irremovable</span>()</div>
 </section>
 </li>
 </ul>

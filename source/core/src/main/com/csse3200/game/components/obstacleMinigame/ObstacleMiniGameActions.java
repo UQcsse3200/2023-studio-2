@@ -13,8 +13,8 @@ import static com.csse3200.game.ui.UIComponent.skin;
 
 public class ObstacleMiniGameActions extends MainGameActions {
     private static final Logger logger = LoggerFactory.getLogger(ObstacleMiniGameActions.class);
-    private GdxGame game;
-    private Stage stage;
+    private final GdxGame game;
+    private final Stage stage;
 
     public ObstacleMiniGameActions(GdxGame game, Stage stage) {
         super(game);

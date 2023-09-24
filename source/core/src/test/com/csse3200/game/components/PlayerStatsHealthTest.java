@@ -2,7 +2,6 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

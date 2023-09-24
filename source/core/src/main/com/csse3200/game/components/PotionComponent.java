@@ -4,10 +4,8 @@
  */
 package com.csse3200.game.components;
 
-import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.Entity;
 
 

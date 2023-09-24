@@ -89,7 +89,9 @@ public class PlayerStatsDisplay extends UIComponent {
 
     //CREATING LABELS
     int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+
     CharSequence healthText = String.format("%d", health);
+
     healthLabel = new Label(healthText, skin, "small");
     dodgeLabel = new Label("Ready!", skin, "small");
     livesLabel = new Label("Lives:", skin, "small");

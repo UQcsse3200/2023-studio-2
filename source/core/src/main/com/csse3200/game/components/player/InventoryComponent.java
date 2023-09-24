@@ -3,6 +3,7 @@ package com.csse3200.game.components.player;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ public class InventoryComponent extends Component {
   private int equipped = 1;
   private final HashMap<Integer, WeaponType> equippedWMap = new HashMap<Integer, WeaponType>();
 
+  @Override
   public void create() {
     equippedWMap.put(1, WeaponType.MELEE_KATANA);
     equippedWMap.put(2, WeaponType.RANGED_BOOMERANG);
@@ -56,6 +58,11 @@ public class InventoryComponent extends Component {
     }
     equippedWMap.remove(slot);
     equippedWMap.put(slot, weaponType);
+  }
+
+  /** Returns the current equipped weapons represented in a hash map **/
+  public HashMap<Integer, WeaponType> getEquippedWeaponMap() {
+    return equippedWMap;
   }
 
   public void placeInSlot(WeaponType weaponType) {

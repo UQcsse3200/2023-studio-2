@@ -27,7 +27,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     private static final float ROOT2INV = 1f / (float) Math.sqrt(2f);
     private static final float DODGE_SPEED = 3f;
     private static final float WALK_SPEED = 1f;
-    private static final int DODGE_COOLDOWN = 300;
+    private static final int DODGE_COOLDOWN = 1000;
     private static final int DODGE_DURATION = 300;
 
     private Vector2 walkDirection = Vector2.Zero.cpy();
@@ -58,11 +58,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return false;
     }
 
-    public void playerDead() {
-        if (entity.getComponent(CombatStatsComponent.class).isDead()) {
-            keyFlags.clear();
-            triggerWalkEvent();
-        }
+    public void clearWalking() {
+        keyFlags.clear();
+        triggerWalkEvent();
     }
 
     /**
@@ -208,12 +206,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   /**
-   * Function to repond to player mouse press
+   * Function to respond to player mouse press
    * @param screenX - X position on screen that mouse was pressed
    * @param screenY - Y position on screen that mouse was pressed
    * @param pointer -
    * @param button  - Button that pas pressed
-   * @return - True or false based on if an acction occured
+   * @return - True or false based on if an action occurred
    */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -291,6 +289,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   /**
    * Triggers walk event
+   * and also trigger the walking sound
    */
   private void triggerWalkEvent() {
     Vector2 lastDir = this.walkDirection.cpy();
@@ -300,6 +299,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       if (dir == directions.None) {
         entity.getEvents().trigger("walkStop");
         entity.getEvents().trigger("walkStopAnimation", lastDir);
+
+        entity.getEvents().trigger("stopSound", "footstep");
         return;
       }
 
@@ -314,6 +315,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case DownRight -> entity.getEvents().trigger("walkDownRight");
       }
       entity.getEvents().trigger("walk", walkDirection);
+
+      // play the sound when player starts walking
+        entity.getEvents().trigger("loopSound", "footstep");
+
     }
     }
 
@@ -323,7 +328,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * @return
    */
   public int triggerDodgeEvent() {
-    final Timer timer = new Timer();
+
+      final Timer timer = new Timer();
     this.walkDirection = keysToVector().scl(DODGE_SPEED);
     directions dir = keysToDirection();
 
@@ -340,6 +346,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
     entity.getEvents().trigger("walk", walkDirection);
     entity.getEvents().trigger("dodged");
+
+//  play the sound when player starts dodging
+    entity.getEvents().trigger("playSound", "dodge");
 
     java.util.TimerTask stopDodge = new java.util.TimerTask() {
       @Override
@@ -367,8 +376,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   /**
    * Responsible for dodge action
-   * Triggers when the spacebar is clicked.
-   * Cooldown of 3000 ms.
+   * Triggers when the spacer is clicked.
+   * Cool down of 3000 ms.
    */
   public void dodge() {
     dodge_available = false;

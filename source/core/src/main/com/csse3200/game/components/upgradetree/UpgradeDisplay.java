@@ -19,13 +19,11 @@ import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.structures.ToolConfig;
 import com.csse3200.game.components.structures.ToolsConfig;
-import com.csse3200.game.components.structures.tools.Tool;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputOverrideComponent;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
@@ -42,20 +40,15 @@ public class UpgradeDisplay extends Window {
     private static final float WINDOW_WIDTH_SCALE = 0.65f;
     private static final float WINDOW_HEIGHT_SCALE = 0.65f;
     private static final float SIZE = 64f;
-    private static final String SKIN_PATH = "kenney-rpg-expansion/kenneyrpg.json";
     private static final String MATERIALS_FORMAT = "Materials: %d";
     private final InputOverrideComponent inputOverrideComponent;
     private final Entity upgradeBench;
     private Label materialsLabel;
     private final WeaponConfigs weaponConfigs;
     private final Entity player;
-    private UpgradeNode buildRoot;
     private final Skin skin;
     private final ToolsConfig structureTools;
-
-    private StructureToolPicker structurePicker;
-
-    // Tree stuff
+    private final StructureToolPicker structurePicker;
     private final List<UpgradeNode> trees = new ArrayList<>();
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
     private float nodeYSpacing;
@@ -64,41 +57,37 @@ public class UpgradeDisplay extends Window {
     /**
      * Factory method for creating an instance of UpgradeDisplay.
      *
-     * @param upgradeBench The entity representing the upgrade bench in the game.
      * @return A new instance of UpgradeDisplay.
      */
-    public static UpgradeDisplay createUpgradeDisplay(Entity upgradeBench) {
+    public static UpgradeDisplay createUpgradeDisplay() {
         Texture background =
                 ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
-        return new UpgradeDisplay(background, upgradeBench);
+        return new UpgradeDisplay(background);
     }
 
     /**
      * Constructor for UpgradeDisplay.
      *
      * @param background    The texture to be used for the background of the upgrade display.
-     * @param upgradeBench  The entity representing the upgrade bench in the game.
      */
-    public UpgradeDisplay(Texture background, Entity upgradeBench) {
+    public UpgradeDisplay(Texture background) {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
 
-        this.upgradeBench = upgradeBench;
-
-        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000); // todo: remove this - testing line
-
-        skin = new Skin(Gdx.files.internal(SKIN_PATH));
+        skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         weaponConfigs = FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
         structureTools = FileLoader.readClass(ToolsConfig.class, "configs/structure_tools.json");
         player = ServiceLocator.getEntityService().getPlayer();
         structurePicker = player.getComponent(StructureToolPicker.class);
+        this.upgradeBench = player;
+
+        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000); // todo: remove this - testing line
 
         setupWindowDimensions();
 
         Table materialsTable = createMaterialsLabel();
         Table exitTable = createExitButton();
         Group group = createUpgradeButtons();
-
         addActor(group);
         addActor(materialsTable);
         addActor(exitTable);
@@ -106,7 +95,6 @@ public class UpgradeDisplay extends Window {
         // Override all normal user input
         inputOverrideComponent = new InputOverrideComponent();
         ServiceLocator.getInputService().register(inputOverrideComponent);
-
     }
 
     /**
@@ -114,6 +102,7 @@ public class UpgradeDisplay extends Window {
      * These trees dictate the progression of weapons that can be unlocked.
      */
     private void buildTrees() {
+        // Initialise node configs
         WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
         WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA);
         WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_SLINGSHOT);
@@ -121,6 +110,14 @@ public class UpgradeDisplay extends Window {
         WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
         WeaponConfig rocketConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_HOMING);
         WeaponConfig beeConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_BEE_STING);
+        ToolConfig dirtConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.BasicWallTool");
+        ToolConfig gateConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.GateTool");
+        ToolConfig stoneConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.IntermediateWallTool");
+        ToolConfig turretConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.TurretTool");
 
         // Melee Tree
         UpgradeNode swordNode = new UpgradeNode(katanaConfig);
@@ -139,14 +136,11 @@ public class UpgradeDisplay extends Window {
         trees.add(boomerangNode);
 
         // Build Tree
-        UpgradeNode dirtNode = new UpgradeNode(structureTools.toolConfigs
-                .get("com.csse3200.game.components.structures.tools.BasicWallTool"));
-        UpgradeNode gateNode = new UpgradeNode(structureTools.toolConfigs
-                .get("com.csse3200.game.components.structures.tools.GateTool"));
-        UpgradeNode stoneNode = new UpgradeNode(structureTools.toolConfigs
-                .get("com.csse3200.game.components.structures.tools.IntermediateWallTool"));
-        UpgradeNode turretNode = new UpgradeNode(structureTools.toolConfigs
-                .get("com.csse3200.game.components.structures.tools.TurretTool"));
+        UpgradeNode buildRoot;
+        UpgradeNode dirtNode = new UpgradeNode(dirtConfig);
+        UpgradeNode gateNode = new UpgradeNode(gateConfig);
+        UpgradeNode stoneNode = new UpgradeNode(stoneConfig);
+        UpgradeNode turretNode = new UpgradeNode(turretConfig);
         buildRoot = new UpgradeNode(woodhammerConfig);
         buildRoot.addChild(dirtNode);
         dirtNode.addChild(gateNode);
@@ -226,14 +220,18 @@ public class UpgradeDisplay extends Window {
             return;
         }
 
-        // draws an outline around the weapon texture
+        // Grey node background
         float dx = 20;
         float rectSize = SIZE + dx;
         float offsetX = this.getX() - (dx / 2);
         float offsetY = this.getY() - (dx / 2);
+
+        // Black outline box
         float blackRectSize = rectSize * 1.1f;
         float blackOffsetX = offsetX - (blackRectSize - rectSize) / 2;
         float blackOffsetY = offsetY - (blackRectSize - rectSize) / 2;
+
+        // Equipped weapon highlight box
         float equippedRectSize = rectSize * 1.05f;
         float equippedOffsetX = offsetX - (equippedRectSize - rectSize) / 2;
         float equippedOffsetY = offsetY - (equippedRectSize - rectSize) / 2;
@@ -250,7 +248,7 @@ public class UpgradeDisplay extends Window {
             shapeRenderer.rect(node.getX() + equippedOffsetX, node.getY() + equippedOffsetY, equippedRectSize, equippedRectSize);
         }
 
-        // Draws weapon background
+        // Draws grey weapon background
         shapeRenderer.setColor(Color.GRAY);
         shapeRenderer.rect(node.getX() + offsetX, node.getY() + offsetY, rectSize, rectSize);
 

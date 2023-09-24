@@ -23,7 +23,7 @@ public class StarBackground extends Actor {
     /**
      * The number of star sprites in the background.
      */
-    protected int numOfSprites = 150;
+    private final int numOfSprites;
 
     /**
      * Array to store the time passed for each sprite's animation.
@@ -31,11 +31,22 @@ public class StarBackground extends Actor {
     private final float[] stateTimes;  // Time passed for each sprite's animation
 
     /**
-     * Constructs a new NavigationBackground instance.
-     * Loads necessary textures and initializes the star animations and positions.
+     * Constructs a new StarBackground instance.
+     * Animates 150 stars across the screen and load in necessary textures.
      */
     public StarBackground() {
+        this(150);
+    }
 
+
+    /**
+     * Constructs a new StarBackground instance.
+     * Animates the stars across the screen and load in necessary textures.
+     *
+     * @param numStars  The number of stars to create.
+     */
+    public StarBackground(int numStars) {
+        this.numOfSprites = numStars;
         int numOfFrames = 8;
         TextureRegion[] frames = new TextureRegion[numOfFrames];
 
@@ -60,10 +71,16 @@ public class StarBackground extends Actor {
         }
     }
 
+
+    /**
+     * Shifts a star from the given x-y coordinates to new position.
+     * Can be used to draw bounding boxes around content or cluster stars.
+     *
+     * @param x     The x coordinate of star to move.
+     * @param y     The y coordinate of the star to move.
+     * @return      A vector of the new position for the star.
+     */
     protected Vector2 starShift(int x, int y) {
-        while (x > Gdx.graphics.getWidth() / 3 && x < 2 * (Gdx.graphics.getWidth() / 3)) {
-            x = MathUtils.random(0, Gdx.graphics.getWidth());
-        }
         return new Vector2(x, y);
     }
 

@@ -2,6 +2,8 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -20,6 +22,7 @@ public class PlayerStatsDisplay extends UIComponent {
   Table statsTable;
 
   private int maxHealth;
+  private int maxLives;
 
   private float barWidth;
 
@@ -34,20 +37,18 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image dodgeBarFill;
 
   private Image livesBarFrame;
+  private Image livesHeart;
 
   private Table maxLivesAlert;
   private Label maxLivesLabel;
 
   public PlayerStatsDisplay(PlayerConfig config) {
     maxHealth = config.health;
+    maxLives = config.lives;
     barWidth = 300f;
 
     //ADDING IMAGES
-    healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
-    healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
-    dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
-    dodgeBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
-    livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
+
   }
 
   /**
@@ -95,14 +96,34 @@ public class PlayerStatsDisplay extends UIComponent {
     healthLabel.setFontScale(0.25f);
     dodgeLabel.setFontScale(0.25f);
 
+    createHealthBar(statsTable);
+    statsTable.row();
+    createDodgeBar(statsTable);
+    statsTable.row();
+    createLivesBar(statsTable);
+
+    container.add(statsTable);
+    stage.addActor(container);
+  }
+
+  public void createHealthBar(Table statsTable) {
+    healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
+    healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
+
     Table healthBarTable = new Table();
     healthBarTable.add(healthBarFill).size(260f, 30f).padRight(5).padTop(3);
 
     Stack healthStack = new Stack();
     healthStack.add(healthBarFrame);
     healthStack.add(healthBarTable);
+
     statsTable.add(healthStack).size(barWidth, 40f).pad(5);
     statsTable.add(healthLabel).left();
+  }
+
+  public void createDodgeBar(Table statsTable) {
+    dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
+    dodgeBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
 
     Table dodgeBarTable = new Table();
     dodgeBarTable.add(dodgeBarFill).size(260f, 30f).padRight(5).padTop(3);
@@ -110,15 +131,21 @@ public class PlayerStatsDisplay extends UIComponent {
     Stack dodgeStack = new Stack();
     dodgeStack.add(dodgeBarFrame);
     dodgeStack.add(dodgeBarTable);
-    statsTable.row();
     statsTable.add(dodgeStack).size(barWidth, 40f).pad(5);
     statsTable.add(dodgeLabel).left();
+  }
 
-    statsTable.row();
-    statsTable.add(livesBarFrame).size(300f, 58f).pad(5);
+  public void createLivesBar(Table statsTable) {
+    livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
+    livesHeart = new Image(ServiceLocator.getResourceService().getAsset("images/player/heart.png", Texture.class));
 
-    container.add(statsTable);
-    stage.addActor(container);
+    Table livesTable = new Table();
+    //livesTable.add(livesHeart).size(30f, 26f).padRight(5).padTop(3);
+
+    Stack livesStack = new Stack();
+    livesStack.add(livesBarFrame);
+    livesStack.add(livesTable);
+    statsTable.add(livesStack).size(300f, 58f).pad(5);
   }
 
   @Override
@@ -143,6 +170,14 @@ public class PlayerStatsDisplay extends UIComponent {
     CharSequence dodgeText = String.format("");
     dodgeLabel.setText(dodgeText);
     dodgeBarFill.setSize(0, 30f);
+
+    dodgeBarFill.addAction(
+            Actions.sequence(
+                    Actions.parallel(
+                            Actions.sizeTo(260f, dodgeBarFill.getHeight(), 0.7f, Interpolation.linear)
+                    )
+            )
+    );
   }
 
   public void updateDodgeRefreshed() {

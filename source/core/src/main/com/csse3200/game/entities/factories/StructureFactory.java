@@ -257,42 +257,6 @@ public class StructureFactory {
 
     }
 
-<<<<<<< HEAD
-    //TODO: REMOVE - LEGACY
-    /**
-     * Creates an upgrade bench entity using the default config
-     */
-    public static Entity createUpgradeBench() {
-        return createUpgradeBench(defaultUpgradeBench);
-    }
-
-    /**
-     * Creates an upgrade bench entity that matches the config file
-     */
-    public static Entity createUpgradeBench(UpgradeBenchConfig config) {
-        Entity upgradeBench = new Entity()
-                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new TextureRenderComponent(config.spritePath))
-                .addComponent(new UpgradeTree());
-//                .addComponent(new SoundComponent(config.sounds));
-
-        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
-        upgradeBench.addComponent(new DistanceCheckComponent(0.5f, interactLabel));
-        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
-
-        upgradeBench.addComponent(new InteractableComponent(entity -> {
-            UpgradeDisplay minigame = UpgradeDisplay.createUpgradeDisplay(upgradeBench);
-            ServiceLocator.getRenderService().getStage().addActor(minigame);
-        }, 0.5f));
-
-        upgradeBench.setScale(0.6f, 0.6f);
-
-        return upgradeBench;
-    }
-=======
->>>>>>> upgrade-tree
     /**
 
      * Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map

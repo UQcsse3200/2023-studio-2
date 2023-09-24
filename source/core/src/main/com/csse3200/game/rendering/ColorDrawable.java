@@ -8,6 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.csse3200.game.components.player.IAlpha;
 import com.csse3200.game.services.ServiceLocator;
 
+/**
+ * This class is used to programmatically create a color which can be used as a background in UI components.
+ * This is a slightly modified version of a class specified in <a href="https://stackoverflow.com/a/54642587">this stack overflow answer</a>.
+ */
 public class ColorDrawable extends BaseDrawable implements IAlpha {
     private float r, g, b, a;
     private Color savedBatchColor = new Color();

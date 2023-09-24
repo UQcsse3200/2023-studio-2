@@ -12,9 +12,6 @@ import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class ActionFeedbackComponent extends Component {
-    public ActionFeedbackComponent() {
-    }
-
     @Override
     public void create() {
         super.create();

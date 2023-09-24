@@ -16,7 +16,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
 public class AlertUIComponent extends UIComponent implements IAlpha {
-    private static final float scaleFactor = 115;
+    private static final float scaleFactor = 150;
     private final String alert;
     private float alpha = 1.0f;
     private Table table;

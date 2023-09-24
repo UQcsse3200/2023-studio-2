@@ -152,18 +152,23 @@ loadScripts(document, 'script');</script>
 <div class="block">Draw the renderable.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDodgeBarUI(int)" class="member-name-link">updateDodgeBarUI</a><wbr>(int&nbsp;dodge)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxLivesReached()" class="member-name-link">maxLivesReached</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Updates the Player's Dodge on the UI</div>
+<div class="block">Creates an alert for if the maximum number of lives (3) has been reached.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerHealthUI(int)" class="member-name-link">updatePlayerHealthUI</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDodgeBarUI(int)" class="member-name-link">updateDodgeBarUI</a><wbr>(int&nbsp;dodge)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Updates the player's health on the ui.</div>
+<div class="block">Updates the Player's Dodge on the UI</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerLives(int)" class="member-name-link">updatePlayerLives</a><wbr>(int&nbsp;lives)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerHealthUI(int)" class="member-name-link">updatePlayerHealthUI</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the player's health on the ui.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerLives(int)" class="member-name-link">updatePlayerLives</a><wbr>(int&nbsp;lives)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -275,6 +280,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="updatePlayerLives(int)">
 <h3>updatePlayerLives</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updatePlayerLives</span><wbr><span class="parameters">(int&nbsp;lives)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="maxLivesReached()">
+<h3>maxLivesReached</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">maxLivesReached</span>()</div>
+<div class="block">Creates an alert for if the maximum number of lives (3) has been reached.
+ Used when player picks up Powerup ('Plus one life').</div>
 </section>
 </li>
 <li>

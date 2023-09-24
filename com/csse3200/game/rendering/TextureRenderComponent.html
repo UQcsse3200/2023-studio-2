@@ -80,11 +80,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>com.badlogic.gdx.utils.Disposable</code>, <code><a href="Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a>&gt;</code></dd>
+<dd><code>com.badlogic.gdx.utils.Disposable</code>, <code><a href="../components/player/IAlpha.html" title="interface in com.csse3200.game.components.player">IAlpha</a></code>, <code><a href="Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="Renderable.html" title="interface in com.csse3200.game.rendering">Renderable</a>&gt;</code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">TextureRenderComponent</span>
-<span class="extends-implements">extends <a href="RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></span></div>
+<span class="extends-implements">extends <a href="RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a>
+implements <a href="../components/player/IAlpha.html" title="interface in com.csse3200.game.components.player">IAlpha</a></span></div>
 <div class="block">Render a static texture.</div>
 </section>
 <section class="summary">
@@ -213,6 +214,8 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setAlpha</span><wbr><span class="parameters">(float&nbsp;alpha)</span></div>
 <div class="block">Sets the alpha of the spritebatch</div>
 <dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../components/player/IAlpha.html#setAlpha(float)">setAlpha</a></code>&nbsp;in interface&nbsp;<code><a href="../components/player/IAlpha.html" title="interface in com.csse3200.game.components.player">IAlpha</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>alpha</code> - the alpha to set</dd>
 </dl>

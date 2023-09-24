@@ -3,9 +3,12 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -20,31 +23,17 @@ import java.util.TimerTask;
 public class PlayerStatsDisplay extends UIComponent {
   Table container;
   Table statsTable;
-
-  private int maxHealth;
-  private int maxLives;
-
+  private final int maxHealth;
   private float barWidth;
-
   private Label healthLabel;
   private Label dodgeLabel;
   private Label livesLabel;
-
-  private Image healthBarFrame;
   private Image healthBarFill;
-
-  private Image dodgeBarFrame;
   private Image dodgeBarFill;
-
-  private Image livesBarFrame;
-  private Image livesHeart;
-
-  private Table maxLivesAlert;
   private Label maxLivesLabel;
 
   public PlayerStatsDisplay(PlayerConfig config) {
     maxHealth = config.health;
-    maxLives = config.lives;
     barWidth = 300f;
 
     //ADDING IMAGES
@@ -68,11 +57,6 @@ public class PlayerStatsDisplay extends UIComponent {
     entity.getEvents().addListener("maxLivesAlert", this::maxLivesReached);
   }
 
-  @Override
-  public void update() {
-    super.update();
-  }
-
   /**
    * Creates actors and positions them on the stage using a table.
    * @see Table for positioning options
@@ -92,9 +76,10 @@ public class PlayerStatsDisplay extends UIComponent {
 
     CharSequence healthText = String.format("%d", health);
 
-    healthLabel = new Label(healthText, skin, "small");
-    dodgeLabel = new Label("Ready!", skin, "small");
-    livesLabel = new Label("Lives:", skin, "small");
+    String small = "small";
+    healthLabel = new Label(healthText, skin, small);
+    dodgeLabel = new Label("Ready!", skin, small);
+    livesLabel = new Label("Lives:", skin, small);
     healthLabel.setFontScale(0.25f);
     dodgeLabel.setFontScale(0.25f);
 
@@ -103,12 +88,32 @@ public class PlayerStatsDisplay extends UIComponent {
     createDodgeBar(statsTable);
     statsTable.row();
     createLivesBar(statsTable);
+    statsTable.row();
+    createUpgradeTreeButton(statsTable);
 
     container.add(statsTable);
     stage.addActor(container);
   }
 
+  public void createUpgradeTreeButton(Table statsTable) {
+    TextButton button = new TextButton("Upgrade Tree", skin);
+
+    button.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        KeyboardPlayerInputComponent keys =
+                ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
+        keys.clearWalking();
+        UpgradeDisplay display = UpgradeDisplay.createUpgradeDisplay();
+        ServiceLocator.getRenderService().getStage().addActor(display);
+      }
+    });
+
+    statsTable.add(button);
+  }
+
   public void createHealthBar(Table statsTable) {
+    Image healthBarFrame;
     healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
 
@@ -124,6 +129,7 @@ public class PlayerStatsDisplay extends UIComponent {
   }
 
   public void createDodgeBar(Table statsTable) {
+    Image dodgeBarFrame;
     dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     dodgeBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
 
@@ -138,8 +144,9 @@ public class PlayerStatsDisplay extends UIComponent {
   }
 
   public void createLivesBar(Table statsTable) {
+    Image livesBarFrame;
     livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
-    livesHeart = new Image(ServiceLocator.getResourceService().getAsset("images/player/heart.png", Texture.class));
+    Image livesHeart = new Image(ServiceLocator.getResourceService().getAsset("images/player/heart.png", Texture.class));
 
     Table livesTable = new Table();
     //livesTable.add(livesHeart).size(30f, 26f).padRight(5).padTop(3);
@@ -169,7 +176,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * Updates the Player's Dodge on the UI
    */
   public void updateDodgeUsed() {
-    CharSequence dodgeText = String.format("");
+    CharSequence dodgeText = "";
     dodgeLabel.setText(dodgeText);
     dodgeBarFill.setSize(0, 30f);
 
@@ -183,7 +190,7 @@ public class PlayerStatsDisplay extends UIComponent {
   }
 
   public void updateDodgeRefreshed() {
-    CharSequence dodgeText = String.format("Ready!");
+    CharSequence dodgeText = "Ready!";
     dodgeLabel.setText(dodgeText);
     dodgeBarFill.setSize(260f, 30f);
   }
@@ -198,6 +205,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * number of lives player stats.
    */
   private void maxLivesAlert() {
+    Table maxLivesAlert;
     maxLivesAlert = new Table();
     maxLivesAlert.top().left();
     maxLivesAlert.setFillParent(true);
@@ -231,7 +239,5 @@ public class PlayerStatsDisplay extends UIComponent {
     super.dispose();
     healthLabel.remove();
     livesLabel.remove();
-
-    // TODO
   }
 }

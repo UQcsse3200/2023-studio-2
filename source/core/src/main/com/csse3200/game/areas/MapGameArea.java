@@ -88,7 +88,6 @@ public class MapGameArea extends GameArea{
         spawnTerrain();
         spawnEnvironment();
         spawnPowerups();
-        spawnUpgradeBench();
         spawnExtractors();
         spawnShip();
         player = spawnPlayer();
@@ -211,18 +210,6 @@ public class MapGameArea extends GameArea{
         }
     }
 
-    /**
-     * Spawns the upgrade bench to correspond to the config file provided
-     */
-    private void spawnUpgradeBench() {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        UpgradeBenchConfig upgradeBenchConfig = mapConfig.areaEntityConfig.upgradeBench;
-        if (upgradeBenchConfig != null) {
-            Entity upgradeBench = StructureFactory.createUpgradeBench(upgradeBenchConfig);
-            spawnEntityAt(upgradeBench, upgradeBenchConfig.position, true, true);
-        }
-    }
 
     /**
      * Spawns all the extractors for each resource type as defined in the config file

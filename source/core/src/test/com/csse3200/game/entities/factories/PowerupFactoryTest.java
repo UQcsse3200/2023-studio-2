@@ -1,5 +1,6 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.entities.Entity;
@@ -9,15 +10,20 @@ import com.csse3200.game.entities.configs.PowerupConfigs;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * PowerupFactoryTest is a testing class that verifies the correct creation
@@ -30,6 +36,8 @@ public class PowerupFactoryTest {
     private static final PowerupConfigs configs =
             FileLoader.readClass(PowerupConfigs .class, "configs/powerups.json");
 
+    @Mock
+    ResourceService resourceService;
 
     /**
      * Set up services and resources necessary for the tests.
@@ -37,10 +45,12 @@ public class PowerupFactoryTest {
      */
     @BeforeEach
     void setUp() {
+        resourceService = mock(ResourceService.class);
+        when(resourceService.getAsset(Mockito.any(), Mockito.any())).thenReturn(null);
+        ServiceLocator.registerResourceService(resourceService);
+
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerPhysicsService(new PhysicsService());
-        ResourceService resourceService = new ResourceService();
-        ServiceLocator.registerResourceService(resourceService);
         String[] powerupTextures = {"images/healthpowerup.png", "images/speedpowerup.png"};
         resourceService.loadTextures(powerupTextures);
         resourceService.loadAll();

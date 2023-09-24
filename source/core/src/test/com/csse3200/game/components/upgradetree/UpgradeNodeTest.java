@@ -104,7 +104,7 @@ public class UpgradeNodeTest {
 
     @Test
     void testRootCost() {
-        int baseCost = 50;
+        int baseCost = 100;
 
         // Ensure root cost is: base cost * (depth=0 + 1)
         assertEquals(baseCost, node.getNodeCost());
@@ -112,7 +112,7 @@ public class UpgradeNodeTest {
 
     @Test
     void testMultipleDepthsCost() {
-        // int baseCost = 50;
+        // int baseCost = 100;
         WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
         WeaponConfig elecWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
 
@@ -120,13 +120,13 @@ public class UpgradeNodeTest {
         UpgradeNode child1 = new UpgradeNode(woodhammerConfig, WeaponType.STONEHAMMER);
         node.addChild(child1);
         child1.setDepth(1);
-        assertEquals(100, child1.getNodeCost());
+        assertEquals(200, child1.getNodeCost());
 
         // Ensures depth1 cost is: base cost * (depth=2 + 1)
         UpgradeNode child2 = new UpgradeNode(elecWrenchConfig, WeaponType.MELEE_WRENCH);
         child1.addChild(child2);
         child2.setDepth(2);
-        assertEquals(150, child2.getNodeCost());
+        assertEquals(300, child2.getNodeCost());
     }
 
     @Test

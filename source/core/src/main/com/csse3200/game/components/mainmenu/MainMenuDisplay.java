@@ -179,6 +179,7 @@ public class MainMenuDisplay extends UIComponent {
         }
     }
 
+    @Override
     public void update() {
         if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
             AmendAnimation();

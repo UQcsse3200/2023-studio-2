@@ -10,6 +10,7 @@ import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
@@ -38,9 +39,11 @@ public class MapGameArea extends GameArea{
     private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
+    private int playerLives;
+    private Entity playerEntity;
     private boolean validLoad = true;
 
-    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
+    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
             mapConfig = MapConfigLoader.loadMapDirectory(configPath);
             logger.info("Successfully loaded map {}", configPath);
@@ -50,6 +53,7 @@ public class MapGameArea extends GameArea{
         }
         this.game = game;
         this.terrainFactory = terrainFactory;
+        this.playerLives = playerLives;
     }
 
     public static float getSpeedMult() {
@@ -280,6 +284,8 @@ public class MapGameArea extends GameArea{
      */
     private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer(mapConfig.playerConfig);
+        newPlayer.getComponent(CombatStatsComponent.class).setLives(playerLives); // Ensures previous number of lives is maintained.
+        newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         newPlayer.getEvents().addListener("death", () ->
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
         );
@@ -408,5 +414,29 @@ public class MapGameArea extends GameArea{
             resourceService.unloadAssets(mapConfig.soundPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.unloadAssets(new String[] {mapConfig.backgroundMusicPath});
+    }
+
+    /**
+     * Triggers the death screen.
+     * @return death screen, specfic to the number of lives player has remaining.
+     */
+    private boolean initiateDeathScreen() {
+        int lives = getPlayer().getComponent(CombatStatsComponent.class).getLives();
+        switch (lives) {
+            case 0:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_0));
+                return true;
+            case 1:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_1));
+                return true;
+            case 2:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_2));
+                return true;
+            case 3:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_3));
+                return true;
+            default:
+                return false;
+        }
     }
 }

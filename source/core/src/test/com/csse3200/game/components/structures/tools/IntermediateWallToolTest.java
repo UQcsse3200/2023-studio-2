@@ -8,6 +8,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.buildables.Wall;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
@@ -88,6 +89,8 @@ class IntermediateWallToolTest {
 
         when(structurePlacementService.getStructureAt(position)).thenReturn(mock(PlaceableEntity.class));
 
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
+
         tool.interact(player, position);
 
         verify(structurePlacementService, never()).placeStructureAt(any(), eq(position),
@@ -105,6 +108,8 @@ class IntermediateWallToolTest {
         var position = new GridPoint2(0, 0);
 
         when(structurePlacementService.getStructureAt(position)).thenReturn(mock(Wall.class));
+
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
         tool.interact(player, position);
 
@@ -129,6 +134,8 @@ class IntermediateWallToolTest {
 
         when(structurePlacementService.getStructureAt(position)).thenReturn(mock(Wall.class));
 
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
+
         tool.interact(player, position);
 
         verify(stateObserver).getStateData("resource/resource1");
@@ -145,6 +152,8 @@ class IntermediateWallToolTest {
         cost.put("resource2", 25);
 
         when(stateObserver.getStateData(any())).thenReturn(15);
+
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
         var tool = new IntermediateWallTool(cost);
 
@@ -192,6 +201,8 @@ class IntermediateWallToolTest {
         cost.put("resource2", 25);
 
         when(stateObserver.getStateData(any())).thenReturn(15);
+
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
         var tool = new IntermediateWallTool(cost);
 

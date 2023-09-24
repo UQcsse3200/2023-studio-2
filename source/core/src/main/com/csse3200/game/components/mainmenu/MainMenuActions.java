@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
-
   public static GdxGame game;
   private final Stage stage; // Add the stage
   private final Skin skin;   // Add the skin

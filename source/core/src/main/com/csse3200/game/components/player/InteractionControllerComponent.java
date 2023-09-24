@@ -4,8 +4,8 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
-
 import java.util.List;
+
 public class InteractionControllerComponent extends Component {
     private final boolean effectAll;
     public InteractionControllerComponent(boolean effectAll) {

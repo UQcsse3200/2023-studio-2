@@ -44,6 +44,7 @@
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
     "images/sling_shot.png",
+    "images/Companion_spritesheet.png",
     "map/portal.png"
   ],
   "textureAtlasPaths": [
@@ -61,7 +62,8 @@
     "images/weapons/wrench.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
-    "images/botanist.atlas"
+    "images/botanist.atlas",
+    "images/Companion_spritesheet.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav"

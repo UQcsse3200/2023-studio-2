@@ -1,0 +1,11 @@
+{
+  "position": {
+    "x": 10,
+    "y": 10
+  },
+  "health": 50,
+  "baseAttack": 10,
+  "attackMultiplier": 1,
+  "isImmune": false,
+  "spritePath": "images/Companion_spritesheet.atlas"
+}

@@ -45,18 +45,21 @@ public class LabWindow extends Window {
 
 
         Table exit = new Table();
-        Texture potion1Image = new Texture("images/Potion3re.png");
-        Texture potion2Image = new Texture("images/Potion4re.png");
-        Texture potion3Image = new Texture("images/Potion2re.png");
-        Texture potion4Image = new Texture("images/Potion1re.png");
-        Image potion1ImageWidget = new Image(potion1Image);
-        Image potion2ImageWidget = new Image(potion2Image);
-        Image potion3ImageWidget = new Image(potion3Image);
-        Image potion4ImageWidget = new Image(potion4Image);
+        Texture deathpotionImage = new Texture("images/Potion3re.png");
+        Texture speedpotionImage = new Texture("images/Potion4re.png");
+        Texture healthpotionImage = new Texture("images/Potion2re.png");
+        Texture invincibilitypotionImage = new Texture("images/Potion1re.png");
+        Texture doubledamageImage = new Texture("images/powerups/double_damage.png");
+        Image potion1ImageWidget = new Image(deathpotionImage);
+        Image potion2ImageWidget = new Image(speedpotionImage);
+        Image potion3ImageWidget = new Image(healthpotionImage);
+        Image potion4ImageWidget = new Image(invincibilitypotionImage);
+        Image potion5ImageWidget = new Image(doubledamageImage);
         TextButton potion1 = new TextButton("Death", skin);
         TextButton potion2 = new TextButton("Speed", skin);
         TextButton potion3 = new TextButton("Health", skin);
         TextButton potion4 = new TextButton("Invincibility", skin);
+        TextButton potion5 = new TextButton("DoubleDamage",skin);
         TextButton returnToGameButton = new TextButton("Return to Game", skin);
         float buttonWidth = 200f; // Adjust as needed
         float buttonHeight = 200f;
@@ -72,6 +75,9 @@ public class LabWindow extends Window {
         potion4.setWidth(buttonWidth);
         potion4.setHeight(buttonHeight);
 
+        potion5.setWidth(buttonWidth);
+        potion5.setHeight(buttonHeight);
+
         returnToGameButton.setWidth(buttonWidth);
         returnToGameButton.setHeight(buttonHeight);
 
@@ -79,11 +85,13 @@ public class LabWindow extends Window {
         potion2.add(potion2ImageWidget).width(60).height(64);
         potion3.add(potion3ImageWidget).width(60).height(64);
         potion4.add(potion4ImageWidget).width(60).height(64);
+        potion5.add(potion5ImageWidget).width(60).height(64);
         buttonTable.top().left();
         buttonTable.add(potion1).padTop(100).padLeft(150);
         buttonTable.add(potion2).padTop(100).padLeft(190);
         buttonTable.add(potion3).padTop(100).padLeft(165);
         buttonTable.add(potion4).padTop(100).padLeft(180);
+        buttonTable.add(potion5).padTop(80).padLeft(150);
         buttonTable.row(); //Move to the next row
         exit.add(returnToGameButton).bottom().right().padBottom(70).padLeft(2800);
         addActor(buttonTable);
@@ -121,6 +129,13 @@ public class LabWindow extends Window {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.INVINCIBILITY_POTION);
+                failLaboratory();
+            }
+        });
+        potion5.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.DOUBLE_DAMAGE);
                 failLaboratory();
             }
         });

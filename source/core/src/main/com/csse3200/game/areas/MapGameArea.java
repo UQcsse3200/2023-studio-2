@@ -366,27 +366,27 @@ public class MapGameArea extends GameArea{
             case DEATH_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos = new GridPoint2(39, 21);
-                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position
-                        , true, false);
+                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
                 return newPotion;
             case SPEED_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos2 = new GridPoint2(40, 21);
                 spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
                 return newPotion;
             case HEALTH_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos3 = new GridPoint2(41, 21);
                 spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
                 return newPotion;
             case INVINCIBILITY_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.INVINCIBILITY_POTION);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos4 = new GridPoint2(42, 21);
                 spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
+                return newPotion;
+            case DOUBLE_DAMAGE:
+                newPotion = PotionFactory.createPotion(PotionType.DOUBLE_DAMAGE);
+                itemsOnMap.add(newPotion);
+                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position,true,false);
                 return newPotion;
             default: throw new IllegalArgumentException("You must assign a valid PotionType");
         }

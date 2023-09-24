@@ -4,6 +4,7 @@
  */
 package com.csse3200.game.components;
 
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.Companion.CompanionStatsDisplay;
 import com.csse3200.game.components.player.PlayerActions;
@@ -21,6 +22,8 @@ public class PotionComponent extends Component {
     private long duration;
     private Entity player = ServiceLocator.getEntityService().getPlayer();
     private Entity companion = ServiceLocator.getEntityService().getCompanion();
+    private PlayerActions playerActions;
+    private CompanionActions companionActions;
      /**
      * Creates a PotionComponent with the specified type.
      *
@@ -40,6 +43,8 @@ public class PotionComponent extends Component {
      * Applies the effects of the potion to the specified target entities.
      */
     public void applyEffect() {
+        playerActions = player.getComponent(PlayerActions.class);
+        companionActions = companion.getComponent(CompanionActions.class);
 
         switch (type) {
             case DEATH_POTION -> {
@@ -51,6 +56,9 @@ public class PotionComponent extends Component {
 
             }
             case SPEED_POTION -> {
+                if (playerActions == null||companionActions==null) {
+                    return;
+                }
                 player.getComponent(PlayerActions.class).setSpeed(6,6);
                 companion.getComponent(CompanionActions.class).setSpeed(7,7);
                 companion.getComponent(FollowComponent.class).setFollowSpeed(5);
@@ -59,28 +67,33 @@ public class PotionComponent extends Component {
                 this.setDuration(10000);
 
                 // Schedule a task to reset the speed values after the specified duration
-                java.util.TimerTask speedUp = new java.util.TimerTask() {
+                Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
                         player.getComponent(PlayerActions.class).setSpeed(3,3);
                         companion.getComponent(CompanionActions.class).setSpeed(4,4);
                     }
-                };
-                new java.util.Timer().schedule(speedUp, getDuration());
+                },getDuration());
             }
             case INVINCIBILITY_POTION -> {
+                if (playerActions == null||companionActions==null) {
+                    return;
+                }
                 companion.getComponent(CombatStatsComponent.class).setImmunity(true);
                 player.getComponent(CombatStatsComponent.class).setImmunity(true);
                 this.setDuration(8000);
-                java.util.TimerTask health = new java.util.TimerTask()  {
+                Timer.schedule(new Timer.Task()  {
                     @Override
                     public void run() {
                         companion.getComponent(CombatStatsComponent.class).setImmunity(false);
                         player.getComponent(CombatStatsComponent.class).setImmunity(false);
 
                     }
-                };
-                new java.util.Timer().schedule(health, getDuration());
+                },getDuration());
+            }
+            case EXTRA_LIFE -> player.getComponent(CombatStatsComponent.class).addLife();
+            case DOUBLE_DAMAGE -> {
+
             }
             default -> throw new IllegalArgumentException("Invalid PotionType");
         }

@@ -69,10 +69,6 @@ public class CompanionFactory {
         animator.addAnimation("Companion_StandUp", 0.2f);
         animator.addAnimation("Companion_StandLeft", 0.2f);
         animator.addAnimation("Companion_StandRight", 0.2f);
-       /* infanimator.addAnimation("UP_1", 1f);
-        infanimator.addAnimation("DOWN_1", 1f);
-        infanimator.addAnimation("RIGHT_1", 1f);
-        infanimator.addAnimation("LEFT_1", 1f);*/
 
         Entity companion =
                 new Entity()
@@ -86,7 +82,7 @@ public class CompanionFactory {
                         .addComponent(animator)
                         /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay())
-                        .addComponent(new CompanionAnimationController())
+                        .addComponent(new PlayerAnimationController())
                         .addComponent(new FollowComponent(player,1f))
                         .addComponent(new InteractionControllerComponent(false));
         animator.startAnimation("Companion_StandDown");

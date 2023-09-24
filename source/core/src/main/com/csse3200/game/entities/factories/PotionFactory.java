@@ -52,6 +52,11 @@ public class PotionFactory {
                 potion.addComponent(new TextureRenderComponent("images/Potion1re.png"))
                         .addComponent(new PotionComponent(PotionType.INVINCIBILITY_POTION));
             }
+            case EXTRA_LIFE -> potion.addComponent(new TextureRenderComponent("images/powerups/extra_life.png"))
+                                     .addComponent(new PotionComponent(PotionType.EXTRA_LIFE));
+            case DOUBLE_DAMAGE -> potion.addComponent(new TextureRenderComponent("images/powerups/double_damage.png"))
+                    .addComponent(new PotionComponent(PotionType.DOUBLE_DAMAGE));
+            case SNAP -> potion.addComponent(new TextureRenderComponent("images/powerups/snap"));
             default -> throw new IllegalArgumentException("You must assign a valid PotionType");
         }
         return potion;

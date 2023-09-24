@@ -1,6 +1,8 @@
 package com.csse3200.game.components.upgradetree;
 
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.structures.ToolConfig;
+import com.csse3200.game.components.structures.ToolsConfig;
 import com.csse3200.game.entities.configs.WeaponConfig;
 
 import java.util.ArrayList;
@@ -50,9 +52,16 @@ public class UpgradeNode {
      * Constructs a new UpgradeNode with the given weapon type and image path.
      * @param config - The weapons config file
      */
-    UpgradeNode(WeaponConfig config, WeaponType weaponType) {
+    UpgradeNode(WeaponConfig config) {
         this.imagePath = config.imagePath;
-        this.weaponType = weaponType;
+        this.weaponType = config.type;
+        this.children = new ArrayList<>();
+        this.depth = 0;
+    }
+
+    UpgradeNode(ToolConfig tool) {
+        this.imagePath = tool.texture;
+        this.weaponType = null;
         this.children = new ArrayList<>();
         this.depth = 0;
     }

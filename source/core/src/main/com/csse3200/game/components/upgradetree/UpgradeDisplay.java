@@ -17,6 +17,9 @@ import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.structures.ToolConfig;
+import com.csse3200.game.components.structures.ToolsConfig;
+import com.csse3200.game.components.structures.tools.Tool;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
@@ -37,9 +40,7 @@ import java.util.List;
  */
 public class UpgradeDisplay extends Window {
     private static final float WINDOW_WIDTH_SCALE = 0.5f;
-
     private static final float WINDOW_HEIGHT_SCALE = 0.65f;
-
     private static final float SIZE = 64f;
     private static final String SKIN_PATH = "kenney-rpg-expansion/kenneyrpg.json";
     private static final String MATERIALS_FORMAT = "Materials: %d";
@@ -50,6 +51,8 @@ public class UpgradeDisplay extends Window {
     private final Entity player;
     private UpgradeNode buildRoot;
     private final Skin skin;
+    private final ToolsConfig structureTools =
+            FileLoader.readClass(ToolsConfig.class, "configs/structure_tools.json");
 
     // Tree stuff
     private final List<UpgradeNode> trees = new ArrayList<>();
@@ -116,26 +119,37 @@ public class UpgradeDisplay extends Window {
         WeaponConfig stonehammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.STONEHAMMER);
         WeaponConfig rocketConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_HOMING);
         WeaponConfig beeConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_BEE_STING);
+//        ToolConfig gateConfig = structureTools.toolConfigs.get("Gate");
+//
+//        String gateName = gateConfig.name;
+
+//            Stone Wall
+//            Basic Turret
+//            Dirt Wall
+//            Extractor
+//            Gate
+//            Heal
+
 
         // Melee Tree
-        UpgradeNode swordNode = new UpgradeNode(katanaConfig, WeaponType.MELEE_KATANA);
-        UpgradeNode wrenchNode = new UpgradeNode(meleeWrench, WeaponType.MELEE_WRENCH);
-        UpgradeNode beeNode = new UpgradeNode(beeConfig, WeaponType.MELEE_BEE_STING);
+        UpgradeNode swordNode = new UpgradeNode(katanaConfig);
+        UpgradeNode wrenchNode = new UpgradeNode(meleeWrench);
+        UpgradeNode beeNode = new UpgradeNode(beeConfig);
         swordNode.addChild(wrenchNode);
         swordNode.addChild(beeNode);
         trees.add(swordNode);
 
         // Ranged Tree
-        UpgradeNode slingShot = new UpgradeNode(slingshotConfig, WeaponType.RANGED_SLINGSHOT);
-        UpgradeNode rocket = new UpgradeNode(rocketConfig, WeaponType.RANGED_HOMING);
-        UpgradeNode boomerang = new UpgradeNode(boomerangConfig, WeaponType.RANGED_BOOMERANG);
+        UpgradeNode slingShot = new UpgradeNode(slingshotConfig);
+        UpgradeNode rocket = new UpgradeNode(rocketConfig);
+        UpgradeNode boomerang = new UpgradeNode(boomerangConfig);
         boomerang.addChild(slingShot);
         slingShot.addChild(rocket);
         trees.add(boomerang);
 
         // Build Tree
-        buildRoot = new UpgradeNode(woodhammerConfig, WeaponType.WOODHAMMER);
-        UpgradeNode hammer2 = new UpgradeNode(stonehammerConfig, WeaponType.STONEHAMMER);
+        buildRoot = new UpgradeNode(woodhammerConfig);
+        UpgradeNode hammer2 = new UpgradeNode(stonehammerConfig);
         buildRoot.addChild(hammer2);
         trees.add(buildRoot);
     }

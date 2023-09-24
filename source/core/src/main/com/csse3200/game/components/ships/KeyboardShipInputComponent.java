@@ -115,6 +115,9 @@ public class KeyboardShipInputComponent extends InputComponent {
     }
 
 
+    /**
+     * Trigger the fly and flyStop events
+     */
     private void triggerFlyEvent() {
         if (flyDirection.epsilonEquals(Vector2.Zero)) {
             entity.getEvents().trigger("flyStop");
@@ -123,10 +126,16 @@ public class KeyboardShipInputComponent extends InputComponent {
         }
     }
 
+    /**
+     * Calls the event brakeOn to activate brakes
+     */
     private void triggerBrakeOnEvent() {
         entity.getEvents().trigger("brakeOn");
     }
 
+    /**
+     * Calls the event brakeOff to deactivate brake
+     */
     private void triggerBrakeOffEvent() {
         entity.getEvents().trigger("brakeOff");
     }

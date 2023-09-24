@@ -9,9 +9,7 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.ui.DialogComponent;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.badlogic.gdx.utils.Timer;
 
 /**
  * TouchAttackComponent is responsible for dealing damage and applying knockback to entities when
@@ -24,7 +22,7 @@ import java.util.TimerTask;
  */
 public class TouchAttackComponent extends Component {
 
-  private final short targetLayer;
+  private short targetLayer;
   private float knockbackForce = 1f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
@@ -65,13 +63,7 @@ public class TouchAttackComponent extends Component {
     leftContact = true;
 
   }
-
-  /**
-   * Handles collision start events and applies damage and knockback to the target entity.
-   *
-   * @param me The fixture associated with this entity's hitbox.
-   * @param other The fixture of the colliding entity.
-   */
+  
   /**
    * Initial collision between current entity and target entity.
    * Deals single instance of damage when hit by enemy.
@@ -101,20 +93,21 @@ public class TouchAttackComponent extends Component {
     if (target.getComponent(HitboxComponent.class) == null) {
       return;
     }
+
     // Targeting STRUCTURE entity type
     if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-      Timer triggerTimer = new Timer();
       // Schedule the trigger every 2 seconds
-      triggerTimer.scheduleAtFixedRate(new TimerTask() {
+      Timer.Task task = new Timer.Task() {
         @Override
         public void run() {
           if (!leftContact) {
             hitOnce(target, source, sourceStats, targetStats);
           }
         }
-      }, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
+      };
+      Timer.schedule(task, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
     } else {
-      //hit once, push away
+      // hit once, push away
       hitOnce(target, source, sourceStats, targetStats);
     }
   }
@@ -143,15 +136,6 @@ public class TouchAttackComponent extends Component {
         }
       }
 
-      // Gives a delay every time there is a collision for the
-      // attack animation to complete
-      Timer timer = new Timer();
-      timer.schedule(new TimerTask() {
-        @Override
-        public void run() {
-          targetStats.hit(combatStats);
-        }
-      }, 2000);
       targetStats.hit(combatStats);
 
       // Apply knockback
@@ -174,6 +158,12 @@ public class TouchAttackComponent extends Component {
     // Stop dealing tick damage
     leftContact = true;
   }
+
+  /**
+   * This get method returns a char indicating the position of the target relative to the enemy.
+   * @param destination
+   * @return
+   */
 
   public char getDirection(Vector2 destination) {
     if (entity.getPosition().x - destination.x < 0) {

@@ -52,7 +52,8 @@ public class TerrainFactory {
   /**
    * Create a terrain of the given type, using the orientation of the factory. This can be extended
    * to add additional game terrains.
-   * @param mapPath path to file containing terrain information (.tmx file)
+   *
+   * @param mapPath The path of where the map is located
    * @return Terrain component which renders the terrain
    */
   public TerrainComponent createTerrain(String mapPath) {

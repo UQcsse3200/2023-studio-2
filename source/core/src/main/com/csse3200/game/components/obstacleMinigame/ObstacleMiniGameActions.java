@@ -31,6 +31,9 @@ public class ObstacleMiniGameActions extends MainGameActions {
      * Swaps to the Main Menu screen.
      */
 
+    /**
+     * Called when exit screen is triggered, display a dialog before switching the screen
+     */
     protected void onReturnPlanet() {
         logger.info("Exiting main game screen");
 

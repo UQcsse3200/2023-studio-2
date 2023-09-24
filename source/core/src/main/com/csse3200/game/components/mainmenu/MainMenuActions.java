@@ -48,7 +48,7 @@ public class MainMenuActions extends Component {
    * Swaps to the Main Game screen.
    */
   private void onStart() {
-    String startPlanetName = "Earth";
+    String startPlanetName = "Verdant Haven";
     logger.info(String.format("Start game, go to %s", startPlanetName));
     PlanetScreen planetScreen = new PlanetScreen(game, startPlanetName);
     ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", planetScreen);
@@ -60,6 +60,7 @@ public class MainMenuActions extends Component {
     logger.info("Loading Story");
     TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
     titleBox.showDialog(stage);
+    game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
   }
 
   /**

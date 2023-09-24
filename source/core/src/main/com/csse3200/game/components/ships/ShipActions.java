@@ -24,12 +24,27 @@ public class ShipActions extends Component {
     private AnimationRenderComponent animator;
 
 
+    private final double up = 90;
+    private final double down = -90;
+    private final double left = 180;
+    private final double right = 0;
+    private final double left2 = -180;
+
+    /**
+     * Initialize the health, fuel and acceleration of the ship
+     * @param health
+     * @param fuel
+     * @param acceleration
+     */
     public ShipActions(int health, int fuel, int acceleration) {
         this.maxHealth = health;
         this.maxFuel = fuel;
         this.currentAcceleration = acceleration;
     }
 
+    /**
+     * Initialize animation and physics of the ship
+     */
     @Override
     public void create() {
         PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
@@ -45,6 +60,9 @@ public class ShipActions extends Component {
 
     }
 
+    /**
+     * Called each render call. Updates the speed of the ship
+     */
     @Override
     public void update() {
         if (moving) {
@@ -52,6 +70,9 @@ public class ShipActions extends Component {
         }
     }
 
+    /**
+     * Updates the speed and animation of the ship
+     */
     private void updateSpeed() {
 
         //TBD for all these comments, testing movement.
@@ -106,15 +127,15 @@ public class ShipActions extends Component {
         this.body.setLinearDamping(0);
     }
 
+    /**
+     * Given the direction, obtain the angle of the direction vector to the world origin,
+     * use the angle to determine the animation representing ship orientation to be played
+     * @param direction
+     */
     void playAnimation(Vector2 direction) {
 
         double currentOrientation = Vector2Utils.angleTo(direction);
 
-        double left2 = -180;
-        double right = 0;
-        double left = 180;
-        double down = -90;
-        double up = 90;
         if (currentOrientation == up) {
             //
             animator.startAnimation("Ship_UpStill");

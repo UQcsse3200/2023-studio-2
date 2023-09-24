@@ -65,6 +65,7 @@ public class EnemyFactory {
    * @return entity
    */
   public static Entity createEnemy(EnemyConfig config) {
+    System.out.println(config.type);
     AnimationRenderComponent animator;
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -143,29 +144,30 @@ public class EnemyFactory {
     // UI adjustments
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
-    enemy.scaleHeight(getEnemyscale(config.type));
+    enemy.scaleHeight(getEnemyscale(config));
 
     return enemy;
   }
 
   /**
    * Determines the appropriate scale for an enemy based on its type.
-   * @param type The type of the enemy for which the scale is to be determined.
+   * @param config The type of the enemy for which the scale is to be determined.
    * @return The scaling factor for the provided enemy type.
    */
-  static float getEnemyscale(EnemyType type){
+  static float getEnemyscale(EnemyConfig config){
     float scale = 2.0f;
-    if (type == EnemyType.BossRanged){
-      scale = 2.2f;
-    }
-    else if (type == EnemyType.BossMelee){
-      scale = 4.4f;
-    }
-    else if (type == EnemyType.Ranged) {
+
+    if (config.type == EnemyType.Ranged) {
       scale = 2.0f;
+      if (config.isBoss){
+        scale = 4.4f;
+      }
     }
-    else if (type == EnemyType.Melee) {
+    else if (config.type == EnemyType.Melee) {
       scale = 1.8f;
+      if (config.isBoss){
+        scale = 4.4f;
+      }
     }
     return scale;
   }

@@ -67,8 +67,4 @@ public class ProjectileMovementTaskTest {
         // Checks the Projectile has been
         Assertions.assertEquals(Task.Status.ACTIVE, task.getStatus());
     }
-
-    /**
-     *
-     */
 }

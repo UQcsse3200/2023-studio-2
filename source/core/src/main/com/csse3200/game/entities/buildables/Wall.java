@@ -1,5 +1,4 @@
 package com.csse3200.game.entities.buildables;
-
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;

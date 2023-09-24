@@ -89,9 +89,8 @@ public class StructureToolPicker extends UIComponent {
             buttonTable.add(nameLabel).padLeft(10);
 
             for (var cost : optionValue.cost) {
-                var costLabel = new Label(String.format("%s - %d", cost.key, cost.value), skin);
+                var costLabel = new Label(String.format("%s - %d", cost.key, cost.value), skin, "small");
                 costLabel.setColor(Color.BLACK);
-                costLabel.setFontScale(0.9f);
 
                 buttonTable.row().colspan(2);
                 buttonTable.add(costLabel).padTop(10).center();

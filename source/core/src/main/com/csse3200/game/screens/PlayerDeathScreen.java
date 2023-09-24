@@ -23,6 +23,8 @@ public class PlayerDeathScreen extends ScreenAdapter {
     private final Renderer renderer;
     private static final String[] deathScreenTextures = {"images/deathscreen.png"};
 
+    private final DeathScreenDisplay deathScreenDisplay = new DeathScreenDisplay();
+
     public PlayerDeathScreen(GdxGame game) {
         this.game = game;
 
@@ -41,8 +43,10 @@ public class PlayerDeathScreen extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         renderer.resize(width, height);
+        deathScreenDisplay.resize();
         logger.trace("Resized renderer: ({} x {})", width, height);
     }
+
 
     @Override
     public void pause() {
@@ -83,7 +87,7 @@ public class PlayerDeathScreen extends ScreenAdapter {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
-        ui.addComponent(new DeathScreenDisplay())
+        ui.addComponent(deathScreenDisplay)
                 .addComponent(new InputDecorator(stage, 10))
                 .addComponent(new DeathScreenActions(game));
         ServiceLocator.getEntityService().register(ui);

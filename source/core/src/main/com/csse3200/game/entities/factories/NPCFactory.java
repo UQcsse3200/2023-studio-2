@@ -7,12 +7,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.npc.AstroAnimationController;
 import com.csse3200.game.components.npc.BotanistAnimationController;
+import com.csse3200.game.components.npc.FireAnimationController;
+import com.csse3200.game.components.npc.JailAnimationController;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.BotanistConfig;
+import com.csse3200.game.entities.configs.AstroConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -77,33 +81,6 @@ public class NPCFactory {
 //    return ghost;
 //  }
 
-
-  //TODO
-//  public static Entity createBotanist() {
-//    AnimationRenderComponent animator = new AnimationRenderComponent(
-//            ServiceLocator.getResourceService().getAsset("images/botanist.atlas", TextureAtlas.class));
-//    animator.addAnimation("idle_left", Float.MAX_VALUE, Animation.PlayMode.LOOP);
-//    animator.addAnimation("idle_right", Float.MAX_VALUE, Animation.PlayMode.LOOP);
-//    animator.addAnimation("wanderStart_left", 0.4f, Animation.PlayMode.LOOP_REVERSED);
-//    animator.addAnimation("wanderStart_right", 0.4f, Animation.PlayMode.LOOP);
-////    animator.addAnimation("runLeft", 0.2f, Animation.PlayMode.LOOP_REVERSED);
-////    animator.addAnimation("runRight", 0.2f, Animation.PlayMode.LOOP);
-//
-//    AITaskComponent aiTaskComponent = new AITaskComponent()
-//            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
-//
-//    Entity botanist = new Entity()
-//            .addComponent(new PhysicsComponent())
-//            .addComponent(new PhysicsMovementComponent())
-//            .addComponent(new ColliderComponent())
-//            .addComponent(aiTaskComponent)
-//            .addComponent(animator)
-//            .addComponent(new BotanistAnimationController());
-//
-//    PhysicsUtils.setScaledCollider(botanist, 0.9f, 0.4f);
-//    return botanist;
-//  }
-  //TODO: REMOVE - LEGACY
   /**
    * Creates a generic Botanist NPC entity.
    * @return The created Botanist NPC entity.
@@ -111,6 +88,7 @@ public class NPCFactory {
   public static Entity createBotanist() {
     return createBotanist(configs.botanist);
   }
+
 
   /**
    * Creates a Botanist NPC to match the config file
@@ -137,19 +115,95 @@ public class NPCFactory {
             new Entity()
                     .addComponent(animator)
                     .addComponent(new BotanistAnimationController())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
     botanist.addComponent(new InteractableComponent(entity -> {
-      botanist.getComponent(DialogComponent.class).showdialogue("\"Greetings, I am the botanist!\"  \n" +
-              "My name is Adam\nI'm here to help you\nunderstand the planet's flora and fauna", "");
-    },7f));
+      botanist.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
+    },10f));
 
     botanist.scaleHeight(6.1f);
     return botanist;
+  }
+
+  /**
+   * Creates a Astro NPC to match the config file
+   * @return The created Astro NPC entity.
+   */
+  public static Entity createAstro() {
+
+//    AITaskComponent aiComponent = new AITaskComponent();
+//    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/Astro_NPC.atlas", TextureAtlas.class));
+    animator.addAnimation("Astro_Up", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_UpLeft", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_Left", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_DownLeft", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_Down", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_DownRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_Right", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_UpRight", 0.2f, Animation.PlayMode.LOOP);
+
+    Entity Astro =
+            new Entity()
+                    .addComponent(animator)
+                    .addComponent(new AstroAnimationController(new AssetManager()))
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
+                    .addComponent(new DialogComponent(dialogueBox))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new InteractionControllerComponent(true))
+                    .addComponent(new PhysicsMovementComponent());
+//                    .addComponent(aiComponent);
+
+    Astro.getComponent(ColliderComponent.class).setDensity(1.5f);
+    Astro.addComponent(new InteractableComponent(entity -> {
+      Astro.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
+    },3f));
+    animator.startAnimation("Astro_Down");
+    return Astro;
+  }
+  public static Entity createJail() {
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/Jail/jail.atlas", TextureAtlas.class));
+    animator.addAnimation("jail_close", 0.2f, Animation.PlayMode.LOOP);
+
+    Entity Jail =
+            new Entity()
+                    .addComponent(animator)
+                    .addComponent(new JailAnimationController(new AssetManager()))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new InteractionControllerComponent(true))
+                    .addComponent(new PhysicsMovementComponent());
+
+    Jail.scaleHeight(1.7f);
+    animator.startAnimation("jail_close");
+    return Jail;
+  }
+  public static Entity createFire() {
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/fire.atlas", TextureAtlas.class));
+    animator.addAnimation("image_part1", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("image_part2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("image_part3", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("image_part4", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("image_part5", 0.01f, Animation.PlayMode.LOOP);
+
+
+    Entity fire =
+            new Entity()
+                    .addComponent(animator)
+                    .addComponent(new FireAnimationController(new AssetManager()));
+
+    return fire;
   }
 
   /**

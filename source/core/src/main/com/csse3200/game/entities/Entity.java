@@ -42,6 +42,7 @@ public class Entity {
   private float rotation = 0;
   private Array<Component> createdComponents;
 
+
   public Entity() {
     this.entityType = "";
     id = nextId;
@@ -78,6 +79,7 @@ public class Entity {
     logger.debug("Setting enabled={} on entity {}", enabled, this);
     this.enabled = enabled;
   }
+
 
   /**
    * Get the entity's game position.

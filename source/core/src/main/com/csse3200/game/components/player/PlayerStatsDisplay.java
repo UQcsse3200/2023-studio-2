@@ -86,8 +86,8 @@ public class PlayerStatsDisplay extends UIComponent {
     createHealthBar(statsTable);
     statsTable.row();
     createDodgeBar(statsTable);
-    statsTable.row();
-    createLivesBar(statsTable);
+//    statsTable.row();  //todo: implement
+//    createLivesBar(statsTable);
     statsTable.row();
     createUpgradeTreeButton(statsTable);
 

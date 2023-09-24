@@ -124,13 +124,19 @@ public class PlanetScreen extends ScreenAdapter {
      */
     private void generateGameAreas() {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        if ("Earth".equals(name)) {
-            this.nextPlanetName = "Not Earth";
+        if ("Verdant Haven".equals(name)) {
+            this.nextPlanetName = "Chronos";
             generateGameArea("primary", "levels/earth/main-area");
+        } else if ("Chronos".equals(name)) {
+            this.nextPlanetName = "Rusterra";
+            generateGameArea("primary", "levels/lush/main-area");
+        } else if ("Rusterra".equals(name)) {
+            this.nextPlanetName = "Pyroterra";
+            generateGameArea("primary", "levels/frozen/main-area");
         } else {
             // TODO: Extend
             this.nextPlanetName = "Earth";
-            this.allGameAreas.put("primary", new MapGameArea("levels/lush/main-area", terrainFactory, game, game.getPlayerLives()));
+            this.allGameAreas.put("primary", new MapGameArea("levels/earth/main-area", terrainFactory, game, game.getPlayerLives()));
         }
     }
 

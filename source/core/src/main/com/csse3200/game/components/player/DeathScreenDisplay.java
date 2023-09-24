@@ -12,7 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.csse3200.game.components.playerStatsSound;
+import com.csse3200.game.areas.mapConfig.GameAreaConfig;
+import com.csse3200.game.entities.configs.SoundsConfig;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -23,27 +25,15 @@ import org.slf4j.LoggerFactory;
  * It provides options for restarting and exiting the game.
  */
 public class DeathScreenDisplay extends UIComponent {
-
     private static final Logger logger = LoggerFactory.getLogger(DeathScreenDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table tableImage;
     private Table tableButtons;
     private final int lives;
-
-    private final playerStatsSound respawnSound;
-
-    private final playerStatsSound deadSound;
     private static final String[] deathScreenTextures = {"images/deathscreens/deathscreen_0.jpg", "images/deathscreens/deathscreen_1.jpg", "images/deathscreens/deathscreen_2.jpg", "images/deathscreens/deathscreen_3.jpg"};
 
     public DeathScreenDisplay(int lives) {
         this.lives = lives;
-
-//        Initialisation of the respawnSound with the correct audio file
-        respawnSound = new playerStatsSound("sounds/playerLivesRespawn.mp3");
-
-//        Initialisation of the deadSound with the correct audio file
-        deadSound  = new playerStatsSound("sounds/playerDead.mp3");
-
     }
     @Override
     public void create() {
@@ -94,14 +84,14 @@ public class DeathScreenDisplay extends UIComponent {
         tableImage.add(titleImage);
         if (lives > 0) {
 //          Play the respawn sound when the player live still remaining to respawn
-            respawnSound.playRespawnLivesSound();
+            entity.getEvents().trigger("playSound", "respawn");
 
             tableButtons.add(respawnBtn).padBottom(Gdx.graphics.getHeight() * 0.05f);
             tableButtons.row();
             tableButtons.add(exitBtn).padBottom(Gdx.graphics.getHeight() * 0.2f);
         } else {
 //          Play the dead sound when the player live not remaining to respawn
-            deadSound.playDeadSound();
+            entity.getEvents().trigger("playSound", "dead");
 
             tableButtons.row();
             tableButtons.add(exitBtn).padBottom(Gdx.graphics.getHeight() * 0.3f);

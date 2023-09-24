@@ -36,7 +36,7 @@ import java.util.List;
  * The class extends the Window class from libGDX to represent a pop-up or overlay menu in the game.
  */
 public class UpgradeDisplay extends Window {
-    private static final float WINDOW_WIDTH_SCALE = 0.65f;
+    private static final float WINDOW_WIDTH_SCALE = 0.5f;
 
     private static final float WINDOW_HEIGHT_SCALE = 0.65f;
 
@@ -310,8 +310,8 @@ public class UpgradeDisplay extends Window {
         TextButton exitButton = new TextButton("X", skin);
         Table table = new Table();
         table.add(exitButton).height(32f).width(32f);
-        table.setPosition(((float) (getWidth() * getScaleX() * 0.975)),
-                (float) (getHeight() * getScaleY() * 0.95));
+        table.setPosition(((float) (getWidth() * getScaleX() * 0.91)),
+                (float) (getHeight() * getScaleY() * 0.88));
 
         exitButton.addListener(new ChangeListener() {
             @Override

@@ -8,6 +8,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.buildables.Wall;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
@@ -90,6 +91,8 @@ class BasicWallToolTest {
 
         when(structurePlacementService.getStructureAt(position)).thenReturn(mock(PlaceableEntity.class));
 
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
+
         tool.interact(player, position);
 
         verify(structurePlacementService, never()).placeStructureAt(any(), eq(position),
@@ -133,6 +136,8 @@ class BasicWallToolTest {
         var position = new GridPoint2(0, 0);
 
         when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
         tool.interact(player, position);
 

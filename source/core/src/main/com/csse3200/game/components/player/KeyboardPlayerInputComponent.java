@@ -37,21 +37,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     private InventoryComponent playerInventory;
     private int testing = 0;
 
-    private playerActionSound playerWalkSound;
-
-    private playerActionSound playerDodgeSound;
-
     static HashMap<Integer, Integer> keyFlags = new HashMap<Integer, Integer>();
     Vector2 lastMousePos = new Vector2(0, 0);
 
     public KeyboardPlayerInputComponent() {
         super(5);
-
-//        Initialisation of the playerWalkSound with the correct audio file
-        playerWalkSound = new playerActionSound("sounds/footStepsInTheForestGround.mp3");
-
-//        Initialisation of the playerWalkSound with the correct audio file
-        playerDodgeSound = new playerActionSound("sounds/dodgingAlertSweep.mp3");
     }
 
     /**
@@ -310,9 +300,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         entity.getEvents().trigger("walkStop");
         entity.getEvents().trigger("walkStopAnimation", lastDir);
 
-//        the below function call is checking the flag which is in playerActionSound.java,
-//         whether player is in static position or walking
-        playerWalkSound.stopWalking();
+        entity.getEvents().trigger("stopSound", "footstep");
         return;
       }
 
@@ -329,7 +317,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       entity.getEvents().trigger("walk", walkDirection);
 
       // play the sound when player starts walking
-      playerWalkSound.startWalking();
+        entity.getEvents().trigger("loopSound", "footstep");
 
     }
     }
@@ -360,7 +348,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     entity.getEvents().trigger("dodged");
 
 //  play the sound when player starts dodging
-    playerDodgeSound.playDodgeSound();
+    entity.getEvents().trigger("playSound", "dodge");
 
     java.util.TimerTask stopDodge = new java.util.TimerTask() {
       @Override

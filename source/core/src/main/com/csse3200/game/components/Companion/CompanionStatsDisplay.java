@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.playerStatsSound;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
@@ -22,8 +21,6 @@ public class CompanionStatsDisplay extends UIComponent {
     Table companionStatisticsUI;
 
     private boolean update = false;
-
-    private playerStatsSound lowHealthSound; // Object for loading low-health audio file
 
     Table playerLowHealthAlert;
 
@@ -59,9 +56,6 @@ public class CompanionStatsDisplay extends UIComponent {
      */
     public CompanionStatsDisplay(Entity playerEntity) {
         this.playerEntity = playerEntity;
-
-//      low health sound file
-        lowHealthSound = new playerStatsSound("sounds/playerLow_health.mp3");
     }
 
     /**
@@ -211,8 +205,7 @@ public class CompanionStatsDisplay extends UIComponent {
             update = true;
 
 //          Play the low health sound when health is below 50
-            lowHealthSound.playLowHealthSound();
-
+            entity.getEvents().trigger("playSound", "low_health");
             return;
         }
 

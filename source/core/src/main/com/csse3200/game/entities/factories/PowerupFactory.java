@@ -20,6 +20,7 @@ public class PowerupFactory {
     /**
      *
      * @param config - configuration file to match powerUp
+     *               it loads the health powerUp and boostPowerup
      * @return entity
      */
     public static Entity createPowerup(PowerupConfig config) {

@@ -44,10 +44,7 @@ public class PowerupComponent extends Component {
         switch (type) {
             case HEALTH_BOOST ->{
                 playerCombatStats.setHealth(100);
-
-                if (entity != null) {
-                    entity.getEvents().trigger("playSound", "healthPowerup"); //plays sound when health powerup selected
-                }
+                entity.getEvents().trigger("playSound", "healthPowerup"); //plays sound when health powerup selected
             }
 
 

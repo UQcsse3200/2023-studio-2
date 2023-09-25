@@ -392,7 +392,15 @@ public class UpgradeDisplay extends Window {
     }
 
     /**
-     * Creates a label with the specified format and arguments, and then adds it to the given table.
+     * Populates the given table with a label for an attribute and its corresponding value.
+     * <p>
+     * Example display:
+     *      | Damage  |  50  |
+     *
+     * @param table The table to populate with the labels.
+     * @param attributeName The name or description of the attribute.
+     * @param valueFormat The value associated with the attribute. If empty, only the attribute label is added.
+     *
      */
     private void createTooltipLabel(Table table, String attributeName, String valueFormat) {
         table.pad(10);
@@ -419,42 +427,65 @@ public class UpgradeDisplay extends Window {
 
     /**
      * Creates a tooltip for a given upgrade node.
-     * The tooltip displays various attributes of the upgrade node, such as damage, speed, cooldown, etc.
-     * The specific attributes displayed depend on whether the node is a weapon or tool.
+     * The tooltip provides details about the upgrade node, which can either be a weapon or a tool.
      *
-     * @param node The upgrade node for which the tooltip is created.
+     * @param node The upgrade node for which the tooltip is to be created.
      * @return A Tooltip object containing a table with labels that describe the upgrade node.
      */
     private Tooltip<Table> createTooltip(UpgradeNode node) {
 
         Table tooltipTable = new Table();
-
         // Set font style and background
         tooltipTable.defaults().left().padLeft(2).padTop(5).padRight(10);
         Drawable bg = skin.getDrawable("panelInset_brown.png");
         tooltipTable.setBackground(bg);
 
         if (node.getWeaponType() != null) {
-            WeaponConfig config = (WeaponConfig) node.getConfig();
-            createTooltipLabel(tooltipTable, config.name, "");
-            createTooltipLabel(tooltipTable, config.description, "");
-            createTooltipLabel(tooltipTable, "Damage", String.valueOf((int) config.damage));
-            createTooltipLabel(tooltipTable, "Speed", String.valueOf((int) config.weaponSpeed));
-            createTooltipLabel(tooltipTable, "Cooldown", String.valueOf(config.attackCooldown));
-            createTooltipLabel(tooltipTable, "Cost", String.valueOf(node.getNodeCost()));
+            createWeaponTooltip(tooltipTable, node);
         } else {
-            ToolConfig config = (ToolConfig) node.getConfig();
-            createTooltipLabel(tooltipTable, config.name, "");
-            createTooltipLabel(tooltipTable, "Extractor Cost:", "");
-            for (ObjectMap.Entry<String, Integer> entry : config.cost) {
-                createTooltipLabel(tooltipTable, entry.key, String.valueOf(entry.value));
-            }
+            createToolTooltip(tooltipTable, node);
         }
 
-        // Return the table as a tooltip
         Tooltip<Table> tooltip = new Tooltip<>(tooltipTable);
         tooltip.setInstant(true); // Make it appear instantly on mouseover
         return tooltip;
+    }
+
+    /**
+     * Creates the tooltip contents for an upgrade node of type weapon.
+     * This populates the provided table with labels that describe the weapon's attributes.
+     *
+     * @param table The table to populate with weapon details.
+     * @param node The upgrade node of type weapon.
+     */
+    private void createWeaponTooltip(Table table, UpgradeNode node) {
+        WeaponConfig config = (WeaponConfig) node.getConfig();
+        createTooltipLabel(table, config.name, "");
+        createTooltipLabel(table, config.description, "");
+
+        if (node.getWeaponType() != WeaponType.WOODHAMMER) {
+            createTooltipLabel(table, "Damage", String.valueOf((int) config.damage));
+            createTooltipLabel(table, "Speed", String.valueOf((int) config.weaponSpeed));
+            createTooltipLabel(table, "Cooldown", String.valueOf(config.attackCooldown));
+            createTooltipLabel(table, "Cost", String.valueOf(node.getNodeCost()));
+        }
+    }
+
+    /**
+     * Creates the tooltip contents for an upgrade node of type tool.
+     * This populates the provided table with labels that describe the tool's attributes and costs.
+     *
+     * @param table The table to populate with tool details.
+     * @param node The upgrade node of type tool.
+     */
+    private void createToolTooltip(Table table, UpgradeNode node) {
+        ToolConfig config = (ToolConfig) node.getConfig();
+        createTooltipLabel(table, config.name, "");
+        createTooltipLabel(table, "Cost to build:", "");
+
+        for (ObjectMap.Entry<String, Integer> entry : config.cost) {
+            createTooltipLabel(table, entry.key, String.valueOf(entry.value));
+        }
     }
 
     /**
@@ -491,6 +522,13 @@ public class UpgradeDisplay extends Window {
         return weaponButton;
     }
 
+    /**
+     * Creates a cost button for a given upgrade node. This button displays the cost of the upgrade node.
+     *
+     * @param node The upgrade node for which the cost button is to be created.
+     * @param weaponButton The button representing the weapon. The cost button's position is determined relative to this.
+     * @return A TextButton displaying the cost of the upgrade node or null if the weapon is already unlocked.
+     */
     public TextButton createCostButtons(UpgradeNode node, ImageButton weaponButton) {
 
         UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);

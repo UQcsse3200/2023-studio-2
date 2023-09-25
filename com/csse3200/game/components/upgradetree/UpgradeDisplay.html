@@ -151,7 +151,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.scenes.scene2d.ui.TextButton</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createCostButtons(com.csse3200.game.components.upgradetree.UpgradeNode,com.badlogic.gdx.scenes.scene2d.ui.ImageButton)" class="member-name-link">createCostButtons</a><wbr>(<a href="UpgradeNode.html" title="class in com.csse3200.game.components.upgradetree">UpgradeNode</a>&nbsp;node,
  com.badlogic.gdx.scenes.scene2d.ui.ImageButton&nbsp;weaponButton)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a cost button for a given upgrade node.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="UpgradeDisplay.html" title="class in com.csse3200.game.components.upgradetree">UpgradeDisplay</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createUpgradeDisplay()" class="member-name-link">createUpgradeDisplay</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -165,9 +167,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Renders the background, the connection lines, and the ImageButtons for the upgrade tree.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove()" class="member-name-link">remove</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawLines(com.csse3200.game.components.upgradetree.UpgradeNode)" class="member-name-link">drawLines</a><wbr>(<a href="UpgradeNode.html" title="class in com.csse3200.game.components.upgradetree">UpgradeNode</a>&nbsp;node)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Draws lines connecting parent nodes to their child nodes.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove()" class="member-name-link">remove</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Override the removal process to unregister input overrides.</div>
 </div>
 </div>
@@ -233,10 +240,29 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="drawLines(com.csse3200.game.components.upgradetree.UpgradeNode)">
+<h3>drawLines</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">drawLines</span><wbr><span class="parameters">(<a href="UpgradeNode.html" title="class in com.csse3200.game.components.upgradetree">UpgradeNode</a>&nbsp;node)</span></div>
+<div class="block">Draws lines connecting parent nodes to their child nodes.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>node</code> - The current node from which lines will be drawn to its children.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="createCostButtons(com.csse3200.game.components.upgradetree.UpgradeNode,com.badlogic.gdx.scenes.scene2d.ui.ImageButton)">
 <h3>createCostButtons</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.scenes.scene2d.ui.TextButton</span>&nbsp;<span class="element-name">createCostButtons</span><wbr><span class="parameters">(<a href="UpgradeNode.html" title="class in com.csse3200.game.components.upgradetree">UpgradeNode</a>&nbsp;node,
  com.badlogic.gdx.scenes.scene2d.ui.ImageButton&nbsp;weaponButton)</span></div>
+<div class="block">Creates a cost button for a given upgrade node. This button displays the cost of the upgrade node.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>node</code> - The upgrade node for which the cost button is to be created.</dd>
+<dd><code>weaponButton</code> - The button representing the weapon. The cost button's position is determined relative to this.</dd>
+<dt>Returns:</dt>
+<dd>A TextButton displaying the cost of the upgrade node or null if the weapon is already unlocked.</dd>
+</dl>
 </section>
 </li>
 <li>

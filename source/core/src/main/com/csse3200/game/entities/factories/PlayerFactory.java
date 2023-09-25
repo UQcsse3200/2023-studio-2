@@ -8,6 +8,7 @@ import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.player.*;
 import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
@@ -82,7 +83,6 @@ public class PlayerFactory {
         animator.addAnimation("Character_RollUp", 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation("Character_Death", 0.2f, Animation.PlayMode.NORMAL);
 
-
         Entity player =
                 new Entity()
                         .addComponent(new PhysicsComponent())
@@ -92,7 +92,7 @@ public class PlayerFactory {
                         .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
                         .addComponent(new InventoryComponent())
                         .addComponent(inputComponent)
-                        .addComponent(new PlayerStatsDisplay())
+                        .addComponent(new PlayerStatsDisplay(config))
                         .addComponent(animator)
                         .addComponent(new PlayerAnimationController())
                         .addComponent(new WeaponComponent())
@@ -102,7 +102,8 @@ public class PlayerFactory {
                         .addComponent(new StructureToolPicker())
                         .addComponent(new ProximityControllerComponent())
                         .addComponent(new ActionFeedbackComponent())
-                        .addComponent(new SoundComponent(config.sounds));
+                        .addComponent(new SoundComponent(config.sounds))
+                        .addComponent(new UpgradeTree());
 
         PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
         player.getComponent(ColliderComponent.class).setDensity(1.5f);

@@ -45,28 +45,28 @@ public class UpgradeTreeTest {
     @Test
     public void testIsUnlocked() {
         // Ensure the defaults are true and nonUnlocks are false
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER));
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STEELHAMMER));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA));
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER.toString()));
+        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STEELHAMMER.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA.toString()));
+        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG.toString()));
     }
 
     @Test
     public void testDefaultWeapons() {
         // ensure the tree contains only the default weapons
         assertEquals(3, upgradeTree.getUnlockedWeapons().size());
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG.toString()));
     }
 
     @Test
     public void testUnlockWeapon() {
         // Check a weapon is locked, unlock it, then check its unlocked
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER));
-        upgradeTree.unlockWeapon(WeaponType.STONEHAMMER);
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER));
+        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER.toString()));
+        upgradeTree.unlockWeapon(WeaponType.STONEHAMMER.toString());
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER.toString()));
     }
 
     @Test void testUnlockMultipleWeapons() {

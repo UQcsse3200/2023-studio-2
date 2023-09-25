@@ -145,8 +145,8 @@ public class EnemyFactory {
     // Scaling the enemy's visual size
     // UI adjustments
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
-    enemy.scaleHeight(getEnemyscale(config));
-    PhysicsUtils.setScaledCollider(enemy, 0.3f, 0.3f);
+    enemy.scaleWidth(getEnemyscale(config));
+    PhysicsUtils.setScaledCollider(enemy, 0.5f, 0.5f);
 
     return enemy;
   }
@@ -157,18 +157,16 @@ public class EnemyFactory {
    * @return The scaling factor for the provided enemy type.
    */
   static float getEnemyscale(EnemyConfig config){
-    float scale = 2.0f;
+    float scale = 0.7f;
 
     if (config.type == EnemyType.Ranged) {
-      scale = 2.0f;
       if (config.isBoss){
-        scale = 4.4f;
+        scale = 3.0f;
       }
     }
     else if (config.type == EnemyType.Melee) {
-      scale = 1.2f;
       if (config.isBoss){
-        scale = 4.4f;
+        scale = 3.0f;
       }
     }
     return scale;

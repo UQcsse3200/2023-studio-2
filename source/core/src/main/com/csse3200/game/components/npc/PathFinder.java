@@ -33,21 +33,7 @@ public class PathFinder {
                 Entity entityOnGridPoint = map.getAreaEntities().get(new GridPoint2(x, y));
                 // if there is an entity on the grid
                 if (entityOnGridPoint != null) {
-                    // if the entity has a hitbox
-                    if (entityOnGridPoint.getComponent(HitboxComponent.class) != null) {
-                        // if the entity is a bullet or an enemy
-                        if (PhysicsLayer.contains(entityOnGridPoint.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.ENEMY_PROJECTILE) ||
-                            PhysicsLayer.contains(entityOnGridPoint.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.ENEMY_MELEE) ||
-                            PhysicsLayer.contains(entityOnGridPoint.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.ENEMY_RANGE))
-                        {
-                            nodeMap[x][y] = node;
-                        }
-                    } else {
-                        if (x == target.x && y == target.y) {
-                            nodeMap[x][y] = node;
-                        }
-                        closed.add(node);
-                    }
+                    closed.add(node);
                 }
                 nodeMap[x][y] = node;
             }

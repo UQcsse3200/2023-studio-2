@@ -1,6 +1,5 @@
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -10,8 +9,6 @@ import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.StructurePlacementService;
@@ -19,7 +16,6 @@ import com.csse3200.game.services.StructurePlacementService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Represents an area in the game, such as a level, indoor area, etc. An area has a terrain and
@@ -29,7 +25,7 @@ import java.util.Map;
  */
 public abstract class GameArea implements Disposable {
   protected static TerrainComponent terrain;
-  protected HashMap<GridPoint2, Entity> gameAreaEntities;
+  protected HashMap<GridPoint2, Entity> pathFinderGrids;
   protected List<Entity> areaEntities;
   protected Entity companion;
   protected static Entity player;
@@ -39,7 +35,7 @@ public abstract class GameArea implements Disposable {
 
   public GameArea() {
     areaEntities = new ArrayList<>();
-    gameAreaEntities = new HashMap<>();
+    pathFinderGrids = new HashMap<>();
     this.targetables = new ArrayList<>();
   }
 
@@ -58,7 +54,7 @@ public abstract class GameArea implements Disposable {
   }
 
   public HashMap<GridPoint2, Entity> getAreaEntities() {
-    return gameAreaEntities;
+    return pathFinderGrids;
   }
 
   protected void registerStructurePlacementService() {
@@ -119,26 +115,30 @@ public abstract class GameArea implements Disposable {
   protected void spawnEntity(Entity entity) {
     areaEntities.add(entity);
     if (terrain == null) {
-      gameAreaEntities.put(null, entity);
+      pathFinderGrids.put(null, entity);
     } else {
       if (entity.getComponent(ColliderComponent.class) != null) {
-        Vector2 position = entity.getPosition();
-        Vector2 scale = entity.getScale();
+        if (PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.LABORATORY) ||
+            PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.OBSTACLE) ||
+            PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.SHIP)) {
+          Vector2 position = entity.getPosition();
+          Vector2 scale = entity.getScale();
 
 // Calculate the four corners of the entity
-        Vector2 topRight = new Vector2(position.x + scale.x, position.y + scale.y);
-        Vector2 bottomLeft = new Vector2(position.x, position.y);
+          Vector2 topRight = new Vector2(position.x + scale.x, position.y + scale.y);
+          Vector2 bottomLeft = new Vector2(position.x, position.y);
 
 // Convert these to grid coordinates using your existing function
-        GridPoint2 gridTopRight = terrain.worldPositionToTile(topRight);
-        GridPoint2 gridBottomLeft = terrain.worldPositionToTile(bottomLeft);
+          GridPoint2 gridTopRight = terrain.worldPositionToTile(topRight);
+          GridPoint2 gridBottomLeft = terrain.worldPositionToTile(bottomLeft);
 
 // Iterate through the grid coordinates and add them to the HashMap
-        for (int x = gridBottomLeft.x; x <= gridTopRight.x; x++) {
-          for (int y = gridBottomLeft.y; y <= gridTopRight.y; y++) {
-            GridPoint2 gridPoint = new GridPoint2(x, y);
-            if (!(gameAreaEntities.containsKey(gridPoint))) {
-              gameAreaEntities.put(gridPoint, entity);
+          for (int x = gridBottomLeft.x; x < gridTopRight.x; x++) {
+            for (int y = gridBottomLeft.y; y < gridTopRight.y; y++) {
+              GridPoint2 gridPoint = new GridPoint2(x, y);
+              if (!(pathFinderGrids.containsKey(gridPoint))) {
+                pathFinderGrids.put(gridPoint, entity);
+              }
             }
           }
         }

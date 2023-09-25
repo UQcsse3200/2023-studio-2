@@ -45,7 +45,10 @@ public class UpgradeTree extends Component {
     public void unlockWeapon(Object weapon) {
         if (!isWeaponUnlocked(weapon)) {
             unlockedWeapons.add(weapon);
-            entity.getEvents().trigger("playSound", "upgradeWeapon");
+            if (entity != null) {
+                entity.getEvents().trigger("playSound", "upgradeWeapon");
+            }
+
         }
     }
 

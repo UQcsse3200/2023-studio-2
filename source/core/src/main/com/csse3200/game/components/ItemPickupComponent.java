@@ -17,6 +17,7 @@ public class ItemPickupComponent extends Component {
     private Entity companion = ServiceLocator.getEntityService().getCompanion();
 
     private static Logger logger;
+    private Entity player = ServiceLocator.getEntityService().getPlayer();
 
     /**
      * Constructs an ItemPickupComponent with the specified target layer for item collisions.
@@ -44,11 +45,13 @@ public class ItemPickupComponent extends Component {
         short layer = companion.getComponent(HitboxComponent.class).getLayer();
         boolean isCompanion = PhysicsLayer.contains(layer, (short) (PhysicsLayer.PLAYER | PhysicsLayer.COMPANION));
         if (isCompanion){
-        entity.getComponent(PotionComponent.class).applyEffect();
+        /*entity.getComponent(PowerupComponent.class).applyEffect(player);*/
         Entity entityOfComponent = getEntity();
         MapGameArea.removeItemOnMap(entityOfComponent);
         logger.info("Item picked up");
         ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class).addItem(entityOfComponent);}
-        else {return;}
+        else {
+            Entity entityOfComponent = getEntity();
+            MapGameArea.removeItemOnMap(entityOfComponent);}
     }
 }

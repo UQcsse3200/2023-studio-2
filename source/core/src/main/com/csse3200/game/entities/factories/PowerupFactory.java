@@ -7,6 +7,8 @@ import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.configs.PowerupConfig;
 import com.csse3200.game.entities.configs.PowerupConfigs;
 import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
@@ -26,12 +28,11 @@ public class PowerupFactory {
     public static Entity createPowerup(PowerupConfig config) {
         // Initialise and resize a new Powerup
         Entity powerup = new Entity()
-                .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new PowerupComponent(config.type))
                 .addComponent(new TextureRenderComponent(config.spritePath))
                 .addComponent(new SoundComponent(config.sounds));
 
-        powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));
+       /* powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));*/
         powerup.setScale(0.6f, 0.6f);
 
         return powerup;
@@ -55,21 +56,31 @@ public class PowerupFactory {
         // Initialise and resize a new Powerup
         Entity powerup = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new PowerupComponent(type));
-        powerup.addComponent(new PowerUpDisplayHUD(type));
+                .addComponent(new PowerupComponent(type))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
+                .addComponent(new ItemPickupComponent(PhysicsLayer.ITEMS_ABOVE_PLATFORM));
 
-        powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));
+        powerup.addComponent(new PowerUpDisplayHUD(type));
+/*
+        powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));*/
         powerup.setScale(0.6f, 0.6f);
 
         // Assigns texture based on the specific PowerupType
         switch (type) {
-            case HEALTH_BOOST -> powerup.addComponent(new TextureRenderComponent("images/powerups/health_boost.png"));
-            case SPEED_BOOST -> powerup.addComponent(new TextureRenderComponent("images/powerups/speed_boost.png"));
-            case EXTRA_LIFE -> powerup.addComponent(new TextureRenderComponent("images/powerups/extra_life.png"));
-            case DOUBLE_CROSS -> powerup.addComponent(new TextureRenderComponent("images/powerups/double_cross"));
-            case TEMP_IMMUNITY -> powerup.addComponent(new TextureRenderComponent("images/powerups/temp_immunity"));
-            case DOUBLE_DAMAGE -> powerup.addComponent(new TextureRenderComponent("images/powerups/double_damage"));
-            case SNAP -> powerup.addComponent(new TextureRenderComponent("images/powerups/snap"));
+            case HEALTH_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/Potion2re.png"))
+                                         .addComponent(new PowerupComponent(PowerupType.HEALTH_BOOST));}
+            case SPEED_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/Potion4re.png"))
+                                         .addComponent(new PowerupComponent(PowerupType.SPEED_BOOST));}
+            case EXTRA_LIFE -> {powerup.addComponent(new TextureRenderComponent("images/powerups/extra_life.png"))
+                                         .addComponent(new PowerupComponent(PowerupType.EXTRA_LIFE));}
+            case DOUBLE_CROSS -> {powerup.addComponent(new TextureRenderComponent("images/powerups/double_cross.png"))
+                                         .addComponent(new PowerupComponent(PowerupType.DOUBLE_CROSS));}
+            case TEMP_IMMUNITY -> {powerup.addComponent(new TextureRenderComponent("images/Potion1re.png"))
+                                          .addComponent(new PowerupComponent(PowerupType.TEMP_IMMUNITY));}
+            case DOUBLE_DAMAGE -> {powerup.addComponent(new TextureRenderComponent("images/powerups/double_damage.png"))
+                                          .addComponent(new PowerupComponent(PowerupType.DOUBLE_DAMAGE));}
+            case SNAP -> {powerup.addComponent(new TextureRenderComponent("images/powerups/snap.png"))
+                                 .addComponent(new PowerupComponent(PowerupType.SNAP));}
             default -> throw new IllegalArgumentException("You must assign a valid PowerupType");
         }
         return powerup;

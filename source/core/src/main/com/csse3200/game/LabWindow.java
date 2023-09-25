@@ -11,7 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.components.PotionType;
+
+import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -106,21 +107,21 @@ public class LabWindow extends Window {
         potion1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event,float x, float y){
-                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.DEATH_POTION);
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPowerup", PowerupType.DOUBLE_DAMAGE);
                 failLaboratory();
             }
         });
         potion2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.SPEED_POTION);
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPowerup",PowerupType.SPEED_BOOST);
                 failLaboratory();
             }
         });
         potion3.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.HEALTH_POTION);
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPowerup",PowerupType.HEALTH_BOOST);
                 failLaboratory();
             }
         });
@@ -128,17 +129,17 @@ public class LabWindow extends Window {
         potion4.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.INVINCIBILITY_POTION);
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPowerup",PowerupType.TEMP_IMMUNITY);
                 failLaboratory();
             }
         });
-        potion5.addListener(new ChangeListener() {
+        /*potion5.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.DOUBLE_DAMAGE);
                 failLaboratory();
             }
-        });
+        });*/
         // Override all normal user input
         inputOverrideComponent = new InputOverrideComponent();
         ServiceLocator.getInputService().register(inputOverrideComponent);

@@ -2,8 +2,10 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
+import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Represents a power-up component within the game.
@@ -11,8 +13,11 @@ import com.csse3200.game.entities.Entity;
 public class PowerupComponent extends Component {
 
     private PowerupType type;
+    private Entity player = ServiceLocator.getEntityService().getPlayer();
+    private Entity companion = ServiceLocator.getEntityService().getCompanion();
     private CombatStatsComponent playerCombatStats;
     private PlayerActions playerActions;
+
     private long duration;
 
     /**
@@ -44,6 +49,7 @@ public class PowerupComponent extends Component {
         switch (type) {
             case HEALTH_BOOST ->{
                 playerCombatStats.setHealth(100);
+                companion.getComponent(CombatStatsComponent.class).setHealth(50);
                 entity.getEvents().trigger("playSound", "healthPowerup"); //plays sound when health powerup selected
             }
 
@@ -53,39 +59,39 @@ public class PowerupComponent extends Component {
                 if (playerActions == null) {
                     return;
                 }
+                player.getComponent(PlayerActions.class).setSpeed(6,6);
+                companion.getComponent(CompanionActions.class).setSpeed(7,7);
+                companion.getComponent(FollowComponent.class).setFollowSpeed(5);
 
-                playerActions.setSpeed(5, 5);
-                this.setDuration(1500);
-                entity.getEvents().trigger("playSound", "boostPowerup"); //plays sound when boost powerup selected
+                // Set the duration for speed effect
+                this.setDuration(10000);
 
-
-                // Speed up for 1.5 seconds, then return to normal speed
-                Timer.Task speedUp = new Timer.Task() {
+                // Schedule a task to reset the speed values after the specified duration
+                Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
-                        playerActions.setSpeed(3, 3);
+                        player.getComponent(PlayerActions.class).setSpeed(3,3);
+                        companion.getComponent(CompanionActions.class).setSpeed(4,4);
                     }
-                };
-                new Timer().scheduleTask(speedUp, getDuration());
+                },getDuration());
             }
             case EXTRA_LIFE -> playerCombatStats.addLife();
 
             case TEMP_IMMUNITY -> {
-
                 if (playerActions == null) {
                     return;
                 }
-
-                playerCombatStats.setImmunity(true);
-                this.setDuration(6000);
-
-                Timer.Task immune = new Timer.Task() {
+                companion.getComponent(CombatStatsComponent.class).setImmunity(true);
+                player.getComponent(CombatStatsComponent.class).setImmunity(true);
+                this.setDuration(8000);
+                Timer.schedule(new Timer.Task()  {
                     @Override
                     public void run() {
-                        playerCombatStats.setImmunity(false);
+                        companion.getComponent(CombatStatsComponent.class).setImmunity(false);
+                        player.getComponent(CombatStatsComponent.class).setImmunity(false);
+
                     }
-                };
-                new Timer().scheduleTask(immune, getDuration());
+                },getDuration());
             }
             case DOUBLE_DAMAGE -> {
                 if (playerActions == null) {

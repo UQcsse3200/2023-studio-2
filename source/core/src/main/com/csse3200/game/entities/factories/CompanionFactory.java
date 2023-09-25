@@ -11,8 +11,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.*;
 import com.csse3200.game.components.FollowComponent;
-import com.csse3200.game.components.PotionComponent;
-import com.csse3200.game.components.PotionType;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;

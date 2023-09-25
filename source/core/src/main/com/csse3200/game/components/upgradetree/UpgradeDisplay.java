@@ -1,6 +1,7 @@
 package com.csse3200.game.components.upgradetree;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -12,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -388,6 +391,60 @@ public class UpgradeDisplay extends Window {
     }
 
     /**
+     * Creates a label with the specified format and arguments, and then adds it to the given table.
+     *
+     * @param table The table where the label will be added.
+     * @param format The format string used to generate the label's text.
+     * @param args Arguments referenced by the format specifiers in the format string.
+     */
+    private void createTooltipLabel(Table table, String format, Object... args) {
+        Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
+        labelStyle.fontColor = Color.BLACK;
+        labelStyle.font = skin.getFont("thick_black");
+        Label label = new Label(String.format(format, args), labelStyle);
+        table.add(label).row();
+    }
+
+    /**
+     * Creates a tooltip for a given upgrade node.
+     * The tooltip displays various attributes of the upgrade node, such as damage, speed, cooldown, etc.
+     * The specific attributes displayed depend on whether the node is a weapon or tool.
+     *
+     * @param node The upgrade node for which the tooltip is created.
+     * @return A Tooltip object containing a table with labels that describe the upgrade node.
+     */
+    private Tooltip<Table> createTooltip(UpgradeNode node) {
+
+        Table tooltipTable = new Table();
+
+        // Set font style and background
+        tooltipTable.defaults().left().padLeft(2).padTop(5).padRight(10);
+        Drawable bg = skin.getDrawable("panelInset_brown.png");
+        tooltipTable.setBackground(bg);
+
+        if (node.getWeaponType() != null) {
+            WeaponConfig config = (WeaponConfig) node.getConfig();
+            createTooltipLabel(tooltipTable, "%s\n%s\n", config.name, config.description);
+            createTooltipLabel(tooltipTable, "Damage: %d", (int) config.damage);
+            createTooltipLabel(tooltipTable, "Speed: %d", (int) config.weaponSpeed);
+            createTooltipLabel(tooltipTable, "Cooldown: %d", config.attackCooldown);
+            createTooltipLabel(tooltipTable, "Cost: %d", node.getNodeCost());
+        } else {
+            ToolConfig config = (ToolConfig) node.getConfig();
+            createTooltipLabel(tooltipTable, "%s Tool", config.name);
+            createTooltipLabel(tooltipTable, "Cost:");
+            for (ObjectMap.Entry<String, Integer> entry : config.cost) {
+                createTooltipLabel(tooltipTable, "%s: %d", entry.key, (int) entry.value);
+            }
+        }
+
+        // Return the table as a tooltip
+        Tooltip<Table> tooltip = new Tooltip<>(tooltipTable);
+        tooltip.setInstant(true); // Make it appear instantly on mouseover
+        return tooltip;
+    }
+
+    /**
      * Creates a button for a given weapon node.
      *
      * @param node The upgrade node for which the button is being created.
@@ -404,6 +461,10 @@ public class UpgradeDisplay extends Window {
 
         Image lockImage = lockItem(node, stats, weaponButton);
         TextButton costButton = createCostButtons(node, weaponButton);
+
+        // Create tooltips
+        Tooltip<Table> tooltip = createTooltip(node);
+        weaponButton.addListener(tooltip);
 
         // Create unlock listener for unlock button
         if (costButton != null) {

@@ -15,7 +15,8 @@
       "footstep": "sounds/footStepsInTheForestGround.mp3",
       "healthPowerup": "sounds/PlayerHealthRecharge.mp3",
       "boostPowerup": "sounds/playerBoostRecharge.mp3",
-      "upgradeTreeTap": "sounds/upgradeTreeTap.mp3"
+      "upgradeTreeTap": "sounds/upgradeTreeTap.mp3",
+      "upgradeWeapon": "sounds/upgradeWeapon.mp3"
     }
   }
 }

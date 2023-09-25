@@ -27,7 +27,7 @@ public class PlayerDeathScreen extends ScreenAdapter {
     private final Renderer renderer;
     private static final String[] deathScreenTextures = {"images/deathscreens/deathscreen_0.jpg", "images/deathscreens/deathscreen_1.jpg", "images/deathscreens/deathscreen_2.jpg", "images/deathscreens/deathscreen_3.jpg"};
     private static final String[] deathScreenSounds = {
-            "sounds/playerLivesRespawn.mp3",
+            "sounds/playerDeathRespawn.mp3",
             "sounds/playerDead.mp3"
     };
     private int lives;

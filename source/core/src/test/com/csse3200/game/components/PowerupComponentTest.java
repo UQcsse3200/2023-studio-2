@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,6 +39,11 @@ public class PowerupComponentTest {
         Gdx.app = mock(Application.class);
         PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
         Entity player = mock(Entity.class);
+        Entity powerup = mock(Entity.class);
+
+        healthpowerup.setEntity(powerup);
+
+        when(powerup.getEvents()).thenReturn(mock(EventHandler.class));
         CombatStatsComponent playerStats = mock(CombatStatsComponent.class);
 
         // Test Health Powerup
@@ -56,6 +62,11 @@ public class PowerupComponentTest {
         Gdx.app = mock(Application.class);
         PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST);
         Entity player = mock(Entity.class);
+        Entity powerup = mock(Entity.class);
+
+        speedpowerup.setEntity(powerup);
+
+        when(powerup.getEvents()).thenReturn(mock(EventHandler.class));
         PlayerActions playerActions = mock(PlayerActions.class);
 
         // Test Speed Powerup

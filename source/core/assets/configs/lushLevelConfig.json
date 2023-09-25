@@ -39,7 +39,6 @@
     "images/resourcebar_lights.png",
     "images/upgradetree/background.png",
     "images/upgradetree/exit.png",
-    "images/upgradetree/upgradebench.png",
     "images/upgradetree/hammer1.png",
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
@@ -85,7 +84,8 @@
     "baseAttack": 10,
     "attackMultiplier": 1,
     "isImmune": false,
-    "spritePath": "images/player/player.atlas"
+    "spritePath": "images/player/player.atlas",
+    "mapName": "Planet Earth"
   },
   "areaEntityConfig": {
     "ship": {
@@ -130,12 +130,6 @@
           "y": 30
         }
       }
-    ],
-    "upgradeBench": {
-      "position" : {
-        "x": 20,
-        "y": 40
-      }
-    }
+    ]
   }
 }

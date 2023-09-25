@@ -24,7 +24,6 @@ public class AreaEntityConfig {
     public List<PowerupConfig> powerups = new ArrayList<>();
     public ShipConfig ship = null;
     public List<TurretConfig> turrets = new ArrayList<>();
-    public UpgradeBenchConfig upgradeBench = null;
     public List<WallConfig> walls = new ArrayList<>();
     public List<WeaponConfig> weapons = new ArrayList<>();
     public TreeTopConfig treetop = null;
@@ -50,7 +49,6 @@ public class AreaEntityConfig {
         entities.addAll(powerups);
         if (ship != null) entities.add(ship);
         entities.addAll(turrets);
-        if (upgradeBench != null) entities.add(upgradeBench);
         entities.addAll(walls);
         entities.addAll(weapons);
         return entities;
@@ -78,7 +76,6 @@ public class AreaEntityConfig {
         if (!Objects.equals(powerups, that.powerups)) return false;
         if (!Objects.equals(ship, that.ship)) return false;
         if (!Objects.equals(turrets, that.turrets)) return false;
-        if (!Objects.equals(upgradeBench, that.upgradeBench)) return false;
         if (!Objects.equals(walls, that.walls)) return false;
         return Objects.equals(weapons, that.weapons);
     }
@@ -100,7 +97,6 @@ public class AreaEntityConfig {
         result = 31 * result + (powerups != null ? powerups.hashCode() : 0);
         result = 31 * result + (ship != null ? ship.hashCode() : 0);
         result = 31 * result + (turrets != null ? turrets.hashCode() : 0);
-        result = 31 * result + (upgradeBench != null ? upgradeBench.hashCode() : 0);
         result = 31 * result + (walls != null ? walls.hashCode() : 0);
         result = 31 * result + (weapons != null ? weapons.hashCode() : 0);
         return result;

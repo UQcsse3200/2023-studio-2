@@ -1,11 +1,11 @@
 package com.csse3200.game.components.upgradetree;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -403,7 +403,7 @@ public class UpgradeDisplay extends Window {
      *
      */
     private void createTooltipLabel(Table table, String attributeName, String valueFormat) {
-        table.pad(10);
+        table.pad(20);
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
         labelStyle.fontColor = Color.BLACK;
         labelStyle.font = skin.getFont("thick_black");
@@ -435,9 +435,11 @@ public class UpgradeDisplay extends Window {
     private Tooltip<Table> createTooltip(UpgradeNode node) {
 
         Table tooltipTable = new Table();
-        // Set font style and background
         tooltipTable.defaults().left().padLeft(2).padTop(5).padRight(10);
-        Drawable bg = skin.getDrawable("panelInset_brown.png");
+        Texture texture = new Texture(Gdx.files.internal("kenney-rpg-expansion/PNG/panel_brown.png"));
+        texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        Drawable bg = new TextureRegionDrawable(new TextureRegion(texture));
+
         tooltipTable.setBackground(bg);
 
         if (node.getWeaponType() != null) {

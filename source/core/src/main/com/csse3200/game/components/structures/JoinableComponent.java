@@ -9,7 +9,10 @@ import com.csse3200.game.rendering.AtlasRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This component is used to change the texture and collision bounds of an entity

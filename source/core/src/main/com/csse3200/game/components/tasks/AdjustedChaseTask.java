@@ -20,7 +20,7 @@ public class AdjustedChaseTask extends DefaultTask implements PriorityTask {
   private final int priority;
   private final float viewDistance;
   private final float maxChaseDistance;
-  private float shootDistance;
+  private final float shootDistance;
   private final PhysicsEngine physics;
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();

@@ -2,7 +2,6 @@ package com.csse3200.game.components.ships;
 
 import com.badlogic.gdx.Gdx;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.ships.ShipActions;
 import com.csse3200.game.entities.Entity;
 
 /**
@@ -11,7 +10,6 @@ import com.csse3200.game.entities.Entity;
 public class ShipUpgradesComponent extends Component {
 
     private ShipUpgradesType type;
-    private ShipActions shipActions;
 
     /**
      * Assigns a type and targetLayer value to a given ShipUpgrade
@@ -27,7 +25,7 @@ public class ShipUpgradesComponent extends Component {
      * @param ship - the ship to apply the upgrade to
      */
     public void applyUpgrade(Entity ship) {
-        shipActions = ship.getComponent(ShipActions.class);
+        ShipActions shipActions = ship.getComponent(ShipActions.class);
         if (shipActions == null) {
             return;
         }

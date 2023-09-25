@@ -1,9 +1,9 @@
 {
   "position": {
     "x": 10,
-    "y": 10
+    "y": 50
   },
-  "health": 100,
+  "health": 50,
   "baseAttack": 10,
   "attackMultiplier": 1,
   "isImmune": false,

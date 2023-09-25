@@ -65,6 +65,16 @@
       "y": 40
     }
   },
+  "treetop": {
+    "position": {
+      "x": 0,
+      "y": 30
+    },
+    "spritePath": "map/treetop.png",
+    "scaleH": 30,
+    "scaleX": 0.5,
+    "scaleY": 0.2
+  },
   "botanist": {
     "spritePath": "images/botanist.atlas",
     "position" : {
@@ -77,6 +87,13 @@
     "position" : {
       "x": 24,
       "y": 50
+    }
+  },
+  "laboratory": {
+    "spritePath": "images/laboratory.png",
+    "position": {
+      "x": 32,
+      "y": 52
     }
   },
   "Jail": {

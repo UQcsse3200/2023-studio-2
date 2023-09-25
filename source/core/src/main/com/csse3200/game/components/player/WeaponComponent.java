@@ -6,7 +6,6 @@ import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.AttackFactory;
 import com.csse3200.game.entities.factories.PlayerWeaponFactory;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 /**

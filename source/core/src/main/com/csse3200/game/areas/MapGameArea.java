@@ -11,6 +11,7 @@ import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.PotionType;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
@@ -40,10 +41,11 @@ public class MapGameArea extends GameArea{
     private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
+    private int playerLives;
     private boolean validLoad = true;
     private static List<Entity> itemsOnMap = new ArrayList<>();
 
-    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
+    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
             mapConfig = MapConfigLoader.loadMapDirectory(configPath);
             logger.info("Successfully loaded map {}", configPath);
@@ -53,6 +55,7 @@ public class MapGameArea extends GameArea{
         }
         this.game = game;
         this.terrainFactory = terrainFactory;
+        this.playerLives = playerLives;
     }
 
     public static float getSpeedMult() {
@@ -92,6 +95,7 @@ public class MapGameArea extends GameArea{
         spawnBotanist();
         companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
         spawnPortal(player);
+        spawnTreeTop();
         spawnAstro();
         spawnSpawners();
         spawnJail();
@@ -275,7 +279,13 @@ public class MapGameArea extends GameArea{
             spawnEntityAt(ship, shipConfig.position, false, false);
         }
     }
+    private void spawnTreeTop(){
+        if (mapConfig.areaEntityConfig.treetop == null) return;
 
+        TreeTopConfig treeTopConfig = mapConfig.areaEntityConfig.treetop;
+        Entity treeTop = ObstacleFactory.createTreeTop(treeTopConfig);
+        spawnEntityAt(treeTop, treeTopConfig.position, false, false);
+    }
 
     /**
      * Spawns the player at the position given by the config file.
@@ -284,6 +294,8 @@ public class MapGameArea extends GameArea{
      */
     private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer(mapConfig.playerConfig);
+        newPlayer.getComponent(CombatStatsComponent.class).setLives(playerLives); // Ensures previous number of lives is maintained.
+        newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         newPlayer.getEvents().addListener("death", () ->
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
         );
@@ -299,10 +311,11 @@ public class MapGameArea extends GameArea{
         return newPlayer;
     }
     private void spawnLaboratory(){
-
-        GridPoint2 randomPos = new GridPoint2(34,19);
-        Entity newLaboratory = LaboratoryFactory.createLaboratory();
-        spawnEntityAt(newLaboratory, randomPos, true,false);
+        LaboratoryConfig laboratoryConfig = mapConfig.areaEntityConfig.laboratory;
+        if (laboratoryConfig !=null){
+            Entity newLaboratory = LaboratoryFactory.createLaboratory();
+            spawnEntityAt(newLaboratory, laboratoryConfig.position, true,false);
+        }
     }
 
     public static Entity getPlayer() {
@@ -353,26 +366,27 @@ public class MapGameArea extends GameArea{
             case DEATH_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos = new GridPoint2(39, 21);
-                spawnEntityAt(newPotion, pos, true, false);
+                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
                 return newPotion;
             case SPEED_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos2 = new GridPoint2(40, 21);
-                spawnEntityAt(newPotion, pos2, true, false);
+                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
                 return newPotion;
             case HEALTH_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos3 = new GridPoint2(41, 21);
-                spawnEntityAt(newPotion, pos3, true, false);
+                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
                 return newPotion;
             case INVINCIBILITY_POTION:
                 newPotion = PotionFactory.createPotion(PotionType.INVINCIBILITY_POTION);
                 itemsOnMap.add(newPotion);
-                GridPoint2 pos4 = new GridPoint2(42, 21);
-                spawnEntityAt(newPotion, pos4, true, false);
+                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
+                return newPotion;
+            case DOUBLE_DAMAGE:
+                newPotion = PotionFactory.createPotion(PotionType.DOUBLE_DAMAGE);
+                itemsOnMap.add(newPotion);
+                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position,true,false);
                 return newPotion;
             default: throw new IllegalArgumentException("You must assign a valid PotionType");
         }
@@ -445,5 +459,29 @@ public class MapGameArea extends GameArea{
             resourceService.unloadAssets(mapConfig.soundPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.unloadAssets(new String[] {mapConfig.backgroundMusicPath});
+    }
+
+    /**
+     * Triggers the death screen.
+     * @return death screen, specfic to the number of lives player has remaining.
+     */
+    private boolean initiateDeathScreen() {
+        int lives = getPlayer().getComponent(CombatStatsComponent.class).getLives();
+        switch (lives) {
+            case 0:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_0));
+                return true;
+            case 1:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_1));
+                return true;
+            case 2:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_2));
+                return true;
+            case 3:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_3));
+                return true;
+            default:
+                return false;
+        }
     }
 }

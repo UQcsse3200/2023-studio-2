@@ -13,9 +13,6 @@ import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.terminal.commands.DebugCommand;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
@@ -24,7 +21,6 @@ import java.util.Objects;
  * It handles various actions related to the Companion, such as movement, speed, and attacking.
  */
 public class CompanionActions extends Component {
-    private String bulletTexturePath;
 
     private static Vector2 COMPANION_SPEED = new Vector2(4f, 4f); // Metres per second
 
@@ -92,7 +88,7 @@ public class CompanionActions extends Component {
         // adjust the speed
         COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
         entity.getEvents().trigger("companionModeChange","Normal");
-        entity.getComponent(FollowComponent.class).setFollowSpeed(5f);
+        entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
     }
 
     public boolean isCompanionBeingMoved() {
@@ -105,7 +101,6 @@ public class CompanionActions extends Component {
      * @param path - Path????
      */
     public void setBulletTexturePath(String path) {
-        bulletTexturePath = path;
     }
 
     /**

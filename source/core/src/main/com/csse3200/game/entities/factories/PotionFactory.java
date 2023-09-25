@@ -1,6 +1,5 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.CompanionStatsDisplay;
@@ -38,21 +37,26 @@ public class PotionFactory {
         potion.setScale(0.4f, 0.4f);
         switch (type) {
             case DEATH_POTION -> {
-                potion.addComponent(new TextureRenderComponent("images/Potion3re.png"));
-                // You may add more components or apply effects here if needed for death potion
+                potion.addComponent(new TextureRenderComponent("images/Potion3re.png"))
+                        .addComponent(new PotionComponent(PotionType.DEATH_POTION));
             }
             case HEALTH_POTION -> {
-                potion.addComponent(new TextureRenderComponent("images/Potion4re.png"))
+                potion.addComponent(new TextureRenderComponent("images/Potion2re.png"))
                         .addComponent(new PotionComponent(PotionType.HEALTH_POTION));
             }
             case SPEED_POTION -> {
-                potion.addComponent(new TextureRenderComponent("images/Potion2re.png"))
+                potion.addComponent(new TextureRenderComponent("images/Potion4re.png"))
                         .addComponent(new PotionComponent(PotionType.SPEED_POTION));
             }
             case INVINCIBILITY_POTION -> {
                 potion.addComponent(new TextureRenderComponent("images/Potion1re.png"))
                         .addComponent(new PotionComponent(PotionType.INVINCIBILITY_POTION));
             }
+            case EXTRA_LIFE -> potion.addComponent(new TextureRenderComponent("images/powerups/extra_life.png"))
+                                     .addComponent(new PotionComponent(PotionType.EXTRA_LIFE));
+            case DOUBLE_DAMAGE -> potion.addComponent(new TextureRenderComponent("images/powerups/double_damage.png"))
+                    .addComponent(new PotionComponent(PotionType.DOUBLE_DAMAGE));
+            case SNAP -> potion.addComponent(new TextureRenderComponent("images/powerups/snap"));
             default -> throw new IllegalArgumentException("You must assign a valid PotionType");
         }
         return potion;

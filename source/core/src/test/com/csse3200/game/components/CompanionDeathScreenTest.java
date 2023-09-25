@@ -1,14 +1,13 @@
 package com.csse3200.game.components;
 
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import org.junit.jupiter.api.Test;
 
 import java.util.Timer;
 
 import static com.csse3200.game.GdxGame.ScreenType.COMPANION_DEATH;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 /**

@@ -1,12 +1,10 @@
 package com.csse3200.game.areas;
-import com.csse3200.game.entities.Entity;
+
 import com.badlogic.gdx.math.Vector2;
-
-
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;

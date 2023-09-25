@@ -44,7 +44,11 @@
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
     "images/sling_shot.png",
-    "map/portal.png"
+    "images/Companion_spritesheet.png",
+    "map/portal.png",
+    "map/treetoplush.png",
+    "images/action-feedback/warning.png",
+    "images/action-feedback/white_color_texture.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -61,14 +65,18 @@
     "images/weapons/wrench.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
-    "images/botanist.atlas"
+    "images/botanist.atlas",
+    "images/Companion_spritesheet.atlas"
   ],
   "soundPaths": [
-    "sounds/Impact4.wav"
+    "sounds/Impact4.wav",
+    "sounds/playerLow_health.mp3",
+    "sounds/dodgingAlertSweep.mp3",
+    "sounds/footStepsInTheForestGround.mp3"
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 
-  "mapName": "Planet Earth",
+  "mapName": "Planet Lush",
   "terrainPath": "map/map1.tmx",
   "winConditions": [
     {

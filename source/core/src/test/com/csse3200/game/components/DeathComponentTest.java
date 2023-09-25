@@ -1,18 +1,15 @@
 package com.csse3200.game.components;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 
 import static org.mockito.Mockito.*;
 

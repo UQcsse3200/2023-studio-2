@@ -1,17 +1,18 @@
 package com.csse3200.game.components.Companion;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.components.PhysicsComponent;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 
 /**
  * A UI component for displaying Companion stats, e.g., health.
@@ -20,13 +21,16 @@ public class CompanionStatsDisplay extends UIComponent {
     Table companionStatisticsUI;
 
     private boolean update = false;
+
     Table playerLowHealthAlert;
+    private long duration;
 
 
     /**
      * The player entity associated with this CompanionStatsDisplay.
      */
     public Entity player = ServiceLocator.getEntityService().getPlayer();
+    public Entity companion = ServiceLocator.getEntityService().getCompanion();
 
     /**
      * The UI playerLowHealthLabel for displaying the companion's health.
@@ -137,19 +141,20 @@ public class CompanionStatsDisplay extends UIComponent {
      */
     public void toggleInfiniteHealth() {
         if (isInfiniteHealth) {
-            ServiceLocator.getEntityService().getCompanion().getComponent(CombatStatsComponent.class).setImmunity(true);
-            ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(true);
+            companion.getComponent(CombatStatsComponent.class).setImmunity(true);
+            player.getComponent(CombatStatsComponent.class).setImmunity(true);
             isInfiniteHealth = false;
-
+            this.setDuration(6000);
             // Schedule a task to reset health to a normal value after a delay (e.g., 10 seconds)
-            Timer.schedule(new Task() {
+            java.util.TimerTask health = new java.util.TimerTask()  {
                 @Override
                 public void run() {
-                    ServiceLocator.getEntityService().getCompanion().getComponent(CombatStatsComponent.class).setImmunity(false);
-                    ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
+                    companion.getComponent(CombatStatsComponent.class).setImmunity(false);
+                    player.getComponent(CombatStatsComponent.class).setImmunity(false);
 
                 }
-            }, 8.0f);
+            };
+            new java.util.Timer().schedule(health, getDuration());
         }
     }
 
@@ -193,6 +198,9 @@ public class CompanionStatsDisplay extends UIComponent {
         if (health <= 50 && !update) {
             addAlert(health);
             update = true;
+
+//          Play the low health sound when health is below 50
+            entity.getEvents().trigger("playSound", "low_health");
             return;
         }
 
@@ -204,7 +212,7 @@ public class CompanionStatsDisplay extends UIComponent {
                     playerLowHealthLabel.remove();
                     update = false;
                 }
-            }, 3.0f);
+            }, 3000);
         }
     }
 
@@ -236,5 +244,11 @@ public class CompanionStatsDisplay extends UIComponent {
         companionHealthLabel.remove();
         if (playerLowHealthLabel != null) playerLowHealthLabel.remove();
         companionUIHeaderLabel.remove();
+    }
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+    public long getDuration() {
+        return duration;
     }
 }

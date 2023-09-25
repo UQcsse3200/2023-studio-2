@@ -11,6 +11,9 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Core entity class. Entities exist in the game and are updated each frame. All entities have a
  * position and scale, but have no default behaviour. Components should be added to an entity to
@@ -223,6 +226,25 @@ public class Entity {
   public <T extends Component> T getComponent(Class<T> type) {
     ComponentType componentType = ComponentType.getFrom(type);
     return (T) components.get(componentType.getId());
+  }
+
+  /**
+   * Get the components of type T on the entity.
+   *
+   * @param type The component class, e.g. RenderComponent.class
+   * @param <T> The component type, e.g. RenderComponent
+   * @return The entity component, or null if nonexistent.
+   */
+  @SuppressWarnings("unchecked")
+  public <T> List<T> getComponents(Class<T> type) {
+    List<T> matchedComponents = new ArrayList<>();
+
+    for (var component : components.values()) {
+      if (type.isInstance(component)) {
+        matchedComponents.add((T) component);
+      }
+    }
+    return matchedComponents;
   }
 
   /**

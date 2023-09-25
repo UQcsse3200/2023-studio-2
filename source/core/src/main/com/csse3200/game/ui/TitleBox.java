@@ -15,6 +15,7 @@ public class TitleBox extends Dialog {
     private GdxGame game;
     private Label descriptionLabel;
 
+
     public TitleBox(GdxGame game, String title, String description, Skin skin) {
         super(title, skin);
         this.game = game;

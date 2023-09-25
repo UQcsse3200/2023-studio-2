@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -10,7 +11,9 @@ import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
@@ -38,10 +41,14 @@ public class MapGameArea extends GameArea{
     private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
+    private int playerLives;
+    private Entity playerEntity;
     private boolean validLoad = true;
+    private String thing;
 
-    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
+    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
+            thing = configPath;
             mapConfig = MapConfigLoader.loadMapDirectory(configPath);
             logger.info("Successfully loaded map {}", configPath);
         } catch (InvalidConfigException exception) {
@@ -50,6 +57,7 @@ public class MapGameArea extends GameArea{
         }
         this.game = game;
         this.terrainFactory = terrainFactory;
+        this.playerLives = playerLives;
     }
 
     public static float getSpeedMult() {
@@ -80,12 +88,12 @@ public class MapGameArea extends GameArea{
         spawnTerrain();
         spawnEnvironment();
         spawnPowerups();
-        spawnUpgradeBench();
         spawnExtractors();
         spawnShip();
         player = spawnPlayer();
         spawnCompanion(player);
         spawnPortal(player);
+        spawnTreeTop();
         spawnAstro();
         spawnSpawners();
         spawnAstronaut();
@@ -100,6 +108,8 @@ public class MapGameArea extends GameArea{
      * Loads all assets listed in the config file
      */
     protected void loadAssets() {
+        System.out.println("#####################################################");
+        System.out.println(thing);
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
@@ -126,7 +136,8 @@ public class MapGameArea extends GameArea{
         Entity ui = new Entity();
         //Ensure non-null
         mapConfig.mapName = mapConfig.mapName == null ? "" : mapConfig.mapName;
-        ui.addComponent(new GameAreaDisplay(mapConfig.mapName));
+        //ui.addComponent(new GameAreaDisplay(mapConfig.mapName));
+        ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage));
         spawnEntity(ui);
     }
 
@@ -200,18 +211,6 @@ public class MapGameArea extends GameArea{
         }
     }
 
-    /**
-     * Spawns the upgrade bench to correspond to the config file provided
-     */
-    private void spawnUpgradeBench() {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        UpgradeBenchConfig upgradeBenchConfig = mapConfig.areaEntityConfig.upgradeBench;
-        if (upgradeBenchConfig != null) {
-            Entity upgradeBench = StructureFactory.createUpgradeBench(upgradeBenchConfig);
-            spawnEntityAt(upgradeBench, upgradeBenchConfig.position, true, true);
-        }
-    }
 
     /**
      * Spawns all the extractors for each resource type as defined in the config file
@@ -265,6 +264,14 @@ public class MapGameArea extends GameArea{
         }
     }
 
+    private void spawnTreeTop(){
+        if (mapConfig.areaEntityConfig.treetop == null) return;
+
+        TreeTopConfig treeTopConfig = mapConfig.areaEntityConfig.treetop;
+        Entity treeTop = ObstacleFactory.createTreeTop(treeTopConfig);
+        spawnEntityAt(treeTop, treeTopConfig.position, false, false);
+    }
+
     /**
      * Spawns the player at the position given by the config file.
      * If that is null, then spawns at the centre of the map
@@ -272,6 +279,8 @@ public class MapGameArea extends GameArea{
      */
     private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer(mapConfig.playerConfig);
+        newPlayer.getComponent(CombatStatsComponent.class).setLives(playerLives); // Ensures previous number of lives is maintained.
+        newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         newPlayer.getEvents().addListener("death", () ->
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
         );
@@ -332,7 +341,8 @@ public class MapGameArea extends GameArea{
         //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
     }
-    private void spawnAstronaut() {
+    private void
+    spawnAstronaut() {
         if (mapConfig.areaEntityConfig == null) return;
 
        AstronautConfig astronautConfig = mapConfig.areaEntityConfig.astronaut;
@@ -409,5 +419,29 @@ public class MapGameArea extends GameArea{
             resourceService.unloadAssets(mapConfig.soundPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.unloadAssets(new String[] {mapConfig.backgroundMusicPath});
+    }
+
+    /**
+     * Triggers the death screen.
+     * @return death screen, specfic to the number of lives player has remaining.
+     */
+    private boolean initiateDeathScreen() {
+        int lives = getPlayer().getComponent(CombatStatsComponent.class).getLives();
+        switch (lives) {
+            case 0:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_0));
+                return true;
+            case 1:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_1));
+                return true;
+            case 2:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_2));
+                return true;
+            case 3:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_3));
+                return true;
+            default:
+                return false;
+        }
     }
 }

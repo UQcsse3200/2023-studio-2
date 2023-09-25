@@ -1,15 +1,5 @@
 package com.csse3200.game.entities;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.fail;
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -17,16 +7,14 @@ import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.UIComponent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.awt.event.ComponentAdapter;
-import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(GameExtension.class)
@@ -88,7 +76,7 @@ class EntityServiceTest {
     Assertions.assertEquals(entityService.getEntitiesByComponent(PerformanceDisplay.class).size(), 0);
 
     List<Entity> entity =  entityService.getEntitiesByComponent(CombatStatsComponent.class);
-    assertEquals(0, entity.size());
+    Assertions.assertEquals(0, entity.size());
 
   }
 // Creates test as in general
@@ -116,7 +104,7 @@ class EntityServiceTest {
     entityService.register(entityB);
 
     List<Entity> test =  entityService.getEntitiesByComponent(componentA.getClass());
-    assertEquals(2, test.size());
+    Assertions.assertEquals(2, test.size());
 
   }
 

@@ -26,8 +26,6 @@ import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 public class ShipInteractionPopup extends Window {
     private final InputOverrideComponent inputOverrideComponent;
 
-    private Label descriptionLabel;
-
     public ShipInteractionPopup() {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, getBrownBackgroundStatic()));
 
@@ -45,9 +43,10 @@ public class ShipInteractionPopup extends Window {
         add(titleLabel).padTop(20).center().top().expandX();
         row();
 
-        descriptionLabel = new Label("Player: (Breathing heavily) That was tough, but we did it.\n\nEmily: (Nodding) Yeah, and now we need to get this spaceship up and running.\n\n(Sadly, the skilled astronaut NPC who had been helping them collapses)\n\nAstronaut NPC: (Weakly) I... I can't go on. The infection from that cut... it's too much." +
+        Label descriptionLabel = new Label("Player: (Breathing heavily) That was tough, but we did it.\n\nEmily: (Nodding) Yeah, and now we need to get this spaceship up and running.\n\n(Sadly, the skilled astronaut NPC who had been helping them collapses)\n\nAstronaut NPC: (Weakly) I... I can't go on. The infection from that cut... it's too much." +
                 "\nPlayer: (Gently) You've been a great help. Can you tell us about the planet we need to visit?\n\nAstronaut NPC: (Coughing) You must go to... the planet Verdant Heaven. It's... it's the only place where you can find... use this cosmic element dropped by the boss. Use the ship's AI to control it. I'll give you...", labelStyle);
         descriptionLabel.setAlignment(Align.center);
+
         descriptionLabel.setWidth(popupWidth * 0.9f);  // Using 90% of the popup width
         descriptionLabel.setWrap(true); //helps the text to stay within the bounds of the popup
         add(descriptionLabel).width(popupWidth * 0.9f).padTop(20f).padLeft(popupWidth * 0.05f).expand().fill();

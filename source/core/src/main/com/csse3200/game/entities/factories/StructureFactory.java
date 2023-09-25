@@ -7,7 +7,6 @@ import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.areas.mapConfig.ResourceCondition;
@@ -27,11 +26,8 @@ import com.csse3200.game.input.SpannerInputComponent;
 
 import com.csse3200.game.entities.configs.ExtractorConfig;
 import com.csse3200.game.entities.configs.ShipConfig;
-import com.csse3200.game.entities.configs.UpgradeBenchConfig;
 import com.csse3200.game.entities.PlaceableEntity;
 
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -43,7 +39,6 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,8 +57,6 @@ public class StructureFactory {
     // * @param tickSize the amount of the resource produced at each tick
 
     //Default configs
-    public static final UpgradeBenchConfig defaultUpgradeBench =
-            FileLoader.readClass(UpgradeBenchConfig.class, "configs/upgradeBench.json");
     public static final ShipConfig defaultShip =
             FileLoader.readClass(ShipConfig.class, "configs/ship.json");
 
@@ -84,6 +77,7 @@ public class StructureFactory {
         animator.addAnimation("animateExtracting", 0.2f, Animation.PlayMode.LOOP);
 
         PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity()
+                .irremovable()
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
@@ -243,7 +237,9 @@ public class StructureFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
                         .addComponent(new InteractableComponent(entity -> {
                             if (checkWinCondition(requirements)) {
-                                game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
+                                ShipInteractionPopup shipPopup = new ShipInteractionPopup();
+                                ServiceLocator.getRenderService().getStage().addActor(shipPopup);
+
                             } else {
                                 ShipInteractionPopup shipPopup = new ShipInteractionPopup();
                                 ServiceLocator.getRenderService().getStage().addActor(shipPopup);
@@ -263,38 +259,6 @@ public class StructureFactory {
 
     }
 
-    //TODO: REMOVE - LEGACY
-    /**
-     * Creates an upgrade bench entity using the default config
-     */
-    public static Entity createUpgradeBench() {
-        return createUpgradeBench(defaultUpgradeBench);
-    }
-
-    /**
-     * Creates an upgrade bench entity that matches the config file
-     */
-    public static Entity createUpgradeBench(UpgradeBenchConfig config) {
-        Entity upgradeBench = new Entity()
-                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new TextureRenderComponent(config.spritePath))
-                .addComponent(new UpgradeTree());
-
-        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
-        upgradeBench.addComponent(new DistanceCheckComponent(0.5f, interactLabel));
-        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
-
-        upgradeBench.addComponent(new InteractableComponent(entity -> {
-            UpgradeDisplay minigame = UpgradeDisplay.createUpgradeDisplay(upgradeBench);
-            ServiceLocator.getRenderService().getStage().addActor(minigame);
-        }, 0.5f));
-
-        upgradeBench.setScale(0.6f, 0.6f);
-
-        return upgradeBench;
-    }
     /**
 
      * Create an enemy spawner that spawns the desired enemies at a given tick rate and at a given location on the map

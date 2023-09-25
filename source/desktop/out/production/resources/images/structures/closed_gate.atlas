@@ -1,0 +1,125 @@
+
+closed_gate.png
+size: 256, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+down
+  rotate: false
+  xy: 166, 200
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+up
+  rotate: false
+  xy: 166, 200
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+up-down
+  rotate: false
+  xy: 166, 200
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-down
+  rotate: false
+  xy: 70, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-down-wiki
+  rotate: false
+  xy: 2, 104
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+left-right
+  rotate: false
+  xy: 2, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 2, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+no-connection
+  rotate: false
+  xy: 2, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 2, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-right-down
+  rotate: false
+  xy: 166, 166
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-up
+  rotate: false
+  xy: 36, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-up-down
+  rotate: false
+  xy: 132, 200
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-up-right
+  rotate: false
+  xy: 2, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+left-up-right-down
+  rotate: false
+  xy: 36, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+right-down
+  rotate: false
+  xy: 132, 132
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+up-right
+  rotate: false
+  xy: 132, 166
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+up-right-down
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

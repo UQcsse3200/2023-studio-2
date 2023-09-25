@@ -48,6 +48,7 @@
     "map/treetoplush.png",
     "images/action-feedback/warning.png",
     "images/action-feedback/white_color_texture.png",
+    "particle-effects/explosion/particle.png",
     "images/player/bar-fill.png",
     "images/player/planet-frame.png",
     "images/player/statbar.png",
@@ -80,7 +81,11 @@
     "sounds/footStepsInTheForestGround.mp3",
     "sounds/PlayerHealthRecharge.mp3",
     "sounds/playerBoostRecharge.mp3",
-    "sounds/upgradeTree.mp3"
+    "sounds/upgradeTreeTap.mp3",
+    "sounds/upgradeWeapon.mp3"
+  ],
+  "particleEffectPaths": [
+    "particle-effects/explosion/explosion.effect"
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 

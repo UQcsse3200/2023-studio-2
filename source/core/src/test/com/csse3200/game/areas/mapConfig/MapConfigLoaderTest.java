@@ -38,6 +38,7 @@ class MapConfigLoaderTest {
         gameArea.texturePaths = new String[] {"Texture1.png"};
         gameArea.textureAtlasPaths = new String[] {"Texture1.atlas"};
         gameArea.soundPaths = new String[] {"sound.wav"};
+        gameArea.particleEffectPaths = new String[] {"particle.effect"};
         gameArea.backgroundMusicPath = "background.wav";
         gameArea.winConditions = List.of(new ResourceCondition());
         return gameArea;

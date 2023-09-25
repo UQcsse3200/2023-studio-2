@@ -424,15 +424,15 @@ public class UpgradeDisplay extends Window {
 
         if (node.getWeaponType() != null) {
             WeaponConfig config = (WeaponConfig) node.getConfig();
-            createTooltipLabel(tooltipTable, "%s\n%s\n", config.name, config.description);
+            createTooltipLabel(tooltipTable, "%s\n\n%s\n", config.name, config.description);
             createTooltipLabel(tooltipTable, "Damage: %d", (int) config.damage);
             createTooltipLabel(tooltipTable, "Speed: %d", (int) config.weaponSpeed);
             createTooltipLabel(tooltipTable, "Cooldown: %d", config.attackCooldown);
             createTooltipLabel(tooltipTable, "Cost: %d", node.getNodeCost());
         } else {
             ToolConfig config = (ToolConfig) node.getConfig();
-            createTooltipLabel(tooltipTable, "%s Tool", config.name);
-            createTooltipLabel(tooltipTable, "Cost:");
+            createTooltipLabel(tooltipTable, "%s Tool\n", config.name);
+            createTooltipLabel(tooltipTable, "COST");
             for (ObjectMap.Entry<String, Integer> entry : config.cost) {
                 createTooltipLabel(tooltipTable, "%s: %d", entry.key, (int) entry.value);
             }

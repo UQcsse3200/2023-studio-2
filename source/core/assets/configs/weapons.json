@@ -1,7 +1,7 @@
 {
   "RANGED_SLINGSHOT": {
     "name" : "Slingshot",
-    "description": "The Slingshot offers a reliable range with decent damage.\nIts lightweight design ensures a faster speed, making it ideal for distant targets.",
+    "description": "Reliable range, decent damage.\nIdeal for distant targets.",
     "damage" : 50,
     "weaponSpeed": 10,
     "weaponDuration": 50,
@@ -17,7 +17,7 @@
 
   "RANGED_BOOMERANG": {
     "name" : "Boomerang",
-    "description": "\nThough it has lower damage, its ability to hit multiple enemies and return makes it a versatile choice.",
+    "description": "Capable of hitting multiple enemies at once, a versatile choice.",
     "damage" : 25,
     "weaponSpeed": 4,
     "weaponDuration": 155,
@@ -32,8 +32,8 @@
   },
 
   "RANGED_HOMING": {
-    "name" : "Missile",
-    "description": "The pinnacle of ranged weaponry.\nWith its high damage output and homing capabilities, it's a force to be reckoned with.",
+    "name" : "Friendly Heat-Seeking Missile",
+    "description": "No need to aim perfectly!\nIt finds its way by following warmth.\nJust launch and watch it make new friends!",
     "damage" : 100,
     "weaponSpeed": 5,
     "weaponDuration": 300,
@@ -66,7 +66,7 @@
 
   "MELEE_KATANA": {
     "name" : "Katana",
-    "description": "The Katana, a sword with rich history, provides swift slashes.\nIts balance between speed and damage makes it deadly in close quarters.",
+    "description": "Rich history, swift slashes.\nIts balance between speed and damage\nmakes it deadly in close quarters.",
     "damage" : 33,
     "weaponSpeed": 4,
     "weaponDuration": 20,

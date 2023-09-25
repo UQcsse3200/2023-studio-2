@@ -47,7 +47,8 @@
     "map/portal.png",
     "map/treetoplush.png",
     "images/action-feedback/warning.png",
-    "images/action-feedback/white_color_texture.png"
+    "images/action-feedback/white_color_texture.png",
+    "particle-effects/explosion/particle.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -73,7 +74,7 @@
     "sounds/footStepsInTheForestGround.mp3"
   ],
   "particleEffectPaths": [
-    "particle-effects/explosion.effect"
+    "particle-effects/explosion/explosion.effect"
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 

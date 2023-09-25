@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Quaternion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.entities.configs.ParticleEffectsConfig;
 import com.csse3200.game.entities.configs.SoundsConfig;
 import com.csse3200.game.files.UserSettings;
@@ -18,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ParticleComponent extends RenderComponent {
+    private static final float SCALE_REDUCTION = 100;
     private static final Logger logger = LoggerFactory.getLogger(SoundComponent.class);
     private final ParticleEffectsConfig effectsConfig;
     private final Map<String, ParticleEffect> effects;
@@ -29,7 +34,6 @@ public class ParticleComponent extends RenderComponent {
     public ParticleComponent(ParticleEffectsConfig effectsConfig) {
         this.effectsConfig = effectsConfig;
         effects = new HashMap<>();
-        looping = new HashSet<>();
     }
 
     /**
@@ -43,7 +47,7 @@ public class ParticleComponent extends RenderComponent {
         for (var entry : effectsConfig.effectsMap.entries()) {
             logger.debug("Entity {} loading in sound {} with id {}", entity.toString(), entry.value, entry.key);
 
-            ParticleEffect effect = ServiceLocator.getResourceService().getAsset(entry.value, ParticleEffect.class);
+            ParticleEffect effect = new ParticleEffect(ServiceLocator.getResourceService().getAsset(entry.value, ParticleEffect.class));
 
             if (effect == null) {
                 // debug log will occur in the ResourceService class
@@ -58,11 +62,28 @@ public class ParticleComponent extends RenderComponent {
 
     @Override
     protected void draw(SpriteBatch batch) {
+        Matrix4 originalMatrix = batch.getProjectionMatrix().cpy();
+
+        var newScale = new Vector3();
+        newScale = originalMatrix.getScale(newScale);
+        newScale.scl(1/SCALE_REDUCTION);
+
+        var originalPosition = originalMatrix.getTranslation(new Vector3());
+        var originalRotation = originalMatrix.getRotation(new Quaternion());
+
+        var newMatrix = new Matrix4(originalPosition, originalRotation, newScale);
+        batch.setProjectionMatrix(newMatrix);
+
+
+        var position = new Vector2(entity.getCenterPosition().x, entity.getPosition().y);
+        position.scl(SCALE_REDUCTION);
         for (var effect : effects.values()) {
             if (!effect.isComplete()) {
+                effect.setPosition(position.x, position.y);
                 effect.draw(batch, Gdx.graphics.getDeltaTime());
             }
         }
+        batch.setProjectionMatrix(originalMatrix); //revert projection
     }
 
     /**

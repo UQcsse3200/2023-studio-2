@@ -45,6 +45,7 @@ public class UpgradeTree extends Component {
     public void unlockWeapon(Object weapon) {
         if (!isWeaponUnlocked(weapon)) {
             unlockedWeapons.add(weapon);
+            entity.getEvents().trigger("playSound", "upgradeWeapon");
         }
     }
 
@@ -81,6 +82,7 @@ public class UpgradeTree extends Component {
         if (getMaterials() >= amount) {
             ServiceLocator.getGameStateObserverService()
                     .trigger("resourceAdd", Resource.Nebulite.toString(), -amount);
+//            entity.getEvents().trigger("playSound", "upgradeWeapon");
         }
     }
 }

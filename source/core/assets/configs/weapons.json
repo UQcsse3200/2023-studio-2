@@ -1,7 +1,7 @@
 {
   "RANGED_SLINGSHOT": {
     "name" : "Slingshot",
-    "description": "Reliable range, decent damage.\nIdeal for distant targets.",
+    "description": "Reliable range, decent damage. Ideal for distant targets.",
     "damage" : 50,
     "weaponSpeed": 10,
     "weaponDuration": 50,
@@ -33,7 +33,7 @@
 
   "RANGED_HOMING": {
     "name" : "Friendly Heat-Seeking Missile",
-    "description": "No need to aim perfectly!\nIt finds its way by following warmth.\nJust launch and watch it make new friends!",
+    "description": "No need to aim perfectly! It finds its way by following warmth. Just launch and watch it make new friends!",
     "damage" : 100,
     "weaponSpeed": 5,
     "weaponDuration": 300,
@@ -66,7 +66,7 @@
 
   "MELEE_KATANA": {
     "name" : "Katana",
-    "description": "Rich history, swift slashes.\nIts balance between speed and damage\nmakes it deadly in close quarters.",
+    "description": "Rich history, swift slashes. Its balance between speed and damage makes it deadly in close quarters.",
     "damage" : 33,
     "weaponSpeed": 4,
     "weaponDuration": 20,
@@ -100,7 +100,7 @@
 
   "STICK": {
     "name" : "Stick",
-    "description": "The Stick, simple yet effective. \nWhile it might not be the strongest, it does its best",
+    "description": "The Stick, simple yet effective. While it might not be the strongest, it does its best",
     "damage" : 1,
     "weaponSpeed": 0.75,
     "weaponDuration": 50,
@@ -116,7 +116,7 @@
 
   "WOODHAMMER": {
     "name" : "Wooden Hammer",
-    "description": "For all your buildable needs. \nWhile not suitable for combat, it's an essential tool for construction.",
+    "description": "For all your buildable needs. While not suitable for combat, it's an essential tool for construction.",
     "damage" : 0,
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,

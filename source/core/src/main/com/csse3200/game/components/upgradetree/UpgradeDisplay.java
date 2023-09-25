@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Weapons.WeaponType;
@@ -392,17 +393,28 @@ public class UpgradeDisplay extends Window {
 
     /**
      * Creates a label with the specified format and arguments, and then adds it to the given table.
-     *
-     * @param table The table where the label will be added.
-     * @param format The format string used to generate the label's text.
-     * @param args Arguments referenced by the format specifiers in the format string.
      */
-    private void createTooltipLabel(Table table, String format, Object... args) {
+    private void createTooltipLabel(Table table, String attributeName, String valueFormat) {
+        table.pad(10);
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
         labelStyle.fontColor = Color.BLACK;
         labelStyle.font = skin.getFont("thick_black");
-        Label label = new Label(String.format(format, args), labelStyle);
-        table.add(label).row();
+
+        Label attributeLabel = new Label(attributeName, labelStyle);
+        attributeLabel.setWrap(true);
+        attributeLabel.setAlignment(Align.left);
+
+        if (valueFormat.isEmpty()) {
+            table.add(attributeLabel).width(200).colspan(2).left().padLeft(10).padBottom(20).row();
+        } else {
+            BitmapFont font = new BitmapFont();
+            Label.LabelStyle redLabelStyle = new Label.LabelStyle(font, Color.RED);
+
+            Label valueLabel = new Label(valueFormat, redLabelStyle);
+            valueLabel.setWrap(true);
+            table.add(attributeLabel).width(150).left().padLeft(20).padRight(10);
+            table.add(valueLabel).width(40).center().padRight(20).row();
+        }
     }
 
     /**
@@ -424,17 +436,18 @@ public class UpgradeDisplay extends Window {
 
         if (node.getWeaponType() != null) {
             WeaponConfig config = (WeaponConfig) node.getConfig();
-            createTooltipLabel(tooltipTable, "%s\n\n%s\n", config.name, config.description);
-            createTooltipLabel(tooltipTable, "Damage: %d", (int) config.damage);
-            createTooltipLabel(tooltipTable, "Speed: %d", (int) config.weaponSpeed);
-            createTooltipLabel(tooltipTable, "Cooldown: %d", config.attackCooldown);
-            createTooltipLabel(tooltipTable, "Cost: %d", node.getNodeCost());
+            createTooltipLabel(tooltipTable, config.name, "");
+            createTooltipLabel(tooltipTable, config.description, "");
+            createTooltipLabel(tooltipTable, "Damage", String.valueOf((int) config.damage));
+            createTooltipLabel(tooltipTable, "Speed", String.valueOf((int) config.weaponSpeed));
+            createTooltipLabel(tooltipTable, "Cooldown", String.valueOf(config.attackCooldown));
+            createTooltipLabel(tooltipTable, "Cost", String.valueOf(node.getNodeCost()));
         } else {
             ToolConfig config = (ToolConfig) node.getConfig();
-            createTooltipLabel(tooltipTable, "%s\n", config.name);
-            createTooltipLabel(tooltipTable, "COST");
+            createTooltipLabel(tooltipTable, config.name, "");
+            createTooltipLabel(tooltipTable, "Extractor Cost:", "");
             for (ObjectMap.Entry<String, Integer> entry : config.cost) {
-                createTooltipLabel(tooltipTable, "%s: %d", entry.key, (int) entry.value);
+                createTooltipLabel(tooltipTable, entry.key, String.valueOf(entry.value));
             }
         }
 

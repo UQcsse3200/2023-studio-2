@@ -106,6 +106,7 @@ public class PlayerStatsDisplay extends UIComponent {
         keys.clearWalking();
         UpgradeDisplay display = UpgradeDisplay.createUpgradeDisplay();
         ServiceLocator.getRenderService().getStage().addActor(display);
+        entity.getEvents().trigger("playSound", "upgradeTreeTap");
       }
     });
 

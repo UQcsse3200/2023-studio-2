@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Timer;
+import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.structures.StructureToolPicker;
@@ -285,7 +286,7 @@ public class UpgradeDisplay extends Window {
      *
      * @param node The current node from which lines will be drawn to its children.
      */
-    private void drawLines(UpgradeNode node) {
+    public void drawLines(UpgradeNode node) {
         if (node == null || node.getChildren().isEmpty()) {
             return;
         }

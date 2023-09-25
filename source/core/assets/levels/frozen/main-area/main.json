@@ -78,7 +78,7 @@
     "sounds/footStepsInTheForestGround.mp3",
     "sounds/PlayerHealthRecharge.mp3",
     "sounds/playerBoostRecharge.mp3",
-    "sounds/upgradeTree.mp3"
+    "sounds/upgradeTreeTap.mp3"
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 

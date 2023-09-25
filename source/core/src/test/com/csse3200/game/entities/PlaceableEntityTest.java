@@ -5,20 +5,14 @@ import com.csse3200.game.components.structures.Placeable;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.Before;
+import com.csse3200.game.services.StructurePlacementService;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
 
-import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
@@ -70,12 +64,34 @@ class PlaceableEntityTest {
     }
 
     @Test
+    void irremovableRemoved() {
+        placeableEntity = placeableEntity.irremovable();
+        placeableEntity.removed();
+
+        verify(placeable, times(0)).removed();
+        verify(placeable2, times(0)).removed();
+        verify(placeable3, times(0)).removed();
+        verifyNoInteractions(notPlaceable);
+    }
+
+    @Test
     void willRemove() {
         placeableEntity.willRemove();
 
         verify(placeable, times(1)).willRemove();
         verify(placeable2, times(1)).willRemove();
         verify(placeable3, times(1)).willRemove();
+        verifyNoInteractions(notPlaceable);
+    }
+
+    @Test
+    void irremovableWillRemove() {
+        placeableEntity = placeableEntity.irremovable();
+        placeableEntity.removed();
+
+        verify(placeable, times(0)).removed();
+        verify(placeable2, times(0)).removed();
+        verify(placeable3, times(0)).removed();
         verifyNoInteractions(notPlaceable);
     }
 

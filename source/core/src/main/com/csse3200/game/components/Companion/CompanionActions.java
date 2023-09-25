@@ -7,14 +7,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.FollowComponent;
-import com.csse3200.game.components.ItemPickupComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.terminal.commands.DebugCommand;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
@@ -23,13 +18,11 @@ import java.util.Objects;
  * It handles various actions related to the Companion, such as movement, speed, and attacking.
  */
 public class CompanionActions extends Component {
-    private String bulletTexturePath;
 
     private static Vector2 COMPANION_SPEED = new Vector2(4f, 4f); // Metres per second
 
 
     private static final float ROTATION_SPEED = 10.0f;
-    private float currentRotation = 5.0f;
     private Entity playerEntity;
 
     private PhysicsComponent physicsComponent;
@@ -60,7 +53,7 @@ public class CompanionActions extends Component {
         setCompanionModeNormal();
 
         // Initialize currentRotation based on the initial orientation of the companion
-        currentRotation = physicsComponent.getBody().getAngle()*MathUtils.radiansToDegrees;
+        float currentRotation = physicsComponent.getBody().getAngle() * MathUtils.radiansToDegrees;
         if (playerEntity != null) {
             Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
             physicsComponent.getBody().setTransform(playerPosition, currentRotation * MathUtils.degreesToRadians);
@@ -116,7 +109,6 @@ public class CompanionActions extends Component {
      * @param path - Path????
      */
     public void setBulletTexturePath(String path) {
-        bulletTexturePath = path;
     }
 
     /**

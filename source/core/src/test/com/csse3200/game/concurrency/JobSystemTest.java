@@ -1,14 +1,15 @@
 package com.csse3200.game.concurrency;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.csse3200.game.extensions.GameExtension;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * There aren't a lot of tests here since some of the job system's desired behaviour is

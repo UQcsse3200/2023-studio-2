@@ -1,0 +1,6 @@
+{
+  "health": 100,
+  "fuel": 100,
+  "acceleration": 1,
+  "spritePath": "images/LeftShip.png"
+}

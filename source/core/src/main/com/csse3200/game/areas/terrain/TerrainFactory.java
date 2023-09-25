@@ -18,6 +18,8 @@ import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.io.File;
+
 /** Factory for creating game terrains. */
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
@@ -58,17 +60,19 @@ public class TerrainFactory {
     TmxMapLoader mapLoader = new TmxMapLoader();
 
     TiledMap tiledMap = null;
-    try {
-      tiledMap = mapLoader.load(Gdx.files.internal("source/core/assets/" + mapPath).file().getAbsolutePath());
-    } catch (Exception e) {
-
-      try {
-        tiledMap = mapLoader.load(Gdx.files.internal(mapPath).file().getAbsolutePath());
-      } catch (Exception ex) {
-        // Handle the exception (e.g., print an error message)
-        System.err.println("Error loading TiledMap: " + ex.getMessage());
+    for (String origin :
+            new String[]{"source/core/assets/", "core/assets/", "./"}) {
+      File file = Gdx.files.internal(origin + mapPath).file();
+      if (file.exists()) {
+        tiledMap = mapLoader.load(file.getAbsolutePath());
+        break;
       }
     }
+
+    if (tiledMap == null) {
+      throw new RuntimeException("Error loading TileMap" + mapPath);
+    }
+
     TiledMapRenderer renderer = createRenderer(tiledMap, 0.5f / tileSize);
 
     return new TerrainComponent(camera, tiledMap, renderer, orientation, 0.5f);

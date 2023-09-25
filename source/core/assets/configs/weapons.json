@@ -8,7 +8,8 @@
     "textureAtlas": "images/weapons/slingshot.atlas",
     "imageScale" : 1,
     "animationType" : 1,
-    "imagePath" : "images/weapons/slingshotStatic.png"
+    "imagePath" : "images/weapons/slingshotStatic.png",
+    "type" : "RANGED_SLINGSHOT"
   },
 
   "RANGED_BOOMERANG": {
@@ -20,7 +21,8 @@
     "textureAtlas": "images/weapons/boomerang.atlas",
     "imageScale" : 0.5,
     "animationType" : 1,
-    "imagePath" : "images/weapons/boomerangStatic.png"
+    "imagePath" : "images/weapons/boomerangStatic.png",
+    "type" : "RANGED_BOOMERANG"
   },
 
   "RANGED_HOMING": {
@@ -32,7 +34,8 @@
     "textureAtlas": "images/weapons/rocket.atlas",
     "imageScale" : 1.2,
     "animationType" : 8,
-    "imagePath" : "images/weapons/rocket_image.png"
+    "imagePath" : "images/weapons/rocket_image.png",
+    "type" : "RANGED_HOMING"
   },
 
   "MELEE_WRENCH": {
@@ -45,7 +48,8 @@
     "textureAtlas": "images/weapons/wrench.atlas",
     "imageScale" : 0.8,
     "animationType" : 1,
-    "imagePath" : "images/weapons/wrench.png"
+    "imagePath" : "images/weapons/wrench.png",
+    "type" : "MELEE_WRENCH"
   },
 
   "MELEE_KATANA": {
@@ -58,7 +62,8 @@
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 0.8,
     "animationType" : 4,
-    "imagePath" : "images/upgradetree/sword.png"
+    "imagePath" : "images/upgradetree/sword.png",
+    "type" : "MELEE_KATANA"
   },
 
   "MELEE_BEE_STING": {
@@ -71,7 +76,8 @@
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 0.6,
     "animationType" : 4,
-    "imagePath" : "images/weapons/bee_sting.png"
+    "imagePath" : "images/weapons/bee_sting.png",
+    "type" : "MELEE_BEE_STING"
   },
 
   "STICK": {
@@ -83,24 +89,28 @@
     "attackCooldown": 10,
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
-    "imagePath" : "images/upgradetree/stick.png"
+    "imagePath" : "images/upgradetree/stick.png",
+    "type" : "STICK"
   },
 
   "WOODHAMMER": {
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
-    "imagePath" : "images/upgradetree/hammer1.png"
+    "imagePath" : "images/upgradetree/hammer1.png",
+    "type" : "WOODHAMMER"
   },
 
   "STONEHAMMER": {
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
-    "imagePath" : "images/upgradetree/hammer2.png"
+    "imagePath" : "images/upgradetree/hammer2.png",
+    "type" : "STONEHAMMER"
   },
 
   "STEELHAMMER": {
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
-    "imagePath" : "images/upgradetree/hammer2.png"
+    "imagePath" : "images/upgradetree/hammer2.png",
+    "type" : "STEELHAMMER"
   }
 }

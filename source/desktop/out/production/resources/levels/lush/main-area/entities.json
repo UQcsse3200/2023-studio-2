@@ -60,12 +60,6 @@
       }
     }
   ],
-  "upgradeBench": {
-    "position" : {
-      "x": 20,
-      "y": 40
-    }
-  },
   "treetop": {
     "position": {
       "x": 0,

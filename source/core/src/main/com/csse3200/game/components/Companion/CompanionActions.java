@@ -164,8 +164,9 @@ public class CompanionActions extends Component {
      * Makes the companion attack.
      */
     void attack() {
-        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-        attackSound.play();
+//        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+//        attackSound.play();
+
     }
 
     /**

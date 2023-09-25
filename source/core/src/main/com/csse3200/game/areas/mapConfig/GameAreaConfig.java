@@ -16,6 +16,7 @@ public class GameAreaConfig {
 
     //Map Properties
     public String mapName = "Planet";
+    public String planetImage = "images/space_navigation_planet_0.png";
     public String terrainPath = "map/base.tmx";
     public List<ResourceCondition> winConditions = null;
     public PlayerConfig playerConfig = null;

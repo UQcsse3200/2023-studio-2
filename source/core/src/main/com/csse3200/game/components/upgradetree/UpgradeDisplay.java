@@ -17,12 +17,13 @@ import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.structures.ToolConfig;
+import com.csse3200.game.components.structures.ToolsConfig;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputOverrideComponent;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
@@ -36,22 +37,18 @@ import java.util.List;
  * The class extends the Window class from libGDX to represent a pop-up or overlay menu in the game.
  */
 public class UpgradeDisplay extends Window {
-    private static final float WINDOW_WIDTH_SCALE = 0.5f;
-
+    private static final float WINDOW_WIDTH_SCALE = 0.65f;
     private static final float WINDOW_HEIGHT_SCALE = 0.65f;
-
     private static final float SIZE = 64f;
-    private static final String SKIN_PATH = "kenney-rpg-expansion/kenneyrpg.json";
-    private static final String MATERIALS_FORMAT = "Materials: %d";
+    private static final String MATERIALS_FORMAT = "%d";
     private final InputOverrideComponent inputOverrideComponent;
     private final Entity upgradeBench;
     private Label materialsLabel;
     private final WeaponConfigs weaponConfigs;
     private final Entity player;
-    private UpgradeNode buildRoot;
     private final Skin skin;
-
-    // Tree stuff
+    private final ToolsConfig structureTools;
+    private final StructureToolPicker structurePicker;
     private final List<UpgradeNode> trees = new ArrayList<>();
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
     private float nodeYSpacing;
@@ -60,47 +57,48 @@ public class UpgradeDisplay extends Window {
     /**
      * Factory method for creating an instance of UpgradeDisplay.
      *
-     * @param upgradeBench The entity representing the upgrade bench in the game.
      * @return A new instance of UpgradeDisplay.
      */
-    public static UpgradeDisplay createUpgradeDisplay(Entity upgradeBench) {
+    public static UpgradeDisplay createUpgradeDisplay() {
         Texture background =
                 ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
-        return new UpgradeDisplay(background, upgradeBench);
+        return new UpgradeDisplay(background);
     }
 
     /**
      * Constructor for UpgradeDisplay.
      *
      * @param background    The texture to be used for the background of the upgrade display.
-     * @param upgradeBench  The entity representing the upgrade bench in the game.
      */
-    public UpgradeDisplay(Texture background, Entity upgradeBench) {
+    public UpgradeDisplay(Texture background) {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
 
-        this.upgradeBench = upgradeBench;
-
-        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000); // todo: remove this - testing line
-
-        skin = new Skin(Gdx.files.internal(SKIN_PATH));
+        skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         weaponConfigs = FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
+        structureTools = FileLoader.readClass(ToolsConfig.class, "configs/structure_tools.json");
         player = ServiceLocator.getEntityService().getPlayer();
+        structurePicker = player.getComponent(StructureToolPicker.class);
+        this.upgradeBench = player;
+
+        // todo: remove this testing line - just gives max resources in upgrade tree
+        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000);
 
         setupWindowDimensions();
 
+
+        Table titleTable = createTitleTable();
         Table materialsTable = createMaterialsLabel();
         Table exitTable = createExitButton();
         Group group = createUpgradeButtons();
-
         addActor(group);
         addActor(materialsTable);
         addActor(exitTable);
+        addActor(titleTable);
 
         // Override all normal user input
         inputOverrideComponent = new InputOverrideComponent();
         ServiceLocator.getInputService().register(inputOverrideComponent);
-
     }
 
     /**
@@ -108,36 +106,66 @@ public class UpgradeDisplay extends Window {
      * These trees dictate the progression of weapons that can be unlocked.
      */
     private void buildTrees() {
+        // Initialise node configs
         WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
         WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA);
         WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_SLINGSHOT);
         WeaponConfig boomerangConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BOOMERANG);
         WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
-        WeaponConfig stonehammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.STONEHAMMER);
         WeaponConfig rocketConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_HOMING);
         WeaponConfig beeConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_BEE_STING);
+        ToolConfig dirtConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.BasicWallTool");
+        ToolConfig gateConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.GateTool");
+        ToolConfig stoneConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.IntermediateWallTool");
+        ToolConfig turretConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.TurretTool");
 
         // Melee Tree
-        UpgradeNode swordNode = new UpgradeNode(katanaConfig, WeaponType.MELEE_KATANA);
-        UpgradeNode wrenchNode = new UpgradeNode(meleeWrench, WeaponType.MELEE_WRENCH);
-        UpgradeNode beeNode = new UpgradeNode(beeConfig, WeaponType.MELEE_BEE_STING);
+        UpgradeNode swordNode = new UpgradeNode(katanaConfig);
+        UpgradeNode wrenchNode = new UpgradeNode(meleeWrench);
+        UpgradeNode beeNode = new UpgradeNode(beeConfig);
         swordNode.addChild(wrenchNode);
         swordNode.addChild(beeNode);
         trees.add(swordNode);
 
         // Ranged Tree
-        UpgradeNode slingShot = new UpgradeNode(slingshotConfig, WeaponType.RANGED_SLINGSHOT);
-        UpgradeNode rocket = new UpgradeNode(rocketConfig, WeaponType.RANGED_HOMING);
-        UpgradeNode boomerang = new UpgradeNode(boomerangConfig, WeaponType.RANGED_BOOMERANG);
-        boomerang.addChild(slingShot);
-        slingShot.addChild(rocket);
-        trees.add(boomerang);
+        UpgradeNode slingShotNode = new UpgradeNode(slingshotConfig);
+        UpgradeNode rocketNode = new UpgradeNode(rocketConfig);
+        UpgradeNode boomerangNode = new UpgradeNode(boomerangConfig);
+        boomerangNode.addChild(slingShotNode);
+        slingShotNode.addChild(rocketNode);
+        trees.add(boomerangNode);
 
         // Build Tree
-        buildRoot = new UpgradeNode(woodhammerConfig, WeaponType.WOODHAMMER);
-        UpgradeNode hammer2 = new UpgradeNode(stonehammerConfig, WeaponType.STONEHAMMER);
-        buildRoot.addChild(hammer2);
+        UpgradeNode buildRoot;
+        UpgradeNode dirtNode = new UpgradeNode(dirtConfig);
+        UpgradeNode gateNode = new UpgradeNode(gateConfig);
+        UpgradeNode stoneNode = new UpgradeNode(stoneConfig);
+        UpgradeNode turretNode = new UpgradeNode(turretConfig);
+        buildRoot = new UpgradeNode(woodhammerConfig);
+        buildRoot.addChild(dirtNode);
+        dirtNode.addChild(gateNode);
+        dirtNode.addChild(stoneNode);
+        buildRoot.addChild(turretNode);
         trees.add(buildRoot);
+    }
+
+    /**
+     * Creates a title table containing a label
+     */
+    private Table createTitleTable() {
+        Table titleTable = new Table();
+        Label title = new Label("UPGRADE TREE", skin, "large");
+        title.setColor(Color.BLACK);
+        title.setFontScale(0.5F, 0.5F);
+        titleTable.add(title);
+        titleTable.setPosition((getWidth() * getScaleX() / 2),
+                (float) (getHeight() * getScaleY() * 0.88));
+
+        return titleTable;
     }
 
     /**
@@ -151,7 +179,7 @@ public class UpgradeDisplay extends Window {
 
         buildTrees();
 
-        nodeXSpacing = (getWidth() * getScaleX()) / (trees.size() * 2);
+        nodeXSpacing = (float) ((getWidth() * getScaleX()) / (trees.size() * 2.8)); // 2
         nodeYSpacing = (getHeight() * getScaleY()) / 4;
 
         for (UpgradeNode treeRoot : trees) {
@@ -211,14 +239,18 @@ public class UpgradeDisplay extends Window {
             return;
         }
 
-        // draws an outline around the weapon texture
+        // Grey node background
         float dx = 20;
         float rectSize = SIZE + dx;
         float offsetX = this.getX() - (dx / 2);
         float offsetY = this.getY() - (dx / 2);
+
+        // Black outline box
         float blackRectSize = rectSize * 1.1f;
         float blackOffsetX = offsetX - (blackRectSize - rectSize) / 2;
         float blackOffsetY = offsetY - (blackRectSize - rectSize) / 2;
+
+        // Equipped weapon highlight box
         float equippedRectSize = rectSize * 1.05f;
         float equippedOffsetX = offsetX - (equippedRectSize - rectSize) / 2;
         float equippedOffsetY = offsetY - (equippedRectSize - rectSize) / 2;
@@ -235,7 +267,7 @@ public class UpgradeDisplay extends Window {
             shapeRenderer.rect(node.getX() + equippedOffsetX, node.getY() + equippedOffsetY, equippedRectSize, equippedRectSize);
         }
 
-        // Draws weapon background
+        // Draws grey weapon background
         shapeRenderer.setColor(Color.GRAY);
         shapeRenderer.rect(node.getX() + offsetX, node.getY() + offsetY, rectSize, rectSize);
 
@@ -265,7 +297,7 @@ public class UpgradeDisplay extends Window {
             shapeRenderer.rectLine(parentPos, childPos, 9);
 
             // Change line colour based on mutual unlocked / locked status between node and child
-            if (stats.isWeaponUnlocked(node.getWeaponType()) && stats.isWeaponUnlocked(child.getWeaponType())) {
+            if (stats.isWeaponUnlocked(node.getName()) && stats.isWeaponUnlocked(child.getName())) {
                 shapeRenderer.setColor(new Color(41f/255, 222f/255, 15f/255, 0.5f)); // light green
             } else {
                 shapeRenderer.setColor(new Color(150f / 255, 18f / 255, 23f / 255, 0.5f)); // dark red
@@ -330,14 +362,19 @@ public class UpgradeDisplay extends Window {
     private Table createMaterialsLabel() {
         int materials = upgradeBench.getComponent(UpgradeTree.class).getMaterials();
         String str = String.format(MATERIALS_FORMAT, materials);
-        this.materialsLabel = new Label(str, skin);
+        materialsLabel = new Label(str, skin, "large");
+        materialsLabel.setColor(Color.BLACK);
+        materialsLabel.setFontScale(0.25f);
+        Image nebuliteImage =
+                new Image(ServiceLocator.getResourceService().getAsset("images/nebulite.png", Texture.class));
 
         Table table = new Table();
+        table.add(nebuliteImage).size(64,64);
         table.add(materialsLabel);
-        table.setPosition((getWidth() * getScaleX() / 2),
-                (float) (getHeight() * getScaleY() * 0.95));
+        table.setPosition((float) (getWidth() * getScaleX() * 0.10),
+                (float) (getHeight() * getScaleY() * 0.88));
 
-        // update the materials label every second
+        // update the materials label every 250ms
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
@@ -345,7 +382,7 @@ public class UpgradeDisplay extends Window {
                 String updatedStr = String.format(MATERIALS_FORMAT, updatedMaterials);
                 materialsLabel.setText(updatedStr);
             }
-        }, 1, 1);
+        }, 0.25f, 0.25f);
 
         return table;
     }
@@ -373,7 +410,9 @@ public class UpgradeDisplay extends Window {
             costButton.addListener(unlockWeapon(node, stats, weaponButton, lockImage, costButton));
         }
 
-        weaponButton.addListener(equipItem(node));
+        if (node.getWeaponType() != null) {
+            weaponButton.addListener(equipItem(node));
+        }
 
         return weaponButton;
     }
@@ -382,7 +421,7 @@ public class UpgradeDisplay extends Window {
 
         UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
         // Dont draw cost buttons for unlocked nodes
-        if (stats.isWeaponUnlocked(node.getWeaponType())) {
+        if (stats.isWeaponUnlocked(node.getName())) {
             return null;
         }
 
@@ -406,7 +445,7 @@ public class UpgradeDisplay extends Window {
      * @return the lock image
      */
     private Image lockItem(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton) {
-        if (stats.isWeaponUnlocked(node.getWeaponType())) return null;
+        if (stats.isWeaponUnlocked(node.getName())) return null;
 
         Image lock = new Image(new Texture("images/upgradetree/lock.png"));
         lock.setSize(UpgradeDisplay.SIZE, UpgradeDisplay.SIZE);
@@ -427,7 +466,7 @@ public class UpgradeDisplay extends Window {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
-                if (stats.isWeaponUnlocked(node.getWeaponType())) {
+                if (stats.isWeaponUnlocked(node.getName())) {
                     InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
                     playerInventory.placeInSlot(node.getWeaponType());
                 }
@@ -463,23 +502,20 @@ public class UpgradeDisplay extends Window {
     private void handleWeaponUnlocking(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton, Image lockImage, TextButton costButton) {
 
         // Ensure locked, sufficient materials, and parent is unlocked
-        if (stats.isWeaponUnlocked(node.getWeaponType())
+        if (stats.isWeaponUnlocked(node.getName())
                 || stats.getMaterials() < node.getNodeCost()
-                || !stats.isWeaponUnlocked(node.getParent().getWeaponType())) {
+                || !stats.isWeaponUnlocked(node.getParent().getName())) {
             return;
         }
 
         // Set the node to unlocked
-        stats.subtractMaterials(node.getNodeCost());
-        stats.unlockWeapon(node.getWeaponType());
         weaponButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
-        materialsLabel.setText(String.format(MATERIALS_FORMAT, stats.getMaterials()));
+        stats.subtractMaterials(node.getNodeCost());
+        stats.unlockWeapon(node.getName());
 
-        StructureToolPicker structurePicker = player.getComponent(StructureToolPicker.class);
-
-        // Update the StructurePickers level
-        if (buildRoot.getChildren().contains(node) && node.getDepth() == structurePicker.getLevel() + 1) {
-            structurePicker.setLevel(node.getDepth());
+        // Add it to the StructurePicker menu if buildable
+        if (node.getWeaponType() == null) {
+            structurePicker.unlockTool(node.getName());
         }
 
         // Remove lock and cost

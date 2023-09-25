@@ -1,11 +1,9 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.components.InteractableComponent;
-import com.csse3200.game.components.PowerUpDisplayHUD;
-import com.csse3200.game.components.PowerupComponent;
-import com.csse3200.game.components.PowerupType;
+import com.csse3200.game.components.*;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.configs.PowerupConfig;
 import com.csse3200.game.entities.configs.PowerupConfigs;
 import com.csse3200.game.files.FileLoader;
@@ -19,12 +17,19 @@ public class PowerupFactory {
         throw new IllegalStateException("Utility class");
     }
 
+    /**
+     *
+     * @param config - configuration file to match powerUp
+     *               it loads the health powerUp and boostPowerup
+     * @return entity
+     */
     public static Entity createPowerup(PowerupConfig config) {
         // Initialise and resize a new Powerup
         Entity powerup = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new PowerupComponent(config.type))
-                .addComponent(new TextureRenderComponent(config.spritePath));
+                .addComponent(new TextureRenderComponent(config.spritePath))
+                .addComponent(new SoundComponent(config.sounds));
 
         powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));
         powerup.setScale(0.6f, 0.6f);

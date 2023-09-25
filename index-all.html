@@ -838,6 +838,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/obstacleMinigame/ObstacleMiniGameActions.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.obstacleMinigame.<a href="com/csse3200/game/components/obstacleMinigame/ObstacleMiniGameActions.html" title="class in com.csse3200.game.components.obstacleMinigame">ObstacleMiniGameActions</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ParticleComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleComponent.html" title="class in com.csse3200.game.components">ParticleComponent</a></dt>
+<dd>
+<div class="block">Loads the effects specified in the config file into a hashmap for later use.</div>
+</dd>
 <dt><a href="com/csse3200/game/components/player/ActionFeedbackComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/ActionFeedbackComponent.html" title="class in com.csse3200.game.components.player">ActionFeedbackComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/AlertUIComponent.html#create()" class="member-name-link">create()</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/AlertUIComponent.html" title="class in com.csse3200.game.components.player">AlertUIComponent</a></dt>
@@ -1621,6 +1625,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/MiniDisplay/MiniScreenDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.MiniDisplay.<a href="com/csse3200/game/components/MiniDisplay/MiniScreenDisplay.html" title="class in com.csse3200.game.components.MiniDisplay">MiniScreenDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ParticleComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleComponent.html" title="class in com.csse3200.game.components">ParticleComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/AlertUIComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/AlertUIComponent.html" title="class in com.csse3200.game.components.player">AlertUIComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/player/DeathScreenDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.csse3200.game.components.player.<a href="com/csse3200/game/components/player/DeathScreenDisplay.html" title="class in com.csse3200.game.components.player">DeathScreenDisplay</a></dt>
@@ -1704,6 +1710,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/components/structures/Rotation.html#EAST" class="member-name-link">EAST</a> - Enum constant in enum class com.csse3200.game.components.structures.<a href="com/csse3200/game/components/structures/Rotation.html" title="enum class in com.csse3200.game.components.structures">Rotation</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/ParticleEffectsConfig.html#effectsMap" class="member-name-link">effectsMap</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/ParticleEffectsConfig.html" title="class in com.csse3200.game.entities.configs">ParticleEffectsConfig</a></dt>
+<dd>
+<div class="block">Used to map sound identification strings to the sound files</div>
+</dd>
 <dt><a href="com/csse3200/game/components/Component.html#enabled" class="member-name-link">enabled</a> - Variable in class com.csse3200.game.components.<a href="com/csse3200/game/components/Component.html" title="class in com.csse3200.game.components">Component</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsContactListener.html#endContact(com.badlogic.gdx.physics.box2d.Contact)" class="member-name-link">endContact(Contact)</a> - Method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsContactListener.html" title="class in com.csse3200.game.physics">PhysicsContactListener</a></dt>
@@ -3377,6 +3387,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Loads a list of music assets into the asset manager.</div>
 </dd>
+<dt><a href="com/csse3200/game/services/ResourceService.html#loadParticleEffects(java.lang.String%5B%5D)" class="member-name-link">loadParticleEffects(String[])</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ResourceService.html" title="class in com.csse3200.game.services">ResourceService</a></dt>
+<dd>
+<div class="block">Loads a list of particle effect assets into the asset manager.</div>
+</dd>
 <dt><a href="com/csse3200/game/services/ResourceService.html#loadSounds(java.lang.String%5B%5D)" class="member-name-link">loadSounds(String[])</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/ResourceService.html" title="class in com.csse3200.game.services">ResourceService</a></dt>
 <dd>
 <div class="block">Loads a list of sounds into the asset manager.</div>
@@ -3685,6 +3699,20 @@ loadScripts(document, 'script');</script>
 <div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
  processed</div>
 </dd>
+<dt><a href="com/csse3200/game/components/ParticleComponent.html" class="type-name-link" title="class in com.csse3200.game.components">ParticleComponent</a> - Class in <a href="com/csse3200/game/components/package-summary.html">com.csse3200.game.components</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/ParticleComponent.html#%3Cinit%3E(com.csse3200.game.entities.configs.ParticleEffectsConfig)" class="member-name-link">ParticleComponent(ParticleEffectsConfig)</a> - Constructor for class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleComponent.html" title="class in com.csse3200.game.components">ParticleComponent</a></dt>
+<dd>
+<div class="block">Creates a new EffectComponent using the effects specified in the effectsConfig.</div>
+</dd>
+<dt><a href="com/csse3200/game/areas/mapConfig/GameAreaConfig.html#particleEffectPaths" class="member-name-link">particleEffectPaths</a> - Variable in class com.csse3200.game.areas.mapConfig.<a href="com/csse3200/game/areas/mapConfig/GameAreaConfig.html" title="class in com.csse3200.game.areas.mapConfig">GameAreaConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/entities/configs/ParticleEffectsConfig.html" class="type-name-link" title="class in com.csse3200.game.entities.configs">ParticleEffectsConfig</a> - Class in <a href="com/csse3200/game/entities/configs/package-summary.html">com.csse3200.game.entities.configs</a></dt>
+<dd>
+<div class="block">This config class is used to load in custom sound files to play using the SoundComponent</div>
+</dd>
+<dt><a href="com/csse3200/game/entities/configs/ParticleEffectsConfig.html#%3Cinit%3E()" class="member-name-link">ParticleEffectsConfig()</a> - Constructor for class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/ParticleEffectsConfig.html" title="class in com.csse3200.game.entities.configs">ParticleEffectsConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/PathFinder.html" class="type-name-link" title="class in com.csse3200.game.components.npc">PathFinder</a> - Class in <a href="com/csse3200/game/components/npc/package-summary.html">com.csse3200.game.components.npc</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/npc/PathFinder.html#%3Cinit%3E()" class="member-name-link">PathFinder()</a> - Constructor for class com.csse3200.game.components.npc.<a href="com/csse3200/game/components/npc/PathFinder.html" title="class in com.csse3200.game.components.npc">PathFinder</a></dt>
@@ -5214,6 +5242,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/entities/buildables/Turret.html#startDamage(com.csse3200.game.entities.Entity)" class="member-name-link">startDamage(Entity)</a> - Method in class com.csse3200.game.entities.buildables.<a href="com/csse3200/game/entities/buildables/Turret.html" title="class in com.csse3200.game.entities.buildables">Turret</a></dt>
 <dd>
 <div class="block">This method is used manage shooting and requires a target.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/ParticleComponent.html#startEffect(java.lang.String)" class="member-name-link">startEffect(String)</a> - Method in class com.csse3200.game.components.<a href="com/csse3200/game/components/ParticleComponent.html" title="class in com.csse3200.game.components">ParticleComponent</a></dt>
+<dd>
+<div class="block">Plays the effect which effectName maps to if it exists.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/MiniDisplay/MiniScreenDisplay.html#startGame()" class="member-name-link">startGame()</a> - Method in class com.csse3200.game.components.MiniDisplay.<a href="com/csse3200/game/components/MiniDisplay/MiniScreenDisplay.html" title="class in com.csse3200.game.components.MiniDisplay">MiniScreenDisplay</a></dt>
 <dd>&nbsp;</dd>

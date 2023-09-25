@@ -41,10 +41,18 @@ public class UpgradeTree extends Component {
     /**
      * Unlocks a specified weapon type, adding it to the list of unlocked weapons if it's not already there.
      * @param weapon The type of weapon to unlock.
+     * unlockWeapon() - adding weapon on nodes if weapon is locked, also
+     *              plays the sound when upgrading weapons
      */
+
     public void unlockWeapon(Object weapon) {
         if (!isWeaponUnlocked(weapon)) {
             unlockedWeapons.add(weapon);
+
+            if (entity != null) {
+                entity.getEvents().trigger("playSound", "upgradeWeapon");
+            }
+
         }
     }
 
@@ -81,6 +89,7 @@ public class UpgradeTree extends Component {
         if (getMaterials() >= amount) {
             ServiceLocator.getGameStateObserverService()
                     .trigger("resourceAdd", Resource.Nebulite.toString(), -amount);
+//            entity.getEvents().trigger("playSound", "upgradeWeapon");
         }
     }
 }

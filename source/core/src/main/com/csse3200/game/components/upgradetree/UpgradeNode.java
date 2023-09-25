@@ -37,6 +37,9 @@ public class UpgradeNode {
     /** Depth of the tree */
     private int depth;
 
+    /** The config associated with the tool/weapon **/
+    private Object config;
+
     /** Cost of the root node in Nebulite materials **/
     private static final int BASE_COST = 100;
 
@@ -60,14 +63,21 @@ public class UpgradeNode {
         this.weaponType = config.type;
         this.children = new ArrayList<>();
         this.depth = 0;
+        this.config = config;
     }
 
-    UpgradeNode(ToolConfig tool) {
-        this.name = tool.name;
-        this.imagePath = tool.texture;
+    UpgradeNode(ToolConfig config) {
+        this.name = config.name;
+        this.imagePath = config.texture;
         this.weaponType = null;
         this.children = new ArrayList<>();
         this.depth = 0;
+        this.config = config;
+    }
+
+    /** Gets the config file associated with the tool **/
+    public Object getConfig() {
+        return this.config;
     }
 
     /** Gets the name of the tool/weapon **/

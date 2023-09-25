@@ -317,9 +317,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
       // play the sound when player starts walking
         entity.getEvents().trigger("loopSound", "footstep");
-
     }
-    }
+  }
 
   /**
    * Triggers dodge event.

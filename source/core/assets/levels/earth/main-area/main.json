@@ -84,7 +84,8 @@
     "sounds/footStepsInTheForestGround.mp3",
     "sounds/PlayerHealthRecharge.mp3",
     "sounds/playerBoostRecharge.mp3",
-    "sounds/upgradeTree.mp3"
+    "sounds/upgradeTreeTap.mp3",
+    "sounds/upgradeWeapon.mp3"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect"

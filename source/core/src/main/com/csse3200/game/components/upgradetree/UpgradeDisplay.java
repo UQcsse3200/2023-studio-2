@@ -431,7 +431,7 @@ public class UpgradeDisplay extends Window {
             createTooltipLabel(tooltipTable, "Cost: %d", node.getNodeCost());
         } else {
             ToolConfig config = (ToolConfig) node.getConfig();
-            createTooltipLabel(tooltipTable, "%s Tool\n", config.name);
+            createTooltipLabel(tooltipTable, "%s\n", config.name);
             createTooltipLabel(tooltipTable, "COST");
             for (ObjectMap.Entry<String, Integer> entry : config.cost) {
                 createTooltipLabel(tooltipTable, "%s: %d", entry.key, (int) entry.value);

@@ -18,6 +18,8 @@ public class EnemyConfig extends BaseEntityConfig {
   public boolean isBoss = false;
   public int specialAttack;
 
+  public SoundsConfig sound;
+
   public EnemyConfig() {
 
   }

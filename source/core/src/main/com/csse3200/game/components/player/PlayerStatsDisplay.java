@@ -10,6 +10,7 @@ import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,13 +43,12 @@ public class PlayerStatsDisplay extends UIComponent {
   private Table maxLivesAlert;
   private Label maxLivesLabel;
 
+  private HashMap<Integer, Image> livesImages;
+
   public PlayerStatsDisplay(PlayerConfig config) {
     maxHealth = config.health;
     maxLives = config.lives;
     barWidth = 300f;
-
-    //ADDING IMAGES
-
   }
 
   /**
@@ -137,15 +137,24 @@ public class PlayerStatsDisplay extends UIComponent {
 
   public void createLivesBar(Table statsTable) {
     livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
-    livesHeart = new Image(ServiceLocator.getResourceService().getAsset("images/player/heart.png", Texture.class));
+    livesImages = new HashMap<>();
+    for (int lifeNum = 1; lifeNum <= maxLives; lifeNum++) {
+      Image lifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/player/heart.png", Texture.class));
+      livesImages.put(lifeNum, lifeImage);
+    }
 
     Table livesTable = new Table();
-    //livesTable.add(livesHeart).size(30f, 26f).padRight(5).padTop(3);
+    for (Image lifeImage : livesImages.values()) {
+      livesTable.add(lifeImage).size(30f, 26f).padRight(5).padTop(3);
+    }
 
     Stack livesStack = new Stack();
     livesStack.add(livesBarFrame);
     livesStack.add(livesTable);
     statsTable.add(livesStack).size(300f, 58f).pad(5);
+
+    System.out.println("#####################################################################################");
+    System.out.println(maxLives);
   }
 
   @Override

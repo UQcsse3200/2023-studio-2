@@ -8,6 +8,7 @@
   "attackMultiplier": 1,
   "isImmune": false,
   "spritePath": "images/player/player.atlas",
+  "lives": 3,
   "sounds": {
     "soundsMap": {
       "low_health": "sounds/playerLow_health.mp3",

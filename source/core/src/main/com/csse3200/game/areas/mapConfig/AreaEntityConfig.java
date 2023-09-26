@@ -83,6 +83,8 @@ public class AreaEntityConfig {
     }
 
     /**
+     * Adds an entry to the entities hashmap
+     * @throws InvalidConfigException if an entry with the same key already exists
      */
     public void addEntry(Map.Entry<String, List<Object>> entry) throws InvalidConfigException {
         if (entities.containsKey(entry.getKey())) throw new InvalidConfigException(DUPLICATE_ENTITY_KEY + entry.getKey());

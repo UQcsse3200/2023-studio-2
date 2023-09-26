@@ -30,9 +30,7 @@ public class EntityService {
 
   public AreaEntityConfig saveCurrentArea() {
     AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
-    for (Entity entity : getEntitiesByComponent(SaveableComponent.class)) {
-      areaEntityConfig.addEntity(entity);
-    }
+    areaEntityConfig.addEntities(getEntitiesByComponent(SaveableComponent.class));
 
     FileLoader.writeClass(areaEntityConfig, "saves/savefile.json", FileLoader.Location.LOCAL);
 

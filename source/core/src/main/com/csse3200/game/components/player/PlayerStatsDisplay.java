@@ -32,8 +32,6 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image healthBarFill;
   private Image dodgeBarFill;
   private Label maxLivesLabel;
-
-  private HashMap<Integer, Image> livesImages;
   private Texture heartsTexture;
   private TextureRegion hearts;
   private Image livesBarFill;
@@ -249,6 +247,10 @@ public class PlayerStatsDisplay extends UIComponent {
   public void dispose() {
     super.dispose();
     healthLabel.remove();
-    // TODO
+    dodgeLabel.remove();
+    healthBarFill.remove();
+    dodgeBarFill.remove();
+    maxLivesLabel.remove();
+    livesBarFill.remove();
   }
 }

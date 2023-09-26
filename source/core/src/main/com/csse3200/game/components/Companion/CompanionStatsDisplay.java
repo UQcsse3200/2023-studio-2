@@ -1,18 +1,60 @@
 package com.csse3200.game.components.Companion;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.structures.ToolsConfig;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.WeaponConfigs;
+import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Timer;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.structures.ToolConfig;
+import com.csse3200.game.components.structures.ToolsConfig;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.input.InputOverrideComponent;
+import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A UI component for displaying Companion stats, e.g., health.
@@ -20,10 +62,16 @@ import com.csse3200.game.ui.UIComponent;
 public class CompanionStatsDisplay extends UIComponent {
     Table companionStatisticsUI;
 
+    Table container;
+    Table statsTable;
+
     private boolean update = false;
 
     Table playerLowHealthAlert;
+
+    Table titleTable;
     private long duration;
+
 
 
     /**
@@ -64,6 +112,23 @@ public class CompanionStatsDisplay extends UIComponent {
         entity.getEvents().addListener("companionModeChange", this::updateCompanionModeUI);
     }
 
+    public void createInventoryButton(Table statsTable) {
+        TextButton button = new TextButton("Inventory", skin);
+
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                KeyboardPlayerInputComponent keys =
+                        ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
+                keys.clearWalking();
+                CompanionInventoryDisplay display = CompanionInventoryDisplay.createUpgradeDisplay();
+                ServiceLocator.getRenderService().getStage().addActor(display);
+            }
+        });
+
+        statsTable.add(button);
+    }
+
     /**
      * Creates actors and positions them on the stage using a companionStatisticsUI.
      * This means that the UI components are initialised and their locations are set, as well as their starting values
@@ -75,6 +140,15 @@ public class CompanionStatsDisplay extends UIComponent {
         companionStatisticsUI.setFillParent(true);
         //placing the companionStatisticsUI/UI on a certain portion of the screen!
         companionStatisticsUI.padTop(85f).padRight(5f);
+
+        container = new Table();
+        container.top().right();
+        container.setFillParent(true);
+        //container.padTop(20f).padLeft(190f);
+
+        statsTable = new Table();
+        statsTable.padTop(230f).padRight(20f);
+        container.setFillParent(true);
 
         // ADD A COMPANION UI HEADER
         CharSequence companionUIHeader = "Companion";
@@ -100,6 +174,11 @@ public class CompanionStatsDisplay extends UIComponent {
 
         //finally
         stage.addActor(companionStatisticsUI);
+
+        createInventoryButton(statsTable);
+
+        container.add(statsTable);
+        stage.addActor(container);
     }
 
     /**

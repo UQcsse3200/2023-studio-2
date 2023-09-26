@@ -125,6 +125,26 @@ public class CompanionActions extends Component {
         }
     }
 
+//    void updateInventory(int i) {
+//        switch (i) {
+//            case 1:
+//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(1);
+//                break;
+//            case 2:
+//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(2);
+//                break;
+//            case 3:
+//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(3);
+//                break;
+//            case 4:
+//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(4);
+//                break;
+//            default:
+//                entity.getComponent(CompanionInventoryComponent.class).cycleEquipped();
+//                break;
+//        }
+//    }
+
     private boolean isMovementKeyPressed() {
         // Check if any of the movement keys are pressed (I, J, K, L)
         return Gdx.input.isKeyPressed(Input.Keys.I) || Gdx.input.isKeyPressed(Input.Keys.J) ||

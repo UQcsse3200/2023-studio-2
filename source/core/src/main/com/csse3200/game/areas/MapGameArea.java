@@ -123,6 +123,8 @@ public class MapGameArea extends GameArea{
             resourceService.loadTextureAtlases(mapConfig.textureAtlasPaths);
         if (mapConfig.soundPaths != null)
             resourceService.loadSounds(mapConfig.soundPaths);
+        if (mapConfig.particleEffectPaths != null)
+            resourceService.loadParticleEffects(mapConfig.particleEffectPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.loadMusic(new String[] {mapConfig.backgroundMusicPath});
 
@@ -439,6 +441,8 @@ public class MapGameArea extends GameArea{
             resourceService.unloadAssets(mapConfig.textureAtlasPaths);
         if (mapConfig.soundPaths != null)
             resourceService.unloadAssets(mapConfig.soundPaths);
+        if (mapConfig.particleEffectPaths != null)
+            resourceService.unloadAssets(mapConfig.particleEffectPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.unloadAssets(new String[] {mapConfig.backgroundMusicPath});
     }

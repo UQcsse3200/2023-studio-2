@@ -12,6 +12,7 @@ public class GameAreaConfig {
     public String[] texturePaths = null;
     public String[] textureAtlasPaths = null;
     public String[] soundPaths = null;
+    public String[] particleEffectPaths = null;
     public String backgroundMusicPath = null;
 
     //Map Properties
@@ -50,6 +51,7 @@ public class GameAreaConfig {
         if (!Arrays.equals(textureAtlasPaths, that.textureAtlasPaths)) return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
         if (!Arrays.equals(soundPaths, that.soundPaths)) return false;
+        if (!Arrays.equals(particleEffectPaths, that.particleEffectPaths)) return false;
         if (!Objects.equals(backgroundMusicPath, that.backgroundMusicPath))
             return false;
         if (!Objects.equals(mapName, that.mapName)) return false;
@@ -66,6 +68,7 @@ public class GameAreaConfig {
         int result = Arrays.hashCode(texturePaths);
         result = 31 * result + Arrays.hashCode(textureAtlasPaths);
         result = 31 * result + Arrays.hashCode(soundPaths);
+        result = 31 * result + Arrays.hashCode(particleEffectPaths);
         result = 31 * result + (backgroundMusicPath != null ? backgroundMusicPath.hashCode() : 0);
         result = 31 * result + (mapName != null ? mapName.hashCode() : 0);
         result = 31 * result + (terrainPath != null ? terrainPath.hashCode() : 0);

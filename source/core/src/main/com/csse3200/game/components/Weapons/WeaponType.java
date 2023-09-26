@@ -8,6 +8,7 @@ public enum WeaponType {
     RANGED_SLINGSHOT,
 
     RANGED_BOOMERANG,
+    RANGED_GRENADE,
     RANGED_HOMING,
     STATIC_WEAPON,
     STICK,

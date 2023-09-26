@@ -150,8 +150,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 triggerWalkEvent();
                 return true;
             }
-            case Keys.NUMPAD_0 -> {
-                playerInventory.changeEquipped(WeaponType.MELEE_WRENCH);
+            case Keys.G -> {
+                playerInventory.changeEquipped(WeaponType.RANGED_GRENADE);
                 entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
                 return true;
             } case Keys.NUMPAD_1 -> {

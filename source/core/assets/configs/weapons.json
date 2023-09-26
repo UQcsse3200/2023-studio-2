@@ -31,6 +31,22 @@
     "type" : "RANGED_BOOMERANG"
   },
 
+  "RANGED_GRENADE": {
+    "name" : "Grenade",
+    "description": "Boom boom!",
+    "damage" : 25,
+    "weaponSpeed": 4,
+    "weaponDuration": 120,
+    "rotationSpeed": 1,
+    "initialRotationOffset": 60,
+    "imageRotationOffset": 45,
+    "textureAtlas": "images/weapons/boomerang.atlas",
+    "imageScale" : 0.5,
+    "animationType" : 1,
+    "imagePath" : "images/weapons/boomerangStatic.png",
+    "type" : "RANGED_GRENADE"
+  },
+
   "RANGED_HOMING": {
     "name" : "Friendly Heat-Seeking Missile",
     "description": "No need to aim perfectly! It finds its way by following warmth. Just launch and watch it make new friends!",

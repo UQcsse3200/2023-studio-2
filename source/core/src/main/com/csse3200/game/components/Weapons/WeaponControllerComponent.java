@@ -67,7 +67,7 @@ public class WeaponControllerComponent extends Component {
         }
         //switch statement to define weapon movement based on type (a projectile
         Vector2 movement = switch (this.weaponType) {
-            case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING, RANGED_BOOMERANG -> update_swing();
+            case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING, RANGED_BOOMERANG, RANGED_GRENADE -> update_swing();
             case RANGED_SLINGSHOT -> update_ranged_slingshot();
             case RANGED_HOMING -> update_ranged_homing();
             case STATIC_WEAPON -> update_static();

@@ -7,6 +7,7 @@ import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.Weapons.WeaponTargetComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.explosives.ExplosiveComponent;
 import com.csse3200.game.components.player.WeaponComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
@@ -91,7 +92,7 @@ public class AttackFactory {
         case 2, 3 -> animator.startAnimation("LEFT1");
         case 4 -> animator.startAnimation("DOWN");
       }
-    } else if (weaponType == WeaponType.RANGED_BOOMERANG) {
+    } else if (weaponType == WeaponType.RANGED_BOOMERANG || weaponType == WeaponType.RANGED_GRENADE) {
       animator.removeAnimation("UP");
       animator.addAnimation("UP", 0.07f, Animation.PlayMode.LOOP);
       animator.startAnimation("UP");
@@ -99,8 +100,12 @@ public class AttackFactory {
       animator.startAnimation("UP");
     }
 
-    attack.scaleWidth(config.imageScale);
+    if (weaponType == WeaponType.RANGED_GRENADE || weaponType == WeaponType.RANGED_HOMING) {
+      attack.addComponent(new ExplosiveComponent("particle-effects/explosion/explosion.effect",
+              null, 3, true));
+    }
 
+    attack.scaleWidth(config.imageScale);
     attack.addComponent(new WeaponTargetComponent(weaponType, player));
     return attack;
   }

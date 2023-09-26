@@ -19,7 +19,7 @@ import static java.util.Collections.max;
 
 
 /**
- * An ui component for displaying player stats, e.g. health, healthBar, Dodge Cool-down Bar.
+ * An ui component for displaying player stats, e.g. health, dodge cool down and player lives
  */
 public class PlayerStatsDisplay extends UIComponent {
   Table container;
@@ -38,6 +38,10 @@ public class PlayerStatsDisplay extends UIComponent {
   private TextureRegion hearts;
   private Image livesBarFill;
 
+  /**
+   * Constructor for the PlayerStatsDisplay
+   * @param config the player config file
+   */
   public PlayerStatsDisplay(PlayerConfig config) {
     maxHealth = config.health;
     barWidth = 300f;
@@ -72,11 +76,9 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable.top().left();
     container.setFillParent(true);
 
-    //CREATING LABELS
+    // Creating player HP and dodge labels
     int health = entity.getComponent(CombatStatsComponent.class).getHealth();
-
     CharSequence healthText = String.format("%d", health);
-
     String small = "small";
     healthLabel = new Label(healthText, skin, small);
     dodgeLabel = new Label("Ready!", skin, small);
@@ -89,11 +91,14 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable.row();
     createLivesBar(statsTable);
 
-
     container.add(statsTable);
     stage.addActor(container);
   }
 
+  /**
+   * Creates the heath bar for the player HUD
+   * @param statsTable the table which the health bar is contained within
+   */
   public void createHealthBar(Table statsTable) {
     Image healthBarFrame;
     healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
@@ -110,13 +115,17 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable.add(healthLabel).left();
   }
 
+  /**
+   * Creates the dodge bar for the HUD
+   * @param statsTable the table which the dodge bar is contained within
+   */
   public void createDodgeBar(Table statsTable) {
     Image dodgeBarFrame;
     dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     dodgeBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill2.png", Texture.class));
 
     Table dodgeBarTable = new Table();
-    dodgeBarTable.add(dodgeBarFill).size(260f, 30f).padRight(5).padTop(3);
+    dodgeBarTable.add(dodgeBarFill).size((barWidth - 40f), 30f).padRight(5).padTop(3);
 
     Stack dodgeStack = new Stack();
     dodgeStack.add(dodgeBarFrame);
@@ -125,6 +134,10 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable.add(dodgeLabel).left();
   }
 
+  /**
+   * Creates the player lives UI for the HUD
+   * @param statsTable the table which the player lives information is contained within
+   */
   public void createLivesBar(Table statsTable) {
     playerLives = entity.getComponent(CombatStatsComponent.class).getLives();
     Image livesBarFrame;
@@ -141,7 +154,7 @@ public class PlayerStatsDisplay extends UIComponent {
     heartsTable.add(livesBarFill).size(playerLives * 30f, 26f);
 
     Table livesTable = new Table();
-    livesTable.add(livesBarFrame).size(300f, 58f);
+    livesTable.add(livesBarFrame).size(barWidth, 58f);
 
     Stack livesStack = new Stack();
     livesStack.add(livesTable);
@@ -165,7 +178,7 @@ public class PlayerStatsDisplay extends UIComponent {
   }
 
   /**
-   * Updates the Player's Dodge on the UI
+   * Updates the visible avaliability of the dodge movement when used by the player
    */
   public void updateDodgeUsed() {
     CharSequence dodgeText = "";
@@ -180,12 +193,19 @@ public class PlayerStatsDisplay extends UIComponent {
     );
   }
 
+  /**
+   * Updates the visible avaliability of the dodge when it becomes available
+   */
   public void updateDodgeRefreshed() {
     CharSequence dodgeText = "Ready!";
     dodgeLabel.setText(dodgeText);
     dodgeBarFill.setSize(260f, 30f);
   }
 
+  /**
+   * Updates the number of lives displayed in the player HUD
+   * @param lives the number that is being updated to
+   */
   public void updatePlayerLives(int lives) {
     hearts.setRegionWidth(lives*15);
     livesBarFill.setWidth(lives*30);
@@ -225,7 +245,7 @@ public class PlayerStatsDisplay extends UIComponent {
     timer.schedule(removeAlert, 3000); // removes alert after 1 second
   }
 
-    @Override
+  @Override
   public void dispose() {
     super.dispose();
     healthLabel.remove();

@@ -86,8 +86,14 @@ class AnimationRenderComponentTest {
           regions.get(i),
           entity.getPosition().x,
           entity.getPosition().y,
-          entity.getScale().x,
-          entity.getScale().y
+          entity.getScale().x/2,
+          entity.getScale().y/2,
+            entity.getScale().x,
+            entity.getScale().y,
+            1f,
+            1f,
+            entity.getRotation()
+
       );
     }
   }

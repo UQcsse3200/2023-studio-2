@@ -7,7 +7,7 @@
   },
   "levelTwo": {
     "health": 400,
-    "spritePath": "images/structures/TurretTwo.png",
+    "spritePath": "images/structures/turret_two.atlas",
     "maxAmmo": 100,
     "damage": 5
   }

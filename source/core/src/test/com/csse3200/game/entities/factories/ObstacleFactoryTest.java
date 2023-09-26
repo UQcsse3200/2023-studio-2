@@ -42,8 +42,8 @@ public class ObstacleFactoryTest {
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.getResourceService().loadTextures(new String[] {"images/tree.png",
-                "images/structures/TurretOne.png", "images/structures/TurretTwo.png"} );
-        ServiceLocator.getResourceService().loadTextureAtlases(new String[] {} );
+                "images/structures/turret_one.png"} );
+        ServiceLocator.getResourceService().loadTextureAtlases(new String[] {"images/structures/turret_one.atlas", "images/structures/turret_two.atlas"} );
         ServiceLocator.getResourceService().loadAll();
 
     }
@@ -59,7 +59,7 @@ public class ObstacleFactoryTest {
     @Test
     void createLevelTwoTurretConfigTest() {
         PlaceableEntity turret = ObstacleFactory.createCustomTurret(turretconfigs.GetTurretConfig(TurretType.LEVEL_TWO));
-        assertEquals(500, turret.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(400, turret.getComponent(CombatStatsComponent.class).getHealth());
         assertEquals(5, turret.getComponent(CombatStatsComponent.class).getBaseAttack());
     }
 }

@@ -250,7 +250,6 @@ public class PlayerStatsDisplay extends UIComponent {
     dodgeLabel.remove();
     healthBarFill.remove();
     dodgeBarFill.remove();
-    maxLivesLabel.remove();
     livesBarFill.remove();
   }
 }

@@ -123,7 +123,7 @@ public class PlayerStatsDisplay extends UIComponent {
 
   public void createDodgeBar(Table statsTable) {
     dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
-    dodgeBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
+    dodgeBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill2.png", Texture.class));
 
     Table dodgeBarTable = new Table();
     dodgeBarTable.add(dodgeBarFill).size(260f, 30f).padRight(5).padTop(3);

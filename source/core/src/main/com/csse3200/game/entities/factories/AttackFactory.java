@@ -8,6 +8,7 @@ import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.Weapons.WeaponTargetComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.explosives.ExplosiveComponent;
+import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.components.player.WeaponComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
@@ -101,8 +102,14 @@ public class AttackFactory {
     }
 
     if (weaponType == WeaponType.RANGED_GRENADE || weaponType == WeaponType.RANGED_HOMING) {
-      attack.addComponent(new ExplosiveComponent("particle-effects/explosion/explosion.effect",
-              null, 3, true));
+      var explosiveConfig = new ExplosiveConfig();
+      explosiveConfig.chainable = false;
+      explosiveConfig.damage = 20;
+      explosiveConfig.damageRadius = 2.5f;
+      explosiveConfig.chainRadius = 3.0f;
+      explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
+
+      attack.addComponent(new ExplosiveComponent(explosiveConfig));
     }
 
     attack.scaleWidth(config.imageScale);

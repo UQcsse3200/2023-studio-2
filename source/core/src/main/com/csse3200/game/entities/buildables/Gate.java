@@ -47,8 +47,6 @@ public class Gate extends PlaceableEntity {
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(closedAtlas,JoinLayer.WALLS, shapes));
         addComponent(new StructureDestroyComponent());
-        addComponent(new ExplosiveComponent("particle-effects/explosion/explosion.effect",
-                        null, 3, true));
 
         getComponent(JoinableComponent.class).scaleEntity();
     }
@@ -63,10 +61,6 @@ public class Gate extends PlaceableEntity {
 
 
         getComponent(JoinableComponent.class).updateTextureAtlas(openAtlas);
-
-        getEvents().trigger("explode");
-
-
     }
 
     /**

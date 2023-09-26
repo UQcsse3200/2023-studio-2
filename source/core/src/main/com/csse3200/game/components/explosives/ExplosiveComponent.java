@@ -17,17 +17,10 @@ import java.util.TimerTask;
 public class ExplosiveComponent extends Component {
     private boolean isExploded = false;
     private boolean isChained = false;
-    private final String explosionEffectPath;
-    private final String explosionSoundPath;
-    private final float chainRadius;
-    private final boolean chainable;
-    private final int damage = 50;
+    private final ExplosiveConfig explosiveConfig;
 
-    public ExplosiveComponent(String explosionEffectPath, String explosionSoundPath, float chainRadius, boolean chainable) {
-        this.explosionEffectPath = explosionEffectPath;
-        this.explosionSoundPath = explosionSoundPath;
-        this.chainRadius = chainRadius;
-        this.chainable = chainable;
+    public ExplosiveComponent(ExplosiveConfig explosiveConfig) {
+        this.explosiveConfig = explosiveConfig;
     }
 
     @Override
@@ -45,11 +38,11 @@ public class ExplosiveComponent extends Component {
         isExploded = true;
 
         var explosionEntity = new Entity();
-        if (explosionEffectPath != null) {
-            explosionEntity.addComponent(new ParticleComponent("explosion", explosionEffectPath));
+        if (explosiveConfig.effectPath != null) {
+            explosionEntity.addComponent(new ParticleComponent("explosion", explosiveConfig.effectPath));
         }
-        if (explosionSoundPath != null) {
-            explosionEntity.addComponent(new SoundComponent("explosion", explosionSoundPath));
+        if (explosiveConfig.soundPath != null) {
+            explosionEntity.addComponent(new SoundComponent("explosion", explosiveConfig.soundPath));
         }
 
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(explosionEntity, entity.getPosition());
@@ -66,8 +59,8 @@ public class ExplosiveComponent extends Component {
 
             var distance = entity.getCenterPosition().dst(otherEntity.getCenterPosition());
 
-            if (distance <= chainRadius) {
-                otherEntity.getEvents().trigger("chainExplode", distance/chainRadius * 0.4f);
+            if (distance <= explosiveConfig.chainRadius) {
+                otherEntity.getEvents().trigger("chainExplode", distance/explosiveConfig.chainRadius * 0.4f);
             }
         }
 
@@ -81,8 +74,8 @@ public class ExplosiveComponent extends Component {
 
             var distance = entity.getCenterPosition().dst(otherEntity.getCenterPosition());
 
-            if (distance <= chainRadius) {
-                combatStatsComponent.addHealth((int) (distance / chainRadius * -damage));
+            if (distance <= explosiveConfig.damageRadius) {
+                combatStatsComponent.addHealth((int) (distance / explosiveConfig.damageRadius * -explosiveConfig.damage));
             }
         }
 
@@ -105,7 +98,7 @@ public class ExplosiveComponent extends Component {
 
         isChained = true;
 
-        if (chainable) {
+        if (explosiveConfig.chainable) {
             Timer.schedule(new TimerAction(this::explode), delay);
         }
     }

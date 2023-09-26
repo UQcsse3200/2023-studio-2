@@ -72,20 +72,18 @@ public class Healing extends Tool {
         }
 
         // Calculate the healing cost based on the current health deficit
-        double currentHealth = combatStats.getHealth();
-        double maxHealth = combatStats.getMaxHealth();
-        double healthDeficit = maxHealth - currentHealth;
-        int requiredDurasteel = (int) (healthDeficit * 0.01 * 2); // 2 Durasteel per 1%
-        int requiredSolstite = (int) (healthDeficit * 0.01 * 2); // 2 Solstite per 1%
+        int currentHealth = combatStats.getHealth();
+        int maxHealth = combatStats.getMaxHealth();
+        double healthDeficit = 1 - ((double) currentHealth / maxHealth);
+        int requiredDurasteel = (int) Math.ceil(healthDeficit * 100 * 2); // 2 Durasteel per 1%
+        int requiredSolstite = (int) Math.ceil(healthDeficit * 100 * 2); // 2 Solstite per 1%
 
         // Check if the player has enough resources for healing
         if (playerHasEnoughResources(requiredDurasteel, requiredSolstite)) {
             // Deduct the required resources
             deductResources(requiredDurasteel, requiredSolstite);
 
-            // Calculate the healing percentage and apply healing
-            double healingPercentage = healthDeficit / maxHealth;
-            combatStats.setHealth((int) (currentHealth + maxHealth * healingPercentage));
+            combatStats.setHealth(maxHealth);
             return true;
         } else {
             // Player doesn't have enough resources for healing
@@ -100,16 +98,16 @@ public class Healing extends Tool {
 
     // Check if the player has enough Durasteel and Solstite for healing
     private boolean playerHasEnoughResources(int requiredDurasteel, int requiredSolstite) {
-        int playerDurasteel = ServiceLocator.getGameStateObserverService().getPlayerResource(Resource.Durasteel);
-        int playerSolstite = ServiceLocator.getGameStateObserverService().getPlayerResource(Resource.Solstite);
+        int playerDurasteel = (int)ServiceLocator.getGameStateObserverService().getStateData("resource/" + Resource.Durasteel.toString());
+        int playerSolstite = (int)ServiceLocator.getGameStateObserverService().getStateData("resource/" + Resource.Solstite.toString());
 
         return playerDurasteel >= requiredDurasteel && playerSolstite >= requiredSolstite;
     }
 
     // Deduct the required Durasteel and Solstite from the player's resources
     private void deductResources(int requiredDurasteel, int requiredSolstite) {
-        ServiceLocator.getGameStateObserverService().modifyPlayerResource(Resource.Durasteel, -requiredDurasteel);
-        ServiceLocator.getGameStateObserverService().modifyPlayerResource(Resource.Solstite, -requiredSolstite);
+        ServiceLocator.getGameStateObserverService().trigger("resourceAdd", Resource.Durasteel.toString(), -requiredDurasteel);
+        ServiceLocator.getGameStateObserverService().trigger("resourceAdd", Resource.Solstite.toString(), -requiredSolstite);
     }
 }
 

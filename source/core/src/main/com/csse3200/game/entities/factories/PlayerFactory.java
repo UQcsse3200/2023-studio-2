@@ -3,7 +3,6 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.ProximityControllerComponent;
@@ -42,8 +41,10 @@ public class PlayerFactory {
             FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
     //TODO: REMOVE - LEGACY
+
     /**
      * Create a player entity.
+     *
      * @return entity
      */
     public static Entity createPlayer() {
@@ -52,12 +53,13 @@ public class PlayerFactory {
 
     /**
      * Create a player entity.
+     *
      * @param config - configuration file to match player to
      * @return entity
      */
     public static Entity createPlayer(PlayerConfig config) {
         InputComponent inputComponent =
-            ServiceLocator.getInputService().getInputFactory().createForPlayer();
+                ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
@@ -83,32 +85,33 @@ public class PlayerFactory {
         animator.addAnimation("Character_RollUp", 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation("Character_Death", 0.2f, Animation.PlayMode.NORMAL);
 
-        Entity player = new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-            .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
-            .addComponent(new InventoryComponent())
-            .addComponent(inputComponent)
-            .addComponent(new PlayerStatsDisplay(config))
-            .addComponent(animator)
-            .addComponent(new PlayerAnimationController())
-            .addComponent(new WeaponComponent())
-            .addComponent(new DialogComponent(dialogueBox))
-            .addComponent(new InteractionControllerComponent(false))
-            .addComponent(new HealthBarComponent(true))
-            .addComponent(new StructureToolPicker())
-            .addComponent(new ProximityControllerComponent())
-            .addComponent(new ActionFeedbackComponent())
-            .addComponent(new SoundComponent(config.sounds))
-            .addComponent(new UpgradeTree());
+        Entity player =
+                new Entity()
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent())
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+                        .addComponent(new PlayerActions())
+                        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
+                        .addComponent(new InventoryComponent())
+                        .addComponent(inputComponent)
+                        .addComponent(new PlayerStatsDisplay(config))
+                        .addComponent(animator)
+                        .addComponent(new PlayerAnimationController())
+                        .addComponent(new WeaponComponent())
+                        .addComponent(new DialogComponent(dialogueBox))
+                        .addComponent(new InteractionControllerComponent(false))
+                        .addComponent(new HealthBarComponent(true))
+                        .addComponent(new StructureToolPicker())
+                        .addComponent(new ProximityControllerComponent())
+                        .addComponent(new ActionFeedbackComponent())
+                        .addComponent(new SoundComponent(config.sounds))
+                        .addComponent(new UpgradeTree());
 
         player.addComponent(new SaveableComponent<>(p -> {
-          PlayerConfig playerConfig = config;
-          playerConfig.position = new GridPoint2((int) player.getPosition().x, (int)player.getPosition().y);
-          playerConfig.health = player.getComponent(CombatStatsComponent.class).getHealth();
-          return playerConfig;
+            PlayerConfig playerConfig = config;
+            playerConfig.position = new GridPoint2((int) player.getPosition().x, (int)player.getPosition().y);
+            playerConfig.health = player.getComponent(CombatStatsComponent.class).getHealth();
+            return playerConfig;
         }, PlayerConfig.class));
 
         PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);

@@ -2,6 +2,8 @@ package com.csse3200.game.entities.configs;
 
 import com.csse3200.game.files.FileLoader;
 
+import java.util.Objects;
+
 /**
  * Defines the properties stored in player config files to be loaded by the Player Factory.
  */
@@ -23,13 +25,17 @@ public class PlayerConfig extends HealthEntityConfig  {
 
     PlayerConfig that = (PlayerConfig) o;
 
-    return speed == that.speed;
+    if (speed != that.speed) return false;
+    if (lives != that.lives) return false;
+    return Objects.equals(sounds, that.sounds);
   }
 
   @Override
   public int hashCode() {
     int result = super.hashCode();
     result = 31 * result + speed;
+    result = 31 * result + lives;
+    result = 31 * result + (sounds != null ? sounds.hashCode() : 0);
     return result;
   }
 }

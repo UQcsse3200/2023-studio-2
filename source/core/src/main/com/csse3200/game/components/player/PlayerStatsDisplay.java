@@ -154,12 +154,12 @@ public class PlayerStatsDisplay extends UIComponent {
     heartsTable.add(livesBarFill).size(playerLives * 30f, 26f);
 
     Table livesTable = new Table();
-    livesTable.add(livesBarFrame).size(barWidth, 58f);
+    livesTable.add(livesBarFrame).size(150f, 65f);
 
     Stack livesStack = new Stack();
     livesStack.add(livesTable);
     livesStack.add(heartsTable);
-    statsTable.add(livesStack);
+    statsTable.add(livesStack).left().pad(5);
   }
 
   @Override

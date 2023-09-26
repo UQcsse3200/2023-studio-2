@@ -120,16 +120,6 @@ public class CombatStatsComponent extends Component {
     }
   }
 
-  /**
-   * sets the entity's health to maximum if H-Key is pressed on the keyboard.
-   * @param newHealth
-   * @param isHKeyPressed
-   */
-  public void setHealth(int newHealth, boolean isHKeyPressed) {
-    if (isHKeyPressed) {
-      this.health = 100;
-    }
-  }
 
 
   /**

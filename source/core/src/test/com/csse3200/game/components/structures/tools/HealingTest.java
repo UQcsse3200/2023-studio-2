@@ -35,7 +35,12 @@ class HealingTest {
         when(structurePlacementService.getStructureAt(any())).thenReturn(placeableEntity);
         when(placeableEntity.getComponent(CombatStatsComponent.class)).thenReturn(combatStatsComponent);
         when(combatStatsComponent.getMaxHealth()).thenReturn(100);
-        Healing healing = new Healing(new ObjectMap<>());
+        Healing healing = new Healing(new ObjectMap<>()) {
+            @Override
+            public boolean interact(Entity player, GridPoint2 position) {
+                return false;
+            }
+        };
         healing.interact(mock(Entity.class), new GridPoint2());
         verify(combatStatsComponent, times(1)).setHealth(100);
     }

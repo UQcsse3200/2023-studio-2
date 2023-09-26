@@ -76,6 +76,7 @@
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
     "images/fire.atlas"
+
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
@@ -85,7 +86,8 @@
     "sounds/PlayerHealthRecharge.mp3",
     "sounds/playerBoostRecharge.mp3",
     "sounds/upgradeTreeTap.mp3",
-    "sounds/upgradeWeapon.mp3"
+    "sounds/upgradeWeapon.mp3",
+    "sounds/enemyDeath.mp3"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect"

@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.DeathComponent;
-import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.structures.TurretTargetableComponent;
 import com.csse3200.game.components.tasks.AimTask;
@@ -109,7 +106,8 @@ public class EnemyFactory {
                     1,
                     false))
             .addComponent(new DialogComponent(dialogueBox))
-            .addComponent(new TurretTargetableComponent());
+            .addComponent(new TurretTargetableComponent())
+                .addComponent(new SoundComponent(config.sound));
 
     if (config.type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);

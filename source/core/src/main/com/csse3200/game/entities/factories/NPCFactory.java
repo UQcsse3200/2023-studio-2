@@ -92,8 +92,10 @@ public class NPCFactory {
 
 
   /**
-   * Creates a Botanist NPC to match the config file
+   *
+   * @param config Creates a Botanist NPC to match the config file
    * @return The created Botanist NPC entity.
+   * and helps in triggering sound
    */
   public static Entity createBotanist(BotanistConfig config) {
 

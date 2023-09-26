@@ -62,7 +62,8 @@ public class EnemyAnimationController extends Component {
   }
 
   /**
-   * Initialise animation
+   * Initialise animation and
+   * plays the sound when enemy dead
    */
   void animateDeath() {
     if (animator.hasAnimation("death")) {

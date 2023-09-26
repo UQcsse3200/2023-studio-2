@@ -60,6 +60,7 @@ public class EnemyFactory {
    *
    * @param config - config file to replicate entity from
    * @return entity
+   * also helps in triggering sound
    */
   public static Entity createEnemy(EnemyConfig config) {
     System.out.println(config.type);

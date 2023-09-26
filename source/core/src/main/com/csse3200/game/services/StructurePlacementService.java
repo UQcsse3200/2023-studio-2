@@ -75,6 +75,14 @@ public class StructurePlacementService {
         return placedStructures.get(position);
     }
 
+    public void removeStructure(Entity entity) {
+        var position = getStructurePosition(entity);
+
+        if (position != null) {
+            removeStructureAt(position);
+        }
+    }
+
     public static class placeStructureAtArgs {
         private Entity entity;
         private GridPoint2 tilePos;

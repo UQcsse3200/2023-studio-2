@@ -37,6 +37,18 @@ public class ParticleComponent extends RenderComponent {
     }
 
     /**
+     * Creates a new EffectComponent with the particle effect specified.
+     *
+     * @param particleEffectId - the id of the given particle effect
+     * @param particleEffectPath - the path to locate the particle effect
+     */
+    public ParticleComponent(String particleEffectId, String particleEffectPath) {
+        this.effectsConfig = new ParticleEffectsConfig();
+        this.effectsConfig.effectsMap.put(particleEffectId, particleEffectPath);
+        effects = new HashMap<>();
+    }
+
+    /**
      * Loads the effects specified in the config file into a hashmap for later use.
      */
     @Override

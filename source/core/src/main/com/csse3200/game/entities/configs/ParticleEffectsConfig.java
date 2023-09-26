@@ -9,5 +9,5 @@ public class ParticleEffectsConfig {
     /**
      * Used to map sound identification strings to the sound files
      */
-    public ObjectMap<String, String> effectsMap;
+    public ObjectMap<String, String> effectsMap = new ObjectMap<>();
 }

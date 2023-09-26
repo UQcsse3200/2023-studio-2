@@ -88,7 +88,6 @@ public class MapGameArea extends GameArea{
         spawnTerrain();
         spawnEnvironment();
         spawnPowerups();
-        spawnUpgradeBench();
         spawnExtractors();
         spawnShip();
         player = spawnPlayer();
@@ -120,6 +119,8 @@ public class MapGameArea extends GameArea{
             resourceService.loadTextureAtlases(mapConfig.textureAtlasPaths);
         if (mapConfig.soundPaths != null)
             resourceService.loadSounds(mapConfig.soundPaths);
+        if (mapConfig.particleEffectPaths != null)
+            resourceService.loadParticleEffects(mapConfig.particleEffectPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.loadMusic(new String[] {mapConfig.backgroundMusicPath});
 
@@ -211,18 +212,6 @@ public class MapGameArea extends GameArea{
         }
     }
 
-    /**
-     * Spawns the upgrade bench to correspond to the config file provided
-     */
-    private void spawnUpgradeBench() {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        UpgradeBenchConfig upgradeBenchConfig = mapConfig.areaEntityConfig.upgradeBench;
-        if (upgradeBenchConfig != null) {
-            Entity upgradeBench = StructureFactory.createUpgradeBench(upgradeBenchConfig);
-            spawnEntityAt(upgradeBench, upgradeBenchConfig.position, true, true);
-        }
-    }
 
     /**
      * Spawns all the extractors for each resource type as defined in the config file
@@ -419,6 +408,8 @@ public class MapGameArea extends GameArea{
             resourceService.unloadAssets(mapConfig.textureAtlasPaths);
         if (mapConfig.soundPaths != null)
             resourceService.unloadAssets(mapConfig.soundPaths);
+        if (mapConfig.particleEffectPaths != null)
+            resourceService.unloadAssets(mapConfig.particleEffectPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.unloadAssets(new String[] {mapConfig.backgroundMusicPath});
     }

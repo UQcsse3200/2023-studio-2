@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 import org.slf4j.Logger;
@@ -187,6 +188,15 @@ public class ResourceService implements Disposable {
    */
   public void loadMusic(String[] musicNames) {
     loadAssets(musicNames, Music.class);
+  }
+
+  /**
+   * Loads a list of particle effect assets into the asset manager.
+   *
+   * @param particleEffectNames particle effect filenames
+   */
+  public void loadParticleEffects(String[] particleEffectNames) {
+    loadAssets(particleEffectNames, ParticleEffect.class);
   }
 
   public void unloadAssets(String[] assetNames) {

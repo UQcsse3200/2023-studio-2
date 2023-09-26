@@ -137,8 +137,8 @@ public class CombatStatsComponent extends Component {
 
   /**
    * sets the entity's health to maximum if H-Key is pressed on the keyboard.
-   * @param newHealth
-   * @param isHKeyPressed
+   * @param newHealth the new value of the users health
+   * @param isHKeyPressed whether the H key is pressed
    */
   public void setHealth(int newHealth, boolean isHKeyPressed) {
     if (isHKeyPressed) {
@@ -236,7 +236,7 @@ public class CombatStatsComponent extends Component {
 
   /**
    * Sets the number of lives player has left.
-   * @param lives
+   * @param lives the number of lives to set
    */
   public void setLives(int lives) {
     this.lives = lives;

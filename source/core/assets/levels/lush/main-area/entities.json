@@ -59,21 +59,15 @@
       }
     }
   ],
-  "upgradeBench": {
-    "position" : {
-      "x": 20,
-      "y": 40
-    }
-  },
   "treetop": {
     "position": {
       "x": 0,
-      "y": 30
+      "y": 0
     },
-    "spritePath": "map/treetop.png",
-    "scaleH": 30,
-    "scaleX": 0.5,
-    "scaleY": 0.2
+    "spritePath": "map/treetoplush.png",
+    "scaleH": 50,
+    "scaleX": 0.83333,
+    "scaleY": 0.33333
   },
   "botanist": {
     "spritePath": "images/botanist.atlas",

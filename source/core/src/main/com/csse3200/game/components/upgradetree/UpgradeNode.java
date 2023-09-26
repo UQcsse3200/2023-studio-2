@@ -1,6 +1,7 @@
 package com.csse3200.game.components.upgradetree;
 
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.structures.ToolConfig;
 import com.csse3200.game.entities.configs.WeaponConfig;
 
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import java.util.List;
  * Each node holds information about a particular weapon upgrade, its image, and its children in the tree.
  */
 public class UpgradeNode {
+
+    /** Represents the name of the weapon/tool as a string **/
+    private final String name;
 
     /** The current node's parent node **/
     private UpgradeNode parent;
@@ -33,6 +37,9 @@ public class UpgradeNode {
     /** Depth of the tree */
     private int depth;
 
+    /** The config associated with the tool/weapon **/
+    private Object config;
+
     /** Cost of the root node in Nebulite materials **/
     private static final int BASE_COST = 100;
 
@@ -50,11 +57,32 @@ public class UpgradeNode {
      * Constructs a new UpgradeNode with the given weapon type and image path.
      * @param config - The weapons config file
      */
-    UpgradeNode(WeaponConfig config, WeaponType weaponType) {
+    UpgradeNode(WeaponConfig config) {
+        this.name = config.type.toString();
         this.imagePath = config.imagePath;
-        this.weaponType = weaponType;
+        this.weaponType = config.type;
         this.children = new ArrayList<>();
         this.depth = 0;
+        this.config = config;
+    }
+
+    UpgradeNode(ToolConfig config) {
+        this.name = config.name;
+        this.imagePath = config.texture;
+        this.weaponType = null;
+        this.children = new ArrayList<>();
+        this.depth = 0;
+        this.config = config;
+    }
+
+    /** Gets the config file associated with the tool **/
+    public Object getConfig() {
+        return this.config;
+    }
+
+    /** Gets the name of the tool/weapon **/
+    public String getName() {
+        return this.name;
     }
 
     /** Sets the current node's depth **/

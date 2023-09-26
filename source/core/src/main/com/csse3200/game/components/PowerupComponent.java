@@ -33,6 +33,8 @@ public class PowerupComponent extends Component {
     /**
      * Applies the effects of the Powerup to the specified target entity.
      *
+     *
+     *
      * @param target The entity receiving the Powerup effect.
      */
     public void applyEffect(Entity target) {
@@ -40,7 +42,12 @@ public class PowerupComponent extends Component {
         playerActions = target.getComponent(PlayerActions.class);
 
         switch (type) {
-            case HEALTH_BOOST -> playerCombatStats.setHealth(100);
+            case HEALTH_BOOST ->{
+                playerCombatStats.setHealth(100);
+                entity.getEvents().trigger("playSound", "healthPowerup"); //plays sound when health powerup selected
+            }
+
+
             case SPEED_BOOST -> {
 
                 if (playerActions == null) {
@@ -49,16 +56,20 @@ public class PowerupComponent extends Component {
 
                 playerActions.setSpeed(5, 5);
                 this.setDuration(1500);
+                entity.getEvents().trigger("playSound", "boostPowerup"); //plays sound when boost powerup selected
+
 
                 // Speed up for 1.5 seconds, then return to normal speed
-                Timer.schedule(new Timer.Task() {
+                Timer.Task speedUp = new Timer.Task() {
                     @Override
                     public void run() {
                         playerActions.setSpeed(3, 3);
                     }
-                }, getDuration());
+                };
+                new Timer().scheduleTask(speedUp, getDuration());
             }
             case EXTRA_LIFE -> playerCombatStats.addLife();
+
             case TEMP_IMMUNITY -> {
 
                 if (playerActions == null) {
@@ -67,13 +78,14 @@ public class PowerupComponent extends Component {
 
                 playerCombatStats.setImmunity(true);
                 this.setDuration(6000);
-                java.util.TimerTask speedUp = new java.util.TimerTask() {
+
+                Timer.Task immune = new Timer.Task() {
                     @Override
                     public void run() {
                         playerCombatStats.setImmunity(false);
                     }
                 };
-                new java.util.Timer().schedule(speedUp, getDuration());
+                new Timer().scheduleTask(immune, getDuration());
             }
             case DOUBLE_DAMAGE -> {
                 if (playerActions == null) {
@@ -82,15 +94,17 @@ public class PowerupComponent extends Component {
 
                 playerCombatStats.setAttackMultiplier(2);
                 this.setDuration(12000);
-                java.util.TimerTask speedUp = new java.util.TimerTask() {
+
+                Timer.Task doubleDamage = new Timer.Task() {
                     @Override
                     public void run() {
                         playerCombatStats.setAttackMultiplier(1);
                     }
                 };
-                new java.util.Timer().schedule(speedUp, getDuration());
+
+                new Timer().scheduleTask(doubleDamage, getDuration());
             }
-            
+
             default -> throw new IllegalArgumentException("You must specify a valid PowerupType");
         }
 

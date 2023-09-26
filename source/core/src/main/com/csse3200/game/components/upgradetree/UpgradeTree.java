@@ -15,7 +15,7 @@ import java.util.List;
 public class UpgradeTree extends Component {
 
     /** List of unlocked weapons for the player. */
-    private final List<WeaponType> unlockedWeapons;
+    private final List<Object> unlockedWeapons;
 
     /**
      * Constructs a new UpgradeTree with default weapons unlocked.
@@ -24,26 +24,35 @@ public class UpgradeTree extends Component {
         unlockedWeapons = new ArrayList<>();
 
         // Base weapons
-        unlockedWeapons.add(WeaponType.MELEE_KATANA);
-        unlockedWeapons.add(WeaponType.RANGED_BOOMERANG);
-        unlockedWeapons.add(WeaponType.WOODHAMMER);
+        unlockedWeapons.add(WeaponType.MELEE_KATANA.toString());
+        unlockedWeapons.add(WeaponType.RANGED_BOOMERANG.toString());
+        unlockedWeapons.add(WeaponType.WOODHAMMER.toString());
     }
 
     /**
      * Returns a list of all unlocked weapons.
+     *
      * @return The list of unlocked weapons.
      */
-    public List<WeaponType> getUnlockedWeapons() {
+    public List<Object> getUnlockedWeapons() {
         return unlockedWeapons;
     }
 
     /**
      * Unlocks a specified weapon type, adding it to the list of unlocked weapons if it's not already there.
      * @param weapon The type of weapon to unlock.
+     * unlockWeapon() - adding weapon on nodes if weapon is locked, also
+     *              plays the sound when upgrading weapons
      */
-    public void unlockWeapon(WeaponType weapon) {
+
+    public void unlockWeapon(Object weapon) {
         if (!isWeaponUnlocked(weapon)) {
             unlockedWeapons.add(weapon);
+
+            if (entity != null) {
+                entity.getEvents().trigger("playSound", "upgradeWeapon");
+            }
+
         }
     }
 
@@ -52,7 +61,7 @@ public class UpgradeTree extends Component {
      * @param weapon The type of weapon to check.
      * @return True if the weapon is unlocked, false otherwise.
      */
-    public boolean isWeaponUnlocked(WeaponType weapon) {
+    public boolean isWeaponUnlocked(Object weapon) {
         return unlockedWeapons.contains(weapon);
     }
 
@@ -80,6 +89,7 @@ public class UpgradeTree extends Component {
         if (getMaterials() >= amount) {
             ServiceLocator.getGameStateObserverService()
                     .trigger("resourceAdd", Resource.Nebulite.toString(), -amount);
+//            entity.getEvents().trigger("playSound", "upgradeWeapon");
         }
     }
 }

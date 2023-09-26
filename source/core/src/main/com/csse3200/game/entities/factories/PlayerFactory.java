@@ -7,6 +7,8 @@ import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.player.*;
+import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
@@ -20,7 +22,6 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
-import com.csse3200.game.components.structures.StructureToolPicker;
 
 
 /**
@@ -101,7 +102,8 @@ public class PlayerFactory {
                         .addComponent(new StructureToolPicker())
                         .addComponent(new ProximityControllerComponent())
                         .addComponent(new ActionFeedbackComponent())
-                        .addComponent(new SoundComponent(config.sounds));
+                        .addComponent(new SoundComponent(config.sounds))
+                        .addComponent(new UpgradeTree());
 
         PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
         player.getComponent(ColliderComponent.class).setDensity(1.5f);

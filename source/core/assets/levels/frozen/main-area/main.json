@@ -26,7 +26,7 @@
     "images/oldman_down_1.png",
     "images/player_blank.png",
     "images/wrench.png",
-    "images/durastell.png",
+    "images/durasteel.png",
     "images/nebulite.png",
     "images/uparrow.png",
     "images/solstite.png",
@@ -38,7 +38,6 @@
     "images/resourcebar_lights.png",
     "images/upgradetree/background.png",
     "images/upgradetree/exit.png",
-    "images/upgradetree/upgradebench.png",
     "images/upgradetree/hammer1.png",
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
@@ -48,6 +47,7 @@
     "map/treetoplush.png",
     "images/action-feedback/warning.png",
     "images/action-feedback/white_color_texture.png",
+    "particle-effects/explosion/particle.png",
     "images/player/bar-fill.png",
     "images/player/bar-fill2.png",
     "images/player/planet-frame.png",
@@ -77,7 +77,14 @@
     "sounds/Impact4.wav",
     "sounds/playerLow_health.mp3",
     "sounds/dodgingAlertSweep.mp3",
-    "sounds/footStepsInTheForestGround.mp3"
+    "sounds/footStepsInTheForestGround.mp3",
+    "sounds/PlayerHealthRecharge.mp3",
+    "sounds/playerBoostRecharge.mp3",
+    "sounds/upgradeTreeTap.mp3",
+    "sounds/upgradeWeapon.mp3"
+  ],
+  "particleEffectPaths": [
+    "particle-effects/explosion/explosion.effect"
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 

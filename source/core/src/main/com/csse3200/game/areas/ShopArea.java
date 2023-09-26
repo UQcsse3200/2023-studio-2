@@ -4,10 +4,10 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.MinigameShipFactory;
-import com.csse3200.game.entities.factories.ShipUpgradesFactory;
 import com.csse3200.game.entities.configs.ShipUpgradesConfig;
+import com.csse3200.game.entities.factories.MinigameShipFactory;
+import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.factories.ShipUpgradesFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -34,7 +34,6 @@ public class ShopArea extends GameArea {
     private static final String[] spaceTextureAtlases = {"images/ship.atlas"};
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
-    private Entity ship;
 
     /**
      * Constructor for initializing terrain area
@@ -137,7 +136,6 @@ public class ShopArea extends GameArea {
         Entity newShip = MinigameShipFactory.createMinigameShip();
         spawnEntityAt(newShip, SHIP_SPAWN, true, true);
         targetables.add(newShip);
-        this.ship = newShip;
     }
 
     /**

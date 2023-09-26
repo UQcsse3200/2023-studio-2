@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.services.ServiceLocator;
 
 public class SpannerInputComponent extends InputComponent {
 

@@ -14,6 +14,8 @@ public class EnemyConfig extends HealthEntityConfig {
   public boolean isBoss = false;
   public int specialAttack;
 
+  public SoundsConfig sound;
+
   public EnemyConfig() {
 
   }

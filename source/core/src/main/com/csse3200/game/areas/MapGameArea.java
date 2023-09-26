@@ -1,5 +1,6 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObjects;
@@ -13,7 +14,10 @@ import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.gamearea.PlanetHudDisplay;
+import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
@@ -41,9 +45,11 @@ public class MapGameArea extends GameArea{
     private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
+    private int playerLives;
+    private Entity playerEntity;
     private boolean validLoad = true;
 
-    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
+    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
             mapConfig = MapConfigLoader.loadMapDirectory(configPath);
             logger.info("Successfully loaded map {}", configPath);
@@ -53,6 +59,7 @@ public class MapGameArea extends GameArea{
         }
         this.game = game;
         this.terrainFactory = terrainFactory;
+        this.playerLives = playerLives;
     }
 
     public static float getSpeedMult() {
@@ -83,7 +90,6 @@ public class MapGameArea extends GameArea{
         spawnTerrain();
         spawnEnvironment();
         spawnPowerups();
-        spawnUpgradeBench();
         spawnExtractors();
         spawnShip();
         player = spawnPlayer();
@@ -113,6 +119,8 @@ public class MapGameArea extends GameArea{
             resourceService.loadTextureAtlases(mapConfig.textureAtlasPaths);
         if (mapConfig.soundPaths != null)
             resourceService.loadSounds(mapConfig.soundPaths);
+        if (mapConfig.particleEffectPaths != null)
+            resourceService.loadParticleEffects(mapConfig.particleEffectPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.loadMusic(new String[] {mapConfig.backgroundMusicPath});
 
@@ -129,7 +137,8 @@ public class MapGameArea extends GameArea{
         Entity ui = new Entity();
         //Ensure non-null
         mapConfig.mapName = mapConfig.mapName == null ? "" : mapConfig.mapName;
-        ui.addComponent(new GameAreaDisplay(mapConfig.mapName));
+        //ui.addComponent(new GameAreaDisplay(mapConfig.mapName));
+        ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage));
         spawnEntity(ui);
     }
 
@@ -203,18 +212,6 @@ public class MapGameArea extends GameArea{
         }
     }
 
-    /**
-     * Spawns the upgrade bench to correspond to the config file provided
-     */
-    private void spawnUpgradeBench() {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        UpgradeBenchConfig upgradeBenchConfig = mapConfig.areaEntityConfig.getEntity(UpgradeBenchConfig.class);
-        if (upgradeBenchConfig != null) {
-            Entity upgradeBench = StructureFactory.createUpgradeBench(upgradeBenchConfig);
-            spawnEntityAt(upgradeBench, upgradeBenchConfig.position, true, true);
-        }
-    }
 
     /**
      * Spawns all the extractors for each resource type as defined in the config file
@@ -297,7 +294,8 @@ public class MapGameArea extends GameArea{
             logger.info("Player not found in config file - creating generic player");
             newPlayer = PlayerFactory.createPlayer();
         }
-
+        newPlayer.getComponent(CombatStatsComponent.class).setLives(playerLives); // Ensures previous number of lives is maintained.
+        newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         newPlayer.getEvents().addListener("death", () ->
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
         );
@@ -429,7 +427,33 @@ public class MapGameArea extends GameArea{
             resourceService.unloadAssets(mapConfig.textureAtlasPaths);
         if (mapConfig.soundPaths != null)
             resourceService.unloadAssets(mapConfig.soundPaths);
+        if (mapConfig.particleEffectPaths != null)
+            resourceService.unloadAssets(mapConfig.particleEffectPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.unloadAssets(new String[] {mapConfig.backgroundMusicPath});
+    }
+
+    /**
+     * Triggers the death screen.
+     * @return death screen, specfic to the number of lives player has remaining.
+     */
+    private boolean initiateDeathScreen() {
+        int lives = getPlayer().getComponent(CombatStatsComponent.class).getLives();
+        switch (lives) {
+            case 0:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_0));
+                return true;
+            case 1:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_1));
+                return true;
+            case 2:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_2));
+                return true;
+            case 3:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_3));
+                return true;
+            default:
+                return false;
+        }
     }
 }

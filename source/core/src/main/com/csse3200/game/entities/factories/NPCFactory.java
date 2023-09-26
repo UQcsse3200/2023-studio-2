@@ -4,9 +4,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.InteractableComponent;
+import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.AstroAnimationController;
 import com.csse3200.game.components.npc.BotanistAnimationController;
@@ -27,7 +27,6 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
@@ -93,8 +92,10 @@ public class NPCFactory {
 
 
   /**
-   * Creates a Botanist NPC to match the config file
+   *
+   * @param config Creates a Botanist NPC to match the config file
    * @return The created Botanist NPC entity.
+   * and helps in triggering sound
    */
   public static Entity createBotanist(BotanistConfig config) {
 
@@ -122,7 +123,8 @@ public class NPCFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new InteractionControllerComponent(true))
-                    .addComponent(aiComponent);
+                    .addComponent(aiComponent)
+                    .addComponent(new SoundComponent(configs.sound));
     botanist.addComponent(new InteractableComponent(entity -> {
       botanist.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
     },10f));

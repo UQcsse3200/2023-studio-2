@@ -40,7 +40,6 @@
     "images/resourcebar_lights.png",
     "images/upgradetree/background.png",
     "images/upgradetree/exit.png",
-    "images/upgradetree/upgradebench.png",
     "images/upgradetree/hammer1.png",
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
@@ -48,7 +47,16 @@
     "map/portal.png",
     "images/sling_shot.png",
     "images/fireAnim.png",
-    "map/treetop.png"
+    "images/player/bar-fill.png",
+    "images/player/planet-frame.png",
+    "images/player/statbar.png",
+    "images/player/widestatbar.png",
+    "images/player/heart.png",
+    "images/space_navigation_planet_0.png",
+    "images/action-feedback/white_color_texture.png",
+    "images/action-feedback/warning.png",
+    "map/treetop.png",
+    "particle-effects/explosion/particle.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -68,13 +76,26 @@
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
     "images/fire.atlas"
+
   ],
   "soundPaths": [
-    "sounds/Impact4.wav"
+    "sounds/Impact4.wav",
+    "sounds/playerLow_health.mp3",
+    "sounds/dodgingAlertSweep.mp3",
+    "sounds/footStepsInTheForestGround.mp3",
+    "sounds/PlayerHealthRecharge.mp3",
+    "sounds/playerBoostRecharge.mp3",
+    "sounds/upgradeTreeTap.mp3",
+    "sounds/upgradeWeapon.mp3",
+    "sounds/enemyDeath.mp3"
+  ],
+  "particleEffectPaths": [
+    "particle-effects/explosion/explosion.effect"
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 
   "mapName": "Planet Earth",
+  "planetImage": "images/space_navigation_planet_0.png",
   "terrainPath": "map/base.tmx",
   "winConditions": [
     {

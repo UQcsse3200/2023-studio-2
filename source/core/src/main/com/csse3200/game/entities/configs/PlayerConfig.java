@@ -1,13 +1,18 @@
 package com.csse3200.game.entities.configs;
 
+import com.csse3200.game.files.FileLoader;
+
 /**
  * Defines the properties stored in player config files to be loaded by the Player Factory.
  */
 public class PlayerConfig extends HealthEntityConfig  {
   public int speed;
+  public int lives;
+  public SoundsConfig sounds;
 
   public PlayerConfig() {
     this.spritePath = "images/player.atlas";
+    this.sounds = FileLoader.readClass(SoundsConfig.class, "configs/player_sounds.json");
   }
 
   @Override

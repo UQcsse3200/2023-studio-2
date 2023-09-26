@@ -1,7 +1,7 @@
 {
   "levelOne": {
     "health": 200,
-    "spritePath": "images/structures/TurretOne.png",
+    "spritePath": "images/structures/turret_one.atlas",
     "maxAmmo": 50,
     "damage": 2
   },

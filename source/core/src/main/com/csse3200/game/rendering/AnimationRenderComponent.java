@@ -41,6 +41,7 @@ public class AnimationRenderComponent extends RenderComponent {
   private Animation<TextureRegion> currentAnimation;
   private String currentAnimationName;
   private float animationPlayTime;
+  private float rotation = 0.0f;
 
   /**
    * Create the component for a given texture atlas.
@@ -180,6 +181,10 @@ public class AnimationRenderComponent extends RenderComponent {
     return animation.getAnimationDuration();
   }
 
+  public void setRotation(float rotation) {
+    this.rotation = rotation;
+  }
+
   @Override
   protected void draw(SpriteBatch batch) {
     if (currentAnimation == null) {
@@ -189,8 +194,7 @@ public class AnimationRenderComponent extends RenderComponent {
     Vector2 pos = entity.getPosition();
     Vector2 scale = entity.getScale();
     //Why can't I change this?? ;(  todo: daniel plz
-    // batch.draw(region, pos.x, pos.y, scale.x/2, scale.y/2, scale.x, scale.y, 1, 1, entity.getRotation());
-    batch.draw(region, pos.x, pos.y, scale.x, scale.y);
+    batch.draw(region, pos.x, pos.y, scale.x/2, scale.y/2, scale.x, scale.y, 1, 1, rotation);
     animationPlayTime += timeSource.getDeltaTime();
   }
 

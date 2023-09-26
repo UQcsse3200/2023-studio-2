@@ -50,7 +50,8 @@
     "images/fireAnim.png",
     "images/action-feedback/white_color_texture.png",
     "images/action-feedback/warning.png",
-    "map/treetop.png"
+    "map/treetop.png",
+    "images/structures/turret_one.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -69,7 +70,8 @@
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
-    "images/fire.atlas"
+    "images/fire.atlas",
+    "images/structures/turret_one.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav",

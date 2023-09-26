@@ -2,6 +2,7 @@ package com.csse3200.game.components.explosives;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ParticleComponent;
 import com.csse3200.game.components.SoundComponent;
@@ -20,6 +21,7 @@ public class ExplosiveComponent extends Component {
     private final String explosionSoundPath;
     private final float chainRadius;
     private final boolean chainable;
+    private final int damage = 50;
 
     public ExplosiveComponent(String explosionEffectPath, String explosionSoundPath, float chainRadius, boolean chainable) {
         this.explosionEffectPath = explosionEffectPath;
@@ -66,6 +68,21 @@ public class ExplosiveComponent extends Component {
 
             if (distance <= chainRadius) {
                 otherEntity.getEvents().trigger("chainExplode", distance/chainRadius * 0.4f);
+            }
+        }
+
+        for (var otherEntity : ServiceLocator.getEntityService().getEntitiesByComponent(CombatStatsComponent.class)) {
+            var combatStatsComponent = otherEntity.getComponent(CombatStatsComponent.class);
+
+            if (combatStatsComponent == null) {
+                // shouldn't happen, however best to double-check
+                return;
+            }
+
+            var distance = entity.getCenterPosition().dst(otherEntity.getCenterPosition());
+
+            if (distance <= chainRadius) {
+                combatStatsComponent.addHealth((int) (distance / chainRadius * -damage));
             }
         }
 

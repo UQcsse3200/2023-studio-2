@@ -1,6 +1,7 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 
@@ -13,7 +14,6 @@ public class PowerupComponent extends Component {
     private CombatStatsComponent playerCombatStats;
     private PlayerActions playerActions;
     private long duration;
-
 
     /**
      * Assigns a type and targetLayer value to a given Powerup
@@ -33,7 +33,7 @@ public class PowerupComponent extends Component {
     /**
      * Applies the effects of the Powerup to the specified target entity.
      *
-     * @param target  The entity receiving the Powerup effect.
+     * @param target The entity receiving the Powerup effect.
      */
     public void applyEffect(Entity target) {
         playerCombatStats = target.getComponent(CombatStatsComponent.class);
@@ -51,14 +51,46 @@ public class PowerupComponent extends Component {
                 this.setDuration(1500);
 
                 // Speed up for 1.5 seconds, then return to normal speed
-                java.util.TimerTask speedUp = new java.util.TimerTask() {
+                Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
                         playerActions.setSpeed(3, 3);
                     }
+                }, getDuration());
+            }
+            case EXTRA_LIFE -> playerCombatStats.addLife();
+            case TEMP_IMMUNITY -> {
+
+                if (playerActions == null) {
+                    return;
+                }
+
+                playerCombatStats.setImmunity(true);
+                this.setDuration(6000);
+                java.util.TimerTask speedUp = new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        playerCombatStats.setImmunity(false);
+                    }
                 };
                 new java.util.Timer().schedule(speedUp, getDuration());
             }
+            case DOUBLE_DAMAGE -> {
+                if (playerActions == null) {
+                    return;
+                }
+
+                playerCombatStats.setAttackMultiplier(2);
+                this.setDuration(12000);
+                java.util.TimerTask speedUp = new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        playerCombatStats.setAttackMultiplier(1);
+                    }
+                };
+                new java.util.Timer().schedule(speedUp, getDuration());
+            }
+            
             default -> throw new IllegalArgumentException("You must specify a valid PowerupType");
         }
 
@@ -70,7 +102,7 @@ public class PowerupComponent extends Component {
     /**
      * Sets the duration for which the Powerup effect should last.
      *
-     * @param duration  Duration in milliseconds.
+     * @param duration Duration in milliseconds.
      */
     public void setDuration(long duration) {
         this.duration = duration;
@@ -97,10 +129,9 @@ public class PowerupComponent extends Component {
     /**
      * Sets the type of the Powerup.
      *
-     * @param type  The type to set.
+     * @param type The type to set.
      */
     public void setType(PowerupType type) {
         this.type = type;
     }
 }
-

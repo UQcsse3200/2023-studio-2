@@ -1,17 +1,18 @@
 package com.csse3200.game.components.Companion;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.components.PhysicsComponent;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 
 /**
  * A UI component for displaying Companion stats, e.g., health.
@@ -20,6 +21,7 @@ public class CompanionStatsDisplay extends UIComponent {
     Table companionStatisticsUI;
 
     private boolean update = false;
+
     Table playerLowHealthAlert;
 
 
@@ -201,6 +203,9 @@ public class CompanionStatsDisplay extends UIComponent {
         if (health <= 50 && !update) {
             addAlert(health);
             update = true;
+
+//          Play the low health sound when health is below 50
+            entity.getEvents().trigger("playSound", "low_health");
             return;
         }
 
@@ -212,7 +217,7 @@ public class CompanionStatsDisplay extends UIComponent {
                     playerLowHealthLabel.remove();
                     update = false;
                 }
-            }, 3.0f);
+            }, 3000);
         }
     }
 

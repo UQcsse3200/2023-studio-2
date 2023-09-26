@@ -1,31 +1,30 @@
 package com.csse3200.game.areas;
+
 import com.badlogic.gdx.audio.Music;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.files.UserSettings;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
+import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.MinigameShipFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.csse3200.game.components.ships.DistanceDisplay;
-import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 
 /**
  * Forest area for the demo game with trees, a player, and some enemies.
  */
 public class SpaceGameArea extends GameArea {
-    private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpaceGameArea.class);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(5, 10);
     private static final float ASTEROID_SIZE = 0.9f;
     private static final float STATIC_ASTEROID_SIZE =0.9f;

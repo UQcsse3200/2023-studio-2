@@ -1,14 +1,9 @@
 package com.csse3200.game.components.tasks;
 
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.ai.tasks.Task;
-import com.csse3200.game.areas.EarthGameArea;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.ProjectileAttackComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsService;
@@ -25,14 +20,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(GameExtension.class)
 public class ProjectileMovementTaskTest {
-    private Entity newPlayer;
     private Entity projectile;
     private ProjectileMovementTask task;
     @BeforeEach
@@ -47,7 +39,7 @@ public class ProjectileMovementTaskTest {
         ServiceLocator.registerPhysicsService(new PhysicsService());
 
         // Creating Player
-        newPlayer = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
+        Entity newPlayer = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
         // Projectile Setup
         projectile = new Entity()
                         .addComponent(new PhysicsComponent())
@@ -75,24 +67,4 @@ public class ProjectileMovementTaskTest {
         // Checks the Projectile has been
         Assertions.assertEquals(Task.Status.ACTIVE, task.getStatus());
     }
-
-    /**
-     *
-     */
-//    @Test
-//    void sendProjectileTest() {
-//        // Arbitrary Projectile
-//        float initialDistance = projectile.getPosition().dst(newPlayer.getPosition());
-//        task.create(() -> projectile);
-//        task.start();
-//        // Run the game for a few cycles
-//        for (int i = 0; i < 3; i++) {
-//            projectile.earlyUpdate();
-//            projectile.update();
-//            ServiceLocator.getPhysicsService().getPhysics().update();
-//        }
-//        float newDistance = projectile.getPosition().dst(newPlayer.getPosition());
-//        System.out.println(initialDistance + "->" + newDistance);
-//        Assertions.assertTrue(newDistance < initialDistance);
-//    }
 }

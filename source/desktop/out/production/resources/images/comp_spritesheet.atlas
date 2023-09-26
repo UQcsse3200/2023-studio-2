@@ -1,0 +1,60 @@
+comp_spritesheet.png
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+DOWN
+  rotate: false
+  xy: 1, 1
+  size: 245, 245
+  orig: 245, 245
+  offset: 0, 0
+  index: -1
+DOWN_LEFT
+  rotate: false
+  xy: 247, 1
+  size: 245, 245
+  orig: 245, 245
+  offset: 0, 0
+  index: -1
+DOWN_RIGHT
+  rotate: false
+  xy: 493, 1
+  size: 245, 245
+  orig: 245, 245
+  offset: 0, 0
+  index: -1
+UP_LEFT
+  rotate: false
+  xy: 1, 247
+  size: 245, 245
+  orig: 245, 245
+  offset: 0, 0
+  index: -1
+UP_RIGHT
+  rotate: false
+  xy: 247, 247
+  size: 245, 245
+  orig: 245, 245
+  offset: 0, 0
+  index: -1
+UP
+  rotate: false
+  xy: 493, 247
+  size: 245, 245
+  orig: 245, 245
+  offset: 0, 0
+  index: -1
+RIGHT
+  rotate: false
+  xy: 1, 493
+  size: 245, 245
+  orig: 245, 245
+  offset: 0, 0
+  index: -1
+LEFT
+  rotate: false
+  xy: 247, 493
+  size: 245, 245
+  orig: 245, 245
+  offset: 0, 0
+  index: -1

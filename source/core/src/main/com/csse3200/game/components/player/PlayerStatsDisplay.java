@@ -11,14 +11,17 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * An ui component for displaying player stats, e.g. health, healthBar, Dodge Cool-down Bar.
  */
 public class PlayerStatsDisplay extends UIComponent {
-  Table table;
-  Table table2;
-  Table table1;
+  private Table healthTable;
+  private Table dodgeTable;
+  private Table livesTable;
   private Image heartImage;
   private Label healthLabel;
   public ProgressBar healthBar;
@@ -26,6 +29,10 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label DodgeLabel;
   private Label livesLabel;
   private float healthWidth = 1000f;
+  private Table maxLivesAlert;
+  private Label maxLivesLabel;
+
+
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -36,6 +43,8 @@ public class PlayerStatsDisplay extends UIComponent {
 
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("updateDodgeCooldown", this::updateDodgeBarUI);
+    entity.getEvents().addListener("updateLives", this::updatePlayerLives);
+    entity.getEvents().addListener("maxLivesAlert", this::maxLivesReached);
   }
 
   /**
@@ -43,18 +52,19 @@ public class PlayerStatsDisplay extends UIComponent {
    * @see Table for positioning options
    */
   private void addActors() {
-    table = new Table();
-    table.top().left();
-    table2 = new Table();
-    table2.top().left();
-    table.setFillParent(true);
-    table.padTop(45f).padLeft(5f);
-    table2.setFillParent(true);
-    table2.padTop(205f).padLeft(5f);
-    table1 = new Table();
-    table1.top().left();
-    table1.setFillParent(true);
-    table1.padTop(165f).padLeft(5f);
+    healthTable = new Table();
+    livesTable = new Table();
+    dodgeTable = new Table();
+    healthTable.top().left();
+    livesTable.top().left();
+    healthTable.setFillParent(true);
+    healthTable.padTop(45f).padLeft(5f);
+    livesTable.setFillParent(true);
+    livesTable.padTop(205f).padLeft(5f);
+    dodgeTable = new Table();
+    dodgeTable.top().left();
+    dodgeTable.setFillParent(true);
+    dodgeTable.padTop(165f).padLeft(5f);
 
     //health Bar
     int health = entity.getComponent(CombatStatsComponent.class).getHealth();
@@ -64,6 +74,7 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.setValue(100);
 
     //setting the position of health Bar
+    float healthWidth = 1000f;
     healthBar.setWidth(healthWidth);
     healthBar.setDebug(true);
     healthBar.setPosition(10, Gdx.graphics.getHeight()  - healthBar.getHeight());
@@ -97,16 +108,16 @@ public class PlayerStatsDisplay extends UIComponent {
     int lives = entity.getComponent(CombatStatsComponent.class).getLives();
     CharSequence livesText = String.format("Lives Left: %d", lives);
     livesLabel = new Label(livesText, skin, "small");
-    table.add(heartImage).size(heartSideLength).pad(5);
-    table.add(healthLabel);
-    table.add(healthBar).padLeft(20);
+    healthTable.add(heartImage).size(heartSideLength).pad(5);
+    healthTable.add(healthLabel);
+    healthTable.add(healthBar).padLeft(20);
 
-//    table1.add(DodgeLabel); todo: rachel / aman fix
-//    table1.add(DodgeBar);
-//    table2.add(livesLabel);
-    stage.addActor(table);
-    stage.addActor(table1);
-    stage.addActor(table2);
+//    dodgeTable.add(DodgeLabel);
+//    dodgeTable.add(DodgeBar);
+    livesTable.add(livesLabel);
+    stage.addActor(healthTable);
+    stage.addActor(dodgeTable);
+    stage.addActor(livesTable);
   }
 
   @Override
@@ -139,7 +150,40 @@ public class PlayerStatsDisplay extends UIComponent {
     livesLabel.setText(livesText);
   }
 
-  @Override
+  /**
+   * Alert for when maximum number of lives (3) has been reached. Is placed in the left corner below
+   * number of lives player stats.
+   */
+  private void maxLivesAlert() {
+    maxLivesAlert = new Table();
+    maxLivesAlert.top().left();
+    maxLivesAlert.setFillParent(true);
+    maxLivesLabel = new Label("Max Player Lives Reached", skin, "small");
+
+    maxLivesAlert.add(maxLivesLabel).padTop(250).padLeft(5f);
+    //launch the table onto the screen
+    stage.addActor(maxLivesAlert);
+  }
+
+  /**
+   * Creates an alert for if the maximum number of lives (3) has been reached.
+   * Used when player picks up Powerup ('Plus one life').
+   */
+  public void maxLivesReached() {
+    maxLivesAlert(); // indicates to player that max number of lives has been reached
+    final Timer timer = new Timer();
+    TimerTask removeAlert = new TimerTask() {
+      @Override
+      public void run() {
+        maxLivesLabel.remove();
+        timer.cancel();
+        timer.purge();
+      }
+    };
+    timer.schedule(removeAlert, 3000); // removes alert after 1 second
+  }
+
+    @Override
   public void dispose() {
     super.dispose();
     heartImage.remove();

@@ -25,7 +25,7 @@
       "texture": "images/structure-icons/gate.png"
     },
     "com.csse3200.game.components.structures.tools.TurretTool": {
-      "level": 1,
+      "level": 0,
       "name": "Basic Turret",
       "cost": {
         "Durasteel": 75,

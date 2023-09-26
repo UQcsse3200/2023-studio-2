@@ -11,9 +11,6 @@ import com.badlogic.gdx.math.Vector3;
 public class CameraComponent extends Component {
   private final Camera camera;
   private Vector2 lastPosition;
-  private final float zoomSpeed = 0.1f;
-  private final float minimumZoom = 5f; // Set your desired minimum zoom value
-  private final float maximumZoom = 20f;
 
   public CameraComponent() {
     this(new OrthographicCamera());
@@ -27,6 +24,7 @@ public class CameraComponent extends Component {
   @Override
   public void update() {
     Vector2 position = entity.getPosition();
+    float zoomSpeed = 0.1f;
     if (Gdx.input.isKeyPressed(Input.Keys.PLUS) || Gdx.input.isKeyPressed(Input.Keys.EQUALS)) {
       // Zoom in when "+" key is pressed
       fixZoom(-zoomSpeed);
@@ -61,9 +59,12 @@ public class CameraComponent extends Component {
     float currentZoom = camera.viewportWidth + x;
 
     // Ensure zoom stays within a valid range
+    // Set your desired minimum zoom value
+    float minimumZoom = 5f;
     if (currentZoom < minimumZoom) {
       currentZoom = minimumZoom;
     }
+    float maximumZoom = 20f;
     if (currentZoom > maximumZoom) {
       currentZoom = maximumZoom;
     }

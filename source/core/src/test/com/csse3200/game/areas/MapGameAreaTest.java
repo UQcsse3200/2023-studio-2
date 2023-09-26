@@ -63,7 +63,7 @@ class MapGameAreaTest {
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
 
-        assertDoesNotThrow(() -> new MapGameArea("configPath", terrainFactory, game));
+        assertDoesNotThrow(() -> new MapGameArea("configPath", terrainFactory, game, 3));
     }
 
     @Test
@@ -74,7 +74,7 @@ class MapGameAreaTest {
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
 
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.create();
 
         //Verify invalid load and that screen changes to main menu
@@ -91,7 +91,7 @@ class MapGameAreaTest {
 
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.loadAssets();
 
         verify(assetManager).load("Texture1.png", Texture.class);
@@ -111,7 +111,7 @@ class MapGameAreaTest {
 
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.loadAssets();
 
         verify(assetManager).load("Texture3.png", Texture.class);
@@ -131,7 +131,7 @@ class MapGameAreaTest {
 
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.loadAssets();
 
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -152,7 +152,7 @@ class MapGameAreaTest {
 
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.loadAssets();
 
         verify(assetManager).load("soundeffect.wav", Sound.class);
@@ -172,7 +172,7 @@ class MapGameAreaTest {
 
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.loadAssets();
 
         verify(assetManager).load("backgroundMusic.wav", Music.class);

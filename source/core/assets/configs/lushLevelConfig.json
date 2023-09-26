@@ -22,6 +22,7 @@
     "images/structure-icons/gate.png",
     "images/healthpowerup.png",
     "images/speedpowerup.png",
+    "images/extralifepowerup.png",
     "images/Ship.png",
     "images/oldman_down_1.png",
     "images/player_blank.png",
@@ -43,7 +44,8 @@
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
-    "images/sling_shot.png"
+    "images/sling_shot.png",
+    "images/structures/TurretOne.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -60,7 +62,8 @@
     "images/weapons/wrench.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
-    "images/botanist.atlas"
+    "images/botanist.atlas",
+    "images/structures/TurretOne.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav"

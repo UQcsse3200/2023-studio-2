@@ -4,12 +4,12 @@
  */
 package com.csse3200.game.components.Companion;
 
-import com.csse3200.game.components.player.InteractionControllerComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
@@ -24,7 +24,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
     private int flagA = 0;
     private int flagS = 0;
     private int flagD = 0;
-    private int flagMul = 0;
 
     private final CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay();
 
@@ -48,7 +47,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         this.testing = testing;
     }
 
-    private boolean leftCtrlFlag = false;
+    private final boolean leftCtrlFlag = false;
 
     /**
      * Returns the sum of movement flags (W, A, S, D).
@@ -67,6 +66,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         if (movFlagSum >= 3) {
             walkDirection.set(Vector2.Zero);
         }
+        int flagMul = 0;
         if (movFlagSum == 2) {
             flagMul = 1;
             walkDirection.scl(new Vector2(0.707f, 0.707f));

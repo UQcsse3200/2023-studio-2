@@ -44,11 +44,9 @@ public class MapGameArea extends GameArea{
     private int playerLives;
     private Entity playerEntity;
     private boolean validLoad = true;
-    private String thing;
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
-            thing = configPath;
             mapConfig = MapConfigLoader.loadMapDirectory(configPath);
             logger.info("Successfully loaded map {}", configPath);
         } catch (InvalidConfigException exception) {
@@ -107,8 +105,6 @@ public class MapGameArea extends GameArea{
      * Loads all assets listed in the config file
      */
     protected void loadAssets() {
-        System.out.println("#####################################################");
-        System.out.println(thing);
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 

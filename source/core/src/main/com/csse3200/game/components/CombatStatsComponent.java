@@ -248,6 +248,7 @@ public class CombatStatsComponent extends Component {
    */
   public void minusLife() {
     this.lives -= 1;
+    entity.getEvents().trigger("updateLives", this.lives);
   }
 
   /**

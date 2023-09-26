@@ -178,5 +178,8 @@ public class CompanionActions extends Component {
     public void setSpeed(float x, float y) {
         COMPANION_SPEED = new Vector2(x, y);
     }
+    public Vector2 getSpeed() {
+        return COMPANION_SPEED;
+    }
 
 }

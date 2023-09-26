@@ -6,6 +6,10 @@ import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Represents a power-up component within the game.
@@ -13,13 +17,11 @@ import com.csse3200.game.services.ServiceLocator;
 public class PowerupComponent extends Component {
 
     private PowerupType type;
-    private Entity player = ServiceLocator.getEntityService().getPlayer();
-    private Entity companion = ServiceLocator.getEntityService().getCompanion();
-    private CombatStatsComponent playerCombatStats;
-    private PlayerActions playerActions;
-
+    private final Entity player = ServiceLocator.getEntityService().getPlayer();
+    private final Entity companion = ServiceLocator.getEntityService().getCompanion();
     private long duration;
 
+    private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     /**
      * Assigns a type and targetLayer value to a given Powerup
      */
@@ -31,8 +33,7 @@ public class PowerupComponent extends Component {
      * Overrides the Component create() function
      */
     @Override
-    public void create() {
-        playerCombatStats = entity.getComponent(CombatStatsComponent.class);
+    public void create(){
     }
 
     /**
@@ -40,84 +41,70 @@ public class PowerupComponent extends Component {
      *
      *
      *
-     * @param target The entity receiving the Powerup effect.
      */
-    public void applyEffect(Entity target) {
-        playerCombatStats = target.getComponent(CombatStatsComponent.class);
-        playerActions = target.getComponent(PlayerActions.class);
+    public void applyEffect() {
+            switch (type) {
+                case HEALTH_BOOST:
+                    player.getComponent(CombatStatsComponent.class).setHealth(100);
+                    companion.getComponent(CombatStatsComponent.class).setHealth(50);
+                    entity.getEvents().trigger("playSound", "healthPowerup"); // plays sound when health powerup selected
+                    break;
 
-        switch (type) {
-            case HEALTH_BOOST ->{
-                playerCombatStats.setHealth(100);
-                companion.getComponent(CombatStatsComponent.class).setHealth(50);
-                entity.getEvents().trigger("playSound", "healthPowerup"); //plays sound when health powerup selected
-            }
+                case SPEED_BOOST:
+                    if (player.getComponent(PlayerActions.class) == null) {
+                        return;
+                    }else {
+                    player.getComponent(PlayerActions.class).setSpeed(6, 6);
+                    companion.getComponent(CompanionActions.class).setSpeed(7, 7);
+                    companion.getComponent(FollowComponent.class).setFollowSpeed(5);
 
+                    // Set the duration for speed effect
+                    setDuration(8000);
 
-            case SPEED_BOOST -> {
+                    // Schedule a task to reset the speed values after the specified duration
+                    executorService.schedule(() -> {
+                        player.getComponent(PlayerActions.class).setSpeed(3, 3);
+                        companion.getComponent(CompanionActions.class).setSpeed(4, 4);
+                    }, getDuration(), TimeUnit.MILLISECONDS);}
+                    break;
 
-                if (playerActions == null) {
-                    return;
-                }
-                player.getComponent(PlayerActions.class).setSpeed(6,6);
-                companion.getComponent(CompanionActions.class).setSpeed(7,7);
-                companion.getComponent(FollowComponent.class).setFollowSpeed(5);
+                case EXTRA_LIFE:
+                    player.getComponent(CombatStatsComponent.class).addLife();
+                    break;
 
-                // Set the duration for speed effect
-                this.setDuration(10000);
-
-                // Schedule a task to reset the speed values after the specified duration
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        player.getComponent(PlayerActions.class).setSpeed(3,3);
-                        companion.getComponent(CompanionActions.class).setSpeed(4,4);
-                    }
-                },getDuration());
-            }
-            case EXTRA_LIFE -> playerCombatStats.addLife();
-
-            case TEMP_IMMUNITY -> {
-                if (playerActions == null) {
-                    return;
-                }
-                companion.getComponent(CombatStatsComponent.class).setImmunity(true);
-                player.getComponent(CombatStatsComponent.class).setImmunity(true);
-                this.setDuration(8000);
-                Timer.schedule(new Timer.Task()  {
-                    @Override
-                    public void run() {
+                case TEMP_IMMUNITY:
+                    if (player.getComponent(PlayerActions.class) == null) {
+                        return;
+                    }else {
+                    companion.getComponent(CombatStatsComponent.class).setImmunity(true);
+                    player.getComponent(CombatStatsComponent.class).setImmunity(true);
+                    setDuration(6000);
+                    executorService.schedule(() -> {
                         companion.getComponent(CombatStatsComponent.class).setImmunity(false);
                         player.getComponent(CombatStatsComponent.class).setImmunity(false);
+                    }, getDuration(), TimeUnit.MILLISECONDS);}
+                    break;
 
-                    }
-                },getDuration());
-            }
-            case DOUBLE_DAMAGE -> {
-                if (playerActions == null) {
-                    return;
-                }
+                case DOUBLE_DAMAGE:
+                    if (player.getComponent(PlayerActions.class) == null) {
+                        return;
+                    }else {
+                    player.getComponent(CombatStatsComponent.class).setAttackMultiplier(2);
+                    setDuration(12000);
+                    executorService.schedule(() -> {
+                        player.getComponent(CombatStatsComponent.class).setAttackMultiplier(1);
+                    }, getDuration(), TimeUnit.MILLISECONDS);}
+                    break;
 
-                playerCombatStats.setAttackMultiplier(2);
-                this.setDuration(12000);
-
-                Timer.Task doubleDamage = new Timer.Task() {
-                    @Override
-                    public void run() {
-                        playerCombatStats.setAttackMultiplier(1);
-                    }
-                };
-
-                new Timer().scheduleTask(doubleDamage, getDuration());
+                default:
+                    throw new IllegalArgumentException("You must specify a valid PowerupType");
             }
 
-            default -> throw new IllegalArgumentException("You must specify a valid PowerupType");
-        }
-
-        if (entity != null) {
-            Gdx.app.postRunnable(entity::dispose);
-        }
+            if (entity != null) {
+                Gdx.app.postRunnable(entity::dispose);
+            }
     }
+
 
     /**
      * Sets the duration for which the Powerup effect should last.

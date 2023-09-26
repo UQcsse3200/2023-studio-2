@@ -53,7 +53,7 @@ public class PowerupComponentTest {
 
         // Test Health Powerup
         when(player.getComponent(CombatStatsComponent.class)).thenReturn(playerStats);
-        healthpowerup.applyEffect(player);
+        healthpowerup.applyEffect();
         verify(playerStats).setHealth(100);
     }
 
@@ -78,7 +78,7 @@ public class PowerupComponentTest {
 
         // Test Speed Powerup
         when(player.getComponent(PlayerActions.class)).thenReturn(playerActions);
-        speedpowerup.applyEffect(player);
+        speedpowerup.applyEffect();
         verify(playerActions).setSpeed(5, 5);
     }
 
@@ -99,9 +99,9 @@ public class PowerupComponentTest {
         player.addComponent(new CombatStatsComponent(0, 10, 10, false, 1));
 
         // Test Extra Life Powerup
-        extralifepowerup.applyEffect(player);
+        extralifepowerup.applyEffect();
         assertEquals(2, player.getComponent(CombatStatsComponent.class).getLives()); // checks lives increases by 1.
-        extralifepowerup.applyEffect(player);
+        extralifepowerup.applyEffect();
         assertEquals(3, player.getComponent(CombatStatsComponent.class).getLives()); // checks lives increases by 1.
     }
 
@@ -122,7 +122,7 @@ public class PowerupComponentTest {
         player.addComponent(new CombatStatsComponent(0, 10, 10, false, 4));
 
         // Test Extra Life Powerup
-        extralifepowerup.applyEffect(player);
+        extralifepowerup.applyEffect();
         assertEquals(4, player.getComponent(CombatStatsComponent.class).getLives()); // checks lives does not increase.
     }
     */

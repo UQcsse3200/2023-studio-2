@@ -217,22 +217,22 @@ public class MapGameArea extends GameArea{
         Entity newPowerup;
         switch (powerupType){
             case HEALTH_BOOST:
-                newPowerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
+                newPowerup = PowerupFactory.createHealthPowerup();
                 itemsOnMap.add(newPowerup);
                 spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
                 return newPowerup;
             case SPEED_BOOST:
-                newPowerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
+                newPowerup = PowerupFactory.createSpeedPowerup();
                 itemsOnMap.add(newPowerup);
                 spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
                 return newPowerup;
             case TEMP_IMMUNITY:
-                newPowerup = PowerupFactory.createPowerup(PowerupType.TEMP_IMMUNITY);
+                newPowerup = PowerupFactory.createtempImmunityPowerup();
                 itemsOnMap.add(newPowerup);
                 spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
                 return newPowerup;
             case DOUBLE_DAMAGE:
-                newPowerup = PowerupFactory.createPowerup(PowerupType.DOUBLE_DAMAGE);
+                newPowerup = PowerupFactory.createDoubleDamagePowerup();
                 itemsOnMap.add(newPowerup);
                 spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
                 return newPowerup;

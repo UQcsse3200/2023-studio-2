@@ -17,7 +17,6 @@ public class ItemPickupComponent extends Component {
     private Entity companion = ServiceLocator.getEntityService().getCompanion();
 
     private static Logger logger;
-    private Entity player = ServiceLocator.getEntityService().getPlayer();
 
     /**
      * Constructs an ItemPickupComponent with the specified target layer for item collisions.
@@ -42,16 +41,19 @@ public class ItemPickupComponent extends Component {
      * @param other  The fixture of the other entity involved in the collision.
      */
     private void pickUp(Fixture me, Fixture other) {
-        short layer = companion.getComponent(HitboxComponent.class).getLayer();
-        boolean isCompanion = PhysicsLayer.contains(layer, (short) (PhysicsLayer.PLAYER | PhysicsLayer.COMPANION));
-        if (isCompanion){
-        /*entity.getComponent(PowerupComponent.class).applyEffect(player);*/
         Entity entityOfComponent = getEntity();
-        MapGameArea.removeItemOnMap(entityOfComponent);
+        /*// Apply the power-up effect
+        entity.getComponent(PowerupComponent.class).applyEffect();*/
+        // Log the pick-up
         logger.info("Item picked up");
-        ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class).addItem(entityOfComponent);}
-        else {
-            Entity entityOfComponent = getEntity();
-            MapGameArea.removeItemOnMap(entityOfComponent);}
-    }
-}
+
+        // Add the power-up to the companion's inventory
+        Entity companionEntity = ServiceLocator.getEntityService().getCompanion();
+        CompanionInventoryComponent companionInventory = companionEntity.getComponent(CompanionInventoryComponent.class);
+
+        if (companionInventory != null) {
+            companionInventory.addPowerup(entityOfComponent);
+        }
+        // Remove the item from the game area
+        MapGameArea.removeItemOnMap(entityOfComponent);
+    }}

@@ -1,16 +1,14 @@
-/**
- * This class represents the inventory component for a companion character in the game.
- * It manages the companion's gold and provides methods for interacting with it.
- */
 package com.csse3200.game.components.Companion;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.PowerupComponent;
+import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 /**
  * CompanionInventoryComponent handles all the inventory management for the companion.
@@ -18,50 +16,37 @@ import java.util.List;
 public class CompanionInventoryComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(CompanionInventoryComponent.class);
     private static final int INVENTORY_SIZE = 7;
-    private final List<Entity> inventory = new ArrayList<>(INVENTORY_SIZE);
+
+    // A single queue for all power-ups
+    private final Deque<Entity> powerupQueue = new ArrayDeque<>(INVENTORY_SIZE);
+
     private final int[] itemQuantity = new int[INVENTORY_SIZE];
 
     /**
-     * Adds an item to the companion's inventory if there is space remaining.
+     * Adds a power-up item to the companion's inventory if there is space remaining.
      *
-     * @param item An entity which can be put inside the companion's inventory.
+     * @param item An entity representing the power-up to be added.
      */
-    public void addItem(Entity item) {
-        if (inventory.size() < INVENTORY_SIZE) {
-            inventory.add(item);
-            ++itemQuantity[inventory.indexOf(item)];
+    public void addPowerup(Entity item) {
+        if (powerupQueue.size() < INVENTORY_SIZE) {
+            powerupQueue.add(item);
+            ++itemQuantity[powerupQueue.size() - 1];
+            logger.debug("item added");
         }
     }
 
     /**
-     * Retrieves the index of an item in the inventory.
+     * Retrieves and uses the next power-up from the companion's inventory, regardless of its type.
      *
-     * @param item The item to check if it is in the inventory or not.
-     * @return -1 if the item is not in the inventory, otherwise an integer >= 0 indicating the index of that item in the inventory.
+     * @return True if a power-up was successfully used, false if the inventory is empty.
      */
-    public int getItemIndex(Entity item) {
-        int index = -1;
-        for (int i = 0; i < inventory.size(); ++i) {
-            if (inventory.get(i).equals(item)) {
-                return i;
-            }
+    public boolean useNextPowerup() {
+        if (!powerupQueue.isEmpty()) {
+            Entity powerup = powerupQueue.poll();
+            powerup.getComponent(PowerupComponent.class).applyEffect();
+            --itemQuantity[0];
+            return true;
         }
-        return index;
-    }
-
-    /**
-     * Returns the item at a given index in the inventory.
-     *
-     * @param index The index selecting the item in the inventory.
-     * @return Null if there is no item, or an entity if there is an item at that index.
-     */
-    public Entity getItem(Integer index) {
-        // Check if the index is within valid bounds
-        if ((index >= 0) && (index < INVENTORY_SIZE)) {
-            if (inventory.get(index) != null) {
-                return inventory.get(index);
-            }
-        }
-        return null;
+        return false;
     }
 }

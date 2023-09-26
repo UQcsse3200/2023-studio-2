@@ -19,25 +19,6 @@ public class PowerupFactory {
         throw new IllegalStateException("Utility class");
     }
 
-    /**
-     *
-     * @param config - configuration file to match powerUp
-     *               it loads the health powerUp and boostPowerup
-     * @return entity
-     */
-    public static Entity createPowerup(PowerupConfig config) {
-        // Initialise and resize a new Powerup
-        Entity powerup = new Entity()
-                .addComponent(new PowerupComponent(config.type))
-                .addComponent(new TextureRenderComponent(config.spritePath))
-                .addComponent(new SoundComponent(config.sounds));
-
-       /* powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));*/
-        powerup.setScale(0.6f, 0.6f);
-
-        return powerup;
-    }
-
     // TODO: REMOVE - LEGACY
     /**
      * Creates a powerup entity based on the specified type. The entity will have a
@@ -46,27 +27,24 @@ public class PowerupFactory {
      * component set to PLAYER layer,
      * and a PowerupComponment.
      *
-     * @param type The type of powerup to create.
-     * @return Entity representing the powerup.
-     *
-     *
      */
-    public static Entity createPowerup(PowerupType type) {
+    public static Entity createPowerup(PowerupConfig config) {
 
         // Initialise and resize a new Powerup
         Entity powerup = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new PowerupComponent(type))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
-                .addComponent(new ItemPickupComponent(PhysicsLayer.ITEMS_ABOVE_PLATFORM));
-
-        powerup.addComponent(new PowerUpDisplayHUD(type));
+                .addComponent(new PowerupComponent(config.type))
+                .addComponent(new TextureRenderComponent(config.spritePath))
+                .addComponent(new PowerupComponent(config.type))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
+                .addComponent(new ItemPickupComponent(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
+                .addComponent(new PowerUpDisplayHUD(config.type));
 /*
         powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));*/
         powerup.setScale(0.6f, 0.6f);
 
         // Assigns texture based on the specific PowerupType
-        switch (type) {
+        switch (config.type) {
             case HEALTH_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/Potion2re.png"))
                                          .addComponent(new PowerupComponent(PowerupType.HEALTH_BOOST));}
             case SPEED_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/Potion4re.png"))
@@ -145,7 +123,5 @@ public class PowerupFactory {
      *
      * @return Entity representing a snap power-up.
      */
-    public static Entity createSnapPowerup() {
-        return createPowerup(configs.snapPowerup);
-    }
+    public static Entity createSnapPowerup() { return createPowerup(configs.snapPowerup);}
 }

@@ -74,19 +74,19 @@ public class CompanionStatsDisplay extends UIComponent {
         companionStatisticsUI.top().right();
         companionStatisticsUI.setFillParent(true);
         //placing the companionStatisticsUI/UI on a certain portion of the screen!
-        companionStatisticsUI.padTop(85f).padRight(5f);
+        /*companionStatisticsUI.padTop(85f).padRight(5f);*/
 
-        // ADD A COMPANION UI HEADER
+       /* // ADD A COMPANION UI HEADER
         CharSequence companionUIHeader = "Companion";
         companionUIHeaderLabel = new Label(companionUIHeader, skin, "title");
         companionStatisticsUI.add(companionUIHeaderLabel);
-        companionStatisticsUI.row();
+        companionStatisticsUI.row();*/
 
         companionStatisticsUI.padTop(100f).padRight(5f);
 
         // ADD THE COMPANIONS HEALTH INFORMATION
         int companionHealth = entity.getComponent(CombatStatsComponent.class).getHealth();
-        CharSequence companionHealthText = String.format("Health: %d", companionHealth);
+        CharSequence companionHealthText = String.format("%d", companionHealth);
         companionHealthLabel = new Label(companionHealthText, skin, "small");
         companionStatisticsUI.add(companionHealthLabel);
         companionStatisticsUI.row();
@@ -243,7 +243,7 @@ public class CompanionStatsDisplay extends UIComponent {
         super.dispose();
         companionHealthLabel.remove();
         if (playerLowHealthLabel != null) playerLowHealthLabel.remove();
-        companionUIHeaderLabel.remove();
+        /*companionUIHeaderLabel.remove();*/
     }
     public void setDuration(long duration) {
         this.duration = duration;

@@ -34,6 +34,9 @@ public class FollowComponent extends Component{
     public void setFollowSpeed(float followSpeed) {
         this.followSpeed = followSpeed;
     }
+    public float getFollowSpeed() {
+        return followSpeed;
+    }
 
     /**
      * Update the entity following the followEntity.

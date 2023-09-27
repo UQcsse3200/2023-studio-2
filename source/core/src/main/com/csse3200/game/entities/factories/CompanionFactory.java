@@ -11,8 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.*;
 import com.csse3200.game.components.FollowComponent;
-import com.csse3200.game.components.PotionComponent;
-import com.csse3200.game.components.PotionType;
+import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;
@@ -36,14 +35,6 @@ import java.util.Objects;
 public class CompanionFactory {
     private static final CompanionConfig Config =
             FileLoader.readClass(CompanionConfig.class, "configs/companion.json");
-    /**
-     * Create a Companion entity.
-     *
-     * @return The created companion entity.
-     */
-    public static Entity createCompanion() {
-        return createCompanion(Config);
-    }
     /**
      * Create a Companion entity matching the config file
      * @param config Configuration file to match companion to
@@ -80,6 +71,7 @@ public class CompanionFactory {
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
                         .addComponent(animator)
+                        .addComponent(new HealthBarComponent(true))
                         /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay())
                         .addComponent(new PlayerAnimationController())

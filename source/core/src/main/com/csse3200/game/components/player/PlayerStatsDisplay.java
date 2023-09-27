@@ -95,6 +95,12 @@ public class PlayerStatsDisplay extends UIComponent {
     stage.addActor(container);
   }
 
+  /**
+   * @param statsTable - Used to add Column/Rows and define the actors
+   * createUpgradeTreeButton() - creating button and defining it on the top left
+   *                              also playing the sound when on tapping it
+   *
+   */
   public void createUpgradeTreeButton(Table statsTable) {
     TextButton button = new TextButton("Upgrade Tree", skin);
 
@@ -106,6 +112,8 @@ public class PlayerStatsDisplay extends UIComponent {
         keys.clearWalking();
         UpgradeDisplay display = UpgradeDisplay.createUpgradeDisplay();
         ServiceLocator.getRenderService().getStage().addActor(display);
+
+        entity.getEvents().trigger("playSound", "upgradeTreeTap");
       }
     });
 

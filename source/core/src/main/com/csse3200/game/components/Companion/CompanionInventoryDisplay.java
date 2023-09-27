@@ -3,21 +3,18 @@ package com.csse3200.game.components.Companion;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.components.PotionType;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.PotionConfig;
-import com.csse3200.game.entities.configs.PotionConfigs;
+import com.csse3200.game.components.PowerupType;
+import com.csse3200.game.entities.configs.PowerupConfig;
+import com.csse3200.game.entities.configs.PowerupConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -31,8 +28,7 @@ public class CompanionInventoryDisplay extends Window {
     private static final float WINDOW_HEIGHT_SCALE = 0.65f;
     private static final float SIZE = 64f;
     private InputOverrideComponent inputOverrideComponent;
-    private PotionConfigs potionConfigs;
-    private  Entity player;
+    public PowerupConfigs powerupConfigs;
     private  Skin skin;
 
     public static CompanionInventoryDisplay createUpgradeDisplay() {
@@ -47,7 +43,7 @@ public class CompanionInventoryDisplay extends Window {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
 
         skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
-        potionConfigs = FileLoader.readClass(PotionConfigs.class, "configs/potions.json");
+        powerupConfigs = FileLoader.readClass(PowerupConfigs.class, "configs/powerups.json");
 
 
         setupWindowDimensions();
@@ -55,7 +51,7 @@ public class CompanionInventoryDisplay extends Window {
 
         Table titleTable = createTitleTable();
         Table exitTable = createExitButton();
-        addPotions();
+        addPowerups();
         addActor(exitTable);
         addActor(titleTable);
 
@@ -64,30 +60,30 @@ public class CompanionInventoryDisplay extends Window {
         ServiceLocator.getInputService().register(inputOverrideComponent);
     }
 
-    private void addPotions() {
-        PotionConfig deathPotion = potionConfigs.GetPotionConfig(PotionType.DEATH_POTION);
-        PotionConfig healthPotion = potionConfigs.GetPotionConfig(PotionType.HEALTH_POTION);
-        PotionConfig speedPotion = potionConfigs.GetPotionConfig(PotionType.SPEED_POTION);
-        PotionConfig invincibilityPotion = potionConfigs.GetPotionConfig(PotionType.INVINCIBILITY_POTION);
-        PotionConfig extraLife = potionConfigs.GetPotionConfig(PotionType.EXTRA_LIFE);
-        PotionConfig doubleCross= potionConfigs.GetPotionConfig(PotionType.DOUBLE_CROSS);
-        PotionConfig doubleDamage = potionConfigs.GetPotionConfig(PotionType.DOUBLE_DAMAGE);
-        PotionConfig snap = potionConfigs.GetPotionConfig(PotionType.SNAP);
+    private void addPowerups() {
+        PowerupConfig deathPotion = powerupConfigs.GetPowerupConfig(PowerupType.DEATH_POTION);
+        PowerupConfig healthPotion = powerupConfigs.GetPowerupConfig(PowerupType.HEALTH_BOOST);
+        PowerupConfig speedPotion = powerupConfigs.GetPowerupConfig(PowerupType.SPEED_BOOST);
+        PowerupConfig invincibilityPotion = powerupConfigs.GetPowerupConfig(PowerupType.TEMP_IMMUNITY);
+        PowerupConfig extraLife = powerupConfigs.GetPowerupConfig(PowerupType.EXTRA_LIFE);
+        PowerupConfig doubleCross= powerupConfigs.GetPowerupConfig(PowerupType.DOUBLE_CROSS);
+        PowerupConfig doubleDamage = powerupConfigs.GetPowerupConfig(PowerupType.DOUBLE_DAMAGE);
+        PowerupConfig snap = powerupConfigs.GetPowerupConfig(PowerupType.SNAP);
 
         // Create lists for the first and second rows of potions
-        List<PotionConfig> firstRowPotions = new ArrayList<>();
+        List<PowerupConfig> firstRowPotions = new ArrayList<>();
         firstRowPotions.add(deathPotion);
         firstRowPotions.add(healthPotion);
         firstRowPotions.add(speedPotion);
         firstRowPotions.add(invincibilityPotion);
 
-        List<PotionConfig> secondRowPotions = new ArrayList<>();
+        List<PowerupConfig> secondRowPotions = new ArrayList<>();
         secondRowPotions.add(extraLife);
         secondRowPotions.add(doubleCross);
         secondRowPotions.add(doubleDamage);
         secondRowPotions.add(snap);
 
-        Group potionGroup = new Group();
+        Group powerupGroup = new Group();
 
         float startXFirstRow = 50f; // Adjust as needed
         float startYFirstRow = 200f; // Adjust as needed
@@ -96,30 +92,30 @@ public class CompanionInventoryDisplay extends Window {
 
         // Create and position the potion buttons in the first row
         float currentX = startXFirstRow;
-        for (PotionConfig potionConfig : firstRowPotions) {
-            Table potionButtonTable = createPotionButton(potionConfig, currentX, startYFirstRow);
-            potionGroup.addActor(potionButtonTable);
+        for (PowerupConfig powerupConfig : firstRowPotions) {
+            Table potionButtonTable = createPowerupButton(powerupConfig, currentX, startYFirstRow);
+            powerupGroup.addActor(potionButtonTable);
             currentX += spacingXFirstRow;
         }
 
         // Create and position the Death Potion button in the first row
-        ImageButton deathPotionButton = createPotionButton(deathPotion, startXFirstRow, startYFirstRow);
-        potionGroup.addActor(deathPotionButton);
+        ImageButton deathPotionButton = createPowerupButton(deathPotion, startXFirstRow, startYFirstRow);
+        powerupGroup.addActor(deathPotionButton);
 
         // Create and position the Health Potion button in the first row
         float healthPotionX = startXFirstRow + spacingXFirstRow;
-        ImageButton healthPotionButton = createPotionButton(healthPotion, healthPotionX, startYFirstRow);
-        potionGroup.addActor(healthPotionButton);
+        ImageButton healthPotionButton = createPowerupButton(healthPotion, healthPotionX, startYFirstRow);
+        powerupGroup.addActor(healthPotionButton);
 
         // Create and position the Speed Potion button in the first row
         float speedPotionX = healthPotionX + spacingXFirstRow;
-        ImageButton speedPotionButton = createPotionButton(speedPotion, speedPotionX, startYFirstRow);
-        potionGroup.addActor(speedPotionButton);
+        ImageButton speedPotionButton = createPowerupButton(speedPotion, speedPotionX, startYFirstRow);
+        powerupGroup.addActor(speedPotionButton);
 
         // Create and position the Invincibility Potion button in the first row
         float invincibilityPotionX = speedPotionX + spacingXFirstRow;
-        ImageButton invincibilityPotionButton = createPotionButton(invincibilityPotion, invincibilityPotionX, startYFirstRow);
-        potionGroup.addActor(invincibilityPotionButton);
+        ImageButton invincibilityPotionButton = createPowerupButton(invincibilityPotion, invincibilityPotionX, startYFirstRow);
+        powerupGroup.addActor(invincibilityPotionButton);
 
         // Define the starting position and spacing for potion buttons in the second row
         float startXSecondRow = 50f; // Adjust as needed
@@ -128,67 +124,67 @@ public class CompanionInventoryDisplay extends Window {
 
         // Create and position the potion buttons in the second row
         currentX = startXSecondRow;
-        for (PotionConfig potionConfig : secondRowPotions) {
-            Table potionButtonTable = createPotionButton(potionConfig, currentX, startYSecondRow);
-            potionGroup.addActor(potionButtonTable);
+        for (PowerupConfig powerupConfig : secondRowPotions) {
+            Table potionButtonTable = createPowerupButton(powerupConfig, currentX, startYSecondRow);
+            powerupGroup.addActor(potionButtonTable);
             currentX += spacingXFirstRow;
         }
 
         // Create and position the Extra Life button in the second row
-        ImageButton extraLifeButton = createPotionButton(extraLife, startXSecondRow, startYSecondRow);
-        potionGroup.addActor(extraLifeButton);
+        ImageButton extraLifeButton = createPowerupButton(extraLife, startXSecondRow, startYSecondRow);
+        powerupGroup.addActor(extraLifeButton);
 
         // Create and position the Double Cross button in the second row
         float doubleCrossX = startXSecondRow + spacingXFirstRow;
-        ImageButton doubleCrossButton = createPotionButton(doubleCross, doubleCrossX, startYSecondRow);
-        potionGroup.addActor(doubleCrossButton);
+        ImageButton doubleCrossButton = createPowerupButton(doubleCross, doubleCrossX, startYSecondRow);
+        powerupGroup.addActor(doubleCrossButton);
 
         // Create and position the Double Damage button in the second row
         float doubleDamageX = doubleCrossX + spacingXFirstRow;
-        ImageButton doubleDamageButton = createPotionButton(doubleDamage, doubleDamageX, startYSecondRow);
-        potionGroup.addActor(doubleDamageButton);
+        ImageButton doubleDamageButton = createPowerupButton(doubleDamage, doubleDamageX, startYSecondRow);
+        powerupGroup.addActor(doubleDamageButton);
 
         // Create and position the Snap button in the second row
         float snapX = doubleDamageX + spacingXFirstRow;
-        ImageButton snapButton = createPotionButton(snap, snapX, startYSecondRow);
-        potionGroup.addActor(snapButton);
+        ImageButton snapButton = createPowerupButton(snap, snapX, startYSecondRow);
+        powerupGroup.addActor(snapButton);
 
         // Add the potion group to your CompanionInventoryDisplay
-        addActor(potionGroup);
+        addActor(powerupGroup);
 
         // Create and position count buttons for each potion
         currentX = startXFirstRow;
         float countButtonY = startYFirstRow - 20f; // Adjust the Y position for count buttons
 
-        for (PotionConfig potionConfig : firstRowPotions) {
-            TextButton countButton = createCountButton(potionConfig, currentX, countButtonY);
-            potionGroup.addActor(countButton);
+        for (PowerupConfig powerupConfig : firstRowPotions) {
+            TextButton countButton = createCountButton(powerupConfig, currentX, countButtonY);
+            powerupGroup.addActor(countButton);
             currentX += spacingXFirstRow;
         }
 
         countButtonY = startYSecondRow - 20f;
         currentX = startXSecondRow;
 
-        for (PotionConfig potionConfig : secondRowPotions) {
-            TextButton countButton = createCountButton(potionConfig, currentX, countButtonY);
-            potionGroup.addActor(countButton);
+        for (PowerupConfig powerupConfig : secondRowPotions) {
+            TextButton countButton = createCountButton(powerupConfig, currentX, countButtonY);
+            powerupGroup.addActor(countButton);
             currentX += spacingXFirstRow;
         }
 
     }
 
-    private ImageButton createPotionButton(PotionConfig potionConfig, float x, float y) {
-       TextureRegionDrawable buttonDrawable = createTextureRegionDrawable(potionConfig.imagePath, CompanionInventoryDisplay.SIZE);
-        ImageButton potionButton = new ImageButton(buttonDrawable);
+    private ImageButton createPowerupButton(PowerupConfig powerupConfig, float x, float y) {
+       TextureRegionDrawable buttonDrawable = createTextureRegionDrawable(powerupConfig.imagePath, CompanionInventoryDisplay.SIZE);
+        ImageButton powerupButton = new ImageButton(buttonDrawable);
         //potionButton.setPosition(posX, posY);
-        potionButton.setPosition(x, y);
+        powerupButton.setPosition(x, y);
 
         // You can add listeners or other customization for potion buttons here
 
-        return potionButton;
+        return powerupButton;
     }
 
-    private TextButton createCountButton(PotionConfig potionConfig, float x, float y) {
+    private TextButton createCountButton(PowerupConfig powerupConfig, float x, float y) {
         TextButton countButton = new TextButton("0", skin); // Initialize count to 0
         countButton.setSize(SIZE / 2, SIZE / 2);
         countButton.setPosition(x, y);

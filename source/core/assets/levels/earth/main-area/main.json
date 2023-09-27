@@ -51,7 +51,10 @@
     "images/Potion2re.png",
     "images/Potion3re.png",
     "images/Potion4re.png",
-    "images/powerups/double_damage",
+    "images/powerups/double_damage.png",
+    "images/powerups/double_cross.png",
+    "images/powerups/extra_life.png",
+    "images/powerups/snap.png",
     "map/portal.png",
     "images/sling_shot.png",
     "images/fireAnim.png",
@@ -63,7 +66,8 @@
     "images/space_navigation_planet_0.png",
     "images/action-feedback/white_color_texture.png",
     "images/action-feedback/warning.png",
-    "map/treetop.png"
+    "map/treetop.png",
+    "particle-effects/explosion/particle.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -84,6 +88,7 @@
     "images/botanist.atlas",
     "images/Companion_spritesheet.atlas",
     "images/fire.atlas"
+
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
@@ -92,7 +97,12 @@
     "sounds/footStepsInTheForestGround.mp3",
     "sounds/PlayerHealthRecharge.mp3",
     "sounds/playerBoostRecharge.mp3",
-    "sounds/upgradeTree.mp3"
+    "sounds/upgradeTreeTap.mp3",
+    "sounds/upgradeWeapon.mp3",
+    "sounds/enemyDeath.mp3"
+  ],
+  "particleEffectPaths": [
+    "particle-effects/explosion/explosion.effect"
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 

@@ -11,8 +11,8 @@ import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.PotionType;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.resources.Resource;
@@ -89,14 +89,13 @@ public class MapGameArea extends GameArea{
 
         spawnTerrain();
         spawnEnvironment();
-        spawnPowerups();
         spawnExtractors();
         spawnShip();
         player = spawnPlayer();
         companion = spawnCompanion();
         spawnLaboratory();
         spawnBotanist();
-        companion.getEvents().addListener("SpawnPotion",this::spawnPotion);
+        companion.getEvents().addListener("SpawnPowerup",this::spawnPowerups);
         spawnPortal(player);
         spawnTreeTop();
         spawnAstro();
@@ -124,6 +123,8 @@ public class MapGameArea extends GameArea{
             resourceService.loadTextureAtlases(mapConfig.textureAtlasPaths);
         if (mapConfig.soundPaths != null)
             resourceService.loadSounds(mapConfig.soundPaths);
+        if (mapConfig.particleEffectPaths != null)
+            resourceService.loadParticleEffects(mapConfig.particleEffectPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.loadMusic(new String[] {mapConfig.backgroundMusicPath});
 
@@ -212,12 +213,31 @@ public class MapGameArea extends GameArea{
     /**
      * Spawns powerups in the map at the positions as outlined by the config file
      */
-    private void spawnPowerups() {
-        if (mapConfig.areaEntityConfig == null) return;
+    private Entity spawnPowerups(PowerupType powerupType) {
+        Entity newPowerup;
+        switch (powerupType){
+            case HEALTH_BOOST:
+                newPowerup = PowerupFactory.createHealthPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
+                return newPowerup;
+            case SPEED_BOOST:
+                newPowerup = PowerupFactory.createSpeedPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
+                return newPowerup;
+            case TEMP_IMMUNITY:
+                newPowerup = PowerupFactory.createtempImmunityPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
+                return newPowerup;
+            case DOUBLE_DAMAGE:
+                newPowerup = PowerupFactory.createDoubleDamagePowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
+                return newPowerup;
+            default: throw new IllegalArgumentException("You must assign a valid PowerupType");
 
-        for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.powerups) {
-            Entity powerup = PowerupFactory.createPowerup(powerupConfig);
-            spawnEntityAt(powerup, powerupConfig.position, true, false);
         }
     }
 
@@ -354,37 +374,7 @@ public class MapGameArea extends GameArea{
         //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
     }
-    public Entity spawnPotion(PotionType potionType){
-        Entity newPotion;
-        switch (potionType){
-            case DEATH_POTION:
-                newPotion = PotionFactory.createPotion(PotionType.DEATH_POTION);
-                itemsOnMap.add(newPotion);
-                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
-                return newPotion;
-            case SPEED_POTION:
-                newPotion = PotionFactory.createPotion(PotionType.SPEED_POTION);
-                itemsOnMap.add(newPotion);
-                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
-                return newPotion;
-            case HEALTH_POTION:
-                newPotion = PotionFactory.createPotion(PotionType.HEALTH_POTION);
-                itemsOnMap.add(newPotion);
-                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
-                return newPotion;
-            case INVINCIBILITY_POTION:
-                newPotion = PotionFactory.createPotion(PotionType.INVINCIBILITY_POTION);
-                itemsOnMap.add(newPotion);
-                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position, true, false);
-                return newPotion;
-            case DOUBLE_DAMAGE:
-                newPotion = PotionFactory.createPotion(PotionType.DOUBLE_DAMAGE);
-                itemsOnMap.add(newPotion);
-                spawnEntityAt(newPotion, mapConfig.areaEntityConfig.laboratory.position,true,false);
-                return newPotion;
-            default: throw new IllegalArgumentException("You must assign a valid PotionType");
-        }
-    }
+
 
     private void spawnAstro() {
         if (mapConfig.areaEntityConfig == null) return;
@@ -451,6 +441,8 @@ public class MapGameArea extends GameArea{
             resourceService.unloadAssets(mapConfig.textureAtlasPaths);
         if (mapConfig.soundPaths != null)
             resourceService.unloadAssets(mapConfig.soundPaths);
+        if (mapConfig.particleEffectPaths != null)
+            resourceService.unloadAssets(mapConfig.particleEffectPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.unloadAssets(new String[] {mapConfig.backgroundMusicPath});
     }

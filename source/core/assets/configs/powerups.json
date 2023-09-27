@@ -1,36 +1,40 @@
 {
   "healthPowerup": {
-    "spritePath": "images/powerups/health_boost.png",
+    "imagePath": "images/powerups/health_boost.png",
     "type": "HEALTH_BOOST"
   },
 
   "speedPowerup": {
-    "spritePath": "images/powerups/speed_boost.png",
+    "imagePath": "images/powerups/speed_boost.png",
     "type": "SPEED_BOOST"
   },
 
   "extraLifePowerup": {
-    "spritePath": "images/powerups/extra_life.png",
+    "imagePath": "images/powerups/extra_life.png",
     "type": "EXTRA_LIFE"
   },
 
   "doubleCrossPowerup": {
-    "spritePath": "images/powerups/double_cross",
+    "imagePath": "images/powerups/double_cross.png",
     "type": "DOUBLE_CROSS"
   },
 
   "tempImmunityPowerup": {
-    "spritePath": "images/powerups/temp_immunity",
+    "imagePath": "images/powerups/temp_immunity.png",
     "type": "TEMP_IMMUNITY"
   },
 
   "doubleDamagePowerup": {
-    "spritePath": "images/powerups/double_damage",
+    "imagePath": "images/powerups/double_damage.png",
     "type": "DOUBLE_DAMAGE"
   },
 
   "snapPowerup": {
-    "spritePath": "images/powerups/snap",
+    "imagePath": "images/powerups/snap.png",
     "type": "SNAP"
+  },
+  "death_potion": {
+    "imagePath": "images/powerups/death_potion.png",
+    "type": "DEATH_POTION"
   }
 }

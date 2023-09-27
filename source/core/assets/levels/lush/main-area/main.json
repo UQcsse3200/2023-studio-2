@@ -53,7 +53,8 @@
     "images/space_navigation_planet_1.png",
     "map/treetoplush.png",
     "images/action-feedback/warning.png",
-    "images/action-feedback/white_color_texture.png"
+    "images/action-feedback/white_color_texture.png",
+    "particle-effects/explosion/particle.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -80,7 +81,12 @@
     "sounds/footStepsInTheForestGround.mp3",
     "sounds/PlayerHealthRecharge.mp3",
     "sounds/playerBoostRecharge.mp3",
-    "sounds/upgradeTree.mp3"
+    "sounds/upgradeTreeTap.mp3",
+    "sounds/upgradeWeapon.mp3",
+    "sounds/enemyDeath.mp3"
+  ],
+  "particleEffectPaths": [
+    "particle-effects/explosion/explosion.effect"
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 

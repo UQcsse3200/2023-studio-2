@@ -4,7 +4,7 @@ package com.csse3200.game.entities.configs;
  * Defines the properties stored in Companion config files to be loaded by the Companion Factory.
  * Extends {@link BaseEntityConfig} to inherit common entity configuration properties.
  */
-public class CompanionConfig extends BaseEntityConfig {
+public class CompanionConfig extends HealthEntityConfig {
     /**
      * The amount of gold associated with the companion.
      */
@@ -19,8 +19,4 @@ public class CompanionConfig extends BaseEntityConfig {
      * The file path to the bullet texture used by the companion.
      */
     public String bulletTexturePath = "Bullet.png";
-    public int health;
-    public int baseAttack;
-    public int attackMultiplier;
-    public boolean isImmune;
 }

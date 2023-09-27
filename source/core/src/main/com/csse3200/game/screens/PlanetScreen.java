@@ -73,6 +73,15 @@ public class PlanetScreen extends ScreenAdapter {
     };
 
     /**
+     * Construct the PlanetScreen instance for the first planet (Earth).
+     *
+     * @param game  The current game instance to display screen on.
+     */
+    public PlanetScreen(GdxGame game) {
+        this(game, "Earth");
+    }
+
+    /**
      * Construct the PlanetScreen instance for the planet of given name.
      *
      * @param game  The current game instance to display screen on.

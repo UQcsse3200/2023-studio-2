@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.screens.PlanetScreen;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.MainAlert;
@@ -39,7 +38,6 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
-    entity.getEvents().addListener("space map", this::onSpaceMap);
     entity.getEvents().addListener("upgrade shop", this::onShop);
   }
 
@@ -47,11 +45,7 @@ public class MainMenuActions extends Component {
    * Swaps to the Main Game screen.
    */
   private void onStart() {
-    String startPlanetName = "Verdant Haven";
-    logger.info(String.format("Start game, go to %s", startPlanetName));
-    PlanetScreen planetScreen = new PlanetScreen(game, startPlanetName);
-    ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", planetScreen);
-    game.setScreen(planetScreen);
+    ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", new PlanetScreen(game));
 
     AlertBox alertBox = new AlertBox(game," Alert Box", skin);
     alertBox.showDialog(stage);
@@ -97,14 +91,6 @@ public class MainMenuActions extends Component {
   private void onExtractor(){
     logger.info("starting extractor");
     game.setScreen(GdxGame.ScreenType.EXTRACTOR_GAME);
-  }
-
-  private void onSpaceMap() {
-    logger.info("Launching space map screen");
-    ServiceLocator.registerGameStateObserverService(new GameStateObserver());
-    ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", new PlanetScreen(game, "Earth"));
-    //TODO: Remove once map button is removed from main menu
-    game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
   }
 
   private void onShop() {

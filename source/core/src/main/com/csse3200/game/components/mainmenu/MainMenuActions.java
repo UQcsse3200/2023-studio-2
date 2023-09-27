@@ -63,7 +63,7 @@ public class MainMenuActions extends Component {
    */
   private void onLoad() {
     logger.info("Load game");
-    //game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+    // new PlanetTravel(game).returnToCurrent();
     game.setScreen(GdxGame.ScreenType.GAME_STORY);
 
   }

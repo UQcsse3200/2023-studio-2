@@ -38,7 +38,7 @@ public class StoryActions extends Component {
      */
     private void onNext() {
         logger.info("Load next");
-        game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+        new PlanetTravel(game).returnToCurrent();
     }
 
     /**

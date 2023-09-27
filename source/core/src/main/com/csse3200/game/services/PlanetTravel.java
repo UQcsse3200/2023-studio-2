@@ -37,6 +37,9 @@ public class PlanetTravel {
         game.setScreen(nextPlanet);
     }
 
+    /**
+     * Travel back to the currently loaded planet.
+     */
     public void returnToCurrent() {
         PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
         game.setScreen(currentPlanet);

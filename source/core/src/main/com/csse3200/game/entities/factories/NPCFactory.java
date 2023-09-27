@@ -123,8 +123,7 @@ public class NPCFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new InteractionControllerComponent(true))
-                    .addComponent(aiComponent)
-                    .addComponent(new SoundComponent(configs.sound));
+                    .addComponent(aiComponent);
     botanist.addComponent(new InteractableComponent(entity -> {
       botanist.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
     },10f));

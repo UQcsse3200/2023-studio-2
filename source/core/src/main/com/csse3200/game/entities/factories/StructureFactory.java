@@ -62,8 +62,6 @@ public class StructureFactory {
     // * @param tickSize the amount of the resource produced at each tick
 
     //Default configs
-    public static final UpgradeBenchConfig defaultUpgradeBench =
-            FileLoader.readClass(UpgradeBenchConfig.class, "configs/upgradeBench.json");
     public static final ShipConfig defaultShip =
             FileLoader.readClass(ShipConfig.class, "configs/ship.json");
 

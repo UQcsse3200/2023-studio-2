@@ -114,7 +114,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AreaEntityConfig.html" title="class in com.csse3200.game.areas.mapConfig">AreaEntityConfig</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#loadEntities(java.lang.String)" class="member-name-link">loadEntities</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;loadPath)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Loads a .json file containing a list of entities into an AreaEntityConfig object</div>
+<div class="block">Loads a directory containing entity .json files into an AreaEntityConfig object</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="GameAreaConfig.html" title="class in com.csse3200.game.areas.mapConfig">GameAreaConfig</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#loadMapDirectory(java.lang.String)" class="member-name-link">loadMapDirectory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mapDirPath)</code></div>
@@ -195,14 +195,14 @@ loadScripts(document, 'script');</script>
 <h3>loadEntities</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AreaEntityConfig.html" title="class in com.csse3200.game.areas.mapConfig">AreaEntityConfig</a></span>&nbsp;<span class="element-name">loadEntities</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;loadPath)</span>
                                      throws <span class="exceptions"><a href="InvalidConfigException.html" title="class in com.csse3200.game.areas.mapConfig">InvalidConfigException</a></span></div>
-<div class="block">Loads a .json file containing a list of entities into an AreaEntityConfig object</div>
+<div class="block">Loads a directory containing entity .json files into an AreaEntityConfig object</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>loadPath</code> - Path of .json file to be loaded from</dd>
+<dd><code>loadPath</code> - Path of directory to be loaded from</dd>
 <dt>Returns:</dt>
 <dd>Loaded AreaEntityConfig object</dd>
 <dt>Throws:</dt>
-<dd><code><a href="InvalidConfigException.html" title="class in com.csse3200.game.areas.mapConfig">InvalidConfigException</a></code> - If the file is unable to be loaded to an AreaEntityConfig</dd>
+<dd><code><a href="InvalidConfigException.html" title="class in com.csse3200.game.areas.mapConfig">InvalidConfigException</a></code> - If any file in the directory is unable to be loaded</dd>
 </dl>
 </section>
 </li>

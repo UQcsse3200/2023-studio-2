@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
@@ -110,6 +111,15 @@ public class AttackFactory {
       explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
 
       attack.addComponent(new ExplosiveComponent(explosiveConfig));
+
+      // Explode the weapon after its duration ends
+      Timer.Task task = new Timer.Task() {
+        @Override
+        public void run() {
+          attack.getEvents().trigger("explode");
+        }
+      };
+      Timer.schedule(task, (float) config.weaponDuration / 100);
     }
 
     attack.scaleWidth(config.imageScale);

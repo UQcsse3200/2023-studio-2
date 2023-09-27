@@ -3,7 +3,9 @@ package com.csse3200.game.components.Weapons;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.explosives.ExplosiveComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Class to control the movement of weapons that have been spawned
@@ -48,6 +50,11 @@ public class WeaponControllerComponent extends Component {
         this.entity.getEvents().addListener("death", this::setDuration);
     }
 
+    /** Gets the weapons type **/
+    public WeaponType getWeaponType() {
+        return weaponType;
+    }
+
     /**
      * Sets the remaining duration
      * @param duration duration to set reamining duration
@@ -67,7 +74,7 @@ public class WeaponControllerComponent extends Component {
         }
         //switch statement to define weapon movement based on type (a projectile
         Vector2 movement = switch (this.weaponType) {
-            case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING, RANGED_BOOMERANG, RANGED_GRENADE -> update_swing();
+            case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING, RANGED_BOOMERANG, RANGED_GRENADE -> update_swing(); // todo: create grenade controller, currently tracks with player movement
             case RANGED_SLINGSHOT -> update_ranged_slingshot();
             case RANGED_HOMING -> update_ranged_homing();
             case STATIC_WEAPON -> update_static();
@@ -82,13 +89,17 @@ public class WeaponControllerComponent extends Component {
 
     }
 
-
     /**
      * Despawn a weapon when it runs out of durtaion or health
      */
     private void despawn() {
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
         animator.stopAnimation();
+
+        // Allows the explosive component handle disposing of explosives
+        if (entity.getComponent(ExplosiveComponent.class) != null) {
+            return;
+        }
         Gdx.app.postRunnable(entity::dispose);
     }
 

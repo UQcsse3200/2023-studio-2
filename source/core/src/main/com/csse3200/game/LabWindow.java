@@ -26,7 +26,7 @@ public class LabWindow extends Window {
     Table exit;
 
     public static LabWindow MakeNewLaboratory() {
-        Texture background = new Texture("images/inventorynew.png");
+        Texture background = new Texture("images/labwindownew.png");
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new LabWindow(background);
     }
@@ -42,8 +42,8 @@ public class LabWindow extends Window {
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         // Create a Table to hold the buttons and center them within the window
         Table buttonTable = new Table();
-        buttonTable.setFillParent(true); // Fill the entire LabWindow
-
+        buttonTable.setFillParent(true);
+        // Fill the entire LabWindow
 
         Table exit = new Table();
         Texture deathpotionImage = new Texture("images/Potion3re.png");
@@ -60,7 +60,6 @@ public class LabWindow extends Window {
         TextButton potion2 = new TextButton("Speed", skin);
         TextButton potion3 = new TextButton("Health", skin);
         TextButton potion4 = new TextButton("Invincibility", skin);
-        TextButton potion5 = new TextButton("DoubleDamage",skin);
         TextButton returnToGameButton = new TextButton("Return to Game", skin);
         float buttonWidth = 200f; // Adjust as needed
         float buttonHeight = 200f;
@@ -76,27 +75,38 @@ public class LabWindow extends Window {
         potion4.setWidth(buttonWidth);
         potion4.setHeight(buttonHeight);
 
-        potion5.setWidth(buttonWidth);
-        potion5.setHeight(buttonHeight);
-
         returnToGameButton.setWidth(buttonWidth);
         returnToGameButton.setHeight(buttonHeight);
 
-        potion1.add(potion1ImageWidget).width(60).height(64);
-        potion2.add(potion2ImageWidget).width(60).height(64);
-        potion3.add(potion3ImageWidget).width(60).height(64);
-        potion4.add(potion4ImageWidget).width(60).height(64);
-        potion5.add(potion5ImageWidget).width(60).height(64);
+        potion1.add(potion1ImageWidget).width(100).height(64);
+        potion2.add(potion2ImageWidget).width(100).height(64);
+        potion3.add(potion3ImageWidget).width(100).height(64);
+        potion4.add(potion4ImageWidget).width(100).height(64);
+
         buttonTable.top().left();
-        buttonTable.add(potion1).padTop(100).padLeft(150);
-        buttonTable.add(potion2).padTop(100).padLeft(190);
-        buttonTable.add(potion3).padTop(100).padLeft(165);
-        buttonTable.add(potion4).padTop(100).padLeft(180);
-        buttonTable.add(potion5).padTop(80).padLeft(150);
+        buttonTable.add(potion1).padTop(350).padLeft(150);
+        buttonTable.add(potion2).padTop(350).padLeft(190);
+        buttonTable.add(potion3).padTop(350).padLeft(165);
+        buttonTable.add(potion4).padTop(350).padLeft(180);
+
         buttonTable.row(); //Move to the next row
-        exit.add(returnToGameButton).bottom().right().padBottom(70).padLeft(2800);
+        exit.add(returnToGameButton).bottom().right().padBottom(150).padLeft(2800);
         addActor(buttonTable);
         addActor(exit);
+
+        Table button2Table = new Table();
+        button2Table.setFillParent(true);
+
+
+        TextButton potion5 = new TextButton("DoubleDamage",skin);
+
+        potion5.setWidth(buttonWidth);
+        potion5.setHeight(buttonHeight);
+        potion5.add(potion5ImageWidget).width(100).height(64);
+        button2Table.add(potion5).padTop(500).padRight(1200);
+        button2Table.row(); //Move to the next row
+        addActor(button2Table);
+
 
         returnToGameButton.addListener(new ClickListener() {
             @Override

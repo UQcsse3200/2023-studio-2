@@ -56,7 +56,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/entities/configs/ShipConfig.html#acceleration" class="member-name-link">acceleration</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/ShipConfig.html" title="class in com.csse3200.game.entities.configs">ShipConfig</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/components/spacenavigation/NavigationBackground.html#act(float)" class="member-name-link">act(float)</a> - Method in class com.csse3200.game.components.spacenavigation.<a href="com/csse3200/game/components/spacenavigation/NavigationBackground.html" title="class in com.csse3200.game.components.spacenavigation">NavigationBackground</a></dt>
+<dt><a href="com/csse3200/game/components/spacenavigation/StarBackground.html#act(float)" class="member-name-link">act(float)</a> - Method in class com.csse3200.game.components.spacenavigation.<a href="com/csse3200/game/components/spacenavigation/StarBackground.html" title="class in com.csse3200.game.components.spacenavigation">StarBackground</a></dt>
 <dd>
 <div class="block">Called when the actor should perform its action.</div>
 </dd>
@@ -314,9 +314,13 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/physics/PhysicsContactListener.html#beginContact(com.badlogic.gdx.physics.box2d.Contact)" class="member-name-link">beginContact(Contact)</a> - Method in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsContactListener.html" title="class in com.csse3200.game.physics">PhysicsContactListener</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/csse3200/game/services/PlanetTravel.html#beginPlanetTransition(java.lang.String)" class="member-name-link">beginPlanetTransition(String)</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/PlanetTravel.html" title="class in com.csse3200.game.services">PlanetTravel</a></dt>
+<dt><a href="com/csse3200/game/services/PlanetTravel.html#beginFullTravel()" class="member-name-link">beginFullTravel()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/PlanetTravel.html" title="class in com.csse3200.game.services">PlanetTravel</a></dt>
 <dd>
-<div class="block">Begin transitioning to the new planet from the current one.</div>
+<div class="block">Begin transitioning to the next planet from the current one.</div>
+</dd>
+<dt><a href="com/csse3200/game/services/PlanetTravel.html#beginInstantTravel()" class="member-name-link">beginInstantTravel()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/PlanetTravel.html" title="class in com.csse3200.game.services">PlanetTravel</a></dt>
+<dd>
+<div class="block">Travel from the current planet to the next planet instantly.</div>
 </dd>
 <dt><a href="com/csse3200/game/entities/configs/EnemyConfig.html#behaviour" class="member-name-link">behaviour</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/EnemyConfig.html" title="class in com.csse3200.game.entities.configs">EnemyConfig</a></dt>
 <dd>&nbsp;</dd>
@@ -1586,6 +1590,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/utils/math/Vector2Utils.html#DOWN_RIGHT" class="member-name-link">DOWN_RIGHT</a> - Static variable in class com.csse3200.game.utils.math.<a href="com/csse3200/game/utils/math/Vector2Utils.html" title="class in com.csse3200.game.utils.math">Vector2Utils</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/spacenavigation/NavigationBackground.html#draw(com.badlogic.gdx.graphics.g2d.Batch,float)" class="member-name-link">draw(Batch, float)</a> - Method in class com.csse3200.game.components.spacenavigation.<a href="com/csse3200/game/components/spacenavigation/NavigationBackground.html" title="class in com.csse3200.game.components.spacenavigation">NavigationBackground</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/spacenavigation/StarBackground.html#draw(com.badlogic.gdx.graphics.g2d.Batch,float)" class="member-name-link">draw(Batch, float)</a> - Method in class com.csse3200.game.components.spacenavigation.<a href="com/csse3200/game/components/spacenavigation/StarBackground.html" title="class in com.csse3200.game.components.spacenavigation">StarBackground</a></dt>
 <dd>
 <div class="block">Called when the actor should be drawn.</div>
 </dd>
@@ -3611,14 +3617,14 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/csse3200/game/entities/configs/WeaponConfig.html#name" class="member-name-link">name</a> - Variable in class com.csse3200.game.entities.configs.<a href="com/csse3200/game/entities/configs/WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/screens/PlanetScreen.html#name" class="member-name-link">name</a> - Variable in class com.csse3200.game.screens.<a href="com/csse3200/game/screens/PlanetScreen.html" title="class in com.csse3200.game.screens">PlanetScreen</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/GdxGame.ScreenType.html#NAVIGATION_SCREEN" class="member-name-link">NAVIGATION_SCREEN</a> - Enum constant in enum class com.csse3200.game.<a href="com/csse3200/game/GdxGame.ScreenType.html" title="enum class in com.csse3200.game">GdxGame.ScreenType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/spacenavigation/NavigationBackground.html" class="type-name-link" title="class in com.csse3200.game.components.spacenavigation">NavigationBackground</a> - Class in <a href="com/csse3200/game/components/spacenavigation/package-summary.html">com.csse3200.game.components.spacenavigation</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/spacenavigation/NavigationBackground.html#%3Cinit%3E()" class="member-name-link">NavigationBackground()</a> - Constructor for class com.csse3200.game.components.spacenavigation.<a href="com/csse3200/game/components/spacenavigation/NavigationBackground.html" title="class in com.csse3200.game.components.spacenavigation">NavigationBackground</a></dt>
-<dd>
-<div class="block">Constructs a new NavigationBackground instance.</div>
-</dd>
+<dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/components/resources/Resource.html#Nebulite" class="member-name-link">Nebulite</a> - Enum constant in enum class com.csse3200.game.components.resources.<a href="com/csse3200/game/components/resources/Resource.html" title="enum class in com.csse3200.game.components.resources">Resource</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/physics/PhysicsLayer.html#NONE" class="member-name-link">NONE</a> - Static variable in class com.csse3200.game.physics.<a href="com/csse3200/game/physics/PhysicsLayer.html" title="class in com.csse3200.game.physics">PhysicsLayer</a></dt>
@@ -3889,6 +3895,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/screens/PlanetScreen.html" class="type-name-link" title="class in com.csse3200.game.screens">PlanetScreen</a> - Class in <a href="com/csse3200/game/screens/package-summary.html">com.csse3200.game.screens</a></dt>
 <dd>
 <div class="block">A screen that represents a single planet of the game with its corresponding game area/s.</div>
+</dd>
+<dt><a href="com/csse3200/game/screens/PlanetScreen.html#%3Cinit%3E(com.csse3200.game.GdxGame)" class="member-name-link">PlanetScreen(GdxGame)</a> - Constructor for class com.csse3200.game.screens.<a href="com/csse3200/game/screens/PlanetScreen.html" title="class in com.csse3200.game.screens">PlanetScreen</a></dt>
+<dd>
+<div class="block">Construct the PlanetScreen instance for the first planet (Earth).</div>
 </dd>
 <dt><a href="com/csse3200/game/screens/PlanetScreen.html#%3Cinit%3E(com.csse3200.game.GdxGame,java.lang.String)" class="member-name-link">PlanetScreen(GdxGame, String)</a> - Constructor for class com.csse3200.game.screens.<a href="com/csse3200/game/screens/PlanetScreen.html" title="class in com.csse3200.game.screens">PlanetScreen</a></dt>
 <dd>
@@ -4469,6 +4479,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/csse3200/game/services/PlanetTravel.html#returnCurrent()" class="member-name-link">returnCurrent()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/PlanetTravel.html" title="class in com.csse3200.game.services">PlanetTravel</a></dt>
 <dd>
 <div class="block">Return the current planet where player are in</div>
+</dd>
+<dt><a href="com/csse3200/game/services/PlanetTravel.html#returnToCurrent()" class="member-name-link">returnToCurrent()</a> - Method in class com.csse3200.game.services.<a href="com/csse3200/game/services/PlanetTravel.html" title="class in com.csse3200.game.services">PlanetTravel</a></dt>
+<dd>
+<div class="block">Travel back to the currently loaded planet.</div>
 </dd>
 <dt><a href="com/csse3200/game/components/maingame/ReturnToPlanetDisplay.html" class="type-name-link" title="class in com.csse3200.game.components.maingame">ReturnToPlanetDisplay</a> - Class in <a href="com/csse3200/game/components/maingame/package-summary.html">com.csse3200.game.components.maingame</a></dt>
 <dd>
@@ -5229,6 +5243,22 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ui/UIComponent.html#stage" class="member-name-link">stage</a> - Variable in class com.csse3200.game.ui.<a href="com/csse3200/game/ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/spacenavigation/StarBackground.html" class="type-name-link" title="class in com.csse3200.game.components.spacenavigation">StarBackground</a> - Class in <a href="com/csse3200/game/components/spacenavigation/package-summary.html">com.csse3200.game.components.spacenavigation</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/spacenavigation/StarBackground.html#%3Cinit%3E()" class="member-name-link">StarBackground()</a> - Constructor for class com.csse3200.game.components.spacenavigation.<a href="com/csse3200/game/components/spacenavigation/StarBackground.html" title="class in com.csse3200.game.components.spacenavigation">StarBackground</a></dt>
+<dd>
+<div class="block">Constructs a new StarBackground instance.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/spacenavigation/StarBackground.html#%3Cinit%3E(int)" class="member-name-link">StarBackground(int)</a> - Constructor for class com.csse3200.game.components.spacenavigation.<a href="com/csse3200/game/components/spacenavigation/StarBackground.html" title="class in com.csse3200.game.components.spacenavigation">StarBackground</a></dt>
+<dd>
+<div class="block">Constructs a new StarBackground instance.</div>
+</dd>
+<dt><a href="com/csse3200/game/components/spacenavigation/NavigationBackground.html#starShift(int,int)" class="member-name-link">starShift(int, int)</a> - Method in class com.csse3200.game.components.spacenavigation.<a href="com/csse3200/game/components/spacenavigation/NavigationBackground.html" title="class in com.csse3200.game.components.spacenavigation">NavigationBackground</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/csse3200/game/components/spacenavigation/StarBackground.html#starShift(int,int)" class="member-name-link">starShift(int, int)</a> - Method in class com.csse3200.game.components.spacenavigation.<a href="com/csse3200/game/components/spacenavigation/StarBackground.html" title="class in com.csse3200.game.components.spacenavigation">StarBackground</a></dt>
+<dd>
+<div class="block">Shifts a star from the given x-y coordinates to new position.</div>
+</dd>
 <dt><a href="com/csse3200/game/ai/tasks/DefaultTask.html#start()" class="member-name-link">start()</a> - Method in class com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/DefaultTask.html" title="class in com.csse3200.game.ai.tasks">DefaultTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/csse3200/game/ai/tasks/Task.html#start()" class="member-name-link">start()</a> - Method in interface com.csse3200.game.ai.tasks.<a href="com/csse3200/game/ai/tasks/Task.html" title="interface in com.csse3200.game.ai.tasks">Task</a></dt>

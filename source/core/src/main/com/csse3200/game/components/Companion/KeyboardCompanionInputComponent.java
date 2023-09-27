@@ -6,6 +6,7 @@ package com.csse3200.game.components.Companion;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.input.InputComponent;
@@ -256,9 +257,11 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
      * If the walk direction is zero, it triggers the walkStop event.
      */
     private void triggerWalkEvent() {;
+        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/companionwalksound.mp3", Sound.class);
         if (this.getTesting() == 0) {
             if (walkDirection.epsilonEquals(Vector2.Zero)) {
                 entity.getEvents().trigger("walkStop");
+                attackSound.stop();
                 /*entity.getEvents().trigger("walkStopAnimation");*/
             } else {
                 if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
@@ -279,6 +282,8 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                     entity.getEvents().trigger("walkRight");
                 }
                 entity.getEvents().trigger("walk", walkDirection);
+                attackSound.play();
+
             }
         }
     }

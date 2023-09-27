@@ -33,8 +33,12 @@ import java.util.Objects;
  * Factory to create a companion entity.
  */
 public class CompanionFactory {
-    private static final CompanionConfig Config =
+    private static final CompanionConfig config =
             FileLoader.readClass(CompanionConfig.class, "configs/companion.json");
+
+    public static Entity createCompanion(){
+       return createCompanion(config);
+    }
     /**
      * Create a Companion entity matching the config file
      * @param config Configuration file to match companion to
@@ -47,7 +51,7 @@ public class CompanionFactory {
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset(Config.spritePath, TextureAtlas.class));
+                        ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class));
         animator.addAnimation("Companion_DownLeft", 0.2f, Animation.PlayMode.LOOP);
         animator.addAnimation("Companion_UpRight", 0.2f, Animation.PlayMode.LOOP);
         animator.addAnimation("Companion_Up", 0.2f, Animation.PlayMode.LOOP);

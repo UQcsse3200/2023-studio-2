@@ -53,7 +53,7 @@
     "images/player/statbar.png",
     "images/player/widestatbar.png",
     "images/player/heart.png",
-    "images/space_navigation_planet_2.png"
+    "images/navigationmap/planets/glacial_desolation.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -88,8 +88,8 @@
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 
-  "mapName": "Planet Frozen",
-  "planetImage": "images/space_navigation_planet_2.png",
+  "mapName": "Glacial Desolation",
+  "planetImage": "images/navigationmap/planets/glacial_desolation.png",
   "terrainPath": "map/icemap.tmx",
   "winConditions": [
     {

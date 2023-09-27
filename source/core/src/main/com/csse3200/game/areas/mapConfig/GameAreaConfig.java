@@ -19,7 +19,6 @@ public class GameAreaConfig {
     public String planetImage = "images/space_navigation_planet_0.png";
     public String terrainPath = "map/base.tmx";
     public List<ResourceCondition> winConditions = null;
-    public PlayerConfig playerConfig = null;
 
     public AreaEntityConfig areaEntityConfig = null;
 
@@ -56,7 +55,6 @@ public class GameAreaConfig {
         if (!Objects.equals(terrainPath, that.terrainPath)) return false;
         if (!Objects.equals(winConditions, that.winConditions))
             return false;
-        if (!Objects.equals(playerConfig, that.playerConfig)) return false;
         return Objects.equals(areaEntityConfig, that.areaEntityConfig);
     }
 
@@ -70,7 +68,6 @@ public class GameAreaConfig {
         result = 31 * result + (mapName != null ? mapName.hashCode() : 0);
         result = 31 * result + (terrainPath != null ? terrainPath.hashCode() : 0);
         result = 31 * result + (winConditions != null ? winConditions.hashCode() : 0);
-        result = 31 * result + (playerConfig != null ? playerConfig.hashCode() : 0);
         result = 31 * result + (areaEntityConfig != null ? areaEntityConfig.hashCode() : 0);
         return result;
     }

@@ -28,6 +28,15 @@
       "level": 0,
       "name": "Basic Turret",
       "cost": {
+        "Durasteel": 50,
+        "Solstite": 50
+      },
+      "texture": "images/structure-icons/turret.png"
+    },
+    "com.csse3200.game.components.structures.tools.AdvTurretTool": {
+      "level": 1,
+      "name": "Advanced Turret",
+      "cost": {
         "Durasteel": 75,
         "Solstite": 50
       },

@@ -56,6 +56,7 @@ public class StructureToolPicker extends UIComponent {
         unlockedTools.add("Extractor");
         unlockedTools.add("Heal");
         unlockedTools.add("Explosive Barrel");
+        unlockedTools.add("Landmine");
     }
 
     /**

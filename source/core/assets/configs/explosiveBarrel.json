@@ -4,7 +4,7 @@
   "explosive": {
     "effectPath": "particle-effects/explosion/explosion.effect",
     "soundPath": null,
-    "damage": 50,
+    "damage": 150,
     "damageRadius": 3.5,
     "chainRadius": 4,
     "chainable": true

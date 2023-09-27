@@ -54,7 +54,8 @@
     "images/player/widestatbar.png",
     "images/player/heart.png",
     "images/space_navigation_planet_2.png",
-    "images/explosives/explosive-barrel.png"
+    "images/explosives/explosive-barrel.png",
+    "images/explosives/landmine.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",

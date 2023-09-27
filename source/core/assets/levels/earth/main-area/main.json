@@ -57,7 +57,8 @@
     "images/action-feedback/warning.png",
     "map/treetop.png",
     "particle-effects/explosion/particle.png",
-    "images/explosives/explosive-barrel.png"
+    "images/explosives/explosive-barrel.png",
+    "images/explosives/landmine.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",

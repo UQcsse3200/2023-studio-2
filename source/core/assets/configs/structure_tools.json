@@ -54,7 +54,16 @@
         "Durasteel": 50,
         "Solstite": 0
       },
-      "texture": "images/refinedExtractor2.png"
+      "texture": "images/explosives/explosive-barrel.png"
+    },
+    "com.csse3200.game.components.structures.tools.LandmineTool": {
+      "level": 0,
+      "name": "Landmine",
+      "cost": {
+        "Durasteel": 30,
+        "Solstite": 0
+      },
+      "texture": "images/explosives/landmine.png"
     }
   }
 }

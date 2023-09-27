@@ -75,7 +75,8 @@ public class ExplosiveComponent extends Component {
             var distance = entity.getCenterPosition().dst(otherEntity.getCenterPosition());
 
             if (distance <= explosiveConfig.damageRadius) {
-                combatStatsComponent.addHealth((int) (distance / explosiveConfig.damageRadius * -explosiveConfig.damage));
+                combatStatsComponent.addHealth((int) ((explosiveConfig.damageRadius - distance)
+                        / explosiveConfig.damageRadius * -explosiveConfig.damage));
             }
         }
 

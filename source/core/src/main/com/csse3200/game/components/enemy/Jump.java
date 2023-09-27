@@ -48,14 +48,12 @@ public class Jump extends DefaultTask implements PriorityTask {
         scheduler.scheduleAtFixedRate(this::toggleSpeed, 0, 2, TimeUnit.SECONDS);
     }
 
+    /**
+     * Switches the speed variable
+     */
     private void toggleSpeed() {
         // Toggle the speed field
         speed = !speed;
-
-    }
-    public void jumpAction() {
-        // Your task action code here
-
     }
 
     /**
@@ -77,6 +75,9 @@ public class Jump extends DefaultTask implements PriorityTask {
         debugRenderer = ServiceLocator.getRenderService().getDebug();
     }
 
+    /**
+     * Start moving
+     */
     @Override
     public void start() {
         super.start();
@@ -94,7 +95,6 @@ public class Jump extends DefaultTask implements PriorityTask {
             this.owner.getEntity().getEvents().trigger("chaseStart");
         }
     }
-
 
     @Override
     public void update() {

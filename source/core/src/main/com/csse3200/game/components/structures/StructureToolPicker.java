@@ -55,8 +55,6 @@ public class StructureToolPicker extends UIComponent {
         // Default buildables
         unlockedTools.add("Extractor");
         unlockedTools.add("Heal");
-        unlockedTools.add("Explosive Barrel");
-        unlockedTools.add("Landmine");
     }
 
     /**

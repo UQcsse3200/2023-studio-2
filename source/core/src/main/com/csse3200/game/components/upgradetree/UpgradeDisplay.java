@@ -127,6 +127,10 @@ public class UpgradeDisplay extends Window {
                 .get("com.csse3200.game.components.structures.tools.IntermediateWallTool");
         ToolConfig turretConfig = structureTools.toolConfigs
                 .get("com.csse3200.game.components.structures.tools.TurretTool");
+        ToolConfig landmineConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.LandmineTool");
+        ToolConfig barrelConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.ExplosiveBarrelTool");
 
         // Melee Tree
         UpgradeNode swordNode = new UpgradeNode(katanaConfig);
@@ -150,11 +154,15 @@ public class UpgradeDisplay extends Window {
         UpgradeNode gateNode = new UpgradeNode(gateConfig);
         UpgradeNode stoneNode = new UpgradeNode(stoneConfig);
         UpgradeNode turretNode = new UpgradeNode(turretConfig);
+        UpgradeNode landmineNode = new UpgradeNode(landmineConfig);
+        UpgradeNode barrelNode = new UpgradeNode(barrelConfig);
         buildRoot = new UpgradeNode(woodhammerConfig);
         buildRoot.addChild(dirtNode);
         dirtNode.addChild(gateNode);
         dirtNode.addChild(stoneNode);
         buildRoot.addChild(turretNode);
+        buildRoot.addChild(landmineNode);
+        landmineNode.addChild(barrelNode);
         trees.add(buildRoot);
     }
 
@@ -184,15 +192,19 @@ public class UpgradeDisplay extends Window {
 
         buildTrees();
 
-        nodeXSpacing = (float) ((getWidth() * getScaleX()) / (trees.size() * 2.8)); // 2
+        nodeXSpacing = ((getWidth() * getScaleX()) / (trees.size() * 3));
         nodeYSpacing = (getHeight() * getScaleY()) / 4;
 
+        float allocatedWidth = (getWidth() * getScaleX()) / (trees.size() * 1.2f);
+
         for (UpgradeNode treeRoot : trees) {
-            float treeX = (trees.indexOf(treeRoot) + 1) * getWidth() * getScaleX()
-                    / (trees.size() + 1) - nodeXSpacing / 6;
+            int treeIndex = trees.indexOf(treeRoot);
+            float treeX = (treeIndex + 0.75f) * allocatedWidth;
             float startY = getHeight() - (getHeight() / 3);
             createAndPositionNodes(treeRoot, treeX, startY, group, 0);
         }
+
+
 
         return group;
     }

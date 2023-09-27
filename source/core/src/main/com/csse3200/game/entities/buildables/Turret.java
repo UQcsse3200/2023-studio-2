@@ -1,5 +1,6 @@
 package com.csse3200.game.entities.buildables;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.FOVComponent;
 import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.components.structures.TurretAnimationController;
 import com.csse3200.game.entities.Entity;
@@ -57,7 +59,7 @@ public class Turret extends PlaceableEntity{
      */
     public Turret(TurretConfig turretConfig) {
         super();
-        this.setScale(3f,2f); // set scale
+        this.setScale(2f,1.5f); // set scale
 
         AnimationRenderComponent animator = new AnimationRenderComponent(
                 ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, TextureAtlas.class)
@@ -120,6 +122,8 @@ public class Turret extends PlaceableEntity{
         focus.getComponent(HealthBarComponent.class).setEnabled(true);
         if (System.currentTimeMillis() - this.start > 1000) {
             giveDamage(focus);
+            Sound shootingSound = ServiceLocator.getResourceService().getAsset("sounds/turret_shoot.mp3", Sound.class);
+            shootingSound.play(1);
             rotateTurret(focus);
             this.start = System.currentTimeMillis();
         }

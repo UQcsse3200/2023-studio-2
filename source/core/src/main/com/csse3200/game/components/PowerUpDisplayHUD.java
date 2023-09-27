@@ -41,17 +41,17 @@ public class PowerUpDisplayHUD extends UIComponent {
     public Image selectPowerUp() {
 
         if (powerUpEntity == PowerupType.HEALTH_BOOST) {
-            HealthUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/healthpowerup.png", Texture.class));
+            HealthUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/health_boost.png", Texture.class));
             return HealthUpImage;
         }
 
         if (powerUpEntity == PowerupType.SPEED_BOOST) {
-            SpeedUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/speedpowerup.png", Texture.class));
+            SpeedUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/speed_boost.png", Texture.class));
             return SpeedUpImage;
         }
 
         if (powerUpEntity == PowerupType.EXTRA_LIFE) {
-            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/extralifepowerup.png", Texture.class));
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/extralife.png", Texture.class));
             return ExtraLifeImage;
         }
         else return null;

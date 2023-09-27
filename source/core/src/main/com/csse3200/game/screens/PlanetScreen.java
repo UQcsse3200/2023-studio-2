@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.MapGameArea;
+import com.csse3200.game.areas.mapConfig.AssetsConfig;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
@@ -14,6 +15,7 @@ import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputFactory;
@@ -57,20 +59,7 @@ public class PlanetScreen extends ScreenAdapter {
     private PhysicsEngine physicsEngine;
 
     /** file paths of textures for screen to load. */
-    private static final String[] planetTextures = {
-            "images/heart.png",
-            "images/structure-icons/gate.png",
-            "images/structure-icons/wall.png",
-            "images/structure-icons/stone_wall.png",
-            "images/structure-icons/turret.png",
-            "images/structures/closed_gate.png",
-            "images/structures/open_gate.png",
-            "images/structures/dirt_wall.png",
-            "images/structures/stone_wall.png",
-            "images/structures/TurretOne.png",
-            "images/structures/TurretTwo.png",
-            "images/structures/heal_icon.png"
-    };
+    private AssetsConfig assets = null;
 
     /**
      * Construct the PlanetScreen instance for the planet of given name.
@@ -81,6 +70,7 @@ public class PlanetScreen extends ScreenAdapter {
     public PlanetScreen(GdxGame game, String name) {
         this.game = game;
         this.name = name;
+        this.assets = FileLoader.readClass(AssetsConfig.class, "levels/global_assets.json");
     }
 
     /**
@@ -230,7 +220,9 @@ public class PlanetScreen extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(planetTextures);
+        if (assets != null) {
+            assets.load(resourceService);
+        }
         ServiceLocator.getResourceService().loadAll();
     }
 
@@ -240,7 +232,9 @@ public class PlanetScreen extends ScreenAdapter {
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(planetTextures);
+        if (assets != null) {
+            assets.unload(resourceService);
+        }
     }
 
     /**

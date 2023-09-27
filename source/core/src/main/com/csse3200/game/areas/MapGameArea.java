@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.mapConfig.AssetsConfig;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
@@ -108,17 +109,13 @@ public class MapGameArea extends GameArea{
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
+        if (mapConfig == null) return;
         resourceService.loadDynamicAssets(mapConfig.getEntityTextures());
-        if (mapConfig.texturePaths != null)
-            resourceService.loadTextures(mapConfig.texturePaths);
-        if (mapConfig.textureAtlasPaths != null)
-            resourceService.loadTextureAtlases(mapConfig.textureAtlasPaths);
-        if (mapConfig.soundPaths != null)
-            resourceService.loadSounds(mapConfig.soundPaths);
-        if (mapConfig.particleEffectPaths != null)
-            resourceService.loadParticleEffects(mapConfig.particleEffectPaths);
-        if (mapConfig.backgroundMusicPath != null)
-            resourceService.loadMusic(new String[] {mapConfig.backgroundMusicPath});
+        AssetsConfig assets = mapConfig.assets;
+
+        if (assets != null) {
+            assets.load(resourceService);
+        }
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -387,10 +384,10 @@ public class MapGameArea extends GameArea{
      * Plays the game music loaded from the config file
      */
     private void playMusic() {
-        if (mapConfig.backgroundMusicPath == null) return;
+        if (mapConfig.assets == null || mapConfig.assets.backgroundMusicPath == null) return;
         UserSettings.Settings settings = UserSettings.get();
 
-        Music music = ServiceLocator.getResourceService().getAsset(mapConfig.backgroundMusicPath, Music.class);
+        Music music = ServiceLocator.getResourceService().getAsset(mapConfig.assets.backgroundMusicPath, Music.class);
         music.setLooping(true);
         music.setVolume(settings.musicVolume);
         music.play();
@@ -399,8 +396,8 @@ public class MapGameArea extends GameArea{
     @Override
     public void dispose() {
         super.dispose();
-        if (mapConfig != null && mapConfig.backgroundMusicPath != null) {
-            ServiceLocator.getResourceService().getAsset(mapConfig.backgroundMusicPath, Music.class).stop();
+        if (mapConfig != null && mapConfig.assets != null && mapConfig.assets.backgroundMusicPath != null) {
+            ServiceLocator.getResourceService().getAsset(mapConfig.assets.backgroundMusicPath, Music.class).stop();
         }
         this.unloadAssets();
     }
@@ -413,19 +410,15 @@ public class MapGameArea extends GameArea{
         ResourceService resourceService = ServiceLocator.getResourceService();
 
         if (mapConfig == null) return;
+        resourceService.loadDynamicAssets(mapConfig.getEntityTextures());
+        AssetsConfig assets = mapConfig.assets;
 
         if (mapConfig.getEntityTextures() != null)
             resourceService.unloadAssets(mapConfig.getEntityTextures());
-        if (mapConfig.texturePaths != null)
-            resourceService.unloadAssets(mapConfig.texturePaths);
-        if (mapConfig.textureAtlasPaths != null)
-            resourceService.unloadAssets(mapConfig.textureAtlasPaths);
-        if (mapConfig.soundPaths != null)
-            resourceService.unloadAssets(mapConfig.soundPaths);
-        if (mapConfig.particleEffectPaths != null)
-            resourceService.unloadAssets(mapConfig.particleEffectPaths);
-        if (mapConfig.backgroundMusicPath != null)
-            resourceService.unloadAssets(new String[] {mapConfig.backgroundMusicPath});
+
+        if (assets != null) {
+            assets.unload(resourceService);
+        }
     }
 
     /**

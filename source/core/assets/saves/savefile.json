@@ -5,8 +5,8 @@ entities: {
 			class: com.csse3200.game.entities.configs.PlayerConfig
 			spritePath: images/player/player.atlas
 			position: {
-				x: 39
-				y: 5
+				x: 8
+				y: 23
 			}
 			health: 100
 			baseAttack: 10

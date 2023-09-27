@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
-import com.csse3200.game.areas.mapConfig.GameAreaConfig;
-import com.csse3200.game.areas.mapConfig.InvalidConfigException;
-import com.csse3200.game.areas.mapConfig.MapConfigLoader;
+import com.csse3200.game.areas.mapConfig.*;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.extensions.GameExtension;
@@ -41,6 +38,7 @@ class MapGameAreaTest {
     @BeforeEach
     void setup() {
         gameAreaConfig = new GameAreaConfig();
+        gameAreaConfig.assets = new AssetsConfig();
         assetManager = spy(AssetManager.class);
         ServiceLocator.registerResourceService(new ResourceService(assetManager));
         ServiceLocator.registerEntityService(mock(EntityService.class));
@@ -105,7 +103,7 @@ class MapGameAreaTest {
 
     @Test
     void loadAndUnloadTexturePaths() {
-        gameAreaConfig.texturePaths = new String[] {"Texture3.png", "Texture4.png"};
+        gameAreaConfig.assets.texturePaths = new String[] {"Texture3.png", "Texture4.png"};
         //Load the gameAreaConfig regardless of method.
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapDirectory(any())).thenReturn(gameAreaConfig);
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapFile(any())).thenReturn(gameAreaConfig);
@@ -125,7 +123,7 @@ class MapGameAreaTest {
 
     @Test
     void loadAndUnloadTextureAtlasPaths() {
-        gameAreaConfig.textureAtlasPaths = new String[] {"Texture5.atlas", "Texture6.atlas"};
+        gameAreaConfig.assets.textureAtlasPaths = new String[] {"Texture5.atlas", "Texture6.atlas"};
         //Load the gameAreaConfig regardless of method.
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapDirectory(any())).thenReturn(gameAreaConfig);
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapFile(any())).thenReturn(gameAreaConfig);
@@ -146,7 +144,7 @@ class MapGameAreaTest {
 
     @Test
     void loadAndUnloadSoundEffects() {
-        gameAreaConfig.soundPaths = new String[] {"soundeffect.wav", "music.ogg"};
+        gameAreaConfig.assets.soundPaths = new String[] {"soundeffect.wav", "music.ogg"};
         //Load the gameAreaConfig regardless of method.
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapDirectory(any())).thenReturn(gameAreaConfig);
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapFile(any())).thenReturn(gameAreaConfig);
@@ -166,7 +164,7 @@ class MapGameAreaTest {
 
     @Test
     void loadAndUnloadParticleEffects() {
-        gameAreaConfig.particleEffectPaths = new String[] {"explosion.effect", "explosion_2.effect"};
+        gameAreaConfig.assets.particleEffectPaths = new String[] {"explosion.effect", "explosion_2.effect"};
         //Load the gameAreaConfig regardless of method.
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapDirectory(any())).thenReturn(gameAreaConfig);
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapFile(any())).thenReturn(gameAreaConfig);
@@ -186,7 +184,7 @@ class MapGameAreaTest {
 
     @Test
     void loadAndUnloadBackgroundMusic() {
-        gameAreaConfig.backgroundMusicPath = "backgroundMusic.wav";
+        gameAreaConfig.assets.backgroundMusicPath = "backgroundMusic.wav";
         //Load the gameAreaConfig regardless of method.
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapDirectory(any())).thenReturn(gameAreaConfig);
         loaderMockedStatic.when(() -> MapConfigLoader.loadMapFile(any())).thenReturn(gameAreaConfig);

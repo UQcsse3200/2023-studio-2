@@ -33,11 +33,12 @@ class MapConfigLoaderTest {
 
     private GameAreaConfig setupGameArea() {
         GameAreaConfig gameArea = new GameAreaConfig();
-        gameArea.texturePaths = new String[] {"Texture1.png"};
-        gameArea.textureAtlasPaths = new String[] {"Texture1.atlas"};
-        gameArea.soundPaths = new String[] {"sound.wav"};
-        gameArea.particleEffectPaths = new String[] {"particle.effect"};
-        gameArea.backgroundMusicPath = "background.wav";
+        gameArea.assets = new AssetsConfig();
+        gameArea.assets.texturePaths = new String[] {"Texture1.png"};
+        gameArea.assets.textureAtlasPaths = new String[] {"Texture1.atlas"};
+        gameArea.assets.soundPaths = new String[] {"sound.wav"};
+        gameArea.assets.particleEffectPaths = new String[] {"particle.effect"};
+        gameArea.assets.backgroundMusicPath = "background.wav";
         gameArea.winConditions = List.of(new ResourceCondition());
         return gameArea;
     }

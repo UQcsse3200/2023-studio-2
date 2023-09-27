@@ -41,6 +41,7 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
     entity.getEvents().addListener("space map", this::onSpaceMap);
     entity.getEvents().addListener("upgrade shop", this::onShop);
+    entity.getEvents().addListener("tutorial", this::onTutorial);
   }
 
   /**
@@ -79,6 +80,10 @@ public class MainMenuActions extends Component {
   private void onExit() {
     logger.info("Exit game");
     game.exit();
+  }
+  private void onTutorial(){
+    logger.info("Launching tutorial screen");
+    game.setScreen(GdxGame.ScreenType.TUTORIAL_SCREEN);
   }
 
   /**

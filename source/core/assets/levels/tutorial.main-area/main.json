@@ -96,7 +96,7 @@
 
   "mapName": "Planet Earth",
   "planetImage": "images/space_navigation_planet_0.png",
-  "terrainPath": "map/base.tmx",
+  "terrainPath": "map/tutorialmap.tmx",
   "winConditions": [
     {
       "resource": "Solstite",

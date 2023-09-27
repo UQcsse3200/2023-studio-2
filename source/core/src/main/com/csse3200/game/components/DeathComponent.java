@@ -18,7 +18,6 @@ import java.util.TimerTask;
  */
 public class DeathComponent extends Component {
     private CombatStatsComponent combatStats;
-    private HitboxComponent hitboxComponent;
     private Boolean notkilled;
 
     /**
@@ -26,22 +25,16 @@ public class DeathComponent extends Component {
      */
     @Override
     public void create() {
-        entity.getEvents().addListener("collisionEnd", this::kill);
-        combatStats = entity.getComponent(CombatStatsComponent.class);
-        hitboxComponent = entity.getComponent(HitboxComponent.class);
+        entity.getEvents().addListener("updateHealth", this::kill);
+        this.combatStats = entity.getComponent(CombatStatsComponent.class);
         this.notkilled = true;
     }
 
     /**
      * When kill condition met, target entity will be disposed.
-     * @param me The current Entity's Fixture
-     * @param other The targeted Entity's Fixture
+     * @param health - the new health of the entity
      */
-    public void kill(Fixture me, Fixture other) {
-        if (hitboxComponent.getFixture() != me) {
-            // Not triggered by hitbox, ignore
-            return;
-        }
+    public void kill(int health) {
         //check if health is 0, and the kill property has been fulfilled
         if (combatStats.isDead() && this.notkilled) {
             //stop animating the entity once it's death has been confirmed

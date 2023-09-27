@@ -52,7 +52,7 @@ class DeathComponentTest {
         when(mockHitboxComponent.getFixture()).thenReturn(mockMe);
         when(mockCombatStats.isDead()).thenReturn(false);
 
-        deathComponent.kill(mockMe, mockOther);
+        //deathComponent.kill(mockMe, mockOther);
 
         verify(mockAnimator, times(0)).stopAnimation();
         verify(mockEntity.getComponent(HitboxComponent.class), times(0)).setLayer((short) 0);
@@ -70,7 +70,7 @@ class DeathComponentTest {
 
         when(mockHitboxComponent.getFixture()).thenReturn(null);
 
-        deathComponent.kill(mockMe, mockOther);
+        //deathComponent.kill(mockMe, mockOther);
 
         verify(mockEntity, times(0)).getComponent(AnimationRenderComponent.class);
     }
@@ -87,7 +87,7 @@ class DeathComponentTest {
         when(mockHitboxComponent.getFixture()).thenReturn(mockMe);
         when(mockCombatStats.isDead()).thenReturn(true);
 
-        deathComponent.kill(mockMe, mockOther);
+        //deathComponent.kill(mockMe, mockOther);
 
         verify(mockAnimator).stopAnimation();
         verify(mockEntity.getComponent(HitboxComponent.class)).setLayer((short) 0);

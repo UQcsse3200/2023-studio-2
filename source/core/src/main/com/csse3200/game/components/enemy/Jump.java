@@ -103,7 +103,7 @@ public class Jump extends DefaultTask implements PriorityTask {
         if(speed){
             movementTask.setSpeed(new Vector2(3f,3f));
         }else{
-            movementTask.setSpeed(new Vector2(0,0));
+            movementTask.setSpeed(new Vector2(0f,0f));
         }
         movementTask.update();
         if (movementTask.getStatus() != Status.ACTIVE) {
@@ -125,7 +125,6 @@ public class Jump extends DefaultTask implements PriorityTask {
         if (status == Status.ACTIVE) {
             return getActivePriority();
         }
-
         return getInactivePriority();
     }
 

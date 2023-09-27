@@ -45,6 +45,7 @@ public class MovementTask extends DefaultTask {
     this.owner.getEntity().getEvents().trigger("changeDirection", getDirection());
   }
 
+
   @Override
   public void update() {
     if (isAtTarget()) {
@@ -90,5 +91,8 @@ public class MovementTask extends DefaultTask {
   private String getDirection() {
     Vector2 currentPosition = owner.getEntity().getPosition();
     return currentPosition.sub(target).x < 0 ? "right" : "left";
+  }
+  public void setSpeed(Vector2 speed){
+    movementComponent.changeMaxSpeed(speed);
   }
 }

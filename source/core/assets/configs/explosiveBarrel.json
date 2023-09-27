@@ -1,0 +1,12 @@
+{
+  "health": 100,
+  "texture": "images/explosives/explosive-barrel.png",
+  "explosive": {
+    "effectPath": "particle-effects/explosion/explosion.effect",
+    "soundPath": null,
+    "damage": 50,
+    "damageRadius": 3.5,
+    "chainRadius": 4,
+    "chainable": true
+  }
+}

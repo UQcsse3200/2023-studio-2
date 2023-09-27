@@ -6,6 +6,6 @@ public class ShipUpgradesConfig extends BaseEntityConfig {
     public ShipUpgradesType type;
 
     public ShipUpgradesConfig() {
-        this.spritePath = "images/LeftShip.png";
+        this.spritePath = "images/ship/Ship.png";
     }
 }

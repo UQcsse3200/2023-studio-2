@@ -26,12 +26,12 @@ public class ShopArea extends GameArea {
     private final ShipUpgradesFactory shipUpgradesFactory = new ShipUpgradesFactory();
 
     private static final String[] spaceMiniGameTextures = {
-            "images/SpaceMiniGameBackground.png",
+            "images/minigame/SpaceMiniGameBackground.png",
             "images/stone.png",
-            "images/LeftShip.png",
+            "images/ship/Ship.png",
             "images/Ship.png"
     };
-    private static final String[] spaceTextureAtlases = {"images/ship.atlas"};
+    private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
 

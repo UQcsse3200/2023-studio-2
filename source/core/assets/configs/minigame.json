@@ -1,6 +1,6 @@
 {
   "obstacleEnemy": {
-    "spritePath": "images/obstacle-enemy.png"
+    "spritePath": "images/minigame/obstacle-enemy.png"
   },
   "obstacleGameGoal": {
     "spritePath": "images/wormhole.jpg"

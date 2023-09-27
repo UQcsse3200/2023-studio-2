@@ -46,7 +46,7 @@ public class MiniScreenDisplay extends UIComponent {
         background =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/RELAUNCH MISSION-2.png", Texture.class));
+                                .getAsset("images/minigame/RELAUNCH_MISSION-2.png", Texture.class));
         background.setPosition(0, 0);
 
         // Scale the height of the background to maintain the original aspect ratio of the image

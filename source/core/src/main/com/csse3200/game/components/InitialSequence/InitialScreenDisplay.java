@@ -59,7 +59,7 @@ public class InitialScreenDisplay extends UIComponent {
         background =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/InitialScreenImage.png", Texture.class));
+                                .getAsset("images/menu/InitialScreenImage.png", Texture.class));
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background.setPosition(0, 0);
 
@@ -67,7 +67,7 @@ public class InitialScreenDisplay extends UIComponent {
         planet =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/InitialScreenBG.png", Texture.class));
+                                .getAsset("images/menu/InitialScreenBG.png", Texture.class));
         planet.setSize(2500, 400); // Set to a reasonable fixed size
 
         // The planet moves at a constant speed, so to make it appear at the right time,

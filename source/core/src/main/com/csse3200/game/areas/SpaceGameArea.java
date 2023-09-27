@@ -36,20 +36,20 @@ public class SpaceGameArea extends GameArea {
     private static final int NUM_ASTEROIDS = 100;
     private Label distanceLabel;
     private static final String[] spaceMiniGameTextures = {
-            "images/SpaceMiniGameBackground.png",
-            "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-            "images/LeftShip.png",
+            "images/minigame/SpaceMiniGameBackground.png",
+            "images/minigame/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
+            "images/ship/Ship.png",
             "images/Ship.png",
-            "images/wormhole.png",
-            "images/obstacle-enemy.png",
-            "images/mainship.png"
+            "images/minigame/wormhole.png",
+            "images/minigame/obstacle-enemy.png",
+            "images/minigame/mainship.png"
     };
     private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
     private static final String[] spaceMusic = {backgroundMusic};
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
 
-    private static final String[] spaceTextureAtlases = {"images/ship.atlas"};
+    private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
 
     /**
      * Constructor for initializing terrain area

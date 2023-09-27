@@ -31,7 +31,7 @@ public class MinigameShipFactory {
                 ServiceLocator.getInputService().getInputFactory().createForShip();
 
         AnimationRenderComponent animator = new AnimationRenderComponent(
-                ServiceLocator.getResourceService().getAsset("images/ship.atlas", TextureAtlas.class));
+                ServiceLocator.getResourceService().getAsset("images/minigame/ship.atlas", TextureAtlas.class));
 
         animator.addAnimation("Ship_LeftStill", 0.1f);
         animator.addAnimation("Ship_UpStill", 0.1f);
@@ -47,7 +47,7 @@ public class MinigameShipFactory {
                 new Entity()
 
                         //.addComponent(new TextureRenderComponent("images/Ship.png"))
-                        //.addComponent(new TextureRenderComponent("images/LeftShip.png"))Dont add 2 of the same component class
+                        //.addComponent(new TextureRenderComponent("images/ship/Ship.png"))Dont add 2 of the same component class
 
                         .addComponent(animator)
                         .addComponent(new ShipAnimationController())
@@ -61,7 +61,7 @@ public class MinigameShipFactory {
                         //.addComponent(new ShipStatsComponent(stats.health))
                         //.addComponent(new InventoryComponent(stats.gold))
                         //.addComponent(new TextureRenderComponent("images/Ship.png"))
-                        //.addComponent(new TextureRenderComponent("images/LeftShip.png"))Dont add 2 of the same component class
+                        //.addComponent(new TextureRenderComponent("images/ship/Ship.png"))Dont add 2 of the same component class
 
                         //.addComponent(new TextureRenderComponent(config.spritePath))
 

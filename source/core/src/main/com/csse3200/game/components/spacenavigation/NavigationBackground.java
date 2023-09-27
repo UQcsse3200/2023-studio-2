@@ -40,13 +40,13 @@ public class NavigationBackground extends Actor {
      * Loads necessary textures and initializes the star animations and positions.
      */
     public NavigationBackground() {
-        spaceBackground = new Texture(Gdx.files.internal("images/space_navigation_background.png"));
+        spaceBackground = new Texture(Gdx.files.internal("images/space/space_navigation_background.png"));
 
         int numOfFrames = 8;
         TextureRegion[] frames = new TextureRegion[numOfFrames];
 
         for (int i = 0; i < numOfFrames; i++) {
-            frames[i] = new TextureRegion(new Texture(Gdx.files.internal("images/space_navigation_background_star_frame_" + i + ".png")));
+            frames[i] = new TextureRegion(new Texture(Gdx.files.internal("images/space/space_navigation_background_star_frame_" + i + ".png")));
         }
 
         animations = new Animation[numOfSprites];

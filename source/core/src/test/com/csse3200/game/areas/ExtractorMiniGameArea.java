@@ -17,7 +17,7 @@ public class ExtractorMiniGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ExtractorMiniGameArea.class);
 
     private static final String[] extractorMiniGameTextures = {
-            "images/ExtractorMiniGameBackground.png", //TODO: Replace these images with suitable images - these are just for testing purposes!!
+            "images/minigame/ExtractorMiniGameBackground.png", //TODO: Replace these images with suitable images - these are just for testing purposes!!
     };
 
     private final TerrainFactory terrainFactory;

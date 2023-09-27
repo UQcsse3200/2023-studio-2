@@ -53,18 +53,18 @@ public class SpaceNavigationScreen implements Screen {
     @Override
     public void show() {
         // First load textures
-        navigationTitle = new Texture(Gdx.files.internal("images/space_navigation_title.png"));
+        navigationTitle = new Texture(Gdx.files.internal("images/interface/space_navigation_title.png"));
 
         // Planet icons from:
         // https://www.freepik.com/premium-vector/pixel-planets-set-pixel-art-solar-system_36179935.htm
         for(var i = 0; i < planetTextures.length; i++){
-            planetTextures[i] = new Texture(Gdx.files.internal("images/space_navigation_planet_" + i + ".png"));
+            planetTextures[i] = new Texture(Gdx.files.internal("images/planets/space_navigation_planet_" + i + ".png"));
         }
 
-        arrowTextures[0] = new Texture(Gdx.files.internal("images/space_navigation_arrow_left.png"));
-        arrowTextures[1] = new Texture(Gdx.files.internal("images/space_navigation_arrow_right.png"));
-        arrowTextures[2] = new Texture(Gdx.files.internal("images/space_navigation_arrow_up.png"));
-        arrowTextures[3] = new Texture(Gdx.files.internal("images/space_navigation_arrow_down.png"));
+        arrowTextures[0] = new Texture(Gdx.files.internal("images/interface/space_navigation_arrow_left.png"));
+        arrowTextures[1] = new Texture(Gdx.files.internal("images/interface/space_navigation_arrow_right.png"));
+        arrowTextures[2] = new Texture(Gdx.files.internal("images/interface/space_navigation_arrow_up.png"));
+        arrowTextures[3] = new Texture(Gdx.files.internal("images/interface/space_navigation_arrow_down.png"));
 
 
         // Initialise a stage for the scene

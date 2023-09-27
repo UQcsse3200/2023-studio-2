@@ -1,6 +1,6 @@
 {
   "ship": {
-    "spritePath": "images/LeftShip.png",
+    "spritePath": "images/ship/Ship.png",
     "position": {
       "x": 33,
       "y": 67
@@ -67,7 +67,7 @@
     }
   },
   "Astro": {
-    "spritePath": "images/Astro_NPC.atlas",
+    "spritePath": "images/npc/Astro_NPC.atlas",
     "position" : {
       "x": 24,
       "y": 50

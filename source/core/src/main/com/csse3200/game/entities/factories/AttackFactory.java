@@ -109,6 +109,7 @@ public class AttackFactory {
       explosiveConfig.damageRadius = 2.5f;
       explosiveConfig.chainRadius = 3.0f;
       explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
+      explosiveConfig.soundPath = "sounds/explosion/grenade.mp3";
 
       attack.addComponent(new ExplosiveComponent(explosiveConfig));
 

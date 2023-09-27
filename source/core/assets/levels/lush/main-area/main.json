@@ -83,7 +83,9 @@
     "sounds/playerBoostRecharge.mp3",
     "sounds/upgradeTreeTap.mp3",
     "sounds/upgradeWeapon.mp3",
-    "sounds/enemyDeath.mp3"
+    "sounds/enemyDeath.mp3",
+    "sounds/explosion/grenade.mp3",
+    "sounds/explosion/landmine.mp3"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect"

@@ -3,7 +3,7 @@
   "texture": "images/explosives/explosive-barrel.png",
   "explosive": {
     "effectPath": "particle-effects/explosion/explosion.effect",
-    "soundPath": null,
+    "soundPath": "sounds/explosion/landmine.mp3",
     "damage": 150,
     "damageRadius": 3.5,
     "chainRadius": 4,

@@ -17,7 +17,7 @@ import static com.csse3200.game.screens.MainMenuScreen.logger;
 
 public class AlertBox extends Dialog {
 
-    private GdxGame game;
+    private final GdxGame game;
     public AlertBox( GdxGame game, String alert, Skin skin) {
         super(alert, skin);
         this.game = game;

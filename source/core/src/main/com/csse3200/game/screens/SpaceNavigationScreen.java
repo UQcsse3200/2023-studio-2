@@ -32,7 +32,7 @@ public class SpaceNavigationScreen implements Screen {
     /** Texture for the title of this screen */
     private Texture navigationTitle;
     /** Textures for the planets shown on the screen */
-    private final Texture[] planetTextures = new Texture[4];// TODO: Extend with grey?
+    private final Texture[] planetTextures = new Texture[4];
     /** Textures for the arrows on the screen */
     private final Texture[] arrowTextures = new Texture[8];
     /** Names of the planets */
@@ -92,7 +92,6 @@ public class SpaceNavigationScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-//                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
                 planetTravel.returnToCurrent();
             }
         });

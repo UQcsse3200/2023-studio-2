@@ -3,6 +3,7 @@ package com.csse3200.game.screens;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.SpaceGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -14,14 +15,15 @@ import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.rendering.Renderer;
+import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.*;
 import com.csse3200.game.components.obstacleMinigame.ObstacleMiniGameActions;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.csse3200.game.components.ships.DistanceDisplay;
 
 
 /**
@@ -32,13 +34,13 @@ public class SpaceMapScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SpaceMapScreen.class);
 
     private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
-    private Entity ship;
-    private Entity goal;
+    private final Entity ship;
+    private final Entity goal;
     private final GdxGame game;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
     private Label distanceLabel;
-    private DistanceDisplay distanceDisplay;
+    private final DistanceDisplay distanceDisplay;
 
     /**
      * Method for creating the space map screen for the obstacle minigame

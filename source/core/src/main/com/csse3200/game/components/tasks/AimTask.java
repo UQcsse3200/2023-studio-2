@@ -1,8 +1,5 @@
 package com.csse3200.game.components.tasks;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Null;
-import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
@@ -23,9 +20,9 @@ public class AimTask extends DefaultTask implements PriorityTask {
   private ShootTask aimTask;
   private final Entity target;
   private final float range;
-  private GameTime timer;
+  private final GameTime timer;
   private long lastShotTime;
-  private int numshots = 0;
+  private int numShots = 0;
 
   /**
    * creates an aim task.
@@ -70,7 +67,7 @@ public class AimTask extends DefaultTask implements PriorityTask {
   @Override
   public void update() {
     if (currentTask.getStatus() != Status.ACTIVE) {
-      if (currentTask == waitTask && ((timer.getTime() - lastShotTime > 4000) || numshots == 0)) {
+      if (currentTask == waitTask && ((timer.getTime() - lastShotTime > 4000) || numShots == 0)) {
         startAiming();
       } else {
         startWaiting();
@@ -130,7 +127,7 @@ public class AimTask extends DefaultTask implements PriorityTask {
     logger.debug("Starting aiming");
     this.owner.getEntity().getEvents().trigger("standing");
     lastShotTime = timer.getTime();
-    numshots = 1;
+    numShots = 1;
     swapTask(aimTask);
   }
 

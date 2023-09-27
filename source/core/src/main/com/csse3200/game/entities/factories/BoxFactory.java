@@ -30,24 +30,6 @@ public class BoxFactory {
         Box.getComponent(TextureRenderComponent.class).scaleEntity();
 
 
-
-      /*  TextureRenderComponent textureComponent = Box.getComponent(TextureRenderComponent.class);
-        float desiredScale = 0.5f;  // Adjust as needed
-
-// Get the current dimensions of the texture
-        float originalWidth = textureComponent.getWidth();
-        float originalHeight = textureComponent.getHeight();
-
-// Calculate the new dimensions based on the desired scale
-        float newWidth = originalWidth * desiredScale;
-        float newHeight = originalHeight * desiredScale;
-
-// Set the new dimensions for the texture
-        textureComponent.setWidth(newWidth);
-        textureComponent.setHeight(newHeight);*/
-
-
-
         return Box;
     }
     private BoxFactory() {

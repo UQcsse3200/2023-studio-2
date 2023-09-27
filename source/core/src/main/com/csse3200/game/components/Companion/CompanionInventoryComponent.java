@@ -18,8 +18,8 @@ import java.util.List;
 public class CompanionInventoryComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(CompanionInventoryComponent.class);
     private static final int INVENTORY_SIZE = 7;
-    private List<Entity> inventory = new ArrayList<>(INVENTORY_SIZE);
-    private int[] itemQuantity = new int[INVENTORY_SIZE];
+    private final List<Entity> inventory = new ArrayList<>(INVENTORY_SIZE);
+    private final int[] itemQuantity = new int[INVENTORY_SIZE];
 
     /**
      * Adds an item to the companion's inventory if there is space remaining.

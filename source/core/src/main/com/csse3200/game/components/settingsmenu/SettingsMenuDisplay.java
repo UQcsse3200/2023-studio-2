@@ -34,6 +34,7 @@ public class SettingsMenuDisplay extends UIComponent {
   private CheckBox vsyncCheck;
   private Slider uiScaleSlider;
   private Slider musicVolumeSlider;
+  private Slider soundVolumeSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
 
   public SettingsMenuDisplay(GdxGame game) {
@@ -90,7 +91,12 @@ public class SettingsMenuDisplay extends UIComponent {
     Label musicVolumeLabel = new Label("Music Volume:", skin);
     musicVolumeSlider = new Slider(0f, 1f, 0.05f, false, skin);
     musicVolumeSlider.setValue(settings.musicVolume);
-    Label musicVolumeValue = new Label(String.format("%.0f%%", settings.musicVolume), skin);
+    Label musicVolumeValue = new Label(String.format("%.0f%%", settings.musicVolume * 100), skin);
+
+    Label soundVolumeLabel = new Label("Sound Volume:", skin);
+    soundVolumeSlider = new Slider(0f, 1f, 0.05f, false, skin);
+    soundVolumeSlider.setValue(settings.soundVolume);
+    Label soundVolumeValue = new Label(String.format("%.0f%%", settings.soundVolume * 100), skin);
 
     Label displayModeLabel = new Label("Resolution:", skin);
     displayModeSelect = new SelectBox<>(skin);
@@ -129,6 +135,14 @@ public class SettingsMenuDisplay extends UIComponent {
     settingsTable.add(musicVolumeTable).left();
 
     settingsTable.row().padTop(10f);
+    Table soundVolumeTable = new Table();
+    soundVolumeTable.add(soundVolumeSlider).width(100).left();
+    soundVolumeTable.add(soundVolumeValue).left().padLeft(5f).expandX();
+
+    settingsTable.add(soundVolumeLabel).right().padRight(15f);
+    settingsTable.add(soundVolumeTable).left();
+
+    settingsTable.row().padTop(10f);
     settingsTable.add(displayModeLabel).right().padRight(15f);
     settingsTable.add(displayModeSelect).left();
 
@@ -163,6 +177,13 @@ public class SettingsMenuDisplay extends UIComponent {
             (Event event) -> {
               float value = musicVolumeSlider.getValue();
               musicVolumeValue.setText(String.format("%.0f%%", value * 100));
+              return true;
+            });
+
+    soundVolumeSlider.addListener(
+            (Event event) -> {
+              float value = soundVolumeSlider.getValue();
+              soundVolumeValue.setText(String.format("%.0f%%", value * 100));
               return true;
             });
 
@@ -239,6 +260,7 @@ public class SettingsMenuDisplay extends UIComponent {
     settings.displayMode = new DisplaySettings(displayModeSelect.getSelected().object);
     settings.vsync = vsyncCheck.isChecked();
     settings.musicVolume = musicVolumeSlider.getValue();
+    settings.soundVolume = soundVolumeSlider.getValue();
 
     UserSettings.set(settings, true);
   }

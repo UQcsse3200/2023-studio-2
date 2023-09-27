@@ -32,7 +32,8 @@ public class PlanetTravel {
      */
     public void beginInstantTravel() {
         PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
-        PlanetScreen nextPlanet = currentPlanet.getNextPlanet();
+        //PlanetScreen nextPlanet = currentPlanet.getNextPlanet();
+        PlanetScreen nextPlanet = new PlanetScreen(game, targetPlanetName);
         ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
         game.setScreen(nextPlanet);
     }

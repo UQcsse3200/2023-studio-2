@@ -1,7 +1,11 @@
 package com.csse3200.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.InitialSequence.InitialScreenDisplay;
 import com.csse3200.game.entities.Entity;
@@ -61,7 +65,11 @@ public class InitialScreen extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         renderer.resize(width, height);
+        Stage stage = ServiceLocator.getRenderService().getStage();
+        Viewport viewport = stage.getViewport();
+        viewport.update(width, height, true);
     }
+
 
     @Override
     public void dispose() {
@@ -99,6 +107,9 @@ public class InitialScreen extends ScreenAdapter {
     private void createUI() {
         logger.debug("Creating UI");
         Stage stage = ServiceLocator.getRenderService().getStage();
+        Viewport viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.setViewport(viewport);
+
         Entity ui = new Entity();
         ui.addComponent(new InitialScreenDisplay(game))
                 .addComponent(new InputDecorator(stage, 10));

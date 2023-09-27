@@ -57,20 +57,30 @@ public class MainMenuStarBackground extends Actor {
             animations[i] = new Animation<>(0.1f, frames);
             animations[i].setPlayMode(Animation.PlayMode.LOOP_PINGPONG); // Ping pong effect
 
-            // No stars in the rightmost quarter of screen
+//            // No stars in the rightmost quarter of screen
+//            int x = MathUtils.random(0, Gdx.graphics.getWidth());
+//            // TODO CHANGE THE AREAS OF SCREEN AFFECTED
+//            while (x > 3 * (Gdx.graphics.getWidth() / 4) && x < 0.9 * (Gdx.graphics.getWidth())) {
+//                x = MathUtils.random(0, Gdx.graphics.getWidth());
+//            }
+//
+//            // No stars in the top tenth or bottom third of screen
+//            int y = MathUtils.random(0, Gdx.graphics.getHeight()); // TODO REDO
+//            // TODO CHANGE THE AREAS OF SCREEN AFFECTED
+//            while (y < (Gdx.graphics.getHeight() / 3) ||
+//                    y > 0.915 * Gdx.graphics.getHeight()) {
+//                y = MathUtils.random(0, Gdx.graphics.getHeight());
+//            }
+
+            // No stars in the rightmost quarter of screen, overlapping with menu buttons
             int x = MathUtils.random(0, Gdx.graphics.getWidth());
             // TODO CHANGE THE AREAS OF SCREEN AFFECTED
             while (x > 3 * (Gdx.graphics.getWidth() / 4) && x < 0.9 * (Gdx.graphics.getWidth())) {
                 x = MathUtils.random(0, Gdx.graphics.getWidth());
             }
 
-            // No stars in the rightmost quarter of screen
-            int y = MathUtils.random(0, Gdx.graphics.getHeight());
-            // TODO CHANGE THE AREAS OF SCREEN AFFECTED
-            while (y < (Gdx.graphics.getHeight() / 3) ||
-                    y > 0.915 * Gdx.graphics.getHeight()) {
-                y = MathUtils.random(0, Gdx.graphics.getHeight());
-            }
+            // No stars in the top tenth or bottom third of screen
+            int y = MathUtils.random((Gdx.graphics.getHeight() / 3), (int) (0.910 * Gdx.graphics.getHeight())); // TODO REDO
 
             spritePositions[i] = new Vector2(x, y);
             stateTimes[i] = MathUtils.random(0f, 1f);  // Offset animation start times

@@ -45,6 +45,7 @@ public class MainMenuActions extends Component {
    * Swaps to the Main Game screen.
    */
   private void onStart() {
+    logger.info("Creating beginning planet");
     ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", new PlanetScreen(game));
 
     AlertBox alertBox = new AlertBox(game," Alert Box", skin);

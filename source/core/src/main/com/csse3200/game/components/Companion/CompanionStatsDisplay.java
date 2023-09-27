@@ -122,7 +122,7 @@ public class CompanionStatsDisplay extends UIComponent {
 
         // ADD THE COMPANIONS HEALTH INFORMATION
         int companionHealth = entity.getComponent(CombatStatsComponent.class).getHealth();
-        CharSequence companionHealthText = String.format("%d", companionHealth);
+        CharSequence companionHealthText = String.format("Health: %d", companionHealth);
         companionHealthLabel = new Label(companionHealthText, skin, "small");
         companionStatisticsUI.add(companionHealthLabel);
         companionStatisticsUI.row();

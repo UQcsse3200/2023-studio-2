@@ -56,7 +56,8 @@
     "images/action-feedback/white_color_texture.png",
     "images/action-feedback/warning.png",
     "map/treetop.png",
-    "particle-effects/explosion/particle.png"
+    "particle-effects/explosion/particle.png",
+    "images/explosives/explosive-barrel.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",

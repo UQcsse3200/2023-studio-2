@@ -44,6 +44,14 @@
       "level": 0,
       "name": "Extractor",
       "cost": {
+      },
+      "texture": "images/refinedExtractor2.png"
+    },
+    "com.csse3200.game.components.structures.tools.ExplosiveBarrelTool": {
+      "level": 0,
+      "name": "Explosive Barrel",
+      "cost": {
+        "Durasteel": 50,
         "Solstite": 0
       },
       "texture": "images/refinedExtractor2.png"

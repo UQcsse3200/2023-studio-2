@@ -40,7 +40,7 @@ public class ProductionComponent extends Component {
     public ProductionComponent(Resource produces, long tickRate, int tickSize) {
         this.timer = new GameTime();
         this.produces = produces;
-        this.tickRate = tickRate;
+        this.tickRate = tickRate*100;
         this.tickSize = tickSize;
         this.lastTime = timer.getTime();
         this.damaged = true;

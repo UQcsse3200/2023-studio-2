@@ -61,6 +61,7 @@ public class WeaponComponent extends Component {
         Entity newAttack = AttackFactory.createAttack(weaponType, initialRotation, entity);
         var newPos = positionInDirection(initialRotation + spawnAngleOffset, distance, newAttack);
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
+        entity.getEvents().trigger("updateAmmo", entity.getComponent(InventoryComponent.class).getCurrentAmmo());
     }
 
     /**

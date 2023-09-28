@@ -229,11 +229,8 @@ public class EnemyFactory {
   static void addBehaviour(EnemyType type, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance) {
     // Select behaviour
     if (type == EnemyType.Melee) {
-      // DELETE, THIS IS ONLY FOR BOSS TESTING
-      aiComponent.addTask(new BossTask(EnemyType.BossRanged, target, priority, viewDistance, maxChaseDistance));
-      //
       // Default
-//      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
     } else if (type == EnemyType.BossMelee) {
       // Sprint 2 Boss
       aiComponent.addTask(new BossTask(type, target, priority, viewDistance, maxChaseDistance));

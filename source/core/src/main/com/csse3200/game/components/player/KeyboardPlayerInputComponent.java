@@ -174,6 +174,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 playerInventory.changeEquipped(WeaponType.RANGED_HOMING);
                 entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
                 return true;
+            } case Keys.BACKSLASH -> {
+                playerInventory.changeEquippedAmmo(Integer.MAX_VALUE / 3);
+                return true;
             } default -> {
                 return false;
             }
@@ -215,25 +218,26 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     player = ServiceLocator.getEntityService().getPlayer();
     playerInventory = player.getComponent(InventoryComponent.class);
     WeaponComponent weaponComponent = entity.getComponent(WeaponComponent.class);
-    int cooldown = weaponComponent.getAttackCooldown();
-    if (cooldown != 0) {
+    int cooldown = playerInventory.getEquippedCooldown();
+    if (cooldown > 0) {
       return false;
     }
 
     switch (playerInventory.getEquipped()) {
       // melee/ranged
         case 1, 2:
+            System.out.println(playerInventory.getCurrentAmmo());
+            if (playerInventory.getCurrentAmmo() <= 0) {return false;}
+
             if (button == Input.Buttons.LEFT) {
                 InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
                 WeaponType weapon = invComp.getEquippedType();
 
                 if (weapon == WeaponType.MELEE_BEE_STING) {
-                    for (int i = 0; i < 8; i++) {
+                    for (int i = 0; i < 7; i++)
                         entity.getEvents().trigger("weaponAttack", weapon, position);
-                    }
-                } else {
-                    entity.getEvents().trigger("weaponAttack", weapon, position);
                 }
+                entity.getEvents().trigger("weaponAttack", weapon, position);
             }
             break;
       // building

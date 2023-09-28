@@ -66,7 +66,7 @@ public class InventoryComponent extends Component {
   public void placeInSlot(WeaponType weaponType) {
     int slot = switch (weaponType) {
       case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING -> 1; // melee
-      case RANGED_SLINGSHOT, RANGED_BOOMERANG, RANGED_HOMING -> 2; // ranged
+      case RANGED_SLINGSHOT, RANGED_BOOMERANG, RANGED_HOMING, RANGED_GRENADE -> 2; // ranged
       case WOODHAMMER, STONEHAMMER, STEELHAMMER -> 3; // building
       default -> throw new IllegalArgumentException("Slot not assigned: " + weaponType);
     };

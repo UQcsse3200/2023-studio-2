@@ -5,7 +5,9 @@ import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.enemy.SprayTask;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.raycast.RaycastHit;
@@ -31,17 +33,21 @@ public class BossTask extends DefaultTask implements PriorityTask {
   private boolean unleashed;
   private boolean attackReady;
   private char direction;
+  private EnemyType bossType;
+  private SprayTask sprayTask;
+  private WaitTask waitTask;
   /**
    * @param target The entity to chase.
    * @param priority Task priority when chasing (0 when not chasing).
    * @param viewDistance Maximum distance from the entity at which chasing can start.
    * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
    */
-  public BossTask(Entity target, int priority, float viewDistance, float maxChaseDistance) {
+  public BossTask(EnemyType bossType, Entity target, int priority, float viewDistance, float maxChaseDistance) {
     this.target = target;
     this.priority = priority;
     this.viewDistance = viewDistance;
     this.maxChaseDistance = maxChaseDistance;
+    this.bossType = bossType;
     physics = ServiceLocator.getPhysicsService().getPhysics();
     debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
@@ -60,9 +66,19 @@ public class BossTask extends DefaultTask implements PriorityTask {
     movementTask = new MovementTask(target.getPosition());
     movementTask.create(owner);
     float attackRadius = 10;
-    specialAttackTask = new SpecialAttackTask(attackRadius);
-    specialAttackTask.create(owner);
+    // Boss Type
+    if (this.bossType == EnemyType.BossMelee) {
+      specialAttackTask = new SpecialAttackTask(attackRadius);
+      specialAttackTask.create(owner);
+    } else if (this.bossType == EnemyType.BossRanged) {
+      // Shoots spray periodically
+      waitTask = new WaitTask(3);
+      waitTask.create(owner);
+      sprayTask = new SprayTask(target.getPosition(), 5);
+      sprayTask.create(owner);
+    }
 
+    // Standard Movement
     currentTask = movementTask;
     movementTask.start();
     direction = getDirection(target.getPosition());
@@ -85,27 +101,44 @@ public class BossTask extends DefaultTask implements PriorityTask {
 
   @Override
   public void update() {
-    // Check if health is below threshold
     float currentHealth = owner.getEntity().getComponent(CombatStatsComponent.class).getHealth();
     float maxHealth = owner.getEntity().getComponent(CombatStatsComponent.class).getMaxHealth();
     if (currentHealth <= 0) {
       this.owner.getEntity().getEvents().trigger("standing");
     }
-    if ((currentHealth / maxHealth) * 100 <= 50.0f && !unleashed) {
-      System.out.println("Special Attack Incoming");
-      attackReady = true;
+    // Boss Melee
+    if (this.bossType == EnemyType.BossMelee) {
+      // Check if health is below threshold
+      if ((currentHealth / maxHealth) * 100 <= 50.0f && !unleashed) {
+        System.out.println("Special Attack Incoming");
+        attackReady = true;
+      }
+      if (attackReady && !unleashed) {
+        unleashed = true;
+        System.out.println("Unleash!");
+        startSpecialAttack();
+      }
     }
-    if (attackReady && !unleashed) {
-      unleashed = true;
-      System.out.println("Unleash!");
-      startSpecialAttack();
+    // Boss Ranged
+    if (this.bossType == EnemyType.BossRanged) {
+
+      if (waitTask.getStatus() == Status.ACTIVE) {
+        waitTask.update();
+      }
+      else if (waitTask.getStatus() != Status.ACTIVE) {
+        sprayTask.setTarget(target.getPosition());
+        sprayTask.update();
+        startSprayAttack();
+        waitTask.start();
+      }
     }
+
     char direction2 = getDirection(target.getPosition());
     movementTask.setTarget(target.getPosition());
     movementTask.update();
 
     if (movementTask.getStatus() != Status.ACTIVE) {
-      movementTask.start();
+      startMovement();
     }
     if (direction != direction2){
       start();
@@ -212,12 +245,19 @@ public class BossTask extends DefaultTask implements PriorityTask {
     this.owner.getEntity().getEvents().trigger("standing");
     swapTask(specialAttackTask);
   }
+  /**
+   * Helper method to initiate Spray Attack
+   */
+  private void startSprayAttack() {
+    this.owner.getEntity().getEvents().trigger("standing");
+    swapTask(sprayTask);
+  }
 
   /**
    * Helper method to initiate Movement
    */
   private void startMovement() {
-    movementTask.setTarget(target.getPosition());
+    movementTask.start();
     swapTask(movementTask);
   }
 }

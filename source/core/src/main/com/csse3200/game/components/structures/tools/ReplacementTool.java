@@ -48,7 +48,7 @@ public abstract class ReplacementTool extends PlacementTool {
         }
         newStructure.addComponent(new CostComponent(cost));
 
-sd         ServiceLocator.getStructurePlacementService().replaceStructureAt(newStructure, position, false, false);
+        ServiceLocator.getStructurePlacementService().replaceStructureAt(newStructure, position, false, false);
 
         return true;
     }

@@ -33,7 +33,7 @@ public class StoryDisplay extends UIComponent {
     private int start;
     private int end;
 
-    private static final String[] buttonImages = {"images/next_cut.png", "images/prev-cut.png"};
+    private static final String[] buttonImages = {"images/interface/next_cut.png", "images/prev-cut.png"};
 
     @Override
     public void create() {
@@ -52,12 +52,12 @@ public class StoryDisplay extends UIComponent {
         table.bottom().right();
 
         storyImages = new ArrayList<>();
-        storyImages.add("images/Story_1.png");
-        storyImages.add("images/Story_2.png");
-        storyImages.add("images/Story_3.png");
-        storyImages.add("images/Story_4.png");
-        storyImages.add("images/Story_5.png");
-        storyImages.add("images/Story_6.png");
+        storyImages.add("images/menu/Story_1.png");
+        storyImages.add("images/menu/Story_2.png");
+        storyImages.add("images/menu/Story_3.png");
+        storyImages.add("images/menu/Story_4.png");
+        storyImages.add("images/menu/Story_5.png");
+        storyImages.add("images/menu/Story_6.png");
         start = 0;
         end = 6;
 
@@ -70,18 +70,18 @@ public class StoryDisplay extends UIComponent {
         InsertButtons bothButtons = new InsertButtons();
 
         // Create next button
-        String nextTexture = "images/next_cut.png";
-        String nextTextureHover = "images/next_cut_hover.png";
+        String nextTexture = "images/interface/next_cut.png";
+        String nextTextureHover = "images/interface/next_cut_hover.png";
         ImageButton nextBtn = bothButtons.draw(nextTexture, nextTextureHover);
 
         // Create previous button
-        String prevTexture = "images/prev_cut.png";
-        String prevTextureHover = "images/prev_cut_hover.png";
+        String prevTexture = "images/interface/prev_cut.png";
+        String prevTextureHover = "images/interface/prev_cut_hover.png";
         ImageButton prevBtn = bothButtons.draw(prevTexture, prevTextureHover);
 
         // Create skip button
-        String skipTexture = "images/skip_btn.png";
-        String skipTextureHover = "images/skip_btn_hover.png";
+        String skipTexture = "images/interface/skip_btn.png";
+        String skipTextureHover = "images/interface/skip_btn_hover.png";
         ImageButton skipBtn = bothButtons.draw(skipTexture, skipTextureHover);
 
         // Attach listeners to navigation buttons

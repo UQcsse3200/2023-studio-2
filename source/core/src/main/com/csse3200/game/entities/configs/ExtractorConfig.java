@@ -9,6 +9,6 @@ public class ExtractorConfig extends BaseEntityConfig {
     public int tickSize;
 
     public ExtractorConfig() {
-        spritePath = "images/ExtractorAnimation.atlas";
+        spritePath = "images/structures/ExtractorAnimation.atlas";
     }
 }

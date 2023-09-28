@@ -1,13 +1,27 @@
 package com.csse3200.game.entities;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.structures.Placeable;
 
 public class PlaceableEntity extends Entity {
 
     boolean irremovable = false;
+    private final int width;
+    private final int height;
+    private GridPoint2 position;
 
-    public PlaceableEntity() {
+    public PlaceableEntity(int width, int height) {
         super();
+        this.width = width;
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     /**
@@ -18,10 +32,6 @@ public class PlaceableEntity extends Entity {
     public PlaceableEntity irremovable() {
         this.irremovable = true;
         return this;
-    }
-
-    public PlaceableEntity(Entity player) {
-        super();
     }
 
     /**

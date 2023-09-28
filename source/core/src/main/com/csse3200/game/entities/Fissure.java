@@ -6,10 +6,10 @@ import com.csse3200.game.components.resources.FissureComponent;
 import com.csse3200.game.entities.configs.FissureConfig;
 import com.csse3200.game.entities.configs.ParticleEffectsConfig;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 
 public class Fissure extends PlaceableEntity {
     public Fissure(FissureConfig config) {
+        super(2, 2);
         TextureRenderComponent textureRenderComponent = new TextureRenderComponent("images/resources/Cracked_Ground.png");
         textureRenderComponent.overrideZIndex(-100);
         addComponent(textureRenderComponent);

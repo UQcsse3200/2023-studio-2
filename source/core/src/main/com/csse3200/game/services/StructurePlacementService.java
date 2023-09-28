@@ -13,14 +13,11 @@ import java.util.Map;
 public class StructurePlacementService {
     EventHandler handler;
     private final Map<GridPoint2, PlaceableEntity> placedStructures = new HashMap<>();
+    private final Map<PlaceableEntity, GridPoint2> position = new HashMap<>();
 
 
     public StructurePlacementService(EventHandler handler) {
         this.handler = handler;
-    }
-
-    public void placeStructure(Entity entity) {
-        handler.trigger("placeStructure", entity);
     }
 
     /**
@@ -29,29 +26,45 @@ public class StructurePlacementService {
      * @param searchEntity - the entity to get the position of.
      * @return the position of the entity.
      */
-    public GridPoint2 getStructurePosition(Entity searchEntity) {
-        for (var entry : placedStructures.entrySet()) {
-            if (entry.getValue() == searchEntity) {
-                return entry.getKey();
+    public GridPoint2 getStructurePosition(PlaceableEntity searchEntity) {
+        return position.get(searchEntity);
+    }
+
+    public void placeStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+        if (!canPlaceStructureAt(entity, tilePos)) {
+            return;
+        }
+
+        entity.willPlace();
+
+        position.put(entity, tilePos);
+
+        for (int x = tilePos.x; x < (tilePos.x + entity.getWidth()); x++) {
+            for (int y = tilePos.y; y < (tilePos.y + entity.getHeight()); y++) {
+                placedStructures.put(new GridPoint2(x, y), entity);
             }
         }
 
-        return null;
-    }
-    public void placeStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
-        entity.willPlace();
-        placedStructures.put(tilePos, entity);
         handler.trigger("placeStructureAt", new placeStructureAtArgs(entity, tilePos, centerX, centerY));
         entity.placed();
+    }
+
+    public boolean canPlaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos) {
+        for (int x = tilePos.x; x < (tilePos.x + entity.getWidth()); x++) {
+            for (int y = tilePos.y; y < (tilePos.y + entity.getHeight()); y++) {
+                if (getStructureAt(new GridPoint2(x, y)) != null) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public void replaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
         removeStructureAt(tilePos);
 
-        entity.willPlace();
-        placedStructures.put(tilePos, entity);
-        handler.trigger("placeStructureAt", new placeStructureAtArgs(entity, tilePos, centerX, centerY));
-        entity.placed();
+        placeStructureAt(entity, tilePos, centerX, centerY);
     }
 
     public void spawnEntityAtVector(Entity entity, Vector2 worldPos) {
@@ -66,7 +79,15 @@ public class StructurePlacementService {
         }
 
         entity.willRemove();
-        placedStructures.remove(tilePos);
+
+        tilePos = position.get(entity);
+
+        for (int x = tilePos.x; x < (tilePos.x + entity.getWidth()); x++) {
+            for (int y = tilePos.y; y < (tilePos.y + entity.getHeight()); y++) {
+                placedStructures.remove(new GridPoint2(x, y));
+            }
+        }
+
         entity.removed();
 
         Gdx.app.postRunnable(entity::dispose);

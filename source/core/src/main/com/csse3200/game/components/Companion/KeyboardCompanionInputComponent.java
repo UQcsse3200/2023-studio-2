@@ -106,6 +106,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         switch (keycode) {
             case Keys.N -> {
                 ServiceLocator.getEntityService().getCompanion().getEvents().trigger("attack");
+                ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class).useNextPowerup();
                 return true;
             }
 /*
@@ -262,7 +263,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
             if (walkDirection.epsilonEquals(Vector2.Zero)) {
                 entity.getEvents().trigger("walkStop");
                 attackSound.stop();
-                /*entity.getEvents().trigger("walkStopAnimation");*/
             } else {
                 if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
                     entity.getEvents().trigger("walkUpLeft");

@@ -78,7 +78,7 @@ public class CompanionFactory {
                         .addComponent(new HealthBarComponent(true))
                         /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay())
-                        .addComponent(new PlayerAnimationController())
+                        .addComponent(new CompanionAnimationController())
                         .addComponent(new FollowComponent(player,1f))
                         .addComponent(new InteractionControllerComponent(false));
         animator.startAnimation("Companion_StandDown");

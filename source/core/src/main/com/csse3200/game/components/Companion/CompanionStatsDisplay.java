@@ -82,7 +82,6 @@ public class CompanionStatsDisplay extends UIComponent {
             public void changed(ChangeEvent event, Actor actor) {
                 KeyboardPlayerInputComponent keys =
                         ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
-                keys.clearWalking();
                 CompanionInventoryDisplay display = CompanionInventoryDisplay.createUpgradeDisplay();
                 ServiceLocator.getRenderService().getStage().addActor(display);
             }

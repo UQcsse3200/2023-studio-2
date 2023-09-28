@@ -104,16 +104,12 @@ public class PlayerAnimationController extends Component {
     void animateStop(Vector2 lastDirection) {
         if (lastDirection.x < -0.1) {
             animator.startAnimation("Character_StandLeft");
-            animator.startAnimation("Companion_StandLeft");
         } else if (lastDirection.x > 0.1) {
             animator.startAnimation("Character_StandRight");
-            animator.startAnimation("Companion_StandRight");
         } else if (lastDirection.y > 0.1) {
             animator.startAnimation("Character_StandUp");
-            animator.startAnimation("Companion_StandUp");
         } else if (lastDirection.y < -0.1){
             animator.startAnimation("Character_StandDown");
-            animator.startAnimation("Companion_StandDown");
         }
     }
 

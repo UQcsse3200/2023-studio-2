@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
@@ -19,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(GameExtension.class)
@@ -52,11 +54,11 @@ class ExtractorToolTest {
             when(stateObserver.getStateData("extractorsTotal/" + Resource.Durasteel)).thenReturn(0);
             ExtractorTool extractorTool = new ExtractorTool(new ObjectMap<>());
 
-            assertTrue(extractorTool.isPositionValid(new GridPoint2(0, 0)));
+            assertTrue(extractorTool.isPositionValid(new GridPoint2(0, 0), mock(PlaceableEntity.class)));
 
             when(stateObserver.getStateData("extractorsTotal/" + Resource.Durasteel)).thenReturn(5);
 
-            assertFalse(extractorTool.isPositionValid(new GridPoint2(0, 0)));
+            assertFalse(extractorTool.isPositionValid(new GridPoint2(0, 0), mock(PlaceableEntity.class)));
     }
 
 }

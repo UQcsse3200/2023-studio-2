@@ -40,16 +40,50 @@ public class StructurePlacementService {
     }
     public void placeStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
         entity.willPlace();
-        placedStructures.put(tilePos, entity);
+        enterIntoMap(entity, tilePos);
         handler.trigger("placeStructureAt", new placeStructureAtArgs(entity, tilePos, centerX, centerY));
         entity.placed();
+    }
+
+    public boolean canPlaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos) {
+        for (int x = tilePos.x; x < (tilePos.x + entity.getWidth()); x++) {
+            for (int y = tilePos.y; y < (tilePos.y + entity.getHeight()); y++) {
+                if (getStructureAt(new GridPoint2(x, y)) != null) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public void enterIntoMap(PlaceableEntity entity, GridPoint2 tilePos) {
+        entity.setGridPosition(tilePos);
+
+        for (int x = tilePos.x; x < (tilePos.x + entity.getWidth()); x++) {
+            for (int y = tilePos.y; y < (tilePos.y + entity.getHeight()); y++) {
+                placedStructures.put(new GridPoint2(x, y), entity);
+            }
+        }
+    }
+
+    public void removeFromMap(GridPoint2 tilePos) {
+        var entity = getStructureAt(tilePos);
+
+        tilePos = entity.getGridPosition();
+
+        for (int x = tilePos.x; x < (tilePos.x + entity.getWidth()); x++) {
+            for (int y = tilePos.y; y < (tilePos.y + entity.getHeight()); y++) {
+                placedStructures.remove(new GridPoint2(x, y));
+            }
+        }
     }
 
     public void replaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
         removeStructureAt(tilePos);
 
         entity.willPlace();
-        placedStructures.put(tilePos, entity);
+        enterIntoMap(entity, tilePos);
         handler.trigger("placeStructureAt", new placeStructureAtArgs(entity, tilePos, centerX, centerY));
         entity.placed();
     }
@@ -66,7 +100,7 @@ public class StructurePlacementService {
         }
 
         entity.willRemove();
-        placedStructures.remove(tilePos);
+        removeFromMap(tilePos);
         entity.removed();
 
         Gdx.app.postRunnable(entity::dispose);

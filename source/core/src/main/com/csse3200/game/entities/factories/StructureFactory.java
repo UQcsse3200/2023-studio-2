@@ -15,8 +15,6 @@ import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.structures.ExtractorAnimationController;
-import com.csse3200.game.components.upgradetree.UpgradeDisplay;
-import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.SpawnerConfig;
 import com.csse3200.game.input.ExtinguisherInputComponent;
@@ -76,7 +74,7 @@ public class StructureFactory {
         animator.addAnimation("animateBroken", 0.2f,Animation.PlayMode.LOOP);
         animator.addAnimation("animateExtracting", 0.2f, Animation.PlayMode.LOOP);
 
-        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity()
+        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity(2, 2)
                 .irremovable()
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))

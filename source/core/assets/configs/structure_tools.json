@@ -4,7 +4,6 @@
       "level": 0,
       "name": "Dirt Wall",
       "cost": {
-        "Durasteel": 25
       },
       "texture": "images/structure-icons/wall.png"
     },

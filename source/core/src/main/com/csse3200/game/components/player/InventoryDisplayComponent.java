@@ -51,7 +51,7 @@ public class InventoryDisplayComponent extends UIComponent {
             WeaponConfig config = inventory.getConfigs().GetWeaponConfig(weapon);
             Button button = new Button(skin);
             Table buttonTable = new Table();
-            Label nameLabel = new Label(config.name, skin);
+            Label nameLabel = new Label(config.name, skin,"thick");
             nameLabel.setColor(Color.BLACK);
             nameLabel.setFontScale(0.2f, 0.2f);
             Image image = new Image( new Texture(config.imagePath));

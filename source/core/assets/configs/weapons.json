@@ -34,7 +34,7 @@
   },
 
   "RANGED_HOMING": {
-    "name" : "Friendly Heat-Seeking Missile",
+    "name" : "Friendly Missile",
     "description": "No need to aim perfectly! It finds its way by following warmth. Just launch and watch it make new friends!",
     "damage" : 100,
     "weaponSpeed": 5,

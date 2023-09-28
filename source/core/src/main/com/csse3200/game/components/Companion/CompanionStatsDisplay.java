@@ -82,7 +82,9 @@ public class CompanionStatsDisplay extends UIComponent {
             public void changed(ChangeEvent event, Actor actor) {
                 KeyboardPlayerInputComponent keys =
                         ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
-                CompanionInventoryDisplay display = CompanionInventoryDisplay.createUpgradeDisplay();
+                /*keys.clearWalking();*/
+                CompanionInventoryComponent inventoryComponent = new CompanionInventoryComponent();
+                CompanionInventoryDisplay display = CompanionInventoryDisplay.createUpgradeDisplay(inventoryComponent);
                 ServiceLocator.getRenderService().getStage().addActor(display);
             }
         });
@@ -203,7 +205,7 @@ public class CompanionStatsDisplay extends UIComponent {
      *
      * @param health The current health value.
      */
-    private void addAlert(int health) {
+    public void addAlert(int health) {
         //FIND WHERE THE COMPANION IS
         PhysicsComponent companionPhysics = entity.getComponent(PhysicsComponent.class);
         Vector2 compPos = companionPhysics.getBody().getPosition();

@@ -2,6 +2,8 @@ package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.csse3200.game.components.ParticleComponent;
+import com.csse3200.game.components.resources.FissureComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
@@ -43,17 +45,26 @@ public class ExtractorTool extends PlacementTool {
         if (existingStructure == null) {
             return false;
         }
-        ProductionComponent productionComponent = existingStructure.getComponent(ProductionComponent.class);
+        FissureComponent productionComponent = existingStructure.getComponent(FissureComponent.class);
+        ParticleComponent particleComponent = existingStructure.getComponent(ParticleComponent.class);
         if (productionComponent == null) {
             return false;
         }
 
         Resource resource = productionComponent.getProduces();
+        this.produces = resource;
+        particleComponent.startEffect("open");
 
         Object max = ServiceLocator.getGameStateObserverService().getStateData("extractorsMax/" + resource);
         Object count = ServiceLocator.getGameStateObserverService().getStateData("extractorsTotal/" + resource);
+        if (max == null) {
+            max = 0;
+        }
+        if (count == null) {
+            count = 0;
+        }
 
-        return ((max != null) ? (int) max : 0) > ((count != null) ? (int) count : 0);
+        return (int) max > (int) count;
     }
 }
 

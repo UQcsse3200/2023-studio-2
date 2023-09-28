@@ -53,22 +53,22 @@
     {
       "resource": "Solstite",
       "position": {
-        "x": 33,
-        "y": 35
+        "x": 34,
+        "y": 34
       }
     },
     {
       "resource": "Nebulite",
       "position": {
-        "x": 39,
-        "y": 35
+        "x": 40,
+        "y": 34
       }
     },
     {
       "resource": "Durasteel",
       "position": {
-        "x": 42,
-        "y": 35
+        "x": 46,
+        "y": 34
       }
     }
   ],

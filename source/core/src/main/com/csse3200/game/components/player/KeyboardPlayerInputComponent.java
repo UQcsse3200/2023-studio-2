@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
@@ -375,6 +376,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private void triggerInventoryEvent(String slot) {
     InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
     invComp.setEquipped(slot);
+    player.getEvents().trigger("updateHotbar");
     entity.getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
     entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(), invComp.getCurrentMaxAmmo());
   }

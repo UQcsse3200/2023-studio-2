@@ -15,6 +15,7 @@ import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
+import com.csse3200.game.components.player.InventoryDisplayComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
@@ -78,7 +79,6 @@ public class MapGameArea extends GameArea{
             return;
         }
         loadAssets();
-        displayUI();
 
         registerEntityPlacementService();
         registerStructurePlacementService();
@@ -98,6 +98,7 @@ public class MapGameArea extends GameArea{
         //spawnFire();
         //spawnBotanist();
 
+        displayUI();
         playMusic();
     }
 
@@ -134,7 +135,8 @@ public class MapGameArea extends GameArea{
         //Ensure non-null
         mapConfig.mapName = mapConfig.mapName == null ? "" : mapConfig.mapName;
         //ui.addComponent(new GameAreaDisplay(mapConfig.mapName));
-        ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage));
+        ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage))
+                .addComponent(new InventoryDisplayComponent());
         spawnEntity(ui);
     }
 

@@ -77,7 +77,6 @@ public class WeaponComponent extends Component {
      */
     private void makeNewHolding(WeaponType weapon) {
         if (this.holdingWeapon != null) {this.holdingWeapon.dispose();}
-
         this.holdingWeapon = PlayerWeaponFactory.createPlayerWeapon(weapon, entity);
         Vector2 placePos = positionInDirection(10, 0.3f, this.holdingWeapon);
 

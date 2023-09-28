@@ -91,7 +91,6 @@ public class UpgradeDisplay extends Window {
 
         setupWindowDimensions();
 
-
         Table titleTable = createTitleTable();
         Table materialsTable = createMaterialsLabel();
         Table exitTable = createExitButton();
@@ -584,6 +583,7 @@ public class UpgradeDisplay extends Window {
                 if (stats.isWeaponUnlocked(node.getName())) {
                     InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
                     playerInventory.placeInSlot(node.getWeaponType());
+                    player.getEvents().trigger("updateHotbar");
                 }
             }
         };

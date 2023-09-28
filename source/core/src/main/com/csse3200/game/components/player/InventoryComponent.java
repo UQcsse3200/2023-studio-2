@@ -2,15 +2,13 @@ package com.csse3200.game.components.player;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.entities.configs.SpawnerConfig;
-import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
-import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 
 class InventoryItem {
@@ -74,7 +72,7 @@ class InventoryItem {
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
   private String equipped = "melee";
-  private final HashMap<String, InventoryItem> equippedWMap = new HashMap<String, InventoryItem>();
+  private final LinkedHashMap<String, InventoryItem> equippedWMap = new LinkedHashMap<>(); // preserves insert order
   private final WeaponConfigs config;
 
   @Override
@@ -92,6 +90,10 @@ public class InventoryComponent extends Component {
   public InventoryComponent(WeaponConfigs config) {
     create();
     this.config = config;
+  }
+
+  public WeaponConfigs getConfigs() {
+    return config;
   }
 
   /**
@@ -125,6 +127,7 @@ public class InventoryComponent extends Component {
     return equippedWMap.values().stream().map(InventoryItem::getItem).collect(Collectors.toCollection(ArrayList::new));
   }
 
+  // not needed anymore?
   public void placeInSlot(WeaponType weaponType) {
     replaceSlotWithWeapon(config.GetWeaponConfig(weaponType).slotType, weaponType);
   }
@@ -135,10 +138,6 @@ public class InventoryComponent extends Component {
    */
   public void changeEquipped(WeaponType type) {
     this.equipped = config.GetWeaponConfig(type).slotType;
-  }
-
-  public String getSlotType(WeaponType weaponType) {
-    return config.GetWeaponConfig(weaponType).slotType;
   }
 
   /**

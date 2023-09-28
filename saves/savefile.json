@@ -1,0 +1,28 @@
+{
+entities: {
+	PlayerConfig: [
+		{
+			class: com.csse3200.game.entities.configs.PlayerConfig
+			spritePath: images/player/player.atlas
+			position: {
+				x: 21
+				y: 25
+			}
+			health: 100
+			baseAttack: 10
+			lives: 3
+			sounds: {
+				soundsMap: {
+					low_health: sounds/playerLow_health.mp3
+					dodge: sounds/dodgingAlertSweep.mp3
+					boostPowerup: sounds/playerBoostRecharge.mp3
+					upgradeTreeTap: sounds/upgradeTreeTap.mp3
+					healthPowerup: sounds/PlayerHealthRecharge.mp3
+					footstep: sounds/footStepsInTheForestGround.mp3
+					upgradeWeapon: sounds/upgradeWeapon.mp3
+				}
+			}
+		}
+	]
+}
+}

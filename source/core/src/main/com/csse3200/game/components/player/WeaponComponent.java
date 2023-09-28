@@ -26,9 +26,15 @@ public class WeaponComponent extends Component {
     public void create() {
         entity.getEvents().addListener("weaponAttack", this::playerAttacking);
         entity.getEvents().addListener("changeWeapon", this::makeNewHolding);
+        entity.getEvents().addListener("updateAmmo", this::tempPrintAmmo);
         this.holdingWeapon = null;
         makeNewHolding(WeaponType.MELEE_KATANA);
     }
+
+    private void tempPrintAmmo(int ammo, int maxAmmo) {
+        System.out.println("Currently: " + ammo + " / " + maxAmmo);
+    }
+
 
     /**
      * Core function to respond to weapon attacks takes a position and a rotation and spawn an entity
@@ -61,7 +67,8 @@ public class WeaponComponent extends Component {
         Entity newAttack = AttackFactory.createAttack(weaponType, initialRotation, entity);
         var newPos = positionInDirection(initialRotation + spawnAngleOffset, distance, newAttack);
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
-        entity.getEvents().trigger("updateAmmo", entity.getComponent(InventoryComponent.class).getCurrentAmmo());
+        InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+        entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(), invComp.getCurrentMaxAmmo());
     }
 
     /**

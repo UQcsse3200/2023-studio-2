@@ -375,7 +375,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     entity.getEvents().trigger("inventory", i);
     InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
     entity.getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
-    entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo());
+    entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(), invComp.getCurrentMaxAmmo());
   }
 
   /**

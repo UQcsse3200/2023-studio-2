@@ -15,29 +15,39 @@ import java.util.stream.Collectors;
 class InventoryItem {
   WeaponType weaponType;
   int ammoCount;
+  int maxAmmo;
   private int attackCooldown;
 
-  public InventoryItem(WeaponType weaponType, int ammo) {
+  public InventoryItem(WeaponType weaponType, int ammo, int maxAmmo) {
     this.weaponType = weaponType;
     this.ammoCount = ammo;
+    this.maxAmmo = maxAmmo;
     attackCooldown = 0;
   }
   public InventoryItem(WeaponType weaponType) {
     this.weaponType = weaponType;
-    ammoCount = 10;
+    ammoCount = 100;
+    maxAmmo = 100;
   }
 
   public WeaponType getItem() {
     return this.weaponType;
   }
+
   public int getAmmo() {
     return this.ammoCount;
   }
+
   public void changeItem(WeaponType weaponType) {
     this.weaponType = weaponType;
   }
+
   public void changeAmmo(int change) {
-    ammoCount += change;
+    ammoCount = Math.min(maxAmmo, Math.max(0, ammoCount + change));
+  }
+
+  public int getMaxAmmo() {
+    return this.maxAmmo;
   }
 
   public void setAttackCooldown(int cooldown) {
@@ -47,6 +57,7 @@ class InventoryItem {
   public int getAttackCooldown() {
     return this.attackCooldown;
   }
+
   public void decCoolDown() {
     if (attackCooldown == 0)
       return;
@@ -68,8 +79,8 @@ public class InventoryComponent extends Component {
   @Override
   public void create() {
     equippedWMap.put(1, new InventoryItem(WeaponType.MELEE_KATANA));
-    equippedWMap.put(2, new InventoryItem(WeaponType.RANGED_BOOMERANG));
-    equippedWMap.put(3, new InventoryItem(WeaponType.WOODHAMMER));
+    equippedWMap.put(2, new InventoryItem(WeaponType.RANGED_BOOMERANG, 30, 30));
+    equippedWMap.put(3, new InventoryItem(WeaponType.WOODHAMMER, 1, 1));
   }
 
   @Override
@@ -108,8 +119,7 @@ public class InventoryComponent extends Component {
     if (slot > 3 || slot < 1) {
       throw new IllegalArgumentException("Slot must be in range 1-3");
     }
-    var item = equippedWMap.remove(slot);
-    equippedWMap.put(slot, new InventoryItem(weaponType, item.getAmmo()));
+    equippedWMap.get(slot).changeItem(weaponType);
   }
 
   /** Returns the current equipped weapons represented in a hash map **/
@@ -159,6 +169,11 @@ public class InventoryComponent extends Component {
   public int getCurrentAmmo() {
     return this.equippedWMap.get(getEquipped()).getAmmo();
   }
+
+  public int getCurrentMaxAmmo() {
+    return this.equippedWMap.get(getEquipped()).getMaxAmmo();
+  }
+
   public void changeEquippedAmmo(int ammoChange) {
     this.equippedWMap.get(getEquipped()).changeAmmo(ammoChange);
   }
@@ -166,6 +181,7 @@ public class InventoryComponent extends Component {
   public int getEquippedCooldown() {
     return this.equippedWMap.get(getEquipped()).getAttackCooldown();
   }
+
   public void setEquippedCooldown(int coolDown) {
     this.equippedWMap.get(getEquipped()).setAttackCooldown(coolDown);
   }

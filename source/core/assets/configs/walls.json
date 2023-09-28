@@ -13,7 +13,7 @@
     },
   "sound": {
     "soundsMap": {
-      "wallHeal": "sounds/Healing/healingWalls.mp3"
+      "wallHeal": "sounds/Healing/HealingWalls.mp3"
     }
   }
 }

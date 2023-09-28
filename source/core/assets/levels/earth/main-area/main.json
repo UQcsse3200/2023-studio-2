@@ -88,7 +88,7 @@
     "sounds/upgradeTreeTap.mp3",
     "sounds/upgradeWeapon.mp3",
     "sounds/enemyDeath.mp3",
-    "sounds/Healing/healingWalls.mp3"
+    "sounds/Healing/HealingWalls.mp3"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect"

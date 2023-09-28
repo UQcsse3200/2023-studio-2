@@ -30,7 +30,7 @@ public class BossTask extends DefaultTask implements PriorityTask {
   private SpecialAttackTask specialAttackTask;
   private boolean unleashed;
   private boolean attackReady;
-
+  private char direction;
   /**
    * @param target The entity to chase.
    * @param priority Task priority when chasing (0 when not chasing).
@@ -65,7 +65,7 @@ public class BossTask extends DefaultTask implements PriorityTask {
 
     currentTask = movementTask;
     movementTask.start();
-    char direction = getDirection(target.getPosition());
+    direction = getDirection(target.getPosition());
     if(direction == '<'){
       this.owner.getEntity().getEvents().trigger("chaseLeft");
     }
@@ -99,11 +99,18 @@ public class BossTask extends DefaultTask implements PriorityTask {
       unleashed = true;
       System.out.println("Unleash!");
       startSpecialAttack();
-    } else if (currentTask.getStatus() != Status.ACTIVE) {
-      // start moving
-      System.out.println("Started Moving");
-      startMovement();
     }
+    char direction2 = getDirection(target.getPosition());
+    movementTask.setTarget(target.getPosition());
+    movementTask.update();
+
+    if (movementTask.getStatus() != Status.ACTIVE) {
+      movementTask.start();
+    }
+    if (direction != direction2){
+      start();
+    }
+
     currentTask.update();
   }
 

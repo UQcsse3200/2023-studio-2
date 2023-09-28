@@ -10,10 +10,7 @@ import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.structures.TurretTargetableComponent;
-import com.csse3200.game.components.tasks.AimTask;
-import com.csse3200.game.components.tasks.ChaseTask;
-import com.csse3200.game.components.tasks.RunTask;
-import com.csse3200.game.components.tasks.WanderTask;
+import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
@@ -68,7 +65,8 @@ public class EnemyFactory {
     System.out.println(config.type);
     AnimationRenderComponent animator;
     // Choose behaviour for enemy
-    AITaskComponent aiComponent = behaviourSelector(config.type);
+    AITaskComponent aiComponent = new AITaskComponent();
+    aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
     int health = config.health;
     int baseAttack = config.baseAttack;
@@ -149,25 +147,6 @@ public class EnemyFactory {
     return enemy;
   }
 
-  static AITaskComponent behaviourSelector(EnemyType type) {
-    AITaskComponent aiComponent = new AITaskComponent();
-    // Select behaviour
-    if (type == EnemyType.Melee) {
-      // Todo: add task here
-    } else if (type == EnemyType.Ranged) {
-      // Todo: add task here
-    } else if (type == EnemyType.BossMelee) {
-      // Todo: add task here
-    } else if (type == EnemyType.BossRanged) {
-      // Todo: add task here
-    }
-    else {
-      // Default task
-      aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
-    }
-    return aiComponent;
-  }
-
   /**
    * Determines the appropriate scale for an enemy based on its type.
    * @param config The type of the enemy for which the scale is to be determined.
@@ -232,7 +211,7 @@ public class EnemyFactory {
     if (type == EnemyType.Melee && !isPlayer && !matchingBehaviour) priority = 5; //Special case for player targeting melee
 
     //Special case for shooting player
-    if (type == EnemyType.Ranged || type == EnemyType.BossRanged) {
+    if (type == EnemyType.Ranged) {
       float aimDelay = 2f;
       float range = 3f;
       float shootDistance = 3f;
@@ -243,8 +222,25 @@ public class EnemyFactory {
       aiTaskComponent.addTask(new RunTask(target, 11, 2f));
       aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
     } else {
-      aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+      addBehaviour(type, aiTaskComponent, target, priority, viewDistance, maxChaseDistance);
     }
+  }
+
+  static AITaskComponent addBehaviour(EnemyType type, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance) {
+    // Select behaviour
+    if (type == EnemyType.Melee) {
+      // Default
+      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+    } else if (type == EnemyType.BossMelee) {
+      // Sprint 2 Boss
+      aiComponent.addTask(new BossTask(target, priority, viewDistance, maxChaseDistance));
+    } else if (type == EnemyType.BossRanged) {
+      // Todo: add task here
+    } else {
+      // Default task
+      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+    }
+    return aiComponent;
   }
 
   /**

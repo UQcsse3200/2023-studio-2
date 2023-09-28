@@ -40,7 +40,6 @@ public class StructureToolPicker extends UIComponent {
     private final ToolsConfig structureTools =
             FileLoader.readClass(ToolsConfig.class, "configs/structure_tools.json");
     private Tool selectedTool;
-    private int level = 0;
 
     /**
      * Creates a new structure tool picker
@@ -185,24 +184,6 @@ public class StructureToolPicker extends UIComponent {
      */
     public Tool getSelectedTool() {
         return selectedTool;
-    }
-
-    /**
-     * Sets the level of the ToolPicker and updates the options displayed to
-     * the user to match the new level of the picker.
-     * @param level - the maximum level of tools to display.
-     */
-    public void setLevel(int level) {
-        this.level = level;
-        addActors();
-    }
-
-    /**
-     * Gets the current level of the ToolPicker.
-     * @return the maximum level of tools to display.
-     */
-    public int getLevel() {
-        return level;
     }
 
     @Override

@@ -1,32 +1,32 @@
 {
   "toolConfigs": {
     "com.csse3200.game.components.structures.tools.BasicWallTool": {
-      "level": 0,
       "name": "Dirt Wall",
+      "description": "A sturdy wall made of dirt for basic protection!",
       "cost": {
         "Durasteel": 25
       },
       "texture": "images/structure-icons/wall.png"
     },
     "com.csse3200.game.components.structures.tools.IntermediateWallTool": {
-      "level": 1,
       "name": "Stone Wall",
+      "description": "Upgrade to stone for enhanced durability against attacks!",
       "cost": {
         "Durasteel": 50
       },
       "texture": "images/structure-icons/stone_wall.png"
     },
     "com.csse3200.game.components.structures.tools.GateTool": {
-      "level": 0,
       "name": "Gate",
+      "description": "Convenient gate to allow friendly entry while keeping foes out!",
       "cost": {
         "Durasteel": 25
       },
       "texture": "images/structure-icons/gate.png"
     },
     "com.csse3200.game.components.structures.tools.TurretTool": {
-      "level": 1,
       "name": "Basic Turret",
+      "description": "Automated turret to guard your territory. It's always alert!",
       "cost": {
         "Durasteel": 75,
         "Solstite": 50
@@ -34,15 +34,14 @@
       "texture": "images/structure-icons/turret.png"
     },
     "com.csse3200.game.components.structures.tools.Healing": {
-      "level": 0,
       "name": "Heal",
-      "cost": {
-      },
+      "description": "Bandaid tool",
+      "cost": {},
       "texture": "images/structures/heal_icon.png"
     },
     "com.csse3200.game.components.structures.tools.ExtractorTool": {
-      "level": 0,
       "name": "Extractor",
+      "description": "Mining - its ethical.",
       "cost": {
         "Solstite": 0
       },

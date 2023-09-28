@@ -3,6 +3,7 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.csse3200.game.areas.TutorialScreen;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.*;
 import org.slf4j.Logger;
@@ -102,7 +103,9 @@ public class GdxGame extends Game {
         return new SettingsScreen(this);
       case SPACE_MAP:
         return new SpaceMapScreen(this);
-      case EXTRACTOR_GAME:
+      case TUTORIAL_SCREEN:
+        return new TutorialScreen(this);
+        case EXTRACTOR_GAME:
         return new ExtractorMiniGameScreen(this);
       case PLAYER_DEATH_0:
         return new PlayerDeathScreen(this, 0);

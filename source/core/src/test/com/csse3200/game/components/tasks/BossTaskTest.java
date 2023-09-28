@@ -4,6 +4,7 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsService;
@@ -41,7 +42,7 @@ class BossTaskTest {
   void shouldTriggerEvent() {
     Entity target = new Entity();
     target.create();
-    BossTask bossTask = new BossTask(target, 7, 100f, 1000f);
+    BossTask bossTask = new BossTask(EnemyType.BossMelee, target, 7, 100f, 1000f);
 
     PhysicsMovementComponent movement = new PhysicsMovementComponent();
     AITaskComponent aiTaskComponent = new AITaskComponent().addTask(bossTask);
@@ -63,7 +64,7 @@ class BossTaskTest {
   void shouldSpecialAttack() {
     Entity target = new Entity();
     target.create();
-    BossTask bossTask = new BossTask(target, 7, 100f, 1000f);
+    BossTask bossTask = new BossTask(EnemyType.BossMelee, target, 7, 100f, 1000f);
     AITaskComponent aiTaskComponent = new AITaskComponent().addTask(bossTask);
     Entity entity = new Entity().addComponent(aiTaskComponent)
             .addComponent(new PhysicsMovementComponent())

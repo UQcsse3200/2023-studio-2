@@ -122,17 +122,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStructureAt(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">getStructureAt</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;position)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canPlaceStructureAt(com.csse3200.game.entities.PlaceableEntity,com.badlogic.gdx.math.GridPoint2)" class="member-name-link">canPlaceStructureAt</a><wbr>(<a href="../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a>&nbsp;entity,
+ com.badlogic.gdx.math.GridPoint2&nbsp;tilePos)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStructurePosition(com.csse3200.game.entities.Entity)" class="member-name-link">getStructurePosition</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;searchEntity)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStructureAt(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">getStructureAt</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;position)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStructurePosition(com.csse3200.game.entities.PlaceableEntity)" class="member-name-link">getStructurePosition</a><wbr>(<a href="../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a>&nbsp;searchEntity)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the position of the given entity.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#placeStructure(com.csse3200.game.entities.Entity)" class="member-name-link">placeStructure</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#placeStructureAt(com.csse3200.game.entities.PlaceableEntity,com.badlogic.gdx.math.GridPoint2,boolean,boolean)" class="member-name-link">placeStructureAt</a><wbr>(<a href="../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a>&nbsp;entity,
  com.badlogic.gdx.math.GridPoint2&nbsp;tilePos,
@@ -143,15 +144,19 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeStructureAt(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">removeStructureAt</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;tilePos)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#replaceStructureAt(com.csse3200.game.entities.PlaceableEntity,com.badlogic.gdx.math.GridPoint2,boolean,boolean)" class="member-name-link">replaceStructureAt</a><wbr>(<a href="../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a>&nbsp;entity,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeStructureAt(com.badlogic.gdx.math.GridPoint2,boolean)" class="member-name-link">removeStructureAt</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;tilePos,
+ boolean&nbsp;force)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#replaceStructureAt(com.csse3200.game.entities.PlaceableEntity,com.badlogic.gdx.math.GridPoint2,boolean,boolean)" class="member-name-link">replaceStructureAt</a><wbr>(<a href="../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a>&nbsp;entity,
  com.badlogic.gdx.math.GridPoint2&nbsp;tilePos,
  boolean&nbsp;centerX,
  boolean&nbsp;centerY)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#spawnEntityAtVector(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.Vector2)" class="member-name-link">spawnEntityAtVector</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity,
- com.badlogic.gdx.math.Vector2&nbsp;worldPos)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#spawnEntityAtVector(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.Vector2)" class="member-name-link">spawnEntityAtVector</a><wbr>(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity,
+ com.badlogic.gdx.math.Vector2&nbsp;worldPos)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -184,15 +189,9 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="placeStructure(com.csse3200.game.entities.Entity)">
-<h3>placeStructure</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">placeStructure</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;entity)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="getStructurePosition(com.csse3200.game.entities.Entity)">
+<section class="detail" id="getStructurePosition(com.csse3200.game.entities.PlaceableEntity)">
 <h3>getStructurePosition</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.GridPoint2</span>&nbsp;<span class="element-name">getStructurePosition</span><wbr><span class="parameters">(<a href="../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;searchEntity)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.GridPoint2</span>&nbsp;<span class="element-name">getStructurePosition</span><wbr><span class="parameters">(<a href="../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a>&nbsp;searchEntity)</span></div>
 <div class="block">Gets the position of the given entity.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -209,6 +208,13 @@ loadScripts(document, 'script');</script>
  com.badlogic.gdx.math.GridPoint2&nbsp;tilePos,
  boolean&nbsp;centerX,
  boolean&nbsp;centerY)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="canPlaceStructureAt(com.csse3200.game.entities.PlaceableEntity,com.badlogic.gdx.math.GridPoint2)">
+<h3>canPlaceStructureAt</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">canPlaceStructureAt</span><wbr><span class="parameters">(<a href="../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a>&nbsp;entity,
+ com.badlogic.gdx.math.GridPoint2&nbsp;tilePos)</span></div>
 </section>
 </li>
 <li>
@@ -231,6 +237,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="removeStructureAt(com.badlogic.gdx.math.GridPoint2)">
 <h3>removeStructureAt</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeStructureAt</span><wbr><span class="parameters">(com.badlogic.gdx.math.GridPoint2&nbsp;tilePos)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="removeStructureAt(com.badlogic.gdx.math.GridPoint2,boolean)">
+<h3>removeStructureAt</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeStructureAt</span><wbr><span class="parameters">(com.badlogic.gdx.math.GridPoint2&nbsp;tilePos,
+ boolean&nbsp;force)</span></div>
 </section>
 </li>
 <li>

@@ -73,14 +73,16 @@ loadScripts(document, 'script');</script>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="Tool.html" title="class in com.csse3200.game.components.structures.tools">com.csse3200.game.components.structures.tools.Tool</a>
 <div class="inheritance"><a href="PlacementTool.html" title="class in com.csse3200.game.components.structures.tools">com.csse3200.game.components.structures.tools.PlacementTool</a>
+<div class="inheritance"><a href="ReplacementTool.html" title="class in com.csse3200.game.components.structures.tools">com.csse3200.game.components.structures.tools.ReplacementTool</a>
 <div class="inheritance">com.csse3200.game.components.structures.tools.ExtractorTool</div>
+</div>
 </div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ExtractorTool</span>
-<span class="extends-implements">extends <a href="PlacementTool.html" title="class in com.csse3200.game.components.structures.tools">PlacementTool</a></span></div>
+<span class="extends-implements">extends <a href="ReplacementTool.html" title="class in com.csse3200.game.components.structures.tools">ReplacementTool</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -123,15 +125,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a new extractor producing the resource of the location it is being placed, and increments the total amount of
  tracked extractors of this type</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../resources/Resource.html" title="enum class in com.csse3200.game.components.resources">Resource</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getResource(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">getResource</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;position)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPositionValid(com.badlogic.gdx.math.GridPoint2,com.csse3200.game.entities.PlaceableEntity)" class="member-name-link">isPositionValid</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;position,
+ <a href="../../../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a>&nbsp;structure)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the resource at the location or null, that the extractor will be built to produce
- TODO right now this just returns durasteel for testing</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPositionValid(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">isPositionValid</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;position)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Checks if the position of the extractor is valid:
  - There is no collision with other structures (TODO or the map)
  - The resource type of the extractor doesnt exceed the cap</div>
@@ -140,8 +137,8 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-com.csse3200.game.components.structures.tools.PlacementTool">Methods inherited from class&nbsp;com.csse3200.game.components.structures.tools.<a href="PlacementTool.html" title="class in com.csse3200.game.components.structures.tools">PlacementTool</a></h3>
-<code><a href="PlacementTool.html#hasEnoughResources()">hasEnoughResources</a>, <a href="PlacementTool.html#interact(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.GridPoint2)">interact</a></code></div>
+<h3 id="methods-inherited-from-class-com.csse3200.game.components.structures.tools.ReplacementTool">Methods inherited from class&nbsp;com.csse3200.game.components.structures.tools.<a href="ReplacementTool.html" title="class in com.csse3200.game.components.structures.tools">ReplacementTool</a></h3>
+<code><a href="ReplacementTool.html#hasEnoughResources()">hasEnoughResources</a>, <a href="ReplacementTool.html#interact(com.csse3200.game.entities.Entity,com.badlogic.gdx.math.GridPoint2)">interact</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.components.structures.tools.Tool">Methods inherited from class&nbsp;com.csse3200.game.components.structures.tools.<a href="Tool.html" title="class in com.csse3200.game.components.structures.tools">Tool</a></h3>
 <code><a href="Tool.html#getCost()">getCost</a></code></div>
@@ -174,20 +171,6 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="getResource(com.badlogic.gdx.math.GridPoint2)">
-<h3>getResource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../resources/Resource.html" title="enum class in com.csse3200.game.components.resources">Resource</a></span>&nbsp;<span class="element-name">getResource</span><wbr><span class="parameters">(com.badlogic.gdx.math.GridPoint2&nbsp;position)</span></div>
-<div class="block">Returns the resource at the location or null, that the extractor will be built to produce
- TODO right now this just returns durasteel for testing</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>position</code> - the position to check for a floor resource</dd>
-<dt>Returns:</dt>
-<dd>resource at the location or null</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="createStructure(com.csse3200.game.entities.Entity)">
 <h3>createStructure</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a></span>&nbsp;<span class="element-name">createStructure</span><wbr><span class="parameters">(<a href="../../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</span></div>
@@ -195,7 +178,7 @@ loadScripts(document, 'script');</script>
  tracked extractors of this type</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="PlacementTool.html#createStructure(com.csse3200.game.entities.Entity)">createStructure</a></code>&nbsp;in class&nbsp;<code><a href="PlacementTool.html" title="class in com.csse3200.game.components.structures.tools">PlacementTool</a></code></dd>
+<dd><code><a href="ReplacementTool.html#createStructure(com.csse3200.game.entities.Entity)">createStructure</a></code>&nbsp;in class&nbsp;<code><a href="ReplacementTool.html" title="class in com.csse3200.game.components.structures.tools">ReplacementTool</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>player</code> - The player creating the extractor</dd>
 <dt>Returns:</dt>
@@ -204,15 +187,16 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="isPositionValid(com.badlogic.gdx.math.GridPoint2)">
+<section class="detail" id="isPositionValid(com.badlogic.gdx.math.GridPoint2,com.csse3200.game.entities.PlaceableEntity)">
 <h3>isPositionValid</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isPositionValid</span><wbr><span class="parameters">(com.badlogic.gdx.math.GridPoint2&nbsp;position)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isPositionValid</span><wbr><span class="parameters">(com.badlogic.gdx.math.GridPoint2&nbsp;position,
+ <a href="../../../entities/PlaceableEntity.html" title="class in com.csse3200.game.entities">PlaceableEntity</a>&nbsp;structure)</span></div>
 <div class="block">Checks if the position of the extractor is valid:
  - There is no collision with other structures (TODO or the map)
  - The resource type of the extractor doesnt exceed the cap</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="PlacementTool.html#isPositionValid(com.badlogic.gdx.math.GridPoint2)">isPositionValid</a></code>&nbsp;in class&nbsp;<code><a href="PlacementTool.html" title="class in com.csse3200.game.components.structures.tools">PlacementTool</a></code></dd>
+<dd><code><a href="ReplacementTool.html#isPositionValid(com.badlogic.gdx.math.GridPoint2,com.csse3200.game.entities.PlaceableEntity)">isPositionValid</a></code>&nbsp;in class&nbsp;<code><a href="ReplacementTool.html" title="class in com.csse3200.game.components.structures.tools">ReplacementTool</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>position</code> - The position of the extractor</dd>
 <dt>Returns:</dt>

@@ -96,7 +96,6 @@ public class MapGameArea extends GameArea{
         player = spawnPlayer();
         companion = spawnCompanion();
         spawnLaboratory();
-        spawnBotanist();
         companion.getEvents().addListener("SpawnPowerup",this::spawnPowerups);
         spawnPortal(player);
         spawnTreeTop();

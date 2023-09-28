@@ -8,6 +8,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -101,12 +102,19 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
      * @param keycode The keycode of the pressed key.
      * @return True if the input was processed, false otherwise.
      */
+    private long lastNKeyPressTime = 0;
+    private static final long COOLDOWN_TIME = 7000; // 7 seconds in milliseconds
+
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Keys.N -> {
                 ServiceLocator.getEntityService().getCompanion().getEvents().trigger("attack");
+                long currentTime = TimeUtils.millis();
+                if (currentTime - lastNKeyPressTime >= COOLDOWN_TIME) {
                 ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class).useNextPowerup();
+                    lastNKeyPressTime = currentTime;
+                }else {logger.debug("powerup cooldown");}
                 return true;
             }
 /*

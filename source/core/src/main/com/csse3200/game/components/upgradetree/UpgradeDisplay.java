@@ -42,7 +42,7 @@ import java.util.List;
  * The class extends the Window class from libGDX to represent a pop-up or overlay menu in the game.
  */
 public class UpgradeDisplay extends Window {
-    private static final float WINDOW_WIDTH_SCALE = 0.65f;
+    private static final float WINDOW_WIDTH_SCALE = 0.70f;
     private static final float WINDOW_HEIGHT_SCALE = 0.65f;
     private static final float SIZE = 64f;
     private static final String MATERIALS_FORMAT = "%d";

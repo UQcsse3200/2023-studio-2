@@ -54,7 +54,7 @@ public class ExtractorTool extends PlacementTool {
         Object count = ServiceLocator.getGameStateObserverService().getStateData("extractorsTotal/" + this.getResource(position));
         boolean underCapacity =  ((max != null) ? (int) max : 0) > ((count != null) ? (int) count : 0);
 
-        return existingStructure != null && underCapacity;
+        return existingStructure == null && underCapacity;
     }
 }
 

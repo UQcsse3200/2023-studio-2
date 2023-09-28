@@ -1,5 +1,7 @@
 package com.csse3200.game.areas.mapConfig;
 
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
@@ -61,11 +63,10 @@ public class MapConfigLoader {
      */
     public static AreaEntityConfig loadEntities(String loadPath) throws InvalidConfigException {
         AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
-        logger.info(getFiles(loadPath).toString());
-        for (String file : getFiles(loadPath)) {
-            String fullPath = joinPath(loadPath, file);
+        var files = Arrays.stream(Gdx.files.internal(loadPath).list()).map(x -> x.path()).toList();
+        for (String file : files) {
             EntitiesConfigFile entitiesConfigFile =
-                    FileLoader.readClass(EntitiesConfigFile.class, fullPath, FileLoader.Location.INTERNAL);
+                    FileLoader.readClass(EntitiesConfigFile.class, file, FileLoader.Location.INTERNAL);
             if (entitiesConfigFile == null) continue;
             areaEntityConfig.addEntry(entitiesConfigFile.getMapEntry());
         }
@@ -97,14 +98,5 @@ public class MapConfigLoader {
             stringJoiner.add(part);
         }
         return stringJoiner.toString();
-    }
-
-    private static List<String> getFiles(String path) {
-        File[] files = new File(path).listFiles();
-        if (files == null || files.length == 0) return new ArrayList<>();
-        return Arrays.stream(files)
-                .filter(file -> !file.isDirectory())
-                .map(File::getName)
-                .collect(Collectors.toList());
     }
 }

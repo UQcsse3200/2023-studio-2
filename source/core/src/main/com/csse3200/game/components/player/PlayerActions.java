@@ -37,7 +37,6 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("place", this::place);
         entity.getEvents().addListener("remove", this::remove);
         entity.getEvents().addListener("dodged", this::dodged);
-        entity.getEvents().addListener("repair", this::repairWall);
         entity.getEvents().addListener("change_structure", this::changeStructure);
         GameStateInteraction gameStateInteraction = new GameStateInteraction();
     }
@@ -125,7 +124,7 @@ public class PlayerActions extends Component {
     void place(int screenX, int screenY) {
         // gets the gridPosition of the wall from the screen click
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-        GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
+        GridPoint2 gridPosition = new GridPoint2((int)location.x, (int)location.y);
 
         var structurePicker = getEntity().getComponent(StructureToolPicker.class);
         structurePicker.interact(gridPosition);
@@ -139,31 +138,11 @@ public class PlayerActions extends Component {
      */
     void remove(int screenX, int screenY) {
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-        GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
+        GridPoint2 gridPosition = new GridPoint2((int)location.x, (int)location.y);
         Entity structure = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
 
         if (structure != null) {
             ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
-        }
-    }
-
-    /**
-     * Converts screen coords to grid coords and then repairs the wall at the grid
-     * position.
-     *
-     * @param screenX - the x coord of the screen
-     * @param screenY - the y coord of teh screen
-     */
-    void repairWall(int screenX, int screenY) {
-        var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-        GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
-        Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
-
-        if (existingWall != null) {
-            if (existingWall.getComponent(CombatStatsComponent.class).getHealth() < existingWall.getComponent(CombatStatsComponent.class).getMaxHealth()) {
-
-                entity.getComponent(HealthBarComponent.class).updateHealth(entity.getComponent(CombatStatsComponent.class).getMaxHealth());
-            }
         }
     }
 

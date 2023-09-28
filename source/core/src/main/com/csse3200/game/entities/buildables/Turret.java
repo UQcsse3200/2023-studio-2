@@ -51,7 +51,7 @@ public class Turret extends PlaceableEntity{
      * @param turretConfig Configuration file to match turret to
      */
     public Turret(TurretConfig turretConfig) {
-        super();
+        super(2, 2);
 
         maxAmmo = turretConfig.maxAmmo; // set max ammo
         currentAmmo = maxAmmo;

@@ -370,7 +370,7 @@ public class UpgradeDisplay extends Window {
         materialsLabel.setColor(Color.BLACK);
         materialsLabel.setFontScale(0.25f);
         Image nebuliteImage =
-                new Image(ServiceLocator.getResourceService().getAsset("images/nebulite.png", Texture.class));
+                new Image(ServiceLocator.getResourceService().getAsset("images/resources/nebulite.png", Texture.class));
 
         Table table = new Table();
         table.add(nebuliteImage).size(64,64);

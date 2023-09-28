@@ -15,9 +15,9 @@ public class PopupFactory {
 
         // Assigns texture based on the specific resource
         switch (resource) {
-            case Durasteel -> popup.addComponent(new TextureRenderComponent("images/durasteel.png"));
-            case Nebulite -> popup.addComponent(new TextureRenderComponent("images/nebulite.png"));
-            case Solstite -> popup.addComponent(new TextureRenderComponent("images/solstite.png"));
+            case Durasteel -> popup.addComponent(new TextureRenderComponent("images/resources/durasteel.png"));
+            case Nebulite -> popup.addComponent(new TextureRenderComponent("images/resources/nebulite.png"));
+            case Solstite -> popup.addComponent(new TextureRenderComponent("images/resources/solstite.png"));
             default -> throw new IllegalArgumentException("You must assign a valid resource!");
         }
 

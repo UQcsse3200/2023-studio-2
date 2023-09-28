@@ -4,7 +4,6 @@
       "name": "Dirt Wall",
       "description": "A sturdy wall made of dirt for basic protection!",
       "cost": {
-        "Durasteel": 25
       },
       "texture": "images/structure-icons/wall.png"
     },
@@ -43,9 +42,8 @@
       "name": "Extractor",
       "description": "Mining - its ethical.",
       "cost": {
-        "Solstite": 0
       },
-      "texture": "images/refinedExtractor2.png"
+      "texture": "images/structures/refinedExtractor.png"
     }
   }
 }

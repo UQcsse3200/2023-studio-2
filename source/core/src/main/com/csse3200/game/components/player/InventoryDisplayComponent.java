@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents the display component for the player's inventory in the game.
+ * This component provides UI elements to display weapons equipped by the player,
+ * allowing players to see and change their currently equipped weapon.
+ */
 public class InventoryDisplayComponent extends UIComponent {
 
     private Map<Button, WeaponType> buttonWeaponMap = new HashMap<>();
@@ -26,7 +31,7 @@ public class InventoryDisplayComponent extends UIComponent {
     /**
      * Initialises the inventory display.
      * Listens for weapon changes and updates currently equipped weapon display.
-     * **/
+     **/
     public InventoryDisplayComponent() {
         player = ServiceLocator.getEntityService().getPlayer();
         inventory = player.getComponent(InventoryComponent.class);
@@ -35,9 +40,8 @@ public class InventoryDisplayComponent extends UIComponent {
     }
 
     /**
-     * Creates actors and positions them on the stage using a table.
-     *
-     * @see Table for positioning options
+     * Creates and populates a table with buttons representing each weapon.
+     * Each button displays the weapon's image and name.
      */
     private void makeTable() {
 
@@ -72,6 +76,14 @@ public class InventoryDisplayComponent extends UIComponent {
         }
     }
 
+    /**
+     * Updates the color of the button associated with a weapon.
+     * Grey color indicates the weapon is not equipped.
+     * White color indicates the weapon is currently equipped.
+     *
+     * @param button The button to update.
+     * @param weapon The weapon associated with the button.
+     */
     private void updateButtonTableColor(Button button, WeaponType weapon) {
         if (!inventory.getEquippedType().equals(weapon)) {
             button.setColor(0.5f, 0.5f, 0.5f, 0.5f); // grey it out
@@ -80,6 +92,10 @@ public class InventoryDisplayComponent extends UIComponent {
         }
     }
 
+    /**
+     * Handles the event when a weapon is equipped.
+     * Recreates the weapon table and updates button colors.
+     */
     private void equipEvent() {
         table.clear();
         buttonWeaponMap.clear();
@@ -90,8 +106,8 @@ public class InventoryDisplayComponent extends UIComponent {
     }
 
     /**
-     * Creates actors and positions them on the stage using a table.
-     * @see Table for positioning options
+     * Adds the main table to the stage.
+     * Positions the table on the stage and sets its size.
      */
     private void addActors() {
         table.center().right();
@@ -101,7 +117,7 @@ public class InventoryDisplayComponent extends UIComponent {
     }
 
     /**
-     * Creates reusable ui styles and adds actors to the stage.
+     * Creates UI styles and adds actors to the stage.
      */
     @Override
     public void create() {
@@ -109,6 +125,12 @@ public class InventoryDisplayComponent extends UIComponent {
         addActors();
     }
 
+    /**
+     * Draws the component.
+     * This is handled by the stage.
+     *
+     * @param batch The sprite batch used for drawing.
+     */
     @Override
     protected void draw(SpriteBatch batch) {
         // Handled by stage

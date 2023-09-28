@@ -265,9 +265,9 @@ public class UpgradeDisplay extends Window {
         shapeRenderer.rect(node.getX() + blackOffsetX, node.getY() + blackOffsetY, blackRectSize, blackRectSize);
 
         // Draw a yellow highlight around all equipped items.
-        HashMap<Integer, WeaponType> equippedWeaponMap = player.getComponent(InventoryComponent.class)
-                .getEquippedWeaponMap();
-        if (equippedWeaponMap.containsValue(node.getWeaponType())) {
+        ArrayList<WeaponType> equippedWeaponMap = player.getComponent(InventoryComponent.class)
+                .getEquippedWeapons();
+        if (equippedWeaponMap.contains(node.getWeaponType())) {
             shapeRenderer.setColor(Color.GOLD);
             shapeRenderer.rect(node.getX() + equippedOffsetX, node.getY() + equippedOffsetY, equippedRectSize, equippedRectSize);
         }

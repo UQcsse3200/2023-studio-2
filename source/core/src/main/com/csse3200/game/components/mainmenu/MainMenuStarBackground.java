@@ -66,9 +66,9 @@ public class MainMenuStarBackground extends Actor {
                 x = MathUtils.random(0, Gdx.graphics.getWidth());
             }
 
-            // No stars in the top tenth or bottom third of screen
+            // No stars in the top 15% or bottom third of screen
             int y = MathUtils.random((Gdx.graphics.getHeight() / 3),
-                    (int) (0.91 * Gdx.graphics.getHeight()));
+                    (int) (0.85 * Gdx.graphics.getHeight()));
 
             spritePositions[i] = new Vector2(x, y);
             stateTimes[i] = MathUtils.random(0f, 1f);  // Offset animation start times

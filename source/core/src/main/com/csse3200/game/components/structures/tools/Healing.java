@@ -48,8 +48,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.resources.Resource;
-//import com.badlogic.gdx.Gdx;
-//import com.badlogic.gdx.audio.Sound;
 
 public class Healing extends Tool {
 
@@ -91,7 +89,13 @@ public class Healing extends Tool {
         if (playerHasEnoughResources(requiredDurasteel, requiredSolstite)) {
             // Deduct the required resources
             deductResources(requiredDurasteel, requiredSolstite);
-        //    healingSound.play();
+
+            Entity entity = new Entity();
+
+            if (entity != null) {
+                entity.getEvents().trigger("playSound","wallHeal");
+            }
+
             combatStats.setHealth(maxHealth);
             return true;
         } else {

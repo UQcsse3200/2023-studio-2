@@ -12,7 +12,7 @@ import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.services.ServiceLocator;
 
-public class ExtractorTool extends PlacementTool {
+public class ExtractorTool extends ReplacementTool {
     public ExtractorTool(ObjectMap<String, Integer> cost) {
         super(cost);
     }
@@ -53,9 +53,6 @@ public class ExtractorTool extends PlacementTool {
 
         Resource resource = productionComponent.getProduces();
         this.produces = resource;
-
-        ServiceLocator.getStructurePlacementService().removeStructureAt(position);
-        Gdx.app.postRunnable(existingStructure::dispose);
 
         Object max = ServiceLocator.getGameStateObserverService().getStateData("extractorsMax/" + resource);
         Object count = ServiceLocator.getGameStateObserverService().getStateData("extractorsTotal/" + resource);

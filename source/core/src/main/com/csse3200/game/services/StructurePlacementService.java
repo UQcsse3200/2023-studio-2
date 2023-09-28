@@ -62,7 +62,7 @@ public class StructurePlacementService {
     }
 
     public void replaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
-        removeStructureAt(tilePos);
+        removeStructureAt(tilePos, true);
 
         placeStructureAt(entity, tilePos, centerX, centerY);
     }
@@ -72,9 +72,13 @@ public class StructurePlacementService {
     }
 
     public void removeStructureAt(GridPoint2 tilePos) {
+        removeStructureAt(tilePos, false);
+    }
+
+    public void removeStructureAt(GridPoint2 tilePos, boolean force) {
         var entity = placedStructures.get(tilePos);
 
-        if (entity == null || entity.is_irremovable()) {
+        if (entity == null || entity.is_irremovable() && !force) {
             return;
         }
 
@@ -92,6 +96,7 @@ public class StructurePlacementService {
 
         Gdx.app.postRunnable(entity::dispose);
     }
+
     public PlaceableEntity getStructureAt(GridPoint2 position) {
         return placedStructures.get(position);
     }

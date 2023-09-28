@@ -43,7 +43,7 @@
     "textureAtlas": "images/weapons/boomerang.atlas",
     "imageScale" : 0.5,
     "animationType" : 1,
-    "imagePath" : "images/weapons/boomerangStatic.png",
+    "imagePath" : "images/explosives/grenade.png",
     "type" : "RANGED_GRENADE"
   },
 

@@ -119,6 +119,7 @@ public class UpgradeDisplay extends Window {
         WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
         WeaponConfig rocketConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_HOMING);
         WeaponConfig beeConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_BEE_STING);
+        WeaponConfig grenadeConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_GRENADE);
         ToolConfig dirtConfig = structureTools.toolConfigs
                 .get("com.csse3200.game.components.structures.tools.BasicWallTool");
         ToolConfig gateConfig = structureTools.toolConfigs
@@ -144,8 +145,10 @@ public class UpgradeDisplay extends Window {
         UpgradeNode slingShotNode = new UpgradeNode(slingshotConfig);
         UpgradeNode rocketNode = new UpgradeNode(rocketConfig);
         UpgradeNode boomerangNode = new UpgradeNode(boomerangConfig);
+        UpgradeNode grenadeNode = new UpgradeNode(grenadeConfig);
+        boomerangNode.addChild(grenadeNode);
+        grenadeNode.addChild(rocketNode);
         boomerangNode.addChild(slingShotNode);
-        slingShotNode.addChild(rocketNode);
         trees.add(boomerangNode);
 
         // Build Tree

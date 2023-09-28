@@ -67,8 +67,8 @@ public class EnemyFactory {
   public static Entity createEnemy(EnemyConfig config) {
     System.out.println(config.type);
     AnimationRenderComponent animator;
-    AITaskComponent aiComponent = new AITaskComponent();
-    aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    // Choose behaviour for enemy
+    AITaskComponent aiComponent = behaviourSelector(config.type);
 
     int health = config.health;
     int baseAttack = config.baseAttack;
@@ -147,6 +147,25 @@ public class EnemyFactory {
     enemy.scaleHeight(getEnemyscale(config));
 
     return enemy;
+  }
+
+  static AITaskComponent behaviourSelector(EnemyType type) {
+    AITaskComponent aiComponent = new AITaskComponent();
+    // Select behaviour
+    if (type == EnemyType.Melee) {
+      // Todo: add task here
+    } else if (type == EnemyType.Ranged) {
+      // Todo: add task here
+    } else if (type == EnemyType.BossMelee) {
+      // Todo: add task here
+    } else if (type == EnemyType.BossRanged) {
+      // Todo: add task here
+    }
+    else {
+      // Default task
+      aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+    }
+    return aiComponent;
   }
 
   /**

@@ -48,12 +48,13 @@ public class ExtractorTool extends PlacementTool {
      */
     @Override
     public boolean isPositionValid(GridPoint2 position) {
-        boolean existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position) == null;
+        PlaceableEntity existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
+
         Object max = ServiceLocator.getGameStateObserverService().getStateData("extractorsMax/" + this.getResource(position));
         Object count = ServiceLocator.getGameStateObserverService().getStateData("extractorsTotal/" + this.getResource(position));
         boolean underCapacity =  ((max != null) ? (int) max : 0) > ((count != null) ? (int) count : 0);
 
-        return existingStructure && underCapacity;
+        return existingStructure != null && underCapacity;
     }
 }
 

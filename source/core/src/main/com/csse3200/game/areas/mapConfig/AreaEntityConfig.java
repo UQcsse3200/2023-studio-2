@@ -20,6 +20,7 @@ public class AreaEntityConfig {
     public List<SpawnerConfig> spawners = new ArrayList<>();
     public List<PortalConfig> portals = new ArrayList<>();
     public List<ExtractorConfig> extractors = new ArrayList<>();
+    public List<FissureConfig> fissures = new ArrayList<>();
     public List<GateConfig> gates = new ArrayList<>();
     public List<PowerupConfig> powerups = new ArrayList<>();
     public ShipConfig ship = null;
@@ -44,6 +45,7 @@ public class AreaEntityConfig {
         entities.addAll(portals);
         entities.addAll(spawners);
         entities.addAll(extractors);
+        entities.addAll(fissures);
         entities.addAll(gates);
         if (treetop != null) entities.add(treetop);
         entities.addAll(powerups);

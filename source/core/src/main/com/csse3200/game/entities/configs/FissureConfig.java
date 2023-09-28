@@ -4,8 +4,4 @@ import com.csse3200.game.components.resources.Resource;
 
 public class FissureConfig extends BaseEntityConfig {
     public Resource resource;
-
-    public ResourceConfig() {
-        spritePath = "images/structures/ExtractorAnimation.atlas";
-    }
 }

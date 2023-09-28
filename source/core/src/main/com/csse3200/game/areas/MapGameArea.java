@@ -1,6 +1,5 @@
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -12,11 +11,12 @@ import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.Fissure;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.TileEntity;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.entities.factories.*;
@@ -28,7 +28,6 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -249,6 +248,11 @@ public class MapGameArea extends GameArea{
         for (ExtractorConfig extractorConfig : mapConfig.areaEntityConfig.extractors) {
             Entity extractor = StructureFactory.createExtractor(extractorConfig);
             spawnEntityAt(extractor, extractorConfig.position, true, false);
+        }
+
+        for (FissureConfig fissureConfig : mapConfig.areaEntityConfig.fissures) {
+            PlaceableEntity fissure = new Fissure(fissureConfig);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(fissure, fissureConfig.position, true, true);
         }
     }
 

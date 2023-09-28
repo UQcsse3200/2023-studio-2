@@ -22,7 +22,7 @@
     "images/structure-icons/gate.png",
     "images/healthpowerup.png",
     "images/speedpowerup.png",
-    "images/Ship.png",
+    "images/ship/Ship.png",
     "images/oldman_down_1.png",
     "images/player_blank.png",
     "images/wrench.png",
@@ -50,6 +50,7 @@
     "images/player/widestatbar.png",
     "images/player/heart.png",
     "images/planets/space_navigation_planet_1.png",
+    "images/npc/Astro_NPC.png",
     "map/treetoplush.png",
     "images/action-feedback/warning.png",
     "images/action-feedback/white_color_texture.png",
@@ -73,6 +74,7 @@
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
+    "images/npc/Astro_NPC.atlas",
     "images/structures/ExtractorAnimation.atlas"
   ],
   "soundPaths": [

@@ -39,7 +39,7 @@ public class SpaceGameArea extends GameArea {
             "images/minigame/SpaceMiniGameBackground.png",
             "images/minigame/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
             "images/ship/Ship.png",
-            "images/Ship.png",
+            "images/ship/Ship.png",
             "images/minigame/wormhole.png",
             "images/minigame/obstacle-enemy.png",
             "images/minigame/mainship.png"

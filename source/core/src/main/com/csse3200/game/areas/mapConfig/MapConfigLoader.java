@@ -63,12 +63,10 @@ public class MapConfigLoader {
      */
     public static AreaEntityConfig loadEntities(String loadPath) throws InvalidConfigException {
         AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
-        var files = Gdx.files.getFileHandle(loadPath, Files.FileType.Internal).readString().split("\\n");
-        logger.info(Arrays.toString(files));
+        var files = Arrays.stream(Gdx.files.internal(loadPath).list()).map(x -> x.path()).toList();
         for (String file : files) {
-            String fullPath = joinPath(loadPath, file);
             EntitiesConfigFile entitiesConfigFile =
-                    FileLoader.readClass(EntitiesConfigFile.class, fullPath, FileLoader.Location.INTERNAL);
+                    FileLoader.readClass(EntitiesConfigFile.class, file, FileLoader.Location.INTERNAL);
             if (entitiesConfigFile == null) continue;
             areaEntityConfig.addEntry(entitiesConfigFile.getMapEntry());
         }

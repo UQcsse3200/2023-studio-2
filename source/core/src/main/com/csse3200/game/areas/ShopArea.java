@@ -29,7 +29,7 @@ public class ShopArea extends GameArea {
             "images/minigame/SpaceMiniGameBackground.png",
             "images/stone.png",
             "images/ship/Ship.png",
-            "images/Ship.png"
+            "images/ship/Ship.png"
     };
     private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
     private final TerrainFactory terrainFactory;

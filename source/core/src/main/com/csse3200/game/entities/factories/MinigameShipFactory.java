@@ -46,7 +46,7 @@ public class MinigameShipFactory {
         Entity ship =
                 new Entity()
 
-                        //.addComponent(new TextureRenderComponent("images/Ship.png"))
+                        //.addComponent(new TextureRenderComponent("images/ship/Ship.png"))
                         //.addComponent(new TextureRenderComponent("images/ship/Ship.png"))Dont add 2 of the same component class
 
                         .addComponent(animator)
@@ -60,7 +60,7 @@ public class MinigameShipFactory {
                         .addComponent(new InteractionControllerComponent(false));
                         //.addComponent(new ShipStatsComponent(stats.health))
                         //.addComponent(new InventoryComponent(stats.gold))
-                        //.addComponent(new TextureRenderComponent("images/Ship.png"))
+                        //.addComponent(new TextureRenderComponent("images/ship/Ship.png"))
                         //.addComponent(new TextureRenderComponent("images/ship/Ship.png"))Dont add 2 of the same component class
 
                         //.addComponent(new TextureRenderComponent(config.spritePath))

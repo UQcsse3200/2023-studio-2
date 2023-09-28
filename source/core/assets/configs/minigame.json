@@ -6,6 +6,6 @@
     "spritePath": "images/wormhole.jpg"
   },
   "ship": {
-    "spritePath": "images/Ship.png"
+    "spritePath": "images/ship/Ship.png"
   }
 }

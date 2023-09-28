@@ -22,7 +22,7 @@
     "images/structure-icons/gate.png",
     "images/healthpowerup.png",
     "images/speedpowerup.png",
-    "images/Ship.png",
+    "images/ship/Ship.png",
     "images/oldman_down_1.png",
     "images/player_blank.png",
     "images/wrench.png",
@@ -51,11 +51,12 @@
     "images/player/bar-fill.png",
     "images/player/planet-frame.png",
     "images/player/statbar.png",
+    "images/npc/Astro_NPC.png",
     "images/player/widestatbar.png",
     "images/player/heart.png",
     "images/planets/space_navigation_planet_2.png",
     "images/resources/Cracked_Ground.png",
-    "particle-effects/durasteel/durasteel_pixel.png"<
+    "particle-effects/durasteel/durasteel_pixel.png",
     "images/navigationmap/planets/glacial_desolation.png"
   ],
   "textureAtlasPaths": [
@@ -66,6 +67,7 @@
     "images/enemy/rangeEnemy.atlas",
     "images/structures/stone_wall.atlas",
     "images/structures/dirt_wall.atlas",
+    "images/npc/Astro_NPC.atlas",
     "images/botanist.atlas",
     "images/boss_enemy.atlas",
     "images/botanist.atlas",

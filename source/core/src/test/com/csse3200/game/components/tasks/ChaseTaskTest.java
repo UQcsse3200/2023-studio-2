@@ -130,11 +130,21 @@ class ChaseTaskTest {
     chaseTask.start();
     verify(callback).handle();
 
-    target.setPosition(-3f, 0f);
-    entity.getEvents().addListener("chaseLeft", callback);
-    chaseTask.update();
-    verify(callback).handle();
   }
+  @Test
+  void shouldTriggerCorrectAnimation2(){
+    Entity target = new Entity();
+    target.setPosition(-3f, 0f);
+    Entity entity = makePhysicsEntity();
+    entity.create();
+    entity.setPosition(0f, 0f);
+    ChaseTask chaseTask = new ChaseTask(target, 10, 5, 10, 2f);
+    chaseTask.create(() -> entity);
+
+    EventListener0 callback = mock(EventListener0.class);
+    entity.getEvents().addListener("chaseLeft", callback);
+    chaseTask.start();
+    verify(callback).handle();}
 
   private Entity makePhysicsEntity() {
     return new Entity()

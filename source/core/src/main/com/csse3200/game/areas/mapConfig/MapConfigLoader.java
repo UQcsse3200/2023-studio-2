@@ -1,21 +1,32 @@
 package com.csse3200.game.areas.mapConfig;
 
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
+import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Class to handle loading of game areas from config files
  */
 public class MapConfigLoader {
     private static final String MAIN_PATH = "main.json";
-    private static final String PLAYER_PATH = "player.json";
-    private static final String ENTITIES_PATH = "entities.json";
+    private static final String ENTITIES_PATH = "entities";
 
     private static final String FAIL_MESSAGE = "Failed to load config of type ";
     private static final String FAIL_ENTITY = "Failed to load entities config";
+
+    private static final Logger logger = LoggerFactory.getLogger(MapConfigLoader.class);
 
     /**
      * Loads a GameArea from a single .json file containing all game area data.
@@ -38,27 +49,30 @@ public class MapConfigLoader {
      */
     public static GameAreaConfig loadMapDirectory(String mapDirPath) throws InvalidConfigException {
         String mainPath = joinPath(mapDirPath, MAIN_PATH);
-        String playerPath = joinPath(mapDirPath, PLAYER_PATH);
         String entitiesPath = joinPath(mapDirPath, ENTITIES_PATH);
         GameAreaConfig gameAreaConfig = loadConfigFile(mainPath, GameAreaConfig.class);
-        gameAreaConfig.playerConfig = loadConfigFile(playerPath, PlayerConfig.class);
         gameAreaConfig.areaEntityConfig = loadEntities(entitiesPath);
         return gameAreaConfig;
     }
 
-    //TODO: Extend to directory?
     /**
-     * Loads a .json file containing a list of entities into an AreaEntityConfig object
-     * @param loadPath Path of .json file to be loaded from
+     * Loads a directory containing entity .json files into an AreaEntityConfig object
+     * @param loadPath Path of directory to be loaded from
      * @return Loaded AreaEntityConfig object
-     * @throws InvalidConfigException If the file is unable to be loaded to an AreaEntityConfig
+     * @throws InvalidConfigException If any file in the directory is unable to be loaded
      */
     public static AreaEntityConfig loadEntities(String loadPath) throws InvalidConfigException {
-        try {
-            return loadConfigFile(loadPath, AreaEntityConfig.class);
-        } catch (InvalidConfigException exception) {
-            throw new InvalidConfigException(FAIL_ENTITY);
+        AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
+        var files = Gdx.files.getFileHandle(loadPath, Files.FileType.Internal).readString().split("\\n");
+        logger.info(Arrays.toString(files));
+        for (String file : files) {
+            String fullPath = joinPath(loadPath, file);
+            EntitiesConfigFile entitiesConfigFile =
+                    FileLoader.readClass(EntitiesConfigFile.class, fullPath, FileLoader.Location.INTERNAL);
+            if (entitiesConfigFile == null) continue;
+            areaEntityConfig.addEntry(entitiesConfigFile.getMapEntry());
         }
+        return areaEntityConfig;
     }
 
     /**

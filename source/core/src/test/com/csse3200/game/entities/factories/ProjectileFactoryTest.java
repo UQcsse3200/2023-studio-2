@@ -64,7 +64,7 @@ public class ProjectileFactoryTest {
      *  - "baseAttack": 10,
      *  - "speed": 5,
      *  - "behaviour": "PTE",
-     *  - "atlas": "images/rangeEnemy.atlas"
+     *  - "atlas": "images/enemy/rangeEnemy.atlas"
      *  Passes Test if created bullet contains the correct attack retrieved from the Melee PTE enemy
      */
     @Test

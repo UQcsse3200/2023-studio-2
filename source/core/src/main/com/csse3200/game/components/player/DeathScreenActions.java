@@ -5,6 +5,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,7 @@ public class DeathScreenActions extends Component {
      */
     private void onRespawn() {
         logger.info("Relaunching main game screen");
-        game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
         game.setPlayerLives(lives); // stores number of lives remaining in GdxGame to be later accessed when respawning player.
+        new PlanetTravel(game).returnToCurrent();
     }
 }

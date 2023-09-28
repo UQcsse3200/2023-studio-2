@@ -6,7 +6,10 @@ import com.csse3200.game.components.Weapons.WeaponType;
  * Defines each entries properties stored in wall config file to be loaded by the Wall Factory.
  */
 public class WeaponConfig extends BaseEntityConfig {
+    public String name = "";
+    public String description = "";
     //Direction Speed
+    public float damage = 0;
     public float weaponSpeed = 0;
     //Ticks before despawn
     public int weaponDuration = 0;

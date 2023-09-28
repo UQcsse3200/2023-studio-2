@@ -55,14 +55,15 @@
     "images/player/heart.png",
     "images/planets/space_navigation_planet_2.png",
     "images/resources/Cracked_Ground.png",
-    "particle-effects/durasteel/durasteel_pixel.png"
+    "particle-effects/durasteel/durasteel_pixel.png"<
+    "images/navigationmap/planets/glacial_desolation.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
     "images/ghost.atlas",
     "images/ghostKing.atlas",
-    "images/troll_enemy.atlas",
-    "images/rangeEnemy.atlas",
+    "images/enemy/troll_enemy.atlas",
+    "images/enemy/rangeEnemy.atlas",
     "images/structures/stone_wall.atlas",
     "images/structures/dirt_wall.atlas",
     "images/botanist.atlas",
@@ -82,7 +83,9 @@
     "sounds/footStepsInTheForestGround.mp3",
     "sounds/PlayerHealthRecharge.mp3",
     "sounds/playerBoostRecharge.mp3",
-    "sounds/upgradeTree.mp3"
+    "sounds/upgradeTreeTap.mp3",
+    "sounds/upgradeWeapon.mp3",
+    "sounds/enemyDeath.mp3"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",
@@ -92,7 +95,7 @@
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 
-  "mapName": "Planet Frozen",
+  "mapName": "Glacial Desolation",
   "planetImage": "images/planets/space_navigation_planet_2.png",
   "terrainPath": "map/icemap.tmx",
   "winConditions": [

@@ -1,5 +1,8 @@
 {
   "RANGED_SLINGSHOT": {
+    "name" : "Slingshot",
+    "description": "Reliable range, decent damage. Ideal for distant targets.",
+    "damage" : 50,
     "weaponSpeed": 10,
     "weaponDuration": 50,
     "rotationSpeed": 0,
@@ -13,6 +16,9 @@
   },
 
   "RANGED_BOOMERANG": {
+    "name" : "Boomerang",
+    "description": "Capable of hitting multiple enemies at once, a versatile choice.",
+    "damage" : 25,
     "weaponSpeed": 4,
     "weaponDuration": 155,
     "rotationSpeed": 2,
@@ -26,7 +32,10 @@
   },
 
   "RANGED_HOMING": {
-    "weaponSpeed": 3,
+    "name" : "Friendly Heat-Seeking Missile",
+    "description": "No need to aim perfectly! It finds its way by following warmth. Just launch and watch it make new friends!",
+    "damage" : 100,
+    "weaponSpeed": 5,
     "weaponDuration": 300,
     "rotationSpeed": 0,
     "initialRotationOffset": 0,
@@ -39,6 +48,9 @@
   },
 
   "MELEE_WRENCH": {
+    "name" : "Wrench",
+    "description": "Its a wrench, what more to say.",
+    "damage" : 50,
     "weaponSpeed": 10,
     "weaponDuration": 10,
     "rotationSpeed": 1,
@@ -53,6 +65,9 @@
   },
 
   "MELEE_KATANA": {
+    "name" : "Katana",
+    "description": "Rich history, swift slashes. Its balance between speed and damage makes it deadly in close quarters.",
+    "damage" : 33,
     "weaponSpeed": 4,
     "weaponDuration": 20,
     "rotationSpeed": 1,
@@ -67,6 +82,9 @@
   },
 
   "MELEE_BEE_STING": {
+    "name" : "Bees",
+    "description": "Unleash the power of Bees!",
+    "damage" : 50,
     "weaponSpeed": 4,
     "weaponDuration": 45,
     "rotationSpeed": 0,
@@ -81,6 +99,9 @@
   },
 
   "STICK": {
+    "name" : "Stick",
+    "description": "The Stick, simple yet effective. While it might not be the strongest, it does its best",
+    "damage" : 1,
     "weaponSpeed": 0.75,
     "weaponDuration": 50,
     "rotationSpeed": 6,
@@ -94,6 +115,9 @@
   },
 
   "WOODHAMMER": {
+    "name" : "Wooden Hammer",
+    "description": "For all your buildable needs. While not suitable for combat, it's an essential tool for construction.",
+    "damage" : 0,
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
     "imagePath" : "images/upgradetree/hammer1.png",

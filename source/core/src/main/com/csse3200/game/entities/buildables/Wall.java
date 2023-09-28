@@ -49,6 +49,13 @@ public class Wall extends PlaceableEntity {
      * <p>Predefined wall properties are loaded from a config stored as a json file and should have
      * the properties stored in 'WallConfig'.
      */
+    /**
+     *
+     * This adding multiple components for interaction
+     * and also added Sound Component to trigger sound effects
+     * @param type - define the type of wall
+     * @param player - link with player to implement walls
+     */
     public Wall(WallType type, Entity player) {
         super();
         this.type = type;

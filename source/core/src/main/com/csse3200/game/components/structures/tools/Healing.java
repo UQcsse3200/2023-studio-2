@@ -61,7 +61,13 @@ public class Healing extends Tool {
     }
 
 
-
+    /**
+     * this class is meant to heal the walls by checking with enough resources
+     * also trigger Sound effects while healing
+     * @param player - the player interacting with the tool.
+     * @param position - the position being interacted with.
+     * @return
+     */
     @Override
     public boolean interact(Entity player, GridPoint2 position) {
         // For checking whether the player has clicked on an entity

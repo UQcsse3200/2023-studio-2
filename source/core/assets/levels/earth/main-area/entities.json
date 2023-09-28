@@ -59,6 +59,29 @@
       }
     }
   ],
+  "fissures": [
+    {
+      "resource": "Solstite",
+      "position": {
+        "x": 33,
+        "y": 35
+      }
+    },
+    {
+      "resource": "Nebulite",
+      "position": {
+        "x": 39,
+        "y": 35
+      }
+    },
+    {
+      "resource": "Durasteel",
+      "position": {
+        "x": 42,
+        "y": 35
+      }
+    }
+  ],
   "treetop": {
     "position": {
       "x": 0,

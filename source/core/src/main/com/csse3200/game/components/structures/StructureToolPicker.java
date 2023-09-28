@@ -70,7 +70,7 @@ public class StructureToolPicker extends UIComponent {
      * and positions them on the stage using a table.
      * @see Table for positioning options
      */
-    private void addActors() {
+    void addActors() {
         table.clear();
 
         table.align(Align.center);
@@ -155,7 +155,6 @@ public class StructureToolPicker extends UIComponent {
      * @param toolName - the simple name of the tool, e.g. 'Dirt Wall'
      */
     public void unlockTool(String toolName) {
-        System.out.println("Tool UNLOCKED: " + toolName);
         unlockedTools.add(toolName);
         addActors();
     }

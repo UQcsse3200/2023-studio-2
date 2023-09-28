@@ -48,12 +48,21 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.resources.Resource;
+//import com.badlogic.gdx.Gdx;
+//import com.badlogic.gdx.audio.Sound;
 
 public class Healing extends Tool {
 
+//    private final Sound healingSound;
+
+
     public Healing(ObjectMap<String, Integer> cost) {
         super(cost);
+
+       // healingSound = Gdx.audio.newSound(Gdx.files.internal("sounds/healing_sound.wav"));
     }
+
+
 
     @Override
     public boolean interact(Entity player, GridPoint2 position) {
@@ -82,7 +91,7 @@ public class Healing extends Tool {
         if (playerHasEnoughResources(requiredDurasteel, requiredSolstite)) {
             // Deduct the required resources
             deductResources(requiredDurasteel, requiredSolstite);
-
+        //    healingSound.play();
             combatStats.setHealth(maxHealth);
             return true;
         } else {

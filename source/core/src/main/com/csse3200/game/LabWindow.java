@@ -26,7 +26,7 @@ public class LabWindow extends Window {
     Table exit;
 
     public static LabWindow MakeNewLaboratory() {
-        Texture background = new Texture("images/labwindownew.png");
+        Texture background = new Texture("images/lab.png");
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new LabWindow(background);
     }
@@ -36,8 +36,8 @@ public class LabWindow extends Window {
 
         // Here set up the window to be centered on the stage with 80% width and 65% height.
         Stage stage = ServiceLocator.getRenderService().getStage();
-        setWidth((float) (stage.getWidth() * 0.8));
-        setHeight((float) (stage.getHeight() * 0.65));
+        setWidth((float) (stage.getWidth() * 0.70));
+        setHeight((float) (stage.getHeight() * 0.50));
         setPosition(stage.getWidth() / 2 - getWidth() / 2 * getScaleX(), stage.getHeight() / 2 - getHeight() / 2 * getScaleY());
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         // Create a Table to hold the buttons and center them within the window
@@ -46,23 +46,40 @@ public class LabWindow extends Window {
         // Fill the entire LabWindow
 
         Table exit = new Table();
-        Texture deathpotionImage = new Texture("images/Potion3re.png");
-        Texture speedpotionImage = new Texture("images/Potion4re.png");
-        Texture healthpotionImage = new Texture("images/Potion2re.png");
-        Texture invincibilitypotionImage = new Texture("images/Potion1re.png");
+        Texture deathpotionImage = new Texture("images/powerups/death_potion.png");
+        Texture speedpotionImage = new Texture("images/powerups/speed_boost.png");
+        Texture healthpotionImage = new Texture("images/powerups/health_boost.png");
+        Texture invincibilitypotionImage = new Texture("images/powerups/temp_immunity.png");
         Texture doubledamageImage = new Texture("images/powerups/double_damage.png");
+        Texture extralifeImage = new Texture("images/powerups/extra_life.png");
+        Texture snapImage = new Texture("images/powerups/snap.png");
+        Texture doublecrossImage = new Texture("images/powerups/double_cross.png");
+
+
         Image potion1ImageWidget = new Image(deathpotionImage);
         Image potion2ImageWidget = new Image(speedpotionImage);
         Image potion3ImageWidget = new Image(healthpotionImage);
         Image potion4ImageWidget = new Image(invincibilitypotionImage);
         Image potion5ImageWidget = new Image(doubledamageImage);
+        Image potion6ImageWidget = new Image(extralifeImage);
+        Image potion7ImageWidget = new Image(snapImage);
+        Image potion8ImageWidget = new Image(doublecrossImage);
+
+
         TextButton potion1 = new TextButton("Death", skin);
         TextButton potion2 = new TextButton("Speed", skin);
         TextButton potion3 = new TextButton("Health", skin);
         TextButton potion4 = new TextButton("Invincibility", skin);
-        TextButton returnToGameButton = new TextButton("Return to Game", skin);
-        float buttonWidth = 200f; // Adjust as needed
-        float buttonHeight = 200f;
+        TextButton potion5 = new TextButton("2x Damage", skin);
+        TextButton potion6 = new TextButton("Extra Life", skin);
+        TextButton potion7 = new TextButton("Snap", skin);
+        TextButton potion8 = new TextButton("Double Cross", skin);
+        TextButton returnToGameButton = new TextButton("EXIT", skin);
+
+        float buttonWidth = 150f; // Adjust as needed
+        float buttonHeight = 180f;
+
+
         potion1.setWidth(buttonWidth);
         potion1.setHeight(buttonHeight);
 
@@ -75,6 +92,18 @@ public class LabWindow extends Window {
         potion4.setWidth(buttonWidth);
         potion4.setHeight(buttonHeight);
 
+        potion5.setWidth(buttonWidth);
+        potion5.setHeight(buttonHeight);
+
+        potion6.setWidth(buttonWidth);
+        potion6.setHeight(buttonHeight);
+
+        potion7.setWidth(buttonWidth);
+        potion7.setHeight(buttonHeight);
+
+        potion8.setWidth(buttonWidth);
+        potion8.setHeight(buttonHeight);
+
         returnToGameButton.setWidth(buttonWidth);
         returnToGameButton.setHeight(buttonHeight);
 
@@ -82,29 +111,32 @@ public class LabWindow extends Window {
         potion2.add(potion2ImageWidget).width(100).height(64);
         potion3.add(potion3ImageWidget).width(100).height(64);
         potion4.add(potion4ImageWidget).width(100).height(64);
+        potion5.add(potion5ImageWidget).width(100).height(64);
+        potion6.add(potion6ImageWidget).width(100).height(64);
+        potion7.add(potion7ImageWidget).width(100).height(64);
+        potion8.add(potion8ImageWidget).width(100).height(64);
+        potion8.add(potion8ImageWidget).width(100).height(64);
 
-        buttonTable.top().left();
-        buttonTable.add(potion1).padTop(350).padLeft(150);
-        buttonTable.add(potion2).padTop(350).padLeft(190);
-        buttonTable.add(potion3).padTop(350).padLeft(165);
-        buttonTable.add(potion4).padTop(350).padLeft(180);
-
+        buttonTable.top();
+        buttonTable.add(potion1).padTop(70).padLeft(40);
+        buttonTable.add(potion2).padTop(70).padLeft(40);
+        buttonTable.add(potion3).padTop(70).padLeft(40);
+        buttonTable.add(potion4).padTop(70).padLeft(40);
+        buttonTable.row();
+        buttonTable.add(potion5).padTop(70).padLeft(40);
+        buttonTable.add(potion6).padTop(70).padLeft(40);
+        buttonTable.add(potion7).padTop(70).padLeft(40);
+        buttonTable.add(potion8).padTop(70).padLeft(40);
         buttonTable.row(); //Move to the next row
-        exit.add(returnToGameButton).bottom().right().padBottom(150).padLeft(2800);
+//        buttonTable.add(returnToGameButton).padTop(100).padLeft(600);
         addActor(buttonTable);
-        addActor(exit);
+        //addActor(exit);
+
+//
 
         Table button2Table = new Table();
         button2Table.setFillParent(true);
-
-
-        TextButton potion5 = new TextButton("DoubleDamage",skin);
-
-        potion5.setWidth(buttonWidth);
-        potion5.setHeight(buttonHeight);
-        potion5.add(potion5ImageWidget).width(100).height(64);
-        button2Table.add(potion5).padTop(500).padRight(1200);
-        button2Table.row(); //Move to the next row
+        button2Table.add(returnToGameButton).padTop(400).padLeft(860);
         addActor(button2Table);
 
 
@@ -114,10 +146,11 @@ public class LabWindow extends Window {
                 failLaboratory();
             }
         });
-        potion1.addListener(new ClickListener() {
+
+        potion1.addListener(new ChangeListener() {
             @Override
-            public void clicked(InputEvent event,float x, float y){
-                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPowerup", PowerupType.DOUBLE_DAMAGE);
+            public void changed(ChangeEvent event, Actor actor) {
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPowerup",PowerupType.DEATH_POTION);
                 failLaboratory();
             }
         });
@@ -143,13 +176,37 @@ public class LabWindow extends Window {
                 failLaboratory();
             }
         });
-        /*potion5.addListener(new ChangeListener() {
+
+        potion5.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPotion",PotionType.DOUBLE_DAMAGE);
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPowerup",PowerupType.DOUBLE_DAMAGE);
                 failLaboratory();
             }
-        });*/
+        });
+
+        potion6.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPowerup",PowerupType.EXTRA_LIFE);
+                failLaboratory();
+            }
+        });
+        potion7.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPowerup",PowerupType.SNAP);
+                failLaboratory();
+            }
+        });
+        potion8.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPowerup",PowerupType.DOUBLE_CROSS);
+                failLaboratory();
+            }
+        });
+
         // Override all normal user input
         inputOverrideComponent = new InputOverrideComponent();
         ServiceLocator.getInputService().register(inputOverrideComponent);

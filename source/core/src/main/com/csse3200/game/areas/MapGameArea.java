@@ -236,6 +236,26 @@ public class MapGameArea extends GameArea{
                 itemsOnMap.add(newPowerup);
                 spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
                 return newPowerup;
+            case DEATH_POTION:
+                newPowerup = PowerupFactory.createHealthPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
+                return newPowerup;
+            case EXTRA_LIFE:
+                newPowerup = PowerupFactory.createSpeedPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
+                return newPowerup;
+            case DOUBLE_CROSS:
+                newPowerup = PowerupFactory.createtempImmunityPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
+                return newPowerup;
+            case SNAP:
+                newPowerup = PowerupFactory.createDoubleDamagePowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.laboratory.position,true,false);
+                return newPowerup;
             default: throw new IllegalArgumentException("You must assign a valid PowerupType");
 
         }

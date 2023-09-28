@@ -47,6 +47,13 @@ public class ItemPickupComponent extends Component {
         // Log the pick-up
         logger.info("Item picked up");
 
+//        // Check if the picked-up item is a potion (adjust this condition based on your implementation)
+//        if (entityOfComponent.hasComponent(PotionComponent.class)) {
+//            // Trigger the custom event
+//            entityOfComponent.getEvents().trigger(CompanionInventoryDisplay.POTION_PICKED_UP_EVENT);
+//        }
+
+
         // Add the power-up to the companion's inventory
         Entity companionEntity = ServiceLocator.getEntityService().getCompanion();
         CompanionInventoryComponent companionInventory = companionEntity.getComponent(CompanionInventoryComponent.class);

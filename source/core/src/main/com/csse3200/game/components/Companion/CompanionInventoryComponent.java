@@ -4,6 +4,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.PowerupConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
@@ -24,71 +25,34 @@ public class CompanionInventoryComponent extends Component {
 
     private final int[] itemQuantity = new int[INVENTORY_SIZE];
     private int equipped = 1;
-//    private final HashMap<Integer, PotionType> equippedPMap = new HashMap<Integer, PotionType>();
 
-//    @Override
-//    public void create() {
-//        equippedPMap.put(1, PotionType.DEATH_POTION);
-//        equippedPMap.put(2, PotionType.SPEED_POTION);
-//        equippedPMap.put(3, PotionType.HEALTH_POTION);
-//        equippedPMap.put(4, PotionType.INVINCIBILITY_POTION);
-//
-//    }
-//
-//    public CompanionInventoryComponent() {
-//        create();
-//    }
-//
-//    public int getEquipped() {
-//        return equipped;
-//    }
-//
-//    public void setEquipped(int i) {
-//        this.equipped = i;
-//    }
-//
-//    public void replaceSlotWithPotion(int slot, PotionType potionType) {
-//        if (slot > 3 || slot < 1) {
-//            throw new IllegalArgumentException("Slot must be in range 1-3");
-//        }
-//        equippedPMap.remove(slot);
-//        equippedPMap.put(slot, potionType);
-//    }
-//
-//    public HashMap<Integer, PotionType> getEquippedPotionMap() {
-//        return equippedPMap;
-//    }
-//
-//    public void placeInSlot(PotionType potionType) {
-//        int slot = switch (potionType) {
-//            case DEATH_POTION -> 1;
-//            case SPEED_POTION -> 2;
-//            case HEALTH_POTION -> 3;
-//            case INVINCIBILITY_POTION -> 4;
-//            default -> throw new IllegalArgumentException("Slot not assigned: " + potionType);
-//        };
-//        replaceSlotWithPotion(slot, potionType);
-//    }
-//
-//    public void cycleEquipped() {
-//        int equiped = getEquipped();
-//        if (equiped == 3) {
-//            this.equipped = 1;
-//        } else
-//            this.equipped++;
-//    }
-//
-//    public PotionType getEquippedType() {
-//        return this.equippedPMap.get(getEquipped());
-//    }
-//
-//    public void changeEquipped(PotionType potionType) {
-//        System.out.println(potionType);
-//        PotionType equippedType = getEquippedType();
-//        this.equippedPMap.remove(equippedType);
-//        this.equippedPMap.put(getEquipped(), potionType);
-//    }
-//
+    // Add a HashMap to store counts for each power-up type
+    private final HashMap<PowerupType, Integer> powerupCounts = new HashMap<>();
+
+    public CompanionInventoryComponent() {
+        // Initialize power-up counts
+        for (PowerupType type : PowerupType.values()) {
+            powerupCounts.put(type, 0);
+        }
+    }
+
+    private PowerupType identifyPowerupType(Entity item) {
+        // Assuming PowerupComponent contains the type information
+        PowerupComponent powerupComponent = item.getComponent(PowerupComponent.class);
+
+        // Check if the PowerupComponent is present
+        if (powerupComponent != null) {
+            return powerupComponent.getType();
+        } else {
+            // Log a warning or handle the case where PowerupComponent is not present
+            logger.warn("PowerupComponent not found in the item entity");
+            return null;
+        }
+    }
+
+    public int getPowerupCount(PowerupType type) {
+        return powerupCounts.getOrDefault(type, 0);
+    }
 
 
     /**
@@ -100,6 +64,17 @@ public class CompanionInventoryComponent extends Component {
         if (powerupQueue.size() < INVENTORY_SIZE) {
             powerupQueue.add(item);
             ++itemQuantity[powerupQueue.size() - 1];
+
+            // Identify the power-up type and update the count
+            PowerupType powerupType = identifyPowerupType(item);
+            if (powerupType != null) {
+                int currentCount = powerupCounts.get(powerupType);
+                powerupCounts.put(powerupType, currentCount + 1);
+                //System.out.println("Collecting powerup: " + powerupType + ", Count: " + powerupCounts.get(powerupType));
+            }
+            //System.out.println("Current powerupCounts: " + powerupCounts);
+            //System.out.println("Collecting powerup: " + powerupType );
+
             logger.debug("item added");
         }
     }
@@ -118,4 +93,7 @@ public class CompanionInventoryComponent extends Component {
         }
         return false;
     }
+
+
+
 }

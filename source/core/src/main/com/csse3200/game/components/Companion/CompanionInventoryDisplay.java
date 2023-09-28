@@ -30,20 +30,30 @@ public class CompanionInventoryDisplay extends Window {
     private InputOverrideComponent inputOverrideComponent;
     public PowerupConfigs powerupConfigs;
     private  Skin skin;
+    private int healthPotionCount = 0;
+    private TextButton deathPotionCountButton;
+    private Label deathPotionCountLabel;
 
-    public static CompanionInventoryDisplay createUpgradeDisplay() {
+    Group powerupGroup = new Group();
+    List<PowerupConfig> firstRowPotions = new ArrayList<>();
+    List<PowerupConfig> secondRowPotions = new ArrayList<>();
+
+    private CompanionInventoryComponent inventoryComponent;
+
+    public static CompanionInventoryDisplay createUpgradeDisplay(CompanionInventoryComponent inventoryComponent) {
         Texture background =
                 ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
-         return new CompanionInventoryDisplay(background);
+         return new CompanionInventoryDisplay(background, inventoryComponent);
         //return new CompanionInventoryComponent();
     }
 
-    public CompanionInventoryDisplay(Texture background) {
+    public CompanionInventoryDisplay(Texture background, CompanionInventoryComponent inventoryComponent) {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
 
         skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         powerupConfigs = FileLoader.readClass(PowerupConfigs.class, "configs/powerups.json");
+        this.inventoryComponent = inventoryComponent;
 
 
         setupWindowDimensions();
@@ -52,8 +62,20 @@ public class CompanionInventoryDisplay extends Window {
         Table titleTable = createTitleTable();
         Table exitTable = createExitButton();
         addPowerups();
+
+        // Add the count buttons and update their values
+        //updateCountButtons();
+
+
+
         addActor(exitTable);
         addActor(titleTable);
+//
+//        // Initialize count buttons and labels
+//        deathPotionCountButton = createCountButton(deathPotionConfig, startXFirstRow, countButtonY);
+//        deathPotionCountLabel = createCountLabel(deathPotionCountButton, startXFirstRow, countButtonY);
+//
+//        // Add other count buttons and labels if needed
 
         // Override all normal user input
         inputOverrideComponent = new InputOverrideComponent();
@@ -71,19 +93,19 @@ public class CompanionInventoryDisplay extends Window {
         PowerupConfig snap = powerupConfigs.GetPowerupConfig(PowerupType.SNAP);
 
         // Create lists for the first and second rows of potions
-        List<PowerupConfig> firstRowPotions = new ArrayList<>();
+        //List<PowerupConfig> firstRowPotions = new ArrayList<>();
         firstRowPotions.add(deathPotion);
         firstRowPotions.add(healthPotion);
         firstRowPotions.add(speedPotion);
         firstRowPotions.add(invincibilityPotion);
 
-        List<PowerupConfig> secondRowPotions = new ArrayList<>();
+        //List<PowerupConfig> secondRowPotions = new ArrayList<>();
         secondRowPotions.add(extraLife);
         secondRowPotions.add(doubleCross);
         secondRowPotions.add(doubleDamage);
         secondRowPotions.add(snap);
 
-        Group powerupGroup = new Group();
+        //Group powerupGroup = new Group();
 
         float startXFirstRow = 50f; // Adjust as needed
         float startYFirstRow = 200f; // Adjust as needed
@@ -188,9 +210,30 @@ public class CompanionInventoryDisplay extends Window {
         TextButton countButton = new TextButton("0", skin); // Initialize count to 0
         countButton.setSize(SIZE / 2, SIZE / 2);
         countButton.setPosition(x, y);
+
+        // Retrieve the count for the corresponding power-up type
+        PowerupType powerupType = powerupConfig.type;
+        int count = inventoryComponent.getPowerupCount(powerupType);
+        countButton.setText(Integer.toString(count));
+
+
+        // Add listener to update count dynamically
+        countButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                int updatedCount = inventoryComponent.getPowerupCount(powerupType);
+                //System.out.println("Power-up Type: " + powerupType + ", Updated Count: " + updatedCount);
+                updateCountButton(updatedCount, countButton);
+            }
+        });
+        System.out.println("Listener registered for Power-up Type: " + powerupType);
+
         return countButton;
     }
 
+    private void updateCountButton(int count, TextButton countButton) {
+        countButton.setText(String.valueOf(count));
+    }
 
     private Table createTitleTable() {
         Table titleTable = new Table();

@@ -107,12 +107,13 @@ public class PlayerFactory {
                         .addComponent(new SoundComponent(config.sounds))
                         .addComponent(new UpgradeTree());
 
-        player.addComponent(new SaveableComponent<>(p -> {
-            PlayerConfig playerConfig = config;
-            playerConfig.position = new GridPoint2((int) player.getPosition().x, (int)player.getPosition().y);
-            playerConfig.health = player.getComponent(CombatStatsComponent.class).getHealth();
-            return playerConfig;
-        }, PlayerConfig.class));
+        player.addComponent(new InventoryDisplayComponent(player))
+            .addComponent(new SaveableComponent<>(p -> {
+                PlayerConfig playerConfig = config;
+                playerConfig.position = new GridPoint2((int) player.getPosition().x, (int)player.getPosition().y);
+                playerConfig.health = player.getComponent(CombatStatsComponent.class).getHealth();
+                return playerConfig;
+            }, PlayerConfig.class));
 
         PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
         player.getComponent(ColliderComponent.class).setDensity(1.5f);

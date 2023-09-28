@@ -37,7 +37,7 @@ public class WeaponTargetComponent extends Component {
                 pos = keyboardPlayerInputComponent.getLastMousePos();
                 Vector2 eScl = entity.getScale();
                 return new Vector2(pos.x + eScl.x/2 - 0.1f, pos.y + eScl.y/2 - 0.1f);
-            case STATIC_WEAPON, MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING, RANGED_BOOMERANG, RANGED_GRENADE:
+            case STATIC_WEAPON, MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING, RANGED_BOOMERANG:
                 var delta = entity.getPosition().sub(this.trackPrev);
                 this.trackPrev = entity.getPosition();
                 return delta;

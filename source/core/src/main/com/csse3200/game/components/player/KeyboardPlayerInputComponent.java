@@ -226,6 +226,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
     switch (playerInventory.getEquipped()) {
       // melee/ranged
+
         case "melee", "ranged":
             System.out.println(playerInventory.getCurrentAmmo());
             if (playerInventory.getCurrentAmmo() <= 0) {return false;}
@@ -375,6 +376,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
     invComp.setEquipped(slot);
     entity.getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
+    entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(), invComp.getCurrentMaxAmmo());
   }
 
   /**

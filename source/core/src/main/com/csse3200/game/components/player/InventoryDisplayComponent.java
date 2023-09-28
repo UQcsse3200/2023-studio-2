@@ -8,11 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.WeaponConfig;
-import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.ui.UIComponent;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class InventoryDisplayComponent extends UIComponent {
 
@@ -27,14 +25,14 @@ public class InventoryDisplayComponent extends UIComponent {
     /**
      * Creates actors and positions them on the stage using a table.
      *
-     * @return
+     * @return Table - a table containing the player's hot bar
      * @see Table for positioning options
      */
     private Table makeTable() {
         table.setColor(Color.WHITE); // todo: add table background
-        HashMap<Integer, WeaponType> map = inventory.getEquippedWeaponMap();
+        ArrayList<WeaponType> weapons = inventory.getEquippedWeapons();
 
-        for (WeaponType weapon : map.values()) {
+        for (WeaponType weapon : weapons) {
             String weaponString = weapon.name();
             TextButton button = new TextButton(weaponString, skin);
             table.add(button).row();

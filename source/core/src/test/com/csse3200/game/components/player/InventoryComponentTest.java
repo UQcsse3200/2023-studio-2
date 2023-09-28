@@ -30,35 +30,35 @@ class InventoryComponentTest {
     @Test
     void testGetEquipped() {
         InventoryComponent inventory = new InventoryComponent(weaponConfigs);
-        assertEquals(1, inventory.getEquipped());
+
+        inventory.setEquipped("ranged");
+        assertEquals("ranged", inventory.getEquipped());
+
+        inventory.setEquipped("melee");
+        assertEquals("melee", inventory.getEquipped());
+
+        inventory.setEquipped("building");
+        assertEquals("building", inventory.getEquipped());
     }
 
     @Test
     void testSetEquiped() {
         InventoryComponent inventory = new InventoryComponent(weaponConfigs);
-        inventory.setEquipped(2);
-        assertEquals(2, inventory.getEquipped());
-    }
-
-    @Test
-    void testCycleEquiped() {
-        InventoryComponent inventory = new InventoryComponent(weaponConfigs);
-        inventory.setEquipped(3);
-        inventory.cycleEquipped();
-        assertEquals(1, inventory.getEquipped());
+        inventory.setEquipped("melee");
+        assertEquals("melee", inventory.getEquipped());
     }
 
     @Test
     void testGetEquippedType() {
     InventoryComponent inventory = new InventoryComponent(weaponConfigs);
-    inventory.setEquipped(3);
+    inventory.setEquipped("building");
     assertEquals(WeaponType.WOODHAMMER, inventory.getEquippedType());
     }
 
     @Test
     void testChangeEquippedType() {
     InventoryComponent inventory = new InventoryComponent(weaponConfigs);
-    inventory.setEquipped(3);
+    inventory.setEquipped("building");
     inventory.changeEquipped(WeaponType.MELEE_KATANA);
     assertEquals(WeaponType.MELEE_KATANA, inventory.getEquippedType());
     }

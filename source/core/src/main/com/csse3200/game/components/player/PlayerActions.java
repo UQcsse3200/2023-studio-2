@@ -39,7 +39,6 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("dodged", this::dodged);
         entity.getEvents().addListener("repair", this::repairWall);
         entity.getEvents().addListener("change_structure", this::changeStructure);
-        entity.getEvents().addListener("inventory", this::updateInventory);
         GameStateInteraction gameStateInteraction = new GameStateInteraction();
     }
 
@@ -95,28 +94,6 @@ public class PlayerActions extends Component {
      */
     void dodged() {
         entity.getComponent(CombatStatsComponent.class).changeImmunityStatus();
-    }
-
-
-    /**
-     * Updates inventory
-     * @param i - used for determining inventory action
-     */
-    void updateInventory(int i) {
-        switch (i) {
-            case 1:
-                entity.getComponent(InventoryComponent.class).setEquipped(1);
-                break;
-            case 2:
-                entity.getComponent(InventoryComponent.class).setEquipped(2);
-                break;
-            case 3:
-                entity.getComponent(InventoryComponent.class).setEquipped(3);
-                break;
-            default:
-                entity.getComponent(InventoryComponent.class).cycleEquipped();
-                break;
-        }
     }
 
     /**

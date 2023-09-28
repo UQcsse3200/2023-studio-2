@@ -3,6 +3,7 @@ package com.csse3200.game.components.player;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.configs.SpawnerConfig;
+import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.services.GameTime;
 import org.slf4j.Logger;
@@ -61,15 +62,15 @@ class InventoryItem {
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private int equipped = 1;
-  private final HashMap<Integer, InventoryItem> equippedWMap = new HashMap<Integer, InventoryItem>();
+  private String equipped = "melee";
+  private final HashMap<String, InventoryItem> equippedWMap = new HashMap<String, InventoryItem>();
   private final WeaponConfigs config;
 
   @Override
   public void create() {
-    equippedWMap.put(1, new InventoryItem(WeaponType.MELEE_KATANA));
-    equippedWMap.put(2, new InventoryItem(WeaponType.RANGED_BOOMERANG));
-    equippedWMap.put(3, new InventoryItem(WeaponType.WOODHAMMER));
+    equippedWMap.put("melee", new InventoryItem(WeaponType.MELEE_KATANA));
+    equippedWMap.put("ranged", new InventoryItem(WeaponType.RANGED_BOOMERANG));
+    equippedWMap.put("building", new InventoryItem(WeaponType.WOODHAMMER));
   }
 
   @Override
@@ -85,17 +86,17 @@ public class InventoryComponent extends Component {
   /**
    * @return int - the equipped weapon
    */
-  public int getEquipped() {
+  public String getEquipped() {
     return equipped;
   }
 
   /**
    * Changes active inventory slot to a specific slot
    * 
-   * @param i - the weapon to be equipped
+   * @param slot - the weapon to be equipped
    */
-  public void setEquipped(int i) {
-    this.equipped = i;
+  public void setEquipped(String slot) {
+    this.equipped = slot;
   }
 
   /**
@@ -104,10 +105,7 @@ public class InventoryComponent extends Component {
    * @param slot       the slot to be updated
    * @param weaponType the weapon type to be placed in the slot
    */
-  public void replaceSlotWithWeapon(int slot, WeaponType weaponType) {
-    if (slot > 3 || slot < 1) {
-      throw new IllegalArgumentException("Slot must be in range 1-3");
-    }
+  public void replaceSlotWithWeapon(String slot, WeaponType weaponType) {
     var item = equippedWMap.remove(slot);
     equippedWMap.put(slot, new InventoryItem(weaponType, item.getAmmo()));
   }
@@ -118,33 +116,19 @@ public class InventoryComponent extends Component {
   }
 
   public void placeInSlot(WeaponType weaponType) {
-    int slot = switch (config.GetWeaponConfig(weaponType).slotType) {
-      case "melee" -> 1; // melee
-      case "ranged" -> 2; // ranged
-      case "building" -> 3; // building
-      default -> throw new IllegalArgumentException("Slot not assigned: " + weaponType);
-    };
-    replaceSlotWithWeapon(slot, weaponType);
+    replaceSlotWithWeapon(config.GetWeaponConfig(weaponType).slotType, weaponType);
   }
 
   /**
    * Updates weapon of the active inventory slot
    *
-   * @param weaponType - Type of the new weapon
    */
-  public void changeEquipped(WeaponType weaponType) {
-    replaceSlotWithWeapon(getEquipped(), weaponType);
+  public void changeEquipped(WeaponType type) {
+    this.equipped = config.GetWeaponConfig(type).slotType;
   }
 
-  /**
-   * Cycles between equiped weapons
-   */
-  public void cycleEquipped() {
-    int equiped = getEquipped();
-    if (equiped == 3) {
-      this.equipped = 1;
-    } else
-      this.equipped++;
+  public String getSlotType(WeaponType weaponType) {
+    return config.GetWeaponConfig(weaponType).slotType;
   }
 
   /**

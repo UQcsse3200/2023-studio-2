@@ -13,8 +13,7 @@ import java.util.Map;
  * A Rendering component used to switch between different textures based on the current entity's health.
  */
 public class DamageTextureComponent extends RenderComponent {
-    private Map<Integer, Texture> thresholds;
-    private Texture texture = null;
+    private final Map<Integer, Texture> thresholds;
 
     /**
      * Creates a DamageTextureComponent with the given texture
@@ -65,7 +64,7 @@ public class DamageTextureComponent extends RenderComponent {
     protected void draw(SpriteBatch batch) {
         Vector2 position = entity.getPosition();
         Vector2 scale = entity.getScale();
-        texture = getCurrentHealthTexture();
+        Texture texture = getCurrentHealthTexture();
         batch.draw(texture, position.x, position.y, scale.x, scale.y);
     }
 

@@ -1,5 +1,8 @@
 {
   "RANGED_SLINGSHOT": {
+    "name" : "Slingshot",
+    "description": "Reliable range, decent damage. Ideal for distant targets.",
+    "damage" : 50,
     "weaponSpeed": 10,
     "weaponDuration": 50,
     "rotationSpeed": 0,
@@ -8,10 +11,14 @@
     "textureAtlas": "images/weapons/slingshot.atlas",
     "imageScale" : 1,
     "animationType" : 1,
-    "imagePath" : "images/weapons/slingshotStatic.png"
+    "imagePath" : "images/weapons/slingshotStatic.png",
+    "type" : "RANGED_SLINGSHOT"
   },
 
   "RANGED_BOOMERANG": {
+    "name" : "Boomerang",
+    "description": "Capable of hitting multiple enemies at once, a versatile choice.",
+    "damage" : 25,
     "weaponSpeed": 4,
     "weaponDuration": 155,
     "rotationSpeed": 2,
@@ -20,11 +27,15 @@
     "textureAtlas": "images/weapons/boomerang.atlas",
     "imageScale" : 0.5,
     "animationType" : 1,
-    "imagePath" : "images/weapons/boomerangStatic.png"
+    "imagePath" : "images/weapons/boomerangStatic.png",
+    "type" : "RANGED_BOOMERANG"
   },
 
   "RANGED_HOMING": {
-    "weaponSpeed": 3,
+    "name" : "Friendly Heat-Seeking Missile",
+    "description": "No need to aim perfectly! It finds its way by following warmth. Just launch and watch it make new friends!",
+    "damage" : 100,
+    "weaponSpeed": 5,
     "weaponDuration": 300,
     "rotationSpeed": 0,
     "initialRotationOffset": 0,
@@ -32,10 +43,14 @@
     "textureAtlas": "images/weapons/rocket.atlas",
     "imageScale" : 1.2,
     "animationType" : 8,
-    "imagePath" : "images/weapons/rocket_image.png"
+    "imagePath" : "images/weapons/rocket_image.png",
+    "type" : "RANGED_HOMING"
   },
 
   "MELEE_WRENCH": {
+    "name" : "Wrench",
+    "description": "Its a wrench, what more to say.",
+    "damage" : 50,
     "weaponSpeed": 10,
     "weaponDuration": 10,
     "rotationSpeed": 1,
@@ -45,10 +60,14 @@
     "textureAtlas": "images/weapons/wrench.atlas",
     "imageScale" : 0.8,
     "animationType" : 1,
-    "imagePath" : "images/weapons/wrench.png"
+    "imagePath" : "images/weapons/wrench.png",
+    "type" : "MELEE_WRENCH"
   },
 
   "MELEE_KATANA": {
+    "name" : "Katana",
+    "description": "Rich history, swift slashes. Its balance between speed and damage makes it deadly in close quarters.",
+    "damage" : 33,
     "weaponSpeed": 4,
     "weaponDuration": 20,
     "rotationSpeed": 1,
@@ -58,10 +77,14 @@
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 0.8,
     "animationType" : 4,
-    "imagePath" : "images/upgradetree/sword.png"
+    "imagePath" : "images/upgradetree/sword.png",
+    "type" : "MELEE_KATANA"
   },
 
   "MELEE_BEE_STING": {
+    "name" : "Bees",
+    "description": "Unleash the power of Bees!",
+    "damage" : 50,
     "weaponSpeed": 4,
     "weaponDuration": 45,
     "rotationSpeed": 0,
@@ -71,10 +94,14 @@
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 0.6,
     "animationType" : 4,
-    "imagePath" : "images/weapons/bee_sting.png"
+    "imagePath" : "images/weapons/bee_sting.png",
+    "type" : "MELEE_BEE_STING"
   },
 
   "STICK": {
+    "name" : "Stick",
+    "description": "The Stick, simple yet effective. While it might not be the strongest, it does its best",
+    "damage" : 1,
     "weaponSpeed": 0.75,
     "weaponDuration": 50,
     "rotationSpeed": 6,
@@ -83,24 +110,31 @@
     "attackCooldown": 10,
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
-    "imagePath" : "images/upgradetree/stick.png"
+    "imagePath" : "images/upgradetree/stick.png",
+    "type" : "STICK"
   },
 
   "WOODHAMMER": {
+    "name" : "Wooden Hammer",
+    "description": "For all your buildable needs. While not suitable for combat, it's an essential tool for construction.",
+    "damage" : 0,
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
-    "imagePath" : "images/upgradetree/hammer1.png"
+    "imagePath" : "images/upgradetree/hammer1.png",
+    "type" : "WOODHAMMER"
   },
 
   "STONEHAMMER": {
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
-    "imagePath" : "images/upgradetree/hammer2.png"
+    "imagePath" : "images/upgradetree/hammer2.png",
+    "type" : "STONEHAMMER"
   },
 
   "STEELHAMMER": {
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
-    "imagePath" : "images/upgradetree/hammer2.png"
+    "imagePath" : "images/upgradetree/hammer2.png",
+    "type" : "STEELHAMMER"
   }
 }

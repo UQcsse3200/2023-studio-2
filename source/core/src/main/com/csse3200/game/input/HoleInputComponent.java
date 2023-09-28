@@ -6,8 +6,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
 import static com.badlogic.gdx.math.MathUtils.floor;

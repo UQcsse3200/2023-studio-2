@@ -1,12 +1,5 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.components.tasks.RunTask;
-import com.csse3200.game.entities.configs.NPCConfigs;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.*;
-import com.csse3200.game.ui.DialogComponent;
-import com.csse3200.game.ui.DialogueBox;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -17,9 +10,7 @@ import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.structures.TurretTargetableComponent;
-import com.csse3200.game.components.tasks.AimTask;
-import com.csse3200.game.components.tasks.ChaseTask;
-import com.csse3200.game.components.tasks.WanderTask;
+import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
@@ -33,6 +24,10 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.DialogComponent;
+import com.csse3200.game.ui.DialogueBox;
+
 import java.util.List;
 /**
  * Factory to create non-playable enemies entities with predefined components.
@@ -69,6 +64,7 @@ public class EnemyFactory {
   public static Entity createEnemy(EnemyConfig config) {
     System.out.println(config.type);
     AnimationRenderComponent animator;
+    // Choose behaviour for enemy
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
@@ -215,7 +211,7 @@ public class EnemyFactory {
     if (type == EnemyType.Melee && !isPlayer && !matchingBehaviour) priority = 5; //Special case for player targeting melee
 
     //Special case for shooting player
-    if (type == EnemyType.Ranged || type == EnemyType.BossRanged) {
+    if (type == EnemyType.Ranged) {
       float aimDelay = 2f;
       float range = 3f;
       float shootDistance = 3f;
@@ -226,7 +222,23 @@ public class EnemyFactory {
       aiTaskComponent.addTask(new RunTask(target, 11, 2f));
       aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
     } else {
-      aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+      addBehaviour(type, aiTaskComponent, target, priority, viewDistance, maxChaseDistance);
+    }
+  }
+
+  static void addBehaviour(EnemyType type, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance) {
+    // Select behaviour
+    if (type == EnemyType.Melee) {
+      // Default
+      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+    } else if (type == EnemyType.BossMelee) {
+      // Sprint 2 Boss
+      aiComponent.addTask(new BossTask(type, target, priority, viewDistance, maxChaseDistance));
+    } else if (type == EnemyType.BossRanged) {
+      // Todo: add task here
+    } else {
+      // Default task
+      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
     }
   }
 

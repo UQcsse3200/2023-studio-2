@@ -59,10 +59,35 @@
       }
     }
   ],
-  "upgradeBench": {
+  "treetop": {
+    "position": {
+      "x": 0,
+      "y": 30
+    },
+    "spritePath": "map/treetop.png",
+    "scaleH": 30,
+    "scaleX": 0.5,
+    "scaleY": 0.2
+  },
+  "botanist": {
+    "spritePath": "images/botanist.atlas",
     "position" : {
       "x": 20,
-      "y": 40
+      "y": 15
+    }
+  },
+  "Astro": {
+    "spritePath": "images/Astro_NPC.atlas",
+    "position" : {
+      "x": 24,
+      "y": 50
+    }
+  },
+  "Jail": {
+    "spritePath": "images/Jail/jail.atlas",
+    "position" : {
+      "x": 23,
+      "y": 50
     }
   }
 }

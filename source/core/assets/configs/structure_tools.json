@@ -44,7 +44,6 @@
       "level": 0,
       "name": "Extractor",
       "cost": {
-        "Solstite": 0
       },
       "texture": "images/structures/refinedExtractor.png"
     }

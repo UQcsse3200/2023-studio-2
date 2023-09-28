@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.rendering.AtlasRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -43,7 +44,7 @@ public class JoinableComponent extends AtlasRenderComponent {
 
         // finds current position.
         StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
-        GridPoint2 centrePosition = structurePlacementService.getStructurePosition(entity);
+        GridPoint2 centrePosition = structurePlacementService.getStructurePosition((PlaceableEntity) entity);
 
         if (centrePosition == null) {
             return;
@@ -166,7 +167,7 @@ public class JoinableComponent extends AtlasRenderComponent {
      */
     public void notifyNeighbours(boolean isJoined) {
         StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
-        GridPoint2 centrePosition = structurePlacementService.getStructurePosition(entity);
+        GridPoint2 centrePosition = structurePlacementService.getStructurePosition((PlaceableEntity) entity);
 
         notifyNeighbour(JoinDirection.UP, centrePosition, isJoined);
         notifyNeighbour(JoinDirection.DOWN, centrePosition, isJoined);

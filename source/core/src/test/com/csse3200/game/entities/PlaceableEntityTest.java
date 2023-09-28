@@ -96,7 +96,7 @@ class PlaceableEntityTest {
 
     @BeforeEach
     void before() {
-        placeableEntity = new PlaceableEntity(1, height);
+        placeableEntity = new PlaceableEntity(1, 1);
         placeableEntity.addComponent(placeable);
         placeableEntity.addComponent(placeable2);
         placeableEntity.addComponent(placeable3);

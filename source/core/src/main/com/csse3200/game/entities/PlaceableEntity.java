@@ -16,15 +16,6 @@ public class PlaceableEntity extends Entity {
         this.height = height;
     }
 
-    public void setGridPosition(GridPoint2 position) {
-        this.position = position;
-
-    }
-
-    public GridPoint2 getGridPosition() {
-        return position;
-    }
-
     public int getWidth() {
         return width;
     }

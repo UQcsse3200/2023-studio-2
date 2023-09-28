@@ -74,7 +74,7 @@ public class StructureFactory {
         animator.addAnimation("animateBroken", 0.2f,Animation.PlayMode.LOOP);
         animator.addAnimation("animateExtracting", 0.2f, Animation.PlayMode.LOOP);
 
-        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity(2, 2)
+        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity(3, 3)
                 .irremovable()
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))

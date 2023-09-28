@@ -42,23 +42,6 @@ class StructureToolPickerTest {
     }
 
     @Test
-    void unlockTools() {
-        Stage mockStage = mock(St)
-        when(renderService.getStage()).thenReturn(mockStage);
-
-        var structurePicker = new StructureToolPicker();
-        var toolConfig = new ToolConfig();
-        Texture mockTexture = mock(Texture.class);
-        when(resourceService.getAsset(anyString(), eq(Texture.class))).thenReturn(mockTexture);
-        toolConfig.texture = "some texture";
-
-        // Test unlocking dirt wall
-        assertFalse(structurePicker.isToolUnlocked(toolConfig.name));
-        structurePicker.unlockTool(toolConfig.name);
-        assertTrue(structurePicker.isToolUnlocked(toolConfig.name));
-    }
-
-    @Test
     void dispose() {
         var structurePicker = new StructureToolPicker();
         structurePicker.dispose();

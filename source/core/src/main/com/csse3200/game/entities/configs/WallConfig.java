@@ -8,4 +8,5 @@ import com.csse3200.game.entities.buildables.WallType;
 public class WallConfig extends BaseEntityConfig {
     public int health = 0;
     public WallType type;
+    public SoundsConfig sounds;
 }

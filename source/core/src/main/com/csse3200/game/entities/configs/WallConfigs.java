@@ -9,6 +9,7 @@ public class WallConfigs {
     public WallConfig basic = new WallConfig();
     public WallConfig intermediate = new WallConfig();
     public WallConfig gate = new WallConfig();
+    public SoundsConfig sounds;
 
     public WallConfig GetWallConfig(WallType type) {
         return switch (type) {

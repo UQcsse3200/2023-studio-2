@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.ProximityActivationComponent;
+import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.structures.JoinLayer;
 import com.csse3200.game.components.structures.JoinableComponent;
 import com.csse3200.game.components.structures.JoinableComponentShapes;
@@ -62,7 +63,8 @@ public class Wall extends PlaceableEntity {
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));
         addComponent(new ProximityActivationComponent(1.5f, player, this::onPlayerEnter, this::onPlayerExit));
-        addComponent(new StructureDestroyComponent());
+        addComponent(new StructureDestroyComponent())
+                .addComponent(new SoundComponent(config.sounds));
 
         getComponent(JoinableComponent.class).scaleEntity();
     }

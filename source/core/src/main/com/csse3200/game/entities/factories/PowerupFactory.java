@@ -45,15 +45,15 @@ public class PowerupFactory {
 
         // Assigns texture based on the specific PowerupType
         switch (config.type) {
-            case HEALTH_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/Potion2re.png"))
+            case HEALTH_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/powerups/health_potion.png"))
                                          .addComponent(new PowerupComponent(PowerupType.HEALTH_BOOST));}
-            case SPEED_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/Potion4re.png"))
+            case SPEED_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/powerups/speed_potion.png"))
                                          .addComponent(new PowerupComponent(PowerupType.SPEED_BOOST));}
             case EXTRA_LIFE -> {powerup.addComponent(new TextureRenderComponent("images/powerups/extra_life.png"))
                                          .addComponent(new PowerupComponent(PowerupType.EXTRA_LIFE));}
             case DOUBLE_CROSS -> {powerup.addComponent(new TextureRenderComponent("images/powerups/double_cross.png"))
                                          .addComponent(new PowerupComponent(PowerupType.DOUBLE_CROSS));}
-            case TEMP_IMMUNITY -> {powerup.addComponent(new TextureRenderComponent("images/Potion1re.png"))
+            case TEMP_IMMUNITY -> {powerup.addComponent(new TextureRenderComponent("images/powerups/invincibility_potion.png"))
                                           .addComponent(new PowerupComponent(PowerupType.TEMP_IMMUNITY));}
             case DOUBLE_DAMAGE -> {powerup.addComponent(new TextureRenderComponent("images/powerups/double_damage.png"))
                                           .addComponent(new PowerupComponent(PowerupType.DOUBLE_DAMAGE));}
@@ -124,4 +124,5 @@ public class PowerupFactory {
      * @return Entity representing a snap power-up.
      */
     public static Entity createSnapPowerup() { return createPowerup(configs.snapPowerup);}
+    public static Entity createDeathPotion(){return createPowerup(configs.death_potion);}
 }

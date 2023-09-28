@@ -111,6 +111,8 @@ public class MapGameArea extends GameArea{
 
         if (mapConfig == null) return;
         resourceService.loadDynamicAssets(mapConfig.getEntityTextures());
+        if (mapConfig.planetImage != null)
+            resourceService.loadTextures(new String[] {mapConfig.planetImage});
         AssetsConfig assets = mapConfig.assets;
 
         if (assets != null) {

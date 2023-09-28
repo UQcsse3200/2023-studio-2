@@ -40,6 +40,10 @@ public class AssetsConfig {
         return result;
     }
 
+    /**
+     * Loads all assets contained within this config class
+     * @param resourceService Resource service to be loaded into
+     */
     public void load(ResourceService resourceService) {
         if (texturePaths != null)
             resourceService.loadTextures(texturePaths);
@@ -53,6 +57,10 @@ public class AssetsConfig {
             resourceService.loadMusic(new String[] {backgroundMusicPath});
     }
 
+    /**
+     * Unloads all assets contained within this config class
+     * @param resourceService Resource service to be unloaded from
+     */
     public void unload(ResourceService resourceService) {
         if (texturePaths != null)
             resourceService.unloadAssets(texturePaths);

@@ -54,6 +54,8 @@ public class PlanetScreen extends ScreenAdapter {
     /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
+    private static final String SAVEDIR = "save";
+
     /** Service Instances */
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
@@ -205,7 +207,16 @@ public class PlanetScreen extends ScreenAdapter {
      */
     @Override
     public void dispose() {
+        saveGame();
         this.clear();
+    }
+
+    private void saveGame() {
+        String path = String.format("%s/%s/%s/entities.json", SAVEDIR, this.name, this.currentAreaName);
+        ServiceLocator.getEntityService().saveCurrentArea(path);
+
+        Map<String, Object> gameStateEntries = new HashMap<>(ServiceLocator.getGameStateObserverService().getFullStateData());
+        FileLoader.writeClass(gameStateEntries, SAVEDIR + "/gamestate.json", FileLoader.Location.LOCAL);
     }
 
     /**

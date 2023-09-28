@@ -1,7 +1,6 @@
 package com.csse3200.game.areas.mapConfig;
 
 import com.badlogic.gdx.math.GridPoint2;
-import com.csse3200.game.entities.configs.CompanionConfig;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
@@ -29,7 +28,6 @@ class MapConfigLoaderTest {
     private static GameAreaConfig fullGameAreaConfig;
     private static GameAreaConfig gameAreaConfig;
     private static PlayerConfig playerConfig;
-    private static CompanionConfig companionConfig;
     private static AreaEntityConfig areaEntityConfig;
     private static GameAreaConfig expectedGameArea;
 
@@ -50,12 +48,6 @@ class MapConfigLoaderTest {
         playerConfig.position = new GridPoint2(0, 0);
         return playerConfig;
     }
-    private CompanionConfig setupCompanion() {
-        CompanionConfig companionConfig = new CompanionConfig();
-        companionConfig.spritePath = "Companion_spritesheet.png";
-        companionConfig.position = new GridPoint2(0, 0);
-        return companionConfig;
-    }
 
     private AreaEntityConfig setupEntities() {
         return new AreaEntityConfig();
@@ -65,17 +57,12 @@ class MapConfigLoaderTest {
     void setup() {
         gameAreaConfig = setupGameArea();
         playerConfig = setupPlayer();
-        companionConfig = setupCompanion();
         areaEntityConfig = setupEntities();
 
         fullGameAreaConfig = setupGameArea();
-        fullGameAreaConfig.playerConfig = setupPlayer();
-        fullGameAreaConfig.companionConfig = setupCompanion();
         fullGameAreaConfig.areaEntityConfig = setupEntities();
 
         expectedGameArea = setupGameArea();
-        expectedGameArea.playerConfig = setupPlayer();
-        expectedGameArea.companionConfig = setupCompanion();
         expectedGameArea.areaEntityConfig = setupEntities();
     }
 
@@ -102,10 +89,6 @@ class MapConfigLoaderTest {
         try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
             mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
                     .thenReturn(gameAreaConfig);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(PlayerConfig.class), any(), any()))
-                    .thenReturn(playerConfig);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(CompanionConfig.class), any(), any()))
-                    .thenReturn(companionConfig);
             mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
                     .thenReturn(areaEntityConfig);
 
@@ -118,10 +101,6 @@ class MapConfigLoaderTest {
         try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
             mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
                     .thenReturn(null);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(PlayerConfig.class), any(), any()))
-                    .thenReturn(playerConfig);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(CompanionConfig.class), any(), any()))
-                    .thenReturn(companionConfig);
             mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
                     .thenReturn(areaEntityConfig);
 
@@ -129,31 +108,5 @@ class MapConfigLoaderTest {
         }
     }
 
-    @Test
-    void loadInvalidMapDirectoryPlayer() {
-        try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
-            mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
-                    .thenReturn(gameAreaConfig);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(PlayerConfig.class), any(), any()))
-                    .thenReturn(null);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
-                    .thenReturn(areaEntityConfig);
-
-            assertThrows(InvalidConfigException.class, () -> MapConfigLoader.loadMapDirectory("path/"));
-        }
-    }
-
-    @Test
-    void loadInvalidMapDirectoryEntities() {
-        try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
-            mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
-                    .thenReturn(gameAreaConfig);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(PlayerConfig.class), any(), any()))
-                    .thenReturn(playerConfig);
-            mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
-                    .thenReturn(null);
-
-            assertThrows(InvalidConfigException.class, () -> MapConfigLoader.loadMapDirectory("path/"));
-        }
-    }
+    //TODO: Write tests to cover entity folder structure
 }

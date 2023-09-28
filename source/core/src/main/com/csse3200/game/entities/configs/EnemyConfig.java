@@ -6,15 +6,11 @@ import com.csse3200.game.entities.enemies.EnemyType;
 /**
  * Defines the properties stored in Enemy config files to be loaded by the NPC Factory.
  */
-public class EnemyConfig extends BaseEntityConfig {
+public class EnemyConfig extends HealthEntityConfig {
   // Load enemy information here
   public int speed = 1;
   public EnemyBehaviour behaviour;
   public EnemyType type;
-  public int health;
-  public int baseAttack;
-  public int attackMultiplier = 1;
-  public boolean isImmune = false;
   public boolean isBoss = false;
   public int specialAttack;
 

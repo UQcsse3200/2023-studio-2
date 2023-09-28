@@ -4,7 +4,7 @@ package com.csse3200.game.entities.configs;
  * Defines the properties stored in Companion config files to be loaded by the Companion Factory.
  * Extends {@link BaseEntityConfig} to inherit common entity configuration properties.
  */
-public class CompanionConfig extends BaseEntityConfig {
+public class CompanionConfig extends HealthEntityConfig {
 
     public int speed;
     public int health;

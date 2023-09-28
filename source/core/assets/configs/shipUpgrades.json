@@ -1,6 +1,6 @@
 {
   "healthUpgrade": {
-    "spritePath": "images/LeftShip.png",
+    "spritePath": "images/ship/Ship.png",
     "type": "HEALTH_UPGRADE"
   },
   "fuelUpgrade": {

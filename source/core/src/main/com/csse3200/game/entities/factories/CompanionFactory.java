@@ -8,14 +8,17 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.*;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionConfig;
+import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -81,7 +84,14 @@ public class CompanionFactory {
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new FollowComponent(player,1f))
                         .addComponent(new InteractionControllerComponent(false));
-        animator.startAnimation("Companion_StandDown");
+                         companion.addComponent(new SaveableComponent<>(p -> {
+                               CompanionConfig companionConfig = config;
+                               companionConfig.position = new GridPoint2((int) companion.getPosition().x, (int)companion.getPosition().y);
+                               companionConfig.health = companion.getComponent(CombatStatsComponent.class).getHealth();
+                               return companionConfig;
+                                         }, CompanionConfig.class));
+
+                        animator.startAnimation("Companion_StandDown");
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
         companion.scaleHeight(0.9f);

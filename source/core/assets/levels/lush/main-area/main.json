@@ -40,8 +40,8 @@
     ],
     "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
   },
-  "mapName": "Planet Lush",
-  "planetImage": "images/space_navigation_planet_1.png",
+  "mapName": "Verdant Oasis",
+  "planetImage": "images/navigationmap/planets/verdant_oasis.png",
   "terrainPath": "map/map1.tmx",
   "winConditions": [
     {

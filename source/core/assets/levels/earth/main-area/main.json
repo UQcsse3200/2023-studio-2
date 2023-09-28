@@ -42,8 +42,8 @@
     "particleEffectPaths": null,
     "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
   },
-  "mapName": "Planet Earth",
-  "planetImage": "images/space_navigation_planet_0.png",
+  "mapName": "Earth",
+  "planetImage": "images/navigationmap/planets/earth.png",
   "terrainPath": "map/base.tmx",
   "winConditions": [
     {

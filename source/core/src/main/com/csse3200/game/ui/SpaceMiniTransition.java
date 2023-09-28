@@ -78,9 +78,9 @@ public class SpaceMiniTransition extends Actor {
                 // Change the screen after the transition
                 // Replace with your actual screen class
                 if (isExit)
-                    this.callback.run();
-                else
                     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                else
+                    this.callback.run();
             }
         }
     }

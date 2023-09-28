@@ -18,6 +18,7 @@ import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
@@ -98,7 +99,7 @@ public class SpaceMapScreen extends ScreenAdapter {
     {
         if(d < 1.0) {
             this.unloadAssets();
-            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+            new PlanetTravel(game).beginInstantTravel();
         }
     }
 

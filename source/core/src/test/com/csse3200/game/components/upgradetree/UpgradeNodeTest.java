@@ -28,19 +28,23 @@ public class UpgradeNodeTest {
 
         WeaponConfig stickConfig = mock(WeaponConfig.class);
         when(weaponConfigs.GetWeaponConfig(WeaponType.STICK)).thenReturn(stickConfig);
+        stickConfig.type = WeaponType.STICK;
         WeaponConfig woodHammerConfig = mock(WeaponConfig.class);
+        woodHammerConfig.type = WeaponType.WOODHAMMER;
         when(weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER)).thenReturn(woodHammerConfig);
         WeaponConfig katanaConfig = mock(WeaponConfig.class);
+        katanaConfig.type = WeaponType.MELEE_KATANA;
         when(weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA)).thenReturn(katanaConfig);
         WeaponConfig elecWrenchConfig = mock(WeaponConfig.class);
+        elecWrenchConfig.type = WeaponType.MELEE_WRENCH;
         when(weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH)).thenReturn(elecWrenchConfig);
 
-        node = new UpgradeNode(stickConfig, WeaponType.STICK);
+        node = new UpgradeNode(stickConfig);
     }
 
     @Test
     void testAddChild() {
-        UpgradeNode child = new UpgradeNode(weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER), WeaponType.WOODHAMMER);
+        UpgradeNode child = new UpgradeNode(weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER));
         node.addChild(child);
         assertTrue(node.getChildren().contains(child));
     }
@@ -51,9 +55,9 @@ public class UpgradeNodeTest {
         WeaponConfig elecWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
         WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA);
 
-        UpgradeNode child1 = new UpgradeNode(woodhammerConfig, WeaponType.STONEHAMMER);
-        UpgradeNode child2 = new UpgradeNode(elecWrenchConfig, WeaponType.MELEE_WRENCH);
-        UpgradeNode child3 = new UpgradeNode(katanaConfig, WeaponType.MELEE_KATANA);
+        UpgradeNode child1 = new UpgradeNode(woodhammerConfig);
+        UpgradeNode child2 = new UpgradeNode(elecWrenchConfig);
+        UpgradeNode child3 = new UpgradeNode(katanaConfig);
 
         node.addChild(child1);
         node.addChild(child2);
@@ -70,7 +74,7 @@ public class UpgradeNodeTest {
     @Test
     void testGetSingleChild() {
         WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
-        UpgradeNode child1 = new UpgradeNode(woodhammerConfig, WeaponType.WOODHAMMER);
+        UpgradeNode child1 = new UpgradeNode(woodhammerConfig);
         ArrayList<UpgradeNode> dummy = new ArrayList<>();
 
         node.addChild(child1);
@@ -86,9 +90,9 @@ public class UpgradeNodeTest {
         WeaponConfig elecWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
         WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA);
 
-        UpgradeNode child1 = new UpgradeNode(woodhammerConfig, WeaponType.STONEHAMMER);
-        UpgradeNode child2 = new UpgradeNode(elecWrenchConfig, WeaponType.MELEE_WRENCH);
-        UpgradeNode child3 = new UpgradeNode(katanaConfig, WeaponType.MELEE_KATANA);
+        UpgradeNode child1 = new UpgradeNode(woodhammerConfig);
+        UpgradeNode child2 = new UpgradeNode(elecWrenchConfig);
+        UpgradeNode child3 = new UpgradeNode(katanaConfig);
         ArrayList<UpgradeNode> dummy = new ArrayList<>();
 
         node.addChild(child1);
@@ -117,13 +121,13 @@ public class UpgradeNodeTest {
         WeaponConfig elecWrenchConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
 
         // Ensures depth1 cost is: base cost * (depth=1 + 1)
-        UpgradeNode child1 = new UpgradeNode(woodhammerConfig, WeaponType.STONEHAMMER);
+        UpgradeNode child1 = new UpgradeNode(woodhammerConfig);
         node.addChild(child1);
         child1.setDepth(1);
         assertEquals(200, child1.getNodeCost());
 
         // Ensures depth1 cost is: base cost * (depth=2 + 1)
-        UpgradeNode child2 = new UpgradeNode(elecWrenchConfig, WeaponType.MELEE_WRENCH);
+        UpgradeNode child2 = new UpgradeNode(elecWrenchConfig);
         child1.addChild(child2);
         child2.setDepth(2);
         assertEquals(300, child2.getNodeCost());

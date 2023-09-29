@@ -43,9 +43,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private InventoryComponent inventory;
   private Entity player;
   private Label ammoLabel;
-  private Image weaponImage;
   private Table weaponImageTable;
-  private Table ammoInfo;
 
   /**
    * Constructor for the PlayerStatsDisplay
@@ -185,7 +183,7 @@ public class PlayerStatsDisplay extends UIComponent {
     ammoBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
 
     WeaponConfig config = inventory.getConfigs().GetWeaponConfig(inventory.getEquippedType());
-    weaponImage = new Image( new Texture(config.imagePath));
+    Image weaponImage = new Image( new Texture(config.imagePath));
     int currentAmmo = inventory.getCurrentAmmo();
     int maxAmmo = inventory.getCurrentMaxAmmo();
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
@@ -198,7 +196,7 @@ public class PlayerStatsDisplay extends UIComponent {
     weaponImageTable = new Table();
     weaponImageTable.add(weaponImage).size(30f);
 
-    ammoInfo = new Table();
+    Table ammoInfo = new Table();
     ammoInfo.add(weaponImageTable).pad(5).padTop(10).left();
     ammoInfo.add(ammoLabel).pad(5).padTop(10).right();
 
@@ -257,15 +255,23 @@ public class PlayerStatsDisplay extends UIComponent {
     livesBarFill.setWidth(lives*30);
   }
 
-
+  /**
+   * Updates the current and max ammo displaying in the player HUD
+   * @param currentAmmo the current ammo of the weapon equipped
+   * @param maxAmmo the max ammo of the weapon equipped
+   */
   public void updateAmmo(int currentAmmo, int maxAmmo) {
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
     ammoLabel.setText(ammoText);
   }
 
+  /**
+   * Updates the weapon equipped in the player HUD
+   * @param weapon the new weapon
+   */
   public void updateWeapon(WeaponType weapon) {
     WeaponConfig config = inventory.getConfigs().GetWeaponConfig(weapon);
-    weaponImage = new Image( new Texture(config.imagePath));
+    Image weaponImage = new Image( new Texture(config.imagePath));
     weaponImageTable.clear();
     weaponImageTable.add(weaponImage).size(30f);
     updateAmmo(inventory.getCurrentAmmo(), inventory.getCurrentMaxAmmo());

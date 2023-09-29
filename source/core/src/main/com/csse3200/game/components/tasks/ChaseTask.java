@@ -10,7 +10,6 @@ import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.utils.Timer;
-import java.util.ArrayList;
 
 /** Chases a target entity until they get too far away or line of sight is lost */
 public class ChaseTask extends DefaultTask implements PriorityTask {
@@ -18,7 +17,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private final int priority;
   private final float viewDistance;
   private final float maxChaseDistance;
-  private float shootDistance;
+  private final float shootDistance;
   private final PhysicsEngine physics;
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();

@@ -9,32 +9,32 @@
   "spawners": [
     {
       "wave1" : [
-        1,
+        10,
         0,
         0
       ],
       "wave2" : [
-        0,
-        0,
+        10,
+        5,
         0
       ],
       "wave3" : [
-        0,
-        0,
+        10,
+        10,
         0
       ],
       "position": {
-        "x": 20,
+        "x": 40,
         "y": 40
       }
     }
   ],
   "portals": [
     {
-      "teleportX" : 37,
+      "teleportX" : 39,
       "teleportY" : 10,
       "position": {
-        "x": 27,
+        "x": 28,
         "y": 40
       }
     },
@@ -42,8 +42,8 @@
       "teleportX" : 15,
       "teleportY" : 20,
       "position": {
-        "x": 75,
-        "y": 18
+        "x": 76,
+        "y": 19
       }
     }
   ],
@@ -59,12 +59,6 @@
       }
     }
   ],
-  "upgradeBench": {
-    "position" : {
-      "x": 20,
-      "y": 40
-    }
-  },
   "treetop": {
     "position": {
       "x": 0,
@@ -72,7 +66,28 @@
     },
     "spritePath": "map/treetoplush.png",
     "scaleH": 50,
-    "scaleX": 0.5,
-    "scaleY": 0.2
+    "scaleX": 0.83333,
+    "scaleY": 0.33333
+  },
+  "botanist": {
+    "spritePath": "images/botanist.atlas",
+    "position" : {
+      "x": 20,
+      "y": 15
+    }
+  },
+  "Astro": {
+    "spritePath": "images/Astro_NPC.atlas",
+    "position" : {
+      "x": 24,
+      "y": 50
+    }
+  },
+  "Jail": {
+    "spritePath": "images/Jail/jail.atlas",
+    "position" : {
+      "x": 23,
+      "y": 50
+    }
   }
 }

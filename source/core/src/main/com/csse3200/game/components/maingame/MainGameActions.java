@@ -2,6 +2,8 @@ package com.csse3200.game.components.maingame;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.configs.PlayerConfig;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -14,6 +16,8 @@ import org.slf4j.LoggerFactory;
 public class MainGameActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
   private GdxGame game;
+  private static final PlayerConfig config =
+          FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
   public MainGameActions(GdxGame game) {
     this.game = game;
@@ -29,11 +33,13 @@ public class MainGameActions extends Component {
    */
   private void onExit() {
     logger.info("Exiting main game screen");
+    game.setPlayerLives(config.lives); // Resets number of player's lives.
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 
   protected void onReturnPlanet() {
     logger.info("Exiting to current planet screen");
+    game.setPlayerLives(config.lives); // Resets number of player's lives.
     game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
   }
 

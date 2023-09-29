@@ -1,6 +1,7 @@
 package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.structures.CostComponent;
 import com.csse3200.game.entities.Entity;
@@ -33,10 +34,14 @@ public abstract class PlacementTool extends Tool {
     @Override
     public boolean interact(Entity player, GridPoint2 position) {
         if (!isPositionValid(position)) {
+            player.getEvents().trigger("displayWarningAtPosition", "Invalid position",
+                    new Vector2((float) position.x / 2, (float) position.y / 2));
             return false;
         }
 
         if (!hasEnoughResources()) {
+            player.getEvents().trigger("displayWarningAtPosition", "Insufficient resources",
+                    new Vector2((float) position.x / 2, (float) position.y / 2));
             return false;
         }
 

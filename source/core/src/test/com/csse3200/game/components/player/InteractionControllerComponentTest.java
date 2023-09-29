@@ -16,8 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
-public class
-InteractionControllerComponentTest {
+public class InteractionControllerComponentTest {
     @Mock
     EntityService entityService;
 

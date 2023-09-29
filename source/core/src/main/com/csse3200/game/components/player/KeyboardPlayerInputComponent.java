@@ -152,38 +152,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             default -> {
                 return false;
             }
-//            case Keys.NUMPAD_0 -> {
-//                playerInventory.changeEquipped();
-//                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-//                return true;
-//            } case Keys.NUMPAD_1 -> {
-//                playerInventory.changeEquipped(WeaponType.MELEE_KATANA);
-//                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-//                return true;
-//            } case Keys.NUMPAD_2 -> {
-//                playerInventory.changeEquipped(WeaponType.MELEE_BEE_STING);
-//                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-//                return true;
-//            } case Keys.NUMPAD_3 -> {
-//                playerInventory.changeEquipped(WeaponType.RANGED_SLINGSHOT);
-//                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-//                return true;
-//            } case Keys.NUMPAD_4 -> {
-//                playerInventory.changeEquipped(WeaponType.RANGED_BOOMERANG);
-//                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-//                return true;
-//            } case Keys.NUMPAD_5 -> {
-//                playerInventory.changeEquipped(WeaponType.RANGED_HOMING);
-//                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-//                return true;
-//            } case Keys.BACKSLASH -> {
-//                playerInventory.changeEquippedAmmo(Integer.MAX_VALUE / 3);
-//                return true;
-//            } default -> {
-//                return false;
-//            }
-
-
         }
     }
 

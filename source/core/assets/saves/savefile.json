@@ -6,7 +6,7 @@ entities: {
 			spritePath: images/player/player.atlas
 			position: {
 				x: 9
-				y: 18
+				y: 24
 			}
 			health: 100
 			baseAttack: 10

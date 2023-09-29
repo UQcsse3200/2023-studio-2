@@ -13,6 +13,7 @@ import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import net.dermetfan.gdx.physics.box2d.PositionController;
 
 import java.util.HashMap;
 import java.util.Timer;
@@ -255,8 +256,8 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param lives the number that is being updated to
    */
   public void updatePlayerLives(int lives) {
-    hearts.setRegionWidth(lives*15);
-    livesBarFill.setWidth(lives*30);
+    hearts.setRegionWidth(lives * 15);
+    livesBarFill.setWidth(lives * 30);
   }
 
   /**
@@ -266,6 +267,9 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   public void updateAmmo(int currentAmmo, int maxAmmo) {
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
+    if (maxAmmo == 100) {  // todo: make non-ammo things not have ammo
+      ammoText = "    -";
+    }
     ammoLabel.setText(ammoText);
   }
 

@@ -197,7 +197,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       // melee/ranged
 
         case "melee", "ranged":
-            System.out.println(playerInventory.getCurrentAmmo());
             if (playerInventory.getCurrentAmmo() <= 0) {return false;}
 
             if (button == Input.Buttons.LEFT) {

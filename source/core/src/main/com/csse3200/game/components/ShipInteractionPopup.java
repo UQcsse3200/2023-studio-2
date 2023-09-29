@@ -20,8 +20,6 @@ import com.csse3200.game.services.ServiceLocator;
 public class ShipInteractionPopup extends Window {
     private final InputOverrideComponent inputOverrideComponent;
 
-    private Label descriptionLabel;
-
     public ShipInteractionPopup() {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, getBrownBackgroundStatic()));
 
@@ -39,7 +37,7 @@ public class ShipInteractionPopup extends Window {
         add(titleLabel).padTop(20).center().top().expandX();
         row();
 
-        descriptionLabel = new Label("The ship is not ready yet for takeoff", labelStyle);
+        Label descriptionLabel = new Label("The ship is not ready yet for takeoff", labelStyle);
         descriptionLabel.setWidth(popupWidth * 0.9f);  // Using 90% of the popup width
         descriptionLabel.setWrap(true); //helps the text to stay within the bounds of the popup
         add(descriptionLabel).width(popupWidth * 0.9f).padTop(20).padLeft(popupWidth * 0.05f).expand().fill();

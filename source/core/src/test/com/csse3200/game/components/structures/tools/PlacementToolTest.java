@@ -1,15 +1,12 @@
 package com.csse3200.game.components.structures.tools;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
@@ -21,9 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -58,7 +52,7 @@ class PlacementToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 
@@ -76,7 +70,7 @@ class PlacementToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(mock(PlaceableEntity.class));
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(false);
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
@@ -98,7 +92,7 @@ class PlacementToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 
@@ -122,7 +116,7 @@ class PlacementToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 

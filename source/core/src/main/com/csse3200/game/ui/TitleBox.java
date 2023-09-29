@@ -18,7 +18,7 @@ import static com.csse3200.game.screens.MainMenuScreen.logger;
 
 public class TitleBox extends Dialog {
 
-    private GdxGame game;
+    private final GdxGame game;
 
     /**
      * Constructs a TitleBox dialog.

@@ -3,5 +3,6 @@
   "baseAttack": 10,
   "attackMultiplier": 1,
   "isImmune": false,
-  "spritePath": "images/player/player.atlas"
+  "spritePath": "images/player/player.atlas",
+  "lives": 3
 }

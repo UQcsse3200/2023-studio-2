@@ -8,7 +8,7 @@ import com.csse3200.game.components.player.IAlpha;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
- * Extends BaseDrawable to implement the ability to create a drawable for a custom color.
+ * This class is used to programmatically create a color which can be used as a background in UI components.
  * Taken from a <a href="https://stackoverflow.com/a/54642587">StackOverflow answer</a> by Steve Moseley.
  */
 public class ColorDrawable extends BaseDrawable implements IAlpha {
@@ -44,8 +44,10 @@ public class ColorDrawable extends BaseDrawable implements IAlpha {
         savedBatchColor.set(batch.getColor());
         batch.setColor(red, green, blue, alpha);
         // Draw a white texture with the current batch colour
-        batch.draw(ServiceLocator.getResourceService().getAsset("images/white_color_texture.png", Texture.class),
-                x, y, width, height);
+
+        batch.draw(ServiceLocator.getResourceService()
+                .getAsset("images/action-feedback/white_color_texture.png", Texture.class),
+                    x, y, width, height);
         batch.setColor(savedBatchColor);
     }
 

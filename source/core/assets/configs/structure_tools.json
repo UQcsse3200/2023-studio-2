@@ -4,7 +4,6 @@
       "level": 0,
       "name": "Dirt Wall",
       "cost": {
-        "Durasteel": 25
       },
       "texture": "images/structure-icons/wall.png"
     },
@@ -44,9 +43,8 @@
       "level": 0,
       "name": "Extractor",
       "cost": {
-        "Solstite": 0
       },
-      "texture": "images/refinedExtractor2.png"
+      "texture": "images/structures/refinedExtractor.png"
     }
   }
 }

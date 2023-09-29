@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
@@ -44,7 +46,7 @@ public class MiniScreenDisplay extends UIComponent {
         background =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/RELAUNCH MISSION-2.png", Texture.class));
+                                .getAsset("images/minigame/RELAUNCH_MISSION-2.png", Texture.class));
         background.setPosition(0, 0);
 
         // Scale the height of the background to maintain the original aspect ratio of the image

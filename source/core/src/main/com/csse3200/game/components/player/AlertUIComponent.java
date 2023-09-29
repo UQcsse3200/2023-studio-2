@@ -49,7 +49,7 @@ public class AlertUIComponent extends UIComponent implements IAlpha {
         label.setColor(Color.BLACK);
 
         Texture texture = ServiceLocator.getResourceService()
-                .getAsset("images/ActionFeedback/warning.png", Texture.class);
+                .getAsset("images/action-feedback/warning.png", Texture.class);
         Image image = new Image(texture);
 
         innerTable.add(image).padLeft(5).size(30,30);

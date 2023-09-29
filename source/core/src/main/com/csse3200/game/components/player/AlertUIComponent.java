@@ -104,7 +104,19 @@ public class AlertUIComponent extends UIComponent implements IAlpha {
     @Override
     public void setAlpha(float alpha) {
         this.alpha = alpha;
-        backgroundColor1.setAlpha(alpha);
-        backgroundColor2.setAlpha(alpha);
+
+        if (backgroundColor1 != null && backgroundColor2 != null) {
+            backgroundColor1.setAlpha(alpha);
+            backgroundColor2.setAlpha(alpha);
+        }
+    }
+
+    /**
+     * Returns the alpha of the component.
+     *
+     * @return the alpha of the component.
+     */
+    public float getAlpha() {
+        return alpha;
     }
 }

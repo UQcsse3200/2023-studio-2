@@ -3,6 +3,7 @@ package com.csse3200.game.files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.csse3200.game.files.FileLoader.Location;
+import com.badlogic.gdx.math.Vector2;
 
 import java.io.File;
 
@@ -40,6 +41,10 @@ public class UserSettings {
       applySettings(settings);
     }
   }
+
+  public static void set(Vector2 direction) {
+  }
+
 
   /**
    * Apply the given settings without storing them.

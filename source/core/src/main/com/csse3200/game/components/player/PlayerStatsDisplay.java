@@ -71,6 +71,9 @@ public class PlayerStatsDisplay extends UIComponent {
     entity.getEvents().addListener("maxLivesAlert", this::maxLivesReached);
     entity.getEvents().addListener("updateAmmo", this::updateAmmo);
     entity.getEvents().addListener("changeWeapon", this::updateWeapon);
+
+    InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+    this.updateAmmo(invComp.getCurrentAmmo(),invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
   }
 
   /**
@@ -265,9 +268,9 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param currentAmmo the current ammo of the weapon equipped
    * @param maxAmmo the max ammo of the weapon equipped
    */
-  public void updateAmmo(int currentAmmo, int maxAmmo) {
+  public void updateAmmo(int currentAmmo, int maxAmmo, int ammoUse) {
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-    if (maxAmmo == 100) {  // todo: make non-ammo things not have ammo
+    if (ammoUse == 0) {
       ammoText = "    -";
     }
     ammoLabel.setText(ammoText);
@@ -282,7 +285,7 @@ public class PlayerStatsDisplay extends UIComponent {
     Image weaponImage = new Image( new Texture(config.imagePath));
     weaponImageTable.clear();
     weaponImageTable.add(weaponImage).size(30f);
-    updateAmmo(inventory.getCurrentAmmo(), inventory.getCurrentMaxAmmo());
+    updateAmmo(inventory.getCurrentAmmo(), inventory.getCurrentMaxAmmo(), inventory.getCurrentAmmoUse());
   }
 
   /**

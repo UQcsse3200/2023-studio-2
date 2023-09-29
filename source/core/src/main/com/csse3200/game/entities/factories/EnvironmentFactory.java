@@ -43,8 +43,8 @@ public class EnvironmentFactory {
                     if (objects.getCount() >= 1) {
                         RectangleMapObject object = (RectangleMapObject) objects.get(0);
                         Rectangle collisionBox = object.getRectangle();
-                        float collisionX = collisionBox.x / tileSize + xyShift - (scaleSize * (tileSize - collisionBox.width)/tileSize);
-                        float collisionY = collisionBox.y / tileSize + xyShift - (scaleSize * (tileSize - collisionBox.height)/tileSize);
+                        float collisionX = collisionBox.x / tileSize + xyShift - (scaleSize * (tileSize - collisionBox.width) / tileSize);
+                        float collisionY = collisionBox.y / tileSize + xyShift - (scaleSize * (tileSize - collisionBox.height) / tileSize);
                         float collisionWidth = scaleSize * (collisionBox.width / tileSize);
                         float collisionHeight = scaleSize * (collisionBox.height / tileSize);
                         environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);

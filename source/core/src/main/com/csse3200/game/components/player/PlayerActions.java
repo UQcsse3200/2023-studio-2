@@ -27,6 +27,7 @@ public class PlayerActions extends Component {
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
+    private boolean sliding = false;
 
     @Override
     public void create() {
@@ -58,9 +59,17 @@ public class PlayerActions extends Component {
         Vector2 velocity = body.getLinearVelocity();
         float speedMult = MapGameArea.getSpeedMult();
         Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(MAX_SPEED.x * speedMult, MAX_SPEED.y * speedMult));
-        // impulse = (desiredVel - currentVel) * mass
-        Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
-        body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+        if(sliding) {
+            velocity.scl(0.95f);
+            if(velocity.isZero(0.01f)){
+                sliding = false;
+            }
+        }
+        else{
+            Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
+            body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+        }
+
     }
 
     /**
@@ -77,7 +86,11 @@ public class PlayerActions extends Component {
      * Stops the player from walking.
      */
     void stopWalking() {
+        boolean onIce = true; //TODO: Implement function in MapGameArea.java to handle this
         this.walkDirection = Vector2.Zero.cpy();
+        if(onIce) {
+            sliding = true;
+        }
         updateSpeed();
         moving = false;
     }

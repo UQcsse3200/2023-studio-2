@@ -100,23 +100,26 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
-<div class="col-second even-row-color"><code><a href="#companionHealthLabel" class="member-name-link">companionHealthLabel</a></code></div>
+<div class="col-first even-row-color"><code><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color"><code><a href="#companion" class="member-name-link">companion</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
-<div class="col-second odd-row-color"><code><a href="#companionModeLabel" class="member-name-link">companionModeLabel</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#companionHealthLabel" class="member-name-link">companionHealthLabel</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
-<div class="col-second even-row-color"><code><a href="#companionUIHeaderLabel" class="member-name-link">companionUIHeaderLabel</a></code></div>
+<div class="col-second even-row-color"><code><a href="#companionModeLabel" class="member-name-link">companionModeLabel</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#playerEntity" class="member-name-link">playerEntity</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
+<div class="col-second odd-row-color"><code><a href="#companionUIHeaderLabel" class="member-name-link">companionUIHeaderLabel</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color"><code><a href="#player" class="member-name-link">player</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The player entity associated with this CompanionStatsDisplay.</div>
 </div>
-<div class="col-first even-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
-<div class="col-second even-row-color"><code><a href="#playerLowHealthLabel" class="member-name-link">playerLowHealthLabel</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>com.badlogic.gdx.scenes.scene2d.ui.Label</code></div>
+<div class="col-second odd-row-color"><code><a href="#playerLowHealthLabel" class="member-name-link">playerLowHealthLabel</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The UI playerLowHealthLabel for displaying the companion's health.</div>
 </div>
 </div>
@@ -140,10 +143,6 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Default constructor for CompanionStatsDisplay.</div>
 </div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.Entity)" class="member-name-link">CompanionStatsDisplay</a><wbr>(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;playerEntity)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Constructor for CompanionStatsDisplay with a player entity.</div>
-</div>
 </div>
 </section>
 </li>
@@ -159,10 +158,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addAlert(int)" class="member-name-link">addAlert</a><wbr>(int&nbsp;health)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Add an alert when the player's health is low.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Creates reusable UI styles and adds actors to the stage.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createInventoryButton(com.badlogic.gdx.scenes.scene2d.ui.Table)" class="member-name-link">createInventoryButton</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;statsTable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dispose()" class="member-name-link">dispose</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -173,39 +180,40 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Draw the renderable.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetImage()" class="member-name-link">resetImage</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDuration()" class="member-name-link">getDuration</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetImage()" class="member-name-link">resetImage</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Reset the companion's image.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setInvincibleImage()" class="member-name-link">setInvincibleImage</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Set the companion's image to an invincible state.</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toggleInfiniteHealth()" class="member-name-link">toggleInfiniteHealth</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDuration(long)" class="member-name-link">setDuration</a><wbr>(long&nbsp;duration)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toggleInfiniteHealth()" class="member-name-link">toggleInfiniteHealth</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Toggle infinite health for the companion.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toggleInvincibility()" class="member-name-link">toggleInvincibility</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toggleInvincibility()" class="member-name-link">toggleInvincibility</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Toggle invincibility for the companion.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateCompanionHealthUI(int)" class="member-name-link">updateCompanionHealthUI</a><wbr>(int&nbsp;health)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateCompanionHealthUI(int)" class="member-name-link">updateCompanionHealthUI</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the companion's health UI.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateCompanionModeUI(java.lang.String)" class="member-name-link">updateCompanionModeUI</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newMode)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateCompanionModeUI(java.lang.String)" class="member-name-link">updateCompanionModeUI</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newMode)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">updating the companion UI to include the mode</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerHealthUI(int)" class="member-name-link">updatePlayerHealthUI</a><wbr>(int&nbsp;health)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerHealthUI(int)" class="member-name-link">updatePlayerHealthUI</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Update the player's health UI.</div>
 </div>
 </div>
@@ -241,10 +249,16 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="playerEntity">
-<h3>playerEntity</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">playerEntity</span></div>
+<section class="detail" id="player">
+<h3>player</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">player</span></div>
 <div class="block">The player entity associated with this CompanionStatsDisplay.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="companion">
+<h3>companion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">companion</span></div>
 </section>
 </li>
 <li>
@@ -287,17 +301,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Default constructor for CompanionStatsDisplay.</div>
 </section>
 </li>
-<li>
-<section class="detail" id="&lt;init&gt;(com.csse3200.game.entities.Entity)">
-<h3>CompanionStatsDisplay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CompanionStatsDisplay</span><wbr><span class="parameters">(<a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;playerEntity)</span></div>
-<div class="block">Constructor for CompanionStatsDisplay with a player entity.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>playerEntity</code> - The player entity to associate with this UI component.</dd>
-</dl>
-</section>
-</li>
 </ul>
 </section>
 </li>
@@ -318,10 +321,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setInvincibleImage()">
-<h3>setInvincibleImage</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setInvincibleImage</span>()</div>
-<div class="block">Set the companion's image to an invincible state.</div>
+<section class="detail" id="createInventoryButton(com.badlogic.gdx.scenes.scene2d.ui.Table)">
+<h3>createInventoryButton</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createInventoryButton</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;statsTable)</span></div>
 </section>
 </li>
 <li>
@@ -343,6 +345,17 @@ loadScripts(document, 'script');</script>
 <h3>toggleInfiniteHealth</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">toggleInfiniteHealth</span>()</div>
 <div class="block">Toggle infinite health for the companion.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="addAlert(int)">
+<h3>addAlert</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addAlert</span><wbr><span class="parameters">(int&nbsp;health)</span></div>
+<div class="block">Add an alert when the player's health is low.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>health</code> - The current health value.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -403,6 +416,18 @@ loadScripts(document, 'script');</script>
 <dt>Overrides:</dt>
 <dd><code><a href="../../rendering/RenderComponent.html#dispose()">dispose</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setDuration(long)">
+<h3>setDuration</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDuration</span><wbr><span class="parameters">(long&nbsp;duration)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getDuration()">
+<h3>getDuration</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getDuration</span>()</div>
 </section>
 </li>
 </ul>

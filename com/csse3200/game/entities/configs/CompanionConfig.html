@@ -15,7 +15,11 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../";
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
+var pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -48,7 +52,7 @@ loadScripts(document, 'script');</script>
 <li>Detail:&nbsp;</li>
 <li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
 <div class="nav-list-search"><label for="search-input">SEARCH:</label>
@@ -91,25 +95,25 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#bulletTexturePath" class="member-name-link">bulletTexturePath</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">The file path to the bullet texture used by the companion.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#favouriteColour" class="member-name-link">favouriteColour</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">The favorite color of the companion.</div>
-</div>
 <div class="col-first even-row-color"><code>int</code></div>
-<div class="col-second even-row-color"><code><a href="#gold" class="member-name-link">gold</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">The amount of gold associated with the companion.</div>
-</div>
+<div class="col-second even-row-color"><code><a href="#attackMultiplier" class="member-name-link">attackMultiplier</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>int</code></div>
+<div class="col-second odd-row-color"><code><a href="#baseAttack" class="member-name-link">baseAttack</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>int</code></div>
+<div class="col-second even-row-color"><code><a href="#health" class="member-name-link">health</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><code><a href="#isImmune" class="member-name-link">isImmune</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>int</code></div>
+<div class="col-second even-row-color"><code><a href="#speed" class="member-name-link">speed</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.entities.configs.HealthEntityConfig">Fields inherited from class&nbsp;com.csse3200.game.entities.configs.<a href="HealthEntityConfig.html" title="class in com.csse3200.game.entities.configs">HealthEntityConfig</a></h3>
-<code><a href="HealthEntityConfig.html#attackMultiplier">attackMultiplier</a>, <a href="HealthEntityConfig.html#baseAttack">baseAttack</a>, <a href="HealthEntityConfig.html#health">health</a>, <a href="HealthEntityConfig.html#isImmune">isImmune</a>, <a href="HealthEntityConfig.html#maxHealth">maxHealth</a></code></div>
+<code><a href="HealthEntityConfig.html#maxHealth">maxHealth</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.entities.configs.BaseEntityConfig">Fields inherited from class&nbsp;com.csse3200.game.entities.configs.<a href="BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a></h3>
 <code><a href="BaseEntityConfig.html#position">position</a>, <a href="BaseEntityConfig.html#requiredTextures">requiredTextures</a>, <a href="BaseEntityConfig.html#scale">scale</a>, <a href="BaseEntityConfig.html#spritePath">spritePath</a></code></div>
@@ -132,9 +136,22 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-com.csse3200.game.entities.configs.HealthEntityConfig">Methods inherited from class&nbsp;com.csse3200.game.entities.configs.<a href="HealthEntityConfig.html" title="class in com.csse3200.game.entities.configs">HealthEntityConfig</a></h3>
-<code><a href="HealthEntityConfig.html#equals(java.lang.Object)">equals</a>, <a href="HealthEntityConfig.html#hashCode()">hashCode</a></code></div>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+</div>
+</div>
+</div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.csse3200.game.entities.configs.BaseEntityConfig">Methods inherited from class&nbsp;com.csse3200.game.entities.configs.<a href="BaseEntityConfig.html" title="class in com.csse3200.game.entities.configs">BaseEntityConfig</a></h3>
 <code><a href="BaseEntityConfig.html#getTextures()">getTextures</a></code></div>
@@ -153,24 +170,33 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="gold">
-<h3>gold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">gold</span></div>
-<div class="block">The amount of gold associated with the companion.</div>
+<section class="detail" id="speed">
+<h3>speed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">speed</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="favouriteColour">
-<h3>favouriteColour</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">favouriteColour</span></div>
-<div class="block">The favorite color of the companion.</div>
+<section class="detail" id="health">
+<h3>health</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">health</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="bulletTexturePath">
-<h3>bulletTexturePath</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">bulletTexturePath</span></div>
-<div class="block">The file path to the bullet texture used by the companion.</div>
+<section class="detail" id="baseAttack">
+<h3>baseAttack</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">baseAttack</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="attackMultiplier">
+<h3>attackMultiplier</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">attackMultiplier</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="isImmune">
+<h3>isImmune</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isImmune</span></div>
 </section>
 </li>
 </ul>
@@ -185,6 +211,34 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CompanionConfig</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CompanionConfig</span>()</div>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<!-- ============ METHOD DETAIL ========== -->
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="equals(java.lang.Object)">
+<h3>equals</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">equals</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="HealthEntityConfig.html#equals(java.lang.Object)">equals</a></code>&nbsp;in class&nbsp;<code><a href="HealthEntityConfig.html" title="class in com.csse3200.game.entities.configs">HealthEntityConfig</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="hashCode()">
+<h3>hashCode</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">hashCode</span>()</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="HealthEntityConfig.html#hashCode()">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="HealthEntityConfig.html" title="class in com.csse3200.game.entities.configs">HealthEntityConfig</a></code></dd>
+</dl>
 </section>
 </li>
 </ul>

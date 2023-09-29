@@ -1,8 +1,10 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Companion.CompanionInventoryComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * A component responsible for handling item pickups in the game.
  */
 public class ItemPickupComponent extends Component {
+    private Entity companion = ServiceLocator.getEntityService().getCompanion();
 
     private static Logger logger;
 
@@ -38,12 +41,26 @@ public class ItemPickupComponent extends Component {
      * @param other  The fixture of the other entity involved in the collision.
      */
     private void pickUp(Fixture me, Fixture other) {
-
-        HitboxComponent hitboxComponent = entity.getComponent(HitboxComponent.class);
-
         Entity entityOfComponent = getEntity();
-        //EarthGameArea.removeItemOnMap(entityOfComponent);
+        /*// Apply the power-up effect
+        entity.getComponent(PowerupComponent.class).applyEffect();*/
+        // Log the pick-up
         logger.info("Item picked up");
-        ServiceLocator.getGameArea().getCompanion().getComponent(CompanionInventoryComponent.class).addItem(entityOfComponent);
-    }
-}
+
+//        // Check if the picked-up item is a potion (adjust this condition based on your implementation)
+//        if (entityOfComponent.hasComponent(PotionComponent.class)) {
+//            // Trigger the custom event
+//            entityOfComponent.getEvents().trigger(CompanionInventoryDisplay.POTION_PICKED_UP_EVENT);
+//        }
+
+
+        // Add the power-up to the companion's inventory
+        Entity companionEntity = ServiceLocator.getEntityService().getCompanion();
+        CompanionInventoryComponent companionInventory = companionEntity.getComponent(CompanionInventoryComponent.class);
+
+        if (companionInventory != null) {
+            companionInventory.addPowerup(entityOfComponent);
+        }
+        // Remove the item from the game area
+        MapGameArea.removeItemOnMap(entityOfComponent);
+    }}

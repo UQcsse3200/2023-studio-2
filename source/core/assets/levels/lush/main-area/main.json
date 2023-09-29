@@ -43,6 +43,7 @@
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
     "images/sling_shot.png",
+    "images/companion/Companion_spritesheet.png",
     "map/portal.png",
     "images/player/bar-fill.png",
     "images/player/bar-fill2.png",
@@ -77,6 +78,7 @@
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
+    "images/companion/Companion_spritesheet.atlas",
     "images/npc/Astro_NPC.atlas",
     "images/structures/ExtractorAnimation.atlas"
   ],
@@ -89,7 +91,8 @@
     "sounds/playerBoostRecharge.mp3",
     "sounds/upgradeTreeTap.mp3",
     "sounds/upgradeWeapon.mp3",
-    "sounds/enemyDeath.mp3"
+    "sounds/enemyDeath.mp3",
+    "sounds/companionwalksound.mp3"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

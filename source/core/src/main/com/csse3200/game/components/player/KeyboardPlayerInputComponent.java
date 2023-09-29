@@ -264,6 +264,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * and also trigger the walking sound
    */
   private void triggerWalkEvent() {
+      Entity companion = ServiceLocator.getEntityService().getCompanion();
     Vector2 lastDir = this.walkDirection.cpy();
     this.walkDirection = keysToVector().scl(WALK_SPEED);
     if (this.getTesting() == 0) {
@@ -276,19 +277,27 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return;
       }
 
-    switch (dir) {
-        case UP -> entity.getEvents().trigger("walkUp");
-        case DOWN -> entity.getEvents().trigger("walkDown");
-        case LEFT -> entity.getEvents().trigger("walkLeft");
-        case RIGHT -> entity.getEvents().trigger("walkRight");
-        case UPLEFT -> entity.getEvents().trigger("walkUpLeft");
-        case UPRIGHT -> entity.getEvents().trigger("walkUpRight");
-        case DOWNLEFT -> entity.getEvents().trigger("walkDownLeft");
-        case DOWNRIGHT -> entity.getEvents().trigger("walkDownRight");
-        default -> entity.getEvents().trigger(WALKSTOP);
-    }
-
-        entity.getEvents().trigger("walk", walkDirection);
+      switch (dir) {
+          case UP -> {entity.getEvents().trigger("walkUp");
+            companion.getEvents().trigger("walkUp");}
+          case DOWN -> {entity.getEvents().trigger("walkDown");
+            companion.getEvents().trigger("walkDown");}
+          case LEFT -> {
+            entity.getEvents().trigger("walkLeft");
+            companion.getEvents().trigger("walkLeft");}
+          case RIGHT -> {entity.getEvents().trigger("walkRight");
+            companion.getEvents().trigger("walkRight");}
+          case UPLEFT -> {entity.getEvents().trigger("walkUpLeft");
+            companion.getEvents().trigger("walkUpLeft");}
+          case UPRIGHT -> {entity.getEvents().trigger("walkUpRight");
+          companion.getEvents().trigger("walkUpRight");}
+          case DOWNLEFT ->{ entity.getEvents().trigger("walkDownLeft");
+            companion.getEvents().trigger("walkDownLeft");}
+          case DOWNRIGHT ->{ entity.getEvents().trigger("walkDownRight");
+            companion.getEvents().trigger("walkDownLeft");}
+          default -> entity.getEvents().trigger(WALKSTOP);
+      }
+      entity.getEvents().trigger("walk", walkDirection);
 
       // play the sound when player starts walking
         entity.getEvents().trigger("loopSound", "footstep");

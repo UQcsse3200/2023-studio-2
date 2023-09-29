@@ -79,18 +79,24 @@ public class SpawnerComponent extends Component {
         lastTime = currentTime;
     }
 
+    /**
+     *
+     * @param currentTime - checks the time to handle and release the new enemy wave
+     *  The handleEnemySpawn() handles when to spawn enemies and
+     *                    also trigger sound while spawning.
+     */
     private void handleEnemySpawn(long currentTime) {
         if (meleeEnemiesToSpawn > 0) {
             spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
             meleeEnemiesToSpawn--;
             if (entity != null) {
-                entity.getEvents().trigger("playSound", "enemySpawn");
+                entity.getEvents().trigger("playSound", "enemySpawn"); // triggering spawning sound effects
             }
         } else if (rangedEnemiesToSpawn > 0) {
             spawnEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
             rangedEnemiesToSpawn--;
             if (entity != null) {
-                entity.getEvents().trigger("playSound", "enemySpawn");
+                entity.getEvents().trigger("playSound", "enemySpawn"); // triggering spawning sound effects
             }
         }
         enemiesSpawned++;

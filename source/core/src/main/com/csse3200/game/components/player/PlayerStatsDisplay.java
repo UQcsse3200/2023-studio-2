@@ -110,9 +110,9 @@ public class PlayerStatsDisplay extends UIComponent {
 
   /**
    * Creates the heath bar for the player HUD
-   * @param statsTable the table which the health bar is contained within
+   * @param parentTable the table which the health bar is contained within
    */
-  public void createHealthBar(Table statsTable) {
+  public void createHealthBar(Table parentTable) {
     Image healthBarFrame;
     healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
@@ -124,15 +124,15 @@ public class PlayerStatsDisplay extends UIComponent {
     healthStack.add(healthBarFrame);
     healthStack.add(healthBarTable);
 
-    statsTable.add(healthStack).size(healthBarWidth, 40f).pad(5);
-    statsTable.add(healthLabel).left();
+    parentTable.add(healthStack).size(healthBarWidth, 40f).pad(5);
+    parentTable.add(healthLabel).left();
   }
 
   /**
    * Creates the dodge bar for the HUD
-   * @param statsTable the table which the dodge bar is contained within
+   * @param parentTable the table which the dodge bar is contained within
    */
-  public void createDodgeBar(Table statsTable) {
+  public void createDodgeBar(Table parentTable) {
     Image dodgeBarFrame;
     dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     dodgeBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill2.png", Texture.class));
@@ -143,15 +143,15 @@ public class PlayerStatsDisplay extends UIComponent {
     Stack dodgeStack = new Stack();
     dodgeStack.add(dodgeBarFrame);
     dodgeStack.add(dodgeBarTable);
-    statsTable.add(dodgeStack).size(dodgeBarWidth, 40f).pad(5);
-    statsTable.add(dodgeLabel).left();
+    parentTable.add(dodgeStack).size(dodgeBarWidth, 40f).pad(5).padTop(10);
+    parentTable.add(dodgeLabel).left();
   }
 
   /**
    * Creates the player lives UI for the HUD
-   * @param statsTable the table which the player lives information is contained within
+   * @param parentTable the table which the player lives information is contained within
    */
-  public void createLivesBar(Table statsTable) {
+  public void createLivesBar(Table parentTable) {
     playerLives = entity.getComponent(CombatStatsComponent.class).getLives();
     Image livesBarFrame;
     livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
@@ -172,10 +172,14 @@ public class PlayerStatsDisplay extends UIComponent {
     Stack livesStack = new Stack();
     livesStack.add(livesTable);
     livesStack.add(heartsTable);
-    statsTable.add(livesStack).left().pad(5);
+    parentTable.add(livesStack).left().padLeft(5).padRight(5);
   }
 
-  public void createAmmoBar(Table statsTable) {
+  /**
+   * Creates the weapons ammo UI for the HUD
+   * @param parentTable the table which the ammo information is contained within
+   */
+  public void createAmmoBar(Table parentTable) {
     player = ServiceLocator.getEntityService().getPlayer();
     inventory = player.getComponent(InventoryComponent.class);
 
@@ -188,22 +192,22 @@ public class PlayerStatsDisplay extends UIComponent {
     int maxAmmo = inventory.getCurrentMaxAmmo();
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
     ammoLabel = new Label(ammoText, skin, "small");
-    ammoLabel.setFontScale(0.25f);
+    ammoLabel.setFontScale(0.21f);
 
     Table ammoFrameTable = new Table();
     ammoFrameTable.add(ammoBarFrame).size(150f, 65f);
 
     weaponImageTable = new Table();
-    weaponImageTable.add(weaponImage).size(30f);
+    weaponImageTable.add(weaponImage).size(25f);
 
     Table ammoInfo = new Table();
-    ammoInfo.add(weaponImageTable).pad(5).padTop(10).left();
-    ammoInfo.add(ammoLabel).pad(5).padTop(10).right();
+    ammoInfo.add(weaponImageTable).left().pad(5).padTop(10);
+    ammoInfo.add(ammoLabel).size(80f).right().pad(5).padTop(10);
 
     Stack ammoStack = new Stack();
     ammoStack.add(ammoFrameTable);
     ammoStack.add(ammoInfo);
-    statsTable.add(ammoStack).left().pad(5);
+    parentTable.add(ammoStack).left().padLeft(5).padRight(5);
   }
 
   @Override

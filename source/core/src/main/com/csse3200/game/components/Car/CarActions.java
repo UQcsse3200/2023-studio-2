@@ -96,10 +96,10 @@ public class CarActions extends Component {
         mode = Control.normal;
         isSilent = true;
         String prevDirectionStr = getDirection(prevDirection);
-        //entity.getEvents().trigger("car", prevDirectionStr);
-      //  KeyboardCarInputComponent carInput = entity.getComponent(KeyboardCarInputComponent.class);
+        entity.getEvents().trigger("car", prevDirectionStr);
+        KeyboardCarInputComponent carInput = entity.getComponent(KeyboardCarInputComponent.class);
         KeyboardPlayerInputComponent playerInput = player.getComponent(KeyboardPlayerInputComponent.class);
-        //playerInput.setWalkDirection(carInput.getWalkDirection());
+      //  playerInput.setWalkDirection(carInput.getWalkDirection());
         player.setPosition(entity.getPosition());
     }
 

@@ -5,11 +5,12 @@ entities: {
 			class: com.csse3200.game.entities.configs.PlayerConfig
 			spritePath: images/player/player.atlas
 			position: {
-				x: 9
-				y: 24
+				x: 21
+				y: 25
 			}
 			health: 100
 			baseAttack: 10
+			lives: 3
 			sounds: {
 				soundsMap: {
 					low_health: sounds/playerLow_health.mp3

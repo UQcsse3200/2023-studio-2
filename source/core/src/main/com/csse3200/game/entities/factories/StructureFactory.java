@@ -7,7 +7,6 @@ import com.csse3200.game.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.areas.mapConfig.ResourceCondition;
@@ -25,11 +24,8 @@ import com.csse3200.game.input.SpannerInputComponent;
 
 import com.csse3200.game.entities.configs.ExtractorConfig;
 import com.csse3200.game.entities.configs.ShipConfig;
-import com.csse3200.game.entities.configs.UpgradeBenchConfig;
 import com.csse3200.game.entities.PlaceableEntity;
 
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -41,7 +37,6 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

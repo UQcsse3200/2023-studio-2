@@ -5,10 +5,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.WeaponConfig;
+import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
@@ -125,60 +128,30 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 return true;
             }
             case Keys.T -> {
-                if (playerInventory.getEquipped() == 3) {
+                if (playerInventory.getEquipped().equals("building")) {
                     entity.getEvents().trigger("change_structure");
                 }
                 return true;
             }
             case Keys.NUM_1 -> {
-                triggerInventoryEvent(1);
+                triggerInventoryEvent("melee");
                 return true;
             }
             case Keys.NUM_2 -> {
-                triggerInventoryEvent(2);
+                triggerInventoryEvent("ranged");
                 return true;
             }
             case Keys.NUM_3 -> {
-                triggerInventoryEvent(3);
-                return true;
-            }
-            case Keys.TAB -> {
-                triggerInventoryEvent(0);
+                triggerInventoryEvent("building");
                 return true;
             }
             case Keys.W, Keys.S, Keys.A, Keys.D -> {
                 triggerWalkEvent();
                 return true;
             }
-            case Keys.NUMPAD_0 -> {
-                playerInventory.changeEquipped(WeaponType.MELEE_WRENCH);
-                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-                return true;
-            } case Keys.NUMPAD_1 -> {
-                playerInventory.changeEquipped(WeaponType.MELEE_KATANA);
-                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-                return true;
-            } case Keys.NUMPAD_2 -> {
-                playerInventory.changeEquipped(WeaponType.MELEE_BEE_STING);
-                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-                return true;
-            } case Keys.NUMPAD_3 -> {
-                playerInventory.changeEquipped(WeaponType.RANGED_SLINGSHOT);
-                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-                return true;
-            } case Keys.NUMPAD_4 -> {
-                playerInventory.changeEquipped(WeaponType.RANGED_BOOMERANG);
-                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-                return true;
-            } case Keys.NUMPAD_5 -> {
-                playerInventory.changeEquipped(WeaponType.RANGED_HOMING);
-                entity.getEvents().trigger(CHANGEWEAPON, playerInventory.getEquippedType());
-                return true;
-            } default -> {
+            default -> {
                 return false;
             }
-
-
         }
     }
 
@@ -215,29 +188,31 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     player = ServiceLocator.getEntityService().getPlayer();
     playerInventory = player.getComponent(InventoryComponent.class);
     WeaponComponent weaponComponent = entity.getComponent(WeaponComponent.class);
-    int cooldown = weaponComponent.getAttackCooldown();
-    if (cooldown != 0) {
+    int cooldown = playerInventory.getEquippedCooldown();
+    if (cooldown > 0) {
       return false;
     }
 
     switch (playerInventory.getEquipped()) {
       // melee/ranged
-        case 1, 2:
+
+        case "melee", "ranged":
+            System.out.println(playerInventory.getCurrentAmmo());
+            if (playerInventory.getCurrentAmmo() <= 0) {return false;}
+
             if (button == Input.Buttons.LEFT) {
                 InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
                 WeaponType weapon = invComp.getEquippedType();
 
                 if (weapon == WeaponType.MELEE_BEE_STING) {
-                    for (int i = 0; i < 8; i++) {
+                    for (int i = 0; i < 7; i++)
                         entity.getEvents().trigger("weaponAttack", weapon, position);
-                    }
-                } else {
-                    entity.getEvents().trigger("weaponAttack", weapon, position);
                 }
+                entity.getEvents().trigger("weaponAttack", weapon, position);
             }
             break;
       // building
-      case 3:
+      case "building":
         if (button == Input.Buttons.LEFT) {
           entity.getEvents().trigger("place", screenX, screenY);
         } else if (button == Input.Buttons.RIGHT) {
@@ -365,12 +340,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   
   /** 
    * Triggers inventory events
-   * @param i - sets inventory event type
    */
-  private void triggerInventoryEvent(int i) {
-    entity.getEvents().trigger("inventory", i);
+  private void triggerInventoryEvent(String slot) {
     InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+    invComp.setEquipped(slot);
+    player.getEvents().trigger("updateHotbar");
     entity.getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
+    entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(), invComp.getCurrentMaxAmmo());
   }
 
   /**

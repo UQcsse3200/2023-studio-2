@@ -1,5 +1,6 @@
 package com.csse3200.game.input;
 
+import com.csse3200.game.components.Car.KeyboardCarInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,8 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class InputFactory {
   private static final Logger logger = LoggerFactory.getLogger(InputFactory.class);
+
+
 
   /** Input device types */
   public enum InputType {
@@ -60,6 +63,11 @@ public abstract class InputFactory {
    * @return Ship input handler
    */
   public abstract InputComponent createForShip();
+
+  public InputComponent createForCar() {
+    logger.debug("Creating car input handler");
+    return new KeyboardCarInputComponent();
+  }
   /**
    * Creates an input handler for the terminal
    *

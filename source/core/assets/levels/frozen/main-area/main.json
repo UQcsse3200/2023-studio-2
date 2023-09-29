@@ -42,7 +42,7 @@
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
-    "images/Companion_spritesheet.png",
+    "images/companion/Companion_spritesheet.png",
     "images/sling_shot.png",
     "map/portal.png",
     "map/treetoplush.png",
@@ -59,7 +59,7 @@
     "images/resources/Cracked_Ground.png",
     "particle-effects/durasteel/durasteel_pixel.png",
     "images/navigationmap/planets/glacial_desolation.png",
-    "images/Companion_spritesheet.png"
+    "images/companion/Companion_spritesheet.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -78,7 +78,7 @@
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
-    "images/Companion_spritesheet.atlas",
+    "images/companion/Companion_spritesheet.atlas",
     "images/structures/ExtractorAnimation.atlas"
   ],
   "soundPaths": [

@@ -26,7 +26,7 @@ public class LabWindow extends Window {
     Table exit;
 
     public static LabWindow MakeNewLaboratory() {
-        Texture background = new Texture("images/lab.png");
+        Texture background = new Texture("images/companion/lab.png");
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new LabWindow(background);
     }

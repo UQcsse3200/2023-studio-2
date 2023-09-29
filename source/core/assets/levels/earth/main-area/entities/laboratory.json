@@ -3,7 +3,7 @@
   "entities": [
     {
       "class": com.csse3200.game.entities.configs.LaboratoryConfig,
-      "spritePath": "images/laboratory.png",
+      "spritePath": "images/companion/laboratory.png",
       "position": {"x":16,
         "y": 19
       }

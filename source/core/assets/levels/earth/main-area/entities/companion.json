@@ -11,7 +11,7 @@
        "baseAttack": 10,
        "attackMultiplier": 1,
        "isImmune": false,
-       "spritePath": "images/Companion_spritesheet.atlas"
+       "spritePath": "images/companion/Companion_spritesheet.atlas"
     }
   ]
 }

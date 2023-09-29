@@ -1,5 +1,6 @@
 package com.csse3200.game.input;
 
+import com.csse3200.game.components.Car.KeyboardCarInputComponent;
 import com.csse3200.game.components.Companion.TouchCompanionInputComponent;
 import com.csse3200.game.components.player.TouchPlayerInputComponent;
 import com.csse3200.game.components.ships.KeyboardShipInputComponent;
@@ -25,6 +26,11 @@ public class TouchInputFactory extends InputFactory{
   public InputComponent createForShip() {
     logger.debug("Creating ship input handler");
     return new KeyboardShipInputComponent();
+  }
+
+  public InputComponent createForCar() {
+    logger.debug("Creating car input handler");
+    return new KeyboardCarInputComponent();
   }
 
   /**

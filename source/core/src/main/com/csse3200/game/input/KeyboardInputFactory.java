@@ -1,5 +1,6 @@
 package com.csse3200.game.input;
 
+import com.csse3200.game.components.Car.KeyboardCarInputComponent;
 import com.csse3200.game.components.Companion.KeyboardCompanionInputComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.ships.KeyboardShipInputComponent;
@@ -46,5 +47,10 @@ public class KeyboardInputFactory extends InputFactory {
     public InputComponent createForTerminal() {
         logger.debug("Creating terminal input handler");
         return new KeyboardTerminalInputComponent();
+    }
+
+    public InputComponent createForCar() {
+        logger.debug("Creating car input handler");
+        return new KeyboardCarInputComponent();
     }
 }

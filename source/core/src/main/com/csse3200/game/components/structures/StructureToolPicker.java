@@ -40,7 +40,6 @@ public class StructureToolPicker extends UIComponent {
     private final ToolsConfig structureTools =
             FileLoader.readClass(ToolsConfig.class, "configs/structure_tools.json");
     private Tool selectedTool;
-    private int level = 0;
 
     /**
      * Creates a new structure tool picker
@@ -71,7 +70,7 @@ public class StructureToolPicker extends UIComponent {
      * and positions them on the stage using a table.
      * @see Table for positioning options
      */
-    private void addActors() {
+    void addActors() {
         table.clear();
 
         table.align(Align.center);
@@ -94,11 +93,11 @@ public class StructureToolPicker extends UIComponent {
             nameLabel.setColor(Color.BLACK);
             var image = new Image(ServiceLocator.getResourceService().getAsset(optionValue.texture, Texture.class));
 
-            buttonTable.add(image).size(30,30);
-            buttonTable.add(nameLabel).padLeft(10);
+            buttonTable.add(image).size(30,30).right();
+            buttonTable.add(nameLabel).padLeft(10).left();
 
             for (var cost : optionValue.cost) {
-                var costLabel = new Label(String.format("%s - %d", cost.key, cost.value), skin, "small");
+                var costLabel = new Label(String.format("%s - %d", cost.key, cost.value), skin);
                 costLabel.setColor(Color.BLACK);
 
                 buttonTable.row().colspan(2);
@@ -116,7 +115,7 @@ public class StructureToolPicker extends UIComponent {
             });
             buttons.add(button);
             table.row().padTop(10);
-            table.add(button).width(250);
+            table.add(button).width(280);
         }
 
         stage.addActor(table);
@@ -156,7 +155,6 @@ public class StructureToolPicker extends UIComponent {
      * @param toolName - the simple name of the tool, e.g. 'Dirt Wall'
      */
     public void unlockTool(String toolName) {
-        System.out.println("Tool UNLOCKED: " + toolName);
         unlockedTools.add(toolName);
         addActors();
     }
@@ -185,24 +183,6 @@ public class StructureToolPicker extends UIComponent {
      */
     public Tool getSelectedTool() {
         return selectedTool;
-    }
-
-    /**
-     * Sets the level of the ToolPicker and updates the options displayed to
-     * the user to match the new level of the picker.
-     * @param level - the maximum level of tools to display.
-     */
-    public void setLevel(int level) {
-        this.level = level;
-        addActors();
-    }
-
-    /**
-     * Gets the current level of the ToolPicker.
-     * @return the maximum level of tools to display.
-     */
-    public int getLevel() {
-        return level;
     }
 
     @Override

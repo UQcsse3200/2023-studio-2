@@ -3,6 +3,7 @@ package com.csse3200.game.components.structures;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.csse3200.game.components.structures.tools.Tool;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
@@ -32,35 +33,12 @@ class StructureToolPickerTest {
     void beforeEach() {
         ServiceLocator.registerRenderService(renderService);
         ServiceLocator.registerResourceService(resourceService);
+
     }
 
     @AfterEach
     void afterEach() {
         ServiceLocator.clear();
-    }
-
-    @Test
-    void setLevel() {
-        var texture = mock(Texture.class);
-        var stage = mock(Stage.class);
-
-        when(resourceService.getAsset(any(), any())).thenReturn(texture);
-        when(renderService.getStage()).thenReturn(stage);
-
-        var structurePicker = new StructureToolPicker();
-        structurePicker.create();
-
-        // should be 0 by default
-        assertEquals(structurePicker.getLevel(), 0);
-
-        structurePicker.setLevel(1);
-        assertEquals(structurePicker.getLevel(), 1);
-
-        structurePicker.setLevel(100);
-        assertEquals(structurePicker.getLevel(), 100);
-
-        structurePicker.setLevel(0);
-        assertEquals(structurePicker.getLevel(), 0);
     }
 
     @Test

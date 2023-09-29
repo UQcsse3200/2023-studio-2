@@ -42,6 +42,7 @@
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
+    "images/companion/Companion_spritesheet.png",
     "images/sling_shot.png",
     "map/portal.png",
     "map/treetoplush.png",
@@ -49,15 +50,19 @@
     "images/action-feedback/white_color_texture.png",
     "particle-effects/explosion/particle.png",
     "images/player/bar-fill.png",
+    "images/player/bar-fill2.png",
     "images/player/planet-frame.png",
     "images/player/statbar.png",
     "images/npc/Astro_NPC.png",
     "images/player/widestatbar.png",
     "images/player/heart.png",
+    "images/player/hearts.png",
+    "images/space_navigation_planet_2.png",
     "images/planets/space_navigation_planet_2.png",
     "images/resources/Cracked_Ground.png",
     "particle-effects/durasteel/durasteel_pixel.png",
-    "images/navigationmap/planets/glacial_desolation.png"
+    "images/navigationmap/planets/glacial_desolation.png",
+    "images/companion/Companion_spritesheet.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -76,6 +81,7 @@
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
+    "images/companion/Companion_spritesheet.atlas",
     "images/structures/ExtractorAnimation.atlas"
   ],
   "soundPaths": [
@@ -87,7 +93,8 @@
     "sounds/playerBoostRecharge.mp3",
     "sounds/upgradeTreeTap.mp3",
     "sounds/upgradeWeapon.mp3",
-    "sounds/enemyDeath.mp3"
+    "sounds/enemyDeath.mp3",
+    "sounds/companionwalksound.mp3"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

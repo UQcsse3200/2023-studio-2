@@ -7,7 +7,7 @@ import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.Weapons.WeaponTargetComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.player.WeaponComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
@@ -34,8 +34,9 @@ public class AttackFactory {
    */
   public static Entity createAttack(WeaponType weaponType, float initRot, Entity player) {
     WeaponConfig config = configs.GetWeaponConfig(weaponType);
-    WeaponComponent weaponComponent = player.getComponent(WeaponComponent.class);
-    weaponComponent.setAttackCooldown(config.attackCooldown);
+    InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
+    playerInventory.setEquippedCooldown(config.attackCooldown);
+    playerInventory.changeEquippedAmmo(-config.ammoUse);
 
     int direction = 1;
     switch (weaponType) {

@@ -83,9 +83,15 @@ public class SpawnerComponent extends Component {
         if (meleeEnemiesToSpawn > 0) {
             spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
             meleeEnemiesToSpawn--;
+            if (entity != null) {
+                entity.getEvents().trigger("playSound", "enemySpawn");
+            }
         } else if (rangedEnemiesToSpawn > 0) {
             spawnEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
             rangedEnemiesToSpawn--;
+            if (entity != null) {
+                entity.getEvents().trigger("playSound", "enemySpawn");
+            }
         }
         enemiesSpawned++;
         lastTime = currentTime;

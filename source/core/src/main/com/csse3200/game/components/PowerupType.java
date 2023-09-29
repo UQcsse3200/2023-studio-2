@@ -7,5 +7,6 @@ public enum PowerupType {
     DOUBLE_CROSS,
     TEMP_IMMUNITY,
     DOUBLE_DAMAGE,
-    SNAP
+    SNAP,
+    DEATH_POTION
 }

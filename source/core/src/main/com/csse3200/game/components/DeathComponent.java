@@ -72,12 +72,12 @@ public class DeathComponent extends Component {
                     Entity powerup = null;
 
                     if (powerupRandomiser < 5) {                 // 1/3 chance of speed boost
-                        powerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
+                        powerup = PowerupFactory.createSpeedPowerup();
                     } else if (powerupRandomiser == 7) {        // 1/15 chance of speed boost
-                        powerup = PowerupFactory.createPowerup(PowerupType.EXTRA_LIFE);
+                        powerup = PowerupFactory.createExtraLifePowerup();
                     }
                     else if (powerupRandomiser > 9){            // 1/3 chance of health boost
-                        powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
+                        powerup = PowerupFactory.createHealthPowerup();
                     }
 
                     ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody);

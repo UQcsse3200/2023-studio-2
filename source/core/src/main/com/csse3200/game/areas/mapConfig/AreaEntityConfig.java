@@ -97,7 +97,6 @@ public class AreaEntityConfig {
         if (o == null || getClass() != o.getClass()) return false;
 
         AreaEntityConfig that = (AreaEntityConfig) o;
-
         return Objects.deepEquals(entities, that.entities);
     }
 

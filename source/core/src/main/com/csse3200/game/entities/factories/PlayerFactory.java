@@ -8,11 +8,14 @@ import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.SoundComponent;
+import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.*;
 import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
+import com.csse3200.game.entities.configs.WeaponConfig;
+import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -39,6 +42,8 @@ public class PlayerFactory {
 
     private static final PlayerConfig config =
             FileLoader.readClass(PlayerConfig.class, "configs/player.json");
+    private static final WeaponConfigs weaponConfigs =
+            FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
 
     //TODO: REMOVE - LEGACY
 
@@ -92,7 +97,7 @@ public class PlayerFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                         .addComponent(new PlayerActions())
                         .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
-                        .addComponent(new InventoryComponent())
+                        .addComponent(new InventoryComponent(weaponConfigs))
                         .addComponent(inputComponent)
                         .addComponent(new PlayerStatsDisplay(config))
                         .addComponent(animator)
@@ -108,11 +113,11 @@ public class PlayerFactory {
                         .addComponent(new UpgradeTree());
 
         player.addComponent(new SaveableComponent<>(p -> {
-            PlayerConfig playerConfig = config;
-            playerConfig.position = new GridPoint2((int) player.getPosition().x, (int)player.getPosition().y);
-            playerConfig.health = player.getComponent(CombatStatsComponent.class).getHealth();
-            return playerConfig;
-        }, PlayerConfig.class));
+                PlayerConfig playerConfig = config;
+                playerConfig.position = new GridPoint2((int) player.getPosition().x, (int)player.getPosition().y);
+                playerConfig.health = player.getComponent(CombatStatsComponent.class).getHealth();
+                return playerConfig;
+            }, PlayerConfig.class));
 
         PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
         player.getComponent(ColliderComponent.class).setDensity(1.5f);

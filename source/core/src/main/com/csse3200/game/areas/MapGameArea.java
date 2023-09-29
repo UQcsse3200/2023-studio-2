@@ -2,8 +2,6 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -33,8 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.io.File;
 import java.util.List;
 
 /**
@@ -48,6 +44,10 @@ public class MapGameArea extends GameArea{
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
     private int playerLives;
+
+    private static final GridPoint2 CAR_SPAWN = new GridPoint2(20, 40);
+
+    private Entity car;
     private boolean validLoad = true;
     private static List<Entity> itemsOnMap = new ArrayList<>();
     private String thing;
@@ -102,6 +102,8 @@ public class MapGameArea extends GameArea{
         spawnAstro();
         spawnSpawners();
         spawnJail();
+
+        car = spawnCar();
         //spawnFire();
         //spawnBotanist();
 
@@ -198,6 +200,8 @@ public class MapGameArea extends GameArea{
         itemsOnMap.remove(entityToRemove);
         Gdx.app.postRunnable(entityToRemove::dispose);
     }
+
+
 
     /**
      * Spawns the game environment
@@ -321,6 +325,13 @@ public class MapGameArea extends GameArea{
             Entity ship = StructureFactory.createShip(game, mapConfig.winConditions, shipConfig);
             spawnEntityAt(ship, shipConfig.position, false, false);
         }
+    }
+
+    private Entity spawnCar() {
+        if (mapConfig.areaEntityConfig == null) return null;
+        Entity newCar = CarFactory.createCar(player);
+        spawnEntityAt(newCar,CAR_SPAWN, true, true);
+        return newCar;
     }
     private void spawnTreeTop(){
         if (mapConfig.areaEntityConfig == null) return;

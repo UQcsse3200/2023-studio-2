@@ -41,7 +41,7 @@ public class ObstacleFactoryTest {
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerRenderService(new RenderService());
-        ServiceLocator.getResourceService().loadTextures(new String[] {"images/tree.png",
+        ServiceLocator.getResourceService().loadTextures(new String[] {"images/entity/tree.png",
                 "images/structures/TurretOne.png", "images/structures/TurretTwo.png"} );
         ServiceLocator.getResourceService().loadTextureAtlases(new String[] {} );
         ServiceLocator.getResourceService().loadAll();

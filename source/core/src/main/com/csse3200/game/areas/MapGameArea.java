@@ -1,8 +1,9 @@
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -12,11 +13,12 @@ import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.Fissure;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.TileEntity;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.entities.factories.*;
@@ -28,7 +30,7 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -44,11 +46,9 @@ public class MapGameArea extends GameArea{
     private int playerLives;
     private Entity playerEntity;
     private boolean validLoad = true;
-    private String thing;
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
-            thing = configPath;
             mapConfig = MapConfigLoader.loadMapDirectory(configPath);
             logger.info("Successfully loaded map {}", configPath);
         } catch (InvalidConfigException exception) {
@@ -97,8 +97,8 @@ public class MapGameArea extends GameArea{
         spawnAstro();
         spawnSpawners();
         spawnJail();
-      //  spawnFire();
-//        spawnBotanist();
+        //spawnFire();
+        //spawnBotanist();
 
         playMusic();
     }
@@ -107,8 +107,6 @@ public class MapGameArea extends GameArea{
      * Loads all assets listed in the config file
      */
     protected void loadAssets() {
-        System.out.println("#####################################################");
-        System.out.println(thing);
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
@@ -148,7 +146,7 @@ public class MapGameArea extends GameArea{
     private void spawnPortal(Entity playerEntity) {
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (PortalConfig portalConfig : mapConfig.areaEntityConfig.portals) {
+        for (PortalConfig portalConfig : mapConfig.areaEntityConfig.getEntities(PortalConfig.class)) {
             Entity portal = PortalFactory.createPortal(playerEntity, portalConfig);
             spawnEntityAt(portal, portalConfig.position, false, false);
         }
@@ -206,12 +204,11 @@ public class MapGameArea extends GameArea{
     private void spawnPowerups() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.powerups) {
+        for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.getEntities(PowerupConfig.class)) {
             Entity powerup = PowerupFactory.createPowerup(powerupConfig);
             spawnEntityAt(powerup, powerupConfig.position, true, false);
         }
     }
-
 
     /**
      * Spawns all the extractors for each resource type as defined in the config file
@@ -223,6 +220,7 @@ public class MapGameArea extends GameArea{
         int steps = 64;
         int maxResource = 1000;
 
+        //TODO: MOVE TO CONFIG
         ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) maxResource);
         ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) maxResource);
         ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) maxResource);
@@ -246,9 +244,14 @@ public class MapGameArea extends GameArea{
         //Spawn extractors if any in game area
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (ExtractorConfig extractorConfig : mapConfig.areaEntityConfig.extractors) {
+        for (ExtractorConfig extractorConfig : mapConfig.areaEntityConfig.getEntities(ExtractorConfig.class)) {
             Entity extractor = StructureFactory.createExtractor(extractorConfig);
             spawnEntityAt(extractor, extractorConfig.position, true, false);
+        }
+
+        for (FissureConfig fissureConfig : mapConfig.areaEntityConfig.getEntities(FissureConfig.class)) {
+            PlaceableEntity fissure = new Fissure(fissureConfig);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(fissure, fissureConfig.position, true, true);
         }
     }
 
@@ -258,7 +261,7 @@ public class MapGameArea extends GameArea{
     private void spawnShip() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        ShipConfig shipConfig = mapConfig.areaEntityConfig.ship;
+        ShipConfig shipConfig = mapConfig.areaEntityConfig.getEntity(ShipConfig.class);
         if (shipConfig != null) {
             Entity ship = StructureFactory.createShip(game, mapConfig.winConditions, shipConfig);
             spawnEntityAt(ship, shipConfig.position, false, false);
@@ -266,11 +269,13 @@ public class MapGameArea extends GameArea{
     }
 
     private void spawnTreeTop(){
-        if (mapConfig.areaEntityConfig.treetop == null) return;
+        if (mapConfig.areaEntityConfig == null) return;
 
-        TreeTopConfig treeTopConfig = mapConfig.areaEntityConfig.treetop;
-        Entity treeTop = ObstacleFactory.createTreeTop(treeTopConfig);
-        spawnEntityAt(treeTop, treeTopConfig.position, false, false);
+        TreeTopConfig treeTopConfig = mapConfig.areaEntityConfig.getEntity(TreeTopConfig.class);
+        if (treeTopConfig != null) {
+            Entity treeTop = ObstacleFactory.createTreeTop(treeTopConfig);
+            spawnEntityAt(treeTop, treeTopConfig.position, false, false);
+        }
     }
 
     /**
@@ -279,15 +284,27 @@ public class MapGameArea extends GameArea{
      * @return The player entity created
      */
     private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer(mapConfig.playerConfig);
+        Entity newPlayer;
+        PlayerConfig playerConfig = null;
+        if (mapConfig.areaEntityConfig != null) {
+            playerConfig = mapConfig.areaEntityConfig.getEntity(PlayerConfig.class);
+        }
+
+        if (playerConfig != null) {
+            newPlayer = PlayerFactory.createPlayer(playerConfig);
+        } else {
+            logger.info("Player not found in config file - creating generic player");
+            newPlayer = PlayerFactory.createPlayer();
+        }
         newPlayer.getComponent(CombatStatsComponent.class).setLives(playerLives); // Ensures previous number of lives is maintained.
         newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         newPlayer.getEvents().addListener("death", () ->
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
         );
         ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", newPlayer);
-        if (mapConfig.playerConfig != null && mapConfig.playerConfig.position != null) {
-            spawnEntityAt(newPlayer, mapConfig.playerConfig.position, true, true);
+
+        if (playerConfig != null && playerConfig.position != null) {
+            spawnEntityAt(newPlayer, playerConfig.position, true, true);
         } else {
             logger.info("Failed to load player position - created player at middle of map");
             //If no position specified spawn in middle of map.
@@ -309,7 +326,7 @@ public class MapGameArea extends GameArea{
         if (mapConfig.areaEntityConfig == null) return;
 
         //Could spawn companion next to player if no position is specified.
-        CompanionConfig companionConfig = mapConfig.areaEntityConfig.companion;
+        CompanionConfig companionConfig = mapConfig.areaEntityConfig.getEntity(CompanionConfig.class);
         if (companionConfig != null) {
             Entity newCompanion = CompanionFactory.createCompanion(playerEntity, companionConfig);
             spawnEntityAt(newCompanion, companionConfig.position, true, true);
@@ -322,7 +339,7 @@ public class MapGameArea extends GameArea{
     private void spawnSpawners() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (SpawnerConfig spawnerConfig : mapConfig.areaEntityConfig.spawners) {
+        for (SpawnerConfig spawnerConfig : mapConfig.areaEntityConfig.getEntities(SpawnerConfig.class)) {
             Entity spawner = StructureFactory.createSpawner(spawnerConfig);
             spawnEntityAt(spawner, spawnerConfig.position, true, true);
         }
@@ -334,7 +351,7 @@ public class MapGameArea extends GameArea{
     private void spawnBotanist() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        BotanistConfig botanistConfig = mapConfig.areaEntityConfig.botanist;
+        BotanistConfig botanistConfig = mapConfig.areaEntityConfig.getEntity(BotanistConfig.class);
         if (botanistConfig != null) {
             Entity botanist = NPCFactory.createBotanist(botanistConfig);
             spawnEntityAt(botanist, botanistConfig.position, false, false);
@@ -346,7 +363,7 @@ public class MapGameArea extends GameArea{
     private void spawnAstro() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        AstroConfig astroConfig = mapConfig.areaEntityConfig.Astro;
+        AstroConfig astroConfig = mapConfig.areaEntityConfig.getEntity(AstroConfig.class);
         if (astroConfig != null) {
             Entity Astro = NPCFactory.createAstro();
             spawnEntityAt(Astro, astroConfig.position, false, false);
@@ -357,7 +374,7 @@ public class MapGameArea extends GameArea{
     private void spawnJail() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        JailConfig jailConfig = mapConfig.areaEntityConfig.Jail;
+        JailConfig jailConfig = mapConfig.areaEntityConfig.getEntity(JailConfig.class);
         if (jailConfig != null) {
             Entity Jail = NPCFactory.createJail();
             spawnEntityAt(Jail, jailConfig.position, false, false);
@@ -368,7 +385,7 @@ public class MapGameArea extends GameArea{
     private void spawnFire(){
         if (mapConfig.areaEntityConfig == null) return;
 
-        ShipConfig shipConfig = mapConfig.areaEntityConfig.ship;
+        ShipConfig shipConfig = mapConfig.areaEntityConfig.getEntity(ShipConfig.class);
             Entity fire = NPCFactory.createFire();
             spawnEntityAt(fire,shipConfig.position , false, false);
         }
@@ -389,7 +406,9 @@ public class MapGameArea extends GameArea{
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(mapConfig.backgroundMusicPath, Music.class).stop();
+        if (mapConfig != null && mapConfig.backgroundMusicPath != null) {
+            ServiceLocator.getResourceService().getAsset(mapConfig.backgroundMusicPath, Music.class).stop();
+        }
         this.unloadAssets();
     }
 
@@ -399,6 +418,8 @@ public class MapGameArea extends GameArea{
     protected void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+
+        if (mapConfig == null) return;
 
         if (mapConfig.getEntityTextures() != null)
             resourceService.unloadAssets(mapConfig.getEntityTextures());

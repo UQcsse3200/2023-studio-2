@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,7 @@ public class MainGameExitDisplay extends UIComponent {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
           logger.debug("Exit button clicked");
+          ServiceLocator.getEntityService().saveCurrentArea();
           entity.getEvents().trigger("exit");
         }
       });

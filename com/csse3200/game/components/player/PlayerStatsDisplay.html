@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PlayerStatsDisplay</span>
 <span class="extends-implements">extends <a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></span></div>
-<div class="block">An ui component for displaying player stats, e.g. health, healthBar, Dodge Cool-down Bar.</div>
+<div class="block">An ui component for displaying player stats, e.g. health, dodge cool down and player lives</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -112,7 +112,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.configs.PlayerConfig)" class="member-name-link">PlayerStatsDisplay</a><wbr>(<a href="../../entities/configs/PlayerConfig.html" title="class in com.csse3200.game.entities.configs">PlayerConfig</a>&nbsp;config)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructor for the PlayerStatsDisplay</div>
+</div>
 </div>
 </section>
 </li>
@@ -133,17 +135,25 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates reusable ui styles and adds actors to the stage.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createDodgeBar(com.badlogic.gdx.scenes.scene2d.ui.Table)" class="member-name-link">createDodgeBar</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;statsTable)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createAmmoBar(com.badlogic.gdx.scenes.scene2d.ui.Table)" class="member-name-link">createAmmoBar</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;parentTable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates the weapons ammo UI for the HUD</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createHealthBar(com.badlogic.gdx.scenes.scene2d.ui.Table)" class="member-name-link">createHealthBar</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;statsTable)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createDodgeBar(com.badlogic.gdx.scenes.scene2d.ui.Table)" class="member-name-link">createDodgeBar</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;parentTable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates the dodge bar for the HUD</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createLivesBar(com.badlogic.gdx.scenes.scene2d.ui.Table)" class="member-name-link">createLivesBar</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;statsTable)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createHealthBar(com.badlogic.gdx.scenes.scene2d.ui.Table)" class="member-name-link">createHealthBar</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;parentTable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates the heath bar for the player HUD</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createUpgradeTreeButton(com.badlogic.gdx.scenes.scene2d.ui.Table)" class="member-name-link">createUpgradeTreeButton</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;statsTable)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createLivesBar(com.badlogic.gdx.scenes.scene2d.ui.Table)" class="member-name-link">createLivesBar</a><wbr>(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;parentTable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates the player lives UI for the HUD</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dispose()" class="member-name-link">dispose</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -160,21 +170,36 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates an alert for if the maximum number of lives (3) has been reached.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDodgeRefreshed()" class="member-name-link">updateDodgeRefreshed</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateAmmo(int,int)" class="member-name-link">updateAmmo</a><wbr>(int&nbsp;currentAmmo,
+ int&nbsp;maxAmmo)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the current and max ammo displaying in the player HUD</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDodgeUsed()" class="member-name-link">updateDodgeUsed</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDodgeRefreshed()" class="member-name-link">updateDodgeRefreshed</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Updates the Player's Dodge on the UI</div>
+<div class="block">Updates the visible avaliability of the dodge when it becomes available</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerHealthUI(int)" class="member-name-link">updatePlayerHealthUI</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateDodgeUsed()" class="member-name-link">updateDodgeUsed</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Updates the player's health on the ui.</div>
+<div class="block">Updates the visible avaliability of the dodge movement when used by the player</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerLives(int)" class="member-name-link">updatePlayerLives</a><wbr>(int&nbsp;lives)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerHealthUI(int)" class="member-name-link">updatePlayerHealthUI</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the player's health on the ui.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlayerLives(int)" class="member-name-link">updatePlayerLives</a><wbr>(int&nbsp;lives)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the number of lives displayed in the player HUD</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateWeapon(com.csse3200.game.components.Weapons.WeaponType)" class="member-name-link">updateWeapon</a><wbr>(<a href="../Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weapon)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the weapon equipped in the player HUD</div>
+</div>
 </div>
 </div>
 </div>
@@ -211,6 +236,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(com.csse3200.game.entities.configs.PlayerConfig)">
 <h3>PlayerStatsDisplay</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PlayerStatsDisplay</span><wbr><span class="parameters">(<a href="../../entities/configs/PlayerConfig.html" title="class in com.csse3200.game.entities.configs">PlayerConfig</a>&nbsp;config)</span></div>
+<div class="block">Constructor for the PlayerStatsDisplay</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>config</code> - the player config file</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -233,33 +263,47 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="createUpgradeTreeButton(com.badlogic.gdx.scenes.scene2d.ui.Table)">
-<h3>createUpgradeTreeButton</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createUpgradeTreeButton</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;statsTable)</span></div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>statsTable</code> - - Used to add Column/Rows and define the actors
- createUpgradeTreeButton() - creating button and defining it on the top left
-                              also playing the sound when on tapping it</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="createHealthBar(com.badlogic.gdx.scenes.scene2d.ui.Table)">
 <h3>createHealthBar</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createHealthBar</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;statsTable)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createHealthBar</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;parentTable)</span></div>
+<div class="block">Creates the heath bar for the player HUD</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>parentTable</code> - the table which the health bar is contained within</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="createDodgeBar(com.badlogic.gdx.scenes.scene2d.ui.Table)">
 <h3>createDodgeBar</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createDodgeBar</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;statsTable)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createDodgeBar</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;parentTable)</span></div>
+<div class="block">Creates the dodge bar for the HUD</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>parentTable</code> - the table which the dodge bar is contained within</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="createLivesBar(com.badlogic.gdx.scenes.scene2d.ui.Table)">
 <h3>createLivesBar</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createLivesBar</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;statsTable)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createLivesBar</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;parentTable)</span></div>
+<div class="block">Creates the player lives UI for the HUD</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>parentTable</code> - the table which the player lives information is contained within</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createAmmoBar(com.badlogic.gdx.scenes.scene2d.ui.Table)">
+<h3>createAmmoBar</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createAmmoBar</span><wbr><span class="parameters">(com.badlogic.gdx.scenes.scene2d.ui.Table&nbsp;parentTable)</span></div>
+<div class="block">Creates the weapons ammo UI for the HUD</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>parentTable</code> - the table which the ammo information is contained within</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -291,19 +335,49 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="updateDodgeUsed()">
 <h3>updateDodgeUsed</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateDodgeUsed</span>()</div>
-<div class="block">Updates the Player's Dodge on the UI</div>
+<div class="block">Updates the visible avaliability of the dodge movement when used by the player</div>
 </section>
 </li>
 <li>
 <section class="detail" id="updateDodgeRefreshed()">
 <h3>updateDodgeRefreshed</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateDodgeRefreshed</span>()</div>
+<div class="block">Updates the visible avaliability of the dodge when it becomes available</div>
 </section>
 </li>
 <li>
 <section class="detail" id="updatePlayerLives(int)">
 <h3>updatePlayerLives</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updatePlayerLives</span><wbr><span class="parameters">(int&nbsp;lives)</span></div>
+<div class="block">Updates the number of lives displayed in the player HUD</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>lives</code> - the number that is being updated to</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateAmmo(int,int)">
+<h3>updateAmmo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateAmmo</span><wbr><span class="parameters">(int&nbsp;currentAmmo,
+ int&nbsp;maxAmmo)</span></div>
+<div class="block">Updates the current and max ammo displaying in the player HUD</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>currentAmmo</code> - the current ammo of the weapon equipped</dd>
+<dd><code>maxAmmo</code> - the max ammo of the weapon equipped</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateWeapon(com.csse3200.game.components.Weapons.WeaponType)">
+<h3>updateWeapon</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateWeapon</span><wbr><span class="parameters">(<a href="../Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weapon)</span></div>
+<div class="block">Updates the weapon equipped in the player HUD</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>weapon</code> - the new weapon</dd>
+</dl>
 </section>
 </li>
 <li>

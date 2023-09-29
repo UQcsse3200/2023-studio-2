@@ -1,0 +1,13 @@
+{
+  "entityType": "CarConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.CarConfig,
+      "spritePath": "images/car.atlas",
+      "position" : {
+        "x": 10,
+        "y": 40
+      }
+    }
+  ]
+}

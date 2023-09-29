@@ -7,7 +7,10 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
+import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -26,7 +29,8 @@ public class PlayerStatsDisplay extends UIComponent {
   Table statsTable;
   private final int maxHealth;
   private int playerLives;
-  private float barWidth;
+  private float healthBarWidth;
+  private float dodgeBarWidth;
   private Label healthLabel;
   private Label dodgeLabel;
   private Image healthBarFill;
@@ -36,13 +40,21 @@ public class PlayerStatsDisplay extends UIComponent {
   private TextureRegion hearts;
   private Image livesBarFill;
 
+  private InventoryComponent inventory;
+  private Entity player;
+  private Label ammoLabel;
+  private Image weaponImage;
+  private Table weaponImageTable;
+  private Table ammoInfo;
+
   /**
    * Constructor for the PlayerStatsDisplay
    * @param config the player config file
    */
   public PlayerStatsDisplay(PlayerConfig config) {
     maxHealth = config.health;
-    barWidth = 300f;
+    healthBarWidth = 320f;
+    dodgeBarWidth = 320f;
   }
 
   /**
@@ -58,6 +70,8 @@ public class PlayerStatsDisplay extends UIComponent {
     entity.getEvents().addListener("dodgeAvailable", this::updateDodgeRefreshed);
     entity.getEvents().addListener("updateLives", this::updatePlayerLives);
     entity.getEvents().addListener("maxLivesAlert", this::maxLivesReached);
+    entity.getEvents().addListener("updateAmmo", this::updateAmmo);
+    entity.getEvents().addListener("changeWeapon", this::updateWeapon);
   }
 
   /**
@@ -87,7 +101,10 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable.row();
     createDodgeBar(statsTable);
     statsTable.row();
-    createLivesBar(statsTable);
+    Table innerTable = new Table();
+    createLivesBar(innerTable);
+    createAmmoBar(innerTable);
+    statsTable.add(innerTable).left();
 
     container.add(statsTable);
     stage.addActor(container);
@@ -103,13 +120,13 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
 
     Table healthBarTable = new Table();
-    healthBarTable.add(healthBarFill).size(260f, 30f).padRight(5).padTop(3);
+    healthBarTable.add(healthBarFill).size(healthBarWidth - 40f, 30f).padRight(5).padTop(3);
 
     Stack healthStack = new Stack();
     healthStack.add(healthBarFrame);
     healthStack.add(healthBarTable);
 
-    statsTable.add(healthStack).size(barWidth, 40f).pad(5);
+    statsTable.add(healthStack).size(healthBarWidth, 40f).pad(5);
     statsTable.add(healthLabel).left();
   }
 
@@ -123,12 +140,12 @@ public class PlayerStatsDisplay extends UIComponent {
     dodgeBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill2.png", Texture.class));
 
     Table dodgeBarTable = new Table();
-    dodgeBarTable.add(dodgeBarFill).size((barWidth - 40f), 30f).padRight(5).padTop(3);
+    dodgeBarTable.add(dodgeBarFill).size((dodgeBarWidth - 40f), 30f).padRight(5).padTop(3);
 
     Stack dodgeStack = new Stack();
     dodgeStack.add(dodgeBarFrame);
     dodgeStack.add(dodgeBarTable);
-    statsTable.add(dodgeStack).size(barWidth, 40f).pad(5);
+    statsTable.add(dodgeStack).size(dodgeBarWidth, 40f).pad(5);
     statsTable.add(dodgeLabel).left();
   }
 
@@ -160,6 +177,37 @@ public class PlayerStatsDisplay extends UIComponent {
     statsTable.add(livesStack).left().pad(5);
   }
 
+  public void createAmmoBar(Table statsTable) {
+    player = ServiceLocator.getEntityService().getPlayer();
+    inventory = player.getComponent(InventoryComponent.class);
+
+    Image ammoBarFrame;
+    ammoBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
+
+    WeaponConfig config = inventory.getConfigs().GetWeaponConfig(inventory.getEquippedType());
+    weaponImage = new Image( new Texture(config.imagePath));
+    int currentAmmo = inventory.getCurrentAmmo();
+    int maxAmmo = inventory.getCurrentMaxAmmo();
+    CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
+    ammoLabel = new Label(ammoText, skin, "small");
+    ammoLabel.setFontScale(0.25f);
+
+    Table ammoFrameTable = new Table();
+    ammoFrameTable.add(ammoBarFrame).size(150f, 65f);
+
+    weaponImageTable = new Table();
+    weaponImageTable.add(weaponImage).size(30f);
+
+    ammoInfo = new Table();
+    ammoInfo.add(weaponImageTable).pad(5).padTop(10).left();
+    ammoInfo.add(ammoLabel).pad(5).padTop(10).right();
+
+    Stack ammoStack = new Stack();
+    ammoStack.add(ammoFrameTable);
+    ammoStack.add(ammoInfo);
+    statsTable.add(ammoStack).left().pad(5);
+  }
+
   @Override
   public void draw(SpriteBatch batch)  {
     // draw is handled by the stage
@@ -171,8 +219,8 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   public void updatePlayerHealthUI(int health) {
     healthLabel.setText(health);
-    barWidth = 260f * health / maxHealth;
-    healthBarFill.setSize(barWidth, 30f);
+    healthBarWidth = 280f * health / maxHealth;
+    healthBarFill.setSize(healthBarWidth, 30f);
   }
 
   /**
@@ -185,7 +233,7 @@ public class PlayerStatsDisplay extends UIComponent {
     dodgeBarFill.addAction(
             Actions.sequence(
                     Actions.parallel(
-                            Actions.sizeTo(260f, dodgeBarFill.getHeight(), 0.7f, Interpolation.linear)
+                            Actions.sizeTo(dodgeBarWidth - 40f, dodgeBarFill.getHeight(), 0.7f, Interpolation.linear)
                     )
             )
     );
@@ -197,7 +245,7 @@ public class PlayerStatsDisplay extends UIComponent {
   public void updateDodgeRefreshed() {
     CharSequence dodgeText = "Ready!";
     dodgeLabel.setText(dodgeText);
-    dodgeBarFill.setSize(260f, 30f);
+    dodgeBarFill.setSize(dodgeBarWidth - 40f, 30f);
   }
 
   /**
@@ -207,6 +255,20 @@ public class PlayerStatsDisplay extends UIComponent {
   public void updatePlayerLives(int lives) {
     hearts.setRegionWidth(lives*15);
     livesBarFill.setWidth(lives*30);
+  }
+
+
+  public void updateAmmo(int currentAmmo, int maxAmmo) {
+    CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
+    ammoLabel.setText(ammoText);
+  }
+
+  public void updateWeapon(WeaponType weapon) {
+    WeaponConfig config = inventory.getConfigs().GetWeaponConfig(weapon);
+    weaponImage = new Image( new Texture(config.imagePath));
+    weaponImageTable.clear();
+    weaponImageTable.add(weaponImage).size(30f);
+    updateAmmo(inventory.getCurrentAmmo(), inventory.getCurrentMaxAmmo());
   }
 
   /**

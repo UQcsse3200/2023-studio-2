@@ -1,6 +1,6 @@
-package com.csse3200.game.components.car;
+package com.csse3200.game.components.Car;
 
-public enum Carcontrol {
+public enum Control {
     normal,
     reverse,
     parked,

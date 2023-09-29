@@ -30,7 +30,7 @@ public class ExtractorTool extends ReplacementTool {
         Object total = ServiceLocator.getGameStateObserverService().getStateData("extractorsTotal/" + produces.toString());
         ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", this.produces.toString(),
                 (total != null ? (int) total : 0) + 1);
-        return StructureFactory.createExtractor(100, this.produces, 100, 10);
+        return StructureFactory.createExtractor(100, this.produces, 1000, 10);
     }
 
     /**

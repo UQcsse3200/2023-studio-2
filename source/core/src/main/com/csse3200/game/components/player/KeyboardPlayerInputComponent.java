@@ -64,6 +64,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerWalkEvent();
     }
 
+    public void setWalkDirection(Vector2 direction) {
+        this.walkDirection.set(direction);
+    }
+
     /**
      * Returns the last known position of the users cursor
      */

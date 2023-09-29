@@ -88,6 +88,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">AlertUIComponent</span>
 <span class="extends-implements">extends <a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a>
 implements <a href="IAlpha.html" title="interface in com.csse3200.game.components.player">IAlpha</a></span></div>
+<div class="block">A custom UIComponent used which displays text within a yellow border for alerts.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -112,7 +113,9 @@ implements <a href="IAlpha.html" title="interface in com.csse3200.game.component
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">AlertUIComponent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alert)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new AlertUIComponent containing the given text.</div>
+</div>
 </div>
 </section>
 </li>
@@ -130,16 +133,22 @@ implements <a href="IAlpha.html" title="interface in com.csse3200.game.component
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Creates the UI layout for the component.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Draw the renderable.</div>
+<div class="block">Draws the UI Component on to the screen by dividing the batch's projection matrix by
+ the SCALE_FACTOR to ensure that the UI isn't drawn too large on the screen.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAlpha(float)" class="member-name-link">setAlpha</a><wbr>(float&nbsp;alpha)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAlpha()" class="member-name-link">getAlpha</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the alpha of the component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAlpha(float)" class="member-name-link">setAlpha</a><wbr>(float&nbsp;alpha)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the alpha of the spritebatch</div>
 </div>
 </div>
@@ -178,6 +187,11 @@ implements <a href="IAlpha.html" title="interface in com.csse3200.game.component
 <section class="detail" id="&lt;init&gt;(java.lang.String)">
 <h3>AlertUIComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AlertUIComponent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alert)</span></div>
+<div class="block">Creates a new AlertUIComponent containing the given text.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>alert</code> - - the text to display within the component.</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -192,9 +206,7 @@ implements <a href="IAlpha.html" title="interface in com.csse3200.game.component
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Creates the UI layout for the component.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../../ui/UIComponent.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../ui/UIComponent.html" title="class in com.csse3200.game.ui">UIComponent</a></code></dd>
@@ -205,8 +217,8 @@ implements <a href="IAlpha.html" title="interface in com.csse3200.game.component
 <section class="detail" id="draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">
 <h3>draw</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">RenderComponent</a></code></span></div>
-<div class="block">Draw the renderable. Should be called only by the renderer, not manually.</div>
+<div class="block">Draws the UI Component on to the screen by dividing the batch's projection matrix by
+ the SCALE_FACTOR to ensure that the UI isn't drawn too large on the screen.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../rendering/RenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw</a></code>&nbsp;in class&nbsp;<code><a href="../../rendering/RenderComponent.html" title="class in com.csse3200.game.rendering">RenderComponent</a></code></dd>
@@ -225,6 +237,17 @@ implements <a href="IAlpha.html" title="interface in com.csse3200.game.component
 <dd><code><a href="IAlpha.html#setAlpha(float)">setAlpha</a></code>&nbsp;in interface&nbsp;<code><a href="IAlpha.html" title="interface in com.csse3200.game.components.player">IAlpha</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>alpha</code> - the alpha to set</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getAlpha()">
+<h3>getAlpha</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getAlpha</span>()</div>
+<div class="block">Returns the alpha of the component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the alpha of the component.</dd>
 </dl>
 </section>
 </li>

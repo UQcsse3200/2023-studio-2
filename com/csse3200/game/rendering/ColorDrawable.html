@@ -85,7 +85,7 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable
 implements <a href="../components/player/IAlpha.html" title="interface in com.csse3200.game.components.player">IAlpha</a></span></div>
 <div class="block">This class is used to programmatically create a color which can be used as a background in UI components.
- This is a slightly modified version of a class specified in <a href="https://stackoverflow.com/a/54642587">this stack overflow answer</a>.</div>
+ Taken from a <a href="https://stackoverflow.com/a/54642587">StackOverflow answer</a> by Steve Moseley.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -97,11 +97,13 @@ implements <a href="../components/player/IAlpha.html" title="interface in com.cs
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(float,float,float,float)" class="member-name-link">ColorDrawable</a><wbr>(float&nbsp;r,
- float&nbsp;g,
- float&nbsp;b,
- float&nbsp;a)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(float,float,float,float)" class="member-name-link">ColorDrawable</a><wbr>(float&nbsp;red,
+ float&nbsp;green,
+ float&nbsp;blue,
+ float&nbsp;alpha)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new ColorDrawable with the given color (in RGB).</div>
+</div>
 </div>
 </section>
 </li>
@@ -122,10 +124,14 @@ implements <a href="../components/player/IAlpha.html" title="interface in com.cs
  float&nbsp;y,
  float&nbsp;width,
  float&nbsp;height)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Draws the ColorDrawable to the screen by recoloring a white texture to the defined color.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAlpha(float)" class="member-name-link">setAlpha</a><wbr>(float&nbsp;alpha)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Changes the alpha of the ColorDrawable.</div>
+</div>
 </div>
 </div>
 </div>
@@ -149,10 +155,18 @@ implements <a href="../components/player/IAlpha.html" title="interface in com.cs
 <li>
 <section class="detail" id="&lt;init&gt;(float,float,float,float)">
 <h3>ColorDrawable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ColorDrawable</span><wbr><span class="parameters">(float&nbsp;r,
- float&nbsp;g,
- float&nbsp;b,
- float&nbsp;a)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ColorDrawable</span><wbr><span class="parameters">(float&nbsp;red,
+ float&nbsp;green,
+ float&nbsp;blue,
+ float&nbsp;alpha)</span></div>
+<div class="block">Creates a new ColorDrawable with the given color (in RGB).</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>red</code> - - the fraction of red in the color (0 to 1)</dd>
+<dd><code>green</code> - - the fraction of green in the color (0 to 1)</dd>
+<dd><code>blue</code> - - the fraction of blue in the color (0 to 1)</dd>
+<dd><code>alpha</code> - - the fraction of alpha in the color (0 to 1)</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -171,11 +185,18 @@ implements <a href="../components/player/IAlpha.html" title="interface in com.cs
  float&nbsp;y,
  float&nbsp;width,
  float&nbsp;height)</span></div>
+<div class="block">Draws the ColorDrawable to the screen by recoloring a white texture to the defined color.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>draw</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.scenes.scene2d.utils.Drawable</code></dd>
 <dt>Overrides:</dt>
 <dd><code>draw</code>&nbsp;in class&nbsp;<code>com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable</code></dd>
+<dt>Parameters:</dt>
+<dd><code>batch</code> - - the batch to draw the color to.</dd>
+<dd><code>x</code> - - the x position of the drawable</dd>
+<dd><code>y</code> - - the y position of the drawable</dd>
+<dd><code>width</code> - - the width of the drawable</dd>
+<dd><code>height</code> - - the height of the drawable</dd>
 </dl>
 </section>
 </li>
@@ -183,9 +204,12 @@ implements <a href="../components/player/IAlpha.html" title="interface in com.cs
 <section class="detail" id="setAlpha(float)">
 <h3>setAlpha</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setAlpha</span><wbr><span class="parameters">(float&nbsp;alpha)</span></div>
+<div class="block">Changes the alpha of the ColorDrawable.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../components/player/IAlpha.html#setAlpha(float)">setAlpha</a></code>&nbsp;in interface&nbsp;<code><a href="../components/player/IAlpha.html" title="interface in com.csse3200.game.components.player">IAlpha</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>alpha</code> - - the new alpha to use.</dd>
 </dl>
 </section>
 </li>

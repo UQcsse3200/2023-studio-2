@@ -12,7 +12,7 @@ public class CompanionConfig extends HealthEntityConfig {
     public int attackMultiplier;
     public boolean isImmune;
 
-    public CompanionConfig(){this.spritePath="images/Companion_spritesheet.atlas";}
+    public CompanionConfig(){this.spritePath="images/companion/Companion_spritesheet.atlas";}
 
     @Override
     public boolean equals(Object o) {

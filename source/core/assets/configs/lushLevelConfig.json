@@ -61,7 +61,7 @@
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
-    "images/Companion_spritesheet.atlas"
+    "images/companion/Companion_spritesheet.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav"

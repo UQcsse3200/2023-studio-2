@@ -193,6 +193,11 @@ public class MapGameArea extends GameArea{
      */
     private void spawnEnvironment() {
         TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
+
+        if (layer == null) {
+            return;
+        }
+
         List<TileEntity> environments = EnvironmentFactory.createEnvironment(layer);
 
         for (TileEntity tileEntity : environments) {

@@ -43,7 +43,7 @@ public class TutorialScreen extends ScreenAdapter {
 
     private Entity player;
 
-    private String currentAreaName = "Tutorial";
+    private String currentAreaName = "primary";
     private final Map<String, GameArea> allGameAreas = new HashMap<>();
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -87,8 +87,8 @@ public class TutorialScreen extends ScreenAdapter {
 
     private void generateGameAreas() {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        this.allGameAreas.put("primary", new TutorialGameArea("levels/tutorial/main-area", terrainFactory, game, game.getPlayerLives()));
-        generateGameArea("primary", "levels/tutorial/main-area");
+        this.allGameAreas.put("primary", new TutorialGameArea("levels\\tutorial\\main-area", terrainFactory, game, game.getPlayerLives()));
+        generateGameArea("primary", "levels\\tutorial\\main-area");
 
     }
     private void generateGameArea(String name, String configPath) {

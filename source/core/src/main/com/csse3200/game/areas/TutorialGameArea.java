@@ -133,7 +133,7 @@ public class TutorialGameArea extends GameArea{
      * Spawns the game environment
      */
     private void spawnEnvironment() {
-        TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
+        TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
         List<TileEntity> environments = EnvironmentFactory.createEnvironment(layer);
 
         for (TileEntity tileEntity : environments) {

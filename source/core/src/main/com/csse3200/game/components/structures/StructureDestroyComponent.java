@@ -2,6 +2,7 @@ package com.csse3200.game.components.structures;
 
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,7 @@ public class StructureDestroyComponent extends Component {
             return;
         }
 
-        var gridPosition = structureService.getStructurePosition(entity);
+        var gridPosition = structureService.getStructurePosition((PlaceableEntity) entity);
 
         if (gridPosition == null) {
             logger.error("The structure has not been placed using the StructurePlacementService!");

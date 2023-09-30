@@ -21,7 +21,6 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 public class Gate extends PlaceableEntity {
@@ -35,6 +34,7 @@ public class Gate extends PlaceableEntity {
     private final TextureAtlas closedAtlas;
 
     public Gate(Entity player) {
+        super(2, 2);
         openAtlas = ServiceLocator.getResourceService().getAsset(config.openTextureAtlas, TextureAtlas.class);
         closedAtlas = ServiceLocator.getResourceService().getAsset(config.closedTextureAtlas, TextureAtlas.class);
 

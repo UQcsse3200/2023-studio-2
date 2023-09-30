@@ -27,7 +27,7 @@ class JoinableComponentTest {
     @Mock
     JoinableComponentShapes shapes;
     @Mock
-    Entity entity;
+    PlaceableEntity entity;
     @Mock
     ColliderComponent colliderComponent;
     @Mock

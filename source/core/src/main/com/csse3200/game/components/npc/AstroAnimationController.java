@@ -23,9 +23,9 @@ public class AstroAnimationController extends Component {
 
         // Initialize your animator and load the atlas.
         animator = entity.getComponent(AnimationRenderComponent.class);
-        assetManager.load("images/Astro_NPC.atlas", TextureAtlas.class);
+        assetManager.load("images/npc/Astro_NPC.atlas", TextureAtlas.class);
         assetManager.finishLoading();
-        atlas = assetManager.get("images/Astro_NPC.atlas");
+        atlas = assetManager.get("images/npc/Astro_NPC.atlas");
 
         // Start with the default animation.
         animator.startAnimation("Astro_Down");

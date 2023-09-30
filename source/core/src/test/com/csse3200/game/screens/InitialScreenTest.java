@@ -44,7 +44,7 @@ public class InitialScreenTest {
             initialScreen.resize(800, 600);
 
             // Verify that a specific asset has been loaded
-            verifyAssetLoaded("images/InitialScreenBG.png");
+            verifyAssetLoaded("images/menu/InitialScreenBG.png");
 
             // Dispose of the screen
             initialScreen.dispose();

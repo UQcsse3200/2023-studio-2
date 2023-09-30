@@ -32,7 +32,7 @@ public class ExtractorMinigameWindow extends Window {
      * @return New extractor minigame window
      */
     public static ExtractorMinigameWindow MakeNewMinigame(Entity extractor) {
-        Texture background = ServiceLocator.getResourceService().getAsset("images/SpaceMiniGameBackground.png", Texture.class);
+        Texture background = ServiceLocator.getResourceService().getAsset("images/minigame/SpaceMiniGameBackground.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new ExtractorMinigameWindow(background, extractor);
     }
@@ -58,7 +58,7 @@ public class ExtractorMinigameWindow extends Window {
         // put extractors grid
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                Image extractorImage = new Image(new Texture(Gdx.files.internal("images/extractor.png")));
+                Image extractorImage = new Image(new Texture(Gdx.files.internal("images/minigame/extractor.png")));
                 float x = col * cellSize;
                 float y = row * cellSize;
                 extractorImage.setPosition(x, y);
@@ -67,25 +67,25 @@ public class ExtractorMinigameWindow extends Window {
         }
 
         // put extinguisher and spanner
-        Image extinguisherImage = new Image(new Texture(Gdx.files.internal("images/extinguisher.png")));// TODO: change to extinguisher.png
+        Image extinguisherImage = new Image(new Texture(Gdx.files.internal("images/minigame/extinguisher.png")));// TODO: change to extinguisher.png
         extinguisherImage.setPosition(-300, 400);
         imageTable.addActor(extinguisherImage);
         extinguisherImage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 currentMouseState = MouseState.EXTINGUISHER;
-                Pixmap extinguisherPixmap = new Pixmap(Gdx.files.internal("images/extinguisherCursor.png"));// TODO: change to extinguisherCursor.png
+                Pixmap extinguisherPixmap = new Pixmap(Gdx.files.internal("images/minigame/extinguisherCursor.png"));// TODO: change to extinguisherCursor.png
                 Gdx.graphics.setCursor(Gdx.graphics.newCursor(extinguisherPixmap, 0, 0));
             }
         });
-        Image spannerImage = new Image(new Texture(Gdx.files.internal("images/spanner.png")));// TODO: change to spanner.png
+        Image spannerImage = new Image(new Texture(Gdx.files.internal("images/minigame/spanner.png")));// TODO: change to spanner.png
         spannerImage.setPosition(600, 400);
         imageTable.addActor(spannerImage);
         spannerImage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 currentMouseState = MouseState.SPANNER;
-                Pixmap spannerPixmap = new Pixmap(Gdx.files.internal("images/spannerCursor.png"));// TODO: change to spannerCursor.png
+                Pixmap spannerPixmap = new Pixmap(Gdx.files.internal("images/minigame/spannerCursor.png"));// TODO: change to spannerCursor.png
                 Gdx.graphics.setCursor(Gdx.graphics.newCursor(spannerPixmap, 0, 0));
             }
         });
@@ -94,7 +94,7 @@ public class ExtractorMinigameWindow extends Window {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 if ((row == 0 && (col == 0 || col == 2)) || (row == 2 && (col == 0 || col == 2))) {
-                    Image fireImage = new Image(new Texture(Gdx.files.internal("images/fire.png")));
+                    Image fireImage = new Image(new Texture(Gdx.files.internal("images/minigame/fire.png")));
                     fireImage.setName("fire");
                     float x = col * cellSize + 50;
                     float y = row * cellSize + 50;
@@ -117,7 +117,7 @@ public class ExtractorMinigameWindow extends Window {
                         }
                     });
                 } else {
-                    Image holeImage = new Image(new Texture(Gdx.files.internal("images/Hole.png")));
+                    Image holeImage = new Image(new Texture(Gdx.files.internal("images/minigame/Hole.png")));
                     holeImage.setName("hole");
                     float x = col * cellSize + 40;
                     float y = row * cellSize + 30;

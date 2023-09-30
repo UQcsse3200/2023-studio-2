@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.DeathComponent;
-import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.structures.TurretTargetableComponent;
 import com.csse3200.game.components.tasks.*;
@@ -60,6 +57,7 @@ public class EnemyFactory {
    *
    * @param config - config file to replicate entity from
    * @return entity
+   * also helps in triggering sound
    */
   public static Entity createEnemy(EnemyConfig config) {
     System.out.println(config.type);
@@ -107,7 +105,8 @@ public class EnemyFactory {
                     1,
                     false))
             .addComponent(new DialogComponent(dialogueBox))
-            .addComponent(new TurretTargetableComponent());
+            .addComponent(new TurretTargetableComponent())
+                .addComponent(new SoundComponent(config.sound));
 
     if (config.type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
@@ -128,6 +127,7 @@ public class EnemyFactory {
     animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("chaseLeft",0.3f,Animation.PlayMode.LOOP_REVERSED);
     animator.addAnimation("attackLeft",0.05f,Animation.PlayMode.LOOP_REVERSED);
+    animator.addAnimation("invisible",0.5f, Animation.PlayMode.LOOP);
     enemy.addComponent(animator);
     enemy.addComponent(new EnemyAnimationController());
 
@@ -211,7 +211,7 @@ public class EnemyFactory {
     if (type == EnemyType.Melee && !isPlayer && !matchingBehaviour) priority = 5; //Special case for player targeting melee
 
     //Special case for shooting player
-    if (type == EnemyType.Ranged) {
+    if (type == EnemyType.Ranged || type == EnemyType.BossRanged) {
       float aimDelay = 2f;
       float range = 3f;
       float shootDistance = 3f;

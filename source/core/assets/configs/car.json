@@ -3,5 +3,5 @@
     "x": 10,
     "y": 40
   },
-  "spritePath": "images/car.atlas"
+  "spritePath": "images/car/car.atlas"
 }

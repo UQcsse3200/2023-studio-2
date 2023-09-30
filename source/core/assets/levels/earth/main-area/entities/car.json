@@ -3,7 +3,7 @@
   "entities": [
     {
       class: com.csse3200.game.entities.configs.CarConfig,
-      "spritePath": "images/car.atlas",
+      "spritePath": "images/car/car.atlas",
       "position" : {
         "x": 10,
         "y": 40

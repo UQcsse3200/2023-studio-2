@@ -22,7 +22,7 @@
         "x": 10,
         "y": 45
       },
-      "sound": {
+      "sounds": {
         "soundsMap": {
           "enemySpawn": "sounds/enemySpawner.mp3"
         }

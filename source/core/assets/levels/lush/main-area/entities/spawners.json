@@ -24,7 +24,7 @@
       },
       "sound": {
         "soundsMap": {
-          "enemySpawn": "sounds/enemySpawner.mp3"
+          "enemySpawn": "sounds/enemySpawner.wav"
         }
       }
     }

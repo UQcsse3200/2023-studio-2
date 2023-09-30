@@ -2,6 +2,7 @@ package com.csse3200.game.rendering;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.GridPoint2;
@@ -138,8 +139,10 @@ public class DebugRenderer {
     ensureCapacity();
 
     // Create a new color based on fillColor but with reduced opacity (e.g., 50% opacity)
-    Color semiTransparentFillColor = new Color(fillColor.r, fillColor.g, fillColor.b, 0.5f);
+    Color semiTransparentFillColor = new Color(fillColor.r, fillColor.g, fillColor.b, 0.35f);
 
+    //Enable blending
+    Gdx.gl.glEnable(GL20.GL_BLEND);
     shapeRenderer.begin(ShapeType.Filled);
 
     // Fill specific squares from the hashmap
@@ -151,6 +154,7 @@ public class DebugRenderer {
     }
 
     shapeRenderer.end();
+    Gdx.gl.glDisable(GL20.GL_BLEND);
   }
 
   /** @param active true to enable debug drawing, false to disable */

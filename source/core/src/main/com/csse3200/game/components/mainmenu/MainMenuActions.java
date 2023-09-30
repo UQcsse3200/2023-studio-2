@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.screens.TutorialScreen;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.AlertBox;
@@ -64,6 +65,17 @@ public class MainMenuActions extends Component {
   }
 
   /**
+   * Swaps to the Tutorial screen.
+   */
+
+  private void onTutorial(){
+    logger.info("Loading Tutorial");
+    TitleBox titleBox = new TitleBox(game,"Tutorial", skin);
+    titleBox.showDialog(stage);
+    game.setScreen(GdxGame.ScreenType.TUTORIAL_SCREEN);
+  }
+
+  /**
    * Intended for loading a saved game state.
    * Load functionality is not actually implemented.
    */
@@ -81,10 +93,7 @@ public class MainMenuActions extends Component {
     logger.info("Exit game");
     game.exit();
   }
-  private void onTutorial(){
-    logger.info("Launching tutorial screen");
-    game.setScreen(GdxGame.ScreenType.TUTORIAL_SCREEN);
-  }
+
 
   /**
    * Swaps to the Settings screen.

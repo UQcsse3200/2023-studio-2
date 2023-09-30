@@ -13,22 +13,18 @@ import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static java.util.Collections.max;
 
 
 /**
  * An ui component for displaying player stats, e.g. health, dodge cool down and player lives
  */
 public class PlayerStatsDisplay extends UIComponent {
+  private final String labelStyle;
   Table container;
   Table statsTable;
   private final int maxHealth;
-  private int playerLives;
   private float healthBarWidth;
   private float dodgeBarWidth;
   private Label healthLabel;
@@ -36,12 +32,10 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image healthBarFill;
   private Image dodgeBarFill;
   private Label maxLivesLabel;
-  private Texture heartsTexture;
   private TextureRegion hearts;
   private Image livesBarFill;
 
   private InventoryComponent inventory;
-  private Entity player;
   private Label ammoLabel;
   private Table weaponImageTable;
 
@@ -50,6 +44,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param config the player config file
    */
   public PlayerStatsDisplay(PlayerConfig config) {
+    labelStyle = "small";
     maxHealth = config.health;
     healthBarWidth = 320f;
     dodgeBarWidth = 320f;
@@ -89,9 +84,8 @@ public class PlayerStatsDisplay extends UIComponent {
     // Creating player HP and dodge labels
     int health = entity.getComponent(CombatStatsComponent.class).getHealth();
     CharSequence healthText = String.format("%d", health);
-    String small = "small";
-    healthLabel = new Label(healthText, skin, small);
-    dodgeLabel = new Label("Ready!", skin, small);
+    healthLabel = new Label(healthText, skin, labelStyle);
+    dodgeLabel = new Label("Ready!", skin, labelStyle);
     healthLabel.setFontScale(0.25f);
     dodgeLabel.setFontScale(0.25f);
 
@@ -152,11 +146,11 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param parentTable the table which the player lives information is contained within
    */
   public void createLivesBar(Table parentTable) {
-    playerLives = entity.getComponent(CombatStatsComponent.class).getLives();
+    int playerLives = entity.getComponent(CombatStatsComponent.class).getLives();
     Image livesBarFrame;
     livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
 
-    heartsTexture = ServiceLocator.getResourceService().getAsset("images/player/hearts.png", Texture.class);
+    Texture heartsTexture = ServiceLocator.getResourceService().getAsset("images/player/hearts.png", Texture.class);
     hearts = new TextureRegion(heartsTexture,
             playerLives * 15,
             13);
@@ -180,7 +174,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param parentTable the table which the ammo information is contained within
    */
   public void createAmmoBar(Table parentTable) {
-    player = ServiceLocator.getEntityService().getPlayer();
+    Entity player = ServiceLocator.getEntityService().getPlayer();
     inventory = player.getComponent(InventoryComponent.class);
 
     Image ammoBarFrame;
@@ -191,7 +185,7 @@ public class PlayerStatsDisplay extends UIComponent {
     int currentAmmo = inventory.getCurrentAmmo();
     int maxAmmo = inventory.getCurrentMaxAmmo();
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-    ammoLabel = new Label(ammoText, skin, "small");
+    ammoLabel = new Label(ammoText, skin, labelStyle);
     ammoLabel.setFontScale(0.21f);
 
     Table ammoFrameTable = new Table();
@@ -255,8 +249,8 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param lives the number that is being updated to
    */
   public void updatePlayerLives(int lives) {
-    hearts.setRegionWidth(lives*15);
-    livesBarFill.setWidth(lives*30);
+    hearts.setRegionWidth(lives * 15);
+    livesBarFill.setWidth(lives * 30f);
   }
 
   /**
@@ -290,7 +284,7 @@ public class PlayerStatsDisplay extends UIComponent {
     maxLivesAlert = new Table();
     maxLivesAlert.top().left();
     maxLivesAlert.setFillParent(true);
-    maxLivesLabel = new Label("Max Player Lives Reached", skin, "small");
+    maxLivesLabel = new Label("Max Player Lives Reached", skin, labelStyle);
 
     maxLivesAlert.add(maxLivesLabel).padTop(250).padLeft(5f);
     //launch the table onto the screen

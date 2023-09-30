@@ -11,42 +11,54 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+/**
+ * This component is used to create action feedback alerts based on Entity events.
+ */
 public class ActionFeedbackComponent extends Component {
+    /**
+     * How long the alert will display for.
+     */
+    private final static int DURATION = 2000;
+    /**
+     * How fast the alert will float upwards.
+     */
+    private final static double SPEED = 0.001;
+
+    /**
+     * Adds two listeners to the entities events which, when invoked, can be used
+     * to create and display custom warning alerts.
+     */
     @Override
     public void create() {
         super.create();
 
         entity.getEvents().addListener("displayWarning", this::displayWarning);
         entity.getEvents().addListener("displayWarningAtPosition", this::displayWarningAtPosition);
-        entity.getEvents().addListener("displayError", this::displayError);
     }
 
-    private void displayError() {
-    }
-
+    /**
+     * Displays an alert at the entities current position.
+     * @param alert - the text to be displayed.
+     */
     public void displayWarning(String alert) {
-        Entity alertEntity = new Entity();
-        AlertUIComponent alertUIComponent = new AlertUIComponent(alert);
-
-        alertEntity.addComponent(alertUIComponent);
-
-        alertEntity.addComponent(new PopupComponent(2000, 0.001));
-
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(alertEntity, this.entity.getPosition());
-
-
+        displayWarningAtPosition(alert, this.entity.getPosition());
     }
 
+    /**
+     * Displays an alert at the given position.
+     * @param alert - the text to be displayed.
+     * @param position - the position to display the alert.
+     */
     public void displayWarningAtPosition(String alert, Vector2 position) {
         Entity alertEntity = new Entity();
         AlertUIComponent alertUIComponent = new AlertUIComponent(alert);
 
         alertEntity.addComponent(alertUIComponent);
 
-        alertEntity.addComponent(new PopupComponent(2000, 0.001));
+        // uses the popup component to automatically make it float away and fade out over
+        // the predefined duration.
+        alertEntity.addComponent(new PopupComponent(DURATION, SPEED));
 
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(alertEntity, position);
-
-
     }
 }

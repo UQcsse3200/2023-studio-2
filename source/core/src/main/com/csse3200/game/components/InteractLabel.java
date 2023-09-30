@@ -19,7 +19,7 @@ public class InteractLabel extends Table {
     public InteractLabel() {
         super();
 
-        TextureRegionDrawable fButtonDrawable = new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/f_button.png", Texture.class)));
+        TextureRegionDrawable fButtonDrawable = new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/interface/f_button.png", Texture.class)));
         Image fButtonImage = new Image(fButtonDrawable);
 
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));

@@ -29,7 +29,7 @@ public class StoryDisplayTest extends UIComponent {
     private int start;
     private int end;
 
-    private static final String[] buttonImages = {"images/next_cut.png", "images/prev-cut.png"};
+    private static final String[] buttonImages = {"images/interface/next_cut.png", "images/prev-cut.png"};
 
 
 
@@ -68,8 +68,8 @@ public class StoryDisplayTest extends UIComponent {
 
         // next button
 
-        String nextTexture = "images/next_cut.png";
-        String nextTextureHover = "images/next_cut_hover.png";
+        String nextTexture = "images/interface/next_cut.png";
+        String nextTextureHover = "images/interface/next_cut_hover.png";
 
         ImageButton nextBtn;
         nextBtn = bothButtons.draw(nextTexture, nextTextureHover);
@@ -77,14 +77,14 @@ public class StoryDisplayTest extends UIComponent {
 
 
         // prev buttons
-        String prevTexture = "images/prev_cut.png";
-        String prevTextureHover = "images/prev_cut_hover.png";
+        String prevTexture = "images/interface/prev_cut.png";
+        String prevTextureHover = "images/interface/prev_cut_hover.png";
         ImageButton prevBtn;
         prevBtn = bothButtons.draw(prevTexture, prevTextureHover);
 
         // skip button
-        String skipTexture = "images/skip_btn.png";
-        String skipTextureHover = "images/skip_btn_hover.png";
+        String skipTexture = "images/interface/skip_btn.png";
+        String skipTextureHover = "images/interface/skip_btn_hover.png";
         ImageButton skipBtn;
         skipBtn = bothButtons.draw(skipTexture, skipTextureHover);
 

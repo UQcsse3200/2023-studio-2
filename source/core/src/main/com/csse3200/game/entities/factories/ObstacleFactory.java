@@ -155,7 +155,7 @@ public class ObstacleFactory {
     ColliderComponent asteroidCollider = new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE);
     //asteroidCollider.setRestitution(restitution); bounce removed
     Entity asteroid = new Entity()
-            .addComponent(new TextureRenderComponent("images/meteor.png"))
+            .addComponent(new TextureRenderComponent("images/minigame/meteor.png"))
             .addComponent(new PhysicsComponent().setBodyType(BodyType.DynamicBody))
             .addComponent(asteroidCollider);
     asteroid.setScale(width, height);
@@ -217,7 +217,7 @@ public class ObstacleFactory {
             //.addComponent(new TextureRenderComponent(config.spritePath))
 
 
-            .addComponent(new TextureRenderComponent("images/wormhole.png"));
+            .addComponent(new TextureRenderComponent("images/minigame/wormhole.png"));
     //NEED to decide spritePath texture or png texture
     goal.setScale(config.scale);
 

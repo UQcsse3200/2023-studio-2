@@ -3,6 +3,7 @@ package com.csse3200.game.components.structures;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
@@ -19,7 +20,7 @@ class StructureDestroyComponentTest {
     @Mock
     CombatStatsComponent combatStatsComponent;
     @Mock
-    Entity entity;
+    PlaceableEntity entity;
     @Mock
     StructurePlacementService structurePlacementService;
 
@@ -32,7 +33,7 @@ class StructureDestroyComponentTest {
         when(combatStatsComponent.isDead()).thenReturn(true);
 
         var position = mock(GridPoint2.class);
-        when(structurePlacementService.getStructurePosition(entity)).thenReturn(position);
+        when(structurePlacementService.getStructurePosition((PlaceableEntity) entity)).thenReturn(position);
 
         var structureDestroyComponent = new StructureDestroyComponent();
         structureDestroyComponent.setEntity(entity);

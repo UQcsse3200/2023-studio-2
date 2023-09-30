@@ -42,8 +42,8 @@ public class CarFactory {
 
     private static AnimationRenderComponent setupCarAnimations() {
         AnimationRenderComponent animator = new AnimationRenderComponent(
-                ServiceLocator.getResourceService().getAsset("images/car/car.atlas", TextureAtlas.class),
-                18f);
+                ServiceLocator.getResourceService().getAsset("images/car/car.atlas", TextureAtlas.class)
+                );
 
         addCarAnimations(animator, "left");
         addCarAnimations(animator, "right");

@@ -1,6 +1,5 @@
 {
   "texturePaths": [
-    "images/heart.png",
     "images/structure-icons/gate.png",
     "images/structure-icons/wall.png",
     "images/structure-icons/stone_wall.png",
@@ -12,12 +11,12 @@
     "images/structures/TurretOne.png",
     "images/structures/TurretTwo.png",
     "images/structures/heal_icon.png",
-    "images/resourcebar_background.png",
-    "images/resourcebar_durasteel.png",
-    "images/resourcebar_foreground.png",
-    "images/resourcebar_nebulite.png",
-    "images/resourcebar_solstite.png",
-    "images/resourcebar_lights.png",
+    "images/resources/resourcebar_background.png",
+    "images/resources/resourcebar_durasteel.png",
+    "images/resources/resourcebar_foreground.png",
+    "images/resources/resourcebar_nebulite.png",
+    "images/resources/resourcebar_solstite.png",
+    "images/resources/resourcebar_lights.png",
     "images/upgradetree/background.png",
     "images/upgradetree/exit.png",
     "images/upgradetree/hammer1.png",
@@ -31,9 +30,9 @@
     "images/player/statbar.png",
     "images/player/widestatbar.png",
     "images/player/heart.png",
-    "images/durasteel.png",
-    "images/nebulite.png",
-    "images/solstite.png"
+    "images/resources/durasteel.png",
+    "images/resources/nebulite.png",
+    "images/resources/solstite.png"
   ],
   "textureAtlasPaths": [
     "images/structures/stone_wall.atlas",
@@ -53,8 +52,6 @@
     "sounds/upgradeWeapon.mp3",
     "sounds/enemyDeath.mp3"
   ],
-  "particleEffectPaths": [
-    "particle-effects/explosion/explosion.effect"
-  ],
+  "particleEffectPaths": null,
   "backgroundMusicPath": null
 }

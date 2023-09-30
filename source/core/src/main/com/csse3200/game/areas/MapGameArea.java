@@ -1,6 +1,5 @@
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObjects;
@@ -15,10 +14,14 @@ import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
+import com.csse3200.game.components.player.InventoryDisplayComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.Fissure;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.TileEntity;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.entities.factories.*;
@@ -30,6 +33,9 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -43,8 +49,9 @@ public class MapGameArea extends GameArea{
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
     private int playerLives;
-    private Entity playerEntity;
     private boolean validLoad = true;
+    private static List<Entity> itemsOnMap = new ArrayList<>();
+    private String thing;
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
@@ -79,18 +86,18 @@ public class MapGameArea extends GameArea{
             return;
         }
         loadAssets();
-        displayUI();
 
         registerEntityPlacementService();
         registerStructurePlacementService();
 
         spawnTerrain();
         spawnEnvironment();
-        spawnPowerups();
         spawnExtractors();
         spawnShip();
         player = spawnPlayer();
-        spawnCompanion(player);
+        companion = spawnCompanion();
+        spawnLaboratory();
+        companion.getEvents().addListener("SpawnPowerup",this::spawnPowerups);
         spawnPortal(player);
         spawnTreeTop();
         spawnAstro();
@@ -99,6 +106,7 @@ public class MapGameArea extends GameArea{
         //spawnFire();
         //spawnBotanist();
 
+        displayUI();
         playMusic();
     }
 
@@ -133,7 +141,8 @@ public class MapGameArea extends GameArea{
         //Ensure non-null
         mapConfig.mapName = mapConfig.mapName == null ? "" : mapConfig.mapName;
         //ui.addComponent(new GameAreaDisplay(mapConfig.mapName));
-        ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage));
+        ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage))
+                .addComponent(new InventoryDisplayComponent());
         spawnEntity(ui);
     }
 
@@ -183,6 +192,12 @@ public class MapGameArea extends GameArea{
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
     }
 
+    public static void removeItemOnMap(Entity entityToRemove) {
+        entityToRemove.setEnabled(false);
+        itemsOnMap.remove(entityToRemove);
+        Gdx.app.postRunnable(entityToRemove::dispose);
+    }
+
     /**
      * Spawns the game environment
      */
@@ -198,12 +213,54 @@ public class MapGameArea extends GameArea{
     /**
      * Spawns powerups in the map at the positions as outlined by the config file
      */
-    private void spawnPowerups() {
-        if (mapConfig.areaEntityConfig == null) return;
+    private Entity spawnPowerups(PowerupType powerupType) {
+        Entity newPowerup;
+        switch (powerupType){
+            case HEALTH_BOOST:
+                newPowerup = PowerupFactory.createHealthPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case SPEED_BOOST:
+                newPowerup = PowerupFactory.createSpeedPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case TEMP_IMMUNITY:
+                newPowerup = PowerupFactory.createtempImmunityPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case DOUBLE_DAMAGE:
+                newPowerup = PowerupFactory.createDoubleDamagePowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case DEATH_POTION:
+                newPowerup = PowerupFactory.createDeathPotion();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case EXTRA_LIFE:
+                newPowerup = PowerupFactory.createExtraLifePowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case DOUBLE_CROSS:
+                newPowerup = PowerupFactory.createDoubleCrossPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case SNAP:
+                newPowerup = PowerupFactory.createSnapPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            default: throw new IllegalArgumentException("You must assign a valid PowerupType");
 
-        for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.getEntities(PowerupConfig.class)) {
+        /*for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.getEntities(PowerupConfig.class)) {
             Entity powerup = PowerupFactory.createPowerup(powerupConfig);
-            spawnEntityAt(powerup, powerupConfig.position, true, false);
+            spawnEntityAt(powerup, powerupConfig.position, true, false);*/
         }
     }
 
@@ -245,6 +302,11 @@ public class MapGameArea extends GameArea{
             Entity extractor = StructureFactory.createExtractor(extractorConfig);
             spawnEntityAt(extractor, extractorConfig.position, true, false);
         }
+
+        for (FissureConfig fissureConfig : mapConfig.areaEntityConfig.getEntities(FissureConfig.class)) {
+            PlaceableEntity fissure = new Fissure(fissureConfig);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(fissure, fissureConfig.position, true, true);
+        }
     }
 
     /**
@@ -259,7 +321,6 @@ public class MapGameArea extends GameArea{
             spawnEntityAt(ship, shipConfig.position, false, false);
         }
     }
-
     private void spawnTreeTop(){
         if (mapConfig.areaEntityConfig == null) return;
 
@@ -305,6 +366,13 @@ public class MapGameArea extends GameArea{
         }
         return newPlayer;
     }
+    private void spawnLaboratory(){
+        LaboratoryConfig laboratoryConfig = mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class);
+        if (laboratoryConfig !=null){
+            Entity newLaboratory = LaboratoryFactory.createLaboratory();
+            spawnEntityAt(newLaboratory, laboratoryConfig.position, true,false);
+        }
+    }
 
     public static Entity getPlayer() {
         return player;
@@ -312,17 +380,29 @@ public class MapGameArea extends GameArea{
 
     /**
      * Spawns the companion at the position given by the config file
-     * @param playerEntity - player that will be accompanied
      */
-    private void spawnCompanion(Entity playerEntity) {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        //Could spawn companion next to player if no position is specified.
-        CompanionConfig companionConfig = mapConfig.areaEntityConfig.getEntity(CompanionConfig.class);
-        if (companionConfig != null) {
-            Entity newCompanion = CompanionFactory.createCompanion(playerEntity, companionConfig);
-            spawnEntityAt(newCompanion, companionConfig.position, true, true);
+    private Entity spawnCompanion() {
+        Entity newCompanion;
+        CompanionConfig companionConfig = null;
+        if (mapConfig.areaEntityConfig != null) {
+            companionConfig = mapConfig.areaEntityConfig.getEntity(CompanionConfig.class);
         }
+
+        if (companionConfig != null) {
+            newCompanion = CompanionFactory.createCompanion(companionConfig);
+        } else {
+            logger.info("Companion not found in config file - creating generic player");
+            newCompanion = CompanionFactory.createCompanion();
+        }
+        if (companionConfig != null && companionConfig.position != null) {
+            spawnEntityAt(newCompanion, companionConfig.position, true, true);
+        } else {
+            logger.info("Failed to load companion position - created companion at middle of map");
+            //If no position specified spawn in middle of map.
+            GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);
+            spawnEntityAt(newCompanion, pos, true, true);
+        }
+        return newCompanion;
     }
 
     /**
@@ -351,6 +431,7 @@ public class MapGameArea extends GameArea{
         //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
     }
+
 
     private void spawnAstro() {
         if (mapConfig.areaEntityConfig == null) return;

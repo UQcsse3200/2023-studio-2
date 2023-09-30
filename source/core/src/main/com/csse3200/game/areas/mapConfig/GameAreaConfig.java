@@ -1,6 +1,7 @@
 package com.csse3200.game.areas.mapConfig;
 
 import com.csse3200.game.entities.configs.BaseEntityConfig;
+import com.csse3200.game.entities.configs.CompanionConfig;
 import com.csse3200.game.entities.configs.PlayerConfig;
 
 import java.util.*;
@@ -12,9 +13,11 @@ public class GameAreaConfig {
 
     //Map Properties
     public String mapName = "Planet";
-    public String planetImage = "images/navigationmap/planets/earth.png";
+    public String planetImage = "images/planets/space_navigation_planet_0.png";
     public String terrainPath = "map/base.tmx";
     public List<ResourceCondition> winConditions = null;
+    public PlayerConfig playerConfig = null;
+    public CompanionConfig companionConfig = null;
 
     public AreaEntityConfig areaEntityConfig = null;
 

@@ -66,6 +66,11 @@ public class UpgradeTreeTest {
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG.toString()));
     }
 
+    /**
+     * the below Test has been implemented to
+     * test the Ui of unlocking weapon and
+     * also to test the sound of it
+     */
     @Test
     public void testUnlockWeapon() {
 

@@ -74,6 +74,15 @@ public class MapGameArea extends GameArea{
         return speedMult != null ? (float)speedMult : 1f;
     }
 
+    public static boolean isOnIce() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+        Object onIce = cell.getTile().getProperties().get("slide");
+
+        return onIce != null && (boolean) onIce;
+    }
+
     /**
      * Create the game area
      */

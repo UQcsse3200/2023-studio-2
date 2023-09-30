@@ -84,7 +84,7 @@ public class PlayerActions extends Component {
      * Stops the player from walking.
      */
     void stopWalking() {
-        boolean onIce = true; //TODO: Implement function in MapGameArea.java to handle this
+        boolean onIce = MapGameArea.isOnIce(); //TODO: Implement function in MapGameArea.java to handle this
         this.walkDirection = Vector2.Zero.cpy();
         if(onIce) {
             sliding = true;

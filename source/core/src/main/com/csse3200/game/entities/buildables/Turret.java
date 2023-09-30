@@ -18,7 +18,6 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.Objects;
@@ -29,9 +28,6 @@ import java.util.Objects;
 public class Turret extends PlaceableEntity{
 
     private long start = System.currentTimeMillis(); // start time
-
-    private static final TurretConfigs turretConfigs =
-            FileLoader.readClass(TurretConfigs.class, "configs/turrets.json"); // load turret configs
 
     TurretType type; // turret type
     public int currentAmmo; // current ammo
@@ -47,7 +43,7 @@ public class Turret extends PlaceableEntity{
      *               (used to get position and rotation)
      */
     public Turret(TurretType type, Entity player) {
-        this(turretConfigs.GetTurretConfig(type)); // create turret with config file
+        this(FileLoader.readClass(TurretConfigs.class, "configs/turrets.json").GetTurretConfig(type)); // create turret with config file
     }
 
     /**
@@ -55,7 +51,7 @@ public class Turret extends PlaceableEntity{
      * @param turretConfig Configuration file to match turret to
      */
     public Turret(TurretConfig turretConfig) {
-        super();
+        super(2, 2);
 
         maxAmmo = turretConfig.maxAmmo; // set max ammo
         currentAmmo = maxAmmo;

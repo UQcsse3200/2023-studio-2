@@ -1,11 +1,11 @@
 package com.csse3200.game.components.Companion;
 
-import com.csse3200.game.components.Companion.CompanionAnimationController;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class CompanionAnimationControllerTest {
     private CompanionAnimationController controller;
@@ -26,49 +26,49 @@ public class CompanionAnimationControllerTest {
     @Test
     public void testAnimateLeft() {
         controller.animateLeft();
-        verify(animator).startAnimation("LEFT");
+        verify(animator).startAnimation("Companion_Left");
     }
 
     @Test
     public void testAnimateRight() {
         controller.animateRight();
-        verify(animator).startAnimation("RIGHT");
+        verify(animator).startAnimation("Companion_Right");
     }
 
     @Test
     public void testAnimateUp() {
         controller.animateUp();
-        verify(animator).startAnimation("UP");
+        verify(animator).startAnimation("Companion_Up");
     }
 
     @Test
     public void testAnimateDown() {
         controller.animateDown();
-        verify(animator).startAnimation("DOWN");
+        verify(animator).startAnimation("Companion_Down");
     }
 
     @Test
     public void testAnimateUpLeft() {
         controller.animateUpLeft();
-        verify(animator).startAnimation("UP_LEFT");
+        verify(animator).startAnimation("Companion_UpLeft");
     }
 
     @Test
     public void testAnimateUpRight() {
         controller.animateUpRight();
-        verify(animator).startAnimation("UP_RIGHT");
+        verify(animator).startAnimation("Companion_UpRight");
     }
 
     @Test
     public void testAnimateDownLeft() {
         controller.animateDownLeft();
-        verify(animator).startAnimation("DOWN_LEFT");
+        verify(animator).startAnimation("Companion_DownLeft");
     }
 
     @Test
     public void testAnimateDownRight() {
         controller.animateDownRight();
-        verify(animator).startAnimation("DOWN_RIGHT");
+        verify(animator).startAnimation("Companion_DownRight");
     }
 
 }

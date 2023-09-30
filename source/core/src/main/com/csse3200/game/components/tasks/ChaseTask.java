@@ -6,16 +6,10 @@ import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.components.npc.PathFinder;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsEngine;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.raycast.RaycastHit;
-import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
-import com.badlogic.gdx.utils.Timer;
-import java.util.ArrayList;
-import java.util.List;
 
-import static com.csse3200.game.components.npc.PathFinder.findPath;
+
+import java.util.List;
 
 /** Chases a target entity until they get too far away or line of sight is lost */
 public class ChaseTask extends DefaultTask implements PriorityTask {
@@ -27,6 +21,8 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private MovementTask movementTask;
   private List<GridPoint2> path;
   private GridPoint2 targetPosition;
+  private char currentDirection;
+
   /**
    * @param target The entity to chase.
    * @param priority Task priority when chasing (0 when not chasing).
@@ -68,10 +64,12 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     movementTask = new MovementTask(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
     movementTask.create(owner);
     movementTask.start();
+    startDirectionalAnimation();
   }
 
   @Override
   public void update() {
+    char newDirection = getDirection(target.getPosition());
     movementTask.update();
     //check if it reached the tile (the first tile of the path in the start() function)
     if (movementTask.getStatus() != Status.ACTIVE) {
@@ -108,6 +106,9 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
       } else {
         movementTask.update();
       }
+    }
+    if (currentDirection != newDirection){
+      startDirectionalAnimation();
     }
   }
 
@@ -160,4 +161,15 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     }
     return '=';
   }
+
+  public void startDirectionalAnimation() {
+    currentDirection = getDirection(target.getPosition());
+    if(currentDirection == '<'){
+      this.owner.getEntity().getEvents().trigger("chaseLeft");
+    }
+    if(currentDirection == '>'|| currentDirection == '='){
+      this.owner.getEntity().getEvents().trigger("chaseStart");
+    }
+  }
+
 }

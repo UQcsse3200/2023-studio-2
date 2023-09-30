@@ -92,10 +92,10 @@ public class ResourceDisplay extends UIComponent {
     public ResourceDisplay withResource(Resource resource) {
         this.resources.add(resource);
 
-        Image barForegroundImage= new Image(ServiceLocator.getResourceService().getAsset("images/resourcebar_foreground.png", Texture.class));
-        Image barBackgroundImage= new Image(ServiceLocator.getResourceService().getAsset("images/resourcebar_background.png", Texture.class));
+        Image barForegroundImage= new Image(ServiceLocator.getResourceService().getAsset("images/resources/resourcebar_foreground.png", Texture.class));
+        Image barBackgroundImage= new Image(ServiceLocator.getResourceService().getAsset("images/resources/resourcebar_background.png", Texture.class));
 
-        Texture extractorBarTexture = ServiceLocator.getResourceService().getAsset("images/resourcebar_lights.png", Texture.class);
+        Texture extractorBarTexture = ServiceLocator.getResourceService().getAsset("images/resources/resourcebar_lights.png", Texture.class);
         TextureRegion extractorBarTextureRegion = new TextureRegion(extractorBarTexture,
                 (int) (extractorBarTexture.getWidth() * 1.0),
                 extractorBarTexture.getHeight());
@@ -104,7 +104,7 @@ public class ResourceDisplay extends UIComponent {
         Image extractorBar = new Image(extractorBarTextureRegion);
         extractorBarImages.put(resource.toString(), extractorBar);
 
-        String barPath = "images/resourcebar_" + resource.toString().toLowerCase() + ".png";
+        String barPath = "images/resources/resourcebar_" + resource.toString().toLowerCase() + ".png";
         Texture resourceBarTexture = ServiceLocator.getResourceService().getAsset(barPath, Texture.class);
         TextureRegion resourceBarTextureRegion = new TextureRegion(resourceBarTexture,
                 (int) (resourceBarTexture.getWidth() * 1.0),

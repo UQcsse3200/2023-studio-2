@@ -1,24 +1,23 @@
 package com.csse3200.game.areas;
+
 import com.badlogic.gdx.audio.Music;
-import com.csse3200.game.GdxGame;
 import com.csse3200.game.files.UserSettings;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
+import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.MinigameShipFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.csse3200.game.components.ships.DistanceDisplay;
-import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 
 /**
@@ -37,20 +36,20 @@ public class SpaceGameArea extends GameArea {
     private static final int NUM_ASTEROIDS = 100;
     private Label distanceLabel;
     private static final String[] spaceMiniGameTextures = {
-            "images/SpaceMiniGameBackground.png",
-            "images/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-            "images/LeftShip.png",
-            "images/Ship.png",
-            "images/wormhole.png",
-            "images/obstacle-enemy.png",
-            "images/mainship.png"
+            "images/minigame/SpaceMiniGameBackground.png",
+            "images/minigame/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
+            "images/ship/Ship.png",
+            "images/ship/Ship.png",
+            "images/minigame/wormhole.png",
+            "images/minigame/obstacle-enemy.png",
+            "images/minigame/mainship.png"
     };
     private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
     private static final String[] spaceMusic = {backgroundMusic};
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
 
-    private static final String[] spaceTextureAtlases = {"images/ship.atlas"};
+    private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
 
     /**
      * Constructor for initializing terrain area

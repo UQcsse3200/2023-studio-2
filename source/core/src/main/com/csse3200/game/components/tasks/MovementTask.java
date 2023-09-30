@@ -44,6 +44,7 @@ public class MovementTask extends DefaultTask {
     lastPos = owner.getEntity().getPosition();
   }
 
+
   @Override
   public void update() {
     if (isAtTarget() || isAtTargetGrid()) {
@@ -95,5 +96,8 @@ public class MovementTask extends DefaultTask {
   private String getDirection() {
     Vector2 currentPosition = owner.getEntity().getPosition();
     return currentPosition.sub(target).x < 0 ? "right" : "left";
+  }
+  public void setSpeed(Vector2 speed){
+    movementComponent.changeMaxSpeed(speed);
   }
 }

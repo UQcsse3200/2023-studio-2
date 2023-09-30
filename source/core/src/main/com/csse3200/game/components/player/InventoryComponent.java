@@ -2,11 +2,67 @@ package com.csse3200.game.components.player;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
-
-import java.util.HashMap;
-
+import com.csse3200.game.entities.configs.WeaponConfigs;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.stream.Collectors;
+
+class InventoryItem {
+  WeaponType weaponType;
+  int ammoCount;
+  int maxAmmo;
+  private int attackCooldown;
+
+  public InventoryItem(WeaponType weaponType, int ammo, int maxAmmo) {
+    this.weaponType = weaponType;
+    this.ammoCount = ammo;
+    this.maxAmmo = maxAmmo;
+    attackCooldown = 0;
+  }
+  public InventoryItem(WeaponType weaponType) {
+    this.weaponType = weaponType;
+    ammoCount = 100;
+    maxAmmo = 100;
+  }
+
+  public WeaponType getItem() {
+    return this.weaponType;
+  }
+
+  public int getAmmo() {
+    return this.ammoCount;
+  }
+
+  public void changeItem(WeaponType weaponType) {
+    this.weaponType = weaponType;
+  }
+
+  public void changeAmmo(int change) {
+    ammoCount = Math.min(maxAmmo, Math.max(0, ammoCount + change));
+  }
+
+  public int getMaxAmmo() {
+    return this.maxAmmo;
+  }
+
+  public void setAttackCooldown(int cooldown) {
+    this.attackCooldown = cooldown;
+  }
+
+  public int getAttackCooldown() {
+    return this.attackCooldown;
+  }
+
+  public void decCoolDown() {
+    if (attackCooldown == 0)
+      return;
+    attackCooldown--;
+  }
+}
 
 /**
  * A component intended to be used by the player to track their inventory.
@@ -15,33 +71,45 @@ import org.slf4j.LoggerFactory;
  */
 public class InventoryComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
-  private int equipped = 1;
-  private final HashMap<Integer, WeaponType> equippedWMap = new HashMap<Integer, WeaponType>();
+  private String equipped = "melee";
+  private final LinkedHashMap<String, InventoryItem> equippedWMap = new LinkedHashMap<>(); // preserves insert order
+  private final WeaponConfigs config;
 
+  @Override
   public void create() {
-    equippedWMap.put(1, WeaponType.MELEE_KATANA);
-    equippedWMap.put(2, WeaponType.RANGED_BOOMERANG);
-    equippedWMap.put(3, WeaponType.WOODHAMMER);
+    equippedWMap.put("melee", new InventoryItem(WeaponType.MELEE_KATANA));
+    equippedWMap.put("ranged", new InventoryItem(WeaponType.RANGED_BOOMERANG, 30, 30));
+    equippedWMap.put("building", new InventoryItem(WeaponType.WOODHAMMER));
   }
 
-  public InventoryComponent() {
+  @Override
+  public void update() {
+    this.equippedWMap.get(getEquipped()).decCoolDown();
+  }
+
+  public InventoryComponent(WeaponConfigs config) {
     create();
+    this.config = config;
+  }
+
+  public WeaponConfigs getConfigs() {
+    return config;
   }
 
   /**
    * @return int - the equipped weapon
    */
-  public int getEquipped() {
+  public String getEquipped() {
     return equipped;
   }
 
   /**
    * Changes active inventory slot to a specific slot
    * 
-   * @param i - the weapon to be equipped
+   * @param slot - the weapon to be equipped
    */
-  public void setEquipped(int i) {
-    this.equipped = i;
+  public void setEquipped(String slot) {
+    this.equipped = slot;
   }
 
   /**
@@ -50,33 +118,26 @@ public class InventoryComponent extends Component {
    * @param slot       the slot to be updated
    * @param weaponType the weapon type to be placed in the slot
    */
-  public void replaceSlotWithWeapon(int slot, WeaponType weaponType) {
-    if (slot > 3 || slot < 1) {
-      throw new IllegalArgumentException("Slot must be in range 1-3");
-    }
-    equippedWMap.remove(slot);
-    equippedWMap.put(slot, weaponType);
+  public void replaceSlotWithWeapon(String slot, WeaponType weaponType) {
+    equippedWMap.get(slot).changeItem(weaponType);
   }
 
+  /** Returns the current equipped weapons represented in a hash map **/
+  public ArrayList<WeaponType> getEquippedWeapons() {
+    return equippedWMap.values().stream().map(InventoryItem::getItem).collect(Collectors.toCollection(ArrayList::new));
+  }
+
+  // not needed anymore?
   public void placeInSlot(WeaponType weaponType) {
-    int slot = switch (weaponType) {
-      case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING -> 1; // melee
-      case RANGED_SLINGSHOT, RANGED_BOOMERANG, RANGED_HOMING -> 2; // ranged
-      case WOODHAMMER, STONEHAMMER, STEELHAMMER -> 3; // building
-      default -> throw new IllegalArgumentException("Slot not assigned: " + weaponType);
-    };
-    replaceSlotWithWeapon(slot, weaponType);
+    replaceSlotWithWeapon(config.GetWeaponConfig(weaponType).slotType, weaponType);
   }
 
   /**
-   * Cycles between equiped weapons
+   * Updates weapon of the active inventory slot
+   *
    */
-  public void cycleEquipped() {
-    int equiped = getEquipped();
-    if (equiped == 3) {
-      this.equipped = 1;
-    } else
-      this.equipped++;
+  public void changeEquipped(WeaponType type) {
+    this.equipped = config.GetWeaponConfig(type).slotType;
   }
 
   /**
@@ -85,19 +146,26 @@ public class InventoryComponent extends Component {
    * @return WeaponType - Type of cureently equiped weapon
    */
   public WeaponType getEquippedType() {
-    return this.equippedWMap.get(getEquipped());
+    return this.equippedWMap.get(getEquipped()).getItem();
   }
 
-  /**
-   * Updates weapon of the active inventory slot
-   * 
-   * @param weaponType - Type of the new weapon
-   */
-  public void changeEquipped(WeaponType weaponType) {
-    System.out.println(weaponType);
-    WeaponType equippedType = getEquippedType();
-    this.equippedWMap.remove(equippedType);
-    this.equippedWMap.put(getEquipped(), weaponType);
+  public int getCurrentAmmo() {
+    return this.equippedWMap.get(getEquipped()).getAmmo();
   }
 
+  public int getCurrentMaxAmmo() {
+    return this.equippedWMap.get(getEquipped()).getMaxAmmo();
+  }
+
+  public void changeEquippedAmmo(int ammoChange) {
+    this.equippedWMap.get(getEquipped()).changeAmmo(ammoChange);
+  }
+
+  public int getEquippedCooldown() {
+    return this.equippedWMap.get(getEquipped()).getAttackCooldown();
+  }
+
+  public void setEquippedCooldown(int coolDown) {
+    this.equippedWMap.get(getEquipped()).setAttackCooldown(coolDown);
+  }
 }

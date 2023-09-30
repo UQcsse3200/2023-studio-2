@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
 
 import static com.csse3200.game.screens.MainMenuScreen.logger;
@@ -17,7 +18,7 @@ import static com.csse3200.game.screens.MainMenuScreen.logger;
 
 public class AlertBox extends Dialog {
 
-    private GdxGame game;
+    private final GdxGame game;
     public AlertBox( GdxGame game, String alert, Skin skin) {
         super(alert, skin);
         this.game = game;
@@ -57,7 +58,7 @@ public class AlertBox extends Dialog {
     }
     private void onOK() {
         logger.info("Start game");
-        game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+        new PlanetTravel(game).returnToCurrent();
     }
 }
 

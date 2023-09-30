@@ -21,6 +21,7 @@ public class PowerUpDisplayHUD extends UIComponent {
 
     Image SpeedUpImage = null;
     Image HealthUpImage = null;
+    Image ExtraLifeImage = null;
 
     public PowerUpDisplayHUD(PowerupType powerUpEntity) {
         this.powerUpEntity = powerUpEntity;
@@ -40,13 +41,18 @@ public class PowerUpDisplayHUD extends UIComponent {
     public Image selectPowerUp() {
 
         if (powerUpEntity == PowerupType.HEALTH_BOOST) {
-            HealthUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/healthpowerup.png", Texture.class));
+            HealthUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/Potion2re.png", Texture.class));
             return HealthUpImage;
         }
 
         if (powerUpEntity == PowerupType.SPEED_BOOST) {
-            SpeedUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/speedpowerup.png", Texture.class));
+            SpeedUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/Potion4re.png", Texture.class));
             return SpeedUpImage;
+        }
+
+        if (powerUpEntity == PowerupType.EXTRA_LIFE) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/extra_life.png", Texture.class));
+            return ExtraLifeImage;
         }
         else return null;
     }
@@ -75,6 +81,9 @@ public class PowerUpDisplayHUD extends UIComponent {
             // timer task on applyEffect
             table.add(SpeedUpImage).size(powerUpLength).pad(5);
         }
+        else if (selectPowerUp() == ExtraLifeImage) {
+            table.add(ExtraLifeImage).size(powerUpLength).pad(5);
+        }
         // stage.addActor(table); todo: fix
     }
 
@@ -82,7 +91,6 @@ public class PowerUpDisplayHUD extends UIComponent {
      * @param batch Batch to render to.
      */
 
-    @Override
     protected void draw(SpriteBatch batch) {
     }
 
@@ -96,6 +104,7 @@ public class PowerUpDisplayHUD extends UIComponent {
         selectPowerUp();
     }
 
+    @Override
     public void dispose() {
         super.dispose();
         PowerUpLabel.remove();

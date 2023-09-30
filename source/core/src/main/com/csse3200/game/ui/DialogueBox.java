@@ -2,19 +2,12 @@ package com.csse3200.game.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
-import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.mainmenu.MainMenuActions;
-import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.services.ServiceLocator;
-
 import static com.csse3200.game.screens.MainMenuScreen.logger;
 
 /**
@@ -25,8 +18,7 @@ public class DialogueBox extends Dialog {
     //private final InputOverrideComponent inputOverrideComponent;
 
     private TitleBox titleBox;
-    private Label dialogueLabel;
-    private Label titleLabel;
+    private final Label dialogueLabel;
 
     /**
      * Creates a new DialogueBox instance.
@@ -37,7 +29,7 @@ public class DialogueBox extends Dialog {
     public DialogueBox(String title, String message, Skin skin) {
         super("",skin);
 
-        titleLabel = new Label(title, skin);
+        Label titleLabel = new Label(title, skin);
         this.dialogueLabel = new Label(message, skin);
 
         titleLabel.setAlignment(Align.top);

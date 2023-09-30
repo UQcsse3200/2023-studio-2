@@ -4,14 +4,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.components.PhysicsComponent;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+
 
 /**
  * A UI component for displaying Companion stats, e.g., health.
@@ -19,14 +24,23 @@ import com.badlogic.gdx.utils.Timer.Task;
 public class CompanionStatsDisplay extends UIComponent {
     Table companionStatisticsUI;
 
+    Table container;
+    Table statsTable;
+
     private boolean update = false;
+
     Table playerLowHealthAlert;
+
+    Table titleTable;
+    private long duration;
+
 
 
     /**
      * The player entity associated with this CompanionStatsDisplay.
      */
-    public Entity playerEntity;
+    public Entity player = ServiceLocator.getEntityService().getPlayer();
+    public Entity companion = ServiceLocator.getEntityService().getCompanion();
 
     /**
      * The UI playerLowHealthLabel for displaying the companion's health.
@@ -46,16 +60,6 @@ public class CompanionStatsDisplay extends UIComponent {
      */
     public CompanionStatsDisplay() {
     }
-
-    /**
-     * Constructor for CompanionStatsDisplay with a player entity.
-     *
-     * @param playerEntity The player entity to associate with this UI component.
-     */
-    public CompanionStatsDisplay(Entity playerEntity) {
-        this.playerEntity = playerEntity;
-    }
-
     /**
      * Creates reusable UI styles and adds actors to the stage.
      */
@@ -66,8 +70,26 @@ public class CompanionStatsDisplay extends UIComponent {
 
         // Listen for events related to health updates
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
-        playerEntity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+        player.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
         entity.getEvents().addListener("companionModeChange", this::updateCompanionModeUI);
+    }
+
+    public void createInventoryButton(Table statsTable) {
+        TextButton button = new TextButton("Inventory", skin);
+
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                KeyboardPlayerInputComponent keys =
+                        ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
+                /*keys.clearWalking();*/
+                CompanionInventoryComponent inventoryComponent = new CompanionInventoryComponent();
+                CompanionInventoryDisplay display = CompanionInventoryDisplay.createUpgradeDisplay(inventoryComponent);
+                ServiceLocator.getRenderService().getStage().addActor(display);
+            }
+        });
+
+        statsTable.add(button);
     }
 
     /**
@@ -80,7 +102,16 @@ public class CompanionStatsDisplay extends UIComponent {
         companionStatisticsUI.top().right();
         companionStatisticsUI.setFillParent(true);
         //placing the companionStatisticsUI/UI on a certain portion of the screen!
-        companionStatisticsUI.padTop(85f).padRight(5f);
+        /*companionStatisticsUI.padTop(85f).padRight(5f);*/
+
+        container = new Table();
+        container.top().right();
+        container.setFillParent(true);
+        //container.padTop(20f).padLeft(190f);
+
+        statsTable = new Table();
+        statsTable.padTop(230f).padRight(20f);
+        container.setFillParent(true);
 
         // ADD A COMPANION UI HEADER
         CharSequence companionUIHeader = "Companion";
@@ -106,22 +137,27 @@ public class CompanionStatsDisplay extends UIComponent {
 
         //finally
         stage.addActor(companionStatisticsUI);
+
+        createInventoryButton(statsTable);
+
+        container.add(statsTable);
+        stage.addActor(container);
     }
 
     /**
      * Set the companion's image to an invincible state.
      */
-    public void setInvincibleImage() {
+    /*public void setInvincibleImage() {
         AnimationRenderComponent infanimator = ServiceLocator.getGameArea().getCompanion().getComponent(AnimationRenderComponent.class);
-        infanimator.startAnimation("LEFT");
-    }
+        infanimator.startAnimation("LEFT_1");
+    }*/
 
     /**
      * Toggle invincibility for the companion.
      */
     public void toggleInvincibility() {
         if (isInvincible) {
-            setInvincibleImage();
+            /*setInvincibleImage();*/
             isInvincible = false;
 
             // Schedule a task to reset the image after a delay (e.g., 10 seconds)
@@ -138,7 +174,7 @@ public class CompanionStatsDisplay extends UIComponent {
      * Reset the companion's image.
      */
     public void resetImage() {
-        AnimationRenderComponent animator = ServiceLocator.getGameArea().getCompanion().getComponent(AnimationRenderComponent.class);
+        AnimationRenderComponent animator = ServiceLocator.getEntityService().getCompanion().getComponent(AnimationRenderComponent.class);
         animator.startAnimation("RIGHT");
     }
 
@@ -147,17 +183,20 @@ public class CompanionStatsDisplay extends UIComponent {
      */
     public void toggleInfiniteHealth() {
         if (isInfiniteHealth) {
-            int maxHealth = Integer.MAX_VALUE;
-            ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setHealth(maxHealth);
+            companion.getComponent(CombatStatsComponent.class).setImmunity(true);
+            player.getComponent(CombatStatsComponent.class).setImmunity(true);
             isInfiniteHealth = false;
-
+            this.setDuration(6000);
             // Schedule a task to reset health to a normal value after a delay (e.g., 10 seconds)
-            Timer.schedule(new Task() {
+            java.util.TimerTask health = new java.util.TimerTask()  {
                 @Override
                 public void run() {
-                    ServiceLocator.getGameArea().getCompanion().getComponent(CombatStatsComponent.class).setHealth(50);
+                    companion.getComponent(CombatStatsComponent.class).setImmunity(false);
+                    player.getComponent(CombatStatsComponent.class).setImmunity(false);
+
                 }
-            }, 10.0f);
+            };
+            new java.util.Timer().schedule(health, getDuration());
         }
     }
 
@@ -166,7 +205,7 @@ public class CompanionStatsDisplay extends UIComponent {
      *
      * @param health The current health value.
      */
-    private void addAlert(int health) {
+    public void addAlert(int health) {
         //FIND WHERE THE COMPANION IS
         PhysicsComponent companionPhysics = entity.getComponent(PhysicsComponent.class);
         Vector2 compPos = companionPhysics.getBody().getPosition();
@@ -201,6 +240,9 @@ public class CompanionStatsDisplay extends UIComponent {
         if (health <= 50 && !update) {
             addAlert(health);
             update = true;
+
+//          Play the low health sound when health is below 50
+            entity.getEvents().trigger("playSound", "low_health");
             return;
         }
 
@@ -212,7 +254,7 @@ public class CompanionStatsDisplay extends UIComponent {
                     playerLowHealthLabel.remove();
                     update = false;
                 }
-            }, 3.0f);
+            }, 3000);
         }
     }
 
@@ -243,6 +285,12 @@ public class CompanionStatsDisplay extends UIComponent {
         super.dispose();
         companionHealthLabel.remove();
         if (playerLowHealthLabel != null) playerLowHealthLabel.remove();
-        companionUIHeaderLabel.remove();
+        /*companionUIHeaderLabel.remove();*/
+    }
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+    public long getDuration() {
+        return duration;
     }
 }

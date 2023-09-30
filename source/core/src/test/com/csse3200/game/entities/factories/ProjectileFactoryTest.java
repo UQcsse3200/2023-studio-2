@@ -5,11 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.tasks.ProjectileMovementTask;
 import com.csse3200.game.entities.Entity;
-
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.entities.configs.ProjectileConfigs;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
@@ -24,19 +21,18 @@ import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.mockito.Mock;
 
 import java.util.ArrayList;
 
 import static com.csse3200.game.entities.factories.EnemyFactory.createEnemy;
 import static com.csse3200.game.entities.factories.ProjectileFactory.createEnemyBullet;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(GameExtension.class)
 public class ProjectileFactoryTest {
@@ -68,7 +64,7 @@ public class ProjectileFactoryTest {
      *  - "baseAttack": 10,
      *  - "speed": 5,
      *  - "behaviour": "PTE",
-     *  - "atlas": "images/rangeEnemy.atlas"
+     *  - "atlas": "images/enemy/rangeEnemy.atlas"
      *  Passes Test if created bullet contains the correct attack retrieved from the Melee PTE enemy
      */
     @Test

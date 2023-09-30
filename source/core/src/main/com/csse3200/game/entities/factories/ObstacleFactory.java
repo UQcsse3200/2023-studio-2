@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
+import com.csse3200.game.entities.buildables.Turret;
 import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.files.FileLoader;
@@ -14,7 +15,6 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.entities.buildables.Turret;
 
 /**
  * Factory to create obstacle entities.
@@ -102,17 +102,17 @@ public class ObstacleFactory {
    * Creates a tree top entity.
    * @return entity
    */
-  public static Entity createTreeTop() {
+  public static Entity createTreeTop(TreeTopConfig treeTopConfig) {
     Entity treeTop =
             new Entity()
-                    .addComponent(new TextureRenderComponent("map/treetop.png")) // Replace with the path to your tree top texture
+                    .addComponent(new TextureRenderComponent(treeTopConfig.spritePath)) // Replace with the path to your tree top texture
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE));
 
     treeTop.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     treeTop.getComponent(TextureRenderComponent.class).scaleEntity();
-    treeTop.scaleHeight(30f);
-    PhysicsUtils.setScaledCollider(treeTop, 0.5f, 0.2f);
+    treeTop.scaleHeight(treeTopConfig.scaleH);
+    PhysicsUtils.setScaledCollider(treeTop, treeTopConfig.scaleX, treeTopConfig.scaleY);
     return treeTop;
   }
 
@@ -157,7 +157,7 @@ public class ObstacleFactory {
     ColliderComponent asteroidCollider = new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE);
     //asteroidCollider.setRestitution(restitution); bounce removed
     Entity asteroid = new Entity()
-            .addComponent(new TextureRenderComponent("images/meteor.png"))
+            .addComponent(new TextureRenderComponent("images/minigame/meteor.png"))
             .addComponent(new PhysicsComponent().setBodyType(BodyType.DynamicBody))
             .addComponent(asteroidCollider);
     asteroid.setScale(width, height);
@@ -219,7 +219,7 @@ public class ObstacleFactory {
             //.addComponent(new TextureRenderComponent(config.spritePath))
 
 
-            .addComponent(new TextureRenderComponent("images/wormhole.png"));
+            .addComponent(new TextureRenderComponent("images/minigame/wormhole.png"));
     //NEED to decide spritePath texture or png texture
     goal.setScale(config.scale);
 

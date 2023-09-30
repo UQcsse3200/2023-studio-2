@@ -5,19 +5,15 @@
 package com.csse3200.game.components.npc;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 
 public class BotanistAnimationController extends Component {
     private final AssetManager assetManager;
     private AnimationRenderComponent animator;
-    private TextureAtlas atlas;
 
     private float animationTimer = 0f;
-    private float animationDuration = 10f; // Adjust this to control animation speed.
 
     /**
      * Creates a new BotanistAnimationController with an AssetManager for managing assets.
@@ -34,7 +30,7 @@ public class BotanistAnimationController extends Component {
         animator = entity.getComponent(AnimationRenderComponent.class);
         assetManager.load("images/botanist.atlas", TextureAtlas.class);
         assetManager.finishLoading();
-        atlas = assetManager.get("images/botanist.atlas");
+        TextureAtlas atlas = assetManager.get("images/botanist.atlas");
 
         // Start with the default animation.
         animator.startAnimation("row-1-column-1");
@@ -47,6 +43,8 @@ public class BotanistAnimationController extends Component {
         // Update the animation based on a timer.
         animationTimer += 0.1f;
 
+        // Adjust this to control animation speed.
+        float animationDuration = 10f;
         if (animationTimer >= animationDuration) {
             animationTimer = 0f; // Reset the timer.
 

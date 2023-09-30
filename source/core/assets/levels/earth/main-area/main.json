@@ -82,7 +82,8 @@
     "sounds/upgradeTreeTap.mp3",
     "sounds/upgradeWeapon.mp3",
     "sounds/enemyDeath.mp3",
-    "sounds/companionwalksound.mp3"
+    "sounds/companionwalksound.mp3",
+    "sounds/enemySpawner.mp3"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

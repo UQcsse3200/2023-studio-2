@@ -1,7 +1,10 @@
 package com.csse3200.game.entities;
 
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.SaveableComponent;
+import com.csse3200.game.files.FileLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +14,7 @@ import java.util.List;
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
  * over entities to perform updates each loop. All game entities should be registered here.
- *
+ * <p>
  * Avoid adding additional state here! Global access is often the easy but incorrect answer to
  * sharing data.
  */
@@ -23,6 +26,15 @@ public class EntityService {
 
   private Array<Entity> getEntities() {
     return entities;
+  }
+
+  public AreaEntityConfig saveCurrentArea() {
+    AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
+    areaEntityConfig.addEntities(getEntitiesByComponent(SaveableComponent.class));
+
+    FileLoader.writeClass(areaEntityConfig, "saves/savefile.json", FileLoader.Location.LOCAL);
+
+    return areaEntityConfig;
   }
 
   /**
@@ -41,7 +53,7 @@ public class EntityService {
 
   /**
    * Gets all entities belonging to a specified component class.
-   *
+   * <p>
    * Example:
    *    getEntitiesByComponent(PowerupComponent.class) will return a list
    *    of all registered powerup entities.
@@ -96,6 +108,14 @@ public class EntityService {
     for (Entity entity : entities) {
       entity.dispose();
     }
+  }
+  public Entity getCompanion() {
+    for (Entity entity : entities) {
+      if (entity.getEntityType().equals("companion")) {
+        return entity;
+      }
+    }
+    return null;
   }
 
 }

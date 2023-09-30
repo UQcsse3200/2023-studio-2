@@ -2,9 +2,12 @@ package com.csse3200.game.components.resources;
 
 import com.badlogic.gdx.Gdx;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.player.IAlpha;
+import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameTime;
 import com.badlogic.gdx.utils.Timer;
+import com.csse3200.game.ui.UIComponent;
 
 public class PopupComponent extends Component {
     GameTime timer;
@@ -45,7 +48,7 @@ public class PopupComponent extends Component {
 
 
         this.entity.setPosition(this.entity.getPosition().x, (float) (this.entity.getPosition().y + since * speed));
-        this.entity.getComponent(TextureRenderComponent.class).setAlpha(1.0F - (float) (lifespan / duration));
+        this.entity.getComponents(IAlpha.class).forEach(component -> component.setAlpha(1.0F - (float) (lifespan / duration)));
     }
 
     /**

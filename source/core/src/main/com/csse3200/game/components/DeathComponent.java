@@ -22,12 +22,6 @@ public class DeathComponent extends Component {
     private Boolean notkilled;
 
     /**
-     * The Death Component holding Physical Interaction Stats, and facilitates listeners for entity death
-     */
-    public DeathComponent() {
-    }
-
-    /**
      * Creates a new listener on an entity to wait for kill condition
      */
     @Override
@@ -73,15 +67,17 @@ public class DeathComponent extends Component {
                     Gdx.app.postRunnable(entity::dispose);
 
                     Random rand = new Random();
-                    int powerupRandomiser = rand.nextInt(2);
+                    int powerupRandomiser = rand.nextInt(15);
 
                     Entity powerup = null;
 
-                    if (powerupRandomiser ==  0) {
-                        powerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
+                    if (powerupRandomiser < 5) {                 // 1/3 chance of speed boost
+                        powerup = PowerupFactory.createSpeedPowerup();
+                    } else if (powerupRandomiser == 7) {        // 1/15 chance of speed boost
+                        powerup = PowerupFactory.createExtraLifePowerup();
                     }
-                    else {
-                        powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
+                    else if (powerupRandomiser > 9){            // 1/3 chance of health boost
+                        powerup = PowerupFactory.createHealthPowerup();
                     }
 
                     ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody);

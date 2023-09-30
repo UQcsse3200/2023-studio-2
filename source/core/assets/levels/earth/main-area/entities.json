@@ -1,24 +1,49 @@
 {
+  "ship": {
+    "spritePath": "images/LeftShip.png",
+    "position": {
+      "x": 33,
+      "y": 67
+    }
+  },
   "spawners": [
     {
       "wave1" : [
-        1,
+        10,
         0,
         0
       ],
       "wave2" : [
-        0,
-        0,
+        10,
+        5,
         0
       ],
       "wave3" : [
-        0,
-        0,
+        10,
+        10,
         0
       ],
       "position": {
-        "x": 10,
-        "y": 45
+        "x": 40,
+        "y": 40
+      }
+    }
+  ],
+  "portals": [
+    {
+      "teleportX" : 40,
+      "teleportY" : 5,
+      "position": {
+        "x": 30,
+        "y": 40
+      }
+    },
+    {
+      "teleportX" : 16,
+      "teleportY" : 20,
+      "position": {
+        "x": 78,
+        "y": 10
       }
     }
   ],
@@ -33,5 +58,11 @@
         "y": 30
       }
     }
-  ]
+  ],
+  "upgradeBench": {
+    "position" : {
+      "x": 20,
+      "y": 40
+    }
+  }
 }

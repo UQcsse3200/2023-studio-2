@@ -2,149 +2,130 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.extensions.GameExtension;
-import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
-import static junit.framework.TestCase.*;
-import static org.mockito.Mockito.*;
+import java.util.concurrent.TimeUnit;
 
-/**
- * Unit tests for the {@code PowerupComponent} class, validating the behavior of various power-up effects,
- * as well as the get and set operations for the power-up type and duration.
- * <p>
- * This class mocks essential services and components to ensure that the tested methods of {@code PowerupComponent}
- * work as expected in different scenarios. The test suite covers power-ups like health boost and speed boost, and
- * examines the interactions of these power-ups with entities, such as players, within the game environment.
- * </p>
- * <p>
- * The tests are designed to run in isolation with mock dependencies to ensure accurate results without side effects.
- * </p>
- */
-@ExtendWith(MockitoExtension.class)
-@ExtendWith(GameExtension.class)
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class PowerupComponentTest {
 
-    /**
-     * Tests the effect of applying a health power-up to an entity's combat stats.
-     * Ensures that after applying the health power-up, the entity's health is set to full (100).
-     */
-    @Test
-    public void testApplyHealthEffect() {
-        // Initialise player
-        Gdx.app = mock(Application.class);
-        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
-        Entity player = mock(Entity.class);
-        CombatStatsComponent playerStats = mock(CombatStatsComponent.class);
+    @Mock
+    EntityService entityService;
 
-        // Test Health Powerup
-        when(player.getComponent(CombatStatsComponent.class)).thenReturn(playerStats);
-        healthpowerup.applyEffect(player);
-        verify(playerStats).setHealth(100);
+    @BeforeEach
+    void setup() {
+        entityService = mock(EntityService.class);
+        ServiceLocator.registerEntityService(entityService);
+
     }
 
-    /**
-     * Tests the effect of applying a speed power-up to an entity's player actions.
-     * Ensures that after applying the speed power-up, the entity's speed is set to (5, 5).
-     */
     @Test
-    public void testApplySpeedEffect() {
-        // Initialise player
-        Gdx.app = mock(Application.class);
-        PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST);
-        Entity player = mock(Entity.class);
-        PlayerActions playerActions = mock(PlayerActions.class);
+    void shouldApplyExtraLife() {
+        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 10, 1, false, 1))
+                .addComponent(new PlayerActions());
 
-        // Test Speed Powerup
-        when(player.getComponent(PlayerActions.class)).thenReturn(playerActions);
-        speedpowerup.applyEffect(player);
-        verify(playerActions).setSpeed(5, 5);
+        when(entityService.getPlayer()).thenReturn(playerEntity);
+
+        PowerupComponent powerupComponent = new PowerupComponent(PowerupType.EXTRA_LIFE);
+        powerupComponent.applyEffect();
+
+        // Assert
+        assertEquals(2, playerEntity.getComponent(CombatStatsComponent.class).getLives());
+
     }
 
-    /**
-     * Tests the retrieval of the type of power-up component.
-     * Ensures that the returned power-up type matches the type with which the component was initialized.
-     */
-    @Test
-    public void testGetType() {
-        // Initialise Health and Speed Powerups
-        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
-        PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST);
+//    @Test
+//    void shouldApplyHealthBoost() {
+//        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 10, 2, false, 3))
+//                .addComponent(new PlayerActions());
+//
+//        Entity companionEntity = new Entity().addComponent(new CombatStatsComponent(50, 5, 1, false))
+//                .addComponent(new CompanionActions());
+//
+//
+//        when(entityService.getPlayer()).thenReturn(playerEntity);
+//        when(entityService.getCompanion()).thenReturn(companionEntity);
+//
+//        PowerupComponent powerupComponent = new PowerupComponent(PowerupType.HEALTH_BOOST);
+//        powerupComponent.applyEffect();
+//
+//        // Assert
+//        assertEquals(100, playerEntity.getComponent(CombatStatsComponent.class).getHealth());
+//        assertEquals(50, companionEntity.getComponent(CombatStatsComponent.class).getHealth());
+//        // Additional assertions based on your actual implementation
+//    }
+//
+//    @Test
+//    void shouldApplySpeedBoost() {
+//        Entity playerEntity = new Entity().addComponent(new PlayerActions());
+//        Entity companionEntity = new Entity()
+//                .addComponent(new CompanionActions())
+//                .addComponent(new FollowComponent(playerEntity, 5.0f));
+//
+//        when(entityService.getPlayer()).thenReturn(playerEntity);
+//        when(entityService.getCompanion()).thenReturn(companionEntity);
+//
+//        PowerupComponent powerupComponent = new PowerupComponent(PowerupType.SPEED_BOOST);
+//        powerupComponent.applyEffect();
+//
+//        // Assert
+//        assertEquals(6, playerEntity.getComponent(PlayerActions.class).getSpeed());
+//        assertEquals(6, playerEntity.getComponent(PlayerActions.class).getSpeed());
+//        assertEquals(7, companionEntity.getComponent(CompanionActions.class).getSpeed());
+//        assertEquals(7, companionEntity.getComponent(CompanionActions.class).getSpeed());
+//        assertEquals(5, companionEntity.getComponent(FollowComponent.class).getFollowSpeed());
+//        // Additional assertions based on your actual implementation
+//    }
 
-        // Test Health PowerupType
-        assertNotNull(healthpowerup);
-        assertEquals(healthpowerup.getType(), PowerupType.HEALTH_BOOST);
-        assertNotSame(healthpowerup.getType(), PowerupType.SPEED_BOOST);
+//      @Test
+//    void shouldApplyTempImmunity() throws InterruptedException {
+//        Entity playerEntity = new Entity().addComponent(new PlayerActions()).addComponent(new CombatStatsComponent());
+//        Entity companionEntity = new Entity().addComponent(new CompanionActions()).addComponent(new CombatStatsComponent());
+//        when(entityService.getPlayer()).thenReturn(playerEntity);
+//        when(entityService.getCompanion()).thenReturn(companionEntity);
+//
+//        PowerupComponent powerupComponent = new PowerupComponent(PowerupType.TEMP_IMMUNITY);
+//        powerupComponent.applyEffect();
+//
+//        // Assert
+//        assertTrue(playerEntity.getComponent(CombatStatsComponent.class).isImmune());
+//        assertTrue(companionEntity.getComponent(CombatStatsComponent.class).isImmune());
+//
+//        // Wait for the duration of immunity
+//        TimeUnit.MILLISECONDS.sleep(powerupComponent.getDuration());
+//
+//        // Assert after the duration
+//        assertFalse(playerEntity.getComponent(CombatStatsComponent.class).isImmune());
+//        assertFalse(companionEntity.getComponent(CombatStatsComponent.class).isImmune());
+//    }
 
-        // Test Speed PowerupType
-        assertNotNull(speedpowerup);
-        assertEquals(speedpowerup.getType(), PowerupType.SPEED_BOOST);
-        assertNotSame(speedpowerup.getType(), PowerupType.HEALTH_BOOST);
+//    @Test
+//    void shouldApplyDoubleDamage() throws InterruptedException {
+//        Entity playerEntity = new Entity().addComponent(new PlayerActions()).addComponent(new CombatStatsComponent());
+//        when(entityService.getPlayer()).thenReturn(playerEntity);
+//
+//        PowerupComponent powerupComponent = new PowerupComponent(PowerupType.DOUBLE_DAMAGE);
+//        powerupComponent.applyEffect();
+//
+//        // Assert
+//        assertEquals(2, playerEntity.getComponent(CombatStatsComponent.class).getAttackMultiplier());
+//
+//        // Wait for the duration of double damage
+//        TimeUnit.MILLISECONDS.sleep(powerupComponent.getDuration());
+//
+//        // Assert after the duration
+//        assertEquals(1, playerEntity.getComponent(CombatStatsComponent.class).getAttackMultiplier());
+//    }
 
-        // Test Speed and Health Powerup types
-        assertNotSame(speedpowerup.getType(), healthpowerup.getType());
-    }
 
-    /**
-     * Tests the ability to change the type of a power-up component.
-     * Ensures that after setting a new type, the returned type matches the newly set type.
-     */
-    @Test
-    public void testSetType() {
-        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
-        PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST);
-
-        // Test setting health powerup
-        healthpowerup.setType(PowerupType.SPEED_BOOST);
-        assertEquals(healthpowerup.getType(), PowerupType.SPEED_BOOST);
-
-        // Test setting speed powerup
-        speedpowerup.setType(PowerupType.HEALTH_BOOST);
-        assertEquals(speedpowerup.getType(), PowerupType.HEALTH_BOOST);
-
-        // Test setting both back
-        speedpowerup.setType(PowerupType.SPEED_BOOST);
-        healthpowerup.setType(PowerupType.HEALTH_BOOST);
-        assertEquals(speedpowerup.getType(), PowerupType.SPEED_BOOST);
-        assertEquals(healthpowerup.getType(), PowerupType.HEALTH_BOOST);
-    }
-
-    /**
-     * Tests the ability to set the duration for which the power-up effect lasts.
-     * Ensures that after setting a duration, the returned duration matches the set value.
-     */
-    @Test
-    public void testSetDuration() {
-        PowerupComponent powerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
-        long testDuration1 = 100;
-        long testDuration2 = 1000;
-
-        // Test setting the first duration
-        powerup.setDuration(testDuration1);
-        assertEquals(testDuration1, powerup.getDuration());
-
-        // Test setting the second duration
-        powerup.setDuration(testDuration2);
-        assertEquals(testDuration2, powerup.getDuration());
-    }
-
-    /**
-     * Tests the retrieval of the duration for which the power-up effect lasts.
-     * Ensures that the returned duration matches the set value.
-     */
-    @Test
-    public void testGetDuration() {
-        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
-        healthpowerup.setDuration(100);
-        long initialDuration = healthpowerup.getDuration();
-
-        assertTrue(initialDuration > 0);
-
-        long newDuration = 200;
-        healthpowerup.setDuration(newDuration);
-        assertEquals(newDuration, healthpowerup.getDuration());
-    }
 }

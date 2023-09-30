@@ -1,15 +1,37 @@
 package com.csse3200.game.entities;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.structures.Placeable;
 
 public class PlaceableEntity extends Entity {
 
-    public PlaceableEntity() {
+    boolean irremovable = false;
+    private final int width;
+    private final int height;
+    private GridPoint2 position;
+
+    public PlaceableEntity(int width, int height) {
         super();
+        this.width = width;
+        this.height = height;
     }
 
-    public PlaceableEntity(Entity player) {
-        super();
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * This function uses the builder pattern to allow the programmer to make a
+     * placeable entity irremovable
+     * @return The placeable entity
+     */
+    public PlaceableEntity irremovable() {
+        this.irremovable = true;
+        return this;
     }
 
     /**
@@ -31,6 +53,9 @@ public class PlaceableEntity extends Entity {
      * when removed.
      */
     public void removed() {
+        if (irremovable) {
+            return;
+        }
         for (var component : components.values()) {
             if (component instanceof Placeable) {
                 ((Placeable) component).removed();
@@ -57,10 +82,17 @@ public class PlaceableEntity extends Entity {
      * when the entity is about to be removed.
      */
     public void willRemove() {
+        if (irremovable) {
+            return;
+        }
         for (var component : components.values()) {
             if (component instanceof Placeable) {
                 ((Placeable) component).willRemove();
             }
         }
+    }
+
+    public boolean is_irremovable() {
+        return this.irremovable;
     }
 }

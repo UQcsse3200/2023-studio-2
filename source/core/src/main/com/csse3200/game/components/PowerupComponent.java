@@ -1,8 +1,15 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Timer;
+import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Represents a power-up component within the game.
@@ -10,11 +17,11 @@ import com.csse3200.game.entities.Entity;
 public class PowerupComponent extends Component {
 
     private PowerupType type;
-    private CombatStatsComponent playerCombatStats;
-    private PlayerActions playerActions;
+    private final Entity player = ServiceLocator.getEntityService().getPlayer();
+    private final Entity companion = ServiceLocator.getEntityService().getCompanion();
     private long duration;
 
-
+    private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     /**
      * Assigns a type and targetLayer value to a given Powerup
      */
@@ -26,51 +33,83 @@ public class PowerupComponent extends Component {
      * Overrides the Component create() function
      */
     @Override
-    public void create() {
-        playerCombatStats = entity.getComponent(CombatStatsComponent.class);
+    public void create(){
     }
 
     /**
      * Applies the effects of the Powerup to the specified target entity.
      *
-     * @param target  The entity receiving the Powerup effect.
+     *
+     *
      */
-    public void applyEffect(Entity target) {
-        playerCombatStats = target.getComponent(CombatStatsComponent.class);
-        playerActions = target.getComponent(PlayerActions.class);
+    public void applyEffect() {
+            switch (type) {
+                case HEALTH_BOOST:
+                    player.getComponent(CombatStatsComponent.class).setHealth(100);
+                    companion.getComponent(CombatStatsComponent.class).setHealth(50);
+                    entity.getEvents().trigger("playSound", "healthPowerup"); // plays sound when health powerup selected
+                    break;
 
-        switch (type) {
-            case HEALTH_BOOST -> playerCombatStats.setHealth(100);
-            case SPEED_BOOST -> {
+                case SPEED_BOOST:
+                    if (player.getComponent(PlayerActions.class) == null) {
+                        return;
+                    }else {
+                    player.getComponent(PlayerActions.class).setSpeed(6, 6);
+                    companion.getComponent(CompanionActions.class).setSpeed(7, 7);
+                    companion.getComponent(FollowComponent.class).setFollowSpeed(5);
 
-                if (playerActions == null) {
-                    return;
-                }
+                    // Set the duration for speed effect
+                    setDuration(8000);
 
-                playerActions.setSpeed(5, 5);
-                this.setDuration(1500);
+                    // Schedule a task to reset the speed values after the specified duration
+                    executorService.schedule(() -> {
+                        player.getComponent(PlayerActions.class).setSpeed(3, 3);
+                        companion.getComponent(CompanionActions.class).setSpeed(4, 4);
+                    }, getDuration(), TimeUnit.MILLISECONDS);}
+                    break;
 
-                // Speed up for 1.5 seconds, then return to normal speed
-                java.util.TimerTask speedUp = new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        playerActions.setSpeed(3, 3);
-                    }
-                };
-                new java.util.Timer().schedule(speedUp, getDuration());
+                case EXTRA_LIFE:
+                    player.getComponent(CombatStatsComponent.class).addLife();
+                    break;
+
+                case TEMP_IMMUNITY:
+                    if (player.getComponent(PlayerActions.class) == null) {
+                        return;
+                    }else {
+                    companion.getComponent(CombatStatsComponent.class).setImmunity(true);
+                    player.getComponent(CombatStatsComponent.class).setImmunity(true);
+                    setDuration(6000);
+                    executorService.schedule(() -> {
+                        companion.getComponent(CombatStatsComponent.class).setImmunity(false);
+                        player.getComponent(CombatStatsComponent.class).setImmunity(false);
+                    }, getDuration(), TimeUnit.MILLISECONDS);}
+                    break;
+
+                case DOUBLE_DAMAGE:
+                    if (player.getComponent(PlayerActions.class) == null) {
+                        return;
+                    }else {
+                    player.getComponent(CombatStatsComponent.class).setAttackMultiplier(2);
+                    setDuration(12000);
+                    executorService.schedule(() -> {
+                        player.getComponent(CombatStatsComponent.class).setAttackMultiplier(1);
+                    }, getDuration(), TimeUnit.MILLISECONDS);}
+                    break;
+
+                default:
+                    throw new IllegalArgumentException("You must specify a valid PowerupType");
             }
-            default -> throw new IllegalArgumentException("You must specify a valid PowerupType");
-        }
 
-        if (entity != null) {
-            Gdx.app.postRunnable(entity::dispose);
-        }
+            if (entity != null) {
+                Gdx.app.postRunnable(entity::dispose);
+            }
     }
+
 
     /**
      * Sets the duration for which the Powerup effect should last.
      *
-     * @param duration  Duration in milliseconds.
+     * @param duration Duration in milliseconds.
      */
     public void setDuration(long duration) {
         this.duration = duration;
@@ -97,10 +136,9 @@ public class PowerupComponent extends Component {
     /**
      * Sets the type of the Powerup.
      *
-     * @param type  The type to set.
+     * @param type The type to set.
      */
     public void setType(PowerupType type) {
         this.type = type;
     }
 }
-

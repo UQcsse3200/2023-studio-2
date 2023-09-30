@@ -1,7 +1,8 @@
 package com.csse3200.game.entities.configs;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * This class is used to test the TurretConfig class.

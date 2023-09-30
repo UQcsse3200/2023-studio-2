@@ -1,10 +1,13 @@
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.ships.ShipActions;
+import com.csse3200.game.components.ships.ShipAnimationController;
 import com.csse3200.game.components.ships.ShipStatDisplay;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.BaseEntityConfig;
-import com.csse3200.game.entities.configs.MinigameConfigs;
+import com.csse3200.game.entities.configs.ShipConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -12,21 +15,8 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.components.player.InteractionControllerComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.files.FileLoader;
-import com.csse3200.game.entities.configs.ShipConfig;
-
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.csse3200.game.components.ships.ShipAnimationController;
-import com.badlogic.gdx.graphics.g2d.Animation;
+import com.csse3200.game.services.ServiceLocator;
 
 
 public class MinigameShipFactory {
@@ -41,7 +31,7 @@ public class MinigameShipFactory {
                 ServiceLocator.getInputService().getInputFactory().createForShip();
 
         AnimationRenderComponent animator = new AnimationRenderComponent(
-                ServiceLocator.getResourceService().getAsset("images/ship.atlas", TextureAtlas.class));
+                ServiceLocator.getResourceService().getAsset("images/minigame/ship.atlas", TextureAtlas.class));
 
         animator.addAnimation("Ship_LeftStill", 0.1f);
         animator.addAnimation("Ship_UpStill", 0.1f);
@@ -56,8 +46,8 @@ public class MinigameShipFactory {
         Entity ship =
                 new Entity()
 
-                        //.addComponent(new TextureRenderComponent("images/Ship.png"))
-                        //.addComponent(new TextureRenderComponent("images/LeftShip.png"))Dont add 2 of the same component class
+                        //.addComponent(new TextureRenderComponent("images/ship/Ship.png"))
+                        //.addComponent(new TextureRenderComponent("images/ship/Ship.png"))Dont add 2 of the same component class
 
                         .addComponent(animator)
                         .addComponent(new ShipAnimationController())
@@ -70,8 +60,8 @@ public class MinigameShipFactory {
                         .addComponent(new InteractionControllerComponent(false));
                         //.addComponent(new ShipStatsComponent(stats.health))
                         //.addComponent(new InventoryComponent(stats.gold))
-                        //.addComponent(new TextureRenderComponent("images/Ship.png"))
-                        //.addComponent(new TextureRenderComponent("images/LeftShip.png"))Dont add 2 of the same component class
+                        //.addComponent(new TextureRenderComponent("images/ship/Ship.png"))
+                        //.addComponent(new TextureRenderComponent("images/ship/Ship.png"))Dont add 2 of the same component class
 
                         //.addComponent(new TextureRenderComponent(config.spritePath))
 

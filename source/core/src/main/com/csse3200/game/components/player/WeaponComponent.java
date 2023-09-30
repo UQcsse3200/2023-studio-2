@@ -6,7 +6,6 @@ import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.AttackFactory;
 import com.csse3200.game.entities.factories.PlayerWeaponFactory;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -15,16 +14,11 @@ import com.csse3200.game.services.ServiceLocator;
  * respond to an enemy attack use an attack factory to generate a weapon entity
  */
 public class WeaponComponent extends Component {
-    /* Variable to store current duration before play can attack again */
-    private int attackCooldown;
+
     /* Entity reference to projectile that follows */
     private Entity holdingWeapon;
 
-    @Override
-    public void update() {
-        if (attackCooldown > 0) {attackCooldown--;}
-    }
-
+    /* Variable to store current duration before play can attack again */
     /**
      * Function to Set up "weaponAttack" listener to respond to attacks with a weapon
      */
@@ -32,10 +26,15 @@ public class WeaponComponent extends Component {
     public void create() {
         entity.getEvents().addListener("weaponAttack", this::playerAttacking);
         entity.getEvents().addListener("changeWeapon", this::makeNewHolding);
+        entity.getEvents().addListener("updateAmmo", this::tempPrintAmmo);
         this.holdingWeapon = null;
         makeNewHolding(WeaponType.MELEE_KATANA);
-        attackCooldown = 0;
     }
+
+    private void tempPrintAmmo(int ammo, int maxAmmo) {
+        System.out.println("Currently: " + ammo + " / " + maxAmmo);
+    }
+
 
     /**
      * Core function to respond to weapon attacks takes a position and a rotation and spawn an entity
@@ -45,10 +44,11 @@ public class WeaponComponent extends Component {
      */
     private void playerAttacking(WeaponType weaponType, Vector2 clickPosition) {
         float initialRotation = calcRotationAngleInDegrees(entity.getPosition(), clickPosition);
+
+
         if (weaponType == WeaponType.MELEE_BEE_STING) {
             initialRotation = (initialRotation + (float) ((Math.random() - 0.5) * 270)) % 360;
         }
-
         int spawnAngleOffset = 0;
         switch (weaponType) {
             case MELEE_WRENCH, MELEE_KATANA:
@@ -64,10 +64,11 @@ public class WeaponComponent extends Component {
         }
 
         float distance = 1.25f;
-
         Entity newAttack = AttackFactory.createAttack(weaponType, initialRotation, entity);
         var newPos = positionInDirection(initialRotation + spawnAngleOffset, distance, newAttack);
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
+        InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+        entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(), invComp.getCurrentMaxAmmo());
     }
 
     /**
@@ -76,7 +77,6 @@ public class WeaponComponent extends Component {
      */
     private void makeNewHolding(WeaponType weapon) {
         if (this.holdingWeapon != null) {this.holdingWeapon.dispose();}
-
         this.holdingWeapon = PlayerWeaponFactory.createPlayerWeapon(weapon, entity);
         Vector2 placePos = positionInDirection(10, 0.3f, this.holdingWeapon);
 
@@ -103,17 +103,7 @@ public class WeaponComponent extends Component {
                 position.y + yOffset + playerScale.y/2 - weaponScale.y/2 );
     }
 
-    /**
-     * sets atatck cooldown
-     * @param cooldown to set attack cooldown to
-     */
-    public void setAttackCooldown(int cooldown) {
-        this.attackCooldown = cooldown;
-    }
 
-    public int getAttackCooldown() {
-        return this.attackCooldown;
-    }
 
     /**
      * Calcuate angle between 2 points from the center point to the target point,

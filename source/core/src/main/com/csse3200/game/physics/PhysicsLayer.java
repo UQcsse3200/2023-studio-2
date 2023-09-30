@@ -2,6 +2,7 @@ package com.csse3200.game.physics;
 
 public class PhysicsLayer {
   public static final short NONE = 0;
+  @SuppressWarnings("PointlessBitwiseExpression")
   public static final short DEFAULT = (1 << 0);
   public static final short PLAYER = (1 << 1);
 

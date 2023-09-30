@@ -1,6 +1,7 @@
 package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.structures.CostComponent;
 import com.csse3200.game.entities.Entity;
@@ -32,15 +33,19 @@ public abstract class PlacementTool extends Tool {
      */
     @Override
     public boolean interact(Entity player, GridPoint2 position) {
-        if (!isPositionValid(position)) {
+        PlaceableEntity newStructure = createStructure(player);
+
+        if (!isPositionValid(position, newStructure)) {
+            player.getEvents().trigger("displayWarningAtPosition", "Invalid position",
+                    new Vector2((float) position.x / 2, (float) position.y / 2));
             return false;
         }
 
         if (!hasEnoughResources()) {
+            player.getEvents().trigger("displayWarningAtPosition", "Insufficient resources",
+                    new Vector2((float) position.x / 2, (float) position.y / 2));
             return false;
         }
-
-        PlaceableEntity newStructure = createStructure(player);
         newStructure.addComponent(new CostComponent(cost));
 
         ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position, false, false);
@@ -63,10 +68,8 @@ public abstract class PlacementTool extends Tool {
      * @param position - the position the structure is trying to be placed at.
      * @return whether the structure can be placed at the given position.
      */
-    public boolean isPositionValid(GridPoint2 position) {
-        var existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
-
-        return existingStructure == null;
+    public boolean isPositionValid(GridPoint2 position, PlaceableEntity structure) {
+        return ServiceLocator.getStructurePlacementService().canPlaceStructureAt(structure, position);
     }
 
     /**

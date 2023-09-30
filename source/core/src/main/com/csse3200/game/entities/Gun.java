@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 
 
 public class Gun {
-    private Texture gunTexture;
-    private Vector2 gunOffset;
+    private final Texture gunTexture;
+    private final Vector2 gunOffset;
 
     public Gun(String texturePath, Vector2 gunOffset) {
         gunTexture = new Texture(texturePath);

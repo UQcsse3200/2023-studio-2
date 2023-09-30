@@ -27,8 +27,13 @@ public class EnemyAnimationController extends Component {
     entity.getEvents().addListener("enemyAttack", this::animateAttack);
     entity.getEvents().addListener("chaseLeft", this::animateChaseLeft);
     entity.getEvents().addListener("attackLeft",this::animateAttackLeft);
+    entity.getEvents().addListener("goInvisible",this::goInvisible);
 
     entity.getEvents().trigger("standing");
+  }
+
+  private void goInvisible() {
+    animator.startAnimation("invisible");
   }
 
 
@@ -62,11 +67,15 @@ public class EnemyAnimationController extends Component {
   }
 
   /**
-   * Initialise animation
+   * Initialise animation and
+   * plays the sound when enemy dead
    */
   void animateDeath() {
     if (animator.hasAnimation("death")) {
       animator.startAnimation("death");
+      if (entity != null) {
+        entity.getEvents().trigger("playSound", "enemyDeath");
+      }
     }
   }
 

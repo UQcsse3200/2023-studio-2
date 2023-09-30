@@ -5,14 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.screens.PlanetScreen;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.MainAlert;
+import com.csse3200.game.ui.TitleBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.csse3200.game.ui.AlertBox;
-
-import com.csse3200.game.ui.TitleBox;
 
 
 /**
@@ -21,10 +19,9 @@ import com.csse3200.game.ui.TitleBox;
  */
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
-
   public static GdxGame game;
-  private Stage stage; // Add the stage
-  private Skin skin;   // Add the skin
+  private final Stage stage; // Add the stage
+  private final Skin skin;   // Add the skin
 
   public MainMenuActions(GdxGame game, Stage stage, Skin skin) { // Modify the constructor
     this.game = game;
@@ -41,7 +38,6 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
-    entity.getEvents().addListener("space map", this::onSpaceMap);
     entity.getEvents().addListener("upgrade shop", this::onShop);
   }
 
@@ -49,11 +45,8 @@ public class MainMenuActions extends Component {
    * Swaps to the Main Game screen.
    */
   private void onStart() {
-    String startPlanetName = "Earth";
-    logger.info(String.format("Start game, go to %s", startPlanetName));
-    PlanetScreen planetScreen = new PlanetScreen(game, startPlanetName);
-    ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", planetScreen);
-    game.setScreen(planetScreen);
+    logger.info("Creating beginning planet");
+    ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", new PlanetScreen(game));
 
     AlertBox alertBox = new AlertBox(game," Alert Box", skin);
     alertBox.showDialog(stage);
@@ -70,7 +63,7 @@ public class MainMenuActions extends Component {
    */
   private void onLoad() {
     logger.info("Load game");
-    //game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+    // new PlanetTravel(game).returnToCurrent();
     game.setScreen(GdxGame.ScreenType.GAME_STORY);
 
   }
@@ -99,14 +92,6 @@ public class MainMenuActions extends Component {
   private void onExtractor(){
     logger.info("starting extractor");
     game.setScreen(GdxGame.ScreenType.EXTRACTOR_GAME);
-  }
-
-  private void onSpaceMap() {
-    logger.info("Launching space map screen");
-    ServiceLocator.registerGameStateObserverService(new GameStateObserver());
-    ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", new PlanetScreen(game, "Earth"));
-    //TODO: Remove once map button is removed from main menu
-    game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
   }
 
   private void onShop() {

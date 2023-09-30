@@ -2,26 +2,18 @@ package com.csse3200.game.story;
 
 
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.GdxGame;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.mainmenu.InsertButtons;
-import com.csse3200.game.components.mainmenu.MainMenuDisplay;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import java.util.ArrayList;
 
@@ -37,7 +29,7 @@ public class StoryDisplayTest extends UIComponent {
     private int start;
     private int end;
 
-    private static final String[] buttonImages = {"images/next_cut.png", "images/prev-cut.png"};
+    private static final String[] buttonImages = {"images/interface/next_cut.png", "images/prev-cut.png"};
 
 
 
@@ -76,8 +68,8 @@ public class StoryDisplayTest extends UIComponent {
 
         // next button
 
-        String nextTexture = "images/next_cut.png";
-        String nextTextureHover = "images/next_cut_hover.png";
+        String nextTexture = "images/interface/next_cut.png";
+        String nextTextureHover = "images/interface/next_cut_hover.png";
 
         ImageButton nextBtn;
         nextBtn = bothButtons.draw(nextTexture, nextTextureHover);
@@ -85,14 +77,14 @@ public class StoryDisplayTest extends UIComponent {
 
 
         // prev buttons
-        String prevTexture = "images/prev_cut.png";
-        String prevTextureHover = "images/prev_cut_hover.png";
+        String prevTexture = "images/interface/prev_cut.png";
+        String prevTextureHover = "images/interface/prev_cut_hover.png";
         ImageButton prevBtn;
         prevBtn = bothButtons.draw(prevTexture, prevTextureHover);
 
         // skip button
-        String skipTexture = "images/skip_btn.png";
-        String skipTextureHover = "images/skip_btn_hover.png";
+        String skipTexture = "images/interface/skip_btn.png";
+        String skipTextureHover = "images/interface/skip_btn_hover.png";
         ImageButton skipBtn;
         skipBtn = bothButtons.draw(skipTexture, skipTextureHover);
 

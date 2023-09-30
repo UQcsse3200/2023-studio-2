@@ -2,7 +2,7 @@ package com.csse3200.game.entities.buildables;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class is used to test the TurretType enum.

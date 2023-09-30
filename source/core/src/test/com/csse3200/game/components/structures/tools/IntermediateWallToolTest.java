@@ -8,6 +8,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.buildables.Wall;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
@@ -21,10 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.never;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
@@ -49,9 +47,7 @@ class IntermediateWallToolTest {
         ServiceLocator.registerGameStateObserverService(stateObserver);
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerPhysicsService(physicsService);
-    }
 
-    void setupResourceAndPhysics() {
         var physicsEngine = mock(PhysicsEngine.class);
         when(physicsService.getPhysics()).thenReturn(physicsEngine);
         when(physicsEngine.createBody(any())).thenReturn(mock(Body.class));
@@ -63,15 +59,13 @@ class IntermediateWallToolTest {
 
     @Test
     void testInteractNoExistingStructureNoCost() {
-        setupResourceAndPhysics();
-
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
         var tool = new IntermediateWallTool(cost);
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 
@@ -89,7 +83,10 @@ class IntermediateWallToolTest {
 
         var position = new GridPoint2(0, 0);
 
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(false);
         when(structurePlacementService.getStructureAt(position)).thenReturn(mock(PlaceableEntity.class));
+
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
         tool.interact(player, position);
 
@@ -99,15 +96,16 @@ class IntermediateWallToolTest {
 
     @Test
     void testInteractExistingWall() {
-        setupResourceAndPhysics();
-
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
         var tool = new IntermediateWallTool(cost);
 
         var position = new GridPoint2(0, 0);
 
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(false);
         when(structurePlacementService.getStructureAt(position)).thenReturn(mock(Wall.class));
+
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
         tool.interact(player, position);
 
@@ -118,8 +116,6 @@ class IntermediateWallToolTest {
 
     @Test
     void testInteractExistingWallSufficientFunds() {
-        setupResourceAndPhysics();
-
         ObjectMap<String, Integer> cost = new ObjectMap<>();
         cost.put("resource1", 10);
         cost.put("resource2", 25);
@@ -130,7 +126,10 @@ class IntermediateWallToolTest {
 
         var position = new GridPoint2(0, 0);
 
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(false);
         when(structurePlacementService.getStructureAt(position)).thenReturn(mock(Wall.class));
+
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
         tool.interact(player, position);
 
@@ -149,10 +148,13 @@ class IntermediateWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(15);
 
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
+
         var tool = new IntermediateWallTool(cost);
 
         var position = new GridPoint2(0, 0);
 
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(false);
         when(structurePlacementService.getStructureAt(position)).thenReturn(mock(Wall.class));
 
         tool.interact(player, position);
@@ -166,8 +168,6 @@ class IntermediateWallToolTest {
 
     @Test
     void testInteractWithCostAndSufficientFunds() {
-        setupResourceAndPhysics();
-
         ObjectMap<String, Integer> cost = new ObjectMap<>();
         cost.put("resource1", 10);
         cost.put("resource2", 25);
@@ -178,7 +178,7 @@ class IntermediateWallToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 
@@ -196,11 +196,13 @@ class IntermediateWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(15);
 
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
+
         var tool = new IntermediateWallTool(cost);
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 

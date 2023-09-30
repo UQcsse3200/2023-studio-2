@@ -8,6 +8,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.buildables.Wall;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
@@ -21,8 +22,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,9 +47,7 @@ class BasicWallToolTest {
         ServiceLocator.registerGameStateObserverService(stateObserver);
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerPhysicsService(physicsService);
-    }
 
-    void setupResourceAndPhysics() {
         var physicsEngine = mock(PhysicsEngine.class);
         when(physicsService.getPhysics()).thenReturn(physicsEngine);
         when(physicsEngine.createBody(any())).thenReturn(mock(Body.class));
@@ -62,15 +59,13 @@ class BasicWallToolTest {
 
     @Test
     void testInteractNoExistingStructureNoCost() {
-        setupResourceAndPhysics();
-
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
         var tool = new BasicWallTool(cost);
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 
@@ -88,7 +83,9 @@ class BasicWallToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(mock(PlaceableEntity.class));
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(false);
+
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
         tool.interact(player, position);
 
@@ -98,8 +95,6 @@ class BasicWallToolTest {
 
     @Test
     void testInteractWithCostAndSufficientFunds() {
-        setupResourceAndPhysics();
-
         ObjectMap<String, Integer> cost = new ObjectMap<>();
         cost.put("resource1", 10);
         cost.put("resource2", 25);
@@ -110,7 +105,7 @@ class BasicWallToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 
@@ -132,7 +127,9 @@ class BasicWallToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
+
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
         tool.interact(player, position);
 

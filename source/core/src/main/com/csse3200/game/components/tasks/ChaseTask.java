@@ -11,10 +11,12 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
-import com.badlogic.gdx.utils.Timer;
-import java.util.ArrayList;
-import java.util.List;
 
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.List;
 import static com.csse3200.game.components.npc.PathFinder.findPath;
 
 /** Chases a target entity until they get too far away or line of sight is lost */
@@ -27,6 +29,8 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private MovementTask movementTask;
   private List<GridPoint2> path;
   private GridPoint2 targetPosition;
+  private char direction;
+
   /**
    * @param target The entity to chase.
    * @param priority Task priority when chasing (0 when not chasing).
@@ -68,10 +72,21 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     movementTask = new MovementTask(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
     movementTask.create(owner);
     movementTask.start();
+    direction = getDirection(target.getPosition());
+
+    direction = getDirection(target.getPosition());
+
+    if(direction == '<'){
+      this.owner.getEntity().getEvents().trigger("chaseLeft");
+    }
+    if(direction == '>'||direction == '='){
+      this.owner.getEntity().getEvents().trigger("chaseStart");
+    }
   }
 
   @Override
   public void update() {
+    char direction2 = getDirection(target.getPosition());
     movementTask.update();
     //check if it reached the tile (the first tile of the path in the start() function)
     if (movementTask.getStatus() != Status.ACTIVE) {
@@ -108,6 +123,9 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
       } else {
         movementTask.update();
       }
+    }
+    if (direction != direction2){
+      start();
     }
   }
 

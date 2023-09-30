@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
@@ -63,7 +64,7 @@ class MapGameAreaTest {
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
 
-        assertDoesNotThrow(() -> new MapGameArea("configPath", terrainFactory, game));
+        assertDoesNotThrow(() -> new MapGameArea("configPath", terrainFactory, game, 3));
     }
 
     @Test
@@ -74,7 +75,7 @@ class MapGameAreaTest {
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
 
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.create();
 
         //Verify invalid load and that screen changes to main menu
@@ -91,7 +92,7 @@ class MapGameAreaTest {
 
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.loadAssets();
 
         verify(assetManager).load("Texture1.png", Texture.class);
@@ -111,7 +112,7 @@ class MapGameAreaTest {
 
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.loadAssets();
 
         verify(assetManager).load("Texture3.png", Texture.class);
@@ -131,7 +132,7 @@ class MapGameAreaTest {
 
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.loadAssets();
 
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -152,7 +153,7 @@ class MapGameAreaTest {
 
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.loadAssets();
 
         verify(assetManager).load("soundeffect.wav", Sound.class);
@@ -164,6 +165,26 @@ class MapGameAreaTest {
     }
 
     @Test
+    void loadAndUnloadParticleEffects() {
+        gameAreaConfig.particleEffectPaths = new String[] {"explosion.effect", "explosion_2.effect"};
+        //Load the gameAreaConfig regardless of method.
+        loaderMockedStatic.when(() -> MapConfigLoader.loadMapDirectory(any())).thenReturn(gameAreaConfig);
+        loaderMockedStatic.when(() -> MapConfigLoader.loadMapFile(any())).thenReturn(gameAreaConfig);
+
+        TerrainFactory terrainFactory = mock(TerrainFactory.class);
+        GdxGame game = mock(GdxGame.class);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
+        mapGameArea.loadAssets();
+
+        verify(assetManager).load("explosion.effect", ParticleEffect.class);
+        verify(assetManager).load("explosion_2.effect", ParticleEffect.class);
+
+        mapGameArea.unloadAssets();
+        verify(assetManager).unload("explosion.effect");
+        verify(assetManager).unload("explosion_2.effect");
+    }
+
+    @Test
     void loadAndUnloadBackgroundMusic() {
         gameAreaConfig.backgroundMusicPath = "backgroundMusic.wav";
         //Load the gameAreaConfig regardless of method.
@@ -172,7 +193,7 @@ class MapGameAreaTest {
 
         TerrainFactory terrainFactory = mock(TerrainFactory.class);
         GdxGame game = mock(GdxGame.class);
-        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game);
+        MapGameArea mapGameArea = new MapGameArea("configPath", terrainFactory, game, 3);
         mapGameArea.loadAssets();
 
         verify(assetManager).load("backgroundMusic.wav", Music.class);

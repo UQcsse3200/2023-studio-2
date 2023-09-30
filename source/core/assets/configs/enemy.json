@@ -5,7 +5,13 @@
     "speed": 5,
     "behaviour": "PTE",
     "type": "Melee",
-    "spritePath": "images/enemy/base_enemy.atlas"
+    "spritePath": "images/enemy/base_enemy.atlas",
+    "sound": {
+      "soundsMap": {
+        "enemyDeath": "sounds/enemyDeath.mp3",
+        "enemySpawn": "sounds/enemySpawner.mp3"
+      }
+    }
   },
 
   "meleeEnemyDTE": {
@@ -14,7 +20,13 @@
     "speed": 5,
     "behaviour": "DTE",
     "type": "Melee",
-    "spritePath": "images/enemy/RoboMan.atlas"
+    "spritePath": "images/enemy/RoboMan.atlas",
+    "sound": {
+      "soundsMap": {
+        "enemyDeath": "sounds/enemyDeath.mp3",
+        "enemySpawn": "sounds/enemySpawner.mp3"
+      }
+    }
   },
 
   "rangeEnemyPTE": {
@@ -23,7 +35,13 @@
     "speed": 5,
     "behaviour": "PTE",
     "type": "Ranged",
-    "spritePath": "images/enemy/necromancer.atlas"
+    "spritePath": "images/enemy/necromancer.atlas",
+    "sound": {
+      "soundsMap": {
+        "enemyDeath": "sounds/enemyDeath.mp3",
+        "enemySpawn": "sounds/enemySpawner.mp3"
+      }
+    }
   },
 
   "rangeEnemyDTE": {
@@ -32,7 +50,13 @@
     "speed": 5,
     "behaviour": "DTE",
     "type": "Ranged",
-    "spritePath": "images/enemy/necromancer.atlas"
+    "spritePath": "images/enemy/necromancer.atlas",
+    "sound": {
+      "soundsMap": {
+        "enemyDeath": "sounds/enemyDeath.mp3",
+        "enemySpawn": "sounds/enemySpawner.mp3"
+      }
+    }
   },
 
   "meleeBossPTE": {
@@ -43,7 +67,14 @@
     "behaviour": "PTE",
     "type": "Melee",
     "spritePath": "images/enemy/Night.atlas",
-    "isBoss": true
+    "isBoss": true,
+
+    "sound": {
+      "soundsMap": {
+        "enemyDeath": "sounds/enemyDeath.mp3",
+        "enemySpawn": "sounds/enemySpawner.mp3"
+      }
+    }
   },
 
   "rangeBossPTE": {
@@ -54,6 +85,12 @@
     "behaviour": "PTE",
     "type": "Ranged",
     "spritePath": "",
-    "isBoss": true
+    "isBoss": true,
+    "sound": {
+      "soundsMap": {
+        "enemyDeath": "sounds/enemyDeath.mp3",
+        "enemySpawn": "sounds/enemySpawner.mp3"
+      }
+    }
   }
 }

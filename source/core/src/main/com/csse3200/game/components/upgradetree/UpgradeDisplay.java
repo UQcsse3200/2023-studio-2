@@ -91,7 +91,6 @@ public class UpgradeDisplay extends Window {
 
         setupWindowDimensions();
 
-
         Table titleTable = createTitleTable();
         Table materialsTable = createMaterialsLabel();
         Table exitTable = createExitButton();
@@ -265,9 +264,9 @@ public class UpgradeDisplay extends Window {
         shapeRenderer.rect(node.getX() + blackOffsetX, node.getY() + blackOffsetY, blackRectSize, blackRectSize);
 
         // Draw a yellow highlight around all equipped items.
-        HashMap<Integer, WeaponType> equippedWeaponMap = player.getComponent(InventoryComponent.class)
-                .getEquippedWeaponMap();
-        if (equippedWeaponMap.containsValue(node.getWeaponType())) {
+        ArrayList<WeaponType> equippedWeaponMap = player.getComponent(InventoryComponent.class)
+                .getEquippedWeapons();
+        if (equippedWeaponMap.contains(node.getWeaponType())) {
             shapeRenderer.setColor(Color.GOLD);
             shapeRenderer.rect(node.getX() + equippedOffsetX, node.getY() + equippedOffsetY, equippedRectSize, equippedRectSize);
         }
@@ -371,7 +370,7 @@ public class UpgradeDisplay extends Window {
         materialsLabel.setColor(Color.BLACK);
         materialsLabel.setFontScale(0.25f);
         Image nebuliteImage =
-                new Image(ServiceLocator.getResourceService().getAsset("images/nebulite.png", Texture.class));
+                new Image(ServiceLocator.getResourceService().getAsset("images/resources/nebulite.png", Texture.class));
 
         Table table = new Table();
         table.add(nebuliteImage).size(64,64);
@@ -484,6 +483,7 @@ public class UpgradeDisplay extends Window {
     private void createToolTooltip(Table table, UpgradeNode node) {
         ToolConfig config = (ToolConfig) node.getConfig();
         createTooltipLabel(table, config.name, "");
+        createTooltipLabel(table, config.description, "");
         createTooltipLabel(table, "Cost to build:", "");
 
         for (ObjectMap.Entry<String, Integer> entry : config.cost) {
@@ -584,6 +584,7 @@ public class UpgradeDisplay extends Window {
                 if (stats.isWeaponUnlocked(node.getName())) {
                     InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
                     playerInventory.placeInSlot(node.getWeaponType());
+                    player.getEvents().trigger("updateHotbar");
                 }
             }
         };

@@ -1,5 +1,6 @@
 package com.csse3200.game.entities;
 import com.csse3200.game.components.ProximityActivationComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Portal class which extends Entity. Creates a Portal that if the player is within a certain amount
@@ -12,6 +13,7 @@ public class Portal extends Entity {
 
     /** The y-coordinate. */
     private float y;
+    private Entity companion = ServiceLocator.getEntityService().getCompanion();
 
 
     /**
@@ -31,6 +33,7 @@ public class Portal extends Entity {
      */
     public void teleport(Entity player) {
         player.setPosition(x, y);
+        companion.setPosition(x, y);
     }
 
     /**

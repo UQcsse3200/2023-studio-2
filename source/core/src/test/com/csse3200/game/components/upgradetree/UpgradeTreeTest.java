@@ -1,7 +1,12 @@
 package com.csse3200.game.components.upgradetree;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
@@ -63,10 +68,28 @@ public class UpgradeTreeTest {
 
     @Test
     public void testUnlockWeapon() {
+
+        Gdx.app = mock(Application.class);
         // Check a weapon is locked, unlock it, then check its unlocked
         assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER.toString()));
         upgradeTree.unlockWeapon(WeaponType.STONEHAMMER.toString());
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER.toString()));
+
+//        instance for UpgradeTree
+        UpgradeTree sound = new UpgradeTree();
+
+//        Setting the 'unlockWeaponSound' as the entity for sound events.
+        Entity unlockWeaponEvent = mock(Entity.class);
+
+//        Setting the 'unlockWeaponSound' as the entity for sound events.
+        sound.setEntity(unlockWeaponEvent);
+
+//        Mocking the event handling for the 'unlockWeaponSound' entity.
+        when(unlockWeaponEvent.getEvents()).thenReturn(mock(EventHandler.class));
+
+        Object weapon = new Object();
+//        Testing the whole trigger unlockWeaponEvent to test Player's dodge Sound
+        sound.unlockWeapon(weapon);
     }
 
     @Test void testUnlockMultipleWeapons() {

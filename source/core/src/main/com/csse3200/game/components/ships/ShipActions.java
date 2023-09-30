@@ -38,7 +38,8 @@ public class ShipActions extends Component {
      */
     public ShipActions(int health, int fuel, int acceleration) {
         this.maxHealth = health;
-        this.maxFuel = fuel;
+        //temporary value of fuel to 20 for testing
+        this.maxFuel = fuel - fuel + 20;
         this.currentAcceleration = acceleration;
     }
 
@@ -53,6 +54,7 @@ public class ShipActions extends Component {
         entity.getEvents().addListener("flystop", this::flystop);
         entity.getEvents().addListener("brakeOn", this::brakeOn);
         entity.getEvents().addListener("brakeOff", this::brakeOff);
+
 
         body = physicsComponent.getBody();
         body.setLinearDamping(0); //prevents the ship from stopping for no physical reason
@@ -81,13 +83,25 @@ public class ShipActions extends Component {
         //Vector2 desiredVelocity = flyDirection.cpy().scl(MAX_SPEED);
         //impulse = (desiredVel - currentVel) * mass
         //uses impulse to apply velocity instantly
+        if (this.maxFuel > 0) {
+            boost();
+        } else {
+            // do nothing
+        }
 
-        Vector2 currentVelocity = this.flyDirection.cpy();
-        body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration), true);
         this.playAnimation(body.getLinearVelocity());
 
 
-        //scl(scalar) basically multiply the Vector2 velocity of body by a scalar. Belongs to Vector2.
+
+    }
+
+    /**
+     * Push the ship towards a given direction
+     */
+    void boost() {
+        Vector2 currentVelocity = this.flyDirection.cpy();
+        body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration), true);
+        //scl (or scalar) multiply the Vector2 velocity of body by a scalar. Belongs to Vector2.
     }
 
     /**
@@ -96,8 +110,18 @@ public class ShipActions extends Component {
      * @param direction direction to move in
      */
     void fly(Vector2 direction) {
-        this.flyDirection = direction;
-        moving = true;
+
+        //Spends fuel each button press and release
+        if (this.maxFuel > 0) {
+            this.flyDirection = direction;
+            moving = true;
+            this.maxFuel -= 1;
+            updatedFuel();
+        } else {
+            noFuel();
+
+        }
+
     }
 
     /**
@@ -204,6 +228,11 @@ public class ShipActions extends Component {
      * Inform ShipStatsDisplay about new fuel value
      */
     public void updatedFuel() {entity.getEvents().trigger("updateShipFuel");}
+
+    /**
+     * Inform ShipStatsDisplay about empty fuel tank
+     */
+    public void noFuel() { entity.getEvents().trigger("noFuel"); }
 
 
 

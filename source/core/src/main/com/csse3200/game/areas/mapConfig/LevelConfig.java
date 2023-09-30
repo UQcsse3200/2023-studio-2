@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class LevelConfig {
     public List<GameAreaConfig> gameAreas;
+    public List<String> areaNames;
+    public String nextPlanet;
 
     public String[] getTextures() {
         return gameAreas.stream()

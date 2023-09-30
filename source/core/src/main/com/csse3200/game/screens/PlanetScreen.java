@@ -48,13 +48,15 @@ public class PlanetScreen extends ScreenAdapter {
 
     private Entity player;
 
-    private String currentAreaName = "primary";
+    private String currentAreaName = "main-area";
     private final Map<String, GameArea> allGameAreas = new HashMap<>();
 
     /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
     private static final String SAVEDIR = "save";
+
+    private static final String DEFAULT_AREA = "main-area";
 
     /** Service Instances */
     private Renderer renderer;
@@ -126,17 +128,17 @@ public class PlanetScreen extends ScreenAdapter {
     private void generateGameAreas() {
         if ("Earth".equals(name)) {
             this.nextPlanetName = "Verdant Oasis";
-            generateGameArea("primary", "levels/earth/main-area");
+            generateGameArea(DEFAULT_AREA, "levels/earth/main-area");
         } else if ("Verdant Oasis".equals(name)){
             this.nextPlanetName = "Glacial Desolation";
-            generateGameArea("primary", "levels/lush/main-area");
+            generateGameArea(DEFAULT_AREA, "levels/verdant_oasis/main-area");
         } else if ("Glacial Desolation".equals(name)){
             this.nextPlanetName = "Infernal Challenge";
-            generateGameArea("primary", "levels/frozen/main-area");
+            generateGameArea(DEFAULT_AREA, "levels/glacial_desolation/main-area");
         } else if ("Infernal Challenge".equals(name)){
-            generateGameArea("primary", "levels/lush/main-area");
+            generateGameArea(DEFAULT_AREA, "levels/verdant_oasis/main-area");
         } else {
-            generateGameArea("primary", "levels/earth/main-area");
+            generateGameArea(DEFAULT_AREA, "levels/earth/main-area");
         }
     }
 

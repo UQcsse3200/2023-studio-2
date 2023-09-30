@@ -6,13 +6,19 @@
  */
 package com.csse3200.game.entities.factories;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.*;
 import com.csse3200.game.components.FollowComponent;
+import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
+import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionConfig;
+import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -21,55 +27,46 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Objects;
 
 /**
  * Factory to create a companion entity.
  */
 public class CompanionFactory {
-    private static final CompanionConfig companionConfig =
+    private static final CompanionConfig config =
             FileLoader.readClass(CompanionConfig.class, "configs/companion.json");
 
-    //TODO: REMOVE - LEGACY
-    /**
-     * Create a Companion entity.
-     *
-     * @param playerEntity The player entity to which the companion is associated.
-     * @return The created companion entity.
-     */
-    public static Entity createCompanion(Entity playerEntity) {
-        return createCompanion(playerEntity, companionConfig);
+    public static Entity createCompanion(){
+       return createCompanion(config);
     }
-
     /**
      * Create a Companion entity matching the config file
-     * @param playerEntity The player entity to which the companion is associated.
      * @param config Configuration file to match companion to
      * @return The created companion entity.
      */
     // Added a player reference for basic player tracking
-    public static Entity createCompanion(Entity playerEntity, CompanionConfig config) {
-        InputComponent inputComponent =
-                ServiceLocator.getInputService().getInputFactory().createForCompanion();
-        AnimationRenderComponent infanimator =
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/companionSS.atlas", TextureAtlas.class));
+    public static Entity createCompanion(CompanionConfig config) {
+        InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForCompanion();
+        Entity player = ServiceLocator.getEntityService().getPlayer();
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/comp_spritesheet.atlas", TextureAtlas.class));
-        animator.addAnimation("UP", 1f);
-        animator.addAnimation("DOWN", 1f);
-        animator.addAnimation("LEFT", 1f);
-        animator.addAnimation("RIGHT", 1f);
-        animator.addAnimation("UP_RIGHT", 1f);
-        animator.addAnimation("UP_LEFT", 1f);
-        animator.addAnimation("DOWN_RIGHT", 1f);
-        animator.addAnimation("DOWN_LEFT", 1f);
-        infanimator.addAnimation("UP_1", 1f);
-        infanimator.addAnimation("DOWN_1", 1f);
-        infanimator.addAnimation("RIGHT_1", 1f);
-        infanimator.addAnimation("LEFT_1", 1f);
+                        ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class));
+        animator.addAnimation("Companion_DownLeft", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_UpRight", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_Up", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_Left", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_DownRight", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_Down", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_UpLeft", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_Right", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("Companion_StandDown", 0.2f);
+        animator.addAnimation("Companion_StandUp", 0.2f);
+        animator.addAnimation("Companion_StandLeft", 0.2f);
+        animator.addAnimation("Companion_StandRight", 0.2f);
 
         Entity companion =
                 new Entity()
@@ -80,23 +77,27 @@ public class CompanionFactory {
                         .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
-                        .addComponent(new FollowComponent(playerEntity, 1.4f))
                         .addComponent(animator)
-                        .addComponent(infanimator)
-                        .addComponent(new CompanionStatsDisplay(playerEntity))
-                        .addComponent(new KeyboardCompanionInputComponent())
+                        .addComponent(new HealthBarComponent(true))
+                        /*.addComponent(infanimator)*/
+                        .addComponent(new CompanionStatsDisplay())
                         .addComponent(new CompanionAnimationController())
+                        .addComponent(new FollowComponent(player,1f))
                         .addComponent(new InteractionControllerComponent(false));
+                         companion.addComponent(new SaveableComponent<>(p -> {
+                               CompanionConfig companionConfig = config;
+                               companionConfig.position = new GridPoint2((int) companion.getPosition().x, (int)companion.getPosition().y);
+                               companionConfig.health = companion.getComponent(CombatStatsComponent.class).getHealth();
+                               return companionConfig;
+                                         }, CompanionConfig.class));
 
-        animator.startAnimation("DOWN");
-        infanimator.startAnimation("RIGHT_1");
+                        animator.startAnimation("Companion_StandDown");
         PhysicsUtils.setScaledCollider(companion, 0.4f, 0.2f);
         companion.getComponent(ColliderComponent.class).setDensity(1.0f);
         companion.scaleHeight(0.9f);
         companion.setEntityType("companion");
         return companion;
     }
-
     private CompanionFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }

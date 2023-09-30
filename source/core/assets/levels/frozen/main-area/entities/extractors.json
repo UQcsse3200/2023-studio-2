@@ -1,0 +1,16 @@
+{
+  "entityType": "ExtractorConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.ExtractorConfig,
+      "resource": "Solstite",
+      "health": 200,
+      "tickRate": 1000,
+      "tickSize": 10,
+      "position": {
+        "x": 20,
+        "y": 30
+      }
+    }
+  ]
+}

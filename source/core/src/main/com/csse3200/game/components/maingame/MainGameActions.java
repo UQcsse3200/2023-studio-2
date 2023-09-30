@@ -5,6 +5,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ public class MainGameActions extends Component {
   protected void onReturnPlanet() {
     logger.info("Exiting to current planet screen");
     game.setPlayerLives(config.lives); // Resets number of player's lives.
-    game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+    new PlanetTravel(game).returnToCurrent();
   }
 
 }

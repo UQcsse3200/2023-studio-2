@@ -33,7 +33,7 @@ public class SettingsScreen extends ScreenAdapter {
 
     private final GdxGame game;
     private final Renderer renderer;
-    private static final String[] Mamta = {"images/settings-image1.png"};
+    private static final String[] Mamta = {"images/menu/settings-image1.png"};
 
     private Stage stage;
 
@@ -74,7 +74,7 @@ public class SettingsScreen extends ScreenAdapter {
         Image title =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/settings-image1.png", Texture.class));
+                                .getAsset("images/menu/settings-image1.png", Texture.class));
 
         title.setWidth(Gdx.graphics.getWidth());
         title.setHeight(Gdx.graphics.getHeight());

@@ -23,9 +23,9 @@ public class FireAnimationController extends Component {
 
             // Initialize your animator and load the atlas.
             animator = entity.getComponent(AnimationRenderComponent.class);
-            assetManager.load("images/fire.atlas", TextureAtlas.class);
+            assetManager.load("images/minigame/fire.atlas", TextureAtlas.class);
             assetManager.finishLoading();
-            atlas = assetManager.get("images/fire.atlas");
+            atlas = assetManager.get("images/minigame/fire.atlas");
 
             // Start with the default animation.
             animator.startAnimation("image_part1");

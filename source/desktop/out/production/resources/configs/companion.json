@@ -1,0 +1,8 @@
+
+{
+  "health": 100,
+  "baseAttack": 5,
+  "attackMultiplier": 1,
+  "isImmune": false,
+  "spritePath": "images/companion/Companion_spritesheet.atlas"
+}

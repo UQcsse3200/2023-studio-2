@@ -43,7 +43,7 @@ public class InventoryDisplayComponent extends UIComponent {
      * Creates and populates a table with buttons representing each weapon.
      * Each button displays the weapon's image and name.
      */
-    private void makeTable() {
+    void makeTable() {
 
         ArrayList<WeaponType> weapons = inventory.getEquippedWeapons();
 
@@ -84,7 +84,7 @@ public class InventoryDisplayComponent extends UIComponent {
      * @param button The button to update.
      * @param weapon The weapon associated with the button.
      */
-    private void updateButtonTableColor(Button button, WeaponType weapon) {
+    void updateButtonTableColor(Button button, WeaponType weapon) {
         if (!inventory.getEquippedType().equals(weapon)) {
             button.setColor(0.5f, 0.5f, 0.5f, 0.5f); // grey it out
         } else {
@@ -96,7 +96,7 @@ public class InventoryDisplayComponent extends UIComponent {
      * Handles the event when a weapon is equipped.
      * Recreates the weapon table and updates button colors.
      */
-    private void equipEvent() {
+    void equipEvent() {
         table.clear();
         buttonWeaponMap.clear();
         makeTable();

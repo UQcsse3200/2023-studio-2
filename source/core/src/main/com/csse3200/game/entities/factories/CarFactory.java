@@ -22,7 +22,6 @@ public class CarFactory {
         Entity car = new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new CarAnimationController())
-                .addComponent(new ColliderComponent())
                 .addComponent(animator)
                 .addComponent(inputComponent)
                 .addComponent(new CarActions());
@@ -30,20 +29,12 @@ public class CarFactory {
         car.getComponent(AnimationRenderComponent.class).scaleEntity();
         car.getComponent(CarActions.class).setPlayer(player);
         car.getComponent(KeyboardCarInputComponent.class).setActions(car.getComponent(CarActions.class));
-        setColliderForCar(car);
         return car;
-    }
-
-    private static void setColliderForCar(Entity car) {
-        ColliderComponent collider = car.getComponent(ColliderComponent.class);
-        collider.setAsBox(new Vector2(2.25f, 1f), new Vector2(2.5625f, 1.4375f));
-        collider.setDensity(999);
     }
 
     private static AnimationRenderComponent setupCarAnimations() {
         AnimationRenderComponent animator = new AnimationRenderComponent(
-                ServiceLocator.getResourceService().getAsset("images/car/car.atlas", TextureAtlas.class)
-                );
+                ServiceLocator.getResourceService().getAsset("images/car/car.atlas", TextureAtlas.class));
 
         addCarAnimations(animator, "left");
         addCarAnimations(animator, "right");

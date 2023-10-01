@@ -12,14 +12,14 @@ public class CompanionWeaponConfigs {
                 "A deadly potion.",        // Description
                 50.0f,                      // Damage
                 5.0f,                       // Weapon Speed
-                100,                        // Weapon Duration
-                180,                        // Rotation Speed
+                10,                        // Weapon Duration
+                18,                        // Rotation Speed
                 0,                          // Initial Rotation Offset
                 2,                          // Attack Cooldown
                 1,                          // Ammo Use
                 0,                          // Animation Type
                 0,                          // Image Rotation Offset
-                0.5f,                       // Image Scale
+                1f,                       // Image Scale
                 "images/weapons/sword.atlas",   // Texture Atlas
                 "images/powerups/death_potion.png",// Image Path
                 CompanionWeaponType.Death_Potion, // Companion Weapon Type

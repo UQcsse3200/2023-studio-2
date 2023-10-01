@@ -3,7 +3,7 @@
     "name" : "Death_Potion",
     "description": "Reliable range, decent damage. Ideal for distant targets.",
     "damage" : 50,
-    "weaponSpeed": 10,
+    "weaponSpeed": 1,
     "weaponDuration": 50,
     "rotationSpeed": 0,
     "initialRotationOffset": 0,

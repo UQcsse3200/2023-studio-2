@@ -85,18 +85,30 @@ public class PlayerActions extends Component {
      * Makes the player get into tractor.
      */
     void enterCar() {
+        float distanceToCar = calculateDistanceToCar();
 
-        if (this.entity.getPosition().dst(car.getPosition()) > 2) {
+        if (distanceToCar > 2) {
             return;
         }
-        this.stopWalking();
+
+        stopWalking();
         silent = true;
 
-       car.getComponent(CarActions.class).setSilent(false);
-        car.getComponent(KeyboardCarInputComponent.class)
-                .setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
-        this.entity.setPosition(new Vector2(-2, -2));
+        CarActions carActions = car.getComponent(CarActions.class);
+        KeyboardCarInputComponent carInputComponent = car.getComponent(KeyboardCarInputComponent.class);
+        KeyboardPlayerInputComponent playerInputComponent = entity.getComponent(KeyboardPlayerInputComponent.class);
+
+        carActions.setSilent(false);
+        carInputComponent.setWalkDirection(playerInputComponent.getWalkDirection());
+        entity.setPosition(new Vector2(-2, -2));
     }
+
+    float calculateDistanceToCar() {
+        Vector2 playerPosition = this.entity.getPosition();
+        Vector2 carPosition = car.getPosition();
+        return playerPosition.dst(carPosition);
+    }
+
 
     /**
      * Stops the player from walking.

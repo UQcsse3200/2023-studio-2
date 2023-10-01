@@ -67,3 +67,5 @@ class HealingTest {
         verify(combatStatsComponent, times(1)).setHealth(100);
     }
 }
+
+

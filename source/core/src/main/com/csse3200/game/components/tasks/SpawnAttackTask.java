@@ -8,6 +8,8 @@ import com.csse3200.game.services.GameTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 /**
  * Waits around for a set amount of time and then fires a projectile at a target.
  */
@@ -23,6 +25,7 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
   private final GameTime timer;
   private long lastSpawnTime;
   private int numSpawns = 0;
+  private ArrayList<Entity> entities;
 
   /**
    * creates an aim task.
@@ -37,6 +40,7 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
     this.range = range;
     this.timer = new GameTime();
     lastSpawnTime = timer.getTime();
+    entities = new ArrayList<>();
   }
 
   @Override

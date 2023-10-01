@@ -11,19 +11,19 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
 public class SpawnerComponent extends Component {
-    public static final long WAVE_DELAY = 3000;  // 20 seconds
-    public static final long SPAWN_DELAY = 3000;  // 3 seconds
+    private static final long WAVE_DELAY = 3000;  // 20 seconds
+    private static final long SPAWN_DELAY = 3000;  // 3 seconds
 
-    public final GameTime timer;
+    private final GameTime timer;
     private final SpawnerConfig config;
 
-    public long lastTime;
-    public int currentWave = 0;
-    public boolean isSpawning = false;
-    public int enemiesToSpawn = 0;
-    public int enemiesSpawned = 0;
-    public int meleeEnemiesToSpawn = 0;
-    public int rangedEnemiesToSpawn = 0;
+    private long lastTime;
+    private int currentWave = 0;
+    private boolean isSpawning = false;
+    private int enemiesToSpawn = 0;
+    private int enemiesSpawned = 0;
+    private int meleeEnemiesToSpawn = 0;
+    private int rangedEnemiesToSpawn = 0;
 
     public SpawnerComponent(SpawnerConfig config) {
         this.timer = new GameTime();
@@ -47,19 +47,19 @@ public class SpawnerComponent extends Component {
         }
     }
 
-    public boolean shouldSpawnNewWave(long currentTime) {
+    private boolean shouldSpawnNewWave(long currentTime) {
         return !isSpawning && currentTime - lastTime >= WAVE_DELAY;
     }
 
-    public boolean shouldSpawnEnemy(long currentTime) {
+    private boolean shouldSpawnEnemy(long currentTime) {
         return isSpawning && enemiesSpawned < enemiesToSpawn && currentTime - lastTime >= SPAWN_DELAY;
     }
 
-    public boolean shouldStopSpawning() {
+    private boolean shouldStopSpawning() {
         return enemiesSpawned >= enemiesToSpawn;
     }
 
-    public void handleNewWave(long currentTime) {
+    private void handleNewWave(long currentTime) {
         int[] currentConfig;
         switch (currentWave) {
             case 0:
@@ -85,7 +85,7 @@ public class SpawnerComponent extends Component {
      *  The handleEnemySpawn() handles when to spawn enemies and
      *                    also trigger sound while spawning.
      */
-    public void handleEnemySpawn(long currentTime) {
+    private void handleEnemySpawn(long currentTime) {
         if (meleeEnemiesToSpawn > 0) {
             spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
             meleeEnemiesToSpawn--;
@@ -103,13 +103,13 @@ public class SpawnerComponent extends Component {
         lastTime = currentTime;
     }
 
-    public void resetSpawningState() {
+    private void resetSpawningState() {
         isSpawning = false;
         enemiesToSpawn = 0;
         enemiesSpawned = 0;
     }
 
-    public void spawnEnemies(int meleeCount, int rangedCount) {
+    private void spawnEnemies(int meleeCount, int rangedCount) {
         isSpawning = true;
         enemiesToSpawn = meleeCount + rangedCount;
         enemiesSpawned = 0;
@@ -117,7 +117,7 @@ public class SpawnerComponent extends Component {
         rangedEnemiesToSpawn = rangedCount;
     }
 
-    public void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {
+    private void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {
         Vector2 worldPos = entity.getCenterPosition();
         Entity enemy = EnemyFactory.createEnemy(enemyType, behaviour);
         ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemy, worldPos);

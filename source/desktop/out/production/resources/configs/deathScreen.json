@@ -1,6 +1,0 @@
-{
-  "soundsMap":{
-    "respawn": "sounds/playerDeathRespawn.mp3",
-    "dead": "sounds/playerDead.mp3"
-  }
-}

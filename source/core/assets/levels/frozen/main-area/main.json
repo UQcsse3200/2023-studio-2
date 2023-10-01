@@ -86,15 +86,16 @@
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
-    "sounds/playerLow_health.mp3",
-    "sounds/dodgingAlertSweep.mp3",
-    "sounds/footStepsInTheForestGround.mp3",
-    "sounds/PlayerHealthRecharge.mp3",
-    "sounds/playerBoostRecharge.mp3",
-    "sounds/upgradeTreeTap.mp3",
-    "sounds/upgradeWeapon.mp3",
-    "sounds/enemyDeath.mp3",
-    "sounds/companionWalkSound.wav"
+    "sounds/playerLow_health.wav",
+    "sounds/dodgingAlertSweep.wav",
+    "sounds/footStepsInTheForestGround.wav",
+    "sounds/PlayerHealthRecharge.wav",
+    "sounds/playerBoostRecharge.wav",
+    "sounds/upgradeTreeTap.wav",
+    "sounds/upgradeWeapon.wav",
+    "sounds/enemyDeath.wav",
+    "sounds/companionwalksound.wav",
+    "sounds/enemySpawner.wav"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

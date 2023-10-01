@@ -21,6 +21,11 @@
       "position": {
         "x": 40,
         "y": 40
+      },
+      "sounds": {
+        "soundsMap": {
+          "enemySpawn": "sounds/enemySpawner.wav"
+        }
       }
     }
   ]

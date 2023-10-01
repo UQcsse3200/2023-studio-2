@@ -52,7 +52,7 @@ public class FileLoader {
     try {
       object = json.fromJson(type, file);
     } catch (Exception e) {
-      logger.error(e.getMessage());
+      logger.error(e.getMessage() + " - " + e.getCause().getLocalizedMessage());
       return null;
     }
     if (object == null) {

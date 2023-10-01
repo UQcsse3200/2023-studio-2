@@ -2,8 +2,6 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -11,7 +9,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.AssetsConfig;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
-import com.csse3200.game.areas.mapConfig.MapConfigLoader;
+import com.csse3200.game.areas.mapConfig.GameAreaConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.PowerupType;
@@ -34,9 +32,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.io.File;
 import java.util.List;
+
+import static com.csse3200.game.areas.mapConfig.LoadUtils.joinPath;
 
 /**
  * A Base Game Area for any level.
@@ -53,10 +51,10 @@ public class MapGameArea extends GameArea{
     private static List<Entity> itemsOnMap = new ArrayList<>();
     private String thing;
 
-    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
+    public MapGameArea(String levelName, String game_area, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
-            mapConfig = MapConfigLoader.loadMapDirectory(configPath);
-            logger.info("Successfully loaded map {}", configPath);
+            mapConfig = GameAreaConfigLoader.loadMapDirectory(levelName, game_area, false); //TODO: Enable loading from save behaviour.
+            logger.info("Successfully loaded map {}", joinPath(levelName, game_area));
         } catch (InvalidConfigException exception) {
             logger.error("FAILED TO LOAD GAME - RETURNING TO MAIN MENU", exception);
             validLoad = false;

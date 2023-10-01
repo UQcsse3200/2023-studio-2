@@ -5,18 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- *
+ * Configuration file to represent a levelConfig .json file.
  */
 public class LevelConfig {
-    public List<GameAreaConfig> gameAreas;
-    public List<String> areaNames;
-    public String nextPlanet;
-
-    public String[] getTextures() {
-        return gameAreas.stream()
-                 .flatMap(gameAreaConfig -> Arrays.stream(gameAreaConfig.getEntityTextures()))
-                 .distinct()
-                 .toList()
-                 .toArray(new String[]{});
-    }
+    public List<String> areaNames = null;
+    public String nextPlanet = null;
 }

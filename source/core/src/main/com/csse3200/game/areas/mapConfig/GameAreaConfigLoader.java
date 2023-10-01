@@ -1,55 +1,48 @@
 package com.csse3200.game.areas.mapConfig;
 
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.areas.MapGameArea;
-import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static com.csse3200.game.areas.mapConfig.LoadUtils.*;
 
 /**
  * Class to handle loading of game areas from config files
  */
-public class MapConfigLoader {
-    private static final String MAIN_PATH = "main.json";
-    private static final String ENTITIES_PATH = "entities";
-
-    private static final String FAIL_MESSAGE = "Failed to load config of type ";
-    private static final String FAIL_ENTITY = "Failed to load entities config";
-
-    private static final Logger logger = LoggerFactory.getLogger(MapConfigLoader.class);
+public class GameAreaConfigLoader {
+    private static final Logger logger = LoggerFactory.getLogger(GameAreaConfigLoader.class);
 
     /**
      * Loads a GameArea from a single .json file containing all game area data.
      * Note this may not have the best error messages
-     * @param filePath Path of file to be loaded
+     * @param levelName Name of level to be loade
+     * @param gameAreaName Name of game area in level to generate
+     * @param fromSave Boolean - true if you want to load files som
      * @return The GameAreaConfig class loaded from the .json file
      * @throws InvalidConfigException If the file is unable to be loaded to a GameAreaConfig
      */
-    public static GameAreaConfig loadMapFile(String filePath) throws InvalidConfigException {
+    public static GameAreaConfig loadMapFile(String levelName, String gameAreaName, boolean fromSave) throws InvalidConfigException {
+        String filePath = joinPath(ROOT_PATH, levelName, gameAreaName, JSON_EXT);
         GameAreaConfig gameArea = FileLoader.readClass(GameAreaConfig.class, filePath, FileLoader.Location.INTERNAL);
-        if (gameArea == null) throw new InvalidConfigException("Failed to load map");
+        if (gameArea == null) throw new InvalidConfigException("Failed to load map " + filePath);
         return gameArea;
     }
 
     /**
      * Loads a folder containing various .json files that represent a given game area.
-     * @param mapDirPath Directory where files will be loaded from
-     * @return The GameAreaConfig class loaded from the directory
+     * @param levelName Name of level to be loade
+     * @param gameAreaName Name of game area in level to generate
+     * @param fromSave Boolean - true if you want to load files som
      * @throws InvalidConfigException If any file is unable to be loaded to a GameAreaConfig
      */
-    public static GameAreaConfig loadMapDirectory(String mapDirPath) throws InvalidConfigException {
-        String mainPath = joinPath(mapDirPath, MAIN_PATH);
-        String entitiesPath = joinPath(mapDirPath, ENTITIES_PATH);
+    public static GameAreaConfig loadMapDirectory(String levelName, String gameAreaName, boolean fromSave)
+            throws InvalidConfigException {
+        String path = joinPath(ROOT_PATH, levelName, gameAreaName);
+        String mainPath = joinPath(path, MAIN_FILE);
+        String entitiesPath = joinPath(path, ENTITIES_PATH);
         GameAreaConfig gameAreaConfig = loadConfigFile(mainPath, GameAreaConfig.class);
         gameAreaConfig.areaEntityConfig = loadEntities(entitiesPath);
         return gameAreaConfig;
@@ -85,18 +78,5 @@ public class MapConfigLoader {
         T outClass = FileLoader.readClass(target, configPath, FileLoader.Location.INTERNAL);
         if (outClass == null) throw new InvalidConfigException(FAIL_MESSAGE + target);
         return outClass;
-    }
-
-    /**
-     * Joins an arbitrary list of paths using the system's path separator
-     * @param paths List of paths to join together
-     * @return String of all the path strings joined by a path seperator
-     */
-    private static String joinPath(String... paths) {
-        StringJoiner stringJoiner = new StringJoiner(File.separator);
-        for (String part: paths) {
-            stringJoiner.add(part);
-        }
-        return stringJoiner.toString();
     }
 }

@@ -4,22 +4,17 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
-import net.dermetfan.gdx.physics.box2d.PositionController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.swing.*;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(GameExtension.class)
@@ -68,24 +63,6 @@ class MapConfigLoaderTest {
     }
 
     @Test
-    void loadValidMapFile() throws InvalidConfigException {
-        try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
-            mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
-                    .thenReturn(fullGameAreaConfig);
-            assertEquals(expectedGameArea, MapConfigLoader.loadMapFile("path.json"));
-        }
-    }
-
-    @Test
-    void loadInvalidMapFile() {
-        try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
-            mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
-                    .thenReturn(null);
-            assertThrows(InvalidConfigException.class, () -> MapConfigLoader.loadMapFile("path.json"));
-        }
-    }
-
-    @Test
     void loadValidMapDirectory() throws InvalidConfigException {
         try (MockedStatic<FileLoader> mockFileLoader = mockStatic(FileLoader.class)) {
             mockFileLoader.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
@@ -93,7 +70,7 @@ class MapConfigLoaderTest {
             mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
                     .thenReturn(areaEntityConfig);
 
-            assertEquals(MapConfigLoader.loadMapDirectory("path/"), expectedGameArea);
+            assertEquals(GameAreaConfigLoader.loadMapDirectory("level", "area", false), expectedGameArea);
         }
     }
 
@@ -105,9 +82,11 @@ class MapConfigLoaderTest {
             mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
                     .thenReturn(areaEntityConfig);
 
-            assertThrows(InvalidConfigException.class, () -> MapConfigLoader.loadMapDirectory("path/"));
+            assertThrows(InvalidConfigException.class, () -> GameAreaConfigLoader
+                    .loadMapDirectory("level", "area", false));
         }
     }
 
     //TODO: Write tests to cover entity folder structure
+    //TODO: Write tests to cover saving
 }

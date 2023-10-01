@@ -7,6 +7,9 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.mapConfig.AssetsConfig;
+import com.csse3200.game.areas.mapConfig.InvalidConfigException;
+import com.csse3200.game.areas.mapConfig.LevelConfig;
+import com.csse3200.game.areas.mapConfig.LevelConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
@@ -35,6 +38,8 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.csse3200.game.areas.mapConfig.LoadUtils.*;
+
 /**
  * A screen that represents a single planet of the game with its corresponding game area/s.
  * Determines which game area to generate and the next planet in the chain.
@@ -44,7 +49,7 @@ public class PlanetScreen extends ScreenAdapter {
     private final GdxGame game;
 
     public final String name;
-    private String nextPlanetName;
+    private String nextPlanetName = null;
 
     private Entity player;
 
@@ -53,10 +58,6 @@ public class PlanetScreen extends ScreenAdapter {
 
     /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
-
-    private static final String SAVEDIR = "save";
-
-    private static final String DEFAULT_AREA = "main_area";
 
     /** Service Instances */
     private Renderer renderer;
@@ -126,31 +127,30 @@ public class PlanetScreen extends ScreenAdapter {
      * Generates all the appropriate game areas for the current planet based on its name.
      */
     private void generateGameAreas() {
-        if ("Earth".equals(name)) {
-            this.nextPlanetName = "Verdant Oasis";
-            generateGameArea(DEFAULT_AREA, "levels/earth/main-area");
-        } else if ("Verdant Oasis".equals(name)){
-            this.nextPlanetName = "Glacial Desolation";
-            generateGameArea(DEFAULT_AREA, "levels/verdant_oasis/main-area");
-        } else if ("Glacial Desolation".equals(name)){
-            this.nextPlanetName = "Infernal Challenge";
-            generateGameArea(DEFAULT_AREA, "levels/glacial_desolation/main-area");
-        } else if ("Infernal Challenge".equals(name)){
-            generateGameArea(DEFAULT_AREA, "levels/verdant_oasis/main-area");
-        } else {
-            generateGameArea(DEFAULT_AREA, "levels/earth/main-area");
+        String levelName = formatName(name);
+
+        try {
+            LevelConfig levelConfig = LevelConfigLoader.loadLevel(levelName);
+            this.nextPlanetName = levelConfig.nextPlanet;
+            if (levelConfig.areaNames == null) return;
+            for (String area : levelConfig.areaNames) {
+                generateGameArea(levelName, area);
+            }
+        } catch (InvalidConfigException e) {
+            logger.error("FAILED TO LOAD LEVEL DATA FOR " + levelName);
         }
     }
 
     /**
      * Initialises a new game area with a given name based upon the config file.
      *
-     * @param name  The name of the game area to create.
-     * @param configPath    The configPath to load.
+     * @param levelName  The name of the level to load.
+     * @param areaName The nam of the game area to be loaded from the level.
      */
-    private void generateGameArea(String name, String configPath) {
+    private void generateGameArea(String levelName, String areaName) {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        this.allGameAreas.put(name, new MapGameArea(configPath, terrainFactory, game, game.getPlayerLives()));
+        this.allGameAreas.put(areaName, new MapGameArea(levelName, areaName, terrainFactory, game, game.getPlayerLives()));
+
     }
 
     /**
@@ -214,11 +214,11 @@ public class PlanetScreen extends ScreenAdapter {
     }
 
     private void saveGame() {
-        String path = String.format("%s/%s/%s/entities.json", SAVEDIR, this.name, this.currentAreaName);
+        String path = String.format("%s/%s/%s/entities.json", SAVE_PATH, this.name, this.currentAreaName);
         ServiceLocator.getEntityService().saveCurrentArea(path);
 
         Map<String, Object> gameStateEntries = new HashMap<>(ServiceLocator.getGameStateObserverService().getFullStateData());
-        FileLoader.writeClass(gameStateEntries, SAVEDIR + "/gamestate.json", FileLoader.Location.LOCAL);
+        FileLoader.writeClass(gameStateEntries, SAVE_PATH + "/gamestate.json", FileLoader.Location.LOCAL);
     }
 
     /**

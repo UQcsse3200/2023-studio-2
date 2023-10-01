@@ -45,7 +45,7 @@ public class MapGameArea extends GameArea{
     private final GdxGame game;
     private int playerLives;
 
-    private static final GridPoint2 CAR_SPAWN = new GridPoint2(20, 40);
+    private static final GridPoint2 CAR_SPAWN = new GridPoint2(40, 40);
 
     private Entity car;
     private boolean validLoad = true;

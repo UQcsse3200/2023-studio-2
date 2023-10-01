@@ -4,6 +4,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.components.Car.CarActions;
+import com.csse3200.game.components.Car.KeyboardCarInputComponent;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Component;
@@ -25,6 +27,9 @@ public class PlayerActions extends Component {
 
     private final EntityService entityService = new EntityService();
     private PhysicsComponent physicsComponent;
+    private Entity car;
+
+    private boolean silent = false;
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
 
@@ -36,6 +41,7 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("attack", this::attack);
         entity.getEvents().addListener("place", this::place);
         entity.getEvents().addListener("remove", this::remove);
+        entity.getEvents().addListener("enterTractor", this::enterCar);
         entity.getEvents().addListener("dodged", this::dodged);
         entity.getEvents().addListener("change_structure", this::changeStructure);
         GameStateInteraction gameStateInteraction = new GameStateInteraction();
@@ -69,6 +75,27 @@ public class PlayerActions extends Component {
     void walk(Vector2 direction) {
         this.walkDirection = direction;
         moving = true;
+    }
+
+    public void setcar(Entity car) {
+        this.car = car;
+    }
+
+    /**
+     * Makes the player get into tractor.
+     */
+    void enterCar() {
+
+        if (this.entity.getPosition().dst(car.getPosition()) > 2) {
+            return;
+        }
+        this.stopWalking();
+        silent = true;
+
+       car.getComponent(CarActions.class).setSilent(false);
+        car.getComponent(KeyboardCarInputComponent.class)
+                .setWalkDirection(entity.getComponent(KeyboardPlayerInputComponent.class).getWalkDirection());
+        this.entity.setPosition(new Vector2(-2, -2));
     }
 
     /**

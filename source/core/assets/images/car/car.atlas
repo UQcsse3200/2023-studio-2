@@ -1,152 +1,152 @@
 car.png
-size: 2046, 840
+size: 410, 924
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 default
+  xy: 0, 462
+  index: 0
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1, 1
-  size: 390, 749
-  orig: 410, 924
-  offset: 19, 165
-  index: -1
 car_stop_down_normal
+  xy: 0, 0
+  index: 0
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 163, 752
-  size: 274, 85
-  orig: 410, 924
-  offset: 106, 829
-  index: -1
 car_move_down_normal
+  xy: 82, 0
+  index: 0
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 439, 752
-  size: 274, 85
-  orig: 410, 924
-  offset: 106, 829
-  index: -1
 car_move_down_normal
+  xy: 164, 0
+  index: 1
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1, 752
-  size: 160, 87
-  orig: 410, 924
-  offset: 106, 827
-  index: -1
 car_move_down_normal
+  xy: 246, 0
+  index: 2
+   size: 80, 80
+    orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 863, 752
-  size: 55, 80
-  orig: 410, 924
-  offset: 106, 834
-  index: -1
 car_down
+  xy: 328, 0
+  index: 0
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 715, 752
-  size: 146, 83
-  orig: 410, 924
-  offset: 10, 831
-  index: -1
 car_stop_left_normal
+  xy: 0, 231
+  index: 0
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1482, 752
-  size: 81, 51
-  orig: 410, 924
-  offset: 323, 623
-  index: -1
 car_move_left_normal
+  xy: 82, 231
+  index: 0
+  size: 80, 80
+   orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1565, 752
-  size: 81, 51
-  orig: 410, 924
-  offset: 323, 623
-  index: -1
 car_move_left_normal
+  xy: 164, 231
+  index: 1
+  size: 80, 80
+   orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1294, 752
-  size: 92, 51
-  orig: 410, 924
-  offset: 112, 635
-  index: -1
 car_move_left_normal
+  xy: 246, 231
+  index: 2
+   size: 80, 80
+    orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1160, 752
-  size: 132, 51
-  orig: 410, 924
-  offset: 179, 605
-  index: -1
 car_left
+  xy: 328, 231
+  index: 0
+  size: 80, 80
+   orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1388, 752
-  size: 92, 51
-  orig: 410, 924
-  offset: 6, 595
-  index: -1
 car_stop_right_normal
+  xy: 0, 462
+  index: 0
+   size: 80, 80
+    orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 393, 1
-  size: 390, 749
-  orig: 410, 924
-  offset: 19, 165
-  index: -1
-car_stop_right_normal
-  rotate: false
-  xy: 1114, 1
-  size: 309, 749
-  orig: 410, 924
-  offset: 19, 165
-  index: -1
 car_move_right_normal
+  xy: 82, 462
+  index: 0
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1425, 1
-  size: 309, 749
-  orig: 410, 924
-  offset: 19, 165
-  index: -1
 car_move_right_normal
+  xy: 164, 462
+  index: 1
+  size: 80, 80
+   orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1736, 1
-  size: 309, 749
-  orig: 410, 924
-  offset: 19, 165
-  index: -1
+car_move_right_normal
+  xy: 246, 462
+  index: 2
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  rotate: false
 car_right
+  xy: 328, 462
+  index: 0
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 785, 1
-  size: 327, 749
-  orig: 410, 924
-  offset: 1, 165
-  index: -1
 car_stop_up_normal
+  xy: 0, 693
+  index: 0
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 920, 752
-  size: 46, 67
-  orig: 410, 924
-  offset: 19, 163
-  index: -1
 car_move_up_normal
+  xy: 82, 693
+  index: 0
+  size: 80, 80
+   orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 968, 752
-  size: 46, 67
-  orig: 410, 924
-  offset: 164, 148
-  index: -1
 car_move_up_normal
+  xy: 164, 693
+  index: 1
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1016, 752
-  size: 46, 67
-  orig: 410, 924
-  offset: 30, 284
-  index: -1
 car_move_up_normal
+  xy: 246, 693
+  index: 2
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1064, 752
-  size: 46, 67
-  orig: 410, 924
-  offset: 166, 311
-  index: -1
 car_up
+  xy: 328, 693
+  index: 0
+ size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
   rotate: false
-  xy: 1112, 752
-  size: 46, 67
-  orig: 410, 924
-  offset: 166, 311
-  index: -1

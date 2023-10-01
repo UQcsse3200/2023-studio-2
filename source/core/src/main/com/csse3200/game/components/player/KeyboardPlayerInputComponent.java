@@ -84,6 +84,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return testing;
     }
 
+    public Vector2 getWalkDirection() {
+        return walkDirection;
+    }
+
     /**
      * Sets value for testing.
      *
@@ -139,6 +143,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             }
             case Keys.NUM_1 -> {
                 triggerInventoryEvent("melee");
+                return true;
+            }
+
+            case Keys.Q -> {
+                triggerEnter();
                 return true;
             }
             case Keys.NUM_2 -> {
@@ -253,6 +262,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     this.lastMousePos = position.cpy();
     return false;
   }
+    private void triggerEnter() {
+        entity.getEvents().trigger("enterCar");
+    }
 
   /**
    * Returns the direction of the player.

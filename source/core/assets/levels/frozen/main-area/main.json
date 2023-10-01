@@ -62,7 +62,7 @@
     "images/resources/Cracked_Ground.png",
     "particle-effects/durasteel/durasteel_pixel.png",
     "images/navigationmap/planets/glacial_desolation.png",
-    "images/companion/Companion_spritesheet.png"
+    "images/companion/Companion_spritesheet.png","images/powerups/death_potion.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -82,7 +82,7 @@
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
     "images/companion/Companion_spritesheet.atlas",
-    "images/structures/ExtractorAnimation.atlas"
+    "images/structures/ExtractorAnimation.atlas","images/weapons/sword.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav",

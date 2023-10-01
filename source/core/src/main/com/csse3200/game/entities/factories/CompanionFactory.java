@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.Companion.CompanionWeaponComponent;
 import com.csse3200.game.components.Companion.*;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.HealthBarComponent;
@@ -29,6 +30,7 @@ import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+
 
 import java.util.Objects;
 
@@ -79,6 +81,7 @@ public class CompanionFactory {
                         .addComponent(inputComponent)
                         .addComponent(animator)
                         .addComponent(new HealthBarComponent(true))
+                        .addComponent(new CompanionWeaponComponent())
                         /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay())
                         .addComponent(new CompanionAnimationController())

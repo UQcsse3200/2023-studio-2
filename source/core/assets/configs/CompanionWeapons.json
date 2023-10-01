@@ -1,0 +1,17 @@
+{
+  "RANGED_SLINGSHOT": {
+    "name" : "Death_Potion",
+    "description": "Reliable range, decent damage. Ideal for distant targets.",
+    "damage" : 50,
+    "weaponSpeed": 10,
+    "weaponDuration": 50,
+    "rotationSpeed": 0,
+    "initialRotationOffset": 0,
+    "imageRotationOffset": 45,
+    "textureAtlas": "images/weapons/sword.atlas",
+    "imageScale" : 1,
+    "animationType" : 1,
+    "imagePath" : "images/powerups/death_potion.png",
+    "type" : "RANGED_SLINGSHOT",
+    "slotType" : "ranged"
+  }}

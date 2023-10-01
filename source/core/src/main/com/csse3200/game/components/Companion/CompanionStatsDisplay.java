@@ -1,5 +1,6 @@
 package com.csse3200.game.components.Companion;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -7,8 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
+import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.CompanionWeaponConfig;
+import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -23,7 +29,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
  */
 public class CompanionStatsDisplay extends UIComponent {
     Table companionStatisticsUI;
-
+    private Table weaponImageTable;
     Table container;
     Table statsTable;
 
@@ -33,6 +39,7 @@ public class CompanionStatsDisplay extends UIComponent {
 
     Table titleTable;
     private long duration;
+    private CompanionInventoryComponent inventory;
 
 
 
@@ -54,6 +61,7 @@ public class CompanionStatsDisplay extends UIComponent {
 
     private boolean isInvincible = true;
     private boolean isInfiniteHealth = true;
+    private Label ammoLabel;
 
     /**
      * Default constructor for CompanionStatsDisplay.
@@ -72,7 +80,25 @@ public class CompanionStatsDisplay extends UIComponent {
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
         player.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
         entity.getEvents().addListener("companionModeChange", this::updateCompanionModeUI);
+        entity.getEvents().addListener("updateAmmo", this::updateAmmo);
+//        entity.getEvents().addListener("changeWeapon", this::updateWeapon);
     }
+    public void updateAmmo(int currentAmmo, int maxAmmo) {
+        CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
+        if (maxAmmo == 100) {  // todo: make non-ammo things not have ammo
+            ammoText = "    -";
+        }
+        ammoLabel.setText(ammoText);
+    }
+    private CompanionInventoryComponent Inventory;
+
+//    public void updateWeapon(CompanionWeaponType weapon) {
+//        CompanionWeaponConfig config = CompanionInventoryComponent.getConfigs().GetWeaponConfig(weapon);
+//        Image weaponImage = new Image( new Texture(config.imagePath));
+//        weaponImageTable.clear();
+//        weaponImageTable.add(weaponImage).size(30f);
+//        updateAmmo(Inventory.GetCurrentAmmo(), Inventory.GetCurrentMaxAmmo());
+//    }
 
     public void createInventoryButton(Table statsTable) {
         TextButton button = new TextButton("Inventory", skin);
@@ -142,7 +168,52 @@ public class CompanionStatsDisplay extends UIComponent {
 
         container.add(statsTable);
         stage.addActor(container);
+//        Table innerTable = new Table();
+//        createAmmoBar(innerTable);
+//        statsTable.add(innerTable).left();
+//
+//        container.add(statsTable);
+//        stage.addActor(container);
+
     }
+
+
+
+//    public void createAmmoBar(Table parentTable) {
+//        companion = ServiceLocator.getEntityService().getCompanion();
+//        inventory = companion.getComponent(CompanionInventoryComponent.class);
+//
+//        Image ammoBarFrame;
+//        ammoBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
+//// Assuming PlayerStatsDisplay is the class with the getConfigs() method
+//        CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(); // Create an instance
+//
+//// Now, you can call getConfigs() on the instance
+//        CompanionWeaponConfig weaponConfig = companionStatsDisplay.getConfigs().GetWeaponConfig(weaponType);
+//
+//        CompanionWeaponConfig config = CompanionInventoryComponent.getConfigs().GetWeaponConfig(inventory.getEquippedType());
+//        Image weaponImage = new Image( new Texture(config.imagePath));
+//        int currentAmmo = Inventory.GetCurrentAmmo();
+//        int maxAmmo = Inventory.GetCurrentMaxAmmo();
+//        CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
+//        ammoLabel = new Label(ammoText, skin, "small");
+//        ammoLabel.setFontScale(0.21f);
+//
+//        Table ammoFrameTable = new Table();
+//        ammoFrameTable.add(ammoBarFrame).size(150f, 65f);
+//
+//        weaponImageTable = new Table();
+//        weaponImageTable.add(weaponImage).size(25f);
+//
+//        Table ammoInfo = new Table();
+//        ammoInfo.add(weaponImageTable).left().pad(5).padTop(10);
+//        ammoInfo.add(ammoLabel).size(80f).right().pad(5).padTop(10);
+//
+//        Stack ammoStack = new Stack();
+//        ammoStack.add(ammoFrameTable);
+//        ammoStack.add(ammoInfo);
+//        parentTable.add(ammoStack).left().padLeft(5).padRight(5);
+//    }
 
     /**
      * Set the companion's image to an invincible state.

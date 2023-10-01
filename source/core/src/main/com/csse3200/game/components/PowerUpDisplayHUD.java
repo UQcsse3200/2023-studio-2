@@ -6,9 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.csse3200.game.entities.configs.PowerupConfig;
-import com.csse3200.game.entities.configs.PowerupConfigs;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -21,7 +18,7 @@ public class PowerUpDisplayHUD extends UIComponent {
 
     public PowerupType powerUpEntity;
     private Label PowerUpLabel;
-    private final PowerupConfigs configs = FileLoader.readClass(PowerupConfigs .class, "configs/powerups.json");
+
     Image SpeedUpImage = null;
     Image HealthUpImage = null;
     Image ExtraLifeImage = null;
@@ -42,8 +39,39 @@ public class PowerUpDisplayHUD extends UIComponent {
      */
     //
     public Image selectPowerUp() {
-        PowerupConfig config = configs.GetPowerupConfig(powerUpEntity);
-        return config != null ? new Image(ServiceLocator.getResourceService().getAsset(config.imagePath, Texture.class)) : null;
+
+        if (powerUpEntity == PowerupType.HEALTH_BOOST) {
+            HealthUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/health_boost.png", Texture.class));
+            return HealthUpImage;
+        }
+
+        if (powerUpEntity == PowerupType.SPEED_BOOST) {
+            SpeedUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/speed_boost.png", Texture.class));
+            return SpeedUpImage;
+        }
+
+        if (powerUpEntity == PowerupType.EXTRA_LIFE) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/extra_life.png", Texture.class));
+            return ExtraLifeImage;
+        }
+
+        if (powerUpEntity == PowerupType.DOUBLE_CROSS) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_cross.png", Texture.class));
+            return ExtraLifeImage;
+        }
+        if (powerUpEntity == PowerupType.TEMP_IMMUNITY) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/invincibility_potion.png", Texture.class));
+            return ExtraLifeImage;
+        }
+        if (powerUpEntity == PowerupType.DOUBLE_DAMAGE) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_damage.png", Texture.class));
+            return ExtraLifeImage;
+        }
+        if (powerUpEntity == PowerupType.SNAP) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/snap.png", Texture.class));
+            return ExtraLifeImage;
+        }
+        else return null;
     }
 
     /**

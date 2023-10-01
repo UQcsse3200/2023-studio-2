@@ -48,7 +48,7 @@ public class PlanetScreen extends ScreenAdapter {
 
     private Entity player;
 
-    private String currentAreaName = "main-area";
+    private String currentAreaName = DEFAULT_AREA;
     private final Map<String, GameArea> allGameAreas = new HashMap<>();
 
     /** Starting position of the camera */
@@ -56,7 +56,7 @@ public class PlanetScreen extends ScreenAdapter {
 
     private static final String SAVEDIR = "save";
 
-    private static final String DEFAULT_AREA = "main-area";
+    private static final String DEFAULT_AREA = "main_area";
 
     /** Service Instances */
     private Renderer renderer;
@@ -71,7 +71,7 @@ public class PlanetScreen extends ScreenAdapter {
      * @param game  The current game instance to display screen on.
      */
     public PlanetScreen(GdxGame game) {
-        this(game, "Earth");
+        this(game, "earth");
     }
 
     /**

@@ -7,7 +7,7 @@
     "weaponDuration": 50,
     "rotationSpeed": 0,
     "initialRotationOffset": 0,
-    "imageRotationOffset": 45,
+    "imageRotationOffset": 40,
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
     "animationType" : 1,

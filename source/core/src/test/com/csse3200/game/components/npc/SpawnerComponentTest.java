@@ -4,87 +4,47 @@
  */
 package com.csse3200.game.components.npc;
 
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.services.GameTime;
+import com.csse3200.game.entities.configs.SpawnerConfig;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+//import com.csse3200.game.entities.factories.EnemyFactory;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
-
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class SpawnerComponentTest {
-    @Mock
-    private GameTime gameTime;
 
-    /**
-     * Sets up the dependencies and initializes the mock objects
-     * before each test case.
-     */
-    @Before
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
+    private SpawnerComponent spawner;
+    private SpawnerConfig config;
+
+    @BeforeEach
+    public void setup() {
+        // Mock dependencies
+        config = mock(SpawnerConfig.class);
+        spawner = new SpawnerComponent(config);
     }
 
-//    /**
-//     * Tests the spawnEnemies() method of the SpawnerComponent class.
-//     */
-//    @Test
-//    public void testSpawnEnemies() {
-//        // Prepare
-//        SpawnerComponent spawner = new SpawnerComponent();
-//        int meleeCount = 5;
-//        int rangedCount = 3;
-//
-//        // Set up mock behavior
-//        when(gameTime.getTime()).thenReturn(0L);
-//
-//        // Perform the spawning
-//        spawner.spawnEnemies(meleeCount, rangedCount);
-//
-//        // Assert the expected results
-//        assertTrue(spawner.isSpawning());
-//        assertEquals(meleeCount + rangedCount, spawner.getEnemiesToSpawn());
-//        assertEquals(meleeCount, spawner.getMeleeEnemiesToSpawn());
-//        assertEquals(rangedCount, spawner.getRangedEnemiesToSpawn());
-//        assertEquals(0, spawner.getEnemiesSpawned());
-//    }
-//
-//    @Mock
-//    private ArrayList<Entity> targets;
-//
-//    /**
-//     * Tests the update() method of the SpawnerComponent class.
-//     */
-//    @Test
-//    public void testUpdate() {
-//        // Prepare
-//        SpawnerComponent spawner = new SpawnerComponent(targets);
-//        spawner.setSpawning(false);
-//        spawner.setEnemiesSpawned(0);
-//        spawner.setEnemiesToSpawn(0);
-//        spawner.setMeleeEnemiesToSpawn(0);
-//        spawner.setRangedEnemiesToSpawn(0);
-//        long currentTime = 0L;
-//
-//        // Set up mock behavior
-//        when(gameTime.getTime()).thenReturn(currentTime);
-//
-//        // Perform the update
-//        spawner.update();
-//
-//        // Assert the expected results of the update method()
-//        assertFalse(spawner.isSpawning());
-//        assertEquals(0, spawner.getEnemiesToSpawn());
-//        assertEquals(0, spawner.getMeleeEnemiesToSpawn());
-//        assertEquals(0, spawner.getRangedEnemiesToSpawn());
-//        assertEquals(0, spawner.getEnemiesSpawned());
-//    }
+    @Test
+    public void testShouldSpawnNewWave_NotSpawningAndEnoughTimePassed() {
+        // Given
+        spawner.isSpawning = false;
+        spawner.lastTime = spawner.timer.getTime() - SpawnerComponent.WAVE_DELAY;
 
+        // When
+        boolean result = spawner.shouldSpawnNewWave(spawner.timer.getTime());
+
+        // Then
+        assertTrue(result);
+    }
 }
-

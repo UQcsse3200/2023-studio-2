@@ -1,4 +1,4 @@
-package com.csse3200.game.components.InitialSequence;
+/*package com.csse3200.game.components.InitialSequence;
 
 
 import aurelienribon.tweenengine.TweenAccessor;
@@ -30,4 +30,4 @@ public class LabelAccessor implements TweenAccessor<Label> {
                 throw new UnsupportedOperationException("Unsupported tween type: " + tweenType);
         }
     }
-}
+}*/

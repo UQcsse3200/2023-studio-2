@@ -598,7 +598,7 @@ public class UpgradeDisplay extends Window {
                 UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
                 if (stats.isWeaponUnlocked(node.getName())) {
                     InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
-                    playerInventory.placeInSlot(node.getWeaponType());
+                    playerInventory.placeInSlot(node.getWeaponType(), playerInventory);
                 }
             }
         };

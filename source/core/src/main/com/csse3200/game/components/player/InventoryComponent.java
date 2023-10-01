@@ -63,7 +63,7 @@ public class InventoryComponent extends Component {
     return equippedWMap;
   }
 
-  public void placeInSlot(WeaponType weaponType) {
+  public void placeInSlot(WeaponType weaponType, InventoryComponent invComp) {
     int slot = switch (weaponType) {
       case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING -> 1; // melee
       case RANGED_SLINGSHOT, RANGED_BOOMERANG, RANGED_HOMING, RANGED_GRENADE -> 2; // ranged
@@ -71,6 +71,7 @@ public class InventoryComponent extends Component {
       default -> throw new IllegalArgumentException("Slot not assigned: " + weaponType);
     };
     replaceSlotWithWeapon(slot, weaponType);
+    entity.getEvents().trigger("changeWeapon", invComp.getEquippedType());
   }
 
   /**

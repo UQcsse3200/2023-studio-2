@@ -359,7 +359,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     invComp.setEquipped(slot);
     player.getEvents().trigger("updateHotbar");
     entity.getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
-    entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(), invComp.getCurrentMaxAmmo());
+    entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(), invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
   }
 
   /**

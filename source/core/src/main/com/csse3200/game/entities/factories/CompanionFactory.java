@@ -84,6 +84,7 @@ public class CompanionFactory {
                         .addComponent(new CompanionWeaponComponent())
                         /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay())
+                        .addComponent(new CompanionInGameAlerts())
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new FollowComponent(player,1f))
                         .addComponent(new InteractionControllerComponent(false));

@@ -53,6 +53,8 @@ public class CompanionActions extends Component {
         entity.getEvents().addListener("walk", this::walk);
         entity.getEvents().addListener("walkStop", this::stopWalking);
         entity.getEvents().addListener("attack", this::attack);
+        entity.getEvents().addListener("CompanionSwitchMode", this::CompanionSwitchMode);
+
         setCompanionModeNormal();
 
         // Initialize currentRotation based on the initial orientation of the companion
@@ -88,6 +90,17 @@ public class CompanionActions extends Component {
         entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
     }
 
+    /**
+     * Switch the modes of the companion based off keyboard input and triggers, not libGDX inputs.
+     */
+    public void CompanionSwitchMode() {
+        if (Objects.equals(this.companionMode, COMPANION_MODE_NORMAL)) {
+            setCompanionModeAttack();
+        } else {
+            setCompanionModeNormal();
+        }
+    }
+
     public boolean isCompanionBeingMoved() {
         return this.moving;
     }
@@ -110,7 +123,7 @@ public class CompanionActions extends Component {
         updateSpeed();
 
         // How to switch between attack mode and normal mode. Binary toggle
-        if (Gdx.input.isKeyPressed(Input.Keys.B)){
+        if (Gdx.input.isKeyPressed(Input.Keys.B) && 1==2){
             if (Objects.equals(companionMode, COMPANION_MODE_ATTACK)) {
                 //if you're in attack, go to normal
                 setCompanionModeNormal();

@@ -203,9 +203,16 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                 companionStatsDisplay.toggleInvincibility();
                 return true;
             }
+
+
 */
             case Keys.P -> {
                 triggerInventoryEvent("ranged");
+                return true;
+            }
+
+            case Keys.B -> {
+                entity.getEvents().trigger("CompanionSwitchMode");
                 return true;
             }
 

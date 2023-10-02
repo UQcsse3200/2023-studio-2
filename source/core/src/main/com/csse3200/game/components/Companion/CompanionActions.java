@@ -34,7 +34,6 @@ public class CompanionActions extends Component {
     public boolean moving = false;
 
     // ALL CODE PERTAINING TO COMPANION MODES
-    public boolean normal;
     public String companionMode;
     public final static String COMPANION_MODE_ATTACK = "COMPANION_MODE_ATTACK";
     public final static String COMPANION_MODE_NORMAL = "COMPANION_MODE_NORMAL";
@@ -71,7 +70,6 @@ public class CompanionActions extends Component {
     public void setCompanionModeAttack() {
         // set the mode
         companionMode = COMPANION_MODE_ATTACK;
-        normal = false;
         // adjust the speed
         COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
         entity.getEvents().trigger("companionModeChange","Attack");
@@ -84,7 +82,6 @@ public class CompanionActions extends Component {
     public void setCompanionModeNormal() {
         // set the mode
         companionMode = COMPANION_MODE_NORMAL;
-        normal = true;
         // adjust the speed
         COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
         entity.getEvents().trigger("companionModeChange","Normal");

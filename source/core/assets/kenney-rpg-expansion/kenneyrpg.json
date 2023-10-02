@@ -55,6 +55,9 @@
     },
     "white": {
       "hex": "fbffffff"
+    },
+    "darkerGrey": {
+      "hex": "303233ff"
     }
   },
   "TintedDrawable": {
@@ -70,6 +73,12 @@
       "name": "buttonLong_grey_pressed.png",
       "color": {
         "hex": "e9e9e9ff"
+      }
+    },
+    "mid_grey_button_hover": {
+      "name": "buttonLong_grey.png",
+      "color": {
+        "hex": "5a5d61ff"
       }
     }
   },
@@ -171,6 +180,15 @@
       "up": "buttonLong_grey_pressed.png",
       "down": "buttonLong_grey.png",
       "over": "grey_button_hover"
+    },
+    "invalid": {
+      "font": "thick_white",
+      "fontColor": "darkerGrey",
+      "downFontColor": "darkerGrey",
+      "overFontColor": "darkerGrey",
+      "up": "mid_grey_button_hover",
+      "down": "mid_grey_button_hover",
+      "over": "mid_grey_button_hover"
     }
   },
   "TextFieldStyle": {

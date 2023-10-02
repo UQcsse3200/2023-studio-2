@@ -37,6 +37,14 @@ public class LoadUtils {
         return stringJoiner.toString();
     }
 
+    public static boolean pathExists(String path) {
+        return Gdx.files.internal(path).exists();
+    }
+
+    public static boolean pathExists(String... paths) {
+        return pathExists(joinPath(paths));
+    }
+
     /**
      * Returns the first file path that exists, using the different roots in order.
      * @param roots List of roots to try in order
@@ -47,7 +55,7 @@ public class LoadUtils {
     public static String getOptionalSavePath(List<String> roots, String path) throws InvalidConfigException {
         for (String root : roots) {
             String filePath = joinPath(root, path);
-            if (Gdx.files.internal(filePath).exists()) {
+            if (pathExists(filePath)) {
                 return filePath;
             }
         }

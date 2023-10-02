@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import com.csse3200.game.utils.LoadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,9 +60,11 @@ public class MainMenuDisplay extends UIComponent {
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);
 
+        boolean validLoad = LoadUtils.pathExists(LoadUtils.SAVE_PATH, LoadUtils.GAMESTATE_FILE);
+
         // Create buttons for various menu options
         TextButton startBtn = new TextButton("Start", skin);
-        TextButton loadBtn = new TextButton("Load Story", skin);
+        TextButton loadBtn = new TextButton("Load Story", skin, validLoad ? "default" : "invalid");
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Exit", skin);
         TextButton miniBtn = new TextButton("Space Minigame", skin);
@@ -73,7 +76,7 @@ public class MainMenuDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Start button clicked");
-                        entity.getEvents().trigger("start");
+                        entity.getEvents().trigger("start", validLoad);
                     }
                 });
         loadBtn.addListener(
@@ -81,7 +84,7 @@ public class MainMenuDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Load button clicked");
-                        entity.getEvents().trigger("load");
+                        entity.getEvents().trigger("load", validLoad);
                     }
                 });
         settingsBtn.addListener(

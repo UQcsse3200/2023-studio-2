@@ -7,13 +7,14 @@ import com.csse3200.game.areas.mapConfig.ConfigLoader;
 import com.csse3200.game.areas.mapConfig.GameConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.PlanetTravel;
+import com.csse3200.game.ui.Popups.ChoicePopup;
+import com.csse3200.game.ui.Popups.PopupBox;
 import com.csse3200.game.utils.LoadUtils;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.MainAlert;
 import com.csse3200.game.ui.TitleBox;
-import net.dermetfan.gdx.physics.box2d.PositionController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,53 +39,71 @@ public class MainMenuActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("start", this::onStart);
-    entity.getEvents().addListener("space minigame", this::onMini);
     entity.getEvents().addListener("load", this::onLoad);
+    entity.getEvents().addListener("space minigame", this::onMini);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
     entity.getEvents().addListener("upgrade shop", this::onShop);
   }
 
-  /**
-   * Swaps to the Main Game screen.
-   */
-  private void onStart() {
-    logger.info("Creating beginning planet");
+  private void loadGameConfig(boolean newGame) {
+      logger.info("Loading in GameConfig");
 
-    GameConfig gameConfig;
-    try {
-      gameConfig = ConfigLoader.loadGame();
-      if (gameConfig.levelNames.size() < 1) throw new InvalidConfigException(LoadUtils.NO_LEVELS_ERROR);
-      ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", gameConfig.levelNames.get(0));
-      if (gameConfig.levelNames.size() > 1) {
-        PlanetScreen firstPlanet = new PlanetScreen(game, gameConfig.levelNames.get(0));
-        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", firstPlanet.getNextPlanetName());
+      GameConfig gameConfig;
+      try {
+          gameConfig = ConfigLoader.loadGame();
+          if (gameConfig.levelNames.isEmpty()) throw new InvalidConfigException(LoadUtils.NO_LEVELS_ERROR);
+          ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", gameConfig.levelNames.get(0));
+          if (gameConfig.levelNames.size() > 1) {
+              PlanetScreen firstPlanet = new PlanetScreen(game, gameConfig.levelNames.get(0));
+              ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", firstPlanet.getNextPlanetName());
+          }
+      } catch (Exception e) {
+          logger.error("Failed to load game - not leaving to game screen.");
       }
-    } catch (Exception e) {
-      logger.error("Failed to load game - not leaving to game screen.");
-      return;
-    }
+  }
 
+  private void loadGame() {
+      loadGameConfig(false);
+      new PlanetTravel(game).returnToCurrent();
+  }
 
-    AlertBox alertBox = new AlertBox(game," Alert Box", skin);
-    alertBox.showDialog(stage);
+  private void newGame(){
+      loadGameConfig(true);
 
-    logger.info("Loading Story");
-    TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
-    titleBox.showDialog(stage);
-    game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
+      logger.info("Loading Story");
+      TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
+      titleBox.showDialog(stage);
+      game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
   }
 
   /**
-   * Intended for loading a saved game state.
-   * Load functionality is not actually implemented.
+   * Swaps to the Main Game screen.
    */
-  private void onLoad() {
-    logger.info("Load game");
-    // new PlanetTravel(game).returnToCurrent();
-    game.setScreen(GdxGame.ScreenType.GAME_STORY);
+  private void onStart(boolean previousSave) {
+      if (previousSave) {
+          ChoicePopup popup = new ChoicePopup("A save file already exists, starting a new game will overwrite this existing file", "Existing Save", skin);
+          popup.show(stage);
+          popup.getEvents().addListener(popup.getChoice1(), this::newGame);
+          return;
+      }
+      newGame();
+  }
 
+
+  /**
+   * Loading a saved game state.
+   */
+  private void onLoad(boolean validLoad) {
+    if (validLoad) {
+        logger.info("Loading: Fetching from previous save");
+        loadGame();
+    } else {
+        logger.info("Loading: Failed to find save file");
+        PopupBox popupBox =  new PopupBox("No previous load found", "Load", skin);
+        popupBox.show(stage);
+    }
   }
 
   /**

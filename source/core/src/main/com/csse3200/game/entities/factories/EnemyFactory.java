@@ -28,6 +28,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Factory to create non-playable enemies entities with predefined components.
@@ -45,7 +46,7 @@ public class EnemyFactory {
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
   public static DialogueBox dialogueBox;
 
-  public static List<Entity> enemiesList;
+  public static List<Entity> enemiesList = new ArrayList<Entity>();
   /**
    * Creates an enemy - using the default config as defined by the type and behaviour
    * @param type - enemy type

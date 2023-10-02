@@ -45,6 +45,7 @@ public class EnemyFactory {
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
   public static DialogueBox dialogueBox;
 
+  public static List<Entity> enemiesList;
   /**
    * Creates an enemy - using the default config as defined by the type and behaviour
    * @param type - enemy type
@@ -145,6 +146,10 @@ public class EnemyFactory {
     PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
     enemy.scaleHeight(getEnemyscale(config));
 
+    if(!(config.isBoss)){
+      enemiesList.add(enemy);
+    }
+
     return enemy;
   }
 
@@ -226,6 +231,11 @@ public class EnemyFactory {
       aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
     }
   }
+
+  public List<Entity> getEnemyList(){
+    return enemiesList;
+  }
+
 
   /**
    * Throws error when attempting the instantiating of static class

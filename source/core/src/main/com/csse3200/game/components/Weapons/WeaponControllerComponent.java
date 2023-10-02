@@ -29,7 +29,7 @@ public abstract class WeaponControllerComponent extends Component {
 
     /**
      * Create class - implemented class implement initial weapon setup including adding required animations
-     * and controlling initial movement direction & animation
+     * and controlling initial movement direction and animation
      */
     @Override
     public void create() {

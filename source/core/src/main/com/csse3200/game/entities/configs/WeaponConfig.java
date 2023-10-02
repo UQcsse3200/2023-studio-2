@@ -8,22 +8,17 @@ import com.csse3200.game.components.Weapons.WeaponType;
 public class WeaponConfig extends BaseEntityConfig {
     public String name = "";
     public String description = "";
-    //Direction Speed
+
+    //Weapon stats
     public float damage = 0;
     public float weaponSpeed = 0;
-    //Ticks before despawn
-    public int weaponDuration = 0;
-    //Rotational Speed
     public int rotationSpeed = 0;
-    //How far off is projectile fired from player click angle (used for melee swings)
-    public int initialRotationOffset = 0;
-    /* Image rotation of +x */
+    public int weaponDuration = 0;
     public int attackCooldown = 5;
-
     public int ammoUse = 1;
-
+    //How many directions are defined 1, 4, 6, 8
     public int animationType = 0;
-    public int imageRotationOffset = 45;
+
     public float imageScale = 1;
     public String textureAtlas;
     public String imagePath;

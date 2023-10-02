@@ -79,7 +79,7 @@ public class ConfigLoader {
         GameAreaConfig gameAreaConfig = loadConfigFile(mainPath, GameAreaConfig.class);
 
         String entitySaveFilePath = joinPath(SAVE_PATH, levelName, gameAreaName, ENTITIES_PATH + JSON_EXT);
-        if (Gdx.files.internal(entitySaveFilePath).exists()) {
+        if (pathExists(entitySaveFilePath)) {
             gameAreaConfig.areaEntityConfig = loadConfigFile(entitySaveFilePath, AreaEntityConfig.class);
         } else {
             String entitiesPath = joinPath(ROOT_PATH, levelName, gameAreaName, ENTITIES_PATH);

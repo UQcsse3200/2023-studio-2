@@ -64,7 +64,7 @@ public class MainMenuDisplay extends UIComponent {
 
         // Create buttons for various menu options
         TextButton startBtn = new TextButton("Start", skin);
-        TextButton loadBtn = new TextButton("Load Story", skin, validLoad ? "default" : "invalid");
+        TextButton loadBtn = new TextButton("Load Save", skin, validLoad ? "default" : "invalid");
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Exit", skin);
         TextButton miniBtn = new TextButton("Space Minigame", skin);

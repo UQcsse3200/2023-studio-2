@@ -65,7 +65,7 @@ public class PopupBox extends Dialog {
      * @param text  The text to display.
      */
     protected void createText(String text) {
-        createText(text, "large");
+        createText(text, "thin_black");
     }
 
     /**

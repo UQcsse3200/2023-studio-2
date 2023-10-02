@@ -13,6 +13,7 @@ import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.EnvironmentStatsComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.player.InventoryDisplayComponent;
@@ -369,6 +370,11 @@ public class MapGameArea extends GameArea{
             logger.info("Player not found in config file - creating generic player");
             newPlayer = PlayerFactory.createPlayer();
         }
+
+        // environmental damage
+        newPlayer.getComponent(EnvironmentStatsComponent.class).setImmunity(mapConfig);
+        newPlayer.getComponent(EnvironmentStatsComponent.class).damage(newPlayer.getComponent(CombatStatsComponent.class));
+
         newPlayer.getComponent(CombatStatsComponent.class).setLives(playerLives); // Ensures previous number of lives is maintained.
         newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         newPlayer.getEvents().addListener("death", () ->

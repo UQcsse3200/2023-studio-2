@@ -6,6 +6,8 @@
  */
 package com.csse3200.game.components;
 
+import com.badlogic.gdx.utils.Timer.Task;
+import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -23,7 +25,7 @@ import java.util.TimerTask;
 public class EnvironmentStatsComponent extends Component {
 
     private static final Logger logger = LoggerFactory.getLogger(EnvironmentStatsComponent.class);
-    private Boolean isImmune;
+    private Boolean isImmune = false;
 
     private int frozenLevel;
 
@@ -49,16 +51,30 @@ public class EnvironmentStatsComponent extends Component {
      *
      * @param isImmune true to make the entity immune to attacks, false otherwise.
      */
-    public void setImmunity(boolean isImmune) {
-        this.isImmune = isImmune;
+    public void setImmunity(GameAreaConfig mapConfig) {
+        System.out.println(mapConfig.mapName);
+        if (mapConfig.mapName.equals("Earth")) {
+            this.isImmune = false;
+        } else {
+            this.isImmune = true;
+        }
+        
     }
 
+    // Damage over time effect, has a five second delay. Repeats every second.
+    // Effect checks whether or not you are in an applicable area
     public void damage(CombatStatsComponent player) {
-        if (getImmunity()) {
-            return;
+
+        if (!getImmunity()) {
+            int initialDelay = 1000; // start after 1 seconds
+            int period = 1000;        // repeat every 1 seconds
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                public void run() {
+                    player.addHealth(-1);
+                }
+            };
+            timer.schedule(task, initialDelay, period);
         }
-        int newHealth;
-        newHealth = player.getHealth() - 10;
-        player.setHealth(newHealth);
     }
 }

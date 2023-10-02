@@ -25,6 +25,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 
@@ -114,8 +115,9 @@ public class PlayerFactory {
 
         player.addComponent(new SaveableComponent<>(p -> {
                 PlayerConfig playerConfig = config;
-                playerConfig.position = new GridPoint2((int) player.getPosition().x, (int)player.getPosition().y);
-                playerConfig.health = player.getComponent(CombatStatsComponent.class).getHealth();
+                //TODO: FIX LOADING POSITION
+                playerConfig.position = p.getGridPosition();
+                playerConfig.health = p.getComponent(CombatStatsComponent.class).getHealth();
                 return playerConfig;
             }, PlayerConfig.class));
 

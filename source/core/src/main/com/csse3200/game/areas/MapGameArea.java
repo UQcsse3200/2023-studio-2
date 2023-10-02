@@ -56,7 +56,7 @@ public class MapGameArea extends GameArea{
             mapConfig = ConfigLoader.loadMapDirectory(levelName, game_area, false); //TODO: Enable loading from save behaviour.
             logger.info("Successfully loaded map {}", joinPath(levelName, game_area));
         } catch (InvalidConfigException exception) {
-            logger.error("FAILED TO LOAD GAME - RETURNING TO MAIN MENU", exception);
+            logger.error("FAILED TO LOAD GAME IN CONSTRUCTOR - {}", exception.getMessage());
             validLoad = false;
         }
         this.game = game;

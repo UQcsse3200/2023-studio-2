@@ -1,6 +1,10 @@
 package com.csse3200.game.utils;
 
+import com.badlogic.gdx.Gdx;
+import com.csse3200.game.areas.mapConfig.InvalidConfigException;
+
 import java.io.File;
+import java.util.List;
 import java.util.StringJoiner;
 
 public class LoadUtils {
@@ -17,7 +21,8 @@ public class LoadUtils {
     public static final String FAIL_MESSAGE = "Failed to load config of type ";
     public static final String FAIL_ENTITY = "Failed to load entities config";
     public static final String NO_LEVELS_ERROR = "No levels found in " + GAME_FILE;
-
+    public static final String NO_FILE_FOUND = "No config file found ";
+    public static final List<String> PATH_OPTIONS = List.of(SAVE_PATH, ROOT_PATH);
 
     /**
      * Joins an arbitrary list of paths using the system's path separator
@@ -30,6 +35,35 @@ public class LoadUtils {
             stringJoiner.add(part);
         }
         return stringJoiner.toString();
+    }
+
+    /**
+     * Returns the first file path that exists, using the different roots in order.
+     * @param roots List of roots to try in order
+     * @param path File path to search at.
+     * @return String file path of first valid file
+     * @throws InvalidConfigException If no valid file is found.
+     */
+    public static String getOptionalSavePath(List<String> roots, String path) throws InvalidConfigException {
+        for (String root : roots) {
+            String filePath = joinPath(root, path);
+            if (Gdx.files.internal(filePath).exists()) {
+                return filePath;
+            }
+        }
+
+        throw new InvalidConfigException(NO_FILE_FOUND + path);
+    }
+
+    /**
+     * Returns the first file path that exists, using the different roots in order.
+     * @param roots List of roots to try in order
+     * @param paths List of paths to join together as file path
+     * @return String file path of first valid file
+     * @throws InvalidConfigException If no valid file is found.
+     */
+    public static String getOptionalSavePath(List<String> roots, String... paths) throws InvalidConfigException {
+        return getOptionalSavePath(roots, joinPath(paths));
     }
 
     /**

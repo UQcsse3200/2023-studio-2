@@ -113,6 +113,7 @@ public class MapGameArea extends GameArea{
         spawnJail();
         //spawnFire();
         //spawnBotanist();
+        //spawnEnvironmentDamage();
 
         displayUI();
         playMusic();
@@ -166,6 +167,13 @@ public class MapGameArea extends GameArea{
             Entity portal = PortalFactory.createPortal(playerEntity, portalConfig);
             spawnEntityAt(portal, portalConfig.position, false, false);
         }
+    }
+
+    private void spawnEnvironmentDamage() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        Entity envDamage = EnvironmentalDamageFactory.createDamage();
+        spawnEntityAt(envDamage, new GridPoint2(45, 45), false, false);
     }
 
     /**

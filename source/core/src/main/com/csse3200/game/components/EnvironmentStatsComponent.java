@@ -1,3 +1,4 @@
+
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
  * which engage in combat should have an instance of this class registered. This class can be
@@ -26,8 +27,8 @@ public class EnvironmentStatsComponent extends Component {
 
     private int frozenLevel;
 
-    public EnvironmentStatsComponent(int frozenLevel) {
-        this.frozenLevel = frozenLevel;
+    public EnvironmentStatsComponent() {
+        this.frozenLevel = 0;
     }
 
     public int getFrozenLevel() {

@@ -8,8 +8,8 @@
     "spritePath": "images/enemy/base_enemy.atlas",
     "sound": {
       "soundsMap": {
-        "enemyDeath": "sounds/enemyDeath.mp3",
-        "enemySpawn": "sounds/enemySpawner.mp3"
+        "enemyDeath": "sounds/enemyDeath.wav",
+        "enemySpawn": "sounds/enemySpawner.wav"
       }
     }
   },
@@ -23,8 +23,8 @@
     "spritePath": "images/enemy/bull.atlas",
     "sound": {
       "soundsMap": {
-        "enemyDeath": "sounds/enemyDeath.mp3",
-        "enemySpawn": "sounds/enemySpawner.mp3"
+        "enemyDeath": "sounds/enemyDeath.wav",
+        "enemySpawn": "sounds/enemySpawner.wav"
       }
     }
   },
@@ -38,8 +38,8 @@
     "spritePath": "images/enemy/necromancer.atlas",
     "sound": {
       "soundsMap": {
-        "enemyDeath": "sounds/enemyDeath.mp3",
-        "enemySpawn": "sounds/enemySpawner.mp3"
+        "enemyDeath": "sounds/enemyDeath.wav",
+        "enemySpawn": "sounds/enemySpawner.wav"
       }
     }
   },
@@ -53,8 +53,8 @@
     "spritePath": "",
     "sound": {
       "soundsMap": {
-        "enemyDeath": "sounds/enemyDeath.mp3",
-        "enemySpawn": "sounds/enemySpawner.mp3"
+        "enemyDeath": "sounds/enemyDeath.wav",
+        "enemySpawn": "sounds/enemySpawner.wav"
       }
     }
   },
@@ -71,8 +71,8 @@
 
     "sound": {
       "soundsMap": {
-        "enemyDeath": "sounds/enemyDeath.mp3",
-        "enemySpawn": "sounds/enemySpawner.mp3"
+        "enemyDeath": "sounds/enemyDeath.wav",
+        "enemySpawn": "sounds/enemySpawner.wav"
       }
     }
   },
@@ -88,8 +88,8 @@
     "isBoss": true,
     "sound": {
       "soundsMap": {
-        "enemyDeath": "sounds/enemyDeath.mp3",
-        "enemySpawn": "sounds/enemySpawner.mp3"
+        "enemyDeath": "sounds/enemyDeath.wav",
+        "enemySpawn": "sounds/enemySpawner.wav"
       }
     }
   }

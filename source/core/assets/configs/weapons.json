@@ -102,7 +102,8 @@
     "animationType" : 4,
     "imagePath" : "images/weapons/bee_sting.png",
     "type" : "MELEE_BEE_STING",
-    "slotType" : "melee"
+    "slotType" : "melee",
+    "ammoUse" : 1
   },
 
   "STICK": {
@@ -130,7 +131,8 @@
     "imageScale" : 1,
     "imagePath" : "images/upgradetree/hammer1.png",
     "type" : "WOODHAMMER",
-    "slotType" : "building"
+    "slotType" : "building",
+    "ammoUse" : 0
   },
 
   "STONEHAMMER": {
@@ -138,7 +140,8 @@
     "imageScale" : 1,
     "imagePath" : "images/upgradetree/hammer2.png",
     "type" : "STONEHAMMER",
-    "slotType" : "building"
+    "slotType" : "building",
+    "ammoUse" : 0
   },
 
   "STEELHAMMER": {
@@ -146,6 +149,7 @@
     "imageScale" : 1,
     "imagePath" : "images/upgradetree/hammer2.png",
     "type" : "STEELHAMMER",
-    "slotType" : "building"
+    "slotType" : "building",
+    "ammoUse" : 0
   }
 }

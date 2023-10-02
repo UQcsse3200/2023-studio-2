@@ -44,6 +44,13 @@ public class GameState {
     }
 
     /**
+     * Removes a key-value entry from the state data.
+     * @param key   Key to remove
+     */
+    public void remove(String key) {
+        stateData.remove(key);
+    }
+    /**
      * Returns a copy of the current game state data
      *
      * @return The copy of current state data

@@ -7,7 +7,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.ConfigLoader;
 import com.csse3200.game.areas.mapConfig.GameConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.ui.Popups.ChoicePopup;
@@ -52,19 +51,31 @@ public class MainMenuActions extends Component {
   private void loadGameConfig() {
       logger.info("Loading in GameConfig");
 
-      GameConfig gameConfig;
+      GameConfig gameConfig = null;
       try {
           gameConfig = ConfigLoader.loadGame();
           if (gameConfig.levelNames.isEmpty()) throw new InvalidConfigException(LoadUtils.NO_LEVELS_ERROR);
-          if (gameConfig.gameState != null && !gameConfig.gameState.isEmpty()) ServiceLocator.getGameStateObserverService().loadGameStateMap(gameConfig.gameState);
-          ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", gameConfig.levelNames.get(0));
-          if (gameConfig.levelNames.size() > 1) {
-              PlanetScreen firstPlanet = new PlanetScreen(game, gameConfig.levelNames.get(0));
-              ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", firstPlanet.getNextPlanetName());
-          }
       } catch (Exception e) {
           logger.error("Failed to load game - not leaving to game screen.");
+          return;
       }
+
+      String firstPlanet;
+      String secondPlanet = null;
+
+      if (gameConfig.gameState != null && !gameConfig.gameState.isEmpty()) {
+          ServiceLocator.getGameStateObserverService().loadGameStateMap(gameConfig.gameState);
+          firstPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
+          secondPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
+      } else {
+          firstPlanet = gameConfig.levelNames.get(0);
+          if (gameConfig.levelNames.size() > 1) {
+              PlanetScreen tempFirstPlanet = new PlanetScreen(game, gameConfig.levelNames.get(0));
+              secondPlanet = tempFirstPlanet.getNextPlanetName();
+          }
+      }
+      ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", firstPlanet);
+      ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", secondPlanet);
   }
 
   private void loadGame() {

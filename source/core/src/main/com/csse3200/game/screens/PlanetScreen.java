@@ -72,8 +72,8 @@ public class PlanetScreen extends ScreenAdapter {
      *
      * @param game  The current game instance to display screen on.
      */
-    public PlanetScreen(GdxGame game) {
-        this(game, "earth");
+    public PlanetScreen(GdxGame game, String name, String areaName) {
+        this(game, name);
     }
 
     /**
@@ -108,7 +108,12 @@ public class PlanetScreen extends ScreenAdapter {
         loadAssets();
         createUI();
         generateGameAreas();
-        allGameAreas.get(currentAreaName).create();
+        if (!invalidStateKey("gameArea")) {
+            this.currentAreaName = (String) ServiceLocator.getGameStateObserverService().getStateData("gameArea");
+        } else {
+        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "gameArea", currentAreaName);
+        }
+        this.allGameAreas.get(currentAreaName).create();
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
         this.player = allGameAreas.get(currentAreaName).getPlayer();
@@ -127,11 +132,17 @@ public class PlanetScreen extends ScreenAdapter {
      * Sets the current game area the player is on.
      *
      * @param name  The name of the game area.
+     * @return      Whether the new game area was set correctly.
      */
-    public void setCurrentArea(String name) {
-        this.allGameAreas.get(currentAreaName).dispose();
-        this.currentAreaName = name;
-        this.allGameAreas.get(currentAreaName).create();
+    public boolean setCurrentArea(String name) {
+        if (this.allGameAreas.containsKey(name)) {
+            this.allGameAreas.get(currentAreaName).dispose();
+            this.currentAreaName = name;
+            this.allGameAreas.get(currentAreaName).create();
+            ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "gameArea", this.currentAreaName);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -142,12 +153,12 @@ public class PlanetScreen extends ScreenAdapter {
         if (invalidStateKey("nextPlanet")) ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", getNextPlanetName());
 
         int maxResource = 1000;
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) maxResource);
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) maxResource);
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) maxResource);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Nebulite.toString(),  (int) 4);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Durasteel.toString(),  (int) 4);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Solstite.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(), maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(), maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(), maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Nebulite.toString(), 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Durasteel.toString(), 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Solstite.toString(), 4);
     }
 
     private boolean invalidStateKey(String key) {
@@ -259,6 +270,7 @@ public class PlanetScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
+        ServiceLocator.getGameStateObserverService().trigger("remove", "gameArea");
     }
 
     /**

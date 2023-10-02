@@ -51,6 +51,14 @@ public class GameStateInteraction {
     }
 
     /**
+     * Removes a key-value entry from the state data.
+     * @param key   Key to remove
+     */
+    public void remove(String key) {
+        gameState.remove(key);
+    }
+
+    /**
      * Clears the game state data.
      */
     public void clear() {

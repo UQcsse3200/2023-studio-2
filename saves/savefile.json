@@ -4,11 +4,11 @@ entities: {
 		{
 			class: com.csse3200.game.entities.configs.CompanionConfig
 			position: {
-				x: 16
-				y: 19
+				x: 13
+				y: 20
 			}
-			health: 50
-			baseAttack: 10
+			health: 100
+			baseAttack: 5
 			attackMultiplier: 1
 		}
 	]
@@ -17,11 +17,12 @@ entities: {
 			class: com.csse3200.game.entities.configs.PlayerConfig
 			spritePath: images/player/player.atlas
 			position: {
-				x: 16
-				y: 19
+				x: 14
+				y: 20
 			}
 			health: 100
 			baseAttack: 10
+			lives: 3
 			sounds: {
 				soundsMap: {
 					low_health: sounds/playerLow_health.mp3

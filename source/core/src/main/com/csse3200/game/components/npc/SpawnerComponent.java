@@ -123,4 +123,3 @@ public class SpawnerComponent extends Component {
         ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemy, worldPos);
     }
 }
-

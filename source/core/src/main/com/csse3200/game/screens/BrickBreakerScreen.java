@@ -22,10 +22,6 @@ public class BrickBreakerScreen extends ScreenAdapter {
     private final GdxGame game;
     public static final Logger logger = LoggerFactory.getLogger(BrickBreakerScreen.class);
     private final Renderer renderer;
-    private static final String[] brickBreakerSounds = {
-
-    };
-    private static final String[] brickBreakerTextures = {};
     public BrickBreakerScreen(GdxGame game){
         this.game = game;
         renderer = RenderFactory.createRenderer();
@@ -58,23 +54,27 @@ public class BrickBreakerScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        logger.debug("Disposing death screen");
+        logger.debug("Disposing brick breaker minigame screen");
 
         renderer.dispose();
         unloadAssets();
     }
+    /**
+     * Loads all assets
+     */
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(brickBreakerTextures);
-        resourceService.loadSounds(brickBreakerSounds);
         ServiceLocator.getResourceService().loadAll();
     }
 
+    /**
+     * Unloads all assets
+     */
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(brickBreakerTextures);
+        resourceService.clearAllAssets();
     }
     private void createUI() {
         logger.debug("Creating ui");

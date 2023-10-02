@@ -23,6 +23,7 @@ public class GdxGame extends Game {
   @Override
   public void create() {
     logger.info("Creating game");
+    Gdx.graphics.setTitle("Escape Earth");
     loadSettings();
 
     // Sets background to light yellow

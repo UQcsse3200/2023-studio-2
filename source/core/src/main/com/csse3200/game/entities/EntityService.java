@@ -1,7 +1,10 @@
 package com.csse3200.game.entities;
 
 import com.badlogic.gdx.utils.Array;
+import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.SaveableComponent;
+import com.csse3200.game.files.FileLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +26,15 @@ public class EntityService {
 
   private Array<Entity> getEntities() {
     return entities;
+  }
+
+  public AreaEntityConfig saveCurrentArea() {
+    AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
+    areaEntityConfig.addEntities(getEntitiesByComponent(SaveableComponent.class));
+
+    FileLoader.writeClass(areaEntityConfig, "saves/savefile.json", FileLoader.Location.LOCAL);
+
+    return areaEntityConfig;
   }
 
   /**
@@ -83,9 +95,9 @@ public class EntityService {
    * Update all registered entities. Should only be called from the main game loop.
    */
   public void update() {
-    for (Entity entity : entities) {
-      entity.earlyUpdate();
-      entity.update();
+    for (int i = 0; i < entities.size; i++) {
+      entities.get(i).earlyUpdate();
+      entities.get(i).update();
     }
   }
 
@@ -96,6 +108,14 @@ public class EntityService {
     for (Entity entity : entities) {
       entity.dispose();
     }
+  }
+  public Entity getCompanion() {
+    for (Entity entity : entities) {
+      if (entity.getEntityType().equals("companion")) {
+        return entity;
+      }
+    }
+    return null;
   }
 
 }

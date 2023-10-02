@@ -15,8 +15,6 @@ import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.structures.ExtractorAnimationController;
-import com.csse3200.game.components.upgradetree.UpgradeDisplay;
-import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.SpawnerConfig;
 import com.csse3200.game.input.ExtinguisherInputComponent;
@@ -76,7 +74,7 @@ public class StructureFactory {
         animator.addAnimation("animateBroken", 0.2f,Animation.PlayMode.LOOP);
         animator.addAnimation("animateExtracting", 0.2f, Animation.PlayMode.LOOP);
 
-        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity()
+        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity(3, 3)
                 .irremovable()
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
@@ -108,14 +106,14 @@ public class StructureFactory {
     public static Entity createExtractorRepair() {
         Entity extractorRepair = new Entity()
                 //.addComponent(new TextureRenderComponent("images/elixir_collector.png")); //This image removed
-                .addComponent(new TextureRenderComponent("images/extractor.png"));
+                .addComponent(new TextureRenderComponent("images/minigame/extractor.png"));
         extractorRepair.setScale(2.2f, 2.6f);
         return extractorRepair;
     }
 
     public static Entity createExtinguisher(TerrainComponent terrain, ExtractorMiniGameArea area) {
         Entity extinguisher = new Entity()
-                .addComponent(new TextureRenderComponent("images/extinguisher.png"));
+                .addComponent(new TextureRenderComponent("images/minigame/extinguisher.png"));
         ExtinguisherInputComponent extinguisherComponent = new ExtinguisherInputComponent(terrain, area);
         ServiceLocator.getInputService().register(extinguisherComponent);
         extinguisher.addComponent(extinguisherComponent);
@@ -125,7 +123,7 @@ public class StructureFactory {
 
     public static Entity createSpanner(TerrainComponent terrain, ExtractorMiniGameArea area) {
         Entity spanner = new Entity()
-                .addComponent(new TextureRenderComponent("images/spanner.png"));
+                .addComponent(new TextureRenderComponent("images/minigame/spanner.png"));
         SpannerInputComponent spannerComponent = new SpannerInputComponent(terrain, area);
         ServiceLocator.getInputService().register(spannerComponent);
         spanner.addComponent(spannerComponent);
@@ -135,7 +133,7 @@ public class StructureFactory {
 
     public static Entity createExtractorFirePart(TerrainComponent terrain, ExtractorMiniGameArea area) {
         Entity extractorFirePart = new Entity()
-                .addComponent(new TextureRenderComponent("images/fire.png"));
+                .addComponent(new TextureRenderComponent("images/minigame/fire.png"));
         FireInputComponent fireComponent = new FireInputComponent(terrain, area);
         ServiceLocator.getInputService().register(fireComponent);
 
@@ -148,7 +146,7 @@ public class StructureFactory {
 
     public static Entity createExtractorHolePart(TerrainComponent terrain, ExtractorMiniGameArea area) {
         Entity extractorHolePart = new Entity()
-                .addComponent(new TextureRenderComponent("images/Hole.png"));
+                .addComponent(new TextureRenderComponent("images/minigame/Hole.png"));
         HoleInputComponent holeComponent = new HoleInputComponent(terrain, area);
         ServiceLocator.getInputService().register(holeComponent);
 
@@ -189,7 +187,7 @@ public class StructureFactory {
 
     public static Entity createExtractorRepairPart() {
         Entity extractorRepairPart = new Entity()
-                .addComponent(new TextureRenderComponent("images/fire.png"))
+                .addComponent(new TextureRenderComponent("images/minigame/fire.png"))
                 .addComponent(new ExtractorRepairPartComponent());
         extractorRepairPart.setScale(1.8f, 2f);
         return extractorRepairPart;

@@ -8,6 +8,7 @@ import com.csse3200.game.entities.enemies.EnemyType;
  */
 public class NPCConfigs {
   public BaseEntityConfig ghost = new BaseEntityConfig();
+  public SoundsConfig sound;
   public BotanistConfig botanist = new BotanistConfig();
   public AstroConfig Astro = new AstroConfig();
   public AstronautConfig Astronaut = new AstronautConfig();

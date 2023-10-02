@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -12,8 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Timer;
+import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.structures.StructureToolPicker;
@@ -85,7 +90,6 @@ public class UpgradeDisplay extends Window {
         upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000);
 
         setupWindowDimensions();
-
 
         Table titleTable = createTitleTable();
         Table materialsTable = createMaterialsLabel();
@@ -260,9 +264,9 @@ public class UpgradeDisplay extends Window {
         shapeRenderer.rect(node.getX() + blackOffsetX, node.getY() + blackOffsetY, blackRectSize, blackRectSize);
 
         // Draw a yellow highlight around all equipped items.
-        HashMap<Integer, WeaponType> equippedWeaponMap = player.getComponent(InventoryComponent.class)
-                .getEquippedWeaponMap();
-        if (equippedWeaponMap.containsValue(node.getWeaponType())) {
+        ArrayList<WeaponType> equippedWeaponMap = player.getComponent(InventoryComponent.class)
+                .getEquippedWeapons();
+        if (equippedWeaponMap.contains(node.getWeaponType())) {
             shapeRenderer.setColor(Color.GOLD);
             shapeRenderer.rect(node.getX() + equippedOffsetX, node.getY() + equippedOffsetY, equippedRectSize, equippedRectSize);
         }
@@ -281,7 +285,7 @@ public class UpgradeDisplay extends Window {
      *
      * @param node The current node from which lines will be drawn to its children.
      */
-    private void drawLines(UpgradeNode node) {
+    public void drawLines(UpgradeNode node) {
         if (node == null || node.getChildren().isEmpty()) {
             return;
         }
@@ -366,7 +370,7 @@ public class UpgradeDisplay extends Window {
         materialsLabel.setColor(Color.BLACK);
         materialsLabel.setFontScale(0.25f);
         Image nebuliteImage =
-                new Image(ServiceLocator.getResourceService().getAsset("images/nebulite.png", Texture.class));
+                new Image(ServiceLocator.getResourceService().getAsset("images/resources/nebulite.png", Texture.class));
 
         Table table = new Table();
         table.add(nebuliteImage).size(64,64);
@@ -388,6 +392,106 @@ public class UpgradeDisplay extends Window {
     }
 
     /**
+     * Populates the given table with a label for an attribute and its corresponding value.
+     * <p>
+     * Example display:
+     *      | Damage  |  50  |
+     *
+     * @param table The table to populate with the labels.
+     * @param attributeName The name or description of the attribute.
+     * @param valueFormat The value associated with the attribute. If empty, only the attribute label is added.
+     *
+     */
+    private void createTooltipLabel(Table table, String attributeName, String valueFormat) {
+        table.pad(20);
+        Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
+        labelStyle.fontColor = Color.BLACK;
+        labelStyle.font = skin.getFont("thick_black");
+
+        Label attributeLabel = new Label(attributeName, labelStyle);
+        attributeLabel.setWrap(true);
+        attributeLabel.setAlignment(Align.left);
+
+        if (valueFormat.isEmpty()) {
+            table.add(attributeLabel).width(200).colspan(2).left().padLeft(10).padBottom(20).row();
+        } else {
+            BitmapFont font = new BitmapFont();
+            Label.LabelStyle redLabelStyle = new Label.LabelStyle(font, Color.RED);
+
+            Label valueLabel = new Label(valueFormat, redLabelStyle);
+            valueLabel.setWrap(true);
+            table.add(attributeLabel).width(150).left().padLeft(20).padRight(10);
+            table.add(valueLabel).width(40).center().padRight(20).row();
+        }
+    }
+
+    /**
+     * Creates a tooltip for a given upgrade node.
+     * The tooltip provides details about the upgrade node, which can either be a weapon or a tool.
+     *
+     * @param node The upgrade node for which the tooltip is to be created.
+     * @return A Tooltip object containing a table with labels that describe the upgrade node.
+     */
+    private Tooltip<Table> createTooltip(UpgradeNode node) {
+
+        Table tooltipTable = new Table();
+        tooltipTable.defaults().left().padLeft(2).padTop(5).padRight(10);
+        Texture texture = new Texture(Gdx.files.internal("kenney-rpg-expansion/PNG/panel_brown.png"));
+        texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        Drawable bg = new TextureRegionDrawable(new TextureRegion(texture));
+
+        tooltipTable.setBackground(bg);
+
+        if (node.getWeaponType() != null) {
+            createWeaponTooltip(tooltipTable, node);
+        } else {
+            createToolTooltip(tooltipTable, node);
+        }
+
+        Tooltip<Table> tooltip = new Tooltip<>(tooltipTable);
+        tooltip.setInstant(true); // Make it appear instantly on mouseover
+        return tooltip;
+    }
+
+    /**
+     * Creates the tooltip contents for an upgrade node of type weapon.
+     * This populates the provided table with labels that describe the weapon's attributes.
+     *
+     * @param table The table to populate with weapon details.
+     * @param node The upgrade node of type weapon.
+     */
+    private void createWeaponTooltip(Table table, UpgradeNode node) {
+        WeaponConfig config = (WeaponConfig) node.getConfig();
+        createTooltipLabel(table, config.name, "");
+        createTooltipLabel(table, config.description, "");
+
+        if (node.getWeaponType() != WeaponType.WOODHAMMER) {
+            createTooltipLabel(table, "Damage", String.valueOf((int) config.damage));
+            createTooltipLabel(table, "Speed", String.valueOf((int) config.weaponSpeed));
+            createTooltipLabel(table, "Cooldown", String.valueOf(config.attackCooldown));
+            createTooltipLabel(table, "Cost", String.valueOf(node.getNodeCost()));
+        }
+    }
+
+    /**
+     * Creates the tooltip contents for an upgrade node of type tool.
+     * This populates the provided table with labels that describe the tool's attributes and costs.
+     *
+     * @param table The table to populate with tool details.
+     * @param node The upgrade node of type tool.
+     */
+    private void createToolTooltip(Table table, UpgradeNode node) {
+        ToolConfig config = (ToolConfig) node.getConfig();
+        createTooltipLabel(table, config.name, "");
+        createTooltipLabel(table, config.description, "");
+        createTooltipLabel(table, "Cost to build:", "");
+
+        for (ObjectMap.Entry<String, Integer> entry : config.cost) {
+            createTooltipLabel(table, entry.key, String.valueOf(entry.value));
+        }
+    }
+
+    /**
      * Creates a button for a given weapon node.
      *
      * @param node The upgrade node for which the button is being created.
@@ -405,6 +509,10 @@ public class UpgradeDisplay extends Window {
         Image lockImage = lockItem(node, stats, weaponButton);
         TextButton costButton = createCostButtons(node, weaponButton);
 
+        // Create tooltips
+        Tooltip<Table> tooltip = createTooltip(node);
+        weaponButton.addListener(tooltip);
+
         // Create unlock listener for unlock button
         if (costButton != null) {
             costButton.addListener(unlockWeapon(node, stats, weaponButton, lockImage, costButton));
@@ -417,6 +525,13 @@ public class UpgradeDisplay extends Window {
         return weaponButton;
     }
 
+    /**
+     * Creates a cost button for a given upgrade node. This button displays the cost of the upgrade node.
+     *
+     * @param node The upgrade node for which the cost button is to be created.
+     * @param weaponButton The button representing the weapon. The cost button's position is determined relative to this.
+     * @return A TextButton displaying the cost of the upgrade node or null if the weapon is already unlocked.
+     */
     public TextButton createCostButtons(UpgradeNode node, ImageButton weaponButton) {
 
         UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
@@ -469,6 +584,7 @@ public class UpgradeDisplay extends Window {
                 if (stats.isWeaponUnlocked(node.getName())) {
                     InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
                     playerInventory.placeInSlot(node.getWeaponType());
+                    player.getEvents().trigger("updateHotbar");
                 }
             }
         };

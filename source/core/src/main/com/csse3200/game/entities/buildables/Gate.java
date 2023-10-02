@@ -2,8 +2,10 @@ package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.ParticleComponent;
 import com.csse3200.game.components.ProximityActivationComponent;
 import com.csse3200.game.components.structures.JoinLayer;
 import com.csse3200.game.components.structures.JoinableComponent;
@@ -12,6 +14,7 @@ import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.GateConfig;
+import com.csse3200.game.entities.configs.ParticleEffectsConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -31,6 +34,7 @@ public class Gate extends PlaceableEntity {
     private final TextureAtlas closedAtlas;
 
     public Gate(Entity player) {
+        super(2, 2);
         openAtlas = ServiceLocator.getResourceService().getAsset(config.openTextureAtlas, TextureAtlas.class);
         closedAtlas = ServiceLocator.getResourceService().getAsset(config.closedTextureAtlas, TextureAtlas.class);
 
@@ -42,6 +46,10 @@ public class Gate extends PlaceableEntity {
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(closedAtlas,JoinLayer.WALLS, shapes));
         addComponent(new StructureDestroyComponent());
+        var config = new ParticleEffectsConfig();
+        config.effectsMap = new ObjectMap<>();
+        config.effectsMap.put("explosion", "particle-effects/explosion/explosion.effect");
+        addComponent(new ParticleComponent(config));
 
         getComponent(JoinableComponent.class).scaleEntity();
     }
@@ -56,6 +64,8 @@ public class Gate extends PlaceableEntity {
 
 
         getComponent(JoinableComponent.class).updateTextureAtlas(openAtlas);
+
+        getEvents().trigger("startEffect", "explosion");
 
     }
 

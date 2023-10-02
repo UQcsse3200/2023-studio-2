@@ -34,9 +34,8 @@ class ToolsConfigTest {
             // assuming png for now. may need to allow other extensions at some point
             assertTrue(structureOption.value.texture.endsWith(".png"));
 
-            // level can't be null
-            assertTrue(structureOption.value.level >= 0);
-
+            // description cannot be null
+            assertNotNull(structureOption.value.description);
 
             // cost can't be null
             assertNotNull(structureOption.value.cost);

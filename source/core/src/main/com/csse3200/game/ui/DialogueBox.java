@@ -125,7 +125,7 @@ public class DialogueBox extends Dialog {
 
     private void oninfo() {
 
-        String[] nextTitles = {"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected.", "Emily: We can handle it. \nLead the way!"};
+        String[] nextTitles = {"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\n be warned, it's guarded by infected.", "Emily: We can handle it. \nLead the way!"};
         String[] nextMessages = {"", ""};
 
         // Increment the index for the next click

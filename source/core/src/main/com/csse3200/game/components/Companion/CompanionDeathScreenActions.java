@@ -1,8 +1,10 @@
 package com.csse3200.game.components.Companion;
 
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,7 @@ public class CompanionDeathScreenActions extends Component {
      */
     private void onRespawn() {
         logger.info("Relaunching main game screen");
-        game.setScreen((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet"));
+        new PlanetTravel(game).returnToCurrent();
+        ServiceLocator.getEntityService().getCompanion().getComponent(CombatStatsComponent.class).setHealth(100);
     }
 }

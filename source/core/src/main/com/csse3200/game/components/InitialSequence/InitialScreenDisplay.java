@@ -13,8 +13,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
-import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.UIComponent;
@@ -58,7 +56,7 @@ public class InitialScreenDisplay extends UIComponent {
         background =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/InitialScreenImage.png", Texture.class));
+                                .getAsset("images/menu/InitialScreenImage.png", Texture.class));
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background.setPosition(0, 0);
 
@@ -66,7 +64,7 @@ public class InitialScreenDisplay extends UIComponent {
         planet =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/InitialScreenBG.png", Texture.class));
+                                .getAsset("images/menu/InitialScreenBG.png", Texture.class));
         planet.setSize(2500, 400); // Set to a reasonable fixed size
 
         // The planet moves at a constant speed, so to make it appear at the right time,
@@ -102,11 +100,6 @@ public class InitialScreenDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Continue button clicked");
-                String startPlanetName = "Earth";
-                logger.info(String.format("Start game, go to %s", startPlanetName));
-                PlanetScreen planetScreen = new PlanetScreen(game, startPlanetName);
-                ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", planetScreen);
-                game.setScreen(planetScreen);
 
                 AlertBox alertBox = new AlertBox(game, "Alert Box", skin);
                 alertBox.showDialog(stage);

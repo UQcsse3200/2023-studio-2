@@ -183,11 +183,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    Vector2 position = mouseToGamePos(screenX, screenY);
-    this.lastMousePos = position.cpy();
+    Vector2 clickPos = mouseToGamePos(screenX, screenY);
+
     player = ServiceLocator.getEntityService().getPlayer();
     playerInventory = player.getComponent(InventoryComponent.class);
-    WeaponComponent weaponComponent = entity.getComponent(WeaponComponent.class);
     int cooldown = playerInventory.getEquippedCooldown();
     if (cooldown > 0) {
       return false;
@@ -195,7 +194,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
     switch (playerInventory.getEquipped()) {
       // melee/ranged
-
+        //TODO DV #2 do ammo checks?
         case "melee", "ranged":
             if (playerInventory.getCurrentAmmo() <= 0) {return false;}
 
@@ -205,9 +204,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
                 if (weapon == WeaponType.MELEE_BEE_STING) {
                     for (int i = 0; i < 7; i++)
-                        entity.getEvents().trigger("weaponAttack", weapon, position);
+                        entity.getEvents().trigger("weaponAttack", weapon, clickPos);
                 }
-                entity.getEvents().trigger("weaponAttack", weapon, position);
+                entity.getEvents().trigger("weaponAttack", weapon, clickPos);
             }
             break;
       // building
@@ -232,8 +231,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean touchDragged(int screenX, int screenY, int pointer) {
-    Vector2 position = mouseToGamePos(screenX, screenY);
-    this.lastMousePos = position.cpy();
+    mouseToGamePos(screenX, screenY);
     return false;
   }
 
@@ -244,8 +242,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
      */
     @Override
   public boolean mouseMoved(int screenX, int screenY) {
-    Vector2 position = mouseToGamePos(screenX, screenY);
-    this.lastMousePos = position.cpy();
+    mouseToGamePos(screenX, screenY);
     return false;
   }
 
@@ -398,9 +395,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
      * @return game position of mouse location
      */
   private Vector2 mouseToGamePos(int screenX, int screenY) {
-    Vector2 entityScale = entity.getScale();
-    Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-    return new Vector2(mouse.x / 2 - entityScale.x / 2, (mouse.y) / 2 - entityScale.y / 2);
+      this.lastMousePos = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY).scl(0.5f);
+      return this.lastMousePos.cpy();
   }
 
     /**

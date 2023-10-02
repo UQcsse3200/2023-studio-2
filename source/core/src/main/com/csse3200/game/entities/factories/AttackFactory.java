@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.Weapons.SpecWeapon.*;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
-import com.csse3200.game.components.Weapons.WeaponTargetComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
@@ -28,81 +28,45 @@ public class AttackFactory {
   /**
    * Static function to create a new weapon entity
    * @param weaponType - the type of weapon entity to be made
-   * @param initRot - the initial rotation of the player
+   * @param attackDirection - the initial rotation of the player
    * @param player - the player using this attack
    * @return A reference to the created weapon entity
    */
-  public static Entity createAttack(WeaponType weaponType, float initRot, Entity player) {
+  public static Entity createAttack(WeaponType weaponType, float attackDirection, Entity player) {
     WeaponConfig config = configs.GetWeaponConfig(weaponType);
+    //Play modifications
     InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
     playerInventory.setEquippedCooldown(config.attackCooldown);
     playerInventory.changeEquippedAmmo(-config.ammoUse);
 
-    int direction = 1;
-    switch (weaponType) {
-      case MELEE_WRENCH, MELEE_KATANA:
-        if (initRot > 120 && initRot < 300) {direction = -1;}
-        break;
-      default:
-    }
+    //Switch case for different weapon types:
+    WeaponControllerComponent wepCon = switch (weaponType) {
+      case MELEE_WRENCH, MELEE_KATANA, MELEE_BEE_STING
+              -> new MeleeSwingController(config, attackDirection, player);
+      case RANGED_BOOMERANG
+              -> new BoomerangController(config, attackDirection, player);
+      case RANGED_SLINGSHOT
+              -> new ProjectileController(config, attackDirection, player);
+      case RANGED_HOMING
+              -> new HomingProjectileController(config, attackDirection, player);
+      default -> new MeleeSwingController(config, attackDirection, player);
+    };
 
-    WeaponControllerComponent weaponController = new WeaponControllerComponent(weaponType,
-            config.weaponDuration,
-            initRot + config.initialRotationOffset,
-            config.weaponSpeed * direction,
-            config.rotationSpeed * direction,
-            config.animationType,
-            config.imageRotationOffset);
+    //Creating the Attack entity
+    TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
 
     Entity attack =new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WEAPON))
                     .addComponent(new TouchAttackComponent((short)
                             (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE)))
-                    .addComponent(weaponController);
+                    .addComponent(new AnimationRenderComponent(atlas))
+                    .addComponent(wepCon)
+                    .addComponent(new CombatStatsComponent(30, (int) config.damage, 1, false));
     attack.setEntityType("playerWeapon");
 
-    TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
-    AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
-
-    switch (config.animationType) {
-      case 8:
-        animator.addAnimation("LEFT3", 0.07f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("RIGHT3", 0.07f, Animation.PlayMode.NORMAL);
-      case 6:
-        animator.addAnimation("LEFT2", 0.07f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("RIGHT2", 0.07f, Animation.PlayMode.NORMAL);
-      case 4:
-        animator.addAnimation("LEFT1", 0.07f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("RIGHT1", 0.07f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("DOWN", 0.07f, Animation.PlayMode.NORMAL);
-      default:
-        animator.addAnimation("UP", 0.07f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("STATIC", 0.07f, Animation.PlayMode.NORMAL);
-    }
-
-    attack.addComponent(animator)
-            .addComponent(new CombatStatsComponent(30, 10, 1, false));
-
-    if (weaponType == WeaponType.MELEE_KATANA || weaponType == WeaponType.MELEE_BEE_STING) {
-      int dir = (int) Math.floor(initRot / 60);
-      switch (dir) {
-        case 0, 5 -> animator.startAnimation("RIGHT1");
-        case 1 -> animator.startAnimation("UP");
-        case 2, 3 -> animator.startAnimation("LEFT1");
-        case 4 -> animator.startAnimation("DOWN");
-      }
-    } else if (weaponType == WeaponType.RANGED_BOOMERANG) {
-      animator.removeAnimation("UP");
-      animator.addAnimation("UP", 0.07f, Animation.PlayMode.LOOP);
-      animator.startAnimation("UP");
-    } else {
-      animator.startAnimation("UP");
-    }
-
+    //Final stuff
     attack.scaleWidth(config.imageScale);
-
-    attack.addComponent(new WeaponTargetComponent(weaponType, player));
     return attack;
   }
 

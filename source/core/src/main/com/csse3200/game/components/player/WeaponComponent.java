@@ -38,30 +38,13 @@ public class WeaponComponent extends Component {
      * @param clickPosition - click location of mouse
      */
     private void playerAttacking(WeaponType weaponType, Vector2 clickPosition) {
-        float initialRotation = calcRotationAngleInDegrees(entity.getPosition(), clickPosition);
+        float attackDirection = calcRotationAngleInDegrees(
+                entity.getPosition().add(entity.getScale().scl(0.5f)),
+                clickPosition);
 
+        Entity newAttack = AttackFactory.createAttack(weaponType, attackDirection, entity);
+        ServiceLocator.getEntityPlacementService().PlaceEntity(newAttack);
 
-        if (weaponType == WeaponType.MELEE_BEE_STING) {
-            initialRotation = (initialRotation + (float) ((Math.random() - 0.5) * 270)) % 360;
-        }
-        int spawnAngleOffset = 0;
-        switch (weaponType) {
-            case MELEE_WRENCH, MELEE_KATANA:
-                if (initialRotation < 120 || initialRotation > 300) {
-                    spawnAngleOffset += 40;
-                } else {
-                    spawnAngleOffset -= 40;
-                }
-                break;
-            case RANGED_SLINGSHOT, RANGED_BOOMERANG, RANGED_HOMING:
-            default:
-                spawnAngleOffset = 0;
-        }
-
-        float distance = 1.25f;
-        Entity newAttack = AttackFactory.createAttack(weaponType, initialRotation, entity);
-        var newPos = positionInDirection(initialRotation + spawnAngleOffset, distance, newAttack);
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
         InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
         entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(),
                 invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
@@ -74,32 +57,8 @@ public class WeaponComponent extends Component {
     private void makeNewHolding(WeaponType weapon) {
         if (this.holdingWeapon != null) {this.holdingWeapon.dispose();}
         this.holdingWeapon = PlayerWeaponFactory.createPlayerWeapon(weapon, entity);
-        Vector2 placePos = positionInDirection(10, 0.3f, this.holdingWeapon);
-
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(this.holdingWeapon, placePos);
+        ServiceLocator.getEntityPlacementService().PlaceEntity(this.holdingWeapon);
     }
-
-    /**
-     * Returns the game position in a given direction at a given distance relative to the player
-     * to center a given attack entity
-     * @param direction direction the position should be in
-     * @param distance distance infront of the player
-     * @param attack the entity
-     * @return position in the given direction at the distance
-     */
-    private Vector2 positionInDirection(double direction, float distance, Entity attack) {
-        double radians = Math.toRadians(direction);
-        float xOffset = (float) Math.cos(radians) * distance;
-        float yOffset = (float) Math.sin(radians) * distance;
-        Vector2 weaponScale = attack.getScale();
-        Vector2 position = entity.getPosition();
-        Vector2 playerScale = entity.getScale();
-
-        return new Vector2(position.x + xOffset + playerScale.x/2 - weaponScale.x/2,
-                position.y + yOffset + playerScale.y/2 - weaponScale.y/2 );
-    }
-
-
 
     /**
      * Calcuate angle between 2 points from the center point to the target point,

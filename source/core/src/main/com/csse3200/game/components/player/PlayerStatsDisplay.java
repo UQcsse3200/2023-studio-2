@@ -44,7 +44,7 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   public PlayerStatsDisplay(PlayerConfig config) {
     labelStyle = "small";
-    maxHealth = config.health;
+    maxHealth = config.maxHealth;
     healthBarWidth = 320f;
     dodgeBarWidth = 320f;
   }
@@ -56,14 +56,6 @@ public class PlayerStatsDisplay extends UIComponent {
   public void create() {
     super.create();
     addActors();
-
-    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
-    entity.getEvents().addListener("dodged", this::updateDodgeUsed);
-    entity.getEvents().addListener("dodgeAvailable", this::updateDodgeRefreshed);
-    entity.getEvents().addListener("updateLives", this::updatePlayerLives);
-    entity.getEvents().addListener("maxLivesAlert", this::maxLivesReached);
-    entity.getEvents().addListener("updateAmmo", this::updateAmmo);
-    entity.getEvents().addListener("changeWeapon", this::updateWeapon);
 
     InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
     this.updateAmmo(invComp.getCurrentAmmo(),invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());

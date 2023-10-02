@@ -97,7 +97,7 @@ public class PlayerFactory {
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                         .addComponent(new PlayerActions())
-                        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
+                        .addComponent(new CombatStatsComponent(config.maxHealth, config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
                         .addComponent(new InventoryComponent(weaponConfigs))
                         .addComponent(inputComponent)
                         .addComponent(new PlayerStatsDisplay(config))
@@ -118,9 +118,10 @@ public class PlayerFactory {
                 //TODO: FIX LOADING POSITION
                 playerConfig.position = p.getGridPosition();
                 playerConfig.health = p.getComponent(CombatStatsComponent.class).getHealth();
+                playerConfig.maxHealth = p.getComponent(CombatStatsComponent.class).getMaxHealth();
                 return playerConfig;
             }, PlayerConfig.class));
-
+        player.getComponent(CombatStatsComponent.class).setHealth(config.health);
         PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
         player.getComponent(ColliderComponent.class).setDensity(1.5f);
         animator.startAnimation("Character_StandDown");

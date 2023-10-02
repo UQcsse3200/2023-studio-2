@@ -7,8 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.HashMap;
 
 import static com.csse3200.game.utils.LoadUtils.*;
 
@@ -28,7 +27,7 @@ public class ConfigLoader {
         GameConfig gameConfig = FileLoader.readClass(GameConfig.class, path, FileLoader.Location.LOCAL);
         if (gameConfig == null) throw new InvalidConfigException(FAIL_MESSAGE + GameConfig.class.getSimpleName());
         String statePath = getOptionalSavePath(PATH_OPTIONS, GAMESTATE_FILE);
-        gameConfig.gameState = FileLoader.readClass(Map.class, statePath, FileLoader.Location.LOCAL);
+        gameConfig.gameState = FileLoader.readClass(HashMap.class, statePath, FileLoader.Location.LOCAL);
         String assetPath = getOptionalSavePath(PATH_OPTIONS, ASSETS_FILE);
         gameConfig.assets = FileLoader.readClass(AssetsConfig.class, assetPath, FileLoader.Location.LOCAL);
         return gameConfig;

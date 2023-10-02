@@ -12,6 +12,7 @@ import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -102,10 +103,7 @@ public class PlanetScreen extends ScreenAdapter {
     public void show() {
         registerServices();
 
-        if (ServiceLocator.getGameStateObserverService().getStateData("player/lives") == null) {
-            ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", 3);
-        }
-
+        populateGameState();
 
         loadAssets();
         createUI();
@@ -134,6 +132,26 @@ public class PlanetScreen extends ScreenAdapter {
         this.allGameAreas.get(currentAreaName).dispose();
         this.currentAreaName = name;
         this.allGameAreas.get(currentAreaName).create();
+    }
+
+    /**
+     * Populates the game state with important constants or default values if not set yet.
+     */
+    private void populateGameState(){
+        if (invalidStateKey("player/lives")) ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", 3);
+        if (invalidStateKey("nextPlanet")) ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", getNextPlanetName());
+
+        int maxResource = 1000;
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Nebulite.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Durasteel.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Solstite.toString(),  (int) 4);
+    }
+
+    private boolean invalidStateKey(String key) {
+        return ServiceLocator.getGameStateObserverService().getStateData(key) == null;
     }
 
     /**

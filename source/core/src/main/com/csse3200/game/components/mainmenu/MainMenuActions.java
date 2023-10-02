@@ -49,13 +49,14 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("upgrade shop", this::onShop);
   }
 
-  private void loadGameConfig(boolean newGame) {
+  private void loadGameConfig() {
       logger.info("Loading in GameConfig");
 
       GameConfig gameConfig;
       try {
           gameConfig = ConfigLoader.loadGame();
           if (gameConfig.levelNames.isEmpty()) throw new InvalidConfigException(LoadUtils.NO_LEVELS_ERROR);
+          if (gameConfig.gameState != null && !gameConfig.gameState.isEmpty()) ServiceLocator.getGameStateObserverService().loadGameStateMap(gameConfig.gameState);
           ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", gameConfig.levelNames.get(0));
           if (gameConfig.levelNames.size() > 1) {
               PlanetScreen firstPlanet = new PlanetScreen(game, gameConfig.levelNames.get(0));
@@ -67,7 +68,7 @@ public class MainMenuActions extends Component {
   }
 
   private void loadGame() {
-      loadGameConfig(false);
+      loadGameConfig();
       new PlanetTravel(game).returnToCurrent();
   }
 
@@ -75,7 +76,7 @@ public class MainMenuActions extends Component {
 
       Gdx.files.local("save").deleteDirectory();
 
-      loadGameConfig(true);
+      loadGameConfig();
 
       logger.info("Loading Story");
       TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
@@ -91,9 +92,9 @@ public class MainMenuActions extends Component {
           ChoicePopup popup = new ChoicePopup("A save file already exists, starting a new game will overwrite this existing file", "Existing Save", skin);
           popup.show(stage);
           popup.getEvents().addListener(popup.getChoice1(), this::newGame);
-          return;
-      }
+      } else {
       newGame();
+      }
   }
 
 

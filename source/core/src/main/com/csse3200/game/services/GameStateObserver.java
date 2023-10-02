@@ -63,4 +63,12 @@ public class GameStateObserver extends EventHandler {
     public Object getStateData(String key) {
         return stateInteraction.get(key);
     }
+
+    public void loadGameStateMap(Map<String, Object> gameStateMap) {
+        GameState gameState = new GameState();
+        for (Map.Entry<String, Object> entry : gameStateMap.entrySet()) {
+            gameState.put(entry.getKey(), entry.getValue());
+        }
+        stateInteraction = new GameStateInteraction(gameState);
+    }
 }

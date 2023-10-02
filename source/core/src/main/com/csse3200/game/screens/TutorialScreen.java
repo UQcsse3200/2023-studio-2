@@ -86,14 +86,12 @@ public class TutorialScreen extends ScreenAdapter {
     }
 
     private void generateGameAreas() {
-        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        this.allGameAreas.put("primary", new TutorialGameArea("levels\\tutorial\\main-area", terrainFactory, game, game.getPlayerLives()));
         generateGameArea("primary", "levels\\tutorial\\main-area");
 
     }
     private void generateGameArea(String name, String configPath) {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        this.allGameAreas.put(name, new MapGameArea(configPath, terrainFactory, game, game.getPlayerLives()));
+        this.allGameAreas.put(name, new TutorialGameArea(configPath, terrainFactory, game, game.getPlayerLives()));
     }
 
     private void registerServices() {

@@ -49,7 +49,7 @@ public class EnvironmentStatsComponent extends Component {
     /**
      * Sets the entity's immunity status.
      *
-     * @param isImmune true to make the entity immune to attacks, false otherwise.
+     * 
      */
     public void setImmunity(GameAreaConfig mapConfig) {
         System.out.println(mapConfig.mapName);

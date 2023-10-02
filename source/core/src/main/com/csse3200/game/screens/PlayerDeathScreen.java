@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * The game screen indicating a player's death and options to either restart or exit game.
  */
 public class PlayerDeathScreen extends ScreenAdapter {
-    SoundsConfig soundsConfig = FileLoader.readClass(SoundsConfig.class, "configs/deathScreen.json", FileLoader.Location.INTERNAL);
+    SoundsConfig soundsConfig = FileLoader.readClass(SoundsConfig.class, "configs/deathScreen.json", FileLoader.Location.LOCAL);
     public static final Logger logger = LoggerFactory.getLogger(PlayerDeathScreen.class);
     private final GdxGame game;
     private final Renderer renderer;

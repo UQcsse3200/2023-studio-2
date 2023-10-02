@@ -38,7 +38,7 @@ public class LoadUtils {
     }
 
     public static boolean pathExists(String path) {
-        return Gdx.files.internal(path).exists();
+        return Gdx.files.local(path).exists();
     }
 
     public static boolean pathExists(String... paths) {

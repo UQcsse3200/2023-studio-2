@@ -57,6 +57,14 @@ public class PlayerStatsDisplay extends UIComponent {
     super.create();
     addActors();
 
+    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+    entity.getEvents().addListener("dodged", this::updateDodgeUsed);
+    entity.getEvents().addListener("dodgeAvailable", this::updateDodgeRefreshed);
+    entity.getEvents().addListener("updateLives", this::updatePlayerLives);
+    entity.getEvents().addListener("maxLivesAlert", this::maxLivesReached);
+    entity.getEvents().addListener("updateAmmo", this::updateAmmo);
+    entity.getEvents().addListener("changeWeapon", this::updateWeapon);
+
     InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
     this.updateAmmo(invComp.getCurrentAmmo(),invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
   }

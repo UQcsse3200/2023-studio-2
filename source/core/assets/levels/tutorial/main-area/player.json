@@ -1,12 +1,12 @@
 {
   "position": {
-    "x": 15,
-    "y": 15
+    "x": 10,
+    "y": 40
   },
   "health": 100,
   "baseAttack": 10,
   "attackMultiplier": 1,
-  "isImmune": false,
+  "isImmune": true,
   "spritePath": "images/player/player.atlas",
   "sounds": {
     "soundsMap": {

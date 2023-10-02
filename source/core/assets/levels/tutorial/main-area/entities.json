@@ -9,18 +9,18 @@
   "spawners": [
     {
       "wave1" : [
-        10,
-        0,
+        1,
+        1,
         0
       ],
       "wave2" : [
-        10,
-        5,
+        0,
+        0,
         0
       ],
       "wave3" : [
-        10,
-        10,
+        0,
+        0,
         0
       ],
       "position": {
@@ -59,16 +59,6 @@
       }
     }
   ],
-  "treetop": {
-    "position": {
-      "x": 0,
-      "y": 30
-    },
-    "spritePath": "map/treetop.png",
-    "scaleH": 30,
-    "scaleX": 0.5,
-    "scaleY": 0.2
-  },
   "botanist": {
     "spritePath": "images/botanist.atlas",
     "position" : {
@@ -80,13 +70,6 @@
     "spritePath": "images/Astro_NPC.atlas",
     "position" : {
       "x": 24,
-      "y": 50
-    }
-  },
-  "Jail": {
-    "spritePath": "images/Jail/jail.atlas",
-    "position" : {
-      "x": 23,
       "y": 50
     }
   }

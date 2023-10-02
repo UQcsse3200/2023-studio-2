@@ -8,6 +8,7 @@ import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ai.tasks.TaskRunner;
 
 import java.util.Random;
 import java.util.Timer;
@@ -20,6 +21,9 @@ public class DeathComponent extends Component {
     private CombatStatsComponent combatStats;
     private HitboxComponent hitboxComponent;
     private Boolean notkilled;
+
+    private boolean isDying = false; // True when the entity is currently in the process of dying and playing death
+                                     // animation.
 
     /**
      * Creates a new listener on an entity to wait for kill condition
@@ -59,6 +63,7 @@ public class DeathComponent extends Component {
             float deathAnimationDuration = animator.getAnimationDuration("death");
             // Convert the duration from seconds to milliseconds for the Timer
             long delay = (long) (deathAnimationDuration * 1000);
+            this.isDying = true;
             Timer timer = new Timer();
 
             timer.schedule(new TimerTask() {
@@ -85,5 +90,14 @@ public class DeathComponent extends Component {
             }, delay); // Delay based on the death animation duration
 
         }
+    }
+
+    /**
+     * Gets the current state of the isDying variable.
+     *
+     * @return true if the entity is in the process of dying and playing the death animation, false otherwise.
+     */
+    public boolean getIsDying() {
+        return isDying;
     }
 }

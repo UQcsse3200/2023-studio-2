@@ -9,6 +9,7 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.DeathComponent;
 
 
 import java.util.ArrayList;
@@ -85,6 +86,15 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   @Override
   public void update() {
+
+    Entity entity = owner.getEntity();
+    //Check if the enemy is running death animation before allowing it to chase
+    if (entity.getComponent(DeathComponent.class).getIsDying()) {
+      // Stop chasing if the enemy is being disposed(delay) and running the death animation
+      movementTask.stop();
+      return;
+    }
+
     char direction2 = getDirection(target.getPosition());
     movementTask.setTarget(target.getPosition());
     movementTask.update();

@@ -233,7 +233,7 @@ public class EnemyFactory {
     }
   }
 
-  public List<Entity> getEnemyList(){
+  public static List<Entity> getEnemyList(){
     return enemiesList;
   }
 

@@ -50,24 +50,24 @@ public class PlayerActions extends Component {
     }
 
     /**
-     * Updates the player's velocity in the direction they are walking
+     * The player gets slower when walking on certain frozen tiles
      */
     private void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
         float speedMult = MapGameArea.getSpeedMult();
         Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(MAX_SPEED.x * speedMult, MAX_SPEED.y * speedMult));
-        if(sliding) {
-            velocity.scl(0.95f);
-            if(velocity.isZero(0.01f)){
-                sliding = false;
-            }
-        }
-        else{
-            Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
-            body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+
+        // Set the condition to always true for now
+        boolean alwaysTrueCondition = true;
+
+        if (alwaysTrueCondition) {
+            desiredVelocity.scl(0.5f); // Reduce speed when the condition is true (always true for now)
         }
 
+        // impulse = (desiredVel - currentVel) * mass
+        Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
+        body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
     }
 
     /**

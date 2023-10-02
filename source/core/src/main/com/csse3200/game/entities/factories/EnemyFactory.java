@@ -30,6 +30,10 @@ import com.csse3200.game.ui.DialogueBox;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.csse3200.game.physics.PhysicsLayer.ENEMY_MELEE;
+import static com.csse3200.game.physics.PhysicsLayer.ENEMY_RANGE;
+
 /**
  * Factory to create non-playable enemies entities with predefined components.
  *
@@ -115,7 +119,7 @@ public class EnemyFactory {
     if (config.type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     } else {
-      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
+      enemy.getComponent(HitboxComponent.class).setLayer(ENEMY_MELEE);
     }
     enemy.addComponent(aiComponent);
 
@@ -188,13 +192,13 @@ public class EnemyFactory {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     }
     if (type == EnemyType.Melee) {
-      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
+      enemy.getComponent(HitboxComponent.class).setLayer(ENEMY_MELEE);
     }
     if (type == EnemyType.BossRanged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     }
     if (type == EnemyType.BossMelee) {
-      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
+      enemy.getComponent(HitboxComponent.class).setLayer(ENEMY_MELEE);
     }
   }
 
@@ -211,14 +215,41 @@ public class EnemyFactory {
     boolean isStructure = PhysicsLayer.contains(layer, PhysicsLayer.STRUCTURE);
     boolean matchingBehaviour = isPlayer && behaviour == EnemyBehaviour.PTE || isStructure && behaviour == EnemyBehaviour.DTE;
 
-    int priority = matchingBehaviour ? 10 : 0; //Matching behaviour and target gives priority 10
+    int priority = matchingBehaviour ? 10 : 0;
     float viewDistance = 100f;
     float maxChaseDistance = 100f;
 
-    if (type == EnemyType.Melee && !isPlayer && !matchingBehaviour) priority = 5; //Special case for player targeting melee
+    if (type == EnemyType.Melee && !isPlayer && !matchingBehaviour) priority = 5;
 
     //Special case for shooting player
     if (type == EnemyType.Ranged || type == EnemyType.BossRanged) {
+      float aimDelay = 2f;
+      float range = 3f;
+      float shootDistance = 3f;
+      viewDistance = 100f;
+      maxChaseDistance = 100f;
+
+      aiTaskComponent.addTask(new AimTask(aimDelay, target, range));
+      aiTaskComponent.addTask(new RunTask(target, 11, 2f));
+      aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
+    } else {
+      aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+    }
+  }
+
+  public static void targetSet(Entity target, short enemylayer, AITaskComponent aiTaskComponent) {
+    short layer = target.getComponent(HitboxComponent.class).getLayer();
+    boolean isEnemy = PhysicsLayer.contains(layer, (short) (PhysicsLayer.ENEMY_RANGE | ENEMY_MELEE));
+
+    int priority = isEnemy ? 10 : 0;
+    float viewDistance = 100f;
+    float maxChaseDistance = 100f;
+
+    if (PhysicsLayer.contains(layer, ENEMY_MELEE)){
+      priority = 10;
+    }
+
+    if (PhysicsLayer.contains(layer, ENEMY_RANGE)) {
       float aimDelay = 2f;
       float range = 3f;
       float shootDistance = 3f;

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  * Unit tests for the {@link EnvironmentStatsComponent} class.
  */
 @ExtendWith(GameExtension.class)
-class CombatStatsComponentTest {
+class EnvironmentStatsComponentTest {
 
   /**
    * Test setting damage over time effect

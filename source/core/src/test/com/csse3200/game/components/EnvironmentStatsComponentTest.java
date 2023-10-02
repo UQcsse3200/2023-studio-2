@@ -2,6 +2,8 @@ package com.csse3200.game.components;
 
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.extensions.GameExtension;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -15,7 +17,7 @@ class EnvironmentStatsComponentTest {
    * Test setting damage over time effect
    */
   @Test
-  void damage(CombatStatsComponent player) {
+  void damage() {
     // Test logic here
   }
 
@@ -23,7 +25,7 @@ class EnvironmentStatsComponentTest {
    * test setting player immunity
    */
   @Test
-  void setImmunity(GameAreaConfig mapConfig) {
+  void setImmunity() {
     // Test logic here
   }
 

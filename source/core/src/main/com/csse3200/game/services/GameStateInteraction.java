@@ -1,7 +1,7 @@
 package com.csse3200.game.services;
 
 import java.util.Map;
-
+import java.util.Objects;
 
 
 /**
@@ -134,6 +134,25 @@ public class GameStateInteraction {
     public void updateTotalExtractors(String resourceName, int amount) {
         String resourceKey = "extractorsTotal/" + resourceName;
         this.put(resourceKey, amount);
+    }
+
+    /**
+     * Updates the player with its corresponding stat and type of change.
+     * @param statName  Name of the stat (lives, health)
+     * @param type      Type of change (update - modify with addition), or (set - overwrite)
+     * @param amount    The amount to change by or set to.
+     */
+    public void updatePlayer(String statName, String type, int amount) {
+        String key = "player/" + statName;
+
+        if (Objects.equals(type, "update")) {
+            Object value = gameState.get(key);
+            if (value != null) {
+                gameState.put(key, (int) value + amount);
+            }
+        } else {
+            gameState.put(key, amount);
+        }
     }
 }
 

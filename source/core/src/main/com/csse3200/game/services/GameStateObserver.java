@@ -43,7 +43,7 @@ public class GameStateObserver extends EventHandler {
         this.addListener("extractorsTotal", stateInteraction::updateTotalExtractors);
         this.addListener("resourceMax", stateInteraction::updateMaxResources);
         this.addListener("extractorsMax", stateInteraction::updateMaxExtractors);
-        this.addListener("updatePlayer", stateInteraction::put);
+        this.addListener("updatePlayer", stateInteraction::updatePlayer);
     }
 
     /**

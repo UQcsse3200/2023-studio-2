@@ -102,6 +102,11 @@ public class PlanetScreen extends ScreenAdapter {
     public void show() {
         registerServices();
 
+        if (ServiceLocator.getGameStateObserverService().getStateData("player/lives") == null) {
+            ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", 3);
+        }
+
+
         loadAssets();
         createUI();
         generateGameAreas();
@@ -152,7 +157,7 @@ public class PlanetScreen extends ScreenAdapter {
      */
     private void generateGameArea(String levelName, String areaName) {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        this.allGameAreas.put(areaName, new MapGameArea(levelName, areaName, terrainFactory, game, game.getPlayerLives()));
+        this.allGameAreas.put(areaName, new MapGameArea(levelName, areaName, terrainFactory, game));
 
     }
 

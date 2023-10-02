@@ -1,11 +1,13 @@
 package com.csse3200.game.components.mainmenu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.ConfigLoader;
 import com.csse3200.game.areas.mapConfig.GameConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.ui.Popups.ChoicePopup;
@@ -70,6 +72,9 @@ public class MainMenuActions extends Component {
   }
 
   private void newGame(){
+
+      Gdx.files.local("save").deleteDirectory();
+
       loadGameConfig(true);
 
       logger.info("Loading Story");

@@ -46,12 +46,11 @@ public class MapGameArea extends GameArea{
     private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
-    private int playerLives;
     private boolean validLoad = true;
     private static List<Entity> itemsOnMap = new ArrayList<>();
     private String thing;
 
-    public MapGameArea(String levelName, String game_area, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
+    public MapGameArea(String levelName, String game_area, TerrainFactory terrainFactory, GdxGame game) {
         try {
             mapConfig = ConfigLoader.loadMapDirectory(levelName, game_area, false); //TODO: Enable loading from save behaviour.
             logger.info("Successfully loaded map {}", joinPath(levelName, game_area));
@@ -61,7 +60,6 @@ public class MapGameArea extends GameArea{
         }
         this.game = game;
         this.terrainFactory = terrainFactory;
-        this.playerLives = playerLives;
     }
 
     public static float getSpeedMult() {
@@ -349,12 +347,11 @@ public class MapGameArea extends GameArea{
             logger.info("Player not found in config file - creating generic player");
             newPlayer = PlayerFactory.createPlayer();
         }
-        newPlayer.getComponent(CombatStatsComponent.class).setLives(playerLives); // Ensures previous number of lives is maintained.
+        newPlayer.getComponent(CombatStatsComponent.class).setLives((int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")); // Ensures previous number of lives is maintained.
         newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         newPlayer.getEvents().addListener("death", () ->
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
         );
-//        ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", newPlayer);
 
         if (playerConfig != null && playerConfig.position != null) {
             spawnEntityAt(newPlayer, playerConfig.position, true, true);

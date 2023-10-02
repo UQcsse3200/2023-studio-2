@@ -34,13 +34,13 @@ public class MainGameActions extends Component {
    */
   private void onExit() {
     logger.info("Exiting main game screen");
-    game.setPlayerLives(config.lives); // Resets number of player's lives.
+    ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", config.lives);
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 
   protected void onReturnPlanet() {
     logger.info("Exiting to current planet screen");
-    game.setPlayerLives(config.lives); // Resets number of player's lives.
+    ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", config.lives);
     new PlanetTravel(game).returnToCurrent();
   }
 

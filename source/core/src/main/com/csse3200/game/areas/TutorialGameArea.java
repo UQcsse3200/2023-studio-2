@@ -8,13 +8,12 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
-import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.CameraComponent;
-import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.TileEntity;
-import com.csse3200.game.entities.factories.*;
+import com.csse3200.game.entities.factories.EnvironmentFactory;
+import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -28,7 +27,7 @@ import java.util.List;
 public class TutorialGameArea extends GameArea{
 
     private GameAreaConfig mapConfig = null;
-    private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
+    private static final Logger logger = LoggerFactory.getLogger(TutorialGameArea.class);
     private final GdxGame game;
     private boolean validLoad = true;
     private String thing;
@@ -63,9 +62,16 @@ public class TutorialGameArea extends GameArea{
 
         spawnTerrain();
         spawnEnvironment();
+        createDialogueUI();
 
         player = spawnPlayer();
 
+    }
+
+    private void createDialogueUI() {
+        Entity ui = new Entity();
+        ui.addComponent(new TutorialDialogue());
+        spawnEntity(ui);
     }
 
     /**

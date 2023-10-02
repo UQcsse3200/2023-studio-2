@@ -52,11 +52,10 @@ public class ConfigLoader {
      * Note this may not have the best error messages
      * @param levelName Name of level to be loade
      * @param gameAreaName Name of game area in level to generate
-     * @param fromSave Boolean - true if you want to load files som
      * @return The GameAreaConfig class loaded from the .json file
      * @throws InvalidConfigException If the file is unable to be loaded to a GameAreaConfig
      */
-    public static GameAreaConfig loadMapFile(String levelName, String gameAreaName, boolean fromSave) throws InvalidConfigException {
+    public static GameAreaConfig loadMapFile(String levelName, String gameAreaName) throws InvalidConfigException {
         levelName = LoadUtils.formatName(levelName);
         String filePath = getOptionalSavePath(PATH_OPTIONS, levelName, gameAreaName + JSON_EXT);
         GameAreaConfig gameArea = FileLoader.readClass(GameAreaConfig.class, filePath, FileLoader.Location.LOCAL);
@@ -68,10 +67,9 @@ public class ConfigLoader {
      * Loads a folder containing various .json files that represent a given game area.
      * @param levelName Name of level to be loade
      * @param gameAreaName Name of game area in level to generate
-     * @param fromSave Boolean - true if you want to load files som
      * @throws InvalidConfigException If any file is unable to be loaded to a GameAreaConfig
      */
-    public static GameAreaConfig loadMapDirectory(String levelName, String gameAreaName, boolean fromSave)
+    public static GameAreaConfig loadMapDirectory(String levelName, String gameAreaName)
             throws InvalidConfigException {
         levelName = LoadUtils.formatName(levelName);
         String mainPath = getOptionalSavePath(PATH_OPTIONS, levelName, gameAreaName, MAIN_FILE);

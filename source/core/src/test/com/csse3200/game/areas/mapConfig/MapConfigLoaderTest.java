@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
+import com.csse3200.game.utils.LoadUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,7 +71,7 @@ class MapConfigLoaderTest {
             mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
                     .thenReturn(areaEntityConfig);
 
-            assertEquals(ConfigLoader.loadMapDirectory("level", "area", false), expectedGameArea);
+            assertEquals(ConfigLoader.loadMapDirectory("earth", LoadUtils.DEFAULT_AREA), expectedGameArea);
         }
     }
 
@@ -83,7 +84,7 @@ class MapConfigLoaderTest {
                     .thenReturn(areaEntityConfig);
 
             assertThrows(InvalidConfigException.class, () -> ConfigLoader
-                    .loadMapDirectory("level", "area", false));
+                    .loadMapDirectory("earth", LoadUtils.DEFAULT_AREA));
         }
     }
 

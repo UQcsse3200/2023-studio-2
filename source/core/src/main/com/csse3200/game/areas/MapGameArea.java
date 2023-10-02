@@ -15,7 +15,6 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.player.InventoryDisplayComponent;
-import com.csse3200.game.components.player.PlayerStatsDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
@@ -53,7 +52,7 @@ public class MapGameArea extends GameArea{
 
     public MapGameArea(String levelName, String game_area, TerrainFactory terrainFactory, GdxGame game) {
         try {
-            mapConfig = ConfigLoader.loadMapDirectory(levelName, game_area, false); //TODO: Enable loading from save behaviour.
+            mapConfig = ConfigLoader.loadMapDirectory(levelName, game_area);
             logger.info("Successfully loaded map {}", joinPath(levelName, game_area));
         } catch (InvalidConfigException exception) {
             logger.error("FAILED TO LOAD GAME IN CONSTRUCTOR - {}", exception.getMessage());
@@ -274,9 +273,9 @@ public class MapGameArea extends GameArea{
         int maxResource = 1000;
 
         // Sets extractor count
-        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Nebulite.toString(),  (int) 0);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Durasteel.toString(),  (int) 0);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Nebulite.toString(),  0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Durasteel.toString(),  0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Solstite.toString(),  0);
 
         ResourceDisplay resourceDisplayComponent = new ResourceDisplay(scale, steps, maxResource)
                 .withResource(Resource.Durasteel)

@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.ItemPickupComponent;
@@ -37,6 +38,7 @@ public class CompanionActions extends Component {
     public String companionMode;
     public final static String COMPANION_MODE_ATTACK = "COMPANION_MODE_ATTACK";
     public final static String COMPANION_MODE_NORMAL = "COMPANION_MODE_NORMAL";
+    public final static String COMPANION_MODE_DEFENCE = "COMPANION_MODE_DEFENCE";
 
     public final static Vector2 COMPANION_ATTACK_MODE_SPEED = new Vector2(6f, 6f);
     public final static Vector2 COMPANION_NORMAL_MODE_SPEED = new Vector2(4f, 4f);
@@ -55,7 +57,7 @@ public class CompanionActions extends Component {
         entity.getEvents().addListener("attack", this::attack);
         entity.getEvents().addListener("CompanionSwitchMode", this::CompanionSwitchMode);
 
-        setCompanionModeNormal();
+        setCompanionMode(COMPANION_MODE_NORMAL);
 
         // Initialize currentRotation based on the initial orientation of the companion
         currentRotation = physicsComponent.getBody().getAngle()*MathUtils.radiansToDegrees;
@@ -67,37 +69,52 @@ public class CompanionActions extends Component {
 
 
     /**
-     * Set companion mode to attack
+     * Set the companion mode, given a companion mode string
+     *
+     *      Normal = Normal speed, you follow the player
+     *      Defence = Normal speed, you don't follow the player
+     *      Attack = High speed, you don't follow the player
+     *
+     * @param mode - the mode to set to
      */
-    public void setCompanionModeAttack() {
-        // set the mode
-        companionMode = COMPANION_MODE_ATTACK;
-        // adjust the speed
-        COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
-        entity.getEvents().trigger("companionModeChange","Attack");
-        entity.getComponent(FollowComponent.class).setFollowSpeed(0f);
+    public void setCompanionMode(String mode) {
+        companionMode = mode;
+
+        //now for specific modes
+        if (Objects.equals(mode, COMPANION_MODE_NORMAL)) {
+            COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
+            entity.getEvents().trigger("companionModeChange","Normal");
+            entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
+        } else if (Objects.equals(mode, COMPANION_MODE_DEFENCE)) {
+            COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
+            entity.getComponent(CombatStatsComponent.class).addHealth(40);
+            entity.getEvents().trigger("companionModeChange","Defence");
+            entity.getComponent(FollowComponent.class).setFollowSpeed(0f);
+        } else if (Objects.equals(mode, COMPANION_MODE_ATTACK)) {
+            COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
+            entity.getEvents().trigger("companionModeChange","Attack");
+            entity.getComponent(FollowComponent.class).setFollowSpeed(0f);
+        }
     }
 
-    /**
-     * set the companion mode to normal
-     */
-    public void setCompanionModeNormal() {
-        // set the mode
-        companionMode = COMPANION_MODE_NORMAL;
-        // adjust the speed
-        COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
-        entity.getEvents().trigger("companionModeChange","Normal");
-        entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
-    }
 
     /**
-     * Switch the modes of the companion based off keyboard input and triggers, not libGDX inputs.
+     * TOGGLE between the modes of the companion based off its current ordering
+     * cycle goes
+     * Normal -> Defence
+     * Defence -> Attack
+     * Attack -> Normal
      */
     public void CompanionSwitchMode() {
+
         if (Objects.equals(this.companionMode, COMPANION_MODE_NORMAL)) {
-            setCompanionModeAttack();
+            setCompanionMode(COMPANION_MODE_DEFENCE);
+        } else if (Objects.equals(this.companionMode, COMPANION_MODE_DEFENCE)) {
+            setCompanionMode(COMPANION_MODE_ATTACK);
+        } else if (Objects.equals(this.companionMode, COMPANION_MODE_ATTACK)){
+            setCompanionMode(COMPANION_MODE_NORMAL);
         } else {
-            setCompanionModeNormal();
+            setCompanionMode(COMPANION_MODE_NORMAL);
         }
     }
 
@@ -121,18 +138,6 @@ public class CompanionActions extends Component {
     @Override
     public void update() {
         updateSpeed();
-
-        // How to switch between attack mode and normal mode. Binary toggle
-        if (Gdx.input.isKeyPressed(Input.Keys.B) && 1==2){
-            if (Objects.equals(companionMode, COMPANION_MODE_ATTACK)) {
-                //if you're in attack, go to normal
-                setCompanionModeNormal();
-            } else {
-                //if you're in normal, go to attack
-                setCompanionModeAttack();
-            }
-
-        }
     }
 
 //    void updateInventory(int i) {

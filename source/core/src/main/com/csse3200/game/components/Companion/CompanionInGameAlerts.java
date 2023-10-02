@@ -60,17 +60,12 @@ public class CompanionInGameAlerts extends UIComponent {
         //Player has a health change
         player.getEvents().addListener("updateHealth", this::playerHealthUpdate);
 
-        //forced update
-        companionHealthUpdate(100);
-
     }
 
     /**
      * Add anything to a set table on screen
      */
     private void addActors() {
-
-
         return;
 
     }
@@ -83,8 +78,6 @@ public class CompanionInGameAlerts extends UIComponent {
      */
     @Override
     public void update() {
-        //logger.info("ONCE A FRAME THIS SHOULD BE PRINTING");
-
     }
 
     /**
@@ -94,6 +87,7 @@ public class CompanionInGameAlerts extends UIComponent {
     public Vector2 getCurrentPosition() {
         PhysicsComponent companionPhysics = entity.getComponent(PhysicsComponent.class);
         return companionPhysics.getBody().getPosition();
+
     }
 
     /**
@@ -101,10 +95,10 @@ public class CompanionInGameAlerts extends UIComponent {
      * @param alertText - this is the TEXTSTRING which will go on the alert. Must be provided
      */
     private void addFollowingAlert(CharSequence alertText) {
+
+
         //FIND WHERE THE COMPANION IS
         Vector2 companionPosition = getCurrentPosition();
-        logger.info(companionPosition.toString());
-
 
         //create the alert
         alertLabel = new Label(alertText,skin);
@@ -126,7 +120,7 @@ public class CompanionInGameAlerts extends UIComponent {
                 timer.purge();
             }
         };
-        timer.schedule(removeAlert, 3000); // removes alert after 1 second
+        timer.schedule(removeAlert, 10000); // removes alert after 1 second (3000 is good)
     }
 
     /**
@@ -149,6 +143,7 @@ public class CompanionInGameAlerts extends UIComponent {
         if (health <= 50) {
             // add an alert
             CharSequence companionAlertUpdate = String.format("Oh no! Player Health Low! %d", health);
+            addFollowingAlert(companionAlertUpdate);
         }
     }
 

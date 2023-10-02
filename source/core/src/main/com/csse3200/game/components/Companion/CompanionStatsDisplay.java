@@ -78,7 +78,6 @@ public class CompanionStatsDisplay extends UIComponent {
 
         // Listen for events related to health updates
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
-        player.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
         entity.getEvents().addListener("companionModeChange", this::updateCompanionModeUI);
         entity.getEvents().addListener("updateAmmo", this::updateAmmo);
 //        entity.getEvents().addListener("changeWeapon", this::updateWeapon);
@@ -271,62 +270,10 @@ public class CompanionStatsDisplay extends UIComponent {
         }
     }
 
-    /**
-     * Add an alert when the player's health is low.
-     *
-     * @param health The current health value.
-     */
-    public void addAlert(int health) {
-        //FIND WHERE THE COMPANION IS
-        PhysicsComponent companionPhysics = entity.getComponent(PhysicsComponent.class);
-        Vector2 compPos = companionPhysics.getBody().getPosition();
-        playerLowHealthAlert = new Table();
-        playerLowHealthAlert.top().left();
-        playerLowHealthAlert.setFillParent(true);
-        //place the label where the companion is plus an offset
-        playerLowHealthAlert.setPosition(compPos.x + 550f, compPos.y - 200F);
-
-        // plate up the low player health string
-        CharSequence playerLowHealthString = String.format("Player Low Health: %d", health);
-        playerLowHealthLabel = new Label(playerLowHealthString, skin, "small");
-
-
-        playerLowHealthAlert.add(playerLowHealthLabel);
-
-        //launch the table onto the screen
-        stage.addActor(playerLowHealthAlert);
-    }
 
     @Override
     public void draw(SpriteBatch batch) {
         // Code for drawing UI elements and updating the projection matrix.
-    }
-
-    /**
-     * Update the player's health UI.
-     *
-     * @param health The current health value of the player.
-     */
-    public void updatePlayerHealthUI(int health) {
-        if (health <= 50 && !update) {
-            addAlert(health);
-            update = true;
-
-//          Play the low health sound when health is below 50
-            entity.getEvents().trigger("playSound", "low_health");
-            return;
-        }
-
-        if (update) {
-            // Schedule a task to remove the playerLowHealthLabel after a delay (e.g., 3 seconds)
-            Timer.schedule(new Task() {
-                @Override
-                public void run() {
-                    playerLowHealthLabel.remove();
-                    update = false;
-                }
-            }, 3000);
-        }
     }
 
     /**

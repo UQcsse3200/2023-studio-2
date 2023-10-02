@@ -47,7 +47,7 @@ public class PowerupComponent extends Component {
                 case HEALTH_BOOST:
                     player.getComponent(CombatStatsComponent.class).setHealth(100);
                     companion.getComponent(CombatStatsComponent.class).setHealth(50);
-                    entity.getEvents().trigger("playSound", "healthPowerup"); // plays sound when health powerup selected
+                    player.getEvents().trigger("playSound", "healthPowerup"); // plays sound when health powerup selected
                     break;
 
                 case SPEED_BOOST:

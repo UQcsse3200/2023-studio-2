@@ -7,18 +7,20 @@ import com.badlogic.gdx.utils.ObjectMap;
  * It defines the properties of a tool which can be defined.
  */
 public class ToolConfig {
-    /**
-     * The hammer level required to use this tool.
-     */
-    public int level;
+
     /**
      * The display name of this tool
      */
     public String name;
+
+    /** A short description of what the tool does **/
+    public String description;
+
     /**
      * A map containing the tools cost for each resource
      */
     public ObjectMap<String, Integer> cost;
+
     /**
      * The texture to use for the StructureToolPickers' icon.
      */

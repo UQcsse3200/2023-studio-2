@@ -5,7 +5,6 @@ import com.csse3200.game.components.structures.Placeable;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.StructurePlacementService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -97,7 +96,7 @@ class PlaceableEntityTest {
 
     @BeforeEach
     void before() {
-        placeableEntity = new PlaceableEntity();
+        placeableEntity = new PlaceableEntity(1, 1);
         placeableEntity.addComponent(placeable);
         placeableEntity.addComponent(placeable2);
         placeableEntity.addComponent(placeable3);

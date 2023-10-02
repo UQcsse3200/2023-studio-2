@@ -54,7 +54,7 @@ public class MainMenuDisplay extends UIComponent {
         table.setFillParent(true);
 
         // Display game title image
-        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/escape-earth2.png", Texture.class));
+        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/escape-earth2.png", Texture.class));
         titleImage.setWidth(Gdx.graphics.getWidth());
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);
@@ -66,7 +66,6 @@ public class MainMenuDisplay extends UIComponent {
         TextButton exitBtn = new TextButton("Exit", skin);
         TextButton miniBtn = new TextButton("Space Minigame", skin);
         TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
-        TextButton spaceMapBtn = new TextButton("Space Map", skin);
         TextButton upgradeShip = new TextButton("Upgrade Ship", skin);
         TextButton tutorialBtn = new TextButton("Tutorial", skin);
         // Attach listeners to buttons
@@ -113,15 +112,6 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
-        spaceMapBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Space Map button clicked");
-                        entity.getEvents().trigger("space map");
-                    }
-                });
-
         exitBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -163,9 +153,6 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(extractorBtn).padTop(15f).padLeft(1200f);
         table.row();
-        table.add(spaceMapBtn).padTop(15f).padLeft(1200f);
-        table.row();
-
         table.add(exitBtn).padTop(15f).padLeft(1200f);
         table.row();
         table.add(upgradeShip).padTop(15f).padLeft(1200f);

@@ -22,6 +22,10 @@ public class ProductionComponent extends Component {
     // The time of the last tick
     long lastTime;
 
+    public Resource getProduces() {
+        return produces;
+    }
+
     // The resource type this produces
     Resource produces;
 

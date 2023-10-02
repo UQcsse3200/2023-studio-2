@@ -1,0 +1,13 @@
+{
+  "entityType": "BotanistConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.BotanistConfig,
+      "spritePath": "images/botanist.atlas",
+      "position" : {
+        "x": 20,
+        "y": 15
+      }
+    }
+  ]
+}

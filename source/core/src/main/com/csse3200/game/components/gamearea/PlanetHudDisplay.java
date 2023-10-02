@@ -3,10 +3,11 @@ package com.csse3200.game.components.gamearea;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -52,8 +53,34 @@ public class PlanetHudDisplay extends UIComponent {
         planetStack.add(overlayTable);
         planetTable.add(planetStack).size(180f, 225f);
         planetTable.row();
+        createUpgradeTreeButton(planetTable);
 
         stage.addActor(planetTable);
+    }
+
+    /**
+     * @param table - Used to add Column/Rows and define the actors
+     * createUpgradeTreeButton() - creating button and defining it on the top left
+     *                              also playing the sound when on tapping it
+     *
+     */
+    public void createUpgradeTreeButton(Table table) {
+        TextButton button = new TextButton("Upgrade Tree", skin);
+
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                KeyboardPlayerInputComponent keys =
+                        ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
+                keys.clearWalking();
+                UpgradeDisplay display = UpgradeDisplay.createUpgradeDisplay();
+                ServiceLocator.getRenderService().getStage().addActor(display);
+
+                entity.getEvents().trigger("playSound", "upgradeTreeTap");
+            }
+        });
+
+        table.add(button);
     }
 
     @Override

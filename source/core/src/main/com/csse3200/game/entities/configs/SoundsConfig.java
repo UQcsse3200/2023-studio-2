@@ -9,5 +9,5 @@ public class SoundsConfig {
     /**
      * Used to map sound identification strings to the sound files
      */
-    public ObjectMap<String, String> soundsMap;
+    public ObjectMap<String, String> soundsMap = new ObjectMap<>();
 }

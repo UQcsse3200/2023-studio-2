@@ -47,9 +47,7 @@ class BasicWallToolTest {
         ServiceLocator.registerGameStateObserverService(stateObserver);
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerPhysicsService(physicsService);
-    }
 
-    void setupResourceAndPhysics() {
         var physicsEngine = mock(PhysicsEngine.class);
         when(physicsService.getPhysics()).thenReturn(physicsEngine);
         when(physicsEngine.createBody(any())).thenReturn(mock(Body.class));
@@ -61,15 +59,13 @@ class BasicWallToolTest {
 
     @Test
     void testInteractNoExistingStructureNoCost() {
-        setupResourceAndPhysics();
-
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
         var tool = new BasicWallTool(cost);
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 
@@ -87,7 +83,7 @@ class BasicWallToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(mock(PlaceableEntity.class));
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(false);
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
@@ -99,8 +95,6 @@ class BasicWallToolTest {
 
     @Test
     void testInteractWithCostAndSufficientFunds() {
-        setupResourceAndPhysics();
-
         ObjectMap<String, Integer> cost = new ObjectMap<>();
         cost.put("resource1", 10);
         cost.put("resource2", 25);
@@ -111,7 +105,7 @@ class BasicWallToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 
@@ -133,7 +127,7 @@ class BasicWallToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 

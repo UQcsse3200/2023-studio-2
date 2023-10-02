@@ -197,7 +197,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       // melee/ranged
 
         case "melee", "ranged":
-            System.out.println(playerInventory.getCurrentAmmo());
             if (playerInventory.getCurrentAmmo() <= 0) {return false;}
 
             if (button == Input.Buttons.LEFT) {
@@ -263,7 +262,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    * Triggers walk event
    * and also trigger the walking sound
    */
-  private void triggerWalkEvent() {
+  void triggerWalkEvent() {
       Entity companion = ServiceLocator.getEntityService().getCompanion();
     Vector2 lastDir = this.walkDirection.cpy();
     this.walkDirection = keysToVector().scl(WALK_SPEED);
@@ -297,10 +296,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             companion.getEvents().trigger("walkDownLeft");}
           default -> entity.getEvents().trigger(WALKSTOP);
       }
-      entity.getEvents().trigger("walk", walkDirection);
+      if (entity != null) {
+          entity.getEvents().trigger("walk", walkDirection);
 
-      // play the sound when player starts walking
-        entity.getEvents().trigger("loopSound", "footstep");
+          // play the sound when player starts walking
+          entity.getEvents().trigger("loopSound", "footstep");
+
+      }
     }
   }
 
@@ -326,12 +328,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         case RIGHT, DOWNRIGHT, UPRIGHT -> entity.getEvents().trigger("dodgeRight");
         default -> entity.getEvents().trigger(WALKSTOP);
     }
-
-    entity.getEvents().trigger("walk", walkDirection);
-    entity.getEvents().trigger("dodged");
+    if (entity != null) {
+        entity.getEvents().trigger("walk", walkDirection);
+        entity.getEvents().trigger("dodged");
 
 //  play the sound when player starts dodging
-    entity.getEvents().trigger("playSound", "dodge");
+        entity.getEvents().trigger("playSound", "dodge");
+    }
+
 
     java.util.TimerTask stopDodge = new java.util.TimerTask() {
       @Override
@@ -355,7 +359,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     invComp.setEquipped(slot);
     player.getEvents().trigger("updateHotbar");
     entity.getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
-    entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(), invComp.getCurrentMaxAmmo());
+    entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(), invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
   }
 
   /**

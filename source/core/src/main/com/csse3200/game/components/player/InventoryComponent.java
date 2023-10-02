@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 class InventoryItem {
@@ -120,6 +121,9 @@ public class InventoryComponent extends Component {
    */
   public void replaceSlotWithWeapon(String slot, WeaponType weaponType) {
     equippedWMap.get(slot).changeItem(weaponType);
+    if (Objects.equals(slot, equipped)) {
+      entity.getEvents().trigger("changeWeapon", weaponType);
+    }
   }
 
   /** Returns the current equipped weapons represented in a hash map **/
@@ -167,5 +171,9 @@ public class InventoryComponent extends Component {
 
   public void setEquippedCooldown(int coolDown) {
     this.equippedWMap.get(getEquipped()).setAttackCooldown(coolDown);
+  }
+
+  public int getCurrentAmmoUse() {
+    return config.GetWeaponConfig(getEquippedType()).ammoUse;
   }
 }

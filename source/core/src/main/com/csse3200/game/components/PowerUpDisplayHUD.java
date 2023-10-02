@@ -54,6 +54,23 @@ public class PowerUpDisplayHUD extends UIComponent {
             ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/extralife.png", Texture.class));
             return ExtraLifeImage;
         }
+
+        if (powerUpEntity == PowerupType.DOUBLE_CROSS) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_cross.png", Texture.class));
+            return ExtraLifeImage;
+        }
+        if (powerUpEntity == PowerupType.TEMP_IMMUNITY) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/invincibility_potion.png", Texture.class));
+            return ExtraLifeImage;
+        }
+        if (powerUpEntity == PowerupType.DOUBLE_DAMAGE) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_damage.png", Texture.class));
+            return ExtraLifeImage;
+        }
+        if (powerUpEntity == PowerupType.SNAP) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/snap.png", Texture.class));
+            return ExtraLifeImage;
+        }
         else return null;
     }
 

@@ -3,12 +3,17 @@ package com.csse3200.game.components.mainmenu;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.Component;
+import com.csse3200.game.areas.mapConfig.ConfigLoader;
+import com.csse3200.game.areas.mapConfig.GameConfig;
+import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.utils.LoadUtils;
+import com.csse3200.game.components.Component;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.MainAlert;
 import com.csse3200.game.ui.TitleBox;
+import net.dermetfan.gdx.physics.box2d.PositionController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +51,21 @@ public class MainMenuActions extends Component {
    */
   private void onStart() {
     logger.info("Creating beginning planet");
-    ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", new PlanetScreen(game));
+
+    GameConfig gameConfig;
+    try {
+      gameConfig = ConfigLoader.loadGame();
+      if (gameConfig.levelNames.size() < 1) throw new InvalidConfigException(LoadUtils.NO_LEVELS_ERROR);
+      ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", gameConfig.levelNames.get(0));
+      if (gameConfig.levelNames.size() > 1) {
+        PlanetScreen firstPlanet = new PlanetScreen(game, gameConfig.levelNames.get(0));
+        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", firstPlanet.getNextPlanetName());
+      }
+    } catch (Exception e) {
+      logger.error("Failed to load game - not leaving to game screen.");
+      return;
+    }
+
 
     AlertBox alertBox = new AlertBox(game," Alert Box", skin);
     alertBox.showDialog(stage);

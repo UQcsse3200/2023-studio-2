@@ -6,10 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.MapGameArea;
-import com.csse3200.game.areas.mapConfig.AssetsConfig;
-import com.csse3200.game.areas.mapConfig.InvalidConfigException;
-import com.csse3200.game.areas.mapConfig.LevelConfig;
-import com.csse3200.game.areas.mapConfig.LevelConfigLoader;
+import com.csse3200.game.areas.mapConfig.*;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
@@ -32,13 +29,14 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
+import com.csse3200.game.utils.LoadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.csse3200.game.areas.mapConfig.LoadUtils.*;
+import static com.csse3200.game.utils.LoadUtils.*;
 
 /**
  * A screen that represents a single planet of the game with its corresponding game area/s.
@@ -55,6 +53,8 @@ public class PlanetScreen extends ScreenAdapter {
 
     private String currentAreaName = DEFAULT_AREA;
     private final Map<String, GameArea> allGameAreas = new HashMap<>();
+
+    private LevelConfig levelConfig = null;
 
     /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -85,6 +85,14 @@ public class PlanetScreen extends ScreenAdapter {
         this.game = game;
         this.name = name;
         this.assets = FileLoader.readClass(AssetsConfig.class, "levels/global_assets.json");
+
+        String levelName = LoadUtils.formatName(name);
+        try {
+            this.levelConfig = ConfigLoader.loadLevel(levelName);
+            this.nextPlanetName = this.levelConfig.nextPlanet;
+        } catch (InvalidConfigException e) {
+            logger.error("FAILED TO LOAD LEVEL DATA FOR " + levelName);
+        }
     }
 
     /**
@@ -104,12 +112,12 @@ public class PlanetScreen extends ScreenAdapter {
     }
 
     /**
-     * Get the next planet in the sequence after the current planet.
+     * Get the next planet's name in the sequence after the current planet.
      *
-     * @return  The PlanetScreen instance for the next planet.
+     * @return  The name of the next planet.
      */
-    public PlanetScreen getNextPlanet() {
-        return new PlanetScreen(this.game, this.nextPlanetName);
+    public String getNextPlanetName() {
+        return this.nextPlanetName;
     }
 
     /**
@@ -129,15 +137,10 @@ public class PlanetScreen extends ScreenAdapter {
     private void generateGameAreas() {
         String levelName = formatName(name);
 
-        try {
-            LevelConfig levelConfig = LevelConfigLoader.loadLevel(levelName);
-            this.nextPlanetName = levelConfig.nextPlanet;
-            if (levelConfig.areaNames == null) return;
-            for (String area : levelConfig.areaNames) {
+        if (this.levelConfig != null) {
+            for (String area : this.levelConfig.areaNames) {
                 generateGameArea(levelName, area);
             }
-        } catch (InvalidConfigException e) {
-            logger.error("FAILED TO LOAD LEVEL DATA FOR " + levelName);
         }
     }
 
@@ -218,7 +221,7 @@ public class PlanetScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().saveCurrentArea(path);
 
         Map<String, Object> gameStateEntries = new HashMap<>(ServiceLocator.getGameStateObserverService().getFullStateData());
-        FileLoader.writeClass(gameStateEntries, SAVE_PATH + "/gamestate.json", FileLoader.Location.LOCAL);
+        FileLoader.writeClass(gameStateEntries, joinPath(SAVE_PATH, GAMESTATE_FILE), FileLoader.Location.LOCAL);
     }
 
     /**

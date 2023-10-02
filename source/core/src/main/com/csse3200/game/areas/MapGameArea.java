@@ -9,7 +9,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.mapConfig.AssetsConfig;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
-import com.csse3200.game.areas.mapConfig.GameAreaConfigLoader;
+import com.csse3200.game.areas.mapConfig.ConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.PowerupType;
@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.csse3200.game.areas.mapConfig.LoadUtils.joinPath;
+import static com.csse3200.game.utils.LoadUtils.joinPath;
 
 /**
  * A Base Game Area for any level.
@@ -53,7 +53,7 @@ public class MapGameArea extends GameArea{
 
     public MapGameArea(String levelName, String game_area, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
-            mapConfig = GameAreaConfigLoader.loadMapDirectory(levelName, game_area, false); //TODO: Enable loading from save behaviour.
+            mapConfig = ConfigLoader.loadMapDirectory(levelName, game_area, false); //TODO: Enable loading from save behaviour.
             logger.info("Successfully loaded map {}", joinPath(levelName, game_area));
         } catch (InvalidConfigException exception) {
             logger.error("FAILED TO LOAD GAME - RETURNING TO MAIN MENU", exception);
@@ -354,7 +354,7 @@ public class MapGameArea extends GameArea{
         newPlayer.getEvents().addListener("death", () ->
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
         );
-        ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", newPlayer);
+//        ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", newPlayer);
 
         if (playerConfig != null && playerConfig.position != null) {
             spawnEntityAt(newPlayer, playerConfig.position, true, true);

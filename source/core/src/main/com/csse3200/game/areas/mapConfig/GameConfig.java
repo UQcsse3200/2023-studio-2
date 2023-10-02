@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GameConfig {
-    public List<LevelConfig> levels;
-    public Map<String, Object> gameState;
-    public AssetsConfig assets;
+    public List<String> levelNames = null;
+    public Map<String, Object> gameState = null;
+    public AssetsConfig assets = null;
 }

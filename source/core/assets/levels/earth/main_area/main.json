@@ -99,9 +99,6 @@
   "planetImage": "images/navigationmap/planets/earth.png",
   "terrainPath": "map/base.tmx",
   "winConditions": [
-    {
-      "resource": "Solstite",
-      "threshold": 100
-    }
+
   ]
 }

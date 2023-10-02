@@ -70,7 +70,7 @@ class MapConfigLoaderTest {
             mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
                     .thenReturn(areaEntityConfig);
 
-            assertEquals(GameAreaConfigLoader.loadMapDirectory("level", "area", false), expectedGameArea);
+            assertEquals(ConfigLoader.loadMapDirectory("level", "area", false), expectedGameArea);
         }
     }
 
@@ -82,7 +82,7 @@ class MapConfigLoaderTest {
             mockFileLoader.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
                     .thenReturn(areaEntityConfig);
 
-            assertThrows(InvalidConfigException.class, () -> GameAreaConfigLoader
+            assertThrows(InvalidConfigException.class, () -> ConfigLoader
                     .loadMapDirectory("level", "area", false));
         }
     }

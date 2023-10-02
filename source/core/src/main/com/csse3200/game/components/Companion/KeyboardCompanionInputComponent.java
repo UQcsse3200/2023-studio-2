@@ -196,6 +196,11 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                 }else {logger.debug("powerup cooldown");}
                 return true;
             }
+
+            case Keys.B -> {
+                entity.getEvents().trigger("CompanionSwitchMode");
+                return true;
+            }
 /*
 
             case Keys.H -> {

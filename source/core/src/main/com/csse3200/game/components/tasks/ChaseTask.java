@@ -88,22 +88,22 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   public void update() {
 
     Entity entity = owner.getEntity();
-    //Check if the enemy is running death animation before allowing it to chase
-    if (entity.getComponent(DeathComponent.class).getIsDying()) {
+    DeathComponent deathComponent = entity.getComponent(DeathComponent.class);
+    // Check if the enemy is running death animation before allowing it to chase
+    if (entity != null && deathComponent != null && deathComponent.getIsDying()) {
       // Stop chasing if the enemy is being disposed(delay) and running the death animation
       movementTask.stop();
-      return;
-    }
+    } else {
+      char direction2 = getDirection(target.getPosition());
+      movementTask.setTarget(target.getPosition());
+      movementTask.update();
 
-    char direction2 = getDirection(target.getPosition());
-    movementTask.setTarget(target.getPosition());
-    movementTask.update();
-
-    if (movementTask.getStatus() != Status.ACTIVE) {
-      movementTask.start();
-    }
-    if (direction != direction2){
-      start();
+      if (movementTask.getStatus() != Status.ACTIVE) {
+        movementTask.start();
+      }
+      if (direction != direction2) {
+        start();
+      }
     }
   }
 

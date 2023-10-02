@@ -1,6 +1,7 @@
 package com.csse3200.game.components.tasks;
 
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.extensions.GameExtension;
@@ -51,7 +52,13 @@ class ChaseTaskTest {
       ServiceLocator.getPhysicsService().getPhysics().update();
     }
     float newDistance = entity.getPosition().dst(target.getPosition());
-    assertTrue(newDistance < initialDistance);
+
+    DeathComponent deathComponent = entity.getComponent(DeathComponent.class);
+    if (entity != null && deathComponent != null && deathComponent.getIsDying()) {
+      assertTrue(newDistance == initialDistance);
+    } else {
+      assertTrue(newDistance < initialDistance);
+    }
   }
 
   @Test

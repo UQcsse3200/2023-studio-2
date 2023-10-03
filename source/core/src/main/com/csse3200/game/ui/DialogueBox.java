@@ -25,8 +25,11 @@ public class DialogueBox extends Dialog {
 
     private Label dialogueLabel;
     private Label titleLabel;
+
+    private String[] titles;
+    private String[] messages;
     TextButton info;
-    private int nextIndex = -1;
+    private int nextIndex = 0;
     private Stage stage;
 
 
@@ -38,14 +41,14 @@ public class DialogueBox extends Dialog {
      * @param title The title of the dialogue box.
      * @param skin  The skin to use for styling the dialogue box.
      */
-    public DialogueBox(String title, String message, Skin skin) {
+    public DialogueBox(String[] title, String[] message, Skin skin) {
         super("", skin);
         this.skin = skin;
-        titleLabel = new Label(title, skin);
-        this.dialogueLabel = new Label(message, skin);
+        titleLabel = new Label(title[0], skin);
+        this.dialogueLabel = new Label(message[0], skin);
+        this.titles=title;
+        this.messages=message;
         create();
-
-
     }
 
 
@@ -131,8 +134,8 @@ public class DialogueBox extends Dialog {
 
     public void oninfo() {
 
-        String[] nextTitles = {"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected.", "Emily: We can handle it. \nLead the way!"};
-        String[] nextMessages = {"", ""};
+        String[] nextTitles = titles;
+        String[] nextMessages = messages;
 
         // Increment the index for the next click
         nextIndex++;

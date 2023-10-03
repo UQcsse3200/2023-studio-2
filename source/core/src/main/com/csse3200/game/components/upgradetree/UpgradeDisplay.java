@@ -42,8 +42,8 @@ import java.util.List;
  * The class extends the Window class from libGDX to represent a pop-up or overlay menu in the game.
  */
 public class UpgradeDisplay extends Window {
-    private static final float WINDOW_WIDTH_SCALE = 0.70f;
-    private static final float WINDOW_HEIGHT_SCALE = 0.65f;
+    private static final float WINDOW_WIDTH_SCALE = 0.85f;
+    private static final float WINDOW_HEIGHT_SCALE = 0.85f;
     private static final float SIZE = 64f;
     private static final String MATERIALS_FORMAT = "%d";
     private final InputOverrideComponent inputOverrideComponent;
@@ -181,7 +181,7 @@ public class UpgradeDisplay extends Window {
      */
     private Table createTitleTable() {
         Table titleTable = new Table();
-        Label title = new Label("UPGRADE TREE", skin, "large");
+        Label title = new Label("UPGRADE TREE", skin, "thick");
         title.setColor(Color.BLACK);
         title.setFontScale(0.5F, 0.5F);
         titleTable.add(title);
@@ -202,7 +202,7 @@ public class UpgradeDisplay extends Window {
 
         buildTrees();
 
-        nodeXSpacing = ((getWidth() * getScaleX()) / (trees.size() * 3));
+        nodeXSpacing = ((getWidth() * getScaleX()) / (trees.size() * 4));
         nodeYSpacing = (getHeight() * getScaleY()) / 4;
 
         float allocatedWidth = (getWidth() * getScaleX()) / (trees.size() * 1.2f);

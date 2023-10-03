@@ -7,12 +7,20 @@
     "weaponDuration": 50,
     "rotationSpeed": 0,
     "textureAtlas": "images/weapons/slingshot.atlas",
-    "imageScale" : 1,
+    "imageScale" : 0.5,
     "animationType" : 1,
     "imagePath" : "images/weapons/slingshotStatic.png",
     "type" : "RANGED_SLINGSHOT",
     "slotType" : "ranged",
-    "ammoUse" : 0
+    "ammoUse" : 0,
+
+    "sound": {
+      "soundsMap": {
+        "start": "sounds/dodgingAlertSweep.wav",
+        "mid" : "sounds/footStepsInTheForestGround.wav",
+        "stop" : "sounds/PlayerHealthRecharge.wav"
+      }
+    }
   },
 
   "RANGED_BOOMERANG": {
@@ -27,7 +35,15 @@
     "animationType" : 1,
     "imagePath" : "images/weapons/boomerangStatic.png",
     "type" : "RANGED_BOOMERANG",
-    "slotType" : "ranged"
+    "slotType" : "ranged",
+
+    "sound": {
+      "soundsMap": {
+        "start": "sounds/dodgingAlertSweep.wav",
+        "mid" : "sounds/footStepsInTheForestGround.wav",
+        "stop" : "sounds/PlayerHealthRecharge.wav"
+      }
+    }
   },
 
   "RANGED_HOMING": {
@@ -42,7 +58,15 @@
     "animationType" : 8,
     "imagePath" : "images/weapons/rocket_image.png",
     "type" : "RANGED_HOMING",
-    "slotType" : "ranged"
+    "slotType" : "ranged",
+
+    "sound": {
+      "soundsMap": {
+        "start": "sounds/dodgingAlertSweep.wav",
+        "mid" : "sounds/footStepsInTheForestGround.wav",
+        "stop" : "sounds/PlayerHealthRecharge.wav"
+      }
+    }
   },
 
   "MELEE_WRENCH": {
@@ -58,7 +82,15 @@
     "animationType" : 1,
     "imagePath" : "images/weapons/wrench.png",
     "type" : "MELEE_WRENCH",
-    "slotType" : "melee"
+    "slotType" : "melee",
+
+    "sound": {
+      "soundsMap": {
+        "start": "sounds/dodgingAlertSweep.wav",
+        "mid" : "sounds/footStepsInTheForestGround.wav",
+        "stop" : "sounds/PlayerHealthRecharge.wav"
+      }
+    }
   },
 
   "MELEE_KATANA": {
@@ -75,7 +107,15 @@
     "imagePath" : "images/upgradetree/sword.png",
     "type" : "MELEE_KATANA",
     "slotType" : "melee",
-    "ammoUse" : 0
+    "ammoUse" : 0,
+
+    "sound": {
+      "soundsMap": {
+        "start": "sounds/dodgingAlertSweep.wav",
+        "mid" : "sounds/footStepsInTheForestGround.wav",
+        "stop" : "sounds/PlayerHealthRecharge.wav"
+      }
+    }
   },
 
   "MELEE_BEE_STING": {
@@ -93,7 +133,15 @@
     "type" : "MELEE_BEE_STING",
     "slotType" : "melee",
     "ammoUse" : 5,
-    "projectiles" : 8
+    "projectiles" : 8,
+
+    "sound": {
+      "soundsMap": {
+        "start": "sounds/dodgingAlertSweep.wav",
+        "mid" : "sounds/footStepsInTheForestGround.wav",
+        "stop" : "sounds/PlayerHealthRecharge.wav"
+      }
+    }
   },
 
   "STICK": {
@@ -108,7 +156,15 @@
     "imageScale" : 1,
     "imagePath" : "images/upgradetree/stick.png",
     "type" : "STICK",
-    "slotType" : "melee"
+    "slotType" : "melee",
+
+    "sound": {
+      "soundsMap": {
+        "start": "sounds/dodgingAlertSweep.wav",
+        "mid" : "sounds/footStepsInTheForestGround.wav",
+        "stop" : "sounds/PlayerHealthRecharge.wav"
+      }
+    }
   },
 
   "WOODHAMMER": {
@@ -120,7 +176,9 @@
     "imagePath" : "images/upgradetree/hammer1.png",
     "type" : "WOODHAMMER",
     "slotType" : "building",
-    "ammoUse" : 0
+    "ammoUse" : 0,
+
+    "sound": {"soundsMap": {}}
   },
 
   "STONEHAMMER": {
@@ -129,7 +187,8 @@
     "imagePath" : "images/upgradetree/hammer2.png",
     "type" : "STONEHAMMER",
     "slotType" : "building",
-    "ammoUse" : 0
+    "ammoUse" : 0,
+    "sound": {"soundsMap": {}}
   },
 
   "STEELHAMMER": {
@@ -138,6 +197,7 @@
     "imagePath" : "images/upgradetree/hammer2.png",
     "type" : "STEELHAMMER",
     "slotType" : "building",
-    "ammoUse" : 0
+    "ammoUse" : 0,
+    "sound": {"soundsMap": {}}
   }
 }

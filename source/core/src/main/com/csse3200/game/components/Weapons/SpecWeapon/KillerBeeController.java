@@ -24,9 +24,9 @@ public class KillerBeeController extends ProjectileController {
     protected void initial_animation(AnimationRenderComponent animator) {
         int dir = Math.round(currentRotation / 45);
         switch (dir) {
-            case 0, 1, 7 -> animator.startAnimation("RIGHT1");
-            case 2 -> animator.startAnimation("UP");
-            case 3, 4, 5 -> animator.startAnimation("LEFT1");
+            case 0, 7 -> animator.startAnimation("RIGHT1");
+            case 2, 1, 3 -> animator.startAnimation("UP");
+            case 4, 5 -> animator.startAnimation("LEFT1");
             case 6 -> animator.startAnimation("DOWN");
         }
     }

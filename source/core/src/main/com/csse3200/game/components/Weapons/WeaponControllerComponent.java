@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.player.WeaponComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
@@ -16,11 +18,14 @@ public abstract class WeaponControllerComponent extends Component {
     protected int remainingDuration;
     /* The rotation of the weapon indicating its "forward" direction*/
     protected float currentRotation;
+    /* Reference to player entity */
+    protected final Entity player;
 
     /**
      * Class to store variables of a spawned weapon
      */
-    public WeaponControllerComponent(WeaponConfig config, float attackDirection) {
+    public WeaponControllerComponent(WeaponConfig config, float attackDirection, Entity player) {
+        this.player = player;
         this.config = config;
         this.remainingDuration = config.weaponDuration;
         this.currentRotation = attackDirection;
@@ -115,6 +120,7 @@ public abstract class WeaponControllerComponent extends Component {
     private void despawn() {
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
         if (animator != null) {
+            entity.getEvents().trigger("playSound", "stop");
             animator.stopAnimation();
         }
         Gdx.app.postRunnable(entity::dispose);

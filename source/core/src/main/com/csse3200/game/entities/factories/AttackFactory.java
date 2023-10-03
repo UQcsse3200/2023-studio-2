@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.SpecWeapon.*;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
@@ -80,8 +81,9 @@ public class AttackFactory {
                 .addComponent(new TouchAttackComponent((short)
                         (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE)))
                 .addComponent(new AnimationRenderComponent(new TextureAtlas(config.textureAtlas)))
-                .addComponent(wepCon)
-                .addComponent(new CombatStatsComponent(30, (int) config.damage, 1, false));
+                .addComponent(new CombatStatsComponent(30, (int) config.damage, 1, false))
+                .addComponent(new SoundComponent(config.sound))
+                .addComponent(wepCon);
 
         //Final configurations on entity
         attack.setEntityType("playerWeapon");

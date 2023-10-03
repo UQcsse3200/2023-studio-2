@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.factories.AttackFactory;
 import com.csse3200.game.entities.factories.PlayerWeaponFactory;
 import com.csse3200.game.services.ServiceLocator;
@@ -16,7 +17,6 @@ import java.util.ArrayList;
  * respond to an enemy attack use an attack factory to generate a weapon entity
  */
 public class WeaponComponent extends Component {
-
     /* Entity reference to projectile that follows */
     private Entity holdingWeapon;
 
@@ -26,9 +26,9 @@ public class WeaponComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("weaponAttack", this::playerAttacking);
-        entity.getEvents().addListener("changeWeapon", this::makeNewHolding);
+        entity.getEvents().addListener("changeWeapon", this::updateHolding);
         this.holdingWeapon = null;
-        makeNewHolding(WeaponType.MELEE_KATANA);
+        this.updateHolding(WeaponType.MELEE_KATANA);
     }
 
     /**
@@ -48,10 +48,24 @@ public class WeaponComponent extends Component {
 
         for (Entity newAttack : newAttacks) {
             ServiceLocator.getEntityPlacementService().PlaceEntity(newAttack);
+            newAttack.getEvents().trigger("playSound", "start");
         }
+
         InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+        makeNewHolding(weaponType);
         entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(),
                 invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
+    }
+
+    private void updateHolding(WeaponType weaponType) {
+        InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+        WeaponConfig config = invComp.getConfigs().GetWeaponConfig(weaponType);
+
+        if (config.slotType.equals("building")) {
+            makeNewHolding(weaponType);
+        } else if (this.holdingWeapon != null) {
+            this.holdingWeapon.dispose();
+        }
     }
 
     /**

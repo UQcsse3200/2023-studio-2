@@ -6,13 +6,11 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class ProjectileController extends WeaponControllerComponent {
-    protected final Entity player;
 
     public ProjectileController(WeaponConfig config,
                                 float attackDirection,
                                 Entity player) {
-        super(config, attackDirection);
-        this.player = player;
+        super(config, attackDirection, player);
     }
 
     @Override

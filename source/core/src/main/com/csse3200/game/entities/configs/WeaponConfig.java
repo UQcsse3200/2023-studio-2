@@ -1,5 +1,6 @@
 package com.csse3200.game.entities.configs;
 
+import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.Weapons.WeaponType;
 
 /**
@@ -23,6 +24,7 @@ public class WeaponConfig extends BaseEntityConfig {
     public float imageScale = 1;
     public String textureAtlas;
     public String imagePath;
+    public SoundsConfig sound;
 
     public WeaponType type;
     public String slotType = "new slot type";

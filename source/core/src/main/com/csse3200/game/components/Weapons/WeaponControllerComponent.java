@@ -134,7 +134,7 @@ public abstract class WeaponControllerComponent extends Component {
     private void despawn() {
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
         if (animator != null) {
-            entity.getEvents().trigger("playSound", "stop");
+            //entity.getEvents().trigger("playSound", "stop");
             animator.stopAnimation();
         }
         Gdx.app.postRunnable(entity::dispose);

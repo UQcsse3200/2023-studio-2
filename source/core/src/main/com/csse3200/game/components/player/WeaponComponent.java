@@ -48,7 +48,7 @@ public class WeaponComponent extends Component {
 
         for (Entity newAttack : newAttacks) {
             ServiceLocator.getEntityPlacementService().PlaceEntity(newAttack);
-            newAttack.getEvents().trigger("playSound", "start");
+            //newAttack.getEvents().trigger("playSound", "start");
         }
 
         InventoryComponent invComp = entity.getComponent(InventoryComponent.class);

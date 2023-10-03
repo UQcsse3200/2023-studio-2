@@ -68,10 +68,11 @@ public class SpawnerComponentTest {
     @Test
     public void testHandleNewWave_FirstWave() {
 
-        config.wave1 = new int[]{1, 2};
+        config.wave1 = new int[]{1, 2, 0};
         spawner.handleNewWave(spawner.timer.getTime());
         assertEquals(1, spawner.meleeEnemiesToSpawn);
         assertEquals(2, spawner.rangedEnemiesToSpawn);
+        assertEquals(0, spawner.bossEnemiesToSpawn);
         assertEquals(1, spawner.currentWave);
         assertTrue(spawner.isSpawning);
     }

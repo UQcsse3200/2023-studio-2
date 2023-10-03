@@ -137,28 +137,17 @@ public class CompanionStatsDisplay extends UIComponent {
         //Add the companions health bar
         createHealthBar(companionStatisticsUI);
         companionStatisticsUI.row();
-
+        //Add the companions Mode section
         createModesBar(companionStatisticsUI);
         companionStatisticsUI.row();
-
-        // ADD THE COMPANIONS MODE INFORMATION
-        /*CharSequence companionModeText = "Mode: Normal";
-        companionModeLabel = new Label(companionModeText, skin, "small");
-        companionStatisticsUI.add(companionModeLabel);
-        companionStatisticsUI.row();*/
+        //Add the inventory button below
+        createInventoryButton(companionStatisticsUI);
 
         // Place all smaller UI objects into container
         container.add(companionStatisticsUI);
 
         // Place container on the screen
         stage.addActor(container);
-
-        //stage.addActor(companionStatisticsUI);
-
-        //createInventoryButton(statsTable);
-
-        //
-        //stage.addActor(container);
 
     }
 
@@ -229,6 +218,7 @@ public class CompanionStatsDisplay extends UIComponent {
     public void createInventoryButton(Table statsTable) {
         TextButton button = new TextButton("Inventory", skin);
 
+        //How to detect when the button is pressed, and raise the inventory page
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

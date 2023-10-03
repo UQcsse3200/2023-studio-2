@@ -75,6 +75,7 @@ public class CompanionWeaponController extends Component {
         //Update position and rotation of projectile
         entity.setPosition(new Vector2(position.x + movement.x, position.y + movement.y));
 
+
     }
 //    private void despawn() {
 //        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
@@ -87,12 +88,14 @@ public class CompanionWeaponController extends Component {
 
     private Vector2 update_swing() {
         CompanionWeaponTargetComponent weaponTargetComponent = entity.getComponent(CompanionWeaponTargetComponent.class);
-        Vector2 movement = weaponTargetComponent.get_pos_of_target();
+        Vector2 targetPosition = weaponTargetComponent.get_pos_of_target();
 
-        this.currentRotation -= this.rotationSpeed;
-        double radians = Math.toRadians(currentRotation);
-        movement.x += (float) Math.cos(radians) * 0.01f * this.speed;
-        movement.y += (float) Math.sin(radians) * 0.01f * this.speed;
+        // Calculate the direction vector towards the target
+        Vector2 direction = targetPosition.cpy().sub(entity.getPosition()).nor();
+
+        // Update the position based on the direction and speed
+        Vector2 movement = direction.scl(this.speed * Gdx.graphics.getDeltaTime());
+
         return movement;
     }
 }

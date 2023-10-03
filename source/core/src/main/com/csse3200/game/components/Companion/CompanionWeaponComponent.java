@@ -24,7 +24,7 @@ public class CompanionWeaponComponent extends Component {
         ServiceLocator.getEntityService().getCompanion().getEvents().addListener("changeWeapon", this::makeNewHolding);
         ServiceLocator.getEntityService().getCompanion().getEvents().addListener("updateAmmo", this::tempPrintAmmo);
         this.CurrentWeapon = null;
-        makeNewHolding(CompanionWeaponType.Death_Potion);
+        /*makeNewHolding(CompanionWeaponType.Death_Potion);*/
     }
 
     private void tempPrintAmmo(int ammo, int maxAmmo) {

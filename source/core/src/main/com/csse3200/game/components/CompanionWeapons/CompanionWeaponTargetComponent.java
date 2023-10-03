@@ -1,10 +1,15 @@
 package com.csse3200.game.components.CompanionWeapons;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.Companion.KeyboardCompanionInputComponent;
+import com.csse3200.game.entities.factories.EnemyFactory;
+
+import java.util.List;
+import java.util.Random;
 
 public class CompanionWeaponTargetComponent extends Component {
     Entity entity;
@@ -21,24 +26,48 @@ public class CompanionWeaponTargetComponent extends Component {
     }
 
     public Vector2 get_pos_of_target() {
-        //switch statement to define weapon movement based on type (a projectile
         Vector2 pos;
 
         switch (this.weaponType) {
             case Death_Potion:
-                KeyboardCompanionInputComponent keyboardCompanionInputComponent = entity.getComponent(KeyboardCompanionInputComponent.class);
-                //if (keyboardPlayerInputComponent == null) {return null;}
-                pos = keyboardCompanionInputComponent.getLastMousePos();
-                Vector2 eScl = entity.getScale();
-                return new Vector2(pos.x + eScl.x/2 - 0.1f, pos.y + eScl.y/2 - 0.1f);
+                List<Entity> enemies = EnemyFactory.getEnemyList();
+                if (!enemies.isEmpty()) {
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(enemies.size());
+                    Entity enemy = enemies.get(randomIndex);
+                    if (enemy != null) {
+                        // Get the position of the selected enemy
+                        pos = enemy.getPosition();
 
-//                var delta = entity.getPosition().sub(this.trackPrev);
-//                this.trackPrev = entity.getPosition();
-//                return delta;
+                        // Schedule a task to dispose of the enemy after 5 seconds
+                        Timer.schedule(new Timer.Task() {
+                            @Override
+                            public void run() {
+                                if (enemies.contains(enemy)) {
+                                    enemies.remove(enemy);
+                                    enemy.dispose();
+
+                                }
+                            }
+                        }, 7f);
+
+                        // Update the companion's position for tracking
+                        this.trackPrev = entity.getPosition();
+                    } else {
+                        // No valid enemy found, use previous position
+                        pos = this.trackPrev;
+                    }
+                } else {
+                    // No enemies available, use previous position
+                    pos = this.trackPrev;
+                }
+                break;
 
             default:
-                return new Vector2(0, 0);
+                pos = new Vector2(0, 0);
+                break;
         }
 
+        return pos;
     }
 }

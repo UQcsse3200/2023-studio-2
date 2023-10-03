@@ -27,6 +27,7 @@ public class CompanionActions extends Component {
 
 
     private static final float ROTATION_SPEED = 10.0f;
+    private static final String CHANGEWEAPON = "changeWeapon";
     private float currentRotation = 5.0f;
     private Entity player = ServiceLocator.getEntityService().getPlayer();
 
@@ -93,7 +94,8 @@ public class CompanionActions extends Component {
         } else if (Objects.equals(mode, COMPANION_MODE_ATTACK)) {
             COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
             entity.getEvents().trigger("companionModeChange","Attack");
-            entity.getComponent(FollowComponent.class).setFollowSpeed(0f);
+            /*entity.getComponent(FollowComponent.class).setFollowSpeed(0f);*/
+            triggerInventoryEvent("ranged");
         }
     }
 
@@ -215,6 +217,14 @@ public class CompanionActions extends Component {
     }
     public Vector2 getSpeed() {
         return COMPANION_SPEED;
+    }
+
+    private void triggerInventoryEvent(String slot) {
+        CompanionInventoryComponent invComp = ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class);
+        invComp.setEquipped(slot);
+
+        ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
+
     }
 
 }

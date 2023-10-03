@@ -24,7 +24,6 @@
       "texture": "images/structure-icons/gate.png"
     },
     "com.csse3200.game.components.structures.tools.TurretTool": {
-      "level": 0,
       "name": "Basic Turret",
       "description": "Automated turret to guard your territory. It's always alert!",
       "cost": {
@@ -34,8 +33,8 @@
       "texture": "images/structure-icons/turret.png"
     },
     "com.csse3200.game.components.structures.tools.AdvTurretTool": {
-      "level": 1,
       "name": "Advanced Turret",
+      "description": "Even powerful turret. Be aware enemies!",
       "cost": {
         "Durasteel": 75,
         "Solstite": 50

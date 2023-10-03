@@ -345,7 +345,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
      * If the walk direction is zero, it triggers the walkStop event.
      */
     private void triggerWalkEvent() {;
-        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/companionWalkSound.wav", Sound.class);
+        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/companionwalksound.wav", Sound.class);
         if (this.getTesting() == 0) {
             if (walkDirection.epsilonEquals(Vector2.Zero)) {
                 entity.getEvents().trigger("walkStop");

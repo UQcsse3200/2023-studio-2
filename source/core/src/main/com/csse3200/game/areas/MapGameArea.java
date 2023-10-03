@@ -496,11 +496,6 @@ public class MapGameArea extends GameArea{
         ResourceService resourceService = ServiceLocator.getResourceService();
 
         if (mapConfig == null) return;
-<<<<<<< Updated upstream
-=======
-        resourceService.unloadAssets(mapConfig.getEntityTextures());
-        AssetsConfig assets = mapConfig.assets;
->>>>>>> Stashed changes
 
         if (mapConfig.getEntityTextures() != null)
             resourceService.unloadAssets(mapConfig.getEntityTextures());

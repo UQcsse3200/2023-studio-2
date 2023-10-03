@@ -72,9 +72,9 @@ public class BossTask extends DefaultTask implements PriorityTask {
       specialAttackTask.create(owner);
     } else if (this.bossType == EnemyType.BossRanged) {
       // Shoots spray periodically
-      waitTask = new WaitTask(3);
+      waitTask = new WaitTask(5);
       waitTask.create(owner);
-      sprayTask = new SprayTask(target.getPosition(), 5);
+      sprayTask = new SprayTask(target);
       sprayTask.create(owner);
     }
 
@@ -121,13 +121,11 @@ public class BossTask extends DefaultTask implements PriorityTask {
     }
     // Boss Ranged
     if (this.bossType == EnemyType.BossRanged) {
-
       if (waitTask.getStatus() == Status.ACTIVE) {
         waitTask.update();
       }
-      else if (waitTask.getStatus() != Status.ACTIVE) {
-        sprayTask.setTarget(target.getPosition());
-        sprayTask.update();
+      else if (waitTask.getStatus() != Status.ACTIVE && sprayTask.getStatus() != Status.ACTIVE) {
+        sprayTask.setTarget(target);
         startSprayAttack();
         waitTask.start();
       }
@@ -143,8 +141,6 @@ public class BossTask extends DefaultTask implements PriorityTask {
     if (direction != direction2){
       start();
     }
-
-    currentTask.update();
   }
 
   @Override

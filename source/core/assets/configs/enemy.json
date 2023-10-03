@@ -84,7 +84,7 @@
     "specialAttack": 40,
     "behaviour": "PTE",
     "type": "Ranged",
-    "spritePath": "",
+    "spritePath": "images/enemy/Night.atlas",
     "isBoss": true,
     "sound": {
       "soundsMap": {

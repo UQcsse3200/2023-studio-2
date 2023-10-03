@@ -1,6 +1,7 @@
 package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.entities.Entity;
@@ -45,8 +46,6 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
 
         // Create an array to store the positions
         Vector2[] positions = new Vector2[numPositions];
-        // Create an array to store the spawn positions
-        Vector2[] spawns = new Vector2[numPositions];
 
         // Calculate the positions
         for (int i = 0; i < numPositions; i++) {
@@ -63,12 +62,23 @@ public class SpecialAttackTask extends DefaultTask implements PriorityTask {
 
             // Create a Vector2 for the position
             positions[i] = new Vector2(x, y);
-            spawns[i] = new Vector2(spawnX, spawnY);
         }
-        for (int i = 0; i < numPositions; i++) {
-            Entity bullet = ProjectileFactory.createEnemyBullet(positions[i], owner.getEntity());
-            ServiceLocator.getStructurePlacementService().spawnEntityAtVector(bullet, spawns[i]);
-        }
+        final int[] index = {0};
+        Timer.Task spawnBulletTask = new Timer.Task() {
+            @Override
+            public void run() {
+                if (index[0] < positions.length) {
+                    Vector2 location = positions[index[0]];
+                    Entity bullet = ProjectileFactory.createEnemyBullet(location, owner.getEntity());
+                    ServiceLocator.getStructurePlacementService().spawnEntityAtVector(bullet, owner.getEntity().getPosition());
+                    index[0]++;
+                }
+            }
+        };
+
+        float delayBetweenFire = 0.1f;
+        float initialDelay = 0.0f;
+        Timer.schedule(spawnBulletTask, initialDelay, delayBetweenFire);
     }
 
     @Override

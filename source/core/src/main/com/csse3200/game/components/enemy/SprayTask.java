@@ -1,6 +1,7 @@
 package com.csse3200.game.components.enemy;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.entities.Entity;
@@ -14,14 +15,13 @@ public class SprayTask extends DefaultTask implements PriorityTask {
     private boolean hasShot;
 
     private float radius;
-    private Vector2 target;
+    private Entity target;
 
     /**
      * Creates new Special Attack Task
      */
-    public SprayTask(Vector2 target, float radius) {
+    public SprayTask(Entity target) {
         this.target = target;
-        this.radius = radius;
     }
 
     @Override
@@ -38,23 +38,27 @@ public class SprayTask extends DefaultTask implements PriorityTask {
      */
     public void sprayAttack() {
         Vector2 ownerPosition = owner.getEntity().getPosition();
-        // Calculate the direction vector towards the player
-        Vector2 targetPlayerBullet = this.target, offsetBulletOne, offsetBulletTwo;
+        Vector2[] locations = new Vector2[3];
+        locations[0] = this.target.getPosition();
+        locations[1] = this.target.getPosition().rotate90(1);
+        locations[2] = this.target.getPosition().rotate90(-1);
 
-        // Calculate the directions for the other two bullets at ±45 degrees
-        float angleOffset = 60; // Angle offset in degrees
+        final int[] index = {0};
+        Timer.Task spawnBulletTask = new Timer.Task() {
+            @Override
+            public void run() {
+                if (index[0] < locations.length) {
+                    Vector2 location = locations[index[0]];
+                    Entity bullet = ProjectileFactory.createEnemyBullet(location, owner.getEntity());
+                    ServiceLocator.getStructurePlacementService().spawnEntityAtVector(bullet, ownerPosition);
+                    index[0]++;
+                }
+            }
+        };
 
-//        offsetBulletOne.rotateDeg(angleOffset);
-//        offsetBulletTwo.rotateDeg(-angleOffset);
-
-        // Create and spawn the bullets
-        Entity bullet1 = ProjectileFactory.createEnemyBullet(targetPlayerBullet, owner.getEntity());
-//        Entity bullet2 = ProjectileFactory.createEnemyBullet(offsetBulletOne, owner.getEntity());
-//        Entity bullet3 = ProjectileFactory.createEnemyBullet(offsetBulletTwo, owner.getEntity());
-
-        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(bullet1, ownerPosition);
-//        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(bullet2, ownerPosition);
-//        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(bullet3, ownerPosition);
+        float delayBetweenFire = 0.1f;
+        float initialDelay = 0.0f;
+        Timer.schedule(spawnBulletTask, initialDelay, delayBetweenFire);
     }
 
     @Override
@@ -64,7 +68,7 @@ public class SprayTask extends DefaultTask implements PriorityTask {
         }
     }
 
-    public void setTarget(Vector2 target) {
+    public void setTarget(Entity target) {
         this.target = target;
     }
     @Override

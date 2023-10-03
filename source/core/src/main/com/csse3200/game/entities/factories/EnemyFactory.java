@@ -77,7 +77,7 @@ public class EnemyFactory {
     List<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
     for (Entity target : targets) {
       // Adds the specific behaviour to entity
-      EnemyBehaviourSelector(target, config.type, config.behaviour, aiComponent);
+      EnemyBehaviourSelector(target, config.type, config.behaviour, aiComponent, config.isBoss);
     }
 
     TextureAtlas atlas = new TextureAtlas(config.spritePath);
@@ -108,7 +108,7 @@ public class EnemyFactory {
             .addComponent(new TurretTargetableComponent())
                 .addComponent(new SoundComponent(config.sound));
 
-    if (config.type == EnemyType.Ranged) {
+    if (config.type == EnemyType.Ranged || config.type == EnemyType.BossRanged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     } else {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
@@ -198,7 +198,7 @@ public class EnemyFactory {
    * @param type Melee, Ranged, Boss or Mixture of the referred
    * @param behaviour Player or Destructible Targeting
    */
-  private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent) {
+  private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
     boolean isPlayer = PhysicsLayer.contains(layer, (short) (PhysicsLayer.PLAYER | PhysicsLayer.COMPANION));
     boolean isStructure = PhysicsLayer.contains(layer, PhysicsLayer.STRUCTURE);
@@ -209,36 +209,37 @@ public class EnemyFactory {
     float maxChaseDistance = 100f;
 
     if (type == EnemyType.Melee && !isPlayer && !matchingBehaviour) priority = 5; //Special case for player targeting melee
+    // Select and add the necessary behaviour
+    addBehaviour(type, aiTaskComponent, target, priority, viewDistance, maxChaseDistance, isBoss);
+  }
 
-    //Special case for shooting player
-    if (type == EnemyType.Ranged || type == EnemyType.BossRanged) {
+  static void addBehaviour(EnemyType type, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance, boolean isBoss) {
+    // Select behaviour
+    if (isBoss) {
+      if (type == EnemyType.Melee) {
+        // Melee Boss
+        aiComponent.addTask(new BossTask(EnemyType.BossMelee, target, priority, viewDistance, maxChaseDistance));
+      } else if (type == EnemyType.Ranged) {
+        // Ranged Boss
+        aiComponent.addTask(new BossTask(EnemyType.BossRanged, target, priority, viewDistance, maxChaseDistance));
+      } else {
+        // Default; Melee Boss
+        aiComponent.addTask(new BossTask(EnemyType.BossMelee, target, priority, viewDistance, maxChaseDistance));
+      }
+    } else if (type == EnemyType.Melee) {
+      // Melee Enemy
+      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+    } else if (type == EnemyType.Ranged) {
+      // Ranged Enemy
       float aimDelay = 2f;
       float range = 3f;
       float shootDistance = 3f;
       viewDistance = 100f;
       maxChaseDistance = 100f;
 
-      aiTaskComponent.addTask(new AimTask(aimDelay, target, range));
-      aiTaskComponent.addTask(new RunTask(target, 11, 2f));
-      aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
-    } else {
-      addBehaviour(type, aiTaskComponent, target, priority, viewDistance, maxChaseDistance);
-    }
-  }
-
-  static void addBehaviour(EnemyType type, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance) {
-    // Select behaviour
-    if (type == EnemyType.Melee) {
-      // Default
-      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
-    } else if (type == EnemyType.BossMelee) {
-      // Sprint 2 Boss
-      aiComponent.addTask(new BossTask(type, target, priority, viewDistance, maxChaseDistance));
-    } else if (type == EnemyType.BossRanged) {
-      // Todo: add task here
-    } else {
-      // Default task
-      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+      aiComponent.addTask(new AimTask(aimDelay, target, range));
+      aiComponent.addTask(new RunTask(target, 11, 2f));
+      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
     }
   }
 

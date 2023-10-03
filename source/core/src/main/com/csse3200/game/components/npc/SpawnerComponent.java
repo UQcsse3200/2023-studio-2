@@ -24,6 +24,7 @@ public class SpawnerComponent extends Component {
     private int enemiesSpawned = 0;
     private int meleeEnemiesToSpawn = 0;
     private int rangedEnemiesToSpawn = 0;
+    private int bossEnemiesToSpawn = 0;
 
     public SpawnerComponent(SpawnerConfig config) {
         this.timer = new GameTime();
@@ -74,7 +75,7 @@ public class SpawnerComponent extends Component {
             default:
                 return;
         }
-        spawnEnemies(currentConfig[0], currentConfig[1]);
+        spawnEnemies(currentConfig[0], currentConfig[1], currentConfig[2]);
         currentWave++;
         lastTime = currentTime;
     }
@@ -86,7 +87,14 @@ public class SpawnerComponent extends Component {
      *                    also trigger sound while spawning.
      */
     private void handleEnemySpawn(long currentTime) {
-        if (meleeEnemiesToSpawn > 0) {
+        if (bossEnemiesToSpawn > 0) {
+            spawnEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
+//            spawnEnemy(EnemyType.BossRanged, EnemyBehaviour.PTE);
+            bossEnemiesToSpawn--;
+            if (entity != null) {
+                entity.getEvents().trigger("playSound", "enemySpawn"); // triggering spawning sound effects
+            }
+        } else if (meleeEnemiesToSpawn > 0) {
             spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
             meleeEnemiesToSpawn--;
             if (entity != null) {
@@ -109,12 +117,13 @@ public class SpawnerComponent extends Component {
         enemiesSpawned = 0;
     }
 
-    private void spawnEnemies(int meleeCount, int rangedCount) {
+    private void spawnEnemies(int meleeCount, int rangedCount, int bossCount) {
         isSpawning = true;
-        enemiesToSpawn = meleeCount + rangedCount;
+        enemiesToSpawn = meleeCount + rangedCount + bossCount;
         enemiesSpawned = 0;
         meleeEnemiesToSpawn = meleeCount;
         rangedEnemiesToSpawn = rangedCount;
+        bossEnemiesToSpawn = bossCount;
     }
 
     private void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {

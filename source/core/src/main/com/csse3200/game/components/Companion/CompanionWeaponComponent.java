@@ -16,7 +16,9 @@ public class CompanionWeaponComponent extends Component {
     private Entity CurrentWeapon;
 
 
-
+    /**
+     * Set up the listeners on the key binds
+     */
     public void create() {
         ServiceLocator.getEntityService().getCompanion().getEvents().addListener("weaponAttack", this::playerAttacking);
         ServiceLocator.getEntityService().getCompanion().getEvents().addListener("changeWeapon", this::makeNewHolding);

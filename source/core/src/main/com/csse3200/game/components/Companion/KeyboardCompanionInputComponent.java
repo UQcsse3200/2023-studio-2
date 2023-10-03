@@ -40,8 +40,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
     static HashMap<Integer, Integer> keyFlags = new HashMap<>();
     Vector2 lastMousePos = new Vector2(0, 0);
 
-    private final CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay();
-
     public Vector2 getLastMousePos() {
         return this.lastMousePos.cpy();
     }
@@ -201,16 +199,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                 entity.getEvents().trigger("CompanionSwitchMode");
                 return true;
             }
-/*
 
-            case Keys.H -> {
-                companionStatsDisplay.toggleInfiniteHealth();
-                companionStatsDisplay.toggleInvincibility();
-                return true;
-            }
-
-
-*/
             case Keys.P -> {
                 triggerInventoryEvent("ranged");
                 return true;

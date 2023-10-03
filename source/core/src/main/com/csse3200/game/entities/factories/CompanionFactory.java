@@ -83,7 +83,7 @@ public class CompanionFactory {
                         .addComponent(new HealthBarComponent(true))
                         .addComponent(new CompanionWeaponComponent())
                         /*.addComponent(infanimator)*/
-                        .addComponent(new CompanionStatsDisplay())
+                        .addComponent(new CompanionStatsDisplay(config))
                         .addComponent(new CompanionInGameAlerts())
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new FollowComponent(player,1f))

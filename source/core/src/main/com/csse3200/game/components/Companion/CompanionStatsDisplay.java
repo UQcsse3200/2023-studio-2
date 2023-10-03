@@ -13,6 +13,7 @@ import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.CompanionConfig;
 import com.csse3200.game.entities.configs.CompanionWeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -29,15 +30,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
  */
 public class CompanionStatsDisplay extends UIComponent {
     Table companionStatisticsUI;
-    private Table weaponImageTable;
     Table container;
     Table statsTable;
 
-    private boolean update = false;
+    private final int maxHealth;
+    private float healthBarWidth;
 
-    Table playerLowHealthAlert;
-
-    Table titleTable;
     private long duration;
     private CompanionInventoryComponent inventory;
 
@@ -66,10 +64,13 @@ public class CompanionStatsDisplay extends UIComponent {
     /**
      * Default constructor for CompanionStatsDisplay.
      */
-    public CompanionStatsDisplay() {
+    public CompanionStatsDisplay(CompanionConfig config) {
+        maxHealth = config.health;
+        healthBarWidth = 320f;
     }
     /**
      * Creates reusable UI styles and adds actors to the stage.
+     * Check this
      */
     @Override
     public void create() {
@@ -82,13 +83,7 @@ public class CompanionStatsDisplay extends UIComponent {
         entity.getEvents().addListener("updateAmmo", this::updateAmmo);
 //        entity.getEvents().addListener("changeWeapon", this::updateWeapon);
     }
-    public void updateAmmo(int currentAmmo, int maxAmmo) {
-        CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-        if (maxAmmo == 100) {  // todo: make non-ammo things not have ammo
-            ammoText = "    -";
-        }
-        ammoLabel.setText(ammoText);
-    }
+
     private CompanionInventoryComponent Inventory;
 
 //    public void updateWeapon(CompanionWeaponType weapon) {
@@ -99,23 +94,7 @@ public class CompanionStatsDisplay extends UIComponent {
 //        updateAmmo(Inventory.GetCurrentAmmo(), Inventory.GetCurrentMaxAmmo());
 //    }
 
-    public void createInventoryButton(Table statsTable) {
-        TextButton button = new TextButton("Inventory", skin);
 
-        button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                KeyboardPlayerInputComponent keys =
-                        ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
-                /*keys.clearWalking();*/
-                CompanionInventoryComponent inventoryComponent = new CompanionInventoryComponent();
-                CompanionInventoryDisplay display = CompanionInventoryDisplay.createUpgradeDisplay(inventoryComponent);
-                ServiceLocator.getRenderService().getStage().addActor(display);
-            }
-        });
-
-        statsTable.add(button);
-    }
 
     /**
      * Creates actors and positions them on the stage using a companionStatisticsUI.
@@ -167,52 +146,45 @@ public class CompanionStatsDisplay extends UIComponent {
 
         container.add(statsTable);
         stage.addActor(container);
-//        Table innerTable = new Table();
-//        createAmmoBar(innerTable);
-//        statsTable.add(innerTable).left();
-//
-//        container.add(statsTable);
-//        stage.addActor(container);
 
     }
 
 
+    /**
+     * Creates the inventory button which gives access to the things inside the companions inventory!!!
+     * @param statsTable - the Table UI element to print to essentially
+     */
+    public void createInventoryButton(Table statsTable) {
+        TextButton button = new TextButton("Inventory", skin);
 
-//    public void createAmmoBar(Table parentTable) {
-//        companion = ServiceLocator.getEntityService().getCompanion();
-//        inventory = companion.getComponent(CompanionInventoryComponent.class);
-//
-//        Image ammoBarFrame;
-//        ammoBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
-//// Assuming PlayerStatsDisplay is the class with the getConfigs() method
-//        CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay(); // Create an instance
-//
-//// Now, you can call getConfigs() on the instance
-//        CompanionWeaponConfig weaponConfig = companionStatsDisplay.getConfigs().GetWeaponConfig(weaponType);
-//
-//        CompanionWeaponConfig config = CompanionInventoryComponent.getConfigs().GetWeaponConfig(inventory.getEquippedType());
-//        Image weaponImage = new Image( new Texture(config.imagePath));
-//        int currentAmmo = Inventory.GetCurrentAmmo();
-//        int maxAmmo = Inventory.GetCurrentMaxAmmo();
-//        CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-//        ammoLabel = new Label(ammoText, skin, "small");
-//        ammoLabel.setFontScale(0.21f);
-//
-//        Table ammoFrameTable = new Table();
-//        ammoFrameTable.add(ammoBarFrame).size(150f, 65f);
-//
-//        weaponImageTable = new Table();
-//        weaponImageTable.add(weaponImage).size(25f);
-//
-//        Table ammoInfo = new Table();
-//        ammoInfo.add(weaponImageTable).left().pad(5).padTop(10);
-//        ammoInfo.add(ammoLabel).size(80f).right().pad(5).padTop(10);
-//
-//        Stack ammoStack = new Stack();
-//        ammoStack.add(ammoFrameTable);
-//        ammoStack.add(ammoInfo);
-//        parentTable.add(ammoStack).left().padLeft(5).padRight(5);
-//    }
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                KeyboardPlayerInputComponent keys =
+                        ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
+                /*keys.clearWalking();*/
+                CompanionInventoryComponent inventoryComponent = new CompanionInventoryComponent();
+                CompanionInventoryDisplay display = CompanionInventoryDisplay.createUpgradeDisplay(inventoryComponent);
+                ServiceLocator.getRenderService().getStage().addActor(display);
+            }
+        });
+
+        statsTable.add(button);
+    }
+
+    /**
+     * For weapons with a set number of ammo/pieces
+     * Function which updates the amount of ammo seen on screen, for weapons with limited number of uses
+     * @param currentAmmo - amount of ammo in the weapon left
+     * @param maxAmmo - amount of total ammo storage in that weapon
+     */
+    public void updateAmmo(int currentAmmo, int maxAmmo) {
+        CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
+        if (maxAmmo == 100) {  // todo: make non-ammo things not have ammo
+            ammoText = "    -";
+        }
+        ammoLabel.setText(ammoText);
+    }
 
     /**
      * Set the companion's image to an invincible state.
@@ -271,6 +243,10 @@ public class CompanionStatsDisplay extends UIComponent {
     }
 
 
+    /**
+     * Draw
+     * @param batch Batch to render to.
+     */
     @Override
     public void draw(SpriteBatch batch) {
         // Code for drawing UI elements and updating the projection matrix.

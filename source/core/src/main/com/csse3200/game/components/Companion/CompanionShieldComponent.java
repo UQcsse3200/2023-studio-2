@@ -73,6 +73,8 @@ public class CompanionShieldComponent extends Component {
 
     /**
      * Call this if you want to create a shield ages away from the companion
+     * Essentially, we must provide the WeaponController class with an entity (we think) or else it will break
+     * So, we provide it with a shield ages away
      */
     private void makeFakeHolding() {
         if (this.holdingShield != null) {this.holdingShield.dispose();}

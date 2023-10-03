@@ -4,8 +4,8 @@ entities: {
 		{
 			class: com.csse3200.game.entities.configs.CompanionConfig
 			position: {
-				x: 19
-				y: 30
+				x: 17
+				y: 27
 			}
 			health: 50
 			baseAttack: 10
@@ -17,8 +17,8 @@ entities: {
 			class: com.csse3200.game.entities.configs.PlayerConfig
 			spritePath: images/player/player.atlas
 			position: {
-				x: 20
-				y: 30
+				x: 17
+				y: 27
 			}
 			health: 100
 			baseAttack: 10

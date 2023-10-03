@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
@@ -52,6 +53,7 @@ public class MapGameArea extends GameArea{
     private boolean validLoad = true;
     private static List<Entity> itemsOnMap = new ArrayList<>();
     private String thing;
+    private static boolean freezing;
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
@@ -97,6 +99,7 @@ public class MapGameArea extends GameArea{
         //spawnFire();
         //spawnBotanist();
         //spawnEnvironmentDamage();
+        spawnFreezingArea();
 
         displayUI();
         playMusic();
@@ -161,6 +164,14 @@ public class MapGameArea extends GameArea{
         spawnEntityAt(envDamage, new GridPoint2(45, 45), false, false);
     }
 
+    private void spawnFreezingArea() {
+        if (mapConfig.areaEntityConfig == null) return;
+        System.out.println("freezing spawned");
+
+        Entity freezeArea = FreezingAreaFactory.createFreezingArea();
+        spawnEntityAt(freezeArea, new GridPoint2(40, 60), false, false);
+    }
+
     public static float getSpeedMult() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
         Vector2 playerPos = getPlayer().getPosition();
@@ -180,8 +191,12 @@ public class MapGameArea extends GameArea{
     }
 
     public static boolean isFreezing() {
-        Vector2 playerPos = getPlayer().getPosition();
-        return true;
+        return freezing;
+    }
+
+    public static void toggleFreezing(Entity player) {
+        System.out.println("TOGGLE");
+        freezing = !freezing;
     }
 
     /**

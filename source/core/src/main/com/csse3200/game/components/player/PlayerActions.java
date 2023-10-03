@@ -48,13 +48,13 @@ public class PlayerActions extends Component {
         // Set the condition to always true for now
         if (MapGameArea.isFreezing()) {
             if(freezeFactor > 0.25f) {
-                freezeFactor -= 0.005f;
+                freezeFactor -= 0.001f;
             } else {
                 freezeFactor = 0.25f;
             }
         } else {
             if(freezeFactor < 1.0f) {
-                freezeFactor += 0.005f;
+                freezeFactor += 0.02f;
             } else {
                 freezeFactor = 1.0f;
             }

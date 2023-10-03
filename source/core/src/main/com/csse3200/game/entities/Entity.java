@@ -58,22 +58,6 @@ public class Entity {
   }
 
   /**
-   * Function to set rotation
-   * @param rot - rotation of entity to set to
-   */
-  public void setRotation(float rot) {
-    this.rotation = rot;
-  }
-
-  /**
-   * function to get rotation
-   * @return return rotation of entity
-   */
-  public float getRotation() {
-    return this.rotation;
-  }
-
-  /**
    * Enable or disable an entity. Disabled entities do not run update() or earlyUpdate() on their
    * components, but can still be disposed.
    *

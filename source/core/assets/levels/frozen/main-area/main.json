@@ -56,11 +56,9 @@
     "images/npc/Astro_NPC.png",
     "images/player/widestatbar.png",
     "images/player/heart.png",
-<<<<<<< HEAD
     "images/space_navigation_planet_2.png",
     "images/explosives/explosive-barrel.png",
-    "images/explosives/landmine.png"
-=======
+    "images/explosives/landmine.png",
     "images/player/hearts.png",
     "images/space_navigation_planet_2.png",
     "images/planets/space_navigation_planet_2.png",
@@ -68,7 +66,6 @@
     "particle-effects/durasteel/durasteel_pixel.png",
     "images/navigationmap/planets/glacial_desolation.png",
     "images/companion/Companion_spritesheet.png"
->>>>>>> main
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",

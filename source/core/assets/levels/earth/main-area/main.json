@@ -52,13 +52,10 @@
     "images/action-feedback/warning.png",
     "map/treetop.png",
     "particle-effects/explosion/particle.png",
-<<<<<<< HEAD
     "images/explosives/explosive-barrel.png",
-    "images/explosives/landmine.png"
-=======
+    "images/explosives/landmine.png",
     "images/resources/Cracked_Ground.png",
     "images/enemy/botanist.png"
->>>>>>> main
   ],
   "textureAtlasPaths": [
     "images/enemy/troll_enemy.atlas",

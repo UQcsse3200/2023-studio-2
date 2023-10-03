@@ -1,11 +1,12 @@
 package com.csse3200.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.TutorialDialogue;
+//import com.csse3200.game.areas.TutorialDialogue;
 import com.csse3200.game.areas.TutorialGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
@@ -26,6 +27,8 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.TitleBox;
+import com.csse3200.game.ui.TutorialDialogue;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
@@ -34,13 +37,15 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.csse3200.game.ui.UIComponent.skin;
+
 public class TutorialScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(PlanetScreen.class);
     private final GdxGame game;
 
     private final String name;
 
-
+private Stage stage;
     private Entity player;
 
     private String currentAreaName = "primary";
@@ -82,7 +87,17 @@ public class TutorialScreen extends ScreenAdapter {
         allGameAreas.get(currentAreaName).create();
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
+        showTutorialDialogueBox();
         this.player = allGameAreas.get(currentAreaName).getPlayer();
+    }
+    private void showTutorialDialogueBox() {
+        // Create and display the TitleBox
+        TutorialDialogue tutorialDialogue = new TutorialDialogue(game, "Tutorial", "Hello PLayer", skin);
+        // Adjust title and skin as needed
+        tutorialDialogue.showDialog(ServiceLocator.getRenderService().getStage());
+
+        // Pause the game while the TitleBox is displayed
+        Gdx.graphics.setContinuousRendering(false);
     }
 
     private void generateGameAreas() {
@@ -206,13 +221,13 @@ public class TutorialScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().register(ui);
 
     }
-    private TutorialDialogue getTutorialDialogue() {
-        TutorialGameArea tutorialGameArea = (TutorialGameArea) allGameAreas.get(currentAreaName);
-        if (tutorialGameArea != null) {
-            return tutorialGameArea.getTutorialDialogue();
-        }
-        return null;
-    }
+//    private TutorialDialogue getTutorialDialogue() {
+//        TutorialGameArea tutorialGameArea = (TutorialGameArea) allGameAreas.get(currentAreaName);
+//        if (tutorialGameArea != null) {
+//            return tutorialGameArea.getTutorialDialogue();
+//        }
+//        return null;
+//    }
 
     /**
      * Move the camera to follow the player around at screen centre.

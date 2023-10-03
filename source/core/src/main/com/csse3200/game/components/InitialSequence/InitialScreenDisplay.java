@@ -106,8 +106,6 @@ public class InitialScreenDisplay extends UIComponent {
                 alertBox.showDialog(stage);
 
                 logger.info("Loading Story");
-                TitleBox titleBox = new TitleBox(game, "Story Introduction", skin);
-                titleBox.showDialog(stage);
                 game.setScreen(ScreenType.GAME_STORY);
             }
         });

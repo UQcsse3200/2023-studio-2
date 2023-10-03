@@ -42,7 +42,7 @@ public class TutorialDialogue extends Dialog {
             okButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    String[] nextMessages = {"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected.", "Emily: We can handle it. \nLead the way!"};
+                    String[] nextMessages = {"NPC: (Relieved) Thank you so much! There's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected.", "Emily: We can handle it. \nLead the way!"};
                     String[] nextTitles = {"", ""};
 
                     // Increment the index for the next click

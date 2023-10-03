@@ -1,5 +1,6 @@
 package com.csse3200.game.components.tasks;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
@@ -41,14 +42,12 @@ public class MovementTask extends DefaultTask {
     logger.debug("Starting movement towards {}", target);
     lastTimeMoved = gameTime.getTime();
     lastPos = owner.getEntity().getPosition();
-
-    this.owner.getEntity().getEvents().trigger("changeDirection", getDirection());
   }
 
 
   @Override
   public void update() {
-    if (isAtTarget()) {
+    if (isAtTarget() || isAtTargetGrid()) {
       movementComponent.setMoving(false);
       status = Status.FINISHED;
       logger.debug("Finished moving to {}", target);
@@ -71,6 +70,12 @@ public class MovementTask extends DefaultTask {
 
   private boolean isAtTarget() {
     return owner.getEntity().getPosition().dst(target) <= stopDistance;
+  }
+
+  private boolean isAtTargetGrid() {
+    GridPoint2 startGrid = owner.getEntity().getGridPosition();
+    GridPoint2 targetGrid = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target);
+    return targetGrid.equals(startGrid);
   }
 
   private void checkIfStuck() {

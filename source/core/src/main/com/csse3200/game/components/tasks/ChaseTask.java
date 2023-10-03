@@ -1,21 +1,16 @@
 package com.csse3200.game.components.tasks;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
+import com.csse3200.game.components.npc.PathFinder;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsEngine;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.raycast.RaycastHit;
-import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.DeathComponent;
 
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
+import java.util.List;
 
 /** Chases a target entity until they get too far away or line of sight is lost */
 public class ChaseTask extends DefaultTask implements PriorityTask {
@@ -23,12 +18,11 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private final int priority;
   private final float viewDistance;
   private final float maxChaseDistance;
-  private final float shootDistance;
-  private final PhysicsEngine physics;
-  private final DebugRenderer debugRenderer;
-  private final RaycastHit hit = new RaycastHit();
+  private float shootDistance;
   private MovementTask movementTask;
-  private char direction;
+  private List<GridPoint2> path;
+  private GridPoint2 targetPosition;
+  private char currentDirection;
 
   /**
    * @param target The entity to chase.
@@ -42,8 +36,6 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     this.viewDistance = viewDistance;
     this.maxChaseDistance = maxChaseDistance;
     this.shootDistance = 0;
-    physics = ServiceLocator.getPhysicsService().getPhysics();
-    debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
 
   /**
@@ -61,28 +53,20 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     this.viewDistance = viewDistance;
     this.maxChaseDistance = maxChaseDistance;
     this.shootDistance = shootDistance;
-    physics = ServiceLocator.getPhysicsService().getPhysics();
-    debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
 
   @Override
   public void start() {
     super.start();
-    movementTask = new MovementTask(target.getPosition());
+    targetPosition = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition());
+    //get the list of grids which is the path to take to reach the target
+    path = PathFinder.findPath(owner.getEntity().getGridPosition(), targetPosition);
+    //create the movementTask and input the vector position of the first tile of the path
+    movementTask = new MovementTask(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
     movementTask.create(owner);
     movementTask.start();
-    direction = getDirection(target.getPosition());
-
-    direction = getDirection(target.getPosition());
-
-    if(direction == '<'){
-      this.owner.getEntity().getEvents().trigger("chaseLeft");
-    }
-    if(direction == '>'||direction == '='){
-      this.owner.getEntity().getEvents().trigger("chaseStart");
-    }
+    startDirectionalAnimation();
   }
-
 
   @Override
   public void update() {
@@ -94,17 +78,48 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
       // Stop chasing if the enemy is being disposed(delay) and running the death animation
       movementTask.stop();
     } else {
-      char direction2 = getDirection(target.getPosition());
-      movementTask.setTarget(target.getPosition());
-      movementTask.update();
-
-      if (movementTask.getStatus() != Status.ACTIVE) {
-        movementTask.start();
+        char newDirection = getDirection(target.getPosition());
+        movementTask.update();
+        //check if it reached the tile (the first tile of the path in the start() function)
+        if (movementTask.getStatus() != Status.ACTIVE) {
+            //if the tile was reach then find the new targetlocation
+            targetPosition = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition());
+            //check if we're already at the tile or not
+            if (!owner.getEntity().getGridPosition().equals(targetPosition)) {
+                //if we are not at the player tile then find the new path
+                path = PathFinder.findPath(owner.getEntity().getGridPosition(), targetPosition);
+                //set a new target to the movementtask
+                movementTask.setTarget(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
+                //start the movementtask again
+                movementTask.start();
+            } else {
+                movementTask.update();
+            }
+        } else {
+            //if we didn't reach the tile yet
+            //then check whether we should continue to go to the tile or just find a new path, check by seeing if the targets location has changed
+            if (!(targetPosition.equals(ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition())))) {
+                if (owner.getEntity().getGridPosition().equals(targetPosition)) {
+                    return;
+                } else {
+                    //if it has changed then stop the movementtask
+                    movementTask.stop();
+                    //find the new targetlocation
+                    targetPosition = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition());
+                    if (!owner.getEntity().getGridPosition().equals(targetPosition)) {
+                        path = PathFinder.findPath(owner.getEntity().getGridPosition(), targetPosition);
+                        movementTask.setTarget(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
+                        movementTask.start();
+                    }
+                }
+            } else {
+                movementTask.update();
+            }
+        }
+        if (currentDirection != newDirection){
+            startDirectionalAnimation();
+        }
       }
-      if (direction != direction2) {
-        start();
-      }
-    }
   }
 
   @Override
@@ -128,7 +143,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   private int getActivePriority() {
     float dst = getDistanceToTarget();
-    if (dst > maxChaseDistance || dst < shootDistance || !isTargetVisible()) {
+    if (dst > maxChaseDistance || dst < shootDistance) {
       return -1; // Too far, stop chasing
     }
     return priority;
@@ -136,24 +151,12 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   private int getInactivePriority() {
     float dst = getDistanceToTarget();
-    if (dst < viewDistance && dst > shootDistance && isTargetVisible()) {
+    if (dst < viewDistance && dst > shootDistance) {
       return priority;
     }
     return -1;
   }
 
-  private boolean isTargetVisible() {
-    Vector2 from = owner.getEntity().getCenterPosition();
-    Vector2 to = target.getCenterPosition();
-
-    // If there is an obstacle in the path to the player, not visible.
-    if (physics.raycast(from, to, PhysicsLayer.OBSTACLE, hit)) {
-      debugRenderer.drawLine(from, hit.point);
-      return false;
-    }
-    debugRenderer.drawLine(from, to);
-    return true;
-  }
   /**
    * This get method returns a char indicating the position of the target relative to the enemy.
    * @param destination
@@ -168,4 +171,15 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     }
     return '=';
   }
+
+  public void startDirectionalAnimation() {
+    currentDirection = getDirection(target.getPosition());
+    if(currentDirection == '<'){
+      this.owner.getEntity().getEvents().trigger("chaseLeft");
+    }
+    if(currentDirection == '>'|| currentDirection == '='){
+      this.owner.getEntity().getEvents().trigger("chaseStart");
+    }
+  }
+
 }

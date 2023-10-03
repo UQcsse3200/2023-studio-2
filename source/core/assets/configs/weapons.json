@@ -14,13 +14,7 @@
     "slotType" : "ranged",
     "ammoUse" : 0,
 
-    "sound": {
-      "soundsMap": {
-        "start": "sounds/dodgingAlertSweep.wav",
-        "mid" : "sounds/footStepsInTheForestGround.wav",
-        "stop" : "sounds/PlayerHealthRecharge.wav"
-      }
-    }
+    "sound": {"soundsMap": {}}
   },
 
   "RANGED_BOOMERANG": {
@@ -37,13 +31,7 @@
     "type" : "RANGED_BOOMERANG",
     "slotType" : "ranged",
 
-    "sound": {
-      "soundsMap": {
-        "start": "sounds/dodgingAlertSweep.wav",
-        "mid" : "sounds/footStepsInTheForestGround.wav",
-        "stop" : "sounds/PlayerHealthRecharge.wav"
-      }
-    }
+    "sound": {"soundsMap": {}}
   },
 
   "RANGED_HOMING": {
@@ -60,13 +48,7 @@
     "type" : "RANGED_HOMING",
     "slotType" : "ranged",
 
-    "sound": {
-      "soundsMap": {
-        "start": "sounds/dodgingAlertSweep.wav",
-        "mid" : "sounds/footStepsInTheForestGround.wav",
-        "stop" : "sounds/PlayerHealthRecharge.wav"
-      }
-    }
+    "sound": {"soundsMap": {}}
   },
 
   "MELEE_WRENCH": {
@@ -84,13 +66,7 @@
     "type" : "MELEE_WRENCH",
     "slotType" : "melee",
 
-    "sound": {
-      "soundsMap": {
-        "start": "sounds/dodgingAlertSweep.wav",
-        "mid" : "sounds/footStepsInTheForestGround.wav",
-        "stop" : "sounds/PlayerHealthRecharge.wav"
-      }
-    }
+    "sound": {"soundsMap": {}}
   },
 
   "MELEE_KATANA": {
@@ -109,13 +85,7 @@
     "slotType" : "melee",
     "ammoUse" : 0,
 
-    "sound": {
-      "soundsMap": {
-        "start": "sounds/dodgingAlertSweep.wav",
-        "mid" : "sounds/footStepsInTheForestGround.wav",
-        "stop" : "sounds/PlayerHealthRecharge.wav"
-      }
-    }
+    "sound": {"soundsMap": {}}
   },
 
   "MELEE_BEE_STING": {
@@ -135,13 +105,7 @@
     "ammoUse" : 5,
     "projectiles" : 8,
 
-    "sound": {
-      "soundsMap": {
-        "start": "sounds/dodgingAlertSweep.wav",
-        "mid" : "sounds/footStepsInTheForestGround.wav",
-        "stop" : "sounds/PlayerHealthRecharge.wav"
-      }
-    }
+    "sound": {"soundsMap": {}}
   },
 
   "STICK": {

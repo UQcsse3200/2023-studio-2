@@ -70,7 +70,7 @@ public class EnemyFactory {
    * also helps in triggering sound
    */
   public static Entity createEnemy(EnemyConfig config) {
-    System.out.println(config.type);
+//    System.out.println(config.type);
     AnimationRenderComponent animator;
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));

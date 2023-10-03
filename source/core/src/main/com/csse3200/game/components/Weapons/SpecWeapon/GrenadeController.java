@@ -35,7 +35,9 @@ public class GrenadeController extends WeaponControllerComponent {
         explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
         explosiveConfig.soundPath = "sounds/explosion/grenade.mp3";
 
-        entity.addComponent(new ExplosiveComponent(explosiveConfig));
+        var explode = new ExplosiveComponent(explosiveConfig);
+        entity.addComponent(explode);
+        explode.create();
     }
 
     @Override

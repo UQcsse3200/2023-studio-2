@@ -78,12 +78,6 @@ public class InventoryComponent extends Component {
         return equippedWMap.values().stream().map(InventoryItem::getItem).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    // not needed anymore?
-    // TODO Connor (Used in upgrade display ~586)
-    public void placeInSlot(WeaponType weaponType) {
-        replaceSlotWithWeapon(config.GetWeaponConfig(weaponType).slotType, weaponType);
-    }
-
     /**
      * Updates weapon of the active inventory slot
      */

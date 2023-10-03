@@ -1,6 +1,7 @@
 package com.csse3200.game.components.Weapons.SpecWeapon;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.explosives.ExplosiveComponent;
 import com.csse3200.game.components.explosives.ExplosiveConfig;
@@ -27,7 +28,9 @@ public class HomingProjectileController extends ProjectileController {
         explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
         explosiveConfig.soundPath = "sounds/explosion/grenade.mp3";
 
-        entity.addComponent(new ExplosiveComponent(explosiveConfig));
+        var explode = new ExplosiveComponent(explosiveConfig);
+        entity.addComponent(explode);
+        explode.create();
     }
 
     @Override

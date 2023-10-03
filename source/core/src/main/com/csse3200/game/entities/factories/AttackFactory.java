@@ -87,21 +87,9 @@ public class AttackFactory {
                 .addComponent(new TouchAttackComponent((short)
                         (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE)))
                 .addComponent(new AnimationRenderComponent(new TextureAtlas(config.textureAtlas)))
-                .addComponent(new CombatStatsComponent(30, (int) config.damage, 1, false))
+                .addComponent(new CombatStatsComponent(config.health, (int) config.damage, 1, false))
                 .addComponent(new SoundComponent(config.sound))
                 .addComponent(wepCon);
-
-        if (config.type == WeaponType.RANGED_GRENADE || config.type == WeaponType.RANGED_HOMING) {
-            var explosiveConfig = new ExplosiveConfig();
-            explosiveConfig.chainable = false;
-            explosiveConfig.damage = 20;
-            explosiveConfig.damageRadius = 2.5f;
-            explosiveConfig.chainRadius = 3.0f;
-            explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
-            explosiveConfig.soundPath = "sounds/explosion/grenade.mp3";
-
-            attack.addComponent(new ExplosiveComponent(explosiveConfig));
-        }
 
         //Final configurations on entity
         attack.setEntityType("playerWeapon");

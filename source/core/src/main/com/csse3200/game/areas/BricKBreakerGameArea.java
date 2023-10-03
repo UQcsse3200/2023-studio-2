@@ -22,7 +22,7 @@ public class BricKBreakerGameArea extends GameArea{
 
             "images/minigame/SpaceMiniGameBackground.png",
             "images/minigame/wormhole.png",
-            "images/minigame/Ball.png"
+            "images/minigame/Ball.png",
 
 
             "images/brick-game/BrickGameBackground.png"

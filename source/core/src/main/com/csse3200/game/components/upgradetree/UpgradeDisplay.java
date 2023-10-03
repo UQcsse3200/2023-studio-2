@@ -149,11 +149,9 @@ public class UpgradeDisplay extends Window {
         UpgradeNode rocketNode = new UpgradeNode(rocketConfig);
         UpgradeNode boomerangNode = new UpgradeNode(boomerangConfig);
         UpgradeNode grenadeNode = new UpgradeNode(grenadeConfig);
-        boomerangNode.addChild(grenadeNode);
-        grenadeNode.addChild(rocketNode);
-        boomerangNode.addChild(slingShotNode);
         UpgradeNode multiMissileNode = new UpgradeNode(multiMissile);
         UpgradeNode bluemerangNode = new UpgradeNode(bluemerang);
+        boomerangNode.addChild(grenadeNode);
         boomerangNode.addChild(slingShotNode);
         boomerangNode.addChild(bluemerangNode);
         slingShotNode.addChild(rocketNode);

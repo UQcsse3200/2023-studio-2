@@ -49,7 +49,7 @@ public class ShipInteractionPopup extends Window {
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(GdxGame.ScreenType.GAME_STORY);
+                game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
             }
         });
         okButton.setSize(150, 50);

@@ -66,24 +66,6 @@ public class MapGameArea extends GameArea{
         this.playerLives = playerLives;
     }
 
-    public static float getSpeedMult() {
-        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
-        Vector2 playerPos = getPlayer().getPosition();
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
-        Object speedMult = cell.getTile().getProperties().get("speedMult");
-
-        return speedMult != null ? (float)speedMult : 1f;
-    }
-
-    public static boolean isOnIce() {
-        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
-        Vector2 playerPos = getPlayer().getPosition();
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
-        Object onIce = cell.getTile().getProperties().get("slide");
-
-        return onIce != null && (boolean) onIce;
-    }
-
     /**
      * Create the game area
      */
@@ -177,6 +159,29 @@ public class MapGameArea extends GameArea{
 
         Entity envDamage = EnvironmentalDamageFactory.createDamage();
         spawnEntityAt(envDamage, new GridPoint2(45, 45), false, false);
+    }
+
+    public static float getSpeedMult() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+        Object speedMult = cell.getTile().getProperties().get("speedMult");
+
+        return speedMult != null ? (float)speedMult : 1f;
+    }
+
+    public static boolean isOnIce() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+        Object onIce = cell.getTile().getProperties().get("slide");
+
+        return onIce != null && (boolean) onIce;
+    }
+
+    public static boolean isFreezing() {
+        Vector2 playerPos = getPlayer().getPosition();
+        return true;
     }
 
     /**

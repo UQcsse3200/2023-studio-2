@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -86,8 +87,7 @@ public class UpgradeDisplay extends Window {
         structurePicker = player.getComponent(StructureToolPicker.class);
         this.upgradeBench = player;
 
-        // todo: remove this testing line - just gives max resources in upgrade tree
-        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000);
+        // upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000);
 
         setupWindowDimensions();
 
@@ -181,12 +181,11 @@ public class UpgradeDisplay extends Window {
      */
     private Table createTitleTable() {
         Table titleTable = new Table();
-        Label title = new Label("UPGRADE TREE", skin, "thick");
-        title.setColor(Color.BLACK);
-        title.setFontScale(0.5F, 0.5F);
+        Label title = new Label("Upgrades", skin, "pixel_art");
+        title.setFontScale(2F, 2F);
         titleTable.add(title);
         titleTable.setPosition((getWidth() * getScaleX() / 2),
-                (float) (getHeight() * getScaleY() * 0.88));
+                (float) (getHeight() * getScaleY() * 0.86));
 
         return titleTable;
     }

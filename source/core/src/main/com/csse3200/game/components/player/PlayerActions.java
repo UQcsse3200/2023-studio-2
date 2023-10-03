@@ -28,6 +28,7 @@ public class PlayerActions extends Component {
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
     private boolean sliding = false;
+    private float freezeFactor = 1.0f;
 
     @Override
     public void create() {
@@ -44,6 +45,20 @@ public class PlayerActions extends Component {
 
     @Override
     public void update() {
+        // Set the condition to always true for now
+        if (MapGameArea.isFreezing()) {
+            if(freezeFactor > 0.25f) {
+                freezeFactor -= 0.005f;
+            } else {
+                freezeFactor = 0.25f;
+            }
+        } else {
+            if(freezeFactor < 1.0f) {
+                freezeFactor += 0.005f;
+            } else {
+                freezeFactor = 1.0f;
+            }
+        }
         if (moving) {
             updateSpeed();
         }
@@ -57,13 +72,7 @@ public class PlayerActions extends Component {
         Vector2 velocity = body.getLinearVelocity();
         float speedMult = MapGameArea.getSpeedMult();
         Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(MAX_SPEED.x * speedMult, MAX_SPEED.y * speedMult));
-
-        // Set the condition to always true for now
-        boolean alwaysTrueCondition = true;
-
-        if (alwaysTrueCondition) {
-            desiredVelocity.scl(0.5f); // Reduce speed when the condition is true (always true for now)
-        }
+        desiredVelocity.scl(freezeFactor); // Reduce speed when the condition is true (always true for now)
 
         // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
@@ -84,7 +93,7 @@ public class PlayerActions extends Component {
      * Stops the player from walking.
      */
     void stopWalking() {
-        boolean onIce = MapGameArea.isOnIce(); //TODO: Implement function in MapGameArea.java to handle this
+        boolean onIce = MapGameArea.isOnIce();
         this.walkDirection = Vector2.Zero.cpy();
         if(onIce) {
             sliding = true;

@@ -2,6 +2,7 @@ package com.csse3200.game.components.CompanionWeapons;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.configs.CompanionWeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -21,6 +22,7 @@ public class CompanionWeaponController extends Component {
     int imageRotationOffset;
     /* Determined by # of directions in sprite sheet */
     int animationType;
+    private static final float POTION_DISPOSE_DELAY = 6f;
 
     /**
      * Class to store variables of a spawned weapon
@@ -74,8 +76,15 @@ public class CompanionWeaponController extends Component {
         Vector2 position = entity.getPosition();
         //Update position and rotation of projectile
         entity.setPosition(new Vector2(position.x + movement.x, position.y + movement.y));
-
-
+        if (this.weaponType == CompanionWeaponType.Death_Potion) {
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    // Dispose of the entity (potion) here
+                    entity.dispose();
+                }
+            }, POTION_DISPOSE_DELAY);
+        }
     }
 //    private void despawn() {
 //        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);

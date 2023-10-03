@@ -33,6 +33,7 @@ public class TitleBox extends Dialog {
         descriptionLabel = new Label(description, labelStyle);
         descriptionLabel.setAlignment(Align.center);
         descriptionLabel.setWrap(true); // Enable text wrapping
+        descriptionLabel.setColor(Color.BLACK); // Enable text wrapping
 
 
         TextButton okButton = new TextButton("OK", skin);
@@ -63,7 +64,7 @@ public class TitleBox extends Dialog {
         getContentTable().add(buttonTable).expandX().center().center();
         descriptionLabel.setPosition(0, 300f);
 
-        setSize(Gdx.graphics.getWidth(), 300f); // Adjust the height as needed
+        setSize(Gdx.graphics.getWidth(), 550f); // Adjust the height as needed
     }
 
     public void showDialog(Stage stage) {

@@ -46,7 +46,7 @@ public class ControlsScreenTest {
             controlsScreen.resize(800, 600);
 
             // Verify that a specific asset has been loaded
-            verifyAssetLoaded("images/Controls.png");
+            verifyAssetLoaded("images/controls-images/Controls.png");
 
             // Dispose of the screen
             controlsScreen.dispose();

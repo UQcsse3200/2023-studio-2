@@ -172,7 +172,7 @@ public class NPCFactory {
     Astro.getComponent(ColliderComponent.class).setDensity(1.5f);
     Astro.addComponent(new InteractableComponent(entity -> {
       Astro.getComponent(FollowComponent.class).setEntity(Astro);
-      Astro.getComponent(FollowComponent.class).setFollowSpeed(3f);
+      Astro.getComponent(FollowComponent.class).setFollowSpeed(1f);
     },3f));
     animator.startAnimation("Astro_Down");
     return Astro;
@@ -242,7 +242,7 @@ public class NPCFactory {
               ,"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected."
               ,"Emily: We can handle it. \nLead the way!"};
       String[] titletext= {"","",""};
-      Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);},5f));
+      Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);},1f));
     Jail.scaleHeight(1.7f);
     animator.startAnimation("jail_close");
     return Jail;

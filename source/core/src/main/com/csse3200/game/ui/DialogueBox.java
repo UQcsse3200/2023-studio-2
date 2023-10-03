@@ -59,7 +59,7 @@ public class DialogueBox extends Dialog {
 
 
         this.getContentTable().add(titleLabel).padTop(20f).row();
-        this.getContentTable().add(dialogueLabel).width(500f).height(30f).pad(20f).center(); // Adjust width and height as needed
+        this.getContentTable().add(dialogueLabel).width(500f).height(-15f).pad(20f).center(); // Adjust width and height as needed
 
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("large", Label.LabelStyle.class));
@@ -104,8 +104,8 @@ public class DialogueBox extends Dialog {
 
 
         // Size and positioning of the dialog
-        setSize(600f, 370f); // Adjust the size as needed
-        setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, Gdx.graphics.getHeight() - getHeight() - 700); // Adjust the Y position as needed
+        setSize(900f, 600f); // Adjust the size as needed
+        setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, Gdx.graphics.getHeight() - getHeight() - 500); // Adjust the Y position as needed
 
     }
     /**
@@ -129,7 +129,7 @@ public class DialogueBox extends Dialog {
 
     public void onOK() {
         logger.info("Back to game");
-        remove();
+        hide();
     }
 
     public void oninfo() {

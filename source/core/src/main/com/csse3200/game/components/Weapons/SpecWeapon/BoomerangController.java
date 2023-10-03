@@ -12,8 +12,8 @@ public class BoomerangController extends WeaponControllerComponent {
 
     public BoomerangController(WeaponConfig config,
                                float attackDirection,
-                               Entity player) {
-        super(config, attackDirection, player);
+                               Entity player, int attackNum) {
+        super(config, attackDirection, player, attackNum);
         this.player_last_pos = player.getPosition();
     }
 
@@ -24,7 +24,8 @@ public class BoomerangController extends WeaponControllerComponent {
 
     @Override
     protected void initial_rotation() {
-        currentRotation += 45;
+        System.out.println(attackNum);
+        currentRotation += 45 * (attackNum % 2 == 0 ? 1 : -1);;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class BoomerangController extends WeaponControllerComponent {
 
     @Override
     protected void rotate() {
-        this.currentRotation -= config.rotationSpeed;
+        this.currentRotation -= config.rotationSpeed * (attackNum % 2 == 0 ? 1 : -1);
     }
 
 

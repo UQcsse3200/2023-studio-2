@@ -68,9 +68,10 @@ public class AttackFactory {
             case MELEE_WRENCH, MELEE_KATANA ->
                     new MeleeSwingController(config, attackDirection, player);
             case MELEE_BEE_STING -> new KillerBeeController(config, attackDirection, player, attackNum);
-            case RANGED_BOOMERANG -> new BoomerangController(config, attackDirection, player);
-            case RANGED_SLINGSHOT -> new ProjectileController(config, attackDirection, player);
-            case RANGED_HOMING -> new HomingProjectileController(config, attackDirection, player);
+            case RANGED_BOOMERANG, RANGED_BLUEMERANG -> new BoomerangController(config, attackDirection, player, attackNum);
+            case RANGED_SLINGSHOT -> new ProjectileController(config, attackDirection, player, attackNum);
+            case RANGED_HOMING -> new HomingProjectileController(config, attackDirection, player, attackNum);
+            case RANGED_MISSILES -> new HomingMissileSprayProjectileController(config, attackDirection, player, attackNum);
             default -> throw new IllegalArgumentException("No controller defined for weapon type: " + config.type);
         };
 

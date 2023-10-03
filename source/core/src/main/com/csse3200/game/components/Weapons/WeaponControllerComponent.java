@@ -20,6 +20,20 @@ public abstract class WeaponControllerComponent extends Component {
     protected float currentRotation;
     /* Reference to player entity */
     protected final Entity player;
+    /* attack Number in sequence */
+    protected int attackNum = 0;
+
+    /**
+     * Class to store variables of a spawned weapon
+     */
+    public WeaponControllerComponent(WeaponConfig config, float attackDirection, Entity player, int attackNum) {
+        this.player = player;
+        this.config = config;
+        this.remainingDuration = config.weaponDuration;
+        this.currentRotation = attackDirection;
+        this.attackNum = attackNum;
+    }
+
 
     /**
      * Class to store variables of a spawned weapon

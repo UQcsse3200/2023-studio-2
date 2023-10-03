@@ -9,8 +9,8 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 public class HomingProjectileController extends ProjectileController {
     public HomingProjectileController(WeaponConfig config,
                                       float attackDirection,
-                                      Entity player) {
-        super(config, attackDirection, player);
+                                      Entity player, int attackNum) {
+        super(config, attackDirection, player, attackNum);
     }
 
     @Override
@@ -55,4 +55,3 @@ public class HomingProjectileController extends ProjectileController {
         }
     }
 }
-

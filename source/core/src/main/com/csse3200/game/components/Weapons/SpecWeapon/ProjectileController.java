@@ -9,9 +9,10 @@ public class ProjectileController extends WeaponControllerComponent {
 
     public ProjectileController(WeaponConfig config,
                                 float attackDirection,
-                                Entity player) {
-        super(config, attackDirection, player);
+                                Entity player, int attackNum) {
+        super(config, attackDirection, player, attackNum);
     }
+
 
     @Override
     public void create() {

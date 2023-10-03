@@ -5,13 +5,11 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class KillerBeeController extends ProjectileController {
-    private final int attackNum;
 
     public KillerBeeController(WeaponConfig config,
                                float attackDirection,
                                Entity player, int attackNum) {
-        super(config, attackDirection, player);
-        this.attackNum = attackNum;
+        super(config, attackDirection, player, attackNum);
     }
 
     @Override

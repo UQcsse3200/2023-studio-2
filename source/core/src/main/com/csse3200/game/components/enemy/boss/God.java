@@ -1,6 +1,7 @@
 package com.csse3200.game.components.enemy.boss;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 
@@ -43,7 +44,6 @@ public class God extends DefaultTask implements PriorityTask {
 
 
 
-
     @Override
     public void start() {
         super.start();
@@ -65,14 +65,27 @@ public class God extends DefaultTask implements PriorityTask {
             }
 
             if(Mode){
-
                 locations = generateAngle(owner.getEntity().getCenterPosition());
-                for (Vector2 location : locations) {
-                    Entity bullet1 = ProjectileFactory.createEnemyBullet(location, owner.getEntity());
-                    ServiceLocator.getStructurePlacementService()
-                        .spawnEntityAtVector(bullet1, owner.getEntity()
-                            .getPosition());
-                }
+                final int[] index = {0}; // Initialize an array to keep track of the current index
+
+// Define a task that will run after a delay
+                Timer.Task spawnBulletTask = new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if (index[0] < locations.length) {
+                            Vector2 location = locations[index[0]];
+                            Entity bullet1 = ProjectileFactory.createEnemyBullet(location, owner.getEntity());
+                            ServiceLocator.getStructurePlacementService()
+                                .spawnEntityAtVector(bullet1, owner.getEntity().getPosition());
+                            index[0]++;
+                        }
+                    }
+                };
+
+                float delayBetweenIterations = 0.1f; // Delay between each iteration in seconds
+                float initialDelay = 0.0f; // Initial delay before the first iteration in seconds
+
+                Timer.schedule(spawnBulletTask, initialDelay, delayBetweenIterations);
                 Mode = false;
             }
 
@@ -82,7 +95,7 @@ public class God extends DefaultTask implements PriorityTask {
         float radius = 10f;
 
         // Define the number of positions you want
-        int numPositions = 10;
+        int numPositions = 20;
 
         // Calculate the angle between each position
         float angleIncrement = 360.0f / numPositions;

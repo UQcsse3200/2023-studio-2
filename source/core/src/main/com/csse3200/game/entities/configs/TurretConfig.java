@@ -5,15 +5,13 @@ package com.csse3200.game.entities.configs;
  *
  */
 public class TurretConfig extends HealthEntityConfig {
-    public int maxAmmo;
-    public int damage;
+    public int maxAmmo = 0;
+    public int damage = 0;
 
     public TurretConfig() {
         health = 0;
         attackMultiplier = 1;
         isImmune = false;
-        maxAmmo = 0;
-        damage = 0;
     }
 }
 

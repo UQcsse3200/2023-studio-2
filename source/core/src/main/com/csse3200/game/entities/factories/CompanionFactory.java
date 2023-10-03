@@ -87,6 +87,7 @@ public class CompanionFactory {
                         .addComponent(new CompanionInGameAlerts())
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new FollowComponent(player,1f))
+                        .addComponent(new CompanionShieldComponent())
                         .addComponent(new InteractionControllerComponent(false));
                          companion.addComponent(new SaveableComponent<>(p -> {
                                CompanionConfig companionConfig = config;

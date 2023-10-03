@@ -151,5 +151,24 @@
     "type" : "STEELHAMMER",
     "slotType" : "building",
     "ammoUse" : 0
+  },
+
+  "SHIELD": {
+    "name" : "SHIELD",
+    "description": "Shield for defence.",
+    "damage" : 33,
+    "weaponSpeed": 4,
+    "weaponDuration": 20,
+    "rotationSpeed": 1,
+    "initialRotationOffset": -90,
+    "imageRotationOffset": 45,
+    "attackCooldown": 20,
+    "textureAtlas": "images/companion/Companionshield.atlas",
+    "imageScale" : 1.5,
+    "animationType" : 4,
+    "imagePath" : "images/companion/CompanionShield.png",
+    "type" : "SHIELD",
+    "slotType" : "melee",
+    "ammoUse" : 0
   }
 }

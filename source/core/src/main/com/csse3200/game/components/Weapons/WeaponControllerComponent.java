@@ -71,6 +71,7 @@ public class WeaponControllerComponent extends Component {
             case RANGED_SLINGSHOT -> update_ranged_slingshot();
             case RANGED_HOMING -> update_ranged_homing();
             case STATIC_WEAPON -> update_static();
+            case SHIELD -> update_static(); // changed here to include shield
             default -> throw new IllegalStateException("Unexpected value: " + this.weaponType);
         };
 
@@ -81,7 +82,6 @@ public class WeaponControllerComponent extends Component {
         entity.setRotation(this.currentRotation - this.imageRotationOffset);
 
     }
-
 
     /**
      * Despawn a weapon when it runs out of durtaion or health

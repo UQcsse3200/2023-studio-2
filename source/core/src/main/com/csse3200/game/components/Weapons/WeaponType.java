@@ -13,5 +13,7 @@ public enum WeaponType {
     STICK,
     WOODHAMMER,
     STONEHAMMER,
-    STEELHAMMER
+    STEELHAMMER,
+
+    SHIELD,
 }

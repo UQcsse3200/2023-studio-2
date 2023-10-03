@@ -17,6 +17,10 @@ public class WeaponConfigs {
     public WeaponConfig STONEHAMMER = new WeaponConfig();
     public WeaponConfig STEELHAMMER = new WeaponConfig();
 
+    //add in shield
+    public WeaponConfig SHIELD = new WeaponConfig();
+
+
     public WeaponConfig GetWeaponConfig(WeaponType type) {
         return switch (type) {
             case MELEE_WRENCH -> MELEE_WRENCH;
@@ -29,6 +33,7 @@ public class WeaponConfigs {
             case WOODHAMMER -> WOODHAMMER;
             case STONEHAMMER -> STONEHAMMER;
             case STEELHAMMER -> STEELHAMMER;
+            case SHIELD -> SHIELD;
             default -> MELEE_WRENCH;
         };
     }

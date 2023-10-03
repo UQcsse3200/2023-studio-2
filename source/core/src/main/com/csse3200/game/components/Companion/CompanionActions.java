@@ -217,4 +217,8 @@ public class CompanionActions extends Component {
         return COMPANION_SPEED;
     }
 
+    public String getCompanionMode() {
+        return companionMode;
+    }
+
 }

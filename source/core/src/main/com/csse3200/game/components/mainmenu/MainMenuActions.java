@@ -39,7 +39,6 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
     entity.getEvents().addListener("upgrade shop", this::onShop);
-    entity.getEvents().addListener("space map", this::spaceMap);
   }
 
   /**
@@ -98,11 +97,5 @@ public class MainMenuActions extends Component {
   private void onShop() {
     logger.info("Launching Upgrade Shop screen");
     game.setScreen(GdxGame.ScreenType.UPGRADE_SHOP);
-  }
-
-  private void spaceMap() {
-    logger.info("Traveling to space map");
-    ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", new PlanetScreen(game));
-    game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
   }
 }

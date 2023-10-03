@@ -10,8 +10,8 @@ public class AstroAnimationController extends Component {
     private AnimationRenderComponent animator;
     private TextureAtlas atlas;
 
-    private float animationTimer = 0f;
-    private float animationDuration = 10f; // Adjust this to control animation speed.
+    float animationTimer = 0f;
+    float animationDuration = 10f; // Adjust this to control animation speed.
 
     public AstroAnimationController(AssetManager assetManager) {
         this.assetManager = assetManager;

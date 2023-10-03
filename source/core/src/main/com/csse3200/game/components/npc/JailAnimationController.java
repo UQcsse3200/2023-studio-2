@@ -7,11 +7,11 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class JailAnimationController extends Component {
     private final AssetManager assetManager;
-    private AnimationRenderComponent animator;
+    public AnimationRenderComponent animator;
     private TextureAtlas atlas;
 
-    private float animationTimer = 0f;
-    private float animationDuration = 10f; // Adjust this to control animation speed.
+    float animationTimer = 0f;
+    float animationDuration = 10f; // Adjust this to control animation speed.
 
     public JailAnimationController(AssetManager assetManager) {
         this.assetManager = assetManager;

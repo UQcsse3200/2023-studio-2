@@ -16,6 +16,7 @@ public class WeaponConfig extends BaseEntityConfig {
     public int weaponDuration = 0;
     public int attackCooldown = 5;
     public int ammoUse = 1;
+    public int projectiles = 1;
     //How many directions are defined 1, 4, 6, 8
     public int animationType = 0;
 

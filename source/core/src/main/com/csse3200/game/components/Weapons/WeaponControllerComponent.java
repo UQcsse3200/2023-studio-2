@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
@@ -52,7 +51,9 @@ public abstract class WeaponControllerComponent extends Component {
         rotate();
         move();
         reanimate();
-        if (--this.remainingDuration <= 0) {despawn();}
+        if (--this.remainingDuration <= 0) {
+            despawn();
+        }
     }
 
     /**
@@ -76,38 +77,52 @@ public abstract class WeaponControllerComponent extends Component {
         }
     }
 
+    /**
+     * Set initial rotation (defaults to attack direction)
+     */
     protected abstract void initial_rotation();
 
+    /**
+     * Set initial position
+     */
     protected abstract void initial_position();
 
+    /**
+     * Set intial animation
+     *
+     * @param animator - animation component for the entity
+     */
     protected abstract void initial_animation(AnimationRenderComponent animator);
 
     /**
-     * Update entity rotation (Still needs to be set) //TODO fix this requirement
+     * Update entity rotation every tick
      */
     protected abstract void rotate();
 
     /**
-     * Update entity location
+     * Update entity location every tick
      */
     protected abstract void move();
 
     /**
-     * Update entity animation
+     * Update entity animation if required
      */
     protected abstract void reanimate();
 
     /**
-     * Despawn a weapon when it runs out of durtaion or health
+     * respawn a weapon when it runs out of duration or health
      */
     private void despawn() {
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-        if (animator != null ) {animator.stopAnimation();}
+        if (animator != null) {
+            animator.stopAnimation();
+        }
         Gdx.app.postRunnable(entity::dispose);
     }
 
     /**
      * Sets the remaining duration
+     *
      * @param duration duration to set reamining duration
      */
     private void setDuration(int duration) {
@@ -117,13 +132,13 @@ public abstract class WeaponControllerComponent extends Component {
     /**
      * Returns the game position in a given direction at a given distance relative to the player
      * to center a given attack entity
+     *
      * @param direction direction the position should be in
-     * @param distance distance infront of the player
+     * @param distance  distance infront of the player
      * @return position in the given direction at the distance
      */
     protected Vector2 positionInDirection(float direction, float distance) {
-        float radians = (float) Math.toRadians(direction);
+        var radians = Math.toRadians(direction);
         return new Vector2((float) Math.cos(radians), (float) Math.sin(radians)).scl(distance);
     }
 }
-

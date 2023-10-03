@@ -92,7 +92,8 @@
     "imagePath" : "images/weapons/bee_sting.png",
     "type" : "MELEE_BEE_STING",
     "slotType" : "melee",
-    "ammoUse" : 1
+    "ammoUse" : 5,
+    "projectiles" : 8
   },
 
   "STICK": {

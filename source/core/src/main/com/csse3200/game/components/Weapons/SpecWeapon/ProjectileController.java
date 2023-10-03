@@ -27,9 +27,8 @@ public class ProjectileController extends WeaponControllerComponent {
 
     @Override
     protected void initial_position() {
-        entity.setPosition(player.getPosition()
-                .add(player.getScale().scl(0.5f))
-                .sub(entity.getScale().scl(0.5f))
+        entity.setPosition(player.getCenterPosition()
+                .mulAdd(entity.getScale(), -0.5f)
                 .add(positionInDirection(currentRotation, 0.5f))
         );
     }

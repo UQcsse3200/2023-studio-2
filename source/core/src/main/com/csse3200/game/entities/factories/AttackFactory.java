@@ -91,7 +91,7 @@ public class AttackFactory {
                 .addComponent(new SoundComponent(config.sound))
                 .addComponent(wepCon);
 
-        if (config.type == WeaponType.RANGED_GRENADE) {
+        if (config.type == WeaponType.RANGED_GRENADE || config.type == WeaponType.RANGED_HOMING) {
             var explosiveConfig = new ExplosiveConfig();
             explosiveConfig.chainable = false;
             explosiveConfig.damage = 20;

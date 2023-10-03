@@ -11,13 +11,31 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class GrenadeController extends WeaponControllerComponent {
     private Vector2 player_last_pos;
+    private float rotation;
 
+    private float attackDirection;
 
     public GrenadeController(WeaponConfig config,
                              float attackDirection,
                              Entity player, int attackNum) {
         super(config, attackDirection, player, attackNum);
         this.player_last_pos = player.getPosition();
+        this.attackDirection = attackDirection;
+        this.rotation = config.rotationSpeed * (attackDirection < 90 || attackDirection > 270 ? 1 : -1);
+    }
+
+    @Override
+    public void create() {
+        super.create();
+        var explosiveConfig = new ExplosiveConfig();
+        explosiveConfig.chainable = false;
+        explosiveConfig.damage = 20;
+        explosiveConfig.damageRadius = 2.5f;
+        explosiveConfig.chainRadius = 3.0f;
+        explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
+        explosiveConfig.soundPath = "sounds/explosion/grenade.mp3";
+
+        entity.addComponent(new ExplosiveComponent(explosiveConfig));
     }
 
     @Override
@@ -28,7 +46,7 @@ public class GrenadeController extends WeaponControllerComponent {
     @Override
     protected void initial_rotation() {
         System.out.println(attackNum);
-        currentRotation += 45 * (attackNum % 2 == 0 ? 1 : -1);;
+        currentRotation += 45 * (attackNum % 2 == 0 ? 1 : -1) * (attackDirection < 90 || attackDirection > 270 ? 1 : -1);
     }
 
     @Override
@@ -47,7 +65,7 @@ public class GrenadeController extends WeaponControllerComponent {
 
     @Override
     protected void rotate() {
-        this.currentRotation -= config.rotationSpeed * (attackNum % 2 == 0 ? 1 : -1);
+        this.currentRotation -= this.rotation * (attackNum % 2 == 0 ? 1 : -1);
     }
 
 
@@ -57,7 +75,6 @@ public class GrenadeController extends WeaponControllerComponent {
         this.player_last_pos = player.getPosition();
 
         entity.setPosition(entity.getPosition()
-                .add(player_delta.cpy())
                 .add(positionInDirection(currentRotation,0.01f * config.weaponSpeed))
         );
     }

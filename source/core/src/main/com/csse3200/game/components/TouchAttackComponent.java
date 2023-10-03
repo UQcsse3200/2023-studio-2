@@ -3,6 +3,8 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.csse3200.game.components.Weapons.SpecWeapon.HomingMissileSprayProjectileController;
+import com.csse3200.game.components.Weapons.SpecWeapon.HomingProjectileController;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.explosives.ExplosiveComponent;
@@ -114,13 +116,6 @@ public class TouchAttackComponent extends Component {
     } else {
       // hit once, push away
       hitOnce(target, source, sourceStats, targetStats);
-
-//      WeaponControllerComponent weaponControllerComponent = source.getComponent(WeaponControllerComponent.class);
-//
-//      // Explode the homing rocket on impact
-//      if (weaponControllerComponent != null && weaponControllerComponent.getWeaponType() == WeaponType.RANGED_HOMING) {
-//        source.getEvents().trigger("explode");
-//      }
     }
   }
 

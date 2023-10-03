@@ -153,6 +153,11 @@ public abstract class WeaponControllerComponent extends Component {
         this.remainingDuration = duration;
     }
 
+    /** Returns the current weapons config **/
+    public WeaponConfig getConfig() {
+        return config;
+    }
+
     /**
      * Returns the game position in a given direction at a given distance relative to the player
      * to center a given attack entity

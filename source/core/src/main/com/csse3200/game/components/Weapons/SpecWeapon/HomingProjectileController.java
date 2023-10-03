@@ -1,6 +1,9 @@
 package com.csse3200.game.components.Weapons.SpecWeapon;
 
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.explosives.ExplosiveComponent;
+import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
@@ -14,6 +17,20 @@ public class HomingProjectileController extends ProjectileController {
     }
 
     @Override
+    public void create() {
+        super.create();
+        var explosiveConfig = new ExplosiveConfig();
+        explosiveConfig.chainable = false;
+        explosiveConfig.damage = 20;
+        explosiveConfig.damageRadius = 2.5f;
+        explosiveConfig.chainRadius = 3.0f;
+        explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
+        explosiveConfig.soundPath = "sounds/explosion/grenade.mp3";
+
+        entity.addComponent(new ExplosiveComponent(explosiveConfig));
+    }
+
+    @Override
     protected void initial_animation(AnimationRenderComponent animator) {
         reanimate();
     }
@@ -22,7 +39,9 @@ public class HomingProjectileController extends ProjectileController {
     protected void rotate() {
         //kbPIComp = kiloBytes of π Comparator
         KeyboardPlayerInputComponent kbPIComp = player.getComponent(KeyboardPlayerInputComponent.class);
-        if (kbPIComp == null) {return;}
+        if (kbPIComp == null) {
+            return;
+        }
         Vector2 target_pos = kbPIComp.getLastMousePos().sub(entity.getScale().scl(0.5f));
         Vector2 weapon_pos = entity.getPosition();
 
@@ -30,13 +49,16 @@ public class HomingProjectileController extends ProjectileController {
         targetAngle = (targetAngle + 360) % 360;
 
         float dir = targetAngle - currentRotation;
-        if (dir > 180) {dir-= 360;}
-        else if (dir < -180) {dir+= 360;}
+        if (dir > 180) {
+            dir -= 360;
+        } else if (dir < -180) {
+            dir += 360;
+        }
 
         currentRotation = ((
-                        (currentRotation +
+                (currentRotation +
                         ((dir > 0) ? Math.min(config.rotationSpeed, dir) : Math.max(-config.rotationSpeed, dir)))
-                ) + 360) % 360;
+        ) + 360) % 360;
     }
 
     @Override
@@ -53,5 +75,10 @@ public class HomingProjectileController extends ProjectileController {
             case 6 -> animator.startAnimation("DOWN");
             case 7 -> animator.startAnimation("RIGHT3");
         }
+    }
+
+    @Override
+    protected void despawn() {
+        entity.getEvents().trigger("explode");
     }
 }

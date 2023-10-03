@@ -14,6 +14,8 @@ import com.csse3200.game.services.ServiceLocator;
  * This class must be inherited and the createEntity method implemented to function.
  */
 public abstract class PlacementTool extends Tool {
+    protected int snapX = 1;
+    protected int snapY = 1;
 
     /**
      * Creates a new tool which allows the placing of structures with the given cost.
@@ -33,7 +35,11 @@ public abstract class PlacementTool extends Tool {
      */
     @Override
     public boolean interact(Entity player, GridPoint2 position) {
-        if (!isPositionValid(position)) {
+        position = getSnapPosition(position);
+
+        PlaceableEntity newStructure = createStructure(player);
+
+        if (!isPositionValid(position, newStructure)) {
             player.getEvents().trigger("displayWarningAtPosition", "Invalid position",
                     new Vector2((float) position.x / 2, (float) position.y / 2));
             return false;
@@ -44,13 +50,18 @@ public abstract class PlacementTool extends Tool {
                     new Vector2((float) position.x / 2, (float) position.y / 2));
             return false;
         }
-
-        PlaceableEntity newStructure = createStructure(player);
         newStructure.addComponent(new CostComponent(cost));
 
         ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position, false, false);
 
         return true;
+    }
+
+    public GridPoint2 getSnapPosition(GridPoint2 position) {
+        var diffX = position.x % snapX;
+        var diffY = position.y % snapY;
+
+        return new GridPoint2(position.x - diffX, position.y - diffY);
     }
 
     /**
@@ -68,10 +79,10 @@ public abstract class PlacementTool extends Tool {
      * @param position - the position the structure is trying to be placed at.
      * @return whether the structure can be placed at the given position.
      */
-    public boolean isPositionValid(GridPoint2 position) {
-        var existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
+    public boolean isPositionValid(GridPoint2 position, PlaceableEntity structure) {
+        position = getSnapPosition(position);
 
-        return existingStructure == null;
+        return ServiceLocator.getStructurePlacementService().canPlaceStructureAt(structure, position);
     }
 
     /**

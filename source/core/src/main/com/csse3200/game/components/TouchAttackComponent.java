@@ -115,12 +115,12 @@ public class TouchAttackComponent extends Component {
       // hit once, push away
       hitOnce(target, source, sourceStats, targetStats);
 
-      WeaponControllerComponent weaponControllerComponent = source.getComponent(WeaponControllerComponent.class);
-
-      // Explode the homing rocket on impact
-      if (weaponControllerComponent != null && weaponControllerComponent.getWeaponType() == WeaponType.RANGED_HOMING) {
-        source.getEvents().trigger("explode");
-      }
+//      WeaponControllerComponent weaponControllerComponent = source.getComponent(WeaponControllerComponent.class);
+//
+//      // Explode the homing rocket on impact
+//      if (weaponControllerComponent != null && weaponControllerComponent.getWeaponType() == WeaponType.RANGED_HOMING) {
+//        source.getEvents().trigger("explode");
+//      }
     }
   }
 

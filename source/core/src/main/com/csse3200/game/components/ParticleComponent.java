@@ -70,6 +70,7 @@ public class ParticleComponent extends RenderComponent {
         }
 
         entity.getEvents().addListener("startEffect", this::startEffect);
+        entity.getEvents().addListener("stopEffect", this::stopEffect);
     }
 
     @Override
@@ -114,5 +115,23 @@ public class ParticleComponent extends RenderComponent {
         }
 
         effect.start();
+    }
+
+    /**
+     * Stops the playing of the effect which effectName maps to if it exists. If effectName does not map to
+     * a loaded effect, nothing happens.
+     * @param effectName - the name of the effect to stop as specified in the config file.
+     */
+    public void stopEffect(String effectName) {
+        logger.debug("Entity {} stopping effect {}", entity.toString(), effectName);
+
+        var effect = effects.get(effectName);
+
+        if (effect == null) {
+            logger.warn("Sound {} does not exist for entity {}", effect, entity.toString());
+            return;
+        }
+
+        effect.reset();
     }
 }

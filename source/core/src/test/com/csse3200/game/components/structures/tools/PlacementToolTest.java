@@ -52,7 +52,7 @@ class PlacementToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 
@@ -70,7 +70,7 @@ class PlacementToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(mock(PlaceableEntity.class));
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(false);
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
@@ -92,7 +92,7 @@ class PlacementToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 
@@ -116,7 +116,7 @@ class PlacementToolTest {
 
         var position = new GridPoint2(0, 0);
 
-        when(structurePlacementService.getStructureAt(position)).thenReturn(null);
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
 
         tool.interact(player, position);
 

@@ -82,7 +82,7 @@ public class ExplosiveComponent extends Component {
 
         // deletes the entity
         if (entity instanceof PlaceableEntity) {
-            ServiceLocator.getStructurePlacementService().removeStructure(entity);
+            ServiceLocator.getStructurePlacementService().removeStructure((PlaceableEntity)entity);
         } else {
             Gdx.app.postRunnable(entity::dispose);
         }

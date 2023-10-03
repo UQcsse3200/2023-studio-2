@@ -12,7 +12,9 @@ public class WeaponConfigs {
     public WeaponConfig RANGED_SLINGSHOT = new WeaponConfig();
     public WeaponConfig RANGED_GRENADE = new WeaponConfig();
     public WeaponConfig RANGED_BOOMERANG = new WeaponConfig();
+    public WeaponConfig RANGED_BLUEMERANG = new WeaponConfig();
     public WeaponConfig RANGED_HOMING = new WeaponConfig();
+    public WeaponConfig RANGED_MISSILES = new WeaponConfig();
     public WeaponConfig STICK = new WeaponConfig();
     public WeaponConfig WOODHAMMER = new WeaponConfig();
     public WeaponConfig STONEHAMMER = new WeaponConfig();
@@ -26,7 +28,9 @@ public class WeaponConfigs {
             case RANGED_SLINGSHOT -> RANGED_SLINGSHOT;
             case RANGED_BOOMERANG -> RANGED_BOOMERANG;
             case RANGED_GRENADE -> RANGED_GRENADE;
+            case RANGED_BLUEMERANG -> RANGED_BLUEMERANG;
             case RANGED_HOMING -> RANGED_HOMING;
+            case RANGED_MISSILES -> RANGED_MISSILES;
             case STICK -> STICK;
             case WOODHAMMER -> WOODHAMMER;
             case STONEHAMMER -> STONEHAMMER;
@@ -35,4 +39,3 @@ public class WeaponConfigs {
         };
     }
 }
-

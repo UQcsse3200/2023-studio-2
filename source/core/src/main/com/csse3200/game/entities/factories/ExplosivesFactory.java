@@ -29,7 +29,7 @@ public class ExplosivesFactory {
             "configs/landmine.json");
 
     public static PlaceableEntity createExplosiveBarrel() {
-        var explosiveBarrel = new PlaceableEntity();
+        var explosiveBarrel = new PlaceableEntity(2, 2);
 
         Texture texture = ServiceLocator.getResourceService().getAsset(explosiveBarrelConfig.texture, Texture.class);
 
@@ -50,7 +50,7 @@ public class ExplosivesFactory {
     }
 
     public static PlaceableEntity createLandmine() {
-        var explosiveBarrel = new PlaceableEntity();
+        var explosiveBarrel = new PlaceableEntity(2, 2);
 
         Texture texture = ServiceLocator.getResourceService().getAsset(landmineConfig.texture, Texture.class);
 

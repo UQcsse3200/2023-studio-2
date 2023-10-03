@@ -7,6 +7,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.FollowComponent;
+import com.csse3200.game.components.ItemPickupComponent;
+import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -23,19 +26,20 @@ public class CompanionActions extends Component {
 
 
     private static final float ROTATION_SPEED = 10.0f;
-    private Entity playerEntity;
+    private float currentRotation = 5.0f;
+    private Entity player = ServiceLocator.getEntityService().getPlayer();
 
     private PhysicsComponent physicsComponent;
     public Vector2 walkDirection = Vector2.Zero.cpy();
     public boolean moving = false;
 
     // ALL CODE PERTAINING TO COMPANION MODES
-
+    public boolean normal;
     public String companionMode;
     public final static String COMPANION_MODE_ATTACK = "COMPANION_MODE_ATTACK";
     public final static String COMPANION_MODE_NORMAL = "COMPANION_MODE_NORMAL";
 
-    public final static Vector2 COMPANION_ATTACK_MODE_SPEED = new Vector2(8f, 8f);
+    public final static Vector2 COMPANION_ATTACK_MODE_SPEED = new Vector2(6f, 6f);
     public final static Vector2 COMPANION_NORMAL_MODE_SPEED = new Vector2(4f, 4f);
 
 
@@ -53,26 +57,13 @@ public class CompanionActions extends Component {
         setCompanionModeNormal();
 
         // Initialize currentRotation based on the initial orientation of the companion
-        float currentRotation = physicsComponent.getBody().getAngle() * MathUtils.radiansToDegrees;
-        if (playerEntity != null) {
-            Vector2 playerPosition = playerEntity.getComponent(PhysicsComponent.class).getBody().getPosition();
+        currentRotation = physicsComponent.getBody().getAngle()*MathUtils.radiansToDegrees;
+        if (player != null) {
+            Vector2 playerPosition = player.getComponent(PhysicsComponent.class).getBody().getPosition();
             physicsComponent.getBody().setTransform(playerPosition, currentRotation * MathUtils.degreesToRadians);
         }
     }
 
-    /**
-     * Set the player entity, binding it to the companion.
-     *
-     * @param playerEntity - the player entity
-     */
-
-    public void setPlayerEntity(Entity playerEntity){
-        this.playerEntity = playerEntity;
-    }
-
-    public String getCompanionMode() {
-        return this.companionMode;
-    }
 
     /**
      * Set companion mode to attack
@@ -80,10 +71,11 @@ public class CompanionActions extends Component {
     public void setCompanionModeAttack() {
         // set the mode
         companionMode = COMPANION_MODE_ATTACK;
+        normal = false;
         // adjust the speed
         COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
         entity.getEvents().trigger("companionModeChange","Attack");
-
+        entity.getComponent(FollowComponent.class).setFollowSpeed(0f);
     }
 
     /**
@@ -92,11 +84,11 @@ public class CompanionActions extends Component {
     public void setCompanionModeNormal() {
         // set the mode
         companionMode = COMPANION_MODE_NORMAL;
+        normal = true;
         // adjust the speed
         COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
         entity.getEvents().trigger("companionModeChange","Normal");
-
-
+        entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
     }
 
     public boolean isCompanionBeingMoved() {
@@ -132,6 +124,26 @@ public class CompanionActions extends Component {
 
         }
     }
+
+//    void updateInventory(int i) {
+//        switch (i) {
+//            case 1:
+//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(1);
+//                break;
+//            case 2:
+//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(2);
+//                break;
+//            case 3:
+//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(3);
+//                break;
+//            case 4:
+//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(4);
+//                break;
+//            default:
+//                entity.getComponent(CompanionInventoryComponent.class).cycleEquipped();
+//                break;
+//        }
+//    }
 
     private boolean isMovementKeyPressed() {
         // Check if any of the movement keys are pressed (I, J, K, L)
@@ -172,8 +184,9 @@ public class CompanionActions extends Component {
      * Makes the companion attack.
      */
     void attack() {
-        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-        attackSound.play();
+//        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+//        attackSound.play();
+
     }
 
     /**
@@ -185,4 +198,8 @@ public class CompanionActions extends Component {
     public void setSpeed(float x, float y) {
         COMPANION_SPEED = new Vector2(x, y);
     }
+    public Vector2 getSpeed() {
+        return COMPANION_SPEED;
+    }
+
 }

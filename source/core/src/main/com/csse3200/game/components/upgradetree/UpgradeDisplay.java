@@ -91,7 +91,6 @@ public class UpgradeDisplay extends Window {
 
         setupWindowDimensions();
 
-
         Table titleTable = createTitleTable();
         Table materialsTable = createMaterialsLabel();
         Table exitTable = createExitButton();
@@ -120,6 +119,10 @@ public class UpgradeDisplay extends Window {
         WeaponConfig rocketConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_HOMING);
         WeaponConfig beeConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_BEE_STING);
         WeaponConfig grenadeConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_GRENADE);
+        WeaponConfig multiMissile = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_MISSILES);
+        WeaponConfig bluemerang = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BLUEMERANG);
+
+
         ToolConfig dirtConfig = structureTools.toolConfigs
                 .get("com.csse3200.game.components.structures.tools.BasicWallTool");
         ToolConfig gateConfig = structureTools.toolConfigs
@@ -149,6 +152,12 @@ public class UpgradeDisplay extends Window {
         boomerangNode.addChild(grenadeNode);
         grenadeNode.addChild(rocketNode);
         boomerangNode.addChild(slingShotNode);
+        UpgradeNode multiMissileNode = new UpgradeNode(multiMissile);
+        UpgradeNode bluemerangNode = new UpgradeNode(bluemerang);
+        boomerangNode.addChild(slingShotNode);
+        boomerangNode.addChild(bluemerangNode);
+        slingShotNode.addChild(rocketNode);
+        slingShotNode.addChild(multiMissileNode);
         trees.add(boomerangNode);
 
         // Build Tree
@@ -280,9 +289,9 @@ public class UpgradeDisplay extends Window {
         shapeRenderer.rect(node.getX() + blackOffsetX, node.getY() + blackOffsetY, blackRectSize, blackRectSize);
 
         // Draw a yellow highlight around all equipped items.
-        HashMap<Integer, WeaponType> equippedWeaponMap = player.getComponent(InventoryComponent.class)
-                .getEquippedWeaponMap();
-        if (equippedWeaponMap.containsValue(node.getWeaponType())) {
+        ArrayList<WeaponType> equippedWeaponMap = player.getComponent(InventoryComponent.class)
+                .getEquippedWeapons();
+        if (equippedWeaponMap.contains(node.getWeaponType())) {
             shapeRenderer.setColor(Color.GOLD);
             shapeRenderer.rect(node.getX() + equippedOffsetX, node.getY() + equippedOffsetY, equippedRectSize, equippedRectSize);
         }
@@ -386,7 +395,7 @@ public class UpgradeDisplay extends Window {
         materialsLabel.setColor(Color.BLACK);
         materialsLabel.setFontScale(0.25f);
         Image nebuliteImage =
-                new Image(ServiceLocator.getResourceService().getAsset("images/nebulite.png", Texture.class));
+                new Image(ServiceLocator.getResourceService().getAsset("images/resources/nebulite.png", Texture.class));
 
         Table table = new Table();
         table.add(nebuliteImage).size(64,64);
@@ -499,6 +508,7 @@ public class UpgradeDisplay extends Window {
     private void createToolTooltip(Table table, UpgradeNode node) {
         ToolConfig config = (ToolConfig) node.getConfig();
         createTooltipLabel(table, config.name, "");
+        createTooltipLabel(table, config.description, "");
         createTooltipLabel(table, "Cost to build:", "");
 
         for (ObjectMap.Entry<String, Integer> entry : config.cost) {
@@ -598,7 +608,8 @@ public class UpgradeDisplay extends Window {
                 UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
                 if (stats.isWeaponUnlocked(node.getName())) {
                     InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
-                    playerInventory.placeInSlot(node.getWeaponType(), playerInventory);
+                    playerInventory.placeInSlot(node.getWeaponType());
+                    player.getEvents().trigger("updateHotbar");
                 }
             }
         };

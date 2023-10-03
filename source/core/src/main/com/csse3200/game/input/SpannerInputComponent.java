@@ -27,7 +27,7 @@ public class SpannerInputComponent extends InputComponent {
                 new Rectangle(entity.getPosition().x, entity.getPosition().y, entity.getScale().x, entity.getScale().y);
         // Check if the click/touch is within the bounds of the entity
         if (boundingBox.contains(worldCoordinates.x, worldCoordinates.y)) {
-            Pixmap spannerPixmap = new Pixmap(Gdx.files.internal("images/spannerCursor.png"));
+            Pixmap spannerPixmap = new Pixmap(Gdx.files.internal("images/minigame/spannerCursor.png"));
             Gdx.graphics.setCursor(Gdx.graphics.newCursor(spannerPixmap, 0, 0));
             area.mouseState = ExtractorMiniGameArea.MouseState.SPANNER;
             return true; // Return true to consume the event

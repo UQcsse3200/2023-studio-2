@@ -11,6 +11,9 @@ import org.slf4j.LoggerFactory;
 public class FollowComponent extends Component{
     private final Entity followEntity;
     private float followSpeed;
+    private float minimumDistance = 0.6f;
+
+    private static Logger logger; // how to log print
 
     /**
      *
@@ -20,10 +23,6 @@ public class FollowComponent extends Component{
     public FollowComponent(Entity followEntity,float followSpeed){
         this.followEntity = followEntity;
         this.followSpeed = followSpeed;
-
-        //create logger for debug
-        // how to log print
-        Logger logger = LoggerFactory.getLogger(FollowComponent.class);
     }
 
 
@@ -34,6 +33,9 @@ public class FollowComponent extends Component{
      */
     public void setFollowSpeed(float followSpeed) {
         this.followSpeed = followSpeed;
+    }
+    public float getFollowSpeed() {
+        return followSpeed;
     }
 
     /**
@@ -67,11 +69,9 @@ public class FollowComponent extends Component{
             float distance = direction.len();
 
             //The entities are not overlapping on one another
-            float minimumDistance = 0.5f;
             if (distance > minimumDistance) {
                 // Calculate movement only if the distance is greater than the minimum
                 direction.nor().scl(followSpeed * Gdx.graphics.getDeltaTime());
-
                 currentPosition.add(direction);
                 entity.setPosition(currentPosition);
             }

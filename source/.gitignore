@@ -115,4 +115,7 @@ Thumbs.db
 /ios/IOSLauncher.app.dSYM
 
 # save files
-/core/assets/saves/
+/core/assets/saves/*
+
+# add the companion sound
+core/assets/sounds/*

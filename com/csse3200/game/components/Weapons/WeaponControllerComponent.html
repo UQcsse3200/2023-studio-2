@@ -50,7 +50,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -76,8 +76,12 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>Direct Known Subclasses:</dt>
+<dd><code><a href="SpecWeapon/BoomerangController.html" title="class in com.csse3200.game.components.Weapons.SpecWeapon">BoomerangController</a></code>, <code><a href="SpecWeapon/MeleeSwingController.html" title="class in com.csse3200.game.components.Weapons.SpecWeapon">MeleeSwingController</a></code>, <code><a href="SpecWeapon/ProjectileController.html" title="class in com.csse3200.game.components.Weapons.SpecWeapon">ProjectileController</a></code>, <code><a href="SpecWeapon/StaticController.html" title="class in com.csse3200.game.components.Weapons.SpecWeapon">StaticController</a></code></dd>
+</dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">WeaponControllerComponent</span>
+<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">WeaponControllerComponent</span>
 <span class="extends-implements">extends <a href="../Component.html" title="class in com.csse3200.game.components">Component</a></span></div>
 <div class="block">Class to control the movement of weapons that have been spawned</div>
 </section>
@@ -87,6 +91,27 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected int</code></div>
+<div class="col-second even-row-color"><code><a href="#attackNum" class="member-name-link">attackNum</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="../../entities/configs/WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#config" class="member-name-link">config</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected float</code></div>
+<div class="col-second even-row-color"><code><a href="#currentRotation" class="member-name-link">currentRotation</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected final <a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#player" class="member-name-link">player</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected int</code></div>
+<div class="col-second even-row-color"><code><a href="#remainingDuration" class="member-name-link">remainingDuration</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.csse3200.game.components.Component">Fields inherited from class&nbsp;com.csse3200.game.components.<a href="../Component.html" title="class in com.csse3200.game.components">Component</a></h3>
 <code><a href="../Component.html#enabled">enabled</a>, <a href="../Component.html#entity">entity</a>, <a href="../Component.html#logger">logger</a></code></div>
@@ -100,14 +125,17 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.components.Weapons.WeaponType,int,float,float,int,int,int)" class="member-name-link">WeaponControllerComponent</a><wbr>(<a href="WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType,
- int&nbsp;weaponDuration,
- float&nbsp;currentRotation,
- float&nbsp;speed,
- int&nbsp;rotationSpeed,
- int&nbsp;animationType,
- int&nbsp;imageRotationOffset)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.configs.WeaponConfig,float,com.csse3200.game.entities.Entity)" class="member-name-link">WeaponControllerComponent</a><wbr>(<a href="../../entities/configs/WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a>&nbsp;config,
+ float&nbsp;attackDirection,
+ <a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Class to store variables of a spawned weapon</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.csse3200.game.entities.configs.WeaponConfig,float,com.csse3200.game.entities.Entity,int)" class="member-name-link">WeaponControllerComponent</a><wbr>(<a href="../../entities/configs/WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a>&nbsp;config,
+ float&nbsp;attackDirection,
+ <a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player,
+ int&nbsp;attackNum)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Class to store variables of a spawned weapon</div>
 </div>
 </div>
@@ -118,16 +146,59 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add_animations(com.csse3200.game.rendering.AnimationRenderComponent)" class="member-name-link">add_animations</a><wbr>(<a href="../../rendering/AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a>&nbsp;animator)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the entity is created and registered.</div>
+<div class="block">Function to add animations based on standard animation configurations (Overidable)</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Create class - implemented class implement initial weapon setup including adding required animations
+ and controlling initial movement direction and animation</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#initial_animation(com.csse3200.game.rendering.AnimationRenderComponent)" class="member-name-link">initial_animation</a><wbr>(<a href="../../rendering/AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a>&nbsp;animator)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Set intial animation</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#initial_position()" class="member-name-link">initial_position</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Set initial position</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#initial_rotation()" class="member-name-link">initial_rotation</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Set initial rotation (defaults to attack direction)</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#move()" class="member-name-link">move</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Update entity location every tick</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.badlogic.gdx.math.Vector2</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#positionInDirection(float,float)" class="member-name-link">positionInDirection</a><wbr>(float&nbsp;direction,
+ float&nbsp;distance)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the game position in a given direction at a given distance relative to the player
+ to center a given attack entity</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#reanimate()" class="member-name-link">reanimate</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Update entity animation if required</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#rotate()" class="member-name-link">rotate</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Update entity rotation every tick</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
@@ -149,21 +220,65 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="config">
+<h3>config</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../../entities/configs/WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a></span>&nbsp;<span class="element-name">config</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="remainingDuration">
+<h3>remainingDuration</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">remainingDuration</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="currentRotation">
+<h3>currentRotation</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">currentRotation</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="player">
+<h3>player</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">player</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="attackNum">
+<h3>attackNum</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">attackNum</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.csse3200.game.components.Weapons.WeaponType,int,float,float,int,int,int)">
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.entities.configs.WeaponConfig,float,com.csse3200.game.entities.Entity,int)">
 <h3>WeaponControllerComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WeaponControllerComponent</span><wbr><span class="parameters">(<a href="WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType,
- int&nbsp;weaponDuration,
- float&nbsp;currentRotation,
- float&nbsp;speed,
- int&nbsp;rotationSpeed,
- int&nbsp;animationType,
- int&nbsp;imageRotationOffset)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WeaponControllerComponent</span><wbr><span class="parameters">(<a href="../../entities/configs/WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a>&nbsp;config,
+ float&nbsp;attackDirection,
+ <a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player,
+ int&nbsp;attackNum)</span></div>
+<div class="block">Class to store variables of a spawned weapon</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.csse3200.game.entities.configs.WeaponConfig,float,com.csse3200.game.entities.Entity)">
+<h3>WeaponControllerComponent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WeaponControllerComponent</span><wbr><span class="parameters">(<a href="../../entities/configs/WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a>&nbsp;config,
+ float&nbsp;attackDirection,
+ <a href="../../entities/Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</span></div>
 <div class="block">Class to store variables of a spawned weapon</div>
 </section>
 </li>
@@ -179,9 +294,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="create()">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../Component.html#create()">Component</a></code></span></div>
-<div class="block">Called when the entity is created and registered. Initial logic such as calls to GetComponent
- should be made here, not in the constructor which is called before an entity is finished.</div>
+<div class="block">Create class - implemented class implement initial weapon setup including adding required animations
+ and controlling initial movement direction and animation</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
@@ -196,6 +310,75 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.csse3200.game.components">Component</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="add_animations(com.csse3200.game.rendering.AnimationRenderComponent)">
+<h3>add_animations</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">add_animations</span><wbr><span class="parameters">(<a href="../../rendering/AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a>&nbsp;animator)</span></div>
+<div class="block">Function to add animations based on standard animation configurations (Overidable)</div>
+</section>
+</li>
+<li>
+<section class="detail" id="initial_rotation()">
+<h3>initial_rotation</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initial_rotation</span>()</div>
+<div class="block">Set initial rotation (defaults to attack direction)</div>
+</section>
+</li>
+<li>
+<section class="detail" id="initial_position()">
+<h3>initial_position</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initial_position</span>()</div>
+<div class="block">Set initial position</div>
+</section>
+</li>
+<li>
+<section class="detail" id="initial_animation(com.csse3200.game.rendering.AnimationRenderComponent)">
+<h3>initial_animation</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initial_animation</span><wbr><span class="parameters">(<a href="../../rendering/AnimationRenderComponent.html" title="class in com.csse3200.game.rendering">AnimationRenderComponent</a>&nbsp;animator)</span></div>
+<div class="block">Set intial animation</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>animator</code> - - animation component for the entity</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="rotate()">
+<h3>rotate</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">rotate</span>()</div>
+<div class="block">Update entity rotation every tick</div>
+</section>
+</li>
+<li>
+<section class="detail" id="move()">
+<h3>move</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">move</span>()</div>
+<div class="block">Update entity location every tick</div>
+</section>
+</li>
+<li>
+<section class="detail" id="reanimate()">
+<h3>reanimate</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">reanimate</span>()</div>
+<div class="block">Update entity animation if required</div>
+</section>
+</li>
+<li>
+<section class="detail" id="positionInDirection(float,float)">
+<h3>positionInDirection</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.Vector2</span>&nbsp;<span class="element-name">positionInDirection</span><wbr><span class="parameters">(float&nbsp;direction,
+ float&nbsp;distance)</span></div>
+<div class="block">Returns the game position in a given direction at a given distance relative to the player
+ to center a given attack entity</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>direction</code> - direction the position should be in</dd>
+<dd><code>distance</code> - distance infront of the player</dd>
+<dt>Returns:</dt>
+<dd>position in the given direction at the distance</dd>
 </dl>
 </section>
 </li>

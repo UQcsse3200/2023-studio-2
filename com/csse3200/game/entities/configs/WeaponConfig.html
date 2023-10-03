@@ -109,23 +109,23 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#imagePath" class="member-name-link">imagePath</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>int</code></div>
-<div class="col-second odd-row-color"><code><a href="#imageRotationOffset" class="member-name-link">imageRotationOffset</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>float</code></div>
-<div class="col-second even-row-color"><code><a href="#imageScale" class="member-name-link">imageScale</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>int</code></div>
-<div class="col-second odd-row-color"><code><a href="#initialRotationOffset" class="member-name-link">initialRotationOffset</a></code></div>
+<div class="col-first odd-row-color"><code>float</code></div>
+<div class="col-second odd-row-color"><code><a href="#imageScale" class="member-name-link">imageScale</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#name" class="member-name-link">name</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>int</code></div>
-<div class="col-second odd-row-color"><code><a href="#rotationSpeed" class="member-name-link">rotationSpeed</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#projectiles" class="member-name-link">projectiles</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#slotType" class="member-name-link">slotType</a></code></div>
+<div class="col-first even-row-color"><code>float</code></div>
+<div class="col-second even-row-color"><code><a href="#rotationSpeed" class="member-name-link">rotationSpeed</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#slotType" class="member-name-link">slotType</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="SoundsConfig.html" title="class in com.csse3200.game.entities.configs">SoundsConfig</a></code></div>
+<div class="col-second even-row-color"><code><a href="#sound" class="member-name-link">sound</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#textureAtlas" class="member-name-link">textureAtlas</a></code></div>
@@ -204,21 +204,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="rotationSpeed">
+<h3>rotationSpeed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">rotationSpeed</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="weaponDuration">
 <h3>weaponDuration</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">weaponDuration</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="rotationSpeed">
-<h3>rotationSpeed</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">rotationSpeed</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="initialRotationOffset">
-<h3>initialRotationOffset</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">initialRotationOffset</span></div>
 </section>
 </li>
 <li>
@@ -234,15 +228,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="animationType">
-<h3>animationType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">animationType</span></div>
+<section class="detail" id="projectiles">
+<h3>projectiles</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">projectiles</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="imageRotationOffset">
-<h3>imageRotationOffset</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">imageRotationOffset</span></div>
+<section class="detail" id="animationType">
+<h3>animationType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">animationType</span></div>
 </section>
 </li>
 <li>
@@ -261,6 +255,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="imagePath">
 <h3>imagePath</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">imagePath</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="sound">
+<h3>sound</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SoundsConfig.html" title="class in com.csse3200.game.entities.configs">SoundsConfig</a></span>&nbsp;<span class="element-name">sound</span></div>
 </section>
 </li>
 <li>

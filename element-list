@@ -26,6 +26,7 @@ com.csse3200.game.components.structures.tools
 com.csse3200.game.components.tasks
 com.csse3200.game.components.upgradetree
 com.csse3200.game.components.Weapons
+com.csse3200.game.components.Weapons.SpecWeapon
 com.csse3200.game.concurrency
 com.csse3200.game.entities
 com.csse3200.game.entities.buildables

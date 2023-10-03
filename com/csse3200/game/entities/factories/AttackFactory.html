@@ -93,11 +93,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createAttack(com.csse3200.game.components.Weapons.WeaponType,float,com.csse3200.game.entities.Entity)" class="member-name-link">createAttack</a><wbr>(<a href="../../components/Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType,
- float&nbsp;initRot,
- <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createAttack(com.csse3200.game.entities.configs.WeaponConfig,float,com.csse3200.game.entities.Entity,int)" class="member-name-link">createAttack</a><wbr>(<a href="../configs/WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a>&nbsp;config,
+ float&nbsp;attackDirection,
+ <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player,
+ int&nbsp;attackNum)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Static function to create a new weapon entity</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createAttacks(com.csse3200.game.components.Weapons.WeaponType,float,com.csse3200.game.entities.Entity)" class="member-name-link">createAttacks</a><wbr>(<a href="../../components/Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType,
+ float&nbsp;attackDirection,
+ <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">function to generate multiple attacks in a sequence attack</div>
 </div>
 </div>
 </div>
@@ -117,17 +125,35 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="createAttack(com.csse3200.game.components.Weapons.WeaponType,float,com.csse3200.game.entities.Entity)">
-<h3>createAttack</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createAttack</span><wbr><span class="parameters">(<a href="../../components/Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType,
- float&nbsp;initRot,
+<section class="detail" id="createAttacks(com.csse3200.game.components.Weapons.WeaponType,float,com.csse3200.game.entities.Entity)">
+<h3>createAttacks</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&gt;</span>&nbsp;<span class="element-name">createAttacks</span><wbr><span class="parameters">(<a href="../../components/Weapons/WeaponType.html" title="enum class in com.csse3200.game.components.Weapons">WeaponType</a>&nbsp;weaponType,
+ float&nbsp;attackDirection,
  <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player)</span></div>
+<div class="block">function to generate multiple attacks in a sequence attack</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>weaponType</code> - </dd>
+<dd><code>attackDirection</code> - </dd>
+<dd><code>player</code> - </dd>
+<dt>Returns:</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createAttack(com.csse3200.game.entities.configs.WeaponConfig,float,com.csse3200.game.entities.Entity,int)">
+<h3>createAttack</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a></span>&nbsp;<span class="element-name">createAttack</span><wbr><span class="parameters">(<a href="../configs/WeaponConfig.html" title="class in com.csse3200.game.entities.configs">WeaponConfig</a>&nbsp;config,
+ float&nbsp;attackDirection,
+ <a href="../Entity.html" title="class in com.csse3200.game.entities">Entity</a>&nbsp;player,
+ int&nbsp;attackNum)</span></div>
 <div class="block">Static function to create a new weapon entity</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>weaponType</code> - - the type of weapon entity to be made</dd>
-<dd><code>initRot</code> - - the initial rotation of the player</dd>
+<dd><code>config</code> - config to weapon to create</dd>
+<dd><code>attackDirection</code> - - the initial rotation of the player</dd>
 <dd><code>player</code> - - the player using this attack</dd>
+<dd><code>attackNum</code> - - the number of the attack in the sequence</dd>
 <dt>Returns:</dt>
 <dd>A reference to the created weapon entity</dd>
 </dl>

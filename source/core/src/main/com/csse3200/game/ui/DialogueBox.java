@@ -49,7 +49,7 @@ public class DialogueBox extends Dialog {
     }
 
 
-    private void create(){
+    public void create(){
         titleLabel.setAlignment(Align.top);
         titleLabel.setFontScale(0.3f); // Adjust font scale as needed
         titleLabel.setColor(Color.BLACK); // TitleBox Title Colour can be changed here
@@ -124,12 +124,12 @@ public class DialogueBox extends Dialog {
         stage.addActor(this);
     }
 
-    private void onOK() {
+    public void onOK() {
         logger.info("Back to game");
         remove();
     }
 
-    private void oninfo() {
+    public void oninfo() {
 
         String[] nextTitles = {"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected.", "Emily: We can handle it. \nLead the way!"};
         String[] nextMessages = {"", ""};

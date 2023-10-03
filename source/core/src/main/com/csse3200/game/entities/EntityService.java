@@ -28,13 +28,11 @@ public class EntityService {
     return entities;
   }
 
-  public AreaEntityConfig saveCurrentArea(String path) {
+  public void saveCurrentArea(String path) {
     AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
     areaEntityConfig.addEntities(getEntitiesByComponent(SaveableComponent.class));
 
     FileLoader.writeClass(areaEntityConfig, path, FileLoader.Location.LOCAL);
-
-    return areaEntityConfig;
   }
 
   /**

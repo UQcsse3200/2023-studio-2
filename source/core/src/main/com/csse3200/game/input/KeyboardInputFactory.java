@@ -47,4 +47,8 @@ public class KeyboardInputFactory extends InputFactory {
         logger.debug("Creating terminal input handler");
         return new KeyboardTerminalInputComponent();
     }
+    public InputComponent createForBall() {
+        logger.debug("Creating ship input handler");
+        return new KeyboardTerminalInputComponent();
+    }
 }

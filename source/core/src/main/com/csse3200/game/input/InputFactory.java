@@ -60,6 +60,7 @@ public abstract class InputFactory {
    * @return Ship input handler
    */
   public abstract InputComponent createForShip();
+  public abstract InputComponent createForBall();
   /**
    * Creates an input handler for the terminal
    *

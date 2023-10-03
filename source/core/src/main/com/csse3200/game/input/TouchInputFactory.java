@@ -3,6 +3,7 @@ package com.csse3200.game.input;
 import com.csse3200.game.components.Companion.TouchCompanionInputComponent;
 import com.csse3200.game.components.player.TouchPlayerInputComponent;
 import com.csse3200.game.components.ships.KeyboardShipInputComponent;
+import com.csse3200.game.ui.terminal.KeyboardTerminalInputComponent;
 import com.csse3200.game.ui.terminal.TouchTerminalInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,10 @@ public class TouchInputFactory extends InputFactory{
     logger.debug("Creating ship input handler");
     return new KeyboardShipInputComponent();
   }
-
+  public InputComponent createForBall() {
+    logger.debug("Creating ball input handler");
+    return new KeyboardTerminalInputComponent();
+  }
   /**
    * Creates an input handler for the Companion
    *

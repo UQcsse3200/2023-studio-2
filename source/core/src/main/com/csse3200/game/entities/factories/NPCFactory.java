@@ -126,7 +126,10 @@ public class NPCFactory {
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
     botanist.addComponent(new InteractableComponent(entity -> {
-      botanist.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
+      String[] storytext= {"Hello I am the Botanist","I am here to guide you through"};
+      String[] titletext= {"",""};
+
+      botanist.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
     },10f));
 
     botanist.scaleHeight(6.1f);
@@ -211,7 +214,9 @@ public class NPCFactory {
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
     astronaut.addComponent(new InteractableComponent(entity -> {
-      astronaut.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
+      String[] storytext= {"Hello I am Astronaut","I am here to guide you through"};
+      String[] titletext= {"",""};
+      astronaut.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
     },10f));
 
     astronaut.scaleHeight(1f);
@@ -233,7 +238,11 @@ public class NPCFactory {
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsMovementComponent());
     Jail.addComponent(new InteractableComponent(entity -> {Jail.dispose();
-      Jail.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");},5f));
+      String[] storytext= {"NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!"
+              ,"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected."
+              ,"Emily: We can handle it. \nLead the way!"};
+      String[] titletext= {"","",""};
+      Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);},5f));
     Jail.scaleHeight(1.7f);
     animator.startAnimation("jail_close");
     return Jail;

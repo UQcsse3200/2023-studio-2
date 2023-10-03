@@ -4,6 +4,7 @@
       "name": "Dirt Wall",
       "description": "A sturdy wall made of dirt for basic protection!",
       "cost": {
+        "Durasteel": 25
       },
       "texture": "images/structure-icons/wall.png"
     },
@@ -50,7 +51,7 @@
       "description": "Makes big boom!",
       "cost": {
         "Durasteel": 50,
-        "Solstite": 0
+        "Solstite": 100
       },
       "texture": "images/explosives/explosive-barrel.png"
     },
@@ -58,8 +59,8 @@
       "name": "Landmine",
       "description": "Watch your step!",
       "cost": {
-        "Durasteel": 30,
-        "Solstite": 0
+        "Durasteel": 25,
+        "Solstite": 50
       },
       "texture": "images/explosives/landmine.png"
     }

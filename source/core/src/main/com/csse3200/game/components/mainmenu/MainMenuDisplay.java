@@ -128,6 +128,15 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
+        TextButton spaceButton = new TextButton("Map", skin);
+        spaceButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        entity.getEvents().trigger("space map");
+                    }
+                });
+
         // Arrange UI elements in a table layout
         table.add(titleImage);
         table.row();
@@ -145,6 +154,7 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(upgradeShip).padTop(15f).padLeft(1200f);
         table.row();
+        table.add(spaceButton).padTop(15f).padLeft(1200f);
         stage.addActor(titleImage);
 
         AmendAnimation();

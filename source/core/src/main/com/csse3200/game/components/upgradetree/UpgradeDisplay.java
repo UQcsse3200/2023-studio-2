@@ -87,7 +87,7 @@ public class UpgradeDisplay extends Window {
         structurePicker = player.getComponent(StructureToolPicker.class);
         this.upgradeBench = player;
 
-        // upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000);
+        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-500); // todo: remove for final release
 
         setupWindowDimensions();
 

@@ -234,6 +234,14 @@ public class ShipActions extends Component {
      */
     public void noFuel() { entity.getEvents().trigger("noFuel"); }
 
+    /**
+     * Ship hits an obstacle, reduce health by 1
+     */
+    public void hit() {
+        this.maxHealth -= 1;
+        this.updatedHealth();
+    }
+
 
 
 }

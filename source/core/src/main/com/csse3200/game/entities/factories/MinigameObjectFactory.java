@@ -13,7 +13,9 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.components.ships.SpaceCollideDamageComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 
 /**
  * Creates collidable objects in the Space Obstacle Minigame
@@ -36,7 +38,9 @@ public class MinigameObjectFactory {
         Entity asteroid = new Entity()
                 .addComponent(new TextureRenderComponent(config.spritePath))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.DynamicBody))
-                .addComponent(asteroidCollider);
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(asteroidCollider)
+                .addComponent(new SpaceCollideDamageComponent(PhysicsLayer.SHIP, (float) 0.5));
         asteroid.setScale(config.scale);
         return asteroid;
     }
@@ -54,7 +58,9 @@ public class MinigameObjectFactory {
         Entity asteroid = new Entity()
                 .addComponent(new TextureRenderComponent("images/minigame/meteor.png"))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.DynamicBody))
-                .addComponent(asteroidCollider);
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(asteroidCollider)
+                .addComponent(new SpaceCollideDamageComponent(PhysicsLayer.SHIP, (float) 0.5));
         asteroid.setScale(width, height);
         return asteroid;
     }
@@ -68,7 +74,9 @@ public class MinigameObjectFactory {
         Entity asteroid = new Entity()
                 .addComponent(new TextureRenderComponent(config.spritePath))
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new SpaceCollideDamageComponent(PhysicsLayer.SHIP, (float) 0.5));
         asteroid.setScale(config.scale);
         return asteroid;
     }
@@ -130,6 +138,7 @@ public class MinigameObjectFactory {
         minigameConfigs.obstacleGameGoal.scale = new Vector2(width, height);
         return createObstacleGameGoal(minigameConfigs.obstacleGameGoal);
     }
+
 
     private MinigameObjectFactory() {
         throw new IllegalStateException("Instantiating static util class");

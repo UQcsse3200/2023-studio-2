@@ -6,11 +6,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
-import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Core entity class. Entities exist in the game and are updated each frame. All entities have a
@@ -43,6 +45,7 @@ public class Entity {
   private float rotation = 0;
   private Array<Component> createdComponents;
 
+
   public Entity() {
     this.entityType = "";
     id = nextId;
@@ -51,22 +54,6 @@ public class Entity {
 
     components = new IntMap<>(4);
     eventHandler = new EventHandler();
-  }
-
-  /**
-   * Function to set rotation
-   * @param rot - rotation of entity to set to
-   */
-  public void setRotation(float rot) {
-    this.rotation = rot;
-  }
-
-  /**
-   * function to get rotation
-   * @return return rotation of entity
-   */
-  public float getRotation() {
-    return this.rotation;
   }
 
   /**
@@ -79,6 +66,7 @@ public class Entity {
     logger.debug("Setting enabled={} on entity {}", enabled, this);
     this.enabled = enabled;
   }
+
 
   /**
    * Get the entity's game position.
@@ -225,6 +213,25 @@ public class Entity {
   }
 
   /**
+   * Get the components of type T on the entity.
+   *
+   * @param type The component class, e.g. RenderComponent.class
+   * @param <T> The component type, e.g. RenderComponent
+   * @return The entity component, or null if nonexistent.
+   */
+  @SuppressWarnings("unchecked")
+  public <T> List<T> getComponents(Class<T> type) {
+    List<T> matchedComponents = new ArrayList<>();
+
+    for (var component : components.values()) {
+      if (type.isInstance(component)) {
+        matchedComponents.add((T) component);
+      }
+    }
+    return matchedComponents;
+  }
+
+  /**
    * Add a component to the entity. Can only be called before the entity is registered in the world.
    *
    * @param component The component to add. Only one component of a type can be added to an entity.
@@ -285,8 +292,8 @@ public class Entity {
     if (!enabled) {
       return;
     }
-    for (Component component : createdComponents) {
-      component.triggerEarlyUpdate();
+    for (int i = 0; i < createdComponents.size; i++) {
+      createdComponents.get(i).triggerEarlyUpdate();
     }
   }
 
@@ -298,8 +305,8 @@ public class Entity {
     if (!enabled) {
       return;
     }
-    for (Component component : createdComponents) {
-      component.triggerUpdate();
+    for (int i = 0; i < createdComponents.size; i++) {
+      createdComponents.get(i).triggerUpdate();
     }
   }
 

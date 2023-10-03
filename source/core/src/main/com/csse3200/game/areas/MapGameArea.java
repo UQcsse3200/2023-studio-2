@@ -1,40 +1,41 @@
 package com.csse3200.game.areas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
+import com.csse3200.game.areas.mapConfig.InvalidConfigException;
+import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.gamearea.GameAreaDisplay;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.PowerupType;
+import com.csse3200.game.components.gamearea.PlanetHudDisplay;
+import com.csse3200.game.components.player.InventoryDisplayComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.Fissure;
+import com.csse3200.game.entities.PlaceableEntity;
+import com.csse3200.game.entities.TileEntity;
 import com.csse3200.game.entities.configs.*;
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.entities.factories.*;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.files.UserSettings;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.csse3200.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import java.io.File;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * A Base Game Area for any level.
@@ -42,17 +43,35 @@ import java.util.stream.Collectors;
  */
 public class MapGameArea extends GameArea{
 
-    private final GameAreaConfig mapConfig;
-    private static final Logger logger = LoggerFactory.getLogger(EarthGameArea.class);
+    private GameAreaConfig mapConfig = null;
+    private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
-    private Entity playerEntity;
+    private int playerLives;
+    private boolean validLoad = true;
+    private static List<Entity> itemsOnMap = new ArrayList<>();
+    private String thing;
 
-    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game) {
-        //TODO: Check if this causes an error from diff run locations
-        mapConfig = FileLoader.readClass(GameAreaConfig.class, configPath, FileLoader.Location.INTERNAL);
+    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
+        try {
+            mapConfig = MapConfigLoader.loadMapDirectory(configPath);
+            logger.info("Successfully loaded map {}", configPath);
+        } catch (InvalidConfigException exception) {
+            logger.error("FAILED TO LOAD GAME - RETURNING TO MAIN MENU", exception);
+            validLoad = false;
+        }
         this.game = game;
         this.terrainFactory = terrainFactory;
+        this.playerLives = playerLives;
+    }
+
+    public static float getSpeedMult() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+        Object speedMult = cell.getTile().getProperties().get("speedMult");
+
+        return speedMult != null ? (float)speedMult : 1f;
     }
 
     /**
@@ -60,46 +79,53 @@ public class MapGameArea extends GameArea{
      */
     @Override
     public void create() {
+        if (!validLoad) {
+            logger.error("FAILED TO LOAD GAME - RETURNING TO MAIN MENU");
+            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+            return;
+        }
         loadAssets();
-        displayUI();
 
         registerEntityPlacementService();
         registerStructurePlacementService();
 
         spawnTerrain();
         spawnEnvironment();
-        spawnPowerups();
-        spawnUpgradeBench();
         spawnExtractors();
         spawnShip();
-        playerEntity = spawnPlayer();
-        spawnCompanion(playerEntity);
+        player = spawnPlayer();
+        companion = spawnCompanion();
+        spawnLaboratory();
+        companion.getEvents().addListener("SpawnPowerup",this::spawnPowerups);
+        spawnPortal(player);
+        spawnTreeTop();
+        spawnAstro();
+        spawnSpawners();
+        spawnJail();
+        //spawnFire();
+        //spawnBotanist();
 
-        spawnEnemies();
-        spawnBotanist();
-
+        displayUI();
         playMusic();
-    }
-
-    //TODO: is this needed?
-    public Entity getPlayer() {
-        return this.playerEntity;
     }
 
     /**
      * Loads all assets listed in the config file
      */
-    private void loadAssets() {
+    protected void loadAssets() {
+        long start = System.currentTimeMillis();
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
-        resourceService.loadDynamicAssets(mapConfig.getTextures());
+        resourceService.loadDynamicAssets(mapConfig.getEntityTextures());
         if (mapConfig.texturePaths != null)
             resourceService.loadTextures(mapConfig.texturePaths);
         if (mapConfig.textureAtlasPaths != null)
             resourceService.loadTextureAtlases(mapConfig.textureAtlasPaths);
         if (mapConfig.soundPaths != null)
             resourceService.loadSounds(mapConfig.soundPaths);
+        if (mapConfig.particleEffectPaths != null)
+            resourceService.loadParticleEffects(mapConfig.particleEffectPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.loadMusic(new String[] {mapConfig.backgroundMusicPath});
 
@@ -107,6 +133,7 @@ public class MapGameArea extends GameArea{
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
         }
+        logger.debug(String.format("Load took %d ms to load.", System.currentTimeMillis() - start));
     }
 
     /**
@@ -116,8 +143,22 @@ public class MapGameArea extends GameArea{
         Entity ui = new Entity();
         //Ensure non-null
         mapConfig.mapName = mapConfig.mapName == null ? "" : mapConfig.mapName;
-        ui.addComponent(new GameAreaDisplay(mapConfig.mapName));
+        //ui.addComponent(new GameAreaDisplay(mapConfig.mapName));
+        ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage))
+                .addComponent(new InventoryDisplayComponent());
         spawnEntity(ui);
+    }
+
+    /**
+     * Spawns a portal that sends the player to a new location
+     */
+    private void spawnPortal(Entity playerEntity) {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        for (PortalConfig portalConfig : mapConfig.areaEntityConfig.getEntities(PortalConfig.class)) {
+            Entity portal = PortalFactory.createPortal(playerEntity, portalConfig);
+            spawnEntityAt(portal, portalConfig.position, false, false);
+        }
     }
 
     /**
@@ -154,58 +195,75 @@ public class MapGameArea extends GameArea{
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
     }
 
+    public static void removeItemOnMap(Entity entityToRemove) {
+        entityToRemove.setEnabled(false);
+        itemsOnMap.remove(entityToRemove);
+        Gdx.app.postRunnable(entityToRemove::dispose);
+    }
+
     /**
      * Spawns the game environment
      */
     private void spawnEnvironment() {
-        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
-        Entity environment;
-        for (int y = 0; y < collisionLayer.getHeight(); y++) {
-            for (int x = 0; x < collisionLayer.getWidth(); x++) {
-                TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, collisionLayer.getHeight() - 1 - y);
-                if (cell != null) {
-                    MapObjects objects = cell.getTile().getObjects();
-                    GridPoint2 tilePosition = new GridPoint2(x, collisionLayer.getHeight() - 1 - y);
-                    if (objects.getCount() >= 1) {
-                        RectangleMapObject object = (RectangleMapObject) objects.get(0);
-                        Rectangle collisionBox = object.getRectangle();
-                        float collisionX = 0.5f-collisionBox.x / 16;
-                        float collisionY = 0.5f-collisionBox.y / 16;
-                        float collisionWidth = collisionBox.width / 32;
-                        float collisionHeight = collisionBox.height / 32;
-                        environment = ObstacleFactory.createEnvironment(collisionWidth, collisionHeight, collisionX, collisionY);
-                    }
-                    else {
-                        environment = ObstacleFactory.createEnvironment();
-                    }
-                    spawnEntityAt(environment, tilePosition, false, false);
-                }
-            }
+        TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
+        List<TileEntity> environments = EnvironmentFactory.createEnvironment(layer);
+
+        for (TileEntity tileEntity : environments) {
+            spawnEntityAt(tileEntity.getEntity(), tileEntity.getTilePosition(), false, false);
         }
     }
 
     /**
      * Spawns powerups in the map at the positions as outlined by the config file
      */
-    private void spawnPowerups() {
-        if (mapConfig.areaEntityConfig == null) return;
+    private Entity spawnPowerups(PowerupType powerupType) {
+        Entity newPowerup;
+        switch (powerupType){
+            case HEALTH_BOOST:
+                newPowerup = PowerupFactory.createHealthPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case SPEED_BOOST:
+                newPowerup = PowerupFactory.createSpeedPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case TEMP_IMMUNITY:
+                newPowerup = PowerupFactory.createTempImmunityPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case DOUBLE_DAMAGE:
+                newPowerup = PowerupFactory.createDoubleDamagePowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case DEATH_POTION:
+                newPowerup = PowerupFactory.createDeathPotion();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case EXTRA_LIFE:
+                newPowerup = PowerupFactory.createExtraLifePowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case DOUBLE_CROSS:
+                newPowerup = PowerupFactory.createDoubleCrossPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            case SNAP:
+                newPowerup = PowerupFactory.createSnapPowerup();
+                itemsOnMap.add(newPowerup);
+                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
+                return newPowerup;
+            default: throw new IllegalArgumentException("You must assign a valid PowerupType");
 
-        for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.powerups) {
+        /*for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.getEntities(PowerupConfig.class)) {
             Entity powerup = PowerupFactory.createPowerup(powerupConfig);
-            spawnEntityAt(powerup, powerupConfig.position, true, false);
-        }
-    }
-
-    /**
-     * Spawns the upgrade bench to correspond to the config file provided
-     */
-    private void spawnUpgradeBench() {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        UpgradeBenchConfig upgradeBenchConfig = mapConfig.areaEntityConfig.upgradeBench;
-        if (upgradeBenchConfig != null) {
-            Entity upgradeBench = StructureFactory.createUpgradeBench(upgradeBenchConfig);
-            spawnEntityAt(upgradeBench, upgradeBenchConfig.position, true, true);
+            spawnEntityAt(powerup, powerupConfig.position, true, false);*/
         }
     }
 
@@ -219,6 +277,20 @@ public class MapGameArea extends GameArea{
         int steps = 64;
         int maxResource = 1000;
 
+        //TODO: MOVE TO CONFIG
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Nebulite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Durasteel.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Solstite.toString(),  (int) 0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Nebulite.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Durasteel.toString(),  (int) 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Solstite.toString(),  (int) 4);
+
         ResourceDisplay resourceDisplayComponent = new ResourceDisplay(scale, steps, maxResource)
                 .withResource(Resource.Durasteel)
                 .withResource(Resource.Solstite)
@@ -229,9 +301,14 @@ public class MapGameArea extends GameArea{
         //Spawn extractors if any in game area
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (ExtractorConfig extractorConfig : mapConfig.areaEntityConfig.extractors) {
+        for (ExtractorConfig extractorConfig : mapConfig.areaEntityConfig.getEntities(ExtractorConfig.class)) {
             Entity extractor = StructureFactory.createExtractor(extractorConfig);
             spawnEntityAt(extractor, extractorConfig.position, true, false);
+        }
+
+        for (FissureConfig fissureConfig : mapConfig.areaEntityConfig.getEntities(FissureConfig.class)) {
+            PlaceableEntity fissure = new Fissure(fissureConfig);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(fissure, fissureConfig.position, true, true);
         }
     }
 
@@ -241,10 +318,19 @@ public class MapGameArea extends GameArea{
     private void spawnShip() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        ShipConfig shipConfig = mapConfig.areaEntityConfig.ship;
+        ShipConfig shipConfig = mapConfig.areaEntityConfig.getEntity(ShipConfig.class);
         if (shipConfig != null) {
             Entity ship = StructureFactory.createShip(game, mapConfig.winConditions, shipConfig);
             spawnEntityAt(ship, shipConfig.position, false, false);
+        }
+    }
+    private void spawnTreeTop(){
+        if (mapConfig.areaEntityConfig == null) return;
+
+        TreeTopConfig treeTopConfig = mapConfig.areaEntityConfig.getEntity(TreeTopConfig.class);
+        if (treeTopConfig != null) {
+            Entity treeTop = ObstacleFactory.createTreeTop(treeTopConfig);
+            spawnEntityAt(treeTop, treeTopConfig.position, false, false);
         }
     }
 
@@ -254,41 +340,83 @@ public class MapGameArea extends GameArea{
      * @return The player entity created
      */
     private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer(); //TODO: Fix config for player?
-        if (mapConfig.playerSpawn != null) {
-            spawnEntityAt(newPlayer, mapConfig.playerSpawn, true, true);
+        Entity newPlayer;
+        PlayerConfig playerConfig = null;
+        if (mapConfig.areaEntityConfig != null) {
+            playerConfig = mapConfig.areaEntityConfig.getEntity(PlayerConfig.class);
+        }
+
+        if (playerConfig != null) {
+            newPlayer = PlayerFactory.createPlayer(playerConfig);
         } else {
+            logger.info("Player not found in config file - creating generic player");
+            newPlayer = PlayerFactory.createPlayer();
+        }
+        newPlayer.getComponent(CombatStatsComponent.class).setLives(playerLives); // Ensures previous number of lives is maintained.
+        newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
+        newPlayer.getEvents().addListener("death", () ->
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
+        );
+        ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", newPlayer);
+
+        if (playerConfig != null && playerConfig.position != null) {
+            spawnEntityAt(newPlayer, playerConfig.position, true, true);
+        } else {
+            logger.info("Failed to load player position - created player at middle of map");
             //If no position specified spawn in middle of map.
             GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);
             spawnEntityAt(newPlayer, pos, true, true);
         }
         return newPlayer;
     }
-
-    /**
-     * Spawns the companion at the position given by the config file
-     * @param playerEntity - player that will be accompanied
-     */
-    private void spawnCompanion(Entity playerEntity) {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        //Could spawn companion next to player if no position is specified.
-        CompanionConfig companionConfig = mapConfig.areaEntityConfig.companion;
-        if (companionConfig != null) {
-            Entity newCompanion = CompanionFactory.createCompanion(playerEntity, companionConfig);
-            spawnEntityAt(newCompanion, companionConfig.position, true, true);
+    private void spawnLaboratory(){
+        LaboratoryConfig laboratoryConfig = mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class);
+        if (laboratoryConfig !=null){
+            Entity newLaboratory = LaboratoryFactory.createLaboratory();
+            spawnEntityAt(newLaboratory, laboratoryConfig.position, true,false);
         }
     }
 
+    public static Entity getPlayer() {
+        return player;
+    }
+
     /**
-     * Spawns all the enemies detailed in the Game Area.
+     * Spawns the companion at the position given by the config file
      */
-    private void spawnEnemies() {
+    private Entity spawnCompanion() {
+        Entity newCompanion;
+        CompanionConfig companionConfig = null;
+        if (mapConfig.areaEntityConfig != null) {
+            companionConfig = mapConfig.areaEntityConfig.getEntity(CompanionConfig.class);
+        }
+
+        if (companionConfig != null) {
+            newCompanion = CompanionFactory.createCompanion(companionConfig);
+        } else {
+            logger.info("Companion not found in config file - creating generic player");
+            newCompanion = CompanionFactory.createCompanion();
+        }
+        if (companionConfig != null && companionConfig.position != null) {
+            spawnEntityAt(newCompanion, companionConfig.position, true, true);
+        } else {
+            logger.info("Failed to load companion position - created companion at middle of map");
+            //If no position specified spawn in middle of map.
+            GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);
+            spawnEntityAt(newCompanion, pos, true, true);
+        }
+        return newCompanion;
+    }
+
+    /**
+     * Spawns all the spawners detailed in the Game Area.
+     */
+    private void spawnSpawners() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        for (EnemyConfig enemyConfig : mapConfig.areaEntityConfig.enemies) {
-            Entity enemy = EnemyFactory.createEnemy(enemyConfig);
-            spawnEntityAt(enemy, enemyConfig.position, true, true);
+        for (SpawnerConfig spawnerConfig : mapConfig.areaEntityConfig.getEntities(SpawnerConfig.class)) {
+            Entity spawner = StructureFactory.createSpawner(spawnerConfig);
+            spawnEntityAt(spawner, spawnerConfig.position, true, true);
         }
     }
 
@@ -298,7 +426,7 @@ public class MapGameArea extends GameArea{
     private void spawnBotanist() {
         if (mapConfig.areaEntityConfig == null) return;
 
-        BotanistConfig botanistConfig = mapConfig.areaEntityConfig.botanist;
+        BotanistConfig botanistConfig = mapConfig.areaEntityConfig.getEntity(BotanistConfig.class);
         if (botanistConfig != null) {
             Entity botanist = NPCFactory.createBotanist(botanistConfig);
             spawnEntityAt(botanist, botanistConfig.position, false, false);
@@ -306,6 +434,37 @@ public class MapGameArea extends GameArea{
         //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
     }
+
+
+    private void spawnAstro() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        AstroConfig astroConfig = mapConfig.areaEntityConfig.getEntity(AstroConfig.class);
+        if (astroConfig != null) {
+            Entity Astro = NPCFactory.createAstro();
+            spawnEntityAt(Astro, astroConfig.position, false, false);
+        }
+
+    }
+
+    private void spawnJail() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        JailConfig jailConfig = mapConfig.areaEntityConfig.getEntity(JailConfig.class);
+        if (jailConfig != null) {
+            Entity Jail = NPCFactory.createJail();
+            spawnEntityAt(Jail, jailConfig.position, false, false);
+        }
+
+    }
+
+    private void spawnFire(){
+        if (mapConfig.areaEntityConfig == null) return;
+
+        ShipConfig shipConfig = mapConfig.areaEntityConfig.getEntity(ShipConfig.class);
+            Entity fire = NPCFactory.createFire();
+            spawnEntityAt(fire,shipConfig.position , false, false);
+        }
 
     /**
      * Plays the game music loaded from the config file
@@ -323,32 +482,56 @@ public class MapGameArea extends GameArea{
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(mapConfig.backgroundMusicPath, Music.class).stop();
+        if (mapConfig != null && mapConfig.backgroundMusicPath != null) {
+            ServiceLocator.getResourceService().getAsset(mapConfig.backgroundMusicPath, Music.class).stop();
+        }
         this.unloadAssets();
     }
 
     /**
      * Unloads all assets from config file
      */
-    private void unloadAssets() {
+    protected void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
-        if (mapConfig.areaEntityConfig != null) {
-            String[] textures = mapConfig.areaEntityConfig.getAllConfigs().stream()
-                    .map(BaseEntityConfig::getTextures)
-                    .flatMap(Collection::stream)
-                    .distinct()
-                    .toArray(String[]::new);
-            resourceService.unloadAssets(textures);
-        }
+        if (mapConfig == null) return;
+
+        if (mapConfig.getEntityTextures() != null)
+            resourceService.unloadAssets(mapConfig.getEntityTextures());
         if (mapConfig.texturePaths != null)
             resourceService.unloadAssets(mapConfig.texturePaths);
         if (mapConfig.textureAtlasPaths != null)
             resourceService.unloadAssets(mapConfig.textureAtlasPaths);
         if (mapConfig.soundPaths != null)
             resourceService.unloadAssets(mapConfig.soundPaths);
+        if (mapConfig.particleEffectPaths != null)
+            resourceService.unloadAssets(mapConfig.particleEffectPaths);
         if (mapConfig.backgroundMusicPath != null)
             resourceService.unloadAssets(new String[] {mapConfig.backgroundMusicPath});
+    }
+
+    /**
+     * Triggers the death screen.
+     * @return death screen, specfic to the number of lives player has remaining.
+     */
+    private boolean initiateDeathScreen() {
+        int lives = getPlayer().getComponent(CombatStatsComponent.class).getLives();
+        switch (lives) {
+            case 0:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_0));
+                return true;
+            case 1:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_1));
+                return true;
+            case 2:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_2));
+                return true;
+            case 3:
+                Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_3));
+                return true;
+            default:
+                return false;
+        }
     }
 }

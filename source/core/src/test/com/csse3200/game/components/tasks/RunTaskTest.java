@@ -34,7 +34,7 @@ class RunTaskTest {
   }
 
   @Test
-  void shouldMoveTowardsTarget() {
+  void shouldMoveAwayFromTarget() {
     Entity target = new Entity();
     target.setPosition(2f, 2f);
 
@@ -55,7 +55,7 @@ class RunTaskTest {
   }
 
   @Test
-  void shouldChaseOnlyWhenInDistanceOne() {
+  void shouldRunOnlyWhenInDistanceOne() {
     Entity target = new Entity();
     target.setPosition(0f, 6f);
 

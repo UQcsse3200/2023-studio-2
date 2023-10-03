@@ -2,6 +2,9 @@ package com.csse3200.game.components.story;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.services.PlanetTravel;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public class StoryActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(StoryActions.class);
 
-    private GdxGame game;
+    private final GdxGame game;
 
     /**
      * Creates a new instance of StoryActions.
@@ -35,7 +38,7 @@ public class StoryActions extends Component {
      */
     private void onNext() {
         logger.info("Load next");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        new PlanetTravel(game).returnToCurrent();
     }
 
     /**
@@ -43,6 +46,6 @@ public class StoryActions extends Component {
      */
     private void onSkip() {
         logger.info("Skipping to game");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        new PlanetTravel(game).returnToCurrent();
     }
 }

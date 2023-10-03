@@ -10,10 +10,12 @@ import com.csse3200.game.ui.UIComponent;
  */
 public class ShipStatDisplay extends UIComponent {
     Table table;
-    private Label speedLabel;
-
+    private Label fuelLabel;
     private Label healthLabel;
-    private Label attackLabel;
+
+    private int health;
+    private int fuel;
+    private ShipActions shipActions;
 
     /**
      * Creates reusable ui styles and adds actors to the stage.
@@ -21,6 +23,8 @@ public class ShipStatDisplay extends UIComponent {
     @Override
     public void create() {
         super.create();
+        this.health = this.shipActions.getMaxHealth();
+        this.fuel = this.shipActions.getMaxFuel();
         addActors();
     }
 
@@ -33,21 +37,21 @@ public class ShipStatDisplay extends UIComponent {
         table.top().left();
         table.setFillParent(true);
         table.padTop(45f).padLeft(45f);
+        entity.getEvents().addListener("updateShipHealth", this::updateShipHealthUI);
+        entity.getEvents().addListener("updateShipFuel", this::updateShipFuelUI);
 
         //currently leave them here for the UI, may adjust after further implementation
-        CharSequence speedText = "Speed: 100";
-        CharSequence healthText = "Health: 100";
-        CharSequence attackText = "Attack: 100";
+        CharSequence fuelText = "Fuel: " + Integer.toString(this.fuel);
+        CharSequence healthText = "Health: " + Integer.toString(this.health);
 
         float labelWidth = 200f;  // Adjust as necessary
 
-        speedLabel = new Label(speedText, skin, "thick");
+        fuelLabel = new Label(fuelText, skin, "thick");
         healthLabel = new Label(healthText, skin, "thick");
-        attackLabel = new Label(attackText, skin, "thick");
 
-        table.add(speedLabel).width(labelWidth).pad(5f).left().row();
+        table.add(fuelLabel).width(labelWidth).pad(5f).left().row();
         table.add(healthLabel).width(labelWidth).pad(5f).left().row();
-        table.add(attackLabel).width(labelWidth).pad(5f).left().row();
+
 
         stage.addActor(table);
 
@@ -59,18 +63,38 @@ public class ShipStatDisplay extends UIComponent {
     }
 
     /**
-     * Updates the player's health on the ui.
-     * @param health player health
+     * Updates the ship's health on the ui.
      */
-    public void updatePlayerHealthUI(int health) {
-        CharSequence text = String.format("Health: 100");
-        speedLabel.setText(text);
+    public void updateShipHealthUI() {
+
+        this.health = shipActions.getMaxHealth();
+        CharSequence healthText = String.format("Health: %d", this.health);
+        healthLabel.setText(healthText);
+
+
+    }
+
+    /**
+     * Updates ship's fuel on the ui.
+     */
+    public void updateShipFuelUI() {
+
+        this.fuel = shipActions.getMaxFuel();
+        CharSequence fuelText = String.format("Fuel: %d", this.fuel);
+        fuelLabel.setText(fuelText);
+
+
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        speedLabel.remove();
+        fuelLabel.remove();
+        healthLabel.remove();
+    }
+
+    public void setShipActions(ShipActions shipActions) {
+        this.shipActions = shipActions;
     }
 
 }

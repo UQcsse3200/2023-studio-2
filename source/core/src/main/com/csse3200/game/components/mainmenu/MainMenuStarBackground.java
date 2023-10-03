@@ -47,7 +47,7 @@ public class MainMenuStarBackground extends Actor {
 
         for (int i = 0; i < numOfFrames; i++) {
             frames[i] = new TextureRegion(new Texture
-                    (Gdx.files.internal("images/space_navigation_background_star_frame_"
+                    (Gdx.files.internal("images/space/space_navigation_background_star_frame_"
                             + i + ".png")));
         }
 

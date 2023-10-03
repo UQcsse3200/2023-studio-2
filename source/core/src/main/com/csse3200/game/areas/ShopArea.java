@@ -4,8 +4,10 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.configs.ShipUpgradesConfig;
 import com.csse3200.game.entities.factories.MinigameShipFactory;
+import com.csse3200.game.entities.factories.ObstacleFactory;
+import com.csse3200.game.entities.factories.ShipUpgradesFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -20,12 +22,16 @@ public class ShopArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ShopArea.class);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(7, 10);
     private static final float STATIC_ASTEROID_SIZE = 1f;
+    private static final ShipUpgradesConfig shipUpgradesConfig = new ShipUpgradesConfig();
+    private final ShipUpgradesFactory shipUpgradesFactory = new ShipUpgradesFactory();
 
     private static final String[] spaceMiniGameTextures = {
-            "images/SpaceMiniGameBackground.png",
+            "images/minigame/SpaceMiniGameBackground.png",
             "images/stone.png",
-            "images/Ship.png"
+            "images/ship/Ship.png",
+            "images/ship/Ship.png"
     };
+    private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
     private final TerrainFactory terrainFactory;
     private final ArrayList<Entity> targetables;
 
@@ -47,7 +53,17 @@ public class ShopArea extends GameArea {
         loadAssets();
         spawnTerrain();
         spawnShip();
+        spawnShipUpgrades();
         createBoundary();
+    }
+
+    /**
+     * Spawns ShipUpgrades in the map at the position specified
+     */
+    private void spawnShipUpgrades() {
+
+        Entity shipUpgrade = ShipUpgradesFactory.createHealthUpgrade();
+        spawnEntityAt(shipUpgrade, new GridPoint2(8, 12), true, true);
     }
 
     /**
@@ -129,6 +145,7 @@ public class ShopArea extends GameArea {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(spaceMiniGameTextures);
+        resourceService.loadTextureAtlases(spaceTextureAtlases);
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
@@ -142,6 +159,7 @@ public class ShopArea extends GameArea {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(spaceMiniGameTextures);
+        resourceService.unloadAssets(spaceTextureAtlases);
 
     }
 
@@ -150,5 +168,4 @@ public class ShopArea extends GameArea {
         super.dispose();
         this.unloadAssets();
     }
-
 }

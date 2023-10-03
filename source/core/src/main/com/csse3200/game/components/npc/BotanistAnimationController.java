@@ -1,54 +1,67 @@
+/**
+ * The `BotanistAnimationController` class is responsible for controlling and updating
+ * animations for a botanist character in the game.
+ */
 package com.csse3200.game.components.npc;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
-/**
- * This class represents a component responsible for controlling the animation of a botanist NPC entity.
- * It listens to relevant events and triggers animations accordingly.
- */
 public class BotanistAnimationController extends Component {
+    private final AssetManager assetManager;
     private AnimationRenderComponent animator;
-    private String direction = "right";
+
+    private float animationTimer = 0f;
 
     /**
-     * Called when the component is created. Initializes the animator and sets up event listeners.
+     * Creates a new BotanistAnimationController with an AssetManager for managing assets.
      */
+    public BotanistAnimationController() {
+        this.assetManager = new AssetManager();
+    }
+
     @Override
     public void create() {
         super.create();
-        animator = this.entity.getComponent(AnimationRenderComponent.class);
 
-        // Listen for the "changeDirection" event and update the direction.
-        entity.getEvents().addListener("changeDirection", this::setDirection);
+        // Initialize your animator and load the atlas.
+        animator = entity.getComponent(AnimationRenderComponent.class);
+        assetManager.load("images/botanist.atlas", TextureAtlas.class);
+        assetManager.finishLoading();
+        TextureAtlas atlas = assetManager.get("images/botanist.atlas");
 
-        // Listen for the "wanderStart" event and trigger the wander animation.
-        entity.getEvents().addListener("wanderStart", this::animateWander);
-
-        // Listen for the "idle" event and trigger the idle animation.
-        entity.getEvents().addListener("idle", this::animateIdle);
+        // Start with the default animation.
+        animator.startAnimation("row-1-column-1");
     }
 
-    /**
-     * Triggers the animation for wandering in the current direction.
-     */
-    void animateWander() {
-        animator.startAnimation("wanderStart_" + direction);
-    }
+    @Override
+    public void update() {
+        super.update();
 
-    /**
-     * Triggers the animation for being idle in the current direction.
-     */
-    void animateIdle() {
-        animator.startAnimation("idle_" + direction);
-    }
+        // Update the animation based on a timer.
+        animationTimer += 0.1f;
 
-    /**
-     * Sets the direction for animation.
-     *
-     * @param direction The new direction for animation ("left" or "right").
-     */
-    void setDirection(String direction) {
-        this.direction = direction;
+        // Adjust this to control animation speed.
+        float animationDuration = 10f;
+        if (animationTimer >= animationDuration) {
+            animationTimer = 0f; // Reset the timer.
+
+            // Switch between animations.
+            switch (animator.getCurrentAnimation()) {
+                case "row-1-column-1" -> animator.startAnimation("row-1-column-2");
+                case "row-1-column-2" -> animator.startAnimation("row-1-column-3");
+                case "row-1-column-3" -> animator.startAnimation("row-1-column-4");
+                case "row-1-column-4" -> animator.startAnimation("row-1-column-5");
+                case "row-1-column-5" -> animator.startAnimation("row-1-column-6");
+                case "row-1-column-6" -> animator.startAnimation("row-1-column-7");
+                case "row-1-column-7" -> animator.startAnimation("row-1-column-8");
+                case "row-1-column-8" -> animator.startAnimation("row-1-column-1");
+                default ->
+                    // Default to the bottom animation if not in any specific state.
+                        animator.startAnimation("row-1-column-1");
+            }
+        }
     }
 }

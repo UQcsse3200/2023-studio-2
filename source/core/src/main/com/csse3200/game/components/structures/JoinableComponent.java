@@ -4,12 +4,16 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.rendering.AtlasRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This component is used to change the texture and collision bounds of an entity
@@ -138,7 +142,7 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
      */
     public void notifyNeighbours(boolean isJoined) {
         StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
-        GridPoint2 centrePosition = structurePlacementService.getStructurePosition(entity);
+        GridPoint2 centrePosition = structurePlacementService.getStructurePosition((PlaceableEntity) entity);
 
         notifyNeighbour(JoinDirection.UP, centrePosition, isJoined);
         notifyNeighbour(JoinDirection.DOWN, centrePosition, isJoined);
@@ -204,7 +208,7 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
     public void placed() {
         // finds current position.
         StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
-        GridPoint2 centrePosition = structurePlacementService.getStructurePosition(entity);
+        GridPoint2 centrePosition = structurePlacementService.getStructurePosition((PlaceableEntity) entity);
 
         if (centrePosition == null) {
             return;

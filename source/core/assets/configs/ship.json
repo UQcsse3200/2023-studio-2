@@ -1,3 +1,6 @@
 {
-  "spritePath": "images/refinedShip.png"
+  "health": 100,
+  "fuel": 100,
+  "acceleration": 1,
+  "spritePath": "images/ship/Ship.png"
 }

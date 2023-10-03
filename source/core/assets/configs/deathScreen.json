@@ -1,0 +1,6 @@
+{
+  "soundsMap":{
+    "respawn": "sounds/playerDeathRespawn.wav",
+    "dead": "sounds/playerDead.wav"
+  }
+}

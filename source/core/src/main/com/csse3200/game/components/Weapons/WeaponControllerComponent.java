@@ -1,52 +1,65 @@
 package com.csse3200.game.components.Weapons;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.components.player.WeaponComponent;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 /**
  * Class to control the movement of weapons that have been spawned
  */
-public class WeaponControllerComponent extends Component {
-    /* Weapon Type to be controlled*/
-    WeaponType weaponType;
-    /* Variable to hold the remaining life (in game ticks) of a weapon) */
-    int remainingDuration;
-    /* Variable to hold the speed at which the projectile moves */
-    float speed;
-    /* The rotational speed of the weapon*/
-    int rotationSpeed;
-    /* The rotation of the weapon*/
-    float currentRotation;
-    /* number degrees of positive x-axis image is */
-    int imageRotationOffset;
+public abstract class WeaponControllerComponent extends Component {
+    protected WeaponConfig config;
+    /* Variable to hold the remaining life (in game ticks) of a weapon */
+    protected int remainingDuration;
+    /* The rotation of the weapon indicating its "forward" direction*/
+    protected float currentRotation;
+    /* Reference to player entity */
+    protected final Entity player;
+    /* attack Number in sequence */
+    protected int attackNum = 0;
 
     /**
      * Class to store variables of a spawned weapon
      */
-    public WeaponControllerComponent(WeaponType weaponType,
-                                     float currentRotation,
-                                     float speed,
-                                     int remainingDuration,
-                                     int rotationSpeed,
-                                     int imageRotationOffset) {
-        this.weaponType = weaponType;
-        this.remainingDuration = remainingDuration;
-        this.speed = speed;
-        this.rotationSpeed = rotationSpeed;
-        this.currentRotation = currentRotation;
-        this.imageRotationOffset = imageRotationOffset;
+    public WeaponControllerComponent(WeaponConfig config, float attackDirection, Entity player, int attackNum) {
+        this.player = player;
+        this.config = config;
+        this.remainingDuration = config.weaponDuration;
+        this.currentRotation = attackDirection;
+        this.attackNum = attackNum;
     }
 
+
+    /**
+     * Class to store variables of a spawned weapon
+     */
+    public WeaponControllerComponent(WeaponConfig config, float attackDirection, Entity player) {
+        this.player = player;
+        this.config = config;
+        this.remainingDuration = config.weaponDuration;
+        this.currentRotation = attackDirection;
+    }
+
+    /**
+     * Create class - implemented class implement initial weapon setup including adding required animations
+     * and controlling initial movement direction and animation
+     */
     @Override
     public void create() {
         this.entity.getEvents().addListener("death", this::setDuration);
-    }
+        initial_rotation();
+        initial_position();
 
-    private void setDuration(int duration) {
-        this.remainingDuration = duration;
+        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
+        if (animator != null) {
+            add_animations(animator);
+            initial_animation(animator);
+        }
     }
 
     /**
@@ -54,68 +67,98 @@ public class WeaponControllerComponent extends Component {
      */
     @Override
     public void update() {
-        //switch statement to define weapon movement based on type (a projectile
-        Vector2 movement = switch (this.weaponType) {
-            case SLING_SHOT -> weapon_target_update();
-            case ELEC_WRENCH -> weapon_meleeswing_update();
-            case THROW_ELEC_WRENCH -> weapon_2_update();
-            default -> throw new IllegalStateException("Unexpected value: " + this.weaponType);
-        };
-
-
-        //Reference to current position of the projectile
-        Vector2 position = entity.getPosition();
-        //Update position and rotation of projectile
-        entity.setPosition(new Vector2(position.x + movement.x, position.y + movement.y));
-        entity.setRotation(this.currentRotation - this.imageRotationOffset);
-        if (--this.remainingDuration <= 0) {this.despawn();}
+        rotate();
+        move();
+        reanimate();
+        if (--this.remainingDuration <= 0) {
+            despawn();
+        }
     }
 
+    /**
+     * Function to add animations based on standard animation configurations (Overidable)
+     */
+    protected void add_animations(AnimationRenderComponent animator) {
+        switch (config.animationType) {
+            case 8:
+                animator.addAnimation("LEFT3", 0.07f, Animation.PlayMode.NORMAL);
+                animator.addAnimation("RIGHT3", 0.07f, Animation.PlayMode.NORMAL);
+            case 6:
+                animator.addAnimation("LEFT2", 0.07f, Animation.PlayMode.NORMAL);
+                animator.addAnimation("RIGHT2", 0.07f, Animation.PlayMode.NORMAL);
+            case 4:
+                animator.addAnimation("LEFT1", 0.07f, Animation.PlayMode.NORMAL);
+                animator.addAnimation("RIGHT1", 0.07f, Animation.PlayMode.NORMAL);
+                animator.addAnimation("DOWN", 0.07f, Animation.PlayMode.NORMAL);
+            default:
+                animator.addAnimation("UP", 0.07f, Animation.PlayMode.NORMAL);
+                animator.addAnimation("STATIC", 0.07f, Animation.PlayMode.NORMAL);
+        }
+    }
+
+    /**
+     * Set initial rotation (defaults to attack direction)
+     */
+    protected abstract void initial_rotation();
+
+    /**
+     * Set initial position
+     */
+    protected abstract void initial_position();
+
+    /**
+     * Set intial animation
+     *
+     * @param animator - animation component for the entity
+     */
+    protected abstract void initial_animation(AnimationRenderComponent animator);
+
+    /**
+     * Update entity rotation every tick
+     */
+    protected abstract void rotate();
+
+    /**
+     * Update entity location every tick
+     */
+    protected abstract void move();
+
+    /**
+     * Update entity animation if required
+     */
+    protected abstract void reanimate();
+
+    /**
+     * respawn a weapon when it runs out of duration or health
+     */
     private void despawn() {
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-        animator.stopAnimation();
-        entity.getComponent(HitboxComponent.class).setLayer((short) 0);
+        if (animator != null) {
+            //entity.getEvents().trigger("playSound", "stop");
+            animator.stopAnimation();
+        }
         Gdx.app.postRunnable(entity::dispose);
     }
 
-    //TODO fix this forbidden code
-    private Vector2 weapon_x_update() {
-        //Edit this.currentRotation and return movement vector
-        Vector2 movement = new Vector2(0,0);
-        //double radians = Math.toRadians(currentRotation);
-        return movement;
+    /**
+     * Sets the remaining duration
+     *
+     * @param duration duration to set reamining duration
+     */
+    private void setDuration(int duration) {
+        this.remainingDuration = duration;
     }
 
-    private Vector2 weapon_meleeswing_update() {
-        WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
-        Vector2 movement = weaponTargetComponent.get_pos_of_target();
-
-        //Vector2 movement = new Vector2(0,0);
-        this.currentRotation -= this.rotationSpeed;
-        double radians = Math.toRadians(currentRotation);
-        movement.x += (float) Math.cos(radians) * 0.015f * this.speed;
-        movement.y += (float) Math.sin(radians) * 0.015f * this.speed;
-        return movement;
-    }
-
-    private Vector2 weapon_2_update() {
-        Vector2 movement = new Vector2(0,0);
-        double radians = Math.toRadians(currentRotation);
-        movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
-        movement.y = (float) Math.sin(radians) * 0.015f * this.speed;
-        return movement;
-    }
-
-    private Vector2 weapon_target_update() {
-        Vector2 movement = new Vector2(0,0);
-        WeaponTargetComponent weaponTargetComponent = entity.getComponent(WeaponTargetComponent.class);
-        Vector2 target_pos = weaponTargetComponent.get_pos_of_target();
-        Vector2 weapon_pos = entity.getPosition();
-
-        double radians = Math.atan2(target_pos.y - weapon_pos.y, target_pos.x - weapon_pos.x);
-        movement.x = (float) Math.cos(radians) * 0.015f * this.speed;
-        movement.y = (float) Math.sin(radians) * 0.015f * this.speed;
-        return movement;
+    /**
+     * Returns the game position in a given direction at a given distance relative to the player
+     * to center a given attack entity
+     *
+     * @param direction direction the position should be in
+     * @param distance  distance infront of the player
+     * @return position in the given direction at the distance
+     */
+    protected Vector2 positionInDirection(float direction, float distance) {
+        var radians = Math.toRadians(direction);
+        return new Vector2((float) Math.cos(radians), (float) Math.sin(radians)).scl(distance);
     }
 }
-

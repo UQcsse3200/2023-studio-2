@@ -4,12 +4,14 @@
  */
 package com.csse3200.game.components.Companion;
 
-import com.csse3200.game.components.player.InteractionControllerComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.input.InputComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
@@ -24,7 +26,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
     private int flagA = 0;
     private int flagS = 0;
     private int flagD = 0;
-    private int flagMul = 0;
 
     private final CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay();
 
@@ -48,7 +49,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         this.testing = testing;
     }
 
-    private boolean leftCtrlFlag = false;
+    private final boolean leftCtrlFlag = false;
 
     /**
      * Returns the sum of movement flags (W, A, S, D).
@@ -67,6 +68,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         if (movFlagSum >= 3) {
             walkDirection.set(Vector2.Zero);
         }
+        int flagMul = 0;
         if (movFlagSum == 2) {
             flagMul = 1;
             walkDirection.scl(new Vector2(0.707f, 0.707f));
@@ -100,19 +102,29 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
      * @param keycode The keycode of the pressed key.
      * @return True if the input was processed, false otherwise.
      */
+    private long lastNKeyPressTime = 0;
+    private static final long COOLDOWN_TIME = 7000; // 7 seconds in milliseconds
+
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Keys.N -> {
-                ServiceLocator.getGameArea().getCompanion().getEvents().trigger("attack");
+                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("attack");
+                long currentTime = TimeUtils.millis();
+                if (currentTime - lastNKeyPressTime >= COOLDOWN_TIME) {
+                ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class).useNextPowerup();
+                    lastNKeyPressTime = currentTime;
+                }else {logger.debug("powerup cooldown");}
                 return true;
             }
+/*
 
             case Keys.H -> {
                 companionStatsDisplay.toggleInfiniteHealth();
                 companionStatsDisplay.toggleInvincibility();
                 return true;
             }
+*/
 
             case Keys.I -> {
                 flagW = 1;
@@ -253,10 +265,12 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
      * Triggers the walk event for the companion based on the current walk direction.
      * If the walk direction is zero, it triggers the walkStop event.
      */
-    private void triggerWalkEvent() {
+    private void triggerWalkEvent() {;
+        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/companionwalksound.wav", Sound.class);
         if (this.getTesting() == 0) {
             if (walkDirection.epsilonEquals(Vector2.Zero)) {
                 entity.getEvents().trigger("walkStop");
+                attackSound.stop();
             } else {
                 if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
                     entity.getEvents().trigger("walkUpLeft");
@@ -276,6 +290,8 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                     entity.getEvents().trigger("walkRight");
                 }
                 entity.getEvents().trigger("walk", walkDirection);
+                attackSound.play();
+
             }
         }
     }
@@ -294,4 +310,5 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         }
         return angle;
     }
+
 }

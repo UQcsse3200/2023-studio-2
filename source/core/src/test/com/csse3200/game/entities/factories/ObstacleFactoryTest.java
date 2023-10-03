@@ -1,29 +1,22 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.buildables.TurretType;
-import com.csse3200.game.entities.buildables.Wall;
-import com.csse3200.game.entities.buildables.WallType;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(GameExtension.class)
 public class ObstacleFactoryTest {
@@ -48,7 +41,7 @@ public class ObstacleFactoryTest {
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerRenderService(new RenderService());
-        ServiceLocator.getResourceService().loadTextures(new String[] {"images/tree.png",
+        ServiceLocator.getResourceService().loadTextures(new String[] {"images/entity/tree.png",
                 "images/structures/TurretOne.png", "images/structures/TurretTwo.png"} );
         ServiceLocator.getResourceService().loadTextureAtlases(new String[] {} );
         ServiceLocator.getResourceService().loadAll();

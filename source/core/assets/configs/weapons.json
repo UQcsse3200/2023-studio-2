@@ -1,76 +1,203 @@
 {
-  "SLING_SHOT": {
-    "weaponSpeed": 3,
-    "weaponDuration": 2500,
-    "rotationSpeed": 0,
-    "initialRotationOffset": 0,
-    "imageRotationOffset": 45,
-    "spritePath": "images/sling_shot.atlas",
-    "imageScale" : 0.2,
-    "type": "SLING_SHOT",
-    "iconPath" : "images/sling_shot.png"
-  },
-
-  "ELEC_WRENCH": {
-    "weaponSpeed": 0.75,
-    "weaponDuration": 50,
-    "rotationSpeed": 6,
-    "initialRotationOffset": 90,
-    "imageRotationOffset": 45,
-    "attackCooldown": 10,
-    "spritePath": "images/wrench.atlas",
-    "imageScale" : 1,
-    "type": "ELEC_WRENCH",
-    "iconPath" : "images/wrench.png"
-  },
-
-  "THROW_ELEC_WRENCH": {
+  "RANGED_SLINGSHOT": {
+    "name" : "Slingshot",
+    "description": "Reliable range, decent damage. Ideal for distant targets.",
+    "damage" : 50,
     "weaponSpeed": 10,
     "weaponDuration": 50,
     "rotationSpeed": 0,
-    "initialRotationOffset": 0,
-    "imageRotationOffset": 45,
-    "spritePath": "images/wrench.atlas",
-    "imageScale" : 1,
-    "type": "THROW_ELEC_WRENCH",
-    "iconPath" : "images/wrench.png"
+    "textureAtlas": "images/weapons/slingshot.atlas",
+    "imageScale" : 0.5,
+    "animationType" : 1,
+    "imagePath" : "images/weapons/slingshotStatic.png",
+    "type" : "RANGED_SLINGSHOT",
+    "slotType" : "ranged",
+    "ammoUse" : 0,
+
+    "sound": {"soundsMap": {}}
+  },
+
+  "RANGED_BOOMERANG": {
+    "name" : "Boomerang",
+    "description": "Capable of hitting multiple enemies at once, a versatile choice.",
+    "damage" : 25,
+    "weaponSpeed": 4,
+    "weaponDuration": 155,
+    "rotationSpeed": 2,
+    "textureAtlas": "images/weapons/boomerang.atlas",
+    "imageScale" : 0.5,
+    "animationType" : 1,
+    "imagePath" : "images/weapons/boomerangStatic.png",
+    "type" : "RANGED_BOOMERANG",
+    "slotType" : "ranged",
+
+    "sound": {"soundsMap": {}}
+  },
+
+  "RANGED_BLUEMERANG": {
+    "name" : "Bluemerang",
+    "description": "its blue!",
+    "damage" : 25,
+    "weaponSpeed": 6,
+    "weaponDuration": 55,
+    "rotationSpeed": 2,
+    "textureAtlas": "images/weapons/bluemerang.atlas",
+    "imageScale" : 0.5,
+    "animationType" : 1,
+    "imagePath" : "images/weapons/bluemerangStatic.png",
+    "type" : "RANGED_BLUEMERANG",
+    "slotType" : "ranged",
+    "projectiles" : 2,
+
+    "sound": {"soundsMap": {}}
+  },
+
+  "RANGED_MISSILES": {
+    "name" : "Missile Swarm",
+    "description": "Spray a rocket array and watch your enemies pray",
+    "damage" : 40,
+    "weaponSpeed": 5,
+    "weaponDuration": 90,
+    "rotationSpeed": 0,
+    "textureAtlas": "images/weapons/rocket2.atlas",
+    "imageScale" : 0.8,
+    "animationType" : 8,
+    "imagePath" : "images/weapons/rocket_image2.png",
+    "type" : "RANGED_MISSILES",
+    "slotType" : "ranged",
+    "projectiles" : 4,
+
+    "sound": {"soundsMap": {}}
+  },
+
+  "RANGED_HOMING": {
+    "name" : "Friendly Missile",
+    "description": "No need to aim perfectly! It finds its way by following warmth. Just launch and watch it make new friends!",
+    "damage" : 100,
+    "weaponSpeed": 5,
+    "weaponDuration": 300,
+    "rotationSpeed": 5,
+    "textureAtlas": "images/weapons/rocket.atlas",
+    "imageScale" : 1.2,
+    "animationType" : 8,
+    "imagePath" : "images/weapons/rocket_image.png",
+    "type" : "RANGED_HOMING",
+    "slotType" : "ranged",
+
+    "sound": {"soundsMap": {}}
+  },
+
+  "MELEE_WRENCH": {
+    "name" : "Wrench",
+    "description": "Its a wrench, what more to say.",
+    "damage" : 50,
+    "weaponSpeed": 10,
+    "weaponDuration": 10,
+    "rotationSpeed": 1,
+    "attackCooldown": 50,
+    "textureAtlas": "images/weapons/wrench.atlas",
+    "imageScale" : 0.8,
+    "animationType" : 1,
+    "imagePath" : "images/weapons/wrench.png",
+    "type" : "MELEE_WRENCH",
+    "slotType" : "melee",
+
+    "sound": {"soundsMap": {}}
+  },
+
+  "MELEE_KATANA": {
+    "name" : "Katana",
+    "description": "Rich history, swift slashes. Its balance between speed and damage makes it deadly in close quarters.",
+    "damage" : 33,
+    "weaponSpeed": 4,
+    "weaponDuration": 20,
+    "rotationSpeed": 1,
+    "attackCooldown": 20,
+    "textureAtlas": "images/weapons/sword.atlas",
+    "imageScale" : 0.8,
+    "animationType" : 4,
+    "imagePath" : "images/upgradetree/sword.png",
+    "type" : "MELEE_KATANA",
+    "slotType" : "melee",
+    "ammoUse" : 0,
+
+    "sound": {"soundsMap": {}}
+  },
+
+  "MELEE_BEE_STING": {
+    "name" : "Bees",
+    "description": "Unleash the power of Bees!",
+    "damage" : 50,
+    "weaponSpeed": 4,
+    "weaponDuration": 45,
+    "rotationSpeed": 0,
+    "attackCooldown": 10,
+    "textureAtlas": "images/weapons/sword.atlas",
+    "imageScale" : 0.6,
+    "animationType" : 4,
+    "imagePath" : "images/weapons/multiSwordStatic.png",
+    "type" : "MELEE_BEE_STING",
+    "slotType" : "melee",
+    "ammoUse" : 5,
+    "projectiles" : 8,
+
+    "sound": {"soundsMap": {}}
   },
 
   "STICK": {
+    "name" : "Stick",
+    "description": "The Stick, simple yet effective. While it might not be the strongest, it does its best",
+    "damage" : 1,
     "weaponSpeed": 0.75,
     "weaponDuration": 50,
     "rotationSpeed": 6,
-    "initialRotationOffset": 90,
-    "imageRotationOffset": 45,
     "attackCooldown": 10,
-    "spritePath": "images/upgradetree/stick.png",
+    "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
-    "type": "STICK"
-  },
+    "imagePath" : "images/upgradetree/stick.png",
+    "type" : "STICK",
+    "slotType" : "melee",
 
-  "KATANA": {
-    "weaponSpeed": 0.75,
-    "weaponDuration": 50,
-    "rotationSpeed": 6,
-    "initialRotationOffset": 90,
-    "imageRotationOffset": 45,
-    "attackCooldown": 10,
-    "spritePath": "images/upgradetree/sword.png",
-    "imageScale" : 1
+    "sound": {
+      "soundsMap": {
+        "start": "sounds/dodgingAlertSweep.wav",
+        "mid" : "sounds/footStepsInTheForestGround.wav",
+        "stop" : "sounds/PlayerHealthRecharge.wav"
+      }
+    }
   },
 
   "WOODHAMMER": {
-    "spritePath": "images/upgradetree/hammer1.png",
-    "imageScale" : 1
+    "name" : "Wooden Hammer",
+    "description": "For all your buildable needs. While not suitable for combat, it's an essential tool for construction.",
+    "damage" : 0,
+    "textureAtlas": "images/weapons/sword.atlas",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer1.png",
+    "type" : "WOODHAMMER",
+    "slotType" : "building",
+    "ammoUse" : 0,
+
+    "sound": {"soundsMap": {}}
   },
 
   "STONEHAMMER": {
-    "spritePath": "images/upgradetree/hammer2.png",
-    "imageScale" : 1
+    "textureAtlas": "images/weapons/sword.atlas",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer2.png",
+    "type" : "STONEHAMMER",
+    "slotType" : "building",
+    "ammoUse" : 0,
+    "sound": {"soundsMap": {}}
   },
 
   "STEELHAMMER": {
-    "spritePath": "images/upgradetree/hammer2.png",
-    "imageScale" : 1
+    "textureAtlas": "images/weapons/sword.atlas",
+    "imageScale" : 1,
+    "imagePath" : "images/upgradetree/hammer2.png",
+    "type" : "STEELHAMMER",
+    "slotType" : "building",
+    "ammoUse" : 0,
+    "sound": {"soundsMap": {}}
   }
 }

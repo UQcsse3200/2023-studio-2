@@ -8,12 +8,12 @@ package com.csse3200.game.components.mainmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -30,9 +30,17 @@ public class MainMenuDisplay extends UIComponent {
     private static final float Z_INDEX = 2f;
     private Table table;
 
+    public static int frame;
+    private Image transitionFrames;
+    private long lastFrameTime;
+    private final int fps = 17;
+    private final long frameDuration =  (long)(800 / fps);
+
     @Override
     public void create() {
+        frame=1;
         super.create();
+        transitionFrames = new Image();
         addActors();
     }
     //created a checkbox group for single/multi player functionality
@@ -46,6 +54,7 @@ public class MainMenuDisplay extends UIComponent {
         table.setFillParent(true);
 
         // Display game title image
+//        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/escape-earth2.png", Texture.class));
         Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/Background_Test1.png", Texture.class));
         titleImage.setWidth(Gdx.graphics.getWidth());
         titleImage.setHeight(Gdx.graphics.getHeight());
@@ -53,12 +62,11 @@ public class MainMenuDisplay extends UIComponent {
 
         // Create buttons for various menu options
         TextButton startBtn = new TextButton("Start", skin);
-        TextButton loadBtn = new TextButton("Load", skin);
+        TextButton loadBtn = new TextButton("Load Story", skin);
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Exit", skin);
         TextButton miniBtn = new TextButton("Space Minigame", skin);
         TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
-        TextButton spaceMapBtn = new TextButton("Space Map", skin);
         TextButton upgradeShip = new TextButton("Upgrade Ship", skin);
         // Attach listeners to buttons
         startBtn.addListener(
@@ -104,15 +112,6 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
-        spaceMapBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Space Map button clicked");
-                        entity.getEvents().trigger("space map");
-                    }
-                });
-
         exitBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -143,16 +142,37 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(extractorBtn).padTop(15f).padLeft(1200f);
         table.row();
-        table.add(spaceMapBtn).padTop(15f).padLeft(1200f);
-        table.row();
-
         table.add(exitBtn).padTop(15f).padLeft(1200f);
         table.row();
         table.add(upgradeShip).padTop(15f).padLeft(1200f);
         table.row();
         stage.addActor(titleImage);
+
+////        AmendAnimation();
+        stage.addActor(transitionFrames);
         stage.addActor(table);
     }
+
+//    private void AmendAnimation() {
+//        if (frame < MainMenuScreen.MountedFrames) {
+//            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+//                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
+//            transitionFrames.setWidth(Gdx.graphics.getWidth());
+//            transitionFrames.setHeight(Gdx.graphics.getHeight());
+//            transitionFrames.setPosition(0, 0);
+//            frame++;
+//            lastFrameTime = System.currentTimeMillis();
+//        } else {
+//            frame = 1;
+//        }
+//    }
+
+//    @Override
+//    public void update() {
+//        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+//            AmendAnimation();
+//        }
+//    }
 
     @Override
     public void draw(SpriteBatch batch) {

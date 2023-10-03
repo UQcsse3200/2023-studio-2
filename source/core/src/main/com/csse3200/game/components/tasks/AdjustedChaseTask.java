@@ -9,19 +9,18 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.badlogic.gdx.utils.Timer;
 
 import static java.lang.Math.abs;
 
-/** Chases a target entity until they get too far away or line of sight is lost */
+/** Chases a target entity until they get too far away or line of sight is lost. Additional functionality
+ * so that it actively checks if entity is stuck behind an object when chasing and adjusts movement. */
 public class AdjustedChaseTask extends DefaultTask implements PriorityTask {
   private final Entity target;
   private final int priority;
   private final float viewDistance;
   private final float maxChaseDistance;
-  private float shootDistance;
+  private final float shootDistance;
   private final PhysicsEngine physics;
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
@@ -59,8 +58,8 @@ public class AdjustedChaseTask extends DefaultTask implements PriorityTask {
     if(direction == '>'||direction == '='){
       this.owner.getEntity().getEvents().trigger("chaseStart");
     }
-    Timer timer = new Timer();
-    timer.schedule(new TimerTask() {
+
+    Timer.schedule(new Timer.Task(){
       @Override
       public void run() {
         if(getDirection(target.getPosition() )!= direction){
@@ -68,6 +67,7 @@ public class AdjustedChaseTask extends DefaultTask implements PriorityTask {
         }
       }
     },500);
+
   }
 
   @Override
@@ -137,6 +137,10 @@ public class AdjustedChaseTask extends DefaultTask implements PriorityTask {
     return true;
   }
 
+  /**
+   *
+   * @param destination
+   */
   public char getDirection(Vector2 destination) {
     if (owner.getEntity().getPosition().x - destination.x < 0) {
       return '>';

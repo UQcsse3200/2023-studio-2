@@ -4,9 +4,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.factories.AttackFactory;
-import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.entities.factories.PlayerWeaponFactory;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
 
 /**
  * Class to implement weapon functionality in the player,
@@ -14,37 +17,87 @@ import com.csse3200.game.services.ServiceLocator;
  * respond to an enemy attack use an attack factory to generate a weapon entity
  */
 public class WeaponComponent extends Component {
-    /* Variable to hold reference to animation render component */
-    AnimationRenderComponent animator;
+    /* Entity reference to projectile that follows */
+    private Entity holdingWeapon;
 
     /**
      * Function to Set up "weaponAttack" listener to respond to attacks with a weapon
      */
     @Override
     public void create() {
-        //Trigger to respond to player attack
         entity.getEvents().addListener("weaponAttack", this::playerAttacking);
+        entity.getEvents().addListener("changeWeapon", this::updateHolding);
+        this.holdingWeapon = null;
+        this.updateHolding(WeaponType.MELEE_KATANA);
     }
 
     /**
      * Core function to respond to weapon attacks takes a position and a rotation and spawn an entity
      * in that direction and begin the animation of the weapon
-     * @param position - position of the player at the time of attack
-     * @param initRot - direction in which mouse is relative to the player in degrees
-     *                  0<=initRot<=360, East:0, North:90: West:180, South:270
+     *
+     * @param weaponType    - click position
+     * @param clickPosition - click location of mouse
      */
-    private void playerAttacking(Vector2 position, WeaponType weaponType, float initRot) {
-        Entity newAttack = AttackFactory.createAttack(weaponType, initRot, entity);
+    private void playerAttacking(WeaponType weaponType, Vector2 clickPosition) {
+        float attackDirection = calcRotationAngleInDegrees(entity.getCenterPosition(), clickPosition);
+        ArrayList<Entity> newAttacks = AttackFactory.createAttacks(weaponType, attackDirection, entity);
 
-        double radians = Math.toRadians(initRot);
-        float xMovement = (float) Math.cos(radians) * 0.5f;
-        float yMovement = (float) Math.sin(radians) * 0.5f;
-        Vector2 plySc = entity.getScale();
-        Vector2 atkSc = newAttack.getScale();
+        if (newAttacks == null) {
+            return;
+        }
 
-        var newPos = new Vector2(position.x + xMovement + plySc.x/2 - atkSc.y/2 ,
-                position.y + yMovement + plySc.x/2 - atkSc.y/2 );
+        for (Entity newAttack : newAttacks) {
+            ServiceLocator.getEntityPlacementService().PlaceEntity(newAttack);
+            //newAttack.getEvents().trigger("playSound", "start");
+        }
 
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
+        InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+        makeNewHolding(weaponType);
+        entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(),
+                invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
     }
+
+    private void updateHolding(WeaponType weaponType) {
+        InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+        WeaponConfig config = invComp.getConfigs().GetWeaponConfig(weaponType);
+
+        if (config.slotType.equals("building")) {
+            makeNewHolding(weaponType);
+        } else if (this.holdingWeapon != null) {
+            this.holdingWeapon.dispose();
+        }
+    }
+
+    /**
+     * Creates a new static weapon for the player
+     *
+     * @param weapon - weapon to make the player hold
+     */
+    private void makeNewHolding(WeaponType weapon) {
+        if (this.holdingWeapon != null) {
+            this.holdingWeapon.dispose();
+        }
+        this.holdingWeapon = PlayerWeaponFactory.createPlayerWeapon(weapon, entity);
+        ServiceLocator.getEntityPlacementService().PlaceEntity(this.holdingWeapon);
+    }
+
+    /**
+     * Calcuate angle between 2 points from the center point to the target point,
+     * angle is
+     * in degrees with 0degrees being in the direction of the positive x-axis going
+     * counter clockwise
+     * up to 359.9... until wrapping back around
+     *
+     * @param centerPt - point from where angle is calculated from
+     * @param targetPt - Tart point to where angle is calculated to
+     * @return return angle between points in degrees from the positive x-axis
+     */
+    private float calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt) {
+        double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
+        if (angle < 0) {
+            angle += 360;
+        }
+        return (float) angle;
+    }
+
 }

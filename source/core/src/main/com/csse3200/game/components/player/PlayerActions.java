@@ -4,15 +4,16 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.structures.StructureToolPicker;
 
 /**
  * Action component for interacting with the player. Player events should be
@@ -22,12 +23,10 @@ import com.csse3200.game.components.structures.StructureToolPicker;
 public class PlayerActions extends Component {
     private static Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
-    private EntityService entityService = new EntityService();
+    private final EntityService entityService = new EntityService();
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
-    private GameStateInteraction gameStateInteraction;
-    private int attackCooldown;
 
     @Override
     public void create() {
@@ -38,27 +37,25 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("place", this::place);
         entity.getEvents().addListener("remove", this::remove);
         entity.getEvents().addListener("dodged", this::dodged);
-        entity.getEvents().addListener("repair", this::repairWall);
         entity.getEvents().addListener("change_structure", this::changeStructure);
-        entity.getEvents().addListener("inventory", this::updateInventory);
-        gameStateInteraction = new GameStateInteraction();
-        attackCooldown = 0;
+        GameStateInteraction gameStateInteraction = new GameStateInteraction();
     }
 
     @Override
     public void update() {
-        if (attackCooldown > 0) {
-            attackCooldown--;
-        }
         if (moving) {
             updateSpeed();
         }
     }
 
+    /**
+     * Updates the player's velocity in the direction they are walking
+     */
     private void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
-        Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_SPEED);
+        float speedMult = MapGameArea.getSpeedMult();
+        Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(MAX_SPEED.x * speedMult, MAX_SPEED.y * speedMult));
         // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
@@ -98,23 +95,6 @@ public class PlayerActions extends Component {
         entity.getComponent(CombatStatsComponent.class).changeImmunityStatus();
     }
 
-    void updateInventory(int i) {
-        switch (i) {
-            case 1:
-                entity.getComponent(InventoryComponent.class).setEquipped(1);
-                break;
-            case 2:
-                entity.getComponent(InventoryComponent.class).setEquipped(2);
-                break;
-            case 3:
-                entity.getComponent(InventoryComponent.class).setEquipped(3);
-                break;
-            default:
-                entity.getComponent(InventoryComponent.class).cycleEquipped();
-                break;
-        }
-    }
-
     /**
      * Sets the maximum speed of the entity given x and y.
      *
@@ -135,14 +115,8 @@ public class PlayerActions extends Component {
     }
 
     /**
-<<<<<<< HEAD
      * Converts the screen coords to a grid position and then places the selected structure
      * doesn't exist at the grid position, otherwise upgrades the existing structure.
-=======
-     * Converts the screen coords to a grid position and then places a wall if a
-     * wall
-     * doesn't exist at the grid position, otherwise upgrades the wall.
->>>>>>> feature/player
      *
      * @param screenX - the x coord of the screen
      * @param screenY - the y coord of teh screen
@@ -150,7 +124,7 @@ public class PlayerActions extends Component {
     void place(int screenX, int screenY) {
         // gets the gridPosition of the wall from the screen click
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-        GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
+        GridPoint2 gridPosition = new GridPoint2((int)location.x, (int)location.y);
 
         var structurePicker = getEntity().getComponent(StructureToolPicker.class);
         structurePicker.interact(gridPosition);
@@ -164,31 +138,11 @@ public class PlayerActions extends Component {
      */
     void remove(int screenX, int screenY) {
         var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-        GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
+        GridPoint2 gridPosition = new GridPoint2((int)location.x, (int)location.y);
         Entity structure = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
 
         if (structure != null) {
             ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
-        }
-    }
-
-    /**
-     * Converts screen coords to grid coords and then repairs the wall at the grid
-     * position.
-     *
-     * @param screenX - the x coord of the screen
-     * @param screenY - the y coord of teh screen
-     */
-    void repairWall(int screenX, int screenY) {
-        var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
-        GridPoint2 gridPosition = new GridPoint2(((int) (location.x / 2) * 2), ((int) (location.y / 2)) * 2);
-        Entity existingWall = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
-
-        if (existingWall != null) {
-            if (existingWall.getComponent(CombatStatsComponent.class).getHealth() < existingWall.getComponent(CombatStatsComponent.class).getMaxHealth()) {
-
-                entity.getComponent(HealthBarComponent.class).updateHealth(entity.getComponent(CombatStatsComponent.class).getMaxHealth());
-            }
         }
     }
 
@@ -202,11 +156,5 @@ public class PlayerActions extends Component {
         picker.show();
     }
 
-    public void setAttackCooldown(int cooldown) {
-        this.attackCooldown = cooldown;
-    }
 
-    public int getAttackCooldown() {
-        return this.attackCooldown;
-    }
 }

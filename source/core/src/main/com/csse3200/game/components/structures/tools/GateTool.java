@@ -4,7 +4,6 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.factories.BuildablesFactory;
-import com.csse3200.game.entities.factories.StructureFactory;
 
 public class GateTool extends PlacementTool {
     /**
@@ -14,6 +13,8 @@ public class GateTool extends PlacementTool {
      */
     public GateTool(ObjectMap<String, Integer> cost) {
         super(cost);
+        snapX = 2;
+        snapY = 2;
     }
 
     @Override

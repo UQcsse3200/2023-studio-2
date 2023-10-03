@@ -16,6 +16,8 @@ public class TurretTool extends PlacementTool {
      */
     public TurretTool(ObjectMap<String, Integer> cost) {
         super(cost);
+        snapX = 2;
+        snapY = 2;
     }
 
     /**

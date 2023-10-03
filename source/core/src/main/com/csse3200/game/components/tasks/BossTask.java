@@ -4,15 +4,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.raycast.RaycastHit;
 import com.csse3200.game.rendering.DebugRenderer;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.components.CombatStatsComponent;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.badlogic.gdx.utils.Timer;
 
 /**
  * BossTask controls actions of the Boss Entity. Responsible for attacking
@@ -73,8 +72,8 @@ public class BossTask extends DefaultTask implements PriorityTask {
     if(direction == '>'||direction == '='){
       this.owner.getEntity().getEvents().trigger("chaseStart");
     }
-    Timer timer = new Timer();
-    timer.schedule(new TimerTask() {
+
+    Timer.schedule(new Timer.Task(){
       @Override
       public void run() {
         if(getDirection(target.getPosition() )!= direction){
@@ -174,7 +173,6 @@ public class BossTask extends DefaultTask implements PriorityTask {
 
   /**
    * Converts the Vector2 positions to one of a few characters that represent certain directions.
-   * '{@literal <}' means left, '{@literal >}' means right. Otherwise, return '='.
    * @param destination final destination for the Boss.
    * @return a character that represents which direction Boss should face.
    */

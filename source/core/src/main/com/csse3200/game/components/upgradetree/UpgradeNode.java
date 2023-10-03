@@ -1,6 +1,7 @@
 package com.csse3200.game.components.upgradetree;
 
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.structures.ToolConfig;
 import com.csse3200.game.entities.configs.WeaponConfig;
 
 import java.util.ArrayList;
@@ -12,14 +13,20 @@ import java.util.List;
  */
 public class UpgradeNode {
 
+    /** Represents the name of the weapon/tool as a string **/
+    private final String name;
+
+    /** The current node's parent node **/
+    private UpgradeNode parent;
+
     /** Path to the image that represents the weapon upgrade. */
-    private String imagePath;
+    private final String imagePath;
 
     /** Type of weapon this node represents. */
-    private WeaponType weaponType;
+    private final WeaponType weaponType;
 
     /** List of child nodes, representing subsequent potential upgrades. */
-    private List<UpgradeNode> children;
+    private final List<UpgradeNode> children;
 
     /** X-coordinate of the node, typically used for UI positioning. */
     private float x;
@@ -30,21 +37,60 @@ public class UpgradeNode {
     /** Depth of the tree */
     private int depth;
 
+    /** The config associated with the tool/weapon **/
+    private Object config;
+
+    /** Cost of the root node in Nebulite materials **/
+    private static final int BASE_COST = 100;
+
+    /** Sets the parent of the current node**/
+    public void setParent(UpgradeNode parent) {
+        this.parent = parent;
+    }
+
+    /** Returns the current node's parent node**/
+    public UpgradeNode getParent() {
+        return parent;
+    }
+
     /**
      * Constructs a new UpgradeNode with the given weapon type and image path.
      * @param config - The weapons config file
      */
-    UpgradeNode(WeaponConfig config, WeaponType weaponType) {
-        this.imagePath = config.iconPath == null ? config.spritePath : config.iconPath;
-        this.weaponType = weaponType;
+    UpgradeNode(WeaponConfig config) {
+        this.name = config.type.toString();
+        this.imagePath = config.imagePath;
+        this.weaponType = config.type;
         this.children = new ArrayList<>();
         this.depth = 0;
+        this.config = config;
     }
 
+    UpgradeNode(ToolConfig config) {
+        this.name = config.name;
+        this.imagePath = config.texture;
+        this.weaponType = null;
+        this.children = new ArrayList<>();
+        this.depth = 0;
+        this.config = config;
+    }
+
+    /** Gets the config file associated with the tool **/
+    public Object getConfig() {
+        return this.config;
+    }
+
+    /** Gets the name of the tool/weapon **/
+    public String getName() {
+        return this.name;
+    }
+
+    /** Sets the current node's depth **/
     public void setDepth(int depth) {
         this.depth = depth;
     }
 
+    /** Returns the current node's depth **/
     public int getDepth() {
         return depth;
     }
@@ -54,7 +100,8 @@ public class UpgradeNode {
      * @param child The child node to be added.
      */
     public void addChild(UpgradeNode child) {
-        children.add(child);
+        child.setParent(this);
+        this.children.add(child);
     }
 
     /**
@@ -111,5 +158,14 @@ public class UpgradeNode {
      */
     public String getImagePath() {
         return imagePath;
+    }
+
+    /**
+     * Gets the selected nodes upgrade cost
+     *
+     * @return int: the nodes cost
+     */
+    public int getNodeCost() {
+        return BASE_COST * (this.getDepth() + 1);
     }
 }

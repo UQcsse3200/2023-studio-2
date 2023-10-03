@@ -10,9 +10,7 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.badlogic.gdx.utils.Timer;
 
 /**
  * When this entity touches a valid enemy's hitbox, deal damage to them and apply a knockback.
@@ -23,7 +21,7 @@ import java.util.TimerTask;
  * if target entity has a PhysicsComponent.
  */
 public class ProjectileAttackComponent extends Component {
-  private short targetLayer;
+  private final short targetLayer;
   private float knockbackForce = 0f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
@@ -125,14 +123,14 @@ public class ProjectileAttackComponent extends Component {
     float deathAnimationDuration = animator.getAnimationDuration("explode");
     // Convert the duration from seconds to milliseconds for the Timer
     long delay = (long) (deathAnimationDuration * 1000);
-    Timer timer = new Timer();
 
-    timer.schedule(new TimerTask() {
+    // Delay based on the dispose animation duration
+    Timer.schedule(new Timer.Task(){
       @Override
       public void run() {
         Gdx.app.postRunnable(entity::dispose);
       }
-    }, delay); // Delay based on the dispose animation duration
+    }, delay);
 
   }
 

@@ -18,7 +18,6 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.Objects;
@@ -28,20 +27,23 @@ import java.util.Objects;
  */
 public class Turret extends PlaceableEntity{
 
-    private long start = System.currentTimeMillis();
+    private long start = System.currentTimeMillis(); // start time
 
-    private static final TurretConfigs turretConfigs =
-            FileLoader.readClass(TurretConfigs.class, "configs/turrets.json");
+    TurretType type; // turret type
+    public int currentAmmo; // current ammo
 
-    TurretType type;
-    public int currentAmmo;
+    int maxAmmo; // max ammo
+    int damage; // damage
 
-    int maxAmmo;
-    int damage;
-
-    //TODO: REMOVE - LEGACY
+    /**
+     * Create a new turret placeable entity to match the provided type
+     * @param type Type of turret to create
+     *             (used to get config file)
+     * @param player Player entity to create turret for
+     *               (used to get position and rotation)
+     */
     public Turret(TurretType type, Entity player) {
-        this(turretConfigs.GetTurretConfig(type));
+        this(FileLoader.readClass(TurretConfigs.class, "configs/turrets.json").GetTurretConfig(type)); // create turret with config file
     }
 
     /**
@@ -49,30 +51,31 @@ public class Turret extends PlaceableEntity{
      * @param turretConfig Configuration file to match turret to
      */
     public Turret(TurretConfig turretConfig) {
-        super();
+        super(2, 2);
 
-        maxAmmo = turretConfig.maxAmmo;
+        maxAmmo = turretConfig.maxAmmo; // set max ammo
         currentAmmo = maxAmmo;
-        damage = turretConfig.damage;
-        var texture = ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, Texture.class);
+        damage = turretConfig.damage; // set damage
+        var texture = ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, Texture.class); // load texture
 
-        addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
-        addComponent(new ColliderComponent().setLayer(PhysicsLayer.TURRET));
-        addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
-        addComponent(new CombatStatsComponent(turretConfig.health, turretConfig.damage,
+        addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody)); // add physics component
+        addComponent(new ColliderComponent().setLayer(PhysicsLayer.TURRET)); // add collider component
+        addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE)); // add hitbox component
+        addComponent(new CombatStatsComponent(turretConfig.health, turretConfig.damage, // add combat stats component
                 turretConfig.attackMultiplier, turretConfig.isImmune));
-        addComponent(new HealthBarComponent(true));
-        addComponent(new TextureRenderComponent(texture));
-        addComponent(new FOVComponent(4f, this::startDamage, this::stopDamage));
-        addComponent(new StructureDestroyComponent());
+        addComponent(new HealthBarComponent(true)); // add health bar component
+        addComponent(new TextureRenderComponent(texture)); // add texture render component
+        addComponent(new FOVComponent(4f, this::startDamage, this::stopDamage)); // add fov component
+        addComponent(new StructureDestroyComponent()); // add structure destroy component
     }
 
     /**
      * Refill the turret's ammunition to its maximum capacity.
      */
     public void refillAmmo() {
-        currentAmmo = maxAmmo;
+        currentAmmo = maxAmmo; // set current ammo to max ammo
     }
+
     /**
      * Check if the turret can fire (has ammunition).
      *
@@ -80,36 +83,42 @@ public class Turret extends PlaceableEntity{
      */
 
     public boolean Canfire() {
-        return  (currentAmmo > 0) ;
+        return  (currentAmmo > 0) ; // return true if current ammo is greater than 0
     }
+
+    /**
+     * Refill the turret's ammunition by the given amount.
+     * @param ammo The amount of ammunition to refill.
+     */
     public void refillAmmo(int ammo) {
         if (currentAmmo + ammo <= maxAmmo) {
             currentAmmo += ammo;
-        } else {
         }
     }
+
     /**
      * Interact with the turret. This method can be called by a player entity to perform an interaction.
      *
      * @param player The player entity interacting with the turret.
      */
     public void interact(Entity player) {
-        int requiredAmmo = maxAmmo - currentAmmo;
-        var gameStateObserver = ServiceLocator.getGameStateObserverService();
-        int availableResources = (int) gameStateObserver.getStateData("resource/nebulite");
+        int requiredAmmo = maxAmmo - currentAmmo; // calculate required ammo
+        var gameStateObserver = ServiceLocator.getGameStateObserverService(); // get game state observer
+        int availableResources = (int) gameStateObserver.getStateData("resource/nebulite"); // get available resources
 
         if (availableResources >= requiredAmmo) {
-            gameStateObserver.trigger("resourceAdd", "nebulite", -requiredAmmo);
+            gameStateObserver.trigger("resourceAdd", "nebulite", -requiredAmmo); // remove resources
             refillAmmo(requiredAmmo);
-            System.out.println("Turret ammo refilled!");
+            System.out.println("Turret ammo refilled!"); // print message
         } else {
-            System.out.println("Insufficient resources to refill turret ammo.");
+            System.out.println("Insufficient resources to refill turret ammo."); // print message
 
         }
     }
 
-
-
+    /**
+     * This method is used to update the turret.
+     */
     @Override
     public void update() {
         super.update();
@@ -152,6 +161,7 @@ public class Turret extends PlaceableEntity{
 
         }
     }
+
     /**
      * Interact with the turret to refill its ammunition using player resources.
      *
@@ -168,9 +178,6 @@ public class Turret extends PlaceableEntity{
             // Handle insufficient resources (optional)
         }
     }
-
-
-
 
     /**
      * This method is used to stop giving damage to an entity.
@@ -231,7 +238,4 @@ public class Turret extends PlaceableEntity{
     public int hashCode() {
         return Objects.hash(super.hashCode(), start, type, maxAmmo, damage);
     }
-
-
-
 }

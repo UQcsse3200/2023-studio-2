@@ -2,14 +2,16 @@ package com.csse3200.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
@@ -20,8 +22,9 @@ import com.csse3200.game.services.ServiceLocator;
  * This is a window that can be added to a stage to pop up for the extractor minigame.
  */
 public class ExtractorMinigameWindow extends Window {
-    private final InputOverrideComponent inputOverrideComponent;
     private final Entity extractor;
+    private final InputOverrideComponent inputOverrideComponent;
+    private MouseState currentMouseState = MouseState.DEFAULT;
 
     /**
      * Returns a new Minigame window intialised with appropriate background.
@@ -29,7 +32,7 @@ public class ExtractorMinigameWindow extends Window {
      * @return New extractor minigame window
      */
     public static ExtractorMinigameWindow MakeNewMinigame(Entity extractor) {
-        Texture background = ServiceLocator.getResourceService().getAsset("images/SpaceMiniGameBackground.png", Texture.class);
+        Texture background = ServiceLocator.getResourceService().getAsset("images/minigame/SpaceMiniGameBackground.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new ExtractorMinigameWindow(background, extractor);
     }
@@ -44,12 +47,115 @@ public class ExtractorMinigameWindow extends Window {
         setWidth((float) (stage.getWidth()*0.8));
         setHeight((float) (stage.getHeight()*0.65));
         setPosition(stage.getWidth()/2 - getWidth()/2 * getScaleX(), stage.getHeight()/2 - getHeight()/2 * getScaleY());
-        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+
+        inputOverrideComponent = new InputOverrideComponent();
+        ServiceLocator.getInputService().register(inputOverrideComponent);
+
+        Table imageTable = new Table();
+
+        float cellSize = 200; // Size of each cell in the grid
+
+        // put extractors grid
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                Image extractorImage = new Image(new Texture(Gdx.files.internal("images/minigame/extractor.png")));
+                float x = col * cellSize;
+                float y = row * cellSize;
+                extractorImage.setPosition(x, y);
+                imageTable.addActor(extractorImage);
+            }
+        }
+
+        // put extinguisher and spanner
+        Image extinguisherImage = new Image(new Texture(Gdx.files.internal("images/minigame/extinguisher.png")));// TODO: change to extinguisher.png
+        extinguisherImage.setPosition(-300, 400);
+        imageTable.addActor(extinguisherImage);
+        extinguisherImage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                currentMouseState = MouseState.EXTINGUISHER;
+                Pixmap extinguisherPixmap = new Pixmap(Gdx.files.internal("images/minigame/extinguisherCursor.png"));// TODO: change to extinguisherCursor.png
+                Gdx.graphics.setCursor(Gdx.graphics.newCursor(extinguisherPixmap, 0, 0));
+            }
+        });
+        Image spannerImage = new Image(new Texture(Gdx.files.internal("images/minigame/spanner.png")));// TODO: change to spanner.png
+        spannerImage.setPosition(600, 400);
+        imageTable.addActor(spannerImage);
+        spannerImage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                currentMouseState = MouseState.SPANNER;
+                Pixmap spannerPixmap = new Pixmap(Gdx.files.internal("images/minigame/spannerCursor.png"));// TODO: change to spannerCursor.png
+                Gdx.graphics.setCursor(Gdx.graphics.newCursor(spannerPixmap, 0, 0));
+            }
+        });
+
+        // put fire and holes
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if ((row == 0 && (col == 0 || col == 2)) || (row == 2 && (col == 0 || col == 2))) {
+                    Image fireImage = new Image(new Texture(Gdx.files.internal("images/minigame/fire.png")));
+                    fireImage.setName("fire");
+                    float x = col * cellSize + 50;
+                    float y = row * cellSize + 50;
+                    fireImage.setScale(0.5f);
+                    fireImage.setPosition(x, y);
+                    imageTable.addActor(fireImage);
+                    // Attach a click listener to make the fire disappear when clicked
+                    fireImage.addListener(new ClickListener() {
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            switch (currentMouseState) {
+                                case DEFAULT:
+                                    break;
+                                case EXTINGUISHER:
+                                    fireImage.remove();
+                                    break;
+                                case SPANNER:
+                                    failMinigame();
+                            }
+                        }
+                    });
+                } else {
+                    Image holeImage = new Image(new Texture(Gdx.files.internal("images/minigame/Hole.png")));
+                    holeImage.setName("hole");
+                    float x = col * cellSize + 40;
+                    float y = row * cellSize + 30;
+                    holeImage.setPosition(x, y);
+                    holeImage.setScale(0.7f);
+                    imageTable.addActor(holeImage);
+                    // Attach a click listener to make the fire disappear when clicked
+                    holeImage.addListener(new ClickListener() {
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            switch (currentMouseState) {
+                                case DEFAULT:
+                                    break;
+                                case SPANNER:
+                                    holeImage.remove();
+                                    break;
+                                case EXTINGUISHER:
+                                    failMinigame();
+                            }
+                        }
+                    });
+                }
+            }
+        }
+        add(imageTable).fill();
+
+        Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         TextButton button = new TextButton("Complete Minigame", skin);
         TextButton button2 = new TextButton("Exit Minigame", skin);
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                for (Actor stageActor : imageTable.getChildren()) {
+                    if (stageActor instanceof Image && (stageActor.getName() != null)) {
+                        failMinigame();
+                        return;
+                    }
+                }
                 succeedMinigame();
             }
         });
@@ -59,13 +165,12 @@ public class ExtractorMinigameWindow extends Window {
                 failMinigame();
             }
         });
-        add(button);
-        add(button2);
+        Table buttonTable = new Table();
+        buttonTable.add(button).pad(10);
+        buttonTable.add(button2).pad(10);
 
-        //Overide all normal user input
-        inputOverrideComponent = new InputOverrideComponent();
-
-        ServiceLocator.getInputService().register(inputOverrideComponent);
+        // Add the buttonTable to the window
+        add(buttonTable).padTop(20).expandY().top().row();
     }
 
     /**
@@ -88,6 +193,14 @@ public class ExtractorMinigameWindow extends Window {
     public boolean remove() {
         //Stop overriding input when exiting minigame
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
         return super.remove();
     }
+
+    private enum MouseState {
+        DEFAULT,
+        EXTINGUISHER,
+        SPANNER
+    }
 }
+

@@ -20,8 +20,6 @@ import com.csse3200.game.services.ServiceLocator;
 public class ShipInteractionPopup extends Window {
     private final InputOverrideComponent inputOverrideComponent;
 
-    private Label descriptionLabel;
-
     public ShipInteractionPopup() {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, getBrownBackgroundStatic()));
 
@@ -31,7 +29,7 @@ public class ShipInteractionPopup extends Window {
         setPosition(stage.getWidth() / 2 - popupWidth / 2, stage.getHeight() / 2 - popupHeight / 2);
         setSize(popupWidth, popupHeight); //setting the popup size at once using width and height variables
 
-        Skin skin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
 
         Label titleLabel = new Label("ship", labelStyle);
@@ -39,7 +37,7 @@ public class ShipInteractionPopup extends Window {
         add(titleLabel).padTop(20).center().top().expandX();
         row();
 
-        descriptionLabel = new Label("The ship is not ready yet for takeoff", labelStyle);
+        Label descriptionLabel = new Label("The ship is not ready yet for takeoff", labelStyle);
         descriptionLabel.setWidth(popupWidth * 0.9f);  // Using 90% of the popup width
         descriptionLabel.setWrap(true); //helps the text to stay within the bounds of the popup
         add(descriptionLabel).width(popupWidth * 0.9f).padTop(20).padLeft(popupWidth * 0.05f).expand().fill();

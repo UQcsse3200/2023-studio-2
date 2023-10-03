@@ -5,10 +5,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ChainShape;
-import com.csse3200.game.components.structures.JoinDirection;
-import com.csse3200.game.components.structures.JoinLayer;
-import com.csse3200.game.components.structures.JoinableComponent;
-import com.csse3200.game.components.structures.JoinableComponentShapes;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -19,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoSettings;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @MockitoSettings
@@ -31,7 +27,7 @@ class JoinableComponentTest {
     @Mock
     JoinableComponentShapes shapes;
     @Mock
-    Entity entity;
+    PlaceableEntity entity;
     @Mock
     ColliderComponent colliderComponent;
     @Mock

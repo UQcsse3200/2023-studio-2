@@ -3,7 +3,6 @@ package com.csse3200.game.components.CompanionWeapons;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.Weapons.WeaponTargetComponent;
 import com.csse3200.game.entities.configs.CompanionWeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -75,7 +74,6 @@ public class CompanionWeaponController extends Component {
         Vector2 position = entity.getPosition();
         //Update position and rotation of projectile
         entity.setPosition(new Vector2(position.x + movement.x, position.y + movement.y));
-       entity.setRotation(this.currentRotation - this.imageRotationOffset);
 
     }
 //    private void despawn() {

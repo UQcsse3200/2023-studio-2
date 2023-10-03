@@ -230,7 +230,7 @@ public class MapGameArea extends GameArea{
                 spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
                 return newPowerup;
             case TEMP_IMMUNITY:
-                newPowerup = PowerupFactory.createtempImmunityPowerup();
+                newPowerup = PowerupFactory.createTempImmunityPowerup();
                 itemsOnMap.add(newPowerup);
                 spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
                 return newPowerup;

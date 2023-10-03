@@ -1,40 +1,48 @@
 {
-	entities: {
-		CompanionConfig: [
-			{
-				class: com.csse3200.game.entities.configs.CompanionConfig
-				position: {
-					x: 22
-					y: 22
-				}
-				health: 100
-				baseAttack: 5
-				attackMultiplier: 1
+entities: {
+<<<<<<<< HEAD:saves/savefile.json
+	CompanionConfig: [
+		{
+			class: com.csse3200.game.entities.configs.CompanionConfig
+			position: {
+				x: 22
+				y: 22
 			}
-		]
-		PlayerConfig: [
-			{
-				class: com.csse3200.game.entities.configs.PlayerConfig
-				spritePath: images/player/player.atlas
-				position: {
-					x: 22
-					y: 22
-				}
-				health: 100
-				baseAttack: 10
-				lives: 3
-				sounds: {
-					soundsMap: {
-						low_health: sounds/playerLow_health.mp3
-						dodge: sounds/dodgingAlertSweep.mp3
-						boostPowerup: sounds/playerBoostRecharge.mp3
-						upgradeTreeTap: sounds/upgradeTreeTap.mp3
-						healthPowerup: sounds/PlayerHealthRecharge.mp3
-						footstep: sounds/footStepsInTheForestGround.mp3
-						upgradeWeapon: sounds/upgradeWeapon.mp3
-					}
+			health: 100
+			baseAttack: 5
+			attackMultiplier: 1
+		}
+	]
+========
+>>>>>>>> 424e235667ba13c6ed95e686e6f48832eb1c7d8b:source/saves/savefile.json
+	PlayerConfig: [
+		{
+			class: com.csse3200.game.entities.configs.PlayerConfig
+			spritePath: images/player/player.atlas
+			position: {
+<<<<<<<< HEAD:saves/savefile.json
+				x: 22
+				y: 22
+========
+				x: 17
+				y: 15
+>>>>>>>> 424e235667ba13c6ed95e686e6f48832eb1c7d8b:source/saves/savefile.json
+			}
+			health: 100
+			baseAttack: 10
+			lives: 3
+			sounds: {
+				soundsMap: {
+					low_health: sounds/playerLow_health.mp3
+					dodge: sounds/dodgingAlertSweep.mp3
+					boostPowerup: sounds/playerBoostRecharge.mp3
+					upgradeTreeTap: sounds/upgradeTreeTap.mp3
+					healthPowerup: sounds/PlayerHealthRecharge.mp3
+					footstep: sounds/footStepsInTheForestGround.mp3
+					upgradeWeapon: sounds/upgradeWeapon.mp3
 				}
 			}
-		]
-	}
+		}
+	]
+}
 }

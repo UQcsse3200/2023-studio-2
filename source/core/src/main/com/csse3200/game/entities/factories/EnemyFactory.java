@@ -247,9 +247,9 @@ public class EnemyFactory {
     }
   }
 
-  public static void targetSet(Entity target, short enemylayer, AITaskComponent aiTaskComponent) {
+  public static void targetSet(Entity target, AITaskComponent aiTaskComponent) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
-    boolean isEnemy = PhysicsLayer.contains(layer, (short) (PhysicsLayer.ENEMY_RANGE | ENEMY_MELEE));
+    boolean isEnemy = PhysicsLayer.contains(layer, (short) (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE));
 
     int priority = isEnemy ? 10 : 0;
     float viewDistance = 100f;

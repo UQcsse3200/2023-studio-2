@@ -1,31 +1,40 @@
 package com.csse3200.game.areas.mapConfig;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.utils.LoadUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mockStatic;
+import static com.csse3200.game.utils.LoadUtils.ROOT_PATH;
+import static com.csse3200.game.utils.LoadUtils.SAVE_PATH;
+import static org.mockito.ArgumentMatchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
-class MapConfigLoaderTest {
+class ConfigLoaderTest { //TODO: Implement more testing
     private static GameAreaConfig fullGameAreaConfig;
     private static GameAreaConfig gameAreaConfig;
     private static PlayerConfig playerConfig;
     private static AreaEntityConfig areaEntityConfig;
     private static GameAreaConfig expectedGameArea;
+    private static MockedStatic<LoadUtils> utilsMock;
+    private static MockedStatic<FileLoader> fileLoaderMock;
 
     private GameAreaConfig setupGameArea() {
         GameAreaConfig gameArea = new GameAreaConfig();
@@ -52,6 +61,9 @@ class MapConfigLoaderTest {
 
     @BeforeEach
     void setup() {
+        utilsMock = mockStatic(LoadUtils.class, Mockito.CALLS_REAL_METHODS);
+        fileLoaderMock = mockStatic(FileLoader.class, Mockito.CALLS_REAL_METHODS);
+
         gameAreaConfig = setupGameArea();
         playerConfig = setupPlayer();
         areaEntityConfig = setupEntities();
@@ -62,6 +74,38 @@ class MapConfigLoaderTest {
         expectedGameArea = setupGameArea();
         expectedGameArea.areaEntityConfig = setupEntities();
     }
+
+    @AfterEach
+    void teardown() {
+        utilsMock.close();
+        fileLoaderMock.close();
+    }
+
+//    @Test
+    void loadNewValidGame() {
+
+    }
+
+//    @Test
+    void loadSavedGameFiles() {
+
+    }
+
+//    @Test
+    void loadInvalidGameGameFile() {
+
+    }
+
+//    @Test
+    void loadInvalidGameGamestateFile() {
+
+    }
+
+//    @Test
+    void loadInvalidGameAssetsFile() {
+
+    }
+
 
     @Test
     void loadValidMapDirectory() throws InvalidConfigException {

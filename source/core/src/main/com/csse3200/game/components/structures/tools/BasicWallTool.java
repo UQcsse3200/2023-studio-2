@@ -16,6 +16,8 @@ public class BasicWallTool extends PlacementTool {
      */
     public BasicWallTool(ObjectMap<String, Integer> cost) {
         super(cost);
+        snapX = 2;
+        snapY = 2;
     }
 
     /**

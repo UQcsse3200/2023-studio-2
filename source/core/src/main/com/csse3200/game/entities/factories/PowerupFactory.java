@@ -105,7 +105,7 @@ public class PowerupFactory {
      *
      * @return Entity representing a temp immunity power-up.
      */
-    public static Entity createtempImmunityPowerup() {
+    public static Entity createTempImmunityPowerup() {
         return createPowerup(configs.tempImmunityPowerup);
     }
 

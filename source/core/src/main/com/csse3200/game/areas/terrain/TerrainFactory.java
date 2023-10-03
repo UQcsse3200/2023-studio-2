@@ -93,7 +93,7 @@ public class TerrainFactory {
         return createExtractorDemoTerrain(1f, extractorRepair);
       case BRICK_DEMO:
         TextureRegion brickBreak=
-                new TextureRegion(resourceService.getAsset("images/minigame/wormhole.png", Texture.class));
+                new TextureRegion(resourceService.getAsset("images/brick-game/BrickGameBackground.png", Texture.class));
         return createBrickGameTerrain(1f, brickBreak);
       default:
         return null;

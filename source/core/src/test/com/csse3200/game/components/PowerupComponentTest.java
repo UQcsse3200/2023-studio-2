@@ -122,7 +122,7 @@ public class PowerupComponentTest {
         assertEquals(2, playerEntity.getComponent(CombatStatsComponent.class).getAttackMultiplier());
 
         // Wait for the duration of double damage
-        TimeUnit.MILLISECONDS.sleep(powerupComponent.getDuration() + 1);
+        TimeUnit.MILLISECONDS.sleep(powerupComponent.getDuration() + 10);
 
         // Assert after the duration
         assertEquals(1, playerEntity.getComponent(CombatStatsComponent.class).getAttackMultiplier());

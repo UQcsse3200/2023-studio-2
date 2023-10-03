@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.csse3200.game.entities.Entity;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -26,12 +25,13 @@ class LabWindowTest {
         Mockito.when(stage.getHeight()).thenReturn(600f); // Adjust height as needed
 
         // Create a separate stage for potion images
-        /*potionStage = new Stage(new ScreenViewport());*/
+        potionStage = Mockito.spy(new Stage(new ScreenViewport()));
+        Mockito.when(potionStage.getWidth()).thenReturn(800f); // Adjust width as needed
+        Mockito.when(potionStage.getHeight()).thenReturn(600f); // Adjust height as needed
     }
 
     @Test
     public void labWindowNotNull() {
-        Entity dummyEntity = new Entity(); // Create a dummy entity for testing
         LabWindow labWindow = LabWindow.MakeNewLaboratory();
         stage.addActor(labWindow);
 
@@ -52,16 +52,17 @@ class LabWindowTest {
 
         assertNotNull(labWindow);
 
-        // Assertions for the presence of potions using their enum names
-        /*assertNotNull(labWindow.findActor(PotionType.DEATH_POTION.toString()));
-        assertNotNull(labWindow.findActor(PotionType.HEALTH_POTION.toString()));
-        assertNotNull(labWindow.findActor(PotionType.SPEED_POTION.toString()));*/
-
         // Assertions for the presence of potion images using their actor names
         assertNotNull(potionStage.getRoot().findActor("DeathPotionImage"));
         assertNotNull(potionStage.getRoot().findActor("SpeedPotionImage"));
         assertNotNull(potionStage.getRoot().findActor("HealthPotionImage"));
-        assertNotNull(potionStage.getRoot().findActor("PotionImage"));
+        assertNotNull(potionStage.getRoot().findActor("invincibilitypotionImage"));
+        assertNotNull(potionStage.getRoot().findActor("doubledamageImage"));
+        assertNotNull(potionStage.getRoot().findActor("extralifeImage"));
+        assertNotNull(potionStage.getRoot().findActor("snapImage"));
+        assertNotNull(potionStage.getRoot().findActor("doublecrossImage"));
+
+
     }
 
     // Helper method to add potion images to the stage

@@ -68,13 +68,11 @@ public class EnvironmentStatsComponent extends Component {
     public void damage(CombatStatsComponent player) {
 
         if (!getImmunity()) {
-            int initialDelay = 1000; // start after 1 seconds
-            int period = 1000;        // repeat every 1 seconds
             Timer timer = new Timer();
             timer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
-                    player.addHealth(-10);
+                    player.addHealth(-1);
                     if (player.getHealth() <= 0) {
                         timer.stop();
                     }

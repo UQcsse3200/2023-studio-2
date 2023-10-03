@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
+/**
+ * Controls the animation of an astronaut NPC using LibGDX's AnimationRenderComponent.
+ */
 public class AstronautAnimationController extends Component {
     private final AssetManager assetManager;
     private AnimationRenderComponent animator;
@@ -14,7 +17,7 @@ public class AstronautAnimationController extends Component {
     private float animationDuration = 10f; // Adjust this to control animation speed.
 
     /**
-     * Creates a new BotanistAnimationController with an AssetManager for managing assets.
+     * Creates a new AstronautAnimationController with an AssetManager for managing assets.
      */
     public AstronautAnimationController() {
         this.assetManager = new AssetManager();

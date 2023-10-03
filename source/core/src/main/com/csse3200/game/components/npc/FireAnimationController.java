@@ -5,51 +5,60 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
+/**
+ * The FireAnimationController manages the animation of fire in a game.
+ * It loads the required assets, updates the animation, and controls its speed.
+ */
 public class FireAnimationController extends Component {
-        private final AssetManager assetManager;
-        private AnimationRenderComponent animator;
-        private TextureAtlas atlas;
+    private final AssetManager assetManager;
+    private AnimationRenderComponent animator;
+    private TextureAtlas atlas;
 
-        private float animationTimer = 0f;
-        private float animationDuration = 10f; // Adjust this to control animation speed.
+    private float animationTimer = 0f;
+    private float animationDuration = 10f; // Adjust this to control animation speed.
 
+    /**
+     * Creates a new FireAnimationController with an AssetManager for managing assets.
+     *
+     * @param assetManager The AssetManager used to load and manage game assets.
+     */
     public FireAnimationController(AssetManager assetManager) {
         this.assetManager = assetManager;
     }
 
     @Override
-        public void create() {
-            super.create();
+    public void create() {
+        super.create();
 
-            // Initialize your animator and load the atlas.
-            animator = entity.getComponent(AnimationRenderComponent.class);
-            assetManager.load("images/minigame/fire.atlas", TextureAtlas.class);
-            assetManager.finishLoading();
-            atlas = assetManager.get("images/minigame/fire.atlas");
+        // Initialize your animator and load the atlas.
+        animator = entity.getComponent(AnimationRenderComponent.class);
+        assetManager.load("images/minigame/fire.atlas", TextureAtlas.class);
+        assetManager.finishLoading();
+        atlas = assetManager.get("images/minigame/fire.atlas");
 
-            // Start with the default animation.
-            animator.startAnimation("image_part1");
-        }
+        // Start with the default animation.
+        animator.startAnimation("image_part1");
+    }
 
-        @Override
-        public void update() {
-            super.update();
+    @Override
+    public void update() {
+        super.update();
 
-            // Update the animation based on a timer.
-            animationTimer += 0.1f;
+        // Update the animation based on a timer.
+        animationTimer += 0.1f;
 
-            if (animationTimer >= animationDuration) {
-                animationTimer = 0f; // Reset the timer.
+        if (animationTimer >= animationDuration) {
+            animationTimer = 0f; // Reset the timer.
 
-                // Switch between animations.
-                switch (animator.getCurrentAnimation()) {
-                    case "image_part1" -> animator.startAnimation("image_part2");
-                    case "image_part2" -> animator.startAnimation("image_part3");
-                    case "image_part3" -> animator.startAnimation("image_part4");
-                    case "image_part4" -> animator.startAnimation("image_part5");
-                    default ->
-                            animator.startAnimation("image_part1");
-                }
+            // Switch between animations.
+            switch (animator.getCurrentAnimation()) {
+                case "image_part1" -> animator.startAnimation("image_part2");
+                case "image_part2" -> animator.startAnimation("image_part3");
+                case "image_part3" -> animator.startAnimation("image_part4");
+                case "image_part4" -> animator.startAnimation("image_part5");
+                default ->
+                        animator.startAnimation("image_part1");
             }
         }
     }
+}

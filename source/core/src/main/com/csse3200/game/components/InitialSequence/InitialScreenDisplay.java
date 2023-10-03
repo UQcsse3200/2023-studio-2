@@ -93,7 +93,7 @@ public class InitialScreenDisplay extends UIComponent {
         storyLabel.setWidth(Gdx.graphics.getWidth());
 
         // Add the storyLabel to the rootTable and make it expand
-        rootTable.add(storyLabel).expandX().center().padTop(850f);
+        rootTable.add(storyLabel).expandX().center().padTop(900f);
         rootTable.row().padTop(30f);
 
         TextButton continueButton = new TextButton("Continue", skin);

@@ -345,11 +345,11 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
      * If the walk direction is zero, it triggers the walkStop event.
      */
     private void triggerWalkEvent() {;
-        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/companionwalksound.wav", Sound.class);
+        //Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/companionwalksound.wav", Sound.class);
         if (this.getTesting() == 0) {
             if (walkDirection.epsilonEquals(Vector2.Zero)) {
                 entity.getEvents().trigger("walkStop");
-                attackSound.stop();
+                //attackSound.stop();
             } else {
                 if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
                     entity.getEvents().trigger("walkUpLeft");
@@ -369,7 +369,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                     entity.getEvents().trigger("walkRight");
                 }
                 entity.getEvents().trigger("walk", walkDirection);
-                attackSound.play();
+                //attackSound.play();
 
             }
         }

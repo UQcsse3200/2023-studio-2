@@ -163,14 +163,14 @@ public class NPCFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new PhysicsMovementComponent())
-                    .addComponent(new FollowComponent(ServiceLocator.getEntityService().getPlayer(),0f))
-                    .addComponent(new CompanionActions());
+                    .addComponent(new FollowComponent(ServiceLocator.getEntityService().getPlayer(),0f));
 //                    .addComponent(aiComponent);
 
     Astro.getComponent(ColliderComponent.class).setDensity(1.5f);
     Astro.addComponent(new InteractableComponent(entity -> {
       Astro.getComponent(FollowComponent.class).setEntity(Astro);
-      Astro.getComponent(FollowComponent.class).setFollowSpeed(3f);},3f));
+      Astro.getComponent(FollowComponent.class).setFollowSpeed(3f);
+    },3f));
     animator.startAnimation("Astro_Down");
     return Astro;
   }

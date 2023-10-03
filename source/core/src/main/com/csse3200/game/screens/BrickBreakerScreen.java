@@ -30,7 +30,7 @@ public class BrickBreakerScreen extends ScreenAdapter {
     private static final String[] background = {"images/deathscreens/deathscreen_0.jpg"};
     public static final Logger logger = LoggerFactory.getLogger(BrickBreakerScreen.class);
     private final Renderer renderer;
-    private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);vx
+    private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
     public BrickBreakerScreen(GdxGame game){
         this.game = game;
         physicsEngine = ServiceLocator.getPhysicsService().getPhysics();

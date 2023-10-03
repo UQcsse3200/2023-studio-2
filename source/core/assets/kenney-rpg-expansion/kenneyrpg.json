@@ -195,7 +195,7 @@
   },
   "WindowStyle": {
     "default": {
-      "background": "metalPanel_red",
+      "background": "treebox",
       "titleFont": "thick_white"
     }
   }

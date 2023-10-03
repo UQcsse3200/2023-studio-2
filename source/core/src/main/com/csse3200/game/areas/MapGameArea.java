@@ -166,7 +166,6 @@ public class MapGameArea extends GameArea{
 
     private void spawnFreezingArea() {
         if (mapConfig.areaEntityConfig == null) return;
-        System.out.println("freezing spawned");
 
         Entity freezeArea = FreezingAreaFactory.createFreezingArea();
         spawnEntityAt(freezeArea, new GridPoint2(40, 60), false, false);
@@ -195,7 +194,6 @@ public class MapGameArea extends GameArea{
     }
 
     public static void toggleFreezing(Entity player) {
-        System.out.println("TOGGLE");
         freezing = !freezing;
     }
 

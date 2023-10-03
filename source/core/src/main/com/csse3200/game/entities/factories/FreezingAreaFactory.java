@@ -18,7 +18,6 @@ public class FreezingAreaFactory {
                 .addComponent(new ProximityActivationComponent(5.0f, MapGameArea.getPlayer(), MapGameArea::toggleFreezing, MapGameArea::toggleFreezing));
         freezing.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         freezing.setScale(10.0f, 10.0f);
-        System.out.println("freezing created");
         return freezing;
     }
 

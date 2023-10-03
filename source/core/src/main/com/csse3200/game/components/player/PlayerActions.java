@@ -74,9 +74,16 @@ public class PlayerActions extends Component {
         Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(MAX_SPEED.x * speedMult, MAX_SPEED.y * speedMult));
         desiredVelocity.scl(freezeFactor); // Reduce speed when the condition is true (always true for now)
 
-        // impulse = (desiredVel - currentVel) * mass
-        Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
-        body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+        if(sliding) {
+            velocity.scl(0.95f);
+            if(velocity.isZero(0.01f)){
+                sliding = false;
+            }
+        }
+        else {
+            Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
+            body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+        }
     }
 
     /**
@@ -93,11 +100,8 @@ public class PlayerActions extends Component {
      * Stops the player from walking.
      */
     void stopWalking() {
-        boolean onIce = MapGameArea.isOnIce();
         this.walkDirection = Vector2.Zero.cpy();
-        if(onIce) {
-            sliding = true;
-        }
+        sliding = MapGameArea.isOnIce();
         updateSpeed();
         moving = false;
     }

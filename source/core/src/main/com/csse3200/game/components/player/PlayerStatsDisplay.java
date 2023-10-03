@@ -4,10 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.configs.WeaponConfig;
@@ -100,8 +103,34 @@ public class PlayerStatsDisplay extends UIComponent {
     createAmmoBar(innerTable);
     statsTable.add(innerTable).left();
 
+    Stack planetDisplay = new Stack();
     container.add(statsTable);
+    container.add(planetDisplay).size(170f,225f);
+    container.row();
+    createUpgradeTreeButton(container);
     stage.addActor(container);
+  }
+
+
+  public void createUpgradeTreeButton(Table table) {
+    TextButton button = new TextButton("Upgrade Tree", skin);
+
+    button.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+
+        if (event instanceof ChangeEvent) {
+          KeyboardPlayerInputComponent keys =
+                  ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
+          keys.clearWalking();
+          UpgradeDisplay display = UpgradeDisplay.createUpgradeDisplay();
+          ServiceLocator.getRenderService().getStage().addActor(display);
+
+          entity.getEvents().trigger("playSound", "upgradeTree");
+        }
+      }
+    });
+    table.add(button).left();
   }
 
   /**

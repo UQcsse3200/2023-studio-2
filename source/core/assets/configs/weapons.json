@@ -82,7 +82,7 @@
     "weaponSpeed": 4,
     "weaponDuration": 120,
     "rotationSpeed": 1,
-    "textureAtlas": "images/weapons/boomerang.atlas",
+    "textureAtlas": "images/weapons/grenade.atlas",
     "imageScale" : 0.5,
     "animationType" : 1,
     "imagePath" : "images/explosives/grenade.png",

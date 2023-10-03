@@ -64,7 +64,8 @@
     "particle-effects/durasteel/durasteel_pixel.png",
     "images/resources/Cracked_Ground.png",
     "images/structures/turret_one.png",
-    "images/structures/turret_one.png"
+    "images/structures/turret_two.png",
+    "images/structure-icons/adv_turret.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",

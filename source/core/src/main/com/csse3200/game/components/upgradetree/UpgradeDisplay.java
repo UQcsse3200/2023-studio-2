@@ -131,6 +131,8 @@ public class UpgradeDisplay extends Window {
                 .get("com.csse3200.game.components.structures.tools.IntermediateWallTool");
         ToolConfig turretConfig = structureTools.toolConfigs
                 .get("com.csse3200.game.components.structures.tools.TurretTool");
+        ToolConfig advancedTurretConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.AdvTurretTool");
         ToolConfig landmineConfig = structureTools.toolConfigs
                 .get("com.csse3200.game.components.structures.tools.LandmineTool");
         ToolConfig barrelConfig = structureTools.toolConfigs
@@ -164,6 +166,7 @@ public class UpgradeDisplay extends Window {
         UpgradeNode gateNode = new UpgradeNode(gateConfig);
         UpgradeNode stoneNode = new UpgradeNode(stoneConfig);
         UpgradeNode turretNode = new UpgradeNode(turretConfig);
+        UpgradeNode advancedTurretNode = new UpgradeNode(advancedTurretConfig);
         UpgradeNode landmineNode = new UpgradeNode(landmineConfig);
         UpgradeNode barrelNode = new UpgradeNode(barrelConfig);
         buildRoot = new UpgradeNode(woodhammerConfig);
@@ -171,6 +174,7 @@ public class UpgradeDisplay extends Window {
         dirtNode.addChild(gateNode);
         dirtNode.addChild(stoneNode);
         buildRoot.addChild(turretNode);
+        turretNode.addChild(advancedTurretNode);
         buildRoot.addChild(landmineNode);
         landmineNode.addChild(barrelNode);
         trees.add(buildRoot);
@@ -201,15 +205,19 @@ public class UpgradeDisplay extends Window {
 
         buildTrees();
 
+
         nodeXSpacing = ((getWidth() * getScaleX()) / (trees.size() * 4));
         nodeYSpacing = (getHeight() * getScaleY()) / 4;
 
         float allocatedWidth = (getWidth() * getScaleX()) / (trees.size() * 1.2f);
+        float treeX ;
+        float startY;
 
         for (UpgradeNode treeRoot : trees) {
             int treeIndex = trees.indexOf(treeRoot);
-            float treeX = (treeIndex + 0.75f) * allocatedWidth;
-            float startY = getHeight() - (getHeight() / 3);
+            treeX = (treeIndex + 0.75f) * allocatedWidth;
+            startY = getHeight() - (getHeight() / 3);
+
             createAndPositionNodes(treeRoot, treeX, startY, group, 0);
         }
 
@@ -242,7 +250,7 @@ public class UpgradeDisplay extends Window {
 
         int childCount = node.getChildren().size();
         float totalWidth = childCount * nodeXSpacing;
-        float currentX = x - totalWidth / 2 + nodeXSpacing / 2;
+        float currentX = x - totalWidth / 2 + nodeXSpacing / childCount;
 
         for (UpgradeNode child : node.getChildren()) {
             child.setParent(node);

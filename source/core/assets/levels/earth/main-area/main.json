@@ -57,7 +57,8 @@
     "images/resources/Cracked_Ground.png",
     "images/enemy/botanist.png",
     "images/structures/turret_one.png",
-    "images/structures/turret_one.png"
+    "images/structures/turret_one.png",
+    "images/structure-icons/adv_turret.png"
   ],
   "textureAtlasPaths": [
     "images/enemy/troll_enemy.atlas",

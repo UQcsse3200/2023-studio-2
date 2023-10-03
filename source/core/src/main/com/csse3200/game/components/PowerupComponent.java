@@ -114,13 +114,13 @@ public class PowerupComponent extends Component {
                     List<Entity> enemies = EnemyFactory.getEnemyList();
                     int nextInt = random.nextInt(enemies.size()) - 1;
                     Entity enemy = enemies.get(nextInt);
-                    while(enemy == null){
+                    while (enemy == null) {
                         nextInt = random.nextInt(enemies.size()) - 1;
                         enemy = enemies.get(nextInt);
                     }
                     enemies.remove(nextInt);
-                    for (Entity enemytarget : enemies){
-                        if((enemy!=null) && (enemy != enemytarget)){
+                    for (Entity enemytarget : enemies) {
+                        if ((enemy != null) && (enemy != enemytarget)) {
                             EnemyFactory.targetSet(
                                     enemytarget,
                                     enemy.getComponent(HitboxComponent.class).getLayer(),
@@ -141,14 +141,11 @@ public class PowerupComponent extends Component {
                     for (int i = 0; i <= enemyCount; i++) {
                         int nextInt = random.nextInt(enemies.size()) - 1;
                         Entity enemy = enemies.get(nextInt);
-                        if (enemy == null) {
+                        while (enemy == null) {
                             nextInt = random.nextInt(enemies.size()) - 1;
                             enemy = enemies.get(nextInt);
-                            enemy.dispose();
-                        } else {
-                            enemy.dispose();
                         }
-
+                        enemy.dispose();
                     }
                 }
 

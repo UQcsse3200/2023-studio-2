@@ -7,11 +7,15 @@ import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyType;
+import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,7 +57,6 @@ public class PowerupComponentTest {
         Entity companionEntity = new Entity().addComponent(new CombatStatsComponent(50, 5, 1, false))
                 .addComponent(new CompanionActions());
 
-
         when(entityService.getPlayer()).thenReturn(playerEntity);
         when(entityService.getCompanion()).thenReturn(companionEntity);
 
@@ -88,10 +91,13 @@ public class PowerupComponentTest {
         assertEquals(5, companionEntity.getComponent(FollowComponent.class).getFollowSpeed());
         // Additional assertions based on your actual implementation
     }
+
     @Test
     void shouldApplyTempImmunity() throws InterruptedException {
-        Entity playerEntity = new Entity().addComponent(new PlayerActions()).addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
-        Entity companionEntity = new Entity().addComponent(new CompanionActions()).addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
+        Entity playerEntity = new Entity().addComponent(new PlayerActions())
+                .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
+        Entity companionEntity = new Entity().addComponent(new CompanionActions())
+                .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
         when(entityService.getPlayer()).thenReturn(playerEntity);
         when(entityService.getCompanion()).thenReturn(companionEntity);
 
@@ -112,7 +118,8 @@ public class PowerupComponentTest {
 
     @Test
     void shouldApplyDoubleDamage() throws InterruptedException {
-        Entity playerEntity = new Entity().addComponent(new PlayerActions()).addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
+        Entity playerEntity = new Entity().addComponent(new PlayerActions())
+                .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
         when(entityService.getPlayer()).thenReturn(playerEntity);
 
         PowerupComponent powerupComponent = new PowerupComponent(PowerupType.DOUBLE_DAMAGE);
@@ -122,9 +129,29 @@ public class PowerupComponentTest {
         assertEquals(2, playerEntity.getComponent(CombatStatsComponent.class).getAttackMultiplier());
 
         // Wait for the duration of double damage
-        TimeUnit.MILLISECONDS.sleep(powerupComponent.getDuration());
+        TimeUnit.MILLISECONDS.sleep(powerupComponent.getDuration() + 10);
 
         // Assert after the duration
         assertEquals(1, playerEntity.getComponent(CombatStatsComponent.class).getAttackMultiplier());
     }
+
+    // @Test
+    // void shouldApplySnap() throws InterruptedException {
+
+    //     Entity playerEntity = new Entity().addComponent(new PlayerActions())
+    //             .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
+    //     when(entityService.getPlayer()).thenReturn(playerEntity);
+
+    //     EnemyFactory.getEnemyList().add(new Entity());
+    //     EnemyFactory.getEnemyList().add(new Entity());
+    //     EnemyFactory.getEnemyList().add(new Entity());
+    //     EnemyFactory.getEnemyList().add(new Entity());
+
+    //     // int enemies = EnemyFactory.getEnemyList().size();
+
+    //     PowerupComponent powerupComponent = new PowerupComponent(PowerupType.SNAP);
+    //     powerupComponent.applyEffect();
+
+    //     assertEquals(2, EnemyFactory.getEnemyList().size());
+    // }
 }

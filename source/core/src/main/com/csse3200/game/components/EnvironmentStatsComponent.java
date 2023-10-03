@@ -7,6 +7,8 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.utils.Timer.Task;
+import com.badlogic.gdx.utils.Timer;
+
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
@@ -14,8 +16,8 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Timer;
-import java.util.TimerTask;
+//import java.util.Timer;
+//import java.util.TimerTask;
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
@@ -66,15 +68,16 @@ public class EnvironmentStatsComponent extends Component {
     public void damage(CombatStatsComponent player) {
 
         if (!getImmunity()) {
-            int initialDelay = 1000; // start after 1 seconds
-            int period = 1000;        // repeat every 1 seconds
             Timer timer = new Timer();
-            TimerTask task = new TimerTask() {
+            timer.scheduleTask(new Timer.Task() {
+                @Override
                 public void run() {
                     player.addHealth(-1);
+                    if (player.getHealth() <= 0) {
+                        timer.stop();
+                    }
                 }
-            };
-            timer.schedule(task, initialDelay, period);
+            },1,1);   
         }
     }
 }

@@ -1,12 +1,16 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.SpecWeapon.*;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.explosives.ExplosiveComponent;
+import com.csse3200.game.components.explosives.ExplosiveConfig;
+import com.csse3200.game.components.player.WeaponComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
@@ -69,6 +73,7 @@ public class AttackFactory {
                     new MeleeSwingController(config, attackDirection, player);
             case MELEE_BEE_STING -> new KillerBeeController(config, attackDirection, player, attackNum);
             case RANGED_BOOMERANG, RANGED_BLUEMERANG -> new BoomerangController(config, attackDirection, player, attackNum);
+            case RANGED_GRENADE ->  new GrenadeController(config, attackDirection, player, attackNum);
             case RANGED_SLINGSHOT -> new ProjectileController(config, attackDirection, player, attackNum);
             case RANGED_HOMING -> new HomingProjectileController(config, attackDirection, player, attackNum);
             case RANGED_MISSILES -> new HomingMissileSprayProjectileController(config, attackDirection, player, attackNum);
@@ -82,7 +87,7 @@ public class AttackFactory {
                 .addComponent(new TouchAttackComponent((short)
                         (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE)))
                 .addComponent(new AnimationRenderComponent(new TextureAtlas(config.textureAtlas)))
-                .addComponent(new CombatStatsComponent(30, (int) config.damage, 1, false))
+                .addComponent(new CombatStatsComponent(config.health, (int) config.damage, 1, false))
                 .addComponent(new SoundComponent(config.sound))
                 .addComponent(wepCon);
 
@@ -91,7 +96,6 @@ public class AttackFactory {
         attack.scaleWidth(config.imageScale);
         return attack;
     }
-
     private AttackFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }

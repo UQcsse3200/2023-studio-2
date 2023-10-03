@@ -115,17 +115,22 @@ public class DebugRenderer {
    * @param color Grid color
    */
   public void drawGrid(float startX, float startY, float endX, float endY, float cellSize, Color color) {
-    ensureCapacity();
-
-    // Draw horizontal lines
-    for (float y = startY; y <= endY; y += cellSize) {
-      drawLine(new Vector2(startX, y), new Vector2(endX, y), color, 1f);
-    }
+    // Ensure the ShapeRenderer is in the right mode.
+    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+    shapeRenderer.setColor(color);
 
     // Draw vertical lines
     for (float x = startX; x <= endX; x += cellSize) {
-      drawLine(new Vector2(x, startY), new Vector2(x, endY), color, 1f);
+      shapeRenderer.line(x, startY, x, endY);
     }
+
+    // Draw horizontal lines
+    for (float y = startY; y <= endY; y += cellSize) {
+      shapeRenderer.line(startX, y, endX, y);
+    }
+
+    // End the drawing.
+    shapeRenderer.end();
   }
 
   /**
@@ -181,6 +186,7 @@ public class DebugRenderer {
       HashMap<GridPoint2, Entity> fillerGrids = ServiceLocator.getGameArea().getAreaEntities();
       float tileSize = ServiceLocator.getGameArea().getTerrain().getTileSize();
       drawGrid(0, 0, mapBounds.x, mapBounds.y, tileSize, Color.WHITE);
+      shapeRenderer.end();
       drawFillSpecificGrids(fillerGrids, tileSize, Color.RED);
     }
 

@@ -8,8 +8,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.extensions.GameExtension;
@@ -45,7 +43,6 @@ class ChaseTaskTest {
     };
     gameArea.create();
     ServiceLocator.registerGameArea(gameArea);
-    renderService.setDebug(mock(DebugRenderer.class));
     ServiceLocator.registerRenderService(renderService);
     GameTime gameTime = mock(GameTime.class);
     when(gameTime.getDeltaTime()).thenReturn(20f / 1000);

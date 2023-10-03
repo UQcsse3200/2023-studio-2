@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.MapGameArea;
+import com.csse3200.game.areas.TutorialDialogue;
 import com.csse3200.game.areas.TutorialGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
@@ -89,10 +89,13 @@ public class TutorialScreen extends ScreenAdapter {
         generateGameArea("primary", "levels\\tutorial\\main-area");
 
     }
-    private void generateGameArea(String name, String configPath) {
+    private TutorialGameArea generateGameArea(String name, String configPath) {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        this.allGameAreas.put(name, new TutorialGameArea(configPath, terrainFactory, game, game.getPlayerLives()));
+        TutorialGameArea tutorialGameArea = new TutorialGameArea(configPath, terrainFactory, game, game.getPlayerLives());
+        this.allGameAreas.put(name, tutorialGameArea);
+        return tutorialGameArea;
     }
+
 
     private void registerServices() {
         logger.debug(String.format("Initialising %s screen services", this.name));
@@ -203,6 +206,13 @@ public class TutorialScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().register(ui);
 
     }
+    private TutorialDialogue getTutorialDialogue() {
+        TutorialGameArea tutorialGameArea = (TutorialGameArea) allGameAreas.get(currentAreaName);
+        if (tutorialGameArea != null) {
+            return tutorialGameArea.getTutorialDialogue();
+        }
+        return null;
+    }
 
     /**
      * Move the camera to follow the player around at screen centre.
@@ -225,5 +235,6 @@ public class TutorialScreen extends ScreenAdapter {
         //Set new position
         renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
     }
+
 
 }

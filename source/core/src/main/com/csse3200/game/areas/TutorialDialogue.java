@@ -48,4 +48,7 @@ public class TutorialDialogue extends UIComponent {
         window.pack();
         stage.addActor(window);
     }
+
+    public void showMessage(String s) {
+    }
 }

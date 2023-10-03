@@ -27,9 +27,10 @@ import org.slf4j.LoggerFactory;
 public class BrickBreakerScreen extends ScreenAdapter {
     private final GdxGame game;
     private final PhysicsEngine physicsEngine;
+    private static final String[] background = {"images/deathscreens/deathscreen_0.jpg"};
     public static final Logger logger = LoggerFactory.getLogger(BrickBreakerScreen.class);
     private final Renderer renderer;
-    private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
+    private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);vx
     public BrickBreakerScreen(GdxGame game){
         this.game = game;
         physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
@@ -82,6 +83,7 @@ public class BrickBreakerScreen extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(background);
         ServiceLocator.getResourceService().loadAll();
     }
 
@@ -91,6 +93,7 @@ public class BrickBreakerScreen extends ScreenAdapter {
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.unloadAssets(background);
         resourceService.clearAllAssets();
     }
     private void createUI() {

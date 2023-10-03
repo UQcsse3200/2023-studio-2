@@ -111,6 +111,12 @@ public class PlayerStatsDisplay extends UIComponent {
     stage.addActor(container);
   }
 
+  /**
+   * @param table - Used to add Column/Rows and define the actors
+   * createUpgradeTreeButton() - creating button and defining it on the top left
+   *                              also playing the sound when on tapping it
+   *
+   */
 
   public void createUpgradeTreeButton(Table table) {
     TextButton button = new TextButton("Upgrade Tree", skin);

@@ -113,6 +113,7 @@ public class MapGameArea extends GameArea{
      * Loads all assets listed in the config file
      */
     protected void loadAssets() {
+        long start = System.currentTimeMillis();
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
@@ -132,6 +133,7 @@ public class MapGameArea extends GameArea{
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
         }
+        logger.debug(String.format("Load took %d ms to load.", System.currentTimeMillis() - start));
     }
 
     /**
@@ -228,7 +230,7 @@ public class MapGameArea extends GameArea{
                 spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
                 return newPowerup;
             case TEMP_IMMUNITY:
-                newPowerup = PowerupFactory.createtempImmunityPowerup();
+                newPowerup = PowerupFactory.createTempImmunityPowerup();
                 itemsOnMap.add(newPowerup);
                 spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
                 return newPowerup;

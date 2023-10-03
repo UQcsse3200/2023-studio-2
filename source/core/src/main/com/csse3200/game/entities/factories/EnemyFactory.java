@@ -25,6 +25,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Factory to create non-playable enemies entities with predefined components.
@@ -42,6 +43,7 @@ public class EnemyFactory {
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
   public static DialogueBox dialogueBox;
 
+  public static List<Entity> enemiesList = new ArrayList<Entity>();
   /**
    * Creates an enemy - using the default config as defined by the type and behaviour
    * @param type - enemy type
@@ -92,13 +94,13 @@ public class EnemyFactory {
             .addComponent(new DeathComponent())
             .addComponent(new HitboxComponent())
             .addComponent(new HealthBarComponent(false))
-//            .addComponent(new TouchAttackComponent((short) (
-//                    PhysicsLayer.PLAYER |
-//                    PhysicsLayer.COMPANION |
-//                    PhysicsLayer.WALL |
-//                    PhysicsLayer.STRUCTURE |
-//                    PhysicsLayer.WEAPON),
-//                    1.5f))
+            .addComponent(new TouchAttackComponent((short) (
+                    PhysicsLayer.PLAYER |
+                    PhysicsLayer.COMPANION |
+                    PhysicsLayer.WALL |
+                    PhysicsLayer.STRUCTURE |
+                    PhysicsLayer.WEAPON),
+                    1.5f))
             .addComponent(new CombatStatsComponent(
                     health,
                     baseAttack,
@@ -114,6 +116,10 @@ public class EnemyFactory {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
     }
     enemy.addComponent(aiComponent);
+
+    if(!(config.isBoss)){
+        enemiesList.add(enemy);
+    }
 
     // TYPE
     EnemyTypeSelector(enemy, config.type);
@@ -240,6 +246,38 @@ public class EnemyFactory {
       aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
     }
   }
+
+  public static void targetSet(Entity target, short enemylayer, AITaskComponent aiTaskComponent) {
+    short layer = target.getComponent(HitboxComponent.class).getLayer();
+    boolean isEnemy = PhysicsLayer.contains(layer, (short) (PhysicsLayer.ENEMY_RANGE | ENEMY_MELEE));
+
+    int priority = isEnemy ? 10 : 0;
+    float viewDistance = 100f;
+    float maxChaseDistance = 100f;
+
+    if (PhysicsLayer.contains(layer, PhysicsLayer.ENEMY_MELEE)){
+      priority = 10;
+    }
+
+    if (PhysicsLayer.contains(layer, PhysicsLayer.ENEMY_RANGE)) {
+      float aimDelay = 2f;
+      float range = 3f;
+      float shootDistance = 3f;
+      viewDistance = 100f;
+      maxChaseDistance = 100f;
+
+      aiTaskComponent.addTask(new AimTask(aimDelay, target, range));
+      aiTaskComponent.addTask(new RunTask(target, 11, 2f));
+      aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
+    } else {
+      aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+    }
+  }
+
+  public static List<Entity> getEnemyList(){
+    return enemiesList;
+  }
+
 
   /**
    * Throws error when attempting the instantiating of static class

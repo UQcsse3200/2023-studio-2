@@ -95,9 +95,9 @@ public class EntityService {
    * Update all registered entities. Should only be called from the main game loop.
    */
   public void update() {
-    for (Entity entity : entities) {
-      entity.earlyUpdate();
-      entity.update();
+    for (int i = 0; i < entities.size; i++) {
+      entities.get(i).earlyUpdate();
+      entities.get(i).update();
     }
   }
 
@@ -108,6 +108,14 @@ public class EntityService {
     for (Entity entity : entities) {
       entity.dispose();
     }
+  }
+  public Entity getCompanion() {
+    for (Entity entity : entities) {
+      if (entity.getEntityType().equals("companion")) {
+        return entity;
+      }
+    }
+    return null;
   }
 
 }

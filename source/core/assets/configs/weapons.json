@@ -12,7 +12,8 @@
     "imageScale" : 1,
     "animationType" : 1,
     "imagePath" : "images/weapons/slingshotStatic.png",
-    "type" : "RANGED_SLINGSHOT"
+    "type" : "RANGED_SLINGSHOT",
+    "slotType" : "ranged"
   },
 
   "RANGED_BOOMERANG": {
@@ -28,11 +29,12 @@
     "imageScale" : 0.5,
     "animationType" : 1,
     "imagePath" : "images/weapons/boomerangStatic.png",
-    "type" : "RANGED_BOOMERANG"
+    "type" : "RANGED_BOOMERANG",
+    "slotType" : "ranged"
   },
 
   "RANGED_HOMING": {
-    "name" : "Friendly Heat-Seeking Missile",
+    "name" : "Friendly Missile",
     "description": "No need to aim perfectly! It finds its way by following warmth. Just launch and watch it make new friends!",
     "damage" : 100,
     "weaponSpeed": 5,
@@ -44,7 +46,8 @@
     "imageScale" : 1.2,
     "animationType" : 8,
     "imagePath" : "images/weapons/rocket_image.png",
-    "type" : "RANGED_HOMING"
+    "type" : "RANGED_HOMING",
+    "slotType" : "ranged"
   },
 
   "MELEE_WRENCH": {
@@ -56,12 +59,13 @@
     "rotationSpeed": 1,
     "initialRotationOffset": -90,
     "imageRotationOffset": 45,
-    "attackCooldown": 100,
+    "attackCooldown": 50,
     "textureAtlas": "images/weapons/wrench.atlas",
     "imageScale" : 0.8,
     "animationType" : 1,
     "imagePath" : "images/weapons/wrench.png",
-    "type" : "MELEE_WRENCH"
+    "type" : "MELEE_WRENCH",
+    "slotType" : "melee"
   },
 
   "MELEE_KATANA": {
@@ -73,12 +77,14 @@
     "rotationSpeed": 1,
     "initialRotationOffset": -90,
     "imageRotationOffset": 45,
-    "attackCooldown": 100,
+    "attackCooldown": 20,
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 0.8,
     "animationType" : 4,
     "imagePath" : "images/upgradetree/sword.png",
-    "type" : "MELEE_KATANA"
+    "type" : "MELEE_KATANA",
+    "slotType" : "melee",
+    "ammoUse" : 0
   },
 
   "MELEE_BEE_STING": {
@@ -95,7 +101,9 @@
     "imageScale" : 0.6,
     "animationType" : 4,
     "imagePath" : "images/weapons/bee_sting.png",
-    "type" : "MELEE_BEE_STING"
+    "type" : "MELEE_BEE_STING",
+    "slotType" : "melee",
+    "ammoUse" : 1
   },
 
   "STICK": {
@@ -111,7 +119,8 @@
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
     "imagePath" : "images/upgradetree/stick.png",
-    "type" : "STICK"
+    "type" : "STICK",
+    "slotType" : "melee"
   },
 
   "WOODHAMMER": {
@@ -121,20 +130,26 @@
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
     "imagePath" : "images/upgradetree/hammer1.png",
-    "type" : "WOODHAMMER"
+    "type" : "WOODHAMMER",
+    "slotType" : "building",
+    "ammoUse" : 0
   },
 
   "STONEHAMMER": {
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
     "imagePath" : "images/upgradetree/hammer2.png",
-    "type" : "STONEHAMMER"
+    "type" : "STONEHAMMER",
+    "slotType" : "building",
+    "ammoUse" : 0
   },
 
   "STEELHAMMER": {
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
     "imagePath" : "images/upgradetree/hammer2.png",
-    "type" : "STEELHAMMER"
+    "type" : "STEELHAMMER",
+    "slotType" : "building",
+    "ammoUse" : 0
   }
 }

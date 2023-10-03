@@ -31,7 +31,7 @@ public class MainMenuScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   public static final int MountedFrames = 105;
-  private static final String[] mainMenuTextures = {"images/escape-earth2.png"};
+  private static final String[] mainMenuTextures = {"images/menu/escape-earth2.png"};
   public static String[] transitionTextures = new String[MountedFrames];
   private static final String animationPrefix = "images/main_menu_video/menu_animations";
 

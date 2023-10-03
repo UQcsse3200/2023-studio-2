@@ -1,11 +1,11 @@
 {
   "texturePaths": [
-    "images/f_button.png",
-    "images/refinedExtractor2.png",
-    "images/SpaceMiniGameBackground.png",
-    "images/extractor.png",
+    "images/interface/f_button.png",
+    "images/structures/refinedExtractor.png",
+    "images/minigame/SpaceMiniGameBackground.png",
+    "images/minigame/extractor.png",
     "images/broken_extractor.png",
-    "images/meteor.png",
+    "images/minigame/meteor.png",
     "images/box_boy_leaf.png",
     "images/RightShip.png",
     "images/structures_icons/wall.png",
@@ -23,20 +23,20 @@
     "images/healthpowerup.png",
     "images/speedpowerup.png",
     "images/extralifepowerup.png",
-    "images/Ship.png",
+    "images/ship/Ship.png",
     "images/oldman_down_1.png",
     "images/player_blank.png",
     "images/wrench.png",
     "images/durastell.png",
-    "images/nebulite.png",
+    "images/resources/nebulite.png",
     "images/uparrow.png",
-    "images/solstite.png",
-    "images/resourcebar_background.png",
-    "images/resourcebar_durasteel.png",
-    "images/resourcebar_foreground.png",
-    "images/resourcebar_nebulite.png",
-    "images/resourcebar_solstite.png",
-    "images/resourcebar_lights.png",
+    "images/resources/solstite.png",
+    "images/resources/resourcebar_background.png",
+    "images/resources/resourcebar_durasteel.png",
+    "images/resources/resourcebar_foreground.png",
+    "images/resources/resourcebar_nebulite.png",
+    "images/resources/resourcebar_solstite.png",
+    "images/resources/resourcebar_lights.png",
     "images/upgradetree/background.png",
     "images/upgradetree/exit.png",
     "images/upgradetree/hammer1.png",
@@ -50,8 +50,8 @@
     "images/terrain_iso_grass.atlas",
     "images/ghost.atlas",
     "images/ghostKing.atlas",
-    "images/troll_enemy.atlas",
-    "images/rangeEnemy.atlas",
+    "images/enemy/troll_enemy.atlas",
+    "images/enemy/rangeEnemy.atlas",
     "images/structures/stone_wall.atlas",
     "images/structures/dirt_wall.atlas",
     "images/botanist.atlas",
@@ -62,7 +62,9 @@
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
-    "images/structures/TurretOne.atlas"
+    "images/structures/TurretOne.atlas",
+    "images/companion/Companion_spritesheet.atlas"
+
   ],
   "soundPaths": [
     "sounds/Impact4.wav"
@@ -91,7 +93,7 @@
   },
   "areaEntityConfig": {
     "ship": {
-      "spritePath": "images/LeftShip.png",
+      "spritePath": "images/ship/Ship.png",
       "position": {
         "x": 35,
         "y": 40

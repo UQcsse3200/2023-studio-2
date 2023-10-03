@@ -78,7 +78,7 @@ public class EnemyFactoryTest {
      *  - "baseAttack": 10,
      *  - "speed": 5,
      *  - "behaviour": "PTE",
-     *  - "atlas": "images/rangeEnemy.atlas"
+     *  - "atlas": "images/enemy/rangeEnemy.atlas"
      *  Passes Test if created enemy contains the correct health and base attack
      */
     @Test
@@ -99,7 +99,7 @@ public class EnemyFactoryTest {
      *     "baseAttack": 5,
      *     "speed": 5,
      *     "behaviour": "DTE",
-     *     "atlas": "images/troll_enemy.atlas"
+     *     "atlas": "images/enemy/troll_enemy.atlas"
      * Passes test if correct stats are returned
      */
     @Test

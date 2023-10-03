@@ -57,7 +57,7 @@ public class Wall extends PlaceableEntity {
      * @param player - link with player to implement walls
      */
     public Wall(WallType type, Entity player) {
-        super();
+        super(2, 2);
         this.type = type;
 
         WallConfig config = configs.GetWallConfig(type);

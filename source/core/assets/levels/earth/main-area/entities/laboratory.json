@@ -1,0 +1,12 @@
+{
+  "entityType": "LaboratoryConfig",
+  "entities": [
+    {
+      "class": com.csse3200.game.entities.configs.LaboratoryConfig,
+      "spritePath": "images/companion/laboratory.png",
+      "position": {"x":16,
+        "y": 19
+      }
+    }
+  ]
+}

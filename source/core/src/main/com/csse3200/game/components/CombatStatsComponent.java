@@ -23,7 +23,7 @@ public class CombatStatsComponent extends Component {
   private int baseAttack;
   private final int maxHealth;
   private int attackMultiplier;
-  private Boolean isImmune;
+  public Boolean isImmune;
   private int lives;
   private boolean dead = false;
 
@@ -248,6 +248,7 @@ public class CombatStatsComponent extends Component {
    */
   public void minusLife() {
     this.lives -= 1;
+    entity.getEvents().trigger("updateLives", this.lives);
   }
 
   /**

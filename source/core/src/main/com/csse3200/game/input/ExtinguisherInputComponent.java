@@ -27,7 +27,7 @@ public class ExtinguisherInputComponent extends InputComponent {
                 new Rectangle(entity.getPosition().x, entity.getPosition().y, entity.getScale().x, entity.getScale().y);
         // Check if the click/touch is within the bounds of the entity
         if (boundingBox.contains(worldCoordinates.x, worldCoordinates.y)) {
-            Pixmap extinguisherPixmap = new Pixmap(Gdx.files.internal("images/extinguisherCursor.png"));
+            Pixmap extinguisherPixmap = new Pixmap(Gdx.files.internal("images/minigame/extinguisherCursor.png"));
             Gdx.graphics.setCursor(Gdx.graphics.newCursor(extinguisherPixmap, 0, 0));
             area.mouseState = ExtractorMiniGameArea.MouseState.EXTINGUISHER;
             return true; // Return true to consume the event

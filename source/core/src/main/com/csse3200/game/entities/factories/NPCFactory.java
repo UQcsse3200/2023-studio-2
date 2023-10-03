@@ -123,8 +123,8 @@ public class NPCFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new InteractionControllerComponent(true))
-                    .addComponent(aiComponent)
-                    .addComponent(new SoundComponent(configs.sound));
+                    .addComponent(aiComponent);
+
     botanist.addComponent(new InteractableComponent(entity -> {
       botanist.getComponent(DialogComponent.class).showdialogue("NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!", "");
     },10f));
@@ -144,7 +144,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/Astro_NPC.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/npc/Astro_NPC.atlas", TextureAtlas.class));
     animator.addAnimation("Astro_Up", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("Astro_UpLeft", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("Astro_Left", 0.2f, Animation.PlayMode.LOOP);
@@ -194,7 +194,7 @@ public class NPCFactory {
   public static Entity createFire() {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/fire.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/minigame/fire.atlas", TextureAtlas.class));
     animator.addAnimation("image_part1", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("image_part2", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("image_part3", 0.01f, Animation.PlayMode.LOOP);

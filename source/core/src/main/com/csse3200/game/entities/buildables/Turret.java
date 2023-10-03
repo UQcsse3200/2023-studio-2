@@ -58,8 +58,7 @@ public class Turret extends PlaceableEntity{
      * @param turretConfig Configuration file to match turret to
      */
     public Turret(TurretConfig turretConfig) {
-        super();
-        this.setScale(2f,1.5f); // set scale
+        super(2, 2);
 
         AnimationRenderComponent animator = new AnimationRenderComponent(
                 ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, TextureAtlas.class)

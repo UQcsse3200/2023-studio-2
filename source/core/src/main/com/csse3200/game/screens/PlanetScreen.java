@@ -58,7 +58,7 @@ public class PlanetScreen extends ScreenAdapter {
 
     /** file paths of textures for screen to load. */
     private static final String[] planetTextures = {
-            "images/heart.png",
+            "images/player/heart.png",
             "images/structure-icons/gate.png",
             "images/structure-icons/wall.png",
             "images/structure-icons/stone_wall.png",
@@ -134,7 +134,8 @@ public class PlanetScreen extends ScreenAdapter {
     private void generateGameAreas() {
         if ("Earth".equals(name)) {
             this.nextPlanetName = "Verdant Oasis";
-            generateGameArea("primary", "levels/earth/main-area");
+
+;            generateGameArea("primary", "levels/earth/main-area");
         } else if ("Verdant Oasis".equals(name)){
             this.nextPlanetName = "Glacial Desolation";
             generateGameArea("primary", "levels/lush/main-area");

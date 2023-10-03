@@ -62,7 +62,8 @@
     "images/resources/Cracked_Ground.png",
     "particle-effects/durasteel/durasteel_pixel.png",
     "images/navigationmap/planets/glacial_desolation.png",
-    "images/companion/Companion_spritesheet.png"
+    "images/companion/Companion_spritesheet.png",
+    "map/icemaptreetop.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",

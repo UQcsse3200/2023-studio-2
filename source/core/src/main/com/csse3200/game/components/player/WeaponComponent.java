@@ -4,9 +4,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.factories.AttackFactory;
 import com.csse3200.game.entities.factories.PlayerWeaponFactory;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.ArrayList;
 
 /**
  * Class to implement weapon functionality in the player,
@@ -14,48 +17,66 @@ import com.csse3200.game.services.ServiceLocator;
  * respond to an enemy attack use an attack factory to generate a weapon entity
  */
 public class WeaponComponent extends Component {
-
     /* Entity reference to projectile that follows */
     private Entity holdingWeapon;
 
-    /* Variable to store current duration before play can attack again */
     /**
      * Function to Set up "weaponAttack" listener to respond to attacks with a weapon
      */
     @Override
     public void create() {
         entity.getEvents().addListener("weaponAttack", this::playerAttacking);
-        entity.getEvents().addListener("changeWeapon", this::makeNewHolding);
+        entity.getEvents().addListener("changeWeapon", this::updateHolding);
         this.holdingWeapon = null;
-        makeNewHolding(WeaponType.MELEE_KATANA);
+        this.updateHolding(WeaponType.MELEE_KATANA);
     }
-
 
     /**
      * Core function to respond to weapon attacks takes a position and a rotation and spawn an entity
      * in that direction and begin the animation of the weapon
-     * @param weaponType - click position
+     *
+     * @param weaponType    - click position
      * @param clickPosition - click location of mouse
      */
     private void playerAttacking(WeaponType weaponType, Vector2 clickPosition) {
-        float attackDirection = calcRotationAngleInDegrees(
-                entity.getPosition().add(entity.getScale().scl(0.5f)),
-                clickPosition);
+        float attackDirection = calcRotationAngleInDegrees(entity.getCenterPosition(), clickPosition);
+        ArrayList<Entity> newAttacks = AttackFactory.createAttacks(weaponType, attackDirection, entity);
 
-        Entity newAttack = AttackFactory.createAttack(weaponType, attackDirection, entity);
-        ServiceLocator.getEntityPlacementService().PlaceEntity(newAttack);
+        if (newAttacks == null) {
+            return;
+        }
+
+        for (Entity newAttack : newAttacks) {
+            ServiceLocator.getEntityPlacementService().PlaceEntity(newAttack);
+            newAttack.getEvents().trigger("playSound", "start");
+        }
 
         InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+        makeNewHolding(weaponType);
         entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(),
                 invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
     }
 
+    private void updateHolding(WeaponType weaponType) {
+        InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+        WeaponConfig config = invComp.getConfigs().GetWeaponConfig(weaponType);
+
+        if (config.slotType.equals("building")) {
+            makeNewHolding(weaponType);
+        } else if (this.holdingWeapon != null) {
+            this.holdingWeapon.dispose();
+        }
+    }
+
     /**
      * Creates a new static weapon for the player
-     * @param weapon
+     *
+     * @param weapon - weapon to make the player hold
      */
     private void makeNewHolding(WeaponType weapon) {
-        if (this.holdingWeapon != null) {this.holdingWeapon.dispose();}
+        if (this.holdingWeapon != null) {
+            this.holdingWeapon.dispose();
+        }
         this.holdingWeapon = PlayerWeaponFactory.createPlayerWeapon(weapon, entity);
         ServiceLocator.getEntityPlacementService().PlaceEntity(this.holdingWeapon);
     }
@@ -73,7 +94,9 @@ public class WeaponComponent extends Component {
      */
     private float calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt) {
         double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
-        if (angle < 0) {angle += 360;        }
+        if (angle < 0) {
+            angle += 360;
+        }
         return (float) angle;
     }
 

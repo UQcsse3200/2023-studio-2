@@ -154,4 +154,5 @@ public class PowerupComponentTest {
 
     //     assertEquals(2, EnemyFactory.getEnemyList().size());
     // }
+// }
 }

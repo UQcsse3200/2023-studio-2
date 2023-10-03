@@ -8,14 +8,12 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class BoomerangController extends WeaponControllerComponent {
-    private final Entity player;
     private Vector2 player_last_pos;
 
     public BoomerangController(WeaponConfig config,
                                float attackDirection,
                                Entity player) {
-        super(config, attackDirection);
-        this.player = player;
+        super(config, attackDirection, player);
         this.player_last_pos = player.getPosition();
     }
 

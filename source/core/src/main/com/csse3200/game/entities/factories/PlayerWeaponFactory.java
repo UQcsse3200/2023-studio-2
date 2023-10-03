@@ -14,29 +14,31 @@ import com.csse3200.game.rendering.TextureRenderComponent;
  * Class to create weapons for the player to hold
  */
 public class PlayerWeaponFactory {
-  private static final WeaponConfigs configs =
-          FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
-  /**
-   * Static function to create a new weapon entity
-   * @param weaponType - the type of weapon entity to be made
-   * @param player - player entity to track
-   * @return A reference to the created weapon entity
-   */
-  public static Entity createPlayerWeapon(WeaponType weaponType, Entity player) {
-    WeaponConfig config = configs.GetWeaponConfig(weaponType);
-    WeaponControllerComponent wepCon = new StaticController(config, player);
+    private static final WeaponConfigs configs =
+            FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
 
-    Texture texture = new Texture(config.imagePath);
-    Entity attack = new Entity()
-            .addComponent(new TextureRenderComponent(texture))
-            .addComponent(wepCon);
+    /**
+     * Static function to create a new weapon entity
+     *
+     * @param weaponType - the type of weapon entity to be made
+     * @param player     - player entity to track
+     * @return A reference to the created weapon entity
+     */
+    public static Entity createPlayerWeapon(WeaponType weaponType, Entity player) {
+        WeaponConfig config = configs.GetWeaponConfig(weaponType);
+        WeaponControllerComponent wepCon = new StaticController(config, player);
 
-    attack.setEntityType("playerStaticWeapon");
-    attack.scaleWidth(config.imageScale / 2);
-    return attack;
-  }
+        Texture texture = new Texture(config.imagePath);
+        Entity attack = new Entity()
+                .addComponent(new TextureRenderComponent(texture))
+                .addComponent(wepCon);
 
-  private PlayerWeaponFactory() {
-    throw new IllegalStateException("Instantiating static util class");
-  }
+        attack.setEntityType("playerStaticWeapon");
+        attack.scaleWidth(config.imageScale / 2);
+        return attack;
+    }
+
+    private PlayerWeaponFactory() {
+        throw new IllegalStateException("Instantiating static util class");
+    }
 }

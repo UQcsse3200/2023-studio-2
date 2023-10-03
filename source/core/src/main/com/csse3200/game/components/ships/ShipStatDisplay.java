@@ -40,6 +40,7 @@ public class ShipStatDisplay extends UIComponent {
         entity.getEvents().addListener("updateShipHealth", this::updateShipHealthUI);
         entity.getEvents().addListener("updateShipFuel", this::updateShipFuelUI);
         entity.getEvents().addListener("noFuel", this::noFuelReminder);
+        entity.getEvents().addListener("Kaboom", this::noHealth);
 
         //currently leave them here for the UI, may adjust after further implementation
         CharSequence fuelText = "Fuel: " + Integer.toString(this.fuel);
@@ -93,6 +94,14 @@ public class ShipStatDisplay extends UIComponent {
     public void noFuelReminder() {
         CharSequence noFuelText = String.format("Fuel: %d, Need Refueling", this.fuel);
         fuelLabel.setText(noFuelText);
+    }
+
+    /**
+     * Show text on healthLabel that ship has gone Kaboom!
+     */
+    public void noHealth() {
+        CharSequence noHealthText = String.format("Health: %d, Kaboom!", this.health);
+        healthLabel.setText(noHealthText);
     }
 
     /**

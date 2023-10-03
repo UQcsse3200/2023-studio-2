@@ -23,7 +23,7 @@ public class ShipActions extends Component {
     private boolean moving = false;
     private AnimationRenderComponent animator;
 
-
+    //These are used for determining ship orientation by ship velocity direction
     private final double up = 90;
     private final double down = -90;
     private final double left = 180;
@@ -34,10 +34,11 @@ public class ShipActions extends Component {
      * Initialize the health, fuel and acceleration of the ship
      * @param health
      * @param fuel
-     * @param acceleration
+     * @param acceleration Magnitude of force applied to the ship
      */
     public ShipActions(int health, int fuel, int acceleration) {
-        this.maxHealth = health;
+        //temporary value of health to 1 for testing
+        this.maxHealth = health - health + 1;
         //temporary value of fuel to 20 for testing
         this.maxFuel = fuel - fuel + 20;
         this.currentAcceleration = acceleration;
@@ -68,6 +69,9 @@ public class ShipActions extends Component {
     @Override
     public void update() {
         if (moving) {
+            if (this.maxHealth <= 0) {
+                kaboom();
+            }
             updateSpeed();
         }
     }
@@ -233,6 +237,11 @@ public class ShipActions extends Component {
      * Inform ShipStatsDisplay about empty fuel tank
      */
     public void noFuel() { entity.getEvents().trigger("noFuel"); }
+
+    /**
+     * Inform ShipStatsDisplay ship has gone Kaboom!
+     */
+    public void kaboom() { entity.getEvents().trigger("Kaboom"); }
 
     /**
      * Ship hits an obstacle, reduce health by 1

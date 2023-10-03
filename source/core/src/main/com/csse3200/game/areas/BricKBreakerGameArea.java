@@ -19,9 +19,14 @@ public class BricKBreakerGameArea extends GameArea{
     private static final Logger logger = LoggerFactory.getLogger(BricKBreakerGameArea.class);
     private static final GridPoint2 BALL_SPAWN = new GridPoint2(16, 5);
     private static final String[] BrickBreakerTextures = {
+
             "images/minigame/SpaceMiniGameBackground.png",
             "images/minigame/wormhole.png",
             "images/minigame/Ball.png"
+
+
+            "images/brick-game/BrickGameBackground.png"
+
 
     };
 
@@ -54,7 +59,7 @@ public class BricKBreakerGameArea extends GameArea{
     }
     private void displayUI() {
         Entity ui = new Entity();
-        ui.addComponent(new GameAreaDisplay("Space Game"));
+        ui.addComponent(new GameAreaDisplay("Brick Breaker Game"));
         spawnEntity(ui);
     }
 

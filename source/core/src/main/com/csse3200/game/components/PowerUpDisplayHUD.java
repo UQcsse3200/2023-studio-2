@@ -41,17 +41,34 @@ public class PowerUpDisplayHUD extends UIComponent {
     public Image selectPowerUp() {
 
         if (powerUpEntity == PowerupType.HEALTH_BOOST) {
-            HealthUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/Potion2re.png", Texture.class));
+            HealthUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/health_boost.png", Texture.class));
             return HealthUpImage;
         }
 
         if (powerUpEntity == PowerupType.SPEED_BOOST) {
-            SpeedUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/Potion4re.png", Texture.class));
+            SpeedUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/speed_boost.png", Texture.class));
             return SpeedUpImage;
         }
 
         if (powerUpEntity == PowerupType.EXTRA_LIFE) {
             ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/extra_life.png", Texture.class));
+            return ExtraLifeImage;
+        }
+
+        if (powerUpEntity == PowerupType.DOUBLE_CROSS) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_cross.png", Texture.class));
+            return ExtraLifeImage;
+        }
+        if (powerUpEntity == PowerupType.TEMP_IMMUNITY) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/invincibility_potion.png", Texture.class));
+            return ExtraLifeImage;
+        }
+        if (powerUpEntity == PowerupType.DOUBLE_DAMAGE) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_damage.png", Texture.class));
+            return ExtraLifeImage;
+        }
+        if (powerUpEntity == PowerupType.SNAP) {
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/snap.png", Texture.class));
             return ExtraLifeImage;
         }
         else return null;

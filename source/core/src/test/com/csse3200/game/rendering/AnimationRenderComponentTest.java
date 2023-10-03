@@ -92,7 +92,7 @@ class AnimationRenderComponentTest {
             entity.getScale().y,
             1f,
             1f,
-            entity.getRotation()
+            animator.getRotation()
 
       );
     }

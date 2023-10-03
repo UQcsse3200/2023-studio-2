@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
- <tileset firstgid="1" source="../Downloads/Lava #4.tsx"/>
- <tileset firstgid="15626" source="../Downloads/lava.tsx"/>
- <tileset firstgid="15632" source="../Downloads/spooky_trees.tsx"/>
- <tileset firstgid="15758" source="../Downloads/CampFire.tsx"/>
+ <tileset firstgid="1" source="Lava #4.tsx"/>
+ <tileset firstgid="15626" source="lava.tsx"/>
+ <tileset firstgid="15632" source="spooky_trees.tsx"/>
+ <tileset firstgid="15758" source="CampFire.tsx"/>
  <layer id="1" name="Tile Layer 1" width="60" height="60">
   <data encoding="csv">
 3038,3039,3040,15627,15627,15630,15631,15628,15628,15628,15628,15631,15631,15631,15631,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,15630,15630,15630,15630,15631,15629,15629,15626,15626,15627,15628,15628,15631,15631,15631,15631,15631,15630,15631,15631,15631,15626,15627,15626,15629,15630,15631,15626,15627,

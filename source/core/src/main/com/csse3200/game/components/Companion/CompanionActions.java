@@ -87,7 +87,7 @@ public class CompanionActions extends Component {
             entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
         } else if (Objects.equals(mode, COMPANION_MODE_DEFENCE)) {
             COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
-            entity.getComponent(CombatStatsComponent.class).addHealth(40);
+            //entity.getComponent(CombatStatsComponent.class).addHealth(40);
             entity.getEvents().trigger("companionModeChange","Defence");
             entity.getComponent(FollowComponent.class).setFollowSpeed(0f);
         } else if (Objects.equals(mode, COMPANION_MODE_ATTACK)) {

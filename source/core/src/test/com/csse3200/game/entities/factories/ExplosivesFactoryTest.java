@@ -1,13 +1,9 @@
-package com.csse3200.game.components.structures.tools;
+package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
@@ -27,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
-class ExplosiveBarrelToolTest {
+class ExplosivesFactoryTest {
     @Mock
     Entity player;
     @Mock
@@ -52,22 +48,13 @@ class ExplosiveBarrelToolTest {
         when(resourceService.getAsset(any(), eq(Texture.class))).thenReturn(texture);
     }
 
-    // only method overridden in class
     @Test
-    void testCreateStructure() {
-        var tool = new ExplosiveBarrelTool(new ObjectMap<>());
-
-        assertNotNull(tool.createStructure(player));
+    void createExplosiveBarrel() {
+        assertNotNull(ExplosivesFactory.createExplosiveBarrel());
     }
 
     @Test
-    void testCreateStructureWithCost() {
-        var cost = new ObjectMap<String, Integer>();
-        cost.put("Durasteel", 10);
-        cost.put("Solstite", 5);
-
-        var tool = new ExplosiveBarrelTool(cost);
-
-        assertNotNull(tool.createStructure(player));
+    void createLandmine() {
+        assertNotNull(ExplosivesFactory.createLandmine());
     }
 }

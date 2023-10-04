@@ -1,13 +1,10 @@
 package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
@@ -27,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
-class ExplosiveBarrelToolTest {
+class LandmineToolTest {
     @Mock
     Entity player;
     @Mock
@@ -55,7 +52,7 @@ class ExplosiveBarrelToolTest {
     // only method overridden in class
     @Test
     void testCreateStructure() {
-        var tool = new ExplosiveBarrelTool(new ObjectMap<>());
+        var tool = new LandmineTool(new ObjectMap<>());
 
         assertNotNull(tool.createStructure(player));
     }
@@ -66,7 +63,7 @@ class ExplosiveBarrelToolTest {
         cost.put("Durasteel", 10);
         cost.put("Solstite", 5);
 
-        var tool = new ExplosiveBarrelTool(cost);
+        var tool = new LandmineTool(cost);
 
         assertNotNull(tool.createStructure(player));
     }

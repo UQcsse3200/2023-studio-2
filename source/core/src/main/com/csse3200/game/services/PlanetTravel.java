@@ -38,6 +38,17 @@ public class PlanetTravel {
     }
 
     /**
+     * Instantly travel to the planet of given name
+     * @param name  Name of the planet to travel to
+     */
+    public void instantTravelNamed(String name){
+        PlanetScreen nextPlanet = new PlanetScreen(game, name);
+        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
+        game.setScreen(nextPlanet);
+    }
+
+
+    /**
      * Travel back to the currently loaded planet.
      */
     public void returnToCurrent() {

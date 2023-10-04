@@ -65,7 +65,9 @@
     "images/resources/Cracked_Ground.png",
     "particle-effects/durasteel/durasteel_pixel.png",
     "images/navigationmap/planets/glacial_desolation.png",
-    "images/companion/Companion_spritesheet.png","images/powerups/death_potion.png"
+    "images/companion/Companion_spritesheet.png",
+    "images/powerups/death_potion.png",
+    "map/icemaptreetop.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -100,7 +102,8 @@
     "sounds/upgradeWeapon.wav",
     "sounds/enemyDeath.wav",
     "sounds/companionwalksound.wav",
-    "sounds/enemySpawner.wav"
+    "sounds/enemySpawner.wav",
+    "sounds/alert.wav"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

@@ -1,6 +1,6 @@
 {
   "meleeEnemyPTE": {
-    "health": 20,
+    "health": 50,
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
@@ -16,7 +16,7 @@
 
   "meleeEnemyDTE": {
     "health": 50,
-    "baseAttack": 5,
+    "baseAttack": 10,
     "speed": 5,
     "behaviour": "DTE",
     "type": "Melee",
@@ -30,7 +30,7 @@
   },
 
   "rangeEnemyPTE": {
-    "health": 40,
+    "health": 50,
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
@@ -45,7 +45,7 @@
   },
 
   "rangeEnemyDTE": {
-    "health": 40,
+    "health": 50,
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "DTE",
@@ -63,7 +63,7 @@
     "health": 100,
     "baseAttack": 25,
     "speed": 8,
-    "specialAttack": 40,
+    "specialAttack": 50,
     "behaviour": "PTE",
     "type": "Melee",
     "spritePath": "images/enemy/Night.atlas",
@@ -81,7 +81,7 @@
     "health": 100,
     "baseAttack": 25,
     "speed": 8,
-    "specialAttack": 40,
+    "specialAttack": 50,
     "behaviour": "PTE",
     "type": "Ranged",
     "spritePath": "",

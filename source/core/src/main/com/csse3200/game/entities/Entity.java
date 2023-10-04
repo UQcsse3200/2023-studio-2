@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
+import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -342,6 +343,13 @@ public class Entity {
   @Override
   public String toString() {
     return String.format("Entity{id=%d}", id);
+  }
+
+  public int getResourceAmount(Resource resource) {
+    return 0;
+  }
+
+  public void subtractResource(Resource resource, int requiredDurasteel) {
   }
 }
 

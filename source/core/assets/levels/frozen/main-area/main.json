@@ -66,6 +66,9 @@
     "particle-effects/durasteel/durasteel_pixel.png",
     "images/navigationmap/planets/glacial_desolation.png",
     "images/companion/Companion_spritesheet.png",
+    "images/structures/turret_one.png",
+    "images/structures/turret_two.png",
+    "images/structure-icons/adv_turret.png",
     "map/icemaptreetop.png"
   ],
   "textureAtlasPaths": [
@@ -86,10 +89,13 @@
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
     "images/companion/Companion_spritesheet.atlas",
-    "images/structures/ExtractorAnimation.atlas"
+    "images/structures/ExtractorAnimation.atlas",
+    "images/structures/turret_one.atlas",
+    "images/structures/turret_two.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
+    "sounds/Healing/HealingWalls.mp3",
     "sounds/explosion/grenade.mp3",
     "sounds/explosion/landmine.mp3",
     "sounds/playerLow_health.wav",
@@ -102,6 +108,7 @@
     "sounds/enemyDeath.wav",
     "sounds/companionwalksound.wav",
     "sounds/enemySpawner.wav",
+    "sounds/turret_shoot.mp3",
     "sounds/alert.wav"
   ],
   "particleEffectPaths": [

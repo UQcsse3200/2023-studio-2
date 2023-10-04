@@ -1,6 +1,8 @@
 package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.entities.configs.TurretConfig;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsEngine;
@@ -38,7 +40,7 @@ public class TurretTest {
         turretConfig.maxAmmo = 10;
 
         resourceService = mock(ResourceService.class);
-        when(resourceService.getAsset(turretConfig.spritePath, Texture.class)).thenReturn(null);
+        when(resourceService.getAsset(turretConfig.spritePath, TextureAtlas.class)).thenReturn(mock(TextureAtlas.class));
         ServiceLocator.registerResourceService(resourceService);
 
         physicsService = mock(PhysicsService.class);

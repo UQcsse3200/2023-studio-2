@@ -6,6 +6,7 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
@@ -43,7 +44,11 @@ class HealingTest {
         Healing healing = new Healing(new ObjectMap<>());
         when(structurePlacementService.getStructureAt(position)).thenReturn(placeableEntity);
 
-        healing.interact(mock(Entity.class), position);
+        var player = mock(Entity.class);
+        when(player.getEvents()).thenReturn(mock(EventHandler.class));
+
+
+        healing.interact(player, position);
         verify(combatStatsComponent, never()).setHealth(100);
     }
 

@@ -13,25 +13,33 @@ public class Healing extends Tool {
     }
 
     @Override
-    public boolean interact(Entity player, GridPoint2 position) {
+    protected ToolResponse canInteract(Entity player, GridPoint2 position) {
+
         // For checking whether the player has clicked on an entity
         Entity clickedEntity = determineSelectedEntity(position);
         // If no entity is clicked, return false
         if (clickedEntity == null) {
-            return false;
+            return new ToolResponse(PlacementValidity.INVALID, "No structure to heal");
         }
 
         // For checking whether the clicked entity has a CombatStatsComponent
         CombatStatsComponent combatStats = clickedEntity.getComponent(CombatStatsComponent.class);
         // If the clicked entity does not have a CombatStatsComponent, return false
         if (combatStats == null) {
-            return false;
+            return new ToolResponse(PlacementValidity.INVALID, "Cannot be healed");
         }
 
+        return ToolResponse.valid();
+    }
+
+    @Override
+    public void performInteraction(Entity player, GridPoint2 position) {
+        Entity clickedEntity = determineSelectedEntity(position);
+        CombatStatsComponent combatStats = clickedEntity.getComponent(CombatStatsComponent.class);
         // For setting the health of the clicked entity to 100
         combatStats.setHealth(combatStats.getMaxHealth());
-        return true;
     }
+
     // Determine the selected entity based on the player's click position
     private Entity determineSelectedEntity(GridPoint2 position) {
         return ServiceLocator.getStructurePlacementService().getStructureAt(position);
@@ -50,10 +58,10 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.resources.Resource;
 
 public class Healing extends Tool {
+    private int requiredSolstite;
+    private int requiredDurasteel;
 
-//    private final Sound healingSound;
-
-
+    //    private final Sound healingSound;
     public Healing(ObjectMap<String, Integer> cost) {
         super(cost);
 
@@ -68,46 +76,52 @@ public class Healing extends Tool {
      * @param position - the position being interacted with.
      * @return
      */
+
     @Override
-    public boolean interact(Entity player, GridPoint2 position) {
+    protected ToolResponse canInteract(Entity player, GridPoint2 position) {
+
         // For checking whether the player has clicked on an entity
         Entity clickedEntity = determineSelectedEntity(position);
         // If no entity is clicked, return false
         if (clickedEntity == null) {
-            return false;
+            return new ToolResponse(PlacementValidity.INVALID, "No structure to heal");
         }
 
         // For checking whether the clicked entity has a CombatStatsComponent
         CombatStatsComponent combatStats = clickedEntity.getComponent(CombatStatsComponent.class);
         // If the clicked entity does not have a CombatStatsComponent, return false
         if (combatStats == null) {
-            return false;
+            return new ToolResponse(PlacementValidity.INVALID, "Cannot be healed");
         }
 
         // Calculate the healing cost based on the current health deficit
         int currentHealth = combatStats.getHealth();
         int maxHealth = combatStats.getMaxHealth();
         double healthDeficit = 1 - ((double) currentHealth / maxHealth);
-        int requiredDurasteel = (int) Math.ceil(healthDeficit * 100 * 2); // 2 Durasteel per 1%
-        int requiredSolstite = (int) Math.ceil(healthDeficit * 100 * 2); // 2 Solstite per 1%
+        requiredDurasteel = (int) Math.ceil(healthDeficit * 100 * 2); // 2 Durasteel per 1%
+        requiredSolstite = (int) Math.ceil(healthDeficit * 100 * 2); // 2 Solstite per 1%
 
         // Check if the player has enough resources for healing
-        if (playerHasEnoughResources(requiredDurasteel, requiredSolstite)) {
-            // Deduct the required resources
-            deductResources(requiredDurasteel, requiredSolstite);
-
-            Entity entity = new Entity();
-
-            if (entity != null) {
-                entity.getEvents().trigger("playSound","wallHeal");
-            }
-
-            combatStats.setHealth(maxHealth);
-            return true;
-        } else {
-            // Player doesn't have enough resources for healing
-            return false;
+        if (!playerHasEnoughResources(requiredDurasteel, requiredSolstite)) {
+            return new ToolResponse(PlacementValidity.INVALID, "Not enough resources");
         }
+
+        return ToolResponse.valid();
+    }
+
+    @Override
+    public void performInteraction(Entity player, GridPoint2 position) {// Deduct the required resources
+        deductResources(requiredDurasteel, requiredSolstite);
+
+        Entity entity = new Entity();
+
+        Entity clickedEntity = determineSelectedEntity(position);
+
+        entity.getEvents().trigger("playSound","wallHeal");
+
+        CombatStatsComponent combatStats = clickedEntity.getComponent(CombatStatsComponent.class);
+        // For setting the health of the clicked entity to 100
+        combatStats.setHealth(combatStats.getMaxHealth());
     }
 
     // Determine the selected entity based on the player's click position
@@ -117,10 +131,16 @@ public class Healing extends Tool {
 
     // Check if the player has enough Durasteel and Solstite for healing
     private boolean playerHasEnoughResources(int requiredDurasteel, int requiredSolstite) {
-        int playerDurasteel = (int)ServiceLocator.getGameStateObserverService().getStateData("resource/" + Resource.Durasteel.toString());
-        int playerSolstite = (int)ServiceLocator.getGameStateObserverService().getStateData("resource/" + Resource.Solstite.toString());
+        try {
+            int playerDurasteel = (int)ServiceLocator.getGameStateObserverService()
+                    .getStateData("resource/" + Resource.Durasteel);
+            int playerSolstite = (int)ServiceLocator.getGameStateObserverService()
+                    .getStateData("resource/" + Resource.Solstite);
 
-        return playerDurasteel >= requiredDurasteel && playerSolstite >= requiredSolstite;
+            return playerDurasteel >= requiredDurasteel && playerSolstite >= requiredSolstite;
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
     // Deduct the required Durasteel and Solstite from the player's resources

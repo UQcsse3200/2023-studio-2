@@ -4,8 +4,8 @@
     {
       class: com.csse3200.game.entities.configs.SpawnerConfig,
       "wave1" : [
-        10,
-        0,
+        2,
+        2,
         0
       ],
       "wave2" : [

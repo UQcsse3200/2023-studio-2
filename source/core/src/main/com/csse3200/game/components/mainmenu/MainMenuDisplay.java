@@ -54,7 +54,8 @@ public class MainMenuDisplay extends UIComponent {
         table.setFillParent(true);
 
         // Display game title image
-        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/escape-earth2.png", Texture.class));
+//        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/escape-earth2.png", Texture.class));
+        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/Background_Test1.png", Texture.class));
         titleImage.setWidth(Gdx.graphics.getWidth());
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);
@@ -159,31 +160,31 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         stage.addActor(titleImage);
 
-        AmendAnimation();
+////        AmendAnimation();
         stage.addActor(transitionFrames);
         stage.addActor(table);
     }
 
-    private void AmendAnimation() {
-        if (frame < MainMenuScreen.MountedFrames) {
-            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
-            transitionFrames.setWidth(Gdx.graphics.getWidth());
-            transitionFrames.setHeight(Gdx.graphics.getHeight());
-            transitionFrames.setPosition(0, 0);
-            frame++;
-            lastFrameTime = System.currentTimeMillis();
-        } else {
-            frame = 1;
-        }
-    }
+//    private void AmendAnimation() {
+//        if (frame < MainMenuScreen.MountedFrames) {
+//            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+//                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
+//            transitionFrames.setWidth(Gdx.graphics.getWidth());
+//            transitionFrames.setHeight(Gdx.graphics.getHeight());
+//            transitionFrames.setPosition(0, 0);
+//            frame++;
+//            lastFrameTime = System.currentTimeMillis();
+//        } else {
+//            frame = 1;
+//        }
+//    }
 
-    @Override
-    public void update() {
-        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
-            AmendAnimation();
-        }
-    }
+//    @Override
+//    public void update() {
+//        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+//            AmendAnimation();
+//        }
+//    }
 
     @Override
     public void draw(SpriteBatch batch) {

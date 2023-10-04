@@ -128,6 +128,7 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
+
         // Arrange UI elements in a table layout
         table.add(titleImage);
         table.row();

@@ -5,9 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.*;
+import com.csse3200.game.components.flags.EnemyFlag;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.structures.TurretTargetableComponent;
-import com.csse3200.game.components.tasks.*;
+import com.csse3200.game.components.tasks.AimTask;
+import com.csse3200.game.components.tasks.ChaseTask;
+import com.csse3200.game.components.tasks.RunTask;
+import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
@@ -64,7 +68,6 @@ public class EnemyFactory {
   public static Entity createEnemy(EnemyConfig config) {
     System.out.println(config.type);
     AnimationRenderComponent animator;
-    // Choose behaviour for enemy
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
@@ -103,7 +106,8 @@ public class EnemyFactory {
                     config.isImmune))
             .addComponent(new DialogComponent(dialogueBox))
             .addComponent(new TurretTargetableComponent())
-            .addComponent(new SoundComponent(config.sound));
+            .addComponent(new SoundComponent(config.sound))
+            .addComponent(new EnemyFlag());
 
     if (config.type == EnemyType.Ranged || config.type == EnemyType.BossRanged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);

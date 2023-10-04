@@ -53,6 +53,8 @@
     "images/action-feedback/warning.png",
     "map/treetop.png",
     "particle-effects/explosion/particle.png",
+    "images/explosives/explosive-barrel.png",
+    "images/explosives/landmine.png",
     "images/resources/Cracked_Ground.png",
     "images/enemy/botanist.png"
   ],
@@ -75,6 +77,8 @@
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
+    "sounds/explosion/grenade.mp3",
+    "sounds/explosion/landmine.mp3",
     "sounds/playerLow_health.wav",
     "sounds/dodgingAlertSweep.wav",
     "sounds/footStepsInTheForestGround.wav",

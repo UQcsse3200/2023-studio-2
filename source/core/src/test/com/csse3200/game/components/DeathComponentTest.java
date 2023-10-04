@@ -46,13 +46,9 @@ class DeathComponentTest {
      */
     @Test
     void shouldNotKillIfNotDead() {
-        Fixture mockMe = mock(Fixture.class);
-        Fixture mockOther = mock(Fixture.class);
-
-        when(mockHitboxComponent.getFixture()).thenReturn(mockMe);
         when(mockCombatStats.isDead()).thenReturn(false);
 
-        deathComponent.kill(mockMe, mockOther);
+        deathComponent.kill(100);
 
         verify(mockAnimator, times(0)).stopAnimation();
         verify(mockEntity.getComponent(HitboxComponent.class), times(0)).setLayer((short) 0);
@@ -60,34 +56,14 @@ class DeathComponentTest {
     }
 
     /**
-     * Tests the kill functionality when the hitbox is not triggered.
-     * Passes Test if the entity is not killed when the hitbox isn't triggered.
-     */
-    @Test
-    void shouldNotKillIfNotTriggeredByHitbox() {
-        Fixture mockMe = mock(Fixture.class);
-        Fixture mockOther = mock(Fixture.class);
-
-        when(mockHitboxComponent.getFixture()).thenReturn(null);
-
-        deathComponent.kill(mockMe, mockOther);
-
-        verify(mockEntity, times(0)).getComponent(AnimationRenderComponent.class);
-    }
-
-    /**
      * Tests the kill functionality when the entity is dead and the hitbox is triggered.
      * Passes Test if the entity is killed when it's dead and the hitbox is triggered.
      */
     @Test
-    void shouldKillIfTriggeredByHitboxAndIsDead() {
-        Fixture mockMe = mock(Fixture.class);
-        Fixture mockOther = mock(Fixture.class);
-
-        when(mockHitboxComponent.getFixture()).thenReturn(mockMe);
+    void shouldKillIfIsDead() {
         when(mockCombatStats.isDead()).thenReturn(true);
 
-        deathComponent.kill(mockMe, mockOther);
+        deathComponent.kill(0);
 
         verify(mockAnimator).stopAnimation();
         verify(mockEntity.getEvents()).trigger("dispose");

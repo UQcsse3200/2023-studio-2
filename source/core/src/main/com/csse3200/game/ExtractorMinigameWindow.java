@@ -145,8 +145,8 @@ public class ExtractorMinigameWindow extends Window {
         add(imageTable).fill();
 
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
-        TextButton button = new TextButton("Complete Minigame", skin);
-        TextButton button2 = new TextButton("Exit Minigame", skin);
+        TextButton button = new TextButton("Restart! (Make sure you've fixed it)", skin);
+        TextButton button2 = new TextButton("Exit", skin);
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

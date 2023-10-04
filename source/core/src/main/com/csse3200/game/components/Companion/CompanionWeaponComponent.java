@@ -11,8 +11,12 @@ import com.csse3200.game.entities.factories.CompanionWeaponFactory;
 import com.csse3200.game.services.ServiceLocator;
 
 
+/**
+ * This handles the control of all companion weapons that interact with entities
+ */
 public class CompanionWeaponComponent extends Component {
 
+    //only one weapon equipped
     private Entity CurrentWeapon;
 
 
@@ -58,6 +62,7 @@ public class CompanionWeaponComponent extends Component {
 //        ServiceLocator.getEntityService().getCompanion().getEvents().trigger("updateAmmo", invComp.GetCurrentAmmo(), invComp.GetCurrentMaxAmmo());
     }
 
+    // change the weapon in use
     private void makeNewHolding(CompanionWeaponType weapon) {
         if (this.CurrentWeapon  != null) {this.CurrentWeapon .dispose();}
         this.CurrentWeapon  = CompanionWeaponFactory.createCompanionWeapon(weapon, ServiceLocator.getEntityService().getCompanion());

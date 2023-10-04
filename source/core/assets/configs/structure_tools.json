@@ -20,7 +20,7 @@
       "name": "Gate",
       "description": "Convenient gate to allow friendly entry while keeping foes out!",
       "cost": {
-        "Durasteel": 25
+        "Durasteel": 40
       },
       "texture": "images/structure-icons/gate.png"
     },
@@ -28,15 +28,25 @@
       "name": "Basic Turret",
       "description": "Automated turret to guard your territory. It's always alert!",
       "cost": {
-        "Durasteel": 75,
+        "Durasteel": 50,
         "Solstite": 50
       },
       "texture": "images/structure-icons/turret.png"
     },
+    "com.csse3200.game.components.structures.tools.AdvTurretTool": {
+      "name": "Advanced Turret",
+      "description": "Even powerful turret. Be aware enemies!",
+      "cost": {
+        "Durasteel": 75,
+        "Solstite": 50
+      },
+      "texture": "images/structure-icons/adv_turret.png"
+    },
     "com.csse3200.game.components.structures.tools.Healing": {
       "name": "Heal",
       "description": "Bandaid tool",
-      "cost": {},
+      "cost": {
+      },
       "texture": "images/structures/heal_icon.png"
     },
     "com.csse3200.game.components.structures.tools.ExtractorTool": {

@@ -12,6 +12,7 @@ import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
@@ -29,6 +30,9 @@ public class ObstacleFactory {
 
   private static final AsteroidConfig asteroidConfig =
           FileLoader.readClass(AsteroidConfig.class, "configs/asteroid.json");
+  private static final BrickConfig brickConfig =
+          FileLoader.readClass(BrickConfig.class, "configs/brick.json");
+
   private static final MinigameConfigs minigameConfigs =
           FileLoader.readClass(MinigameConfigs.class, "configs/minigame.json");
   private static final TurretConfigs turretconfigs =
@@ -89,6 +93,7 @@ public class ObstacleFactory {
   public static Entity createEnvironment(float sizeX, float sizeY, float posX, float posY) {
     Entity environment =
             new Entity().addComponent(new PhysicsComponent())
+                    .addComponent(new HitboxComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
     environment.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
@@ -176,6 +181,15 @@ public class ObstacleFactory {
     return asteroid;
   }
 
+  public static Entity createStaticBrick(BrickConfig config) {
+    Entity asteroid = new Entity()
+            .addComponent(new TextureRenderComponent(config.spritePath))
+            .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+    asteroid.setScale(config.scale);
+    return asteroid;
+  }
+
   public static Entity createBorder(float width, float height) {
     Entity asteroid = new Entity()
             .addComponent(new TextureRenderComponent("images/structure-icons/stone_wall.png"))
@@ -187,6 +201,10 @@ public class ObstacleFactory {
   public static Entity createStaticAsteroid(float width, float height) {
     asteroidConfig.scale = new Vector2(width, height);
     return createStaticAsteroid(asteroidConfig);
+  }
+  public static Entity createStaticBrick(float width, float height) {
+    asteroidConfig.scale = new Vector2(width, height);
+    return createStaticBrick(brickConfig);
   }
 
   /**

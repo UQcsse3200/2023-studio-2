@@ -1,12 +1,10 @@
 package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.structures.CostComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -15,12 +13,24 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public abstract class ReplacementTool extends PlacementTool {
 
+    private final boolean mustReplace;
+
     /**
      * Creates a new tool which allows the placing of structures with the given cost.
      * @param cost - the cost of the entity being placed.
      */
     protected ReplacementTool(ObjectMap<String, Integer> cost) {
+        this(cost, false);
+    }
+
+    /**
+     * Creates a new tool which allows the placing of structures with the given cost.
+     * @param cost - the cost of the entity being placed.
+     */
+    protected ReplacementTool(ObjectMap<String, Integer> cost, boolean mustPlace) {
+
         super(cost);
+        this.mustReplace = mustPlace;
     }
 
     /**
@@ -32,25 +42,22 @@ public abstract class ReplacementTool extends PlacementTool {
      * @return whether the structure was successfully placed.
      */
     @Override
-    public boolean interact(Entity player, GridPoint2 position) {
+    public void performInteraction(Entity player, GridPoint2 position) {
         PlaceableEntity newStructure = createStructure(player);
-
-        if (!isPositionValid(position, newStructure)) {
-            player.getEvents().trigger("displayWarningAtPosition", "Invalid position",
-                    new Vector2((float) position.x / 2, (float) position.y / 2));
-            return false;
-        }
-
-        if (!hasEnoughResources()) {
-            player.getEvents().trigger("displayWarningAtPosition", "Insufficient resources",
-                    new Vector2((float) position.x / 2, (float) position.y / 2));
-            return false;
-        }
         newStructure.addComponent(new CostComponent(cost));
 
-        ServiceLocator.getStructurePlacementService().replaceStructureAt(newStructure, position, false, false);
+        // get the left-most and bottom-most position of the structure to replace
+        var existingStructure = structurePlacementService.getStructureAt(position);
 
-        return true;
+        if (existingStructure != null) {
+            var placePosition = structurePlacementService.getStructurePosition(existingStructure);
+
+            ServiceLocator.getStructurePlacementService().replaceStructureAt(newStructure, placePosition,
+                    false, false);
+        } else if (!mustReplace) {
+            ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position,
+                    false, false);
+        }
     }
 
     /**
@@ -68,30 +75,16 @@ public abstract class ReplacementTool extends PlacementTool {
      * @param position - the position the structure is trying to be placed at.
      * @return whether the structure can be placed at the given position.
      */
-    public boolean isPositionValid(GridPoint2 position, PlaceableEntity structure) {
-        return ServiceLocator.getStructurePlacementService().canPlaceStructureAt(structure, position);
-    }
-
-    /**
-     * Checks whether the player has sufficient resources to place the structure.
-     *
-     * @return whether the player has sufficient resources to place the structure.
-     */
-    public boolean hasEnoughResources() {
-        GameStateObserver stateObserver = ServiceLocator.getGameStateObserverService();
-
-        for (var resourceCost : cost.entries()) {
-            var availableResources = stateObserver.getStateData("resource/" + resourceCost.key);
-
-            if (!(availableResources instanceof Integer)) {
-                return false;
-            }
-
-            if ((int)availableResources < resourceCost.value) {
-                return false;
-            }
+    @Override
+    public ToolResponse isPositionValid(GridPoint2 position) {
+        if (!mustReplace) {
+            return ToolResponse.valid();
         }
 
-        return true;
+        // can only place if clicked on a structure
+        var existingStructure = structurePlacementService.getStructureAt(position);
+
+        return existingStructure != null ? ToolResponse.valid()
+                : new ToolResponse(PlacementValidity.INVALID_POSITION, "No structure to replace");
     }
 }

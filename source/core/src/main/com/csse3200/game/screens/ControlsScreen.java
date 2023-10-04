@@ -1,6 +1,5 @@
 package com.csse3200.game.screens;
 
-
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
@@ -19,14 +18,22 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * A screen representing the controls screen of the game.
+ */
 public class ControlsScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(StoryScreen.class);
     private final GdxGame game;
     public Renderer renderer;
     private static final String[] storyTextures = {
-            "images/Controls.png"
+            "images/controls-images/Controls.png"
     };
 
+    /**
+     * Constructs a new ControlsScreen.
+     *
+     * @param game The GdxGame instance.
+     */
     public ControlsScreen(GdxGame game) {
         this.game = game;
 
@@ -39,7 +46,6 @@ public class ControlsScreen extends ScreenAdapter {
 
         loadAssets();
         createUI();
-
     }
 
     @Override
@@ -56,7 +62,6 @@ public class ControlsScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-
         renderer.dispose();
         unloadAssets();
 
@@ -67,6 +72,9 @@ public class ControlsScreen extends ScreenAdapter {
         ServiceLocator.clear();
     }
 
+    /**
+     * Load game assets, particularly the textures needed for the controls screen.
+     */
     public void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -74,12 +82,18 @@ public class ControlsScreen extends ScreenAdapter {
         ServiceLocator.getResourceService().loadAll();
     }
 
+    /**
+     * Unload assets that are no longer needed, particularly the textures of the controls screen.
+     */
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(storyTextures);
     }
 
+    /**
+     * Create the user interface (UI) elements for the controls screen.
+     */
     private void createUI() {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();
@@ -90,7 +104,6 @@ public class ControlsScreen extends ScreenAdapter {
         ui.addComponent(new ControlsScreenDisplay())
                 .addComponent(new InputDecorator(stage, 10))
                 .addComponent(new ControlsScreenActions(game));
-        ;
         ServiceLocator.getEntityService().register(ui);
     }
 }

@@ -119,11 +119,10 @@ public class PowerupComponent extends Component {
                         enemy = enemies.get(nextInt);
                     }
                     enemies.remove(nextInt);
-                    for (Entity enemytarget : enemies) {
-                        if ((enemy != null) && (enemy != enemytarget)) {
+                    for (Entity enemyTarget : enemies) {
+                        if (enemy != enemyTarget) {
                             EnemyFactory.targetSet(
-                                    enemytarget,
-                                    enemy.getComponent(HitboxComponent.class).getLayer(),
+                                    enemyTarget,
                                     enemy.getComponent(AITaskComponent.class));
                         }
                     }

@@ -5,14 +5,23 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
+/**
+ * The AstroAnimationController manages the animation of an astronaut NPC in the game.
+ * It loads the required assets, updates the animation, and controls its speed and direction.
+ */
 public class AstroAnimationController extends Component {
     private final AssetManager assetManager;
     private AnimationRenderComponent animator;
     private TextureAtlas atlas;
 
-    private float animationTimer = 0f;
-    private float animationDuration = 10f; // Adjust this to control animation speed.
+    float animationTimer = 0f;
+    float animationDuration = 10f; // Adjust this to control animation speed.
 
+    /**
+     * Creates a new AstroAnimationController with an AssetManager for managing assets.
+     *
+     * @param assetManager The AssetManager used to load and manage game assets.
+     */
     public AstroAnimationController(AssetManager assetManager) {
         this.assetManager = assetManager;
     }

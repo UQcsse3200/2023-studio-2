@@ -41,6 +41,7 @@ public class AnimationRenderComponent extends RenderComponent {
   private Animation<TextureRegion> currentAnimation;
   private String currentAnimationName;
   private float animationPlayTime;
+  private float rotation = 0.0f;
 
   /**
    * Create the component for a given texture atlas.
@@ -180,6 +181,13 @@ public class AnimationRenderComponent extends RenderComponent {
     return animation.getAnimationDuration();
   }
 
+  public void setRotation(float rotation) {
+    this.rotation = rotation;
+  }
+  public float getRotation() {
+    return rotation;
+  }
+
   @Override
   protected void draw(SpriteBatch batch) {
     if (currentAnimation == null) {
@@ -189,8 +197,7 @@ public class AnimationRenderComponent extends RenderComponent {
     Vector2 pos = entity.getPosition();
     Vector2 scale = entity.getScale();
     //Why can't I change this?? ;(  todo: daniel plz
-    // batch.draw(region, pos.x, pos.y, scale.x/2, scale.y/2, scale.x, scale.y, 1, 1, entity.getRotation());
-    batch.draw(region, pos.x, pos.y, scale.x, scale.y);
+    batch.draw(region, pos.x, pos.y, scale.x/2, scale.y/2, scale.x, scale.y, 1, 1, rotation);
     animationPlayTime += timeSource.getDeltaTime();
   }
 /*Added java doc to Companion stats display , spawn companion in forest game area, (spawn companion ,spawn laboratotory,spawn potion) in earth game area,keyboard companion input component,Companion Action,Companion Animation Controller,CompanionInteractionControllerComponent,

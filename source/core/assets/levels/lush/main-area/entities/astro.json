@@ -1,12 +1,12 @@
 {
-  "entityType": "AstroConfig",
+  "entityType": "AstronautConfig",
   "entities": [
     {
-      class: com.csse3200.game.entities.configs.AstroConfig,
-      "spritePath": "images/astronaut_npc.atlas",
+      class: com.csse3200.game.entities.configs.AstronautConfig,
+      "spritePath": "images/npc/astronaut_npc.atlas",
       "position" : {
-        "x": 24,
-        "y": 50
+        "x": 13,
+        "y": 40
       }
     }
   ]

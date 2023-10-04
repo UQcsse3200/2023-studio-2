@@ -184,7 +184,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/astronaut_npc.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/npc/astronaut_npc.atlas", TextureAtlas.class));
     animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);

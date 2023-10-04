@@ -29,9 +29,6 @@ public class AstronautAnimationController extends Component {
 
         // Initialize your animator and load the atlas.
         animator = entity.getComponent(AnimationRenderComponent.class);
-        assetManager.load("images/astronaut_npc.atlas", TextureAtlas.class);
-        assetManager.finishLoading();
-        atlas = assetManager.get("images/astronaut_npc.atlas");
 
         // Start with the default animation.
         animator.startAnimation("row-1-column-1");

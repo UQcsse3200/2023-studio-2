@@ -54,13 +54,13 @@
     "images/player/hearts.png",
     "images/space_navigation_planet_1.png",
     "images/planets/space_navigation_planet_1.png",
-    "images/npc/Astro_NPC.png",
     "map/treetoplush.png",
     "images/action-feedback/warning.png",
     "images/action-feedback/white_color_texture.png",
     "particle-effects/explosion/particle.png",
     "particle-effects/durasteel/durasteel_pixel.png",
-    "images/resources/Cracked_Ground.png"
+    "images/resources/Cracked_Ground.png",
+    "images/npc/astronaut_npc.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -80,7 +80,8 @@
     "images/botanist.atlas",
     "images/companion/Companion_spritesheet.atlas",
     "images/npc/Astro_NPC.atlas",
-    "images/structures/ExtractorAnimation.atlas"
+    "images/structures/ExtractorAnimation.atlas",
+    "images/npc/astronaut_npc.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav",

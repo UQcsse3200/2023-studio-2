@@ -53,7 +53,8 @@ public class ExitShopDisplay extends UIComponent {
         TextButton resume = new TextButton("Resume", skin);
         TextButton minigame = new TextButton("Back to minigame", skin);
         miniFrame.add(mainMenu).pad(10f).row();
-        miniFrame.add(resume);
+        miniFrame.add(resume).pad(10f).row();
+        miniFrame.add(minigame);
         // Triggers an event when the button is pressed.
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         Color color = new Color(1f, 1f, 1f, 0.4f); // white with 30% opacity
@@ -85,7 +86,15 @@ public class ExitShopDisplay extends UIComponent {
                 miniFrame.setVisible(false); // Hide the mini-frame when Current Game button is clicked
             }
         });
-
+        minigame.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Back to minigame button clicked");
+                        entity.getEvents().trigger("exit");
+                    }
+                }
+        );
         table.add(back).padTop(10f).padRight(10f);
         stage.addActor(miniFrame);
         stage.addActor(table);

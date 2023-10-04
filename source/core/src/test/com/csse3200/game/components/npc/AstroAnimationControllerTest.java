@@ -13,6 +13,9 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link AstroAnimationController} class.
+ */
 class AstroAnimationControllerTest {
 
     @Mock
@@ -40,6 +43,9 @@ class AstroAnimationControllerTest {
 
     }
 
+    /**
+     * Test the {@link AstroAnimationController#create()} method.
+     */
     @Test
     void testCreate() {
         controller.create();
@@ -49,6 +55,9 @@ class AstroAnimationControllerTest {
         verify(assetManager).finishLoading();
     }
 
+    /**
+     * Test the {@link AstroAnimationController#update()} method.
+     */
     @Test
     void testUpdate() {
         controller.animationDuration= 10f ;

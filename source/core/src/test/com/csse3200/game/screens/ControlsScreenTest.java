@@ -7,16 +7,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.screens.ControlsScreen;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Unit tests for the {@link ControlsScreen} class.
+ */
 public class ControlsScreenTest {
 
     private Set<String> loadedAssets;
@@ -36,6 +39,9 @@ public class ControlsScreenTest {
         loadedAssets = new HashSet<>();
     }
 
+    /**
+     * Test asset loading in {@link ControlsScreen}.
+     */
     @Test
     void testControlsScreenAssetLoading() {
         Gdx.app.postRunnable(() -> {

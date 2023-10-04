@@ -15,6 +15,9 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link JailAnimationController} class.
+ */
 class JailAnimationControllerTest {
 
     @Mock
@@ -38,9 +41,12 @@ class JailAnimationControllerTest {
 
         controller.entity = mock(Entity.class);
 
-         when(controller.entity.getComponent(AnimationRenderComponent.class)).thenReturn(animator);
+        when(controller.entity.getComponent(AnimationRenderComponent.class)).thenReturn(animator);
     }
 
+    /**
+     * Test the {@link JailAnimationController#create()} method.
+     */
     @Test
     void testCreate() {
         controller.create();
@@ -50,6 +56,9 @@ class JailAnimationControllerTest {
         verify(assetManager).finishLoading();
     }
 
+    /**
+     * Test the {@link JailAnimationController#update()} method.
+     */
     @Test
     void testUpdate() {
         controller.animationDuration= 10f;

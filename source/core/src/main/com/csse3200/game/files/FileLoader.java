@@ -26,7 +26,7 @@ public class FileLoader {
    * @return instance of class, may be null
    */
   public static <T> T readClass(Class<T> type, String filename) {
-    return readClass(type, filename, Location.INTERNAL);
+    return readClass(type, filename, Location.LOCAL);
   }
 
   /**

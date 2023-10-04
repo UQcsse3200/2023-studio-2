@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 
+import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.events.EventHandler;
 
 import java.util.Map;
@@ -63,4 +64,6 @@ public class GameStateObserver extends EventHandler {
     public Object getStateData(String key) {
         return stateInteraction.get(key);
     }
+
+
 }

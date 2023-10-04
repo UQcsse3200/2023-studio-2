@@ -286,4 +286,6 @@ public class CombatStatsComponent extends Component {
     newHealth = getHealth() - attacker.getAttack();
     setHealth(newHealth);
   }
+
+
 }

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public class FollowComponent extends Component{
     private final Entity followEntity;
     private float followSpeed;
-    private float minimumDistance = 0.6f;
+    private float minimumDistance = 0.8f;
 
     private static Logger logger; // how to log print
 
@@ -48,13 +48,10 @@ public class FollowComponent extends Component{
      *
      */
     public void update() {
-        //If you are currently moving, don't start the timer to attract the companion
-        if (entity.getComponent(CompanionActions.class).isCompanionBeingMoved()) {
-            // do nothing
-        } else {
+
             // move companion towards following entity
             moveEntityTowardFollowingEntity();
-        }
+
 
     }
 

@@ -127,6 +127,8 @@ public class GdxGame extends Game {
         return new ControlsScreen(this);
       case INITIALL_SCREEN:
         return new InitialScreen(this);
+      case BRICK_BREAKER_SCREEN:
+        return new BrickBreakerScreen(this);
       default:
         return null;
     }
@@ -134,7 +136,7 @@ public class GdxGame extends Game {
 
   public enum ScreenType {
     MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME,
-    GAME_STORY, PLAYER_DEATH,COMPANION_DEATH, NAVIGATION_SCREEN ,INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIALL_SCREEN,
+    GAME_STORY, PLAYER_DEATH,COMPANION_DEATH, NAVIGATION_SCREEN ,INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIALL_SCREEN, BRICK_BREAKER_SCREEN,
     PLAYER_DEATH_0, PLAYER_DEATH_1, PLAYER_DEATH_2, PLAYER_DEATH_3
   }
   /**

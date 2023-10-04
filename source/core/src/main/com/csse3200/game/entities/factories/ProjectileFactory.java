@@ -96,7 +96,7 @@ public class ProjectileFactory {
                         .addComponent(new PhysicsComponent())
                         .addComponent(movementComponent)
                         .addComponent(new ColliderComponent())
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ENEMY_PROJECTILE))
                         .addComponent(new ProjectileAttackComponent((short) (
                                 PhysicsLayer.PLAYER |
                                 PhysicsLayer.WALL |

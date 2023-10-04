@@ -86,7 +86,9 @@ public class DeathComponent extends Component {
                         powerup = PowerupFactory.createDoubleCrossPowerup();
                     }
                     // 5/14 chance of no powerup dropped
-                    ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody);
+                    if (powerup != null) {
+                        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody);
+                    }
                 }
             }, delay); // Delay based on the death animation duration
 

@@ -1,6 +1,14 @@
 package com.csse3200.game.components.tasks;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.csse3200.game.ai.tasks.AITaskComponent;
+import com.csse3200.game.areas.GameArea;
+import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.components.DeathComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.listeners.EventListener0;
 import com.csse3200.game.extensions.GameExtension;
@@ -15,6 +23,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -23,9 +33,17 @@ import static org.mockito.Mockito.*;
 class ChaseTaskTest {
   @BeforeEach
   void beforeEach() {
-    // Mock rendering, physics, game time
+    // Mock rendering, physics, game time, game area
     RenderService renderService = new RenderService();
-    renderService.setDebug(mock(DebugRenderer.class));
+    TerrainComponent testTerrain = makeComponent();
+    GameArea gameArea = new GameArea() {
+      @Override
+      public void create() {
+        terrain = testTerrain;
+      }
+    };
+    gameArea.create();
+    ServiceLocator.registerGameArea(gameArea);
     ServiceLocator.registerRenderService(renderService);
     GameTime gameTime = mock(GameTime.class);
     when(gameTime.getDeltaTime()).thenReturn(20f / 1000);
@@ -51,7 +69,13 @@ class ChaseTaskTest {
       ServiceLocator.getPhysicsService().getPhysics().update();
     }
     float newDistance = entity.getPosition().dst(target.getPosition());
-    assertTrue(newDistance < initialDistance);
+
+    DeathComponent deathComponent = entity.getComponent(DeathComponent.class);
+    if (entity != null && deathComponent != null && deathComponent.getIsDying()) {
+      assertTrue(newDistance == initialDistance);
+    } else {
+      assertTrue(newDistance < initialDistance);
+    }
   }
 
   @Test
@@ -134,10 +158,10 @@ class ChaseTaskTest {
   @Test
   void shouldTriggerCorrectAnimation2(){
     Entity target = new Entity();
-    target.setPosition(-3f, 0f);
+    target.setPosition(0f, 0f);
     Entity entity = makePhysicsEntity();
     entity.create();
-    entity.setPosition(0f, 0f);
+    entity.setPosition(3f, 0f);
     ChaseTask chaseTask = new ChaseTask(target, 10, 5, 10, 2f);
     chaseTask.create(() -> entity);
 
@@ -150,5 +174,29 @@ class ChaseTaskTest {
     return new Entity()
         .addComponent(new PhysicsComponent())
         .addComponent(new PhysicsMovementComponent());
+  }
+
+  private static TerrainComponent makeComponent() {
+    OrthographicCamera camera = mock(OrthographicCamera.class);
+    String mapPath = "map/base.tmx";
+    TmxMapLoader mapLoader = new TmxMapLoader();
+
+    TiledMap tiledMap = null;
+    for (String origin :
+            new String[]{"source/core/assets/", "core/assets/", "./"}) {
+      File file = Gdx.files.internal(origin + mapPath).file();
+      if (file.exists()) {
+        tiledMap = mapLoader.load(file.getAbsolutePath());
+        break;
+      }
+    }
+
+    if (tiledMap == null) {
+      throw new RuntimeException("Error loading TileMap" + mapPath);
+    }
+
+    TiledMapRenderer renderer = mock(TiledMapRenderer.class);
+
+    return new TerrainComponent(camera, tiledMap, renderer, TerrainComponent.TerrainOrientation.ORTHOGONAL, 0.5f);
   }
 }

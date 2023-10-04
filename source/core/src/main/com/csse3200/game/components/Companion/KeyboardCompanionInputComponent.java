@@ -4,16 +4,22 @@
  */
 package com.csse3200.game.components.Companion;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
 import com.csse3200.game.components.player.InteractionControllerComponent;
+import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
+
+import java.util.HashMap;
 
 /**
  * The KeyboardCompanionInputComponent class handles keyboard input for controlling a companion character.
@@ -21,15 +27,86 @@ import com.csse3200.game.utils.math.Vector2Utils;
 public class KeyboardCompanionInputComponent extends InputComponent implements InputProcessor {
 
     AnimationRenderComponent animator;
+    private static final String CHANGEWEAPON = "changeWeapon";
     private final Vector2 walkDirection = Vector2.Zero.cpy();
     private int flagW = 0;
     private int flagA = 0;
     private int flagS = 0;
     private int flagD = 0;
-
-    private final CompanionStatsDisplay companionStatsDisplay = new CompanionStatsDisplay();
-
+    private Entity Companion;
+    private CompanionInventoryComponent CompanionInventory;
     private int testing = 0;
+
+    static HashMap<Integer, Integer> keyFlags = new HashMap<>();
+    Vector2 lastMousePos = new Vector2(0, 0);
+
+    public Vector2 getLastMousePos() {
+        return this.lastMousePos.cpy();
+    }
+
+
+//    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+//        Vector2 position = mouseToGamePos(screenX, screenY);
+//        this.lastMousePos = position.cpy();
+//       Companion = ServiceLocator.getEntityService().getCompanion();
+//       CompanionInventory = Companion.getComponent(CompanionInventoryComponent.class);
+//        CompanionWeaponComponent weaponComponent = entity.getComponent(CompanionWeaponComponent.class);
+//        int cooldown = CompanionInventory.getEquippedCooldown();
+//        if (cooldown > 0) {
+//            return false;
+//        }
+//
+//        switch (CompanionInventory.getEquipped()) {
+//
+//
+//            case "ranged" :
+//                System.out.println(CompanionInventory.GetCurrentAmmo());
+//                if (CompanionInventory.GetCurrentAmmo() <= 0) {return false;}
+//
+//                if (button == Input.Buttons.LEFT) {
+//                    CompanionInventoryComponent invComp = entity.getComponent(CompanionInventoryComponent.class);
+//                    CompanionWeaponType weapon = invComp.getEquippedType();
+//
+//                    if (weapon == CompanionWeaponType.Death_Potion) {
+//                        for (int i = 0; i < 7; i++)
+//                            ServiceLocator.getEntityService().getCompanion().getEvents().trigger("weaponAttack", weapon, position);
+//                    }
+//                    ServiceLocator.getEntityService().getCompanion().getEvents().trigger("weaponAttack", weapon, position);
+//                }
+//                break;
+//            default:
+//                return false;
+//        }
+//        return true;
+//    }
+
+
+//    public boolean touchDragged(int screenX, int screenY, int pointer) {
+//        Vector2 position = mouseToGamePos(screenX, screenY);
+//        this.lastMousePos = position.cpy();
+//        return false;
+//    }
+
+    /**
+     * Update location of known mouse position
+     * @param screenX, screenY Location of mouse press
+     * @return - false
+     */
+
+//    public boolean mouseMoved(int screenX, int screenY) {
+//        Vector2 position = mouseToGamePos(screenX, screenY);
+//        this.lastMousePos = position.cpy();
+//        return false;
+//    }
+
+//    private Vector2 mouseToGamePos(int screenX, int screenY) {
+//        Vector2 entityScale = entity.getScale();
+//        Vector2 mouse = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
+//        return new Vector2(mouse.x / 2 - entityScale.x / 2, (mouse.y) / 2 - entityScale.y / 2);
+//    }
+
+
+
 
     /**
      * Returns the value for testing.
@@ -117,14 +194,16 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                 }else {logger.debug("powerup cooldown");}
                 return true;
             }
-/*
 
-            case Keys.H -> {
-                companionStatsDisplay.toggleInfiniteHealth();
-                companionStatsDisplay.toggleInvincibility();
+            case Keys.B -> {
+                entity.getEvents().trigger("CompanionSwitchMode");
                 return true;
             }
-*/
+
+            case Keys.P -> {
+                triggerInventoryEvent("ranged");
+                return true;
+            }
 
             case Keys.I -> {
                 flagW = 1;
@@ -266,11 +345,11 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
      * If the walk direction is zero, it triggers the walkStop event.
      */
     private void triggerWalkEvent() {;
-        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/companionwalksound.wav", Sound.class);
+        //Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/companionwalksound.wav", Sound.class);
         if (this.getTesting() == 0) {
             if (walkDirection.epsilonEquals(Vector2.Zero)) {
                 entity.getEvents().trigger("walkStop");
-                attackSound.stop();
+                //attackSound.stop();
             } else {
                 if (walkDirection.epsilonEquals(Vector2Utils.UP_LEFT)) {
                     entity.getEvents().trigger("walkUpLeft");
@@ -290,10 +369,18 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                     entity.getEvents().trigger("walkRight");
                 }
                 entity.getEvents().trigger("walk", walkDirection);
-                attackSound.play();
+                //attackSound.play();
 
             }
         }
+    }
+
+    private void triggerInventoryEvent(String slot) {
+        CompanionInventoryComponent invComp = ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class);
+        invComp.setEquipped(slot);
+
+        ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
+
     }
 
     /**

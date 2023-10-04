@@ -1,6 +1,7 @@
 {
   "RANGED_SLINGSHOT": {
     "name" : "Slingshot",
+    "health" : 1,
     "description": "Reliable range, decent damage. Ideal for distant targets.",
     "damage" : 50,
     "weaponSpeed": 10,
@@ -19,6 +20,7 @@
 
   "RANGED_BOOMERANG": {
     "name" : "Boomerang",
+    "health" : 1,
     "description": "Capable of hitting multiple enemies at once, a versatile choice.",
     "damage" : 25,
     "weaponSpeed": 4,
@@ -36,6 +38,7 @@
 
   "RANGED_BLUEMERANG": {
     "name" : "Bluemerang",
+    "health" : 1,
     "description": "its blue!",
     "damage" : 25,
     "weaponSpeed": 6,
@@ -54,6 +57,7 @@
 
   "RANGED_MISSILES": {
     "name" : "Missile Swarm",
+    "health" : 1,
     "description": "Spray a rocket array and watch your enemies pray",
     "damage" : 40,
     "weaponSpeed": 5,
@@ -70,8 +74,27 @@
     "sound": {"soundsMap": {}}
   },
 
+  "RANGED_GRENADE": {
+    "name" : "Grenade",
+    "health" : 1000,
+    "description": "Boom boom!",
+    "damage" : 0,
+    "weaponSpeed": 4,
+    "weaponDuration": 120,
+    "rotationSpeed": 1,
+    "textureAtlas": "images/weapons/grenade.atlas",
+    "imageScale" : 0.5,
+    "animationType" : 1,
+    "imagePath" : "images/explosives/grenade.png",
+    "type" : "RANGED_GRENADE",
+    "slotType" : "ranged",
+
+    "sound": {"soundsMap": {}}
+  },
+
   "RANGED_HOMING": {
     "name" : "Friendly Missile",
+    "health" : 1,
     "description": "No need to aim perfectly! It finds its way by following warmth. Just launch and watch it make new friends!",
     "damage" : 100,
     "weaponSpeed": 5,

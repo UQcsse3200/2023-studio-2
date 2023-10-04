@@ -10,6 +10,7 @@ public class WeaponConfigs {
     public WeaponConfig MELEE_KATANA = new WeaponConfig();
     public WeaponConfig MELEE_BEE_STING = new WeaponConfig();
     public WeaponConfig RANGED_SLINGSHOT = new WeaponConfig();
+    public WeaponConfig RANGED_GRENADE = new WeaponConfig();
     public WeaponConfig RANGED_BOOMERANG = new WeaponConfig();
     public WeaponConfig RANGED_BLUEMERANG = new WeaponConfig();
     public WeaponConfig RANGED_HOMING = new WeaponConfig();
@@ -26,6 +27,7 @@ public class WeaponConfigs {
             case MELEE_BEE_STING -> MELEE_BEE_STING;
             case RANGED_SLINGSHOT -> RANGED_SLINGSHOT;
             case RANGED_BOOMERANG -> RANGED_BOOMERANG;
+            case RANGED_GRENADE -> RANGED_GRENADE;
             case RANGED_BLUEMERANG -> RANGED_BLUEMERANG;
             case RANGED_HOMING -> RANGED_HOMING;
             case RANGED_MISSILES -> RANGED_MISSILES;

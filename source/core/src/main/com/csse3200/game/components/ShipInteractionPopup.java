@@ -14,8 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
+
+import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 public class ShipInteractionPopup extends Window {
     private final InputOverrideComponent inputOverrideComponent;
@@ -32,24 +35,24 @@ public class ShipInteractionPopup extends Window {
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
 
-        Label titleLabel = new Label("ship", labelStyle);
+        Label titleLabel = new Label("Welcome!!", labelStyle);
         titleLabel.setColor(Color.RED);
         add(titleLabel).padTop(20).center().top().expandX();
         row();
 
-        Label descriptionLabel = new Label("The ship is not ready yet for takeoff", labelStyle);
+        Label descriptionLabel = new Label("I am Nova Pilot ,the Space Nav artificial intelligence, created by Astro, now entrusted to guide you through the cosmos. My purpose is to assist you with any inquiries, provide navigational assistance, and meet your mission-related needs.", labelStyle);
         descriptionLabel.setWidth(popupWidth * 0.9f);  // Using 90% of the popup width
         descriptionLabel.setWrap(true); //helps the text to stay within the bounds of the popup
         add(descriptionLabel).width(popupWidth * 0.9f).padTop(20).padLeft(popupWidth * 0.05f).expand().fill();
 
-        TextButton okButton = new TextButton("OK", skin);
+        TextButton okButton = new TextButton("Start Journey", skin);
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ShipInteractionPopup.this.remove(); // Remove the popup from the stage
+                game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
             }
         });
-        okButton.setSize(100, 50);
+        okButton.setSize(150, 50);
         okButton.setPosition((getWidth() - okButton.getWidth()) / 2, 20);
         this.addActor(okButton);
 

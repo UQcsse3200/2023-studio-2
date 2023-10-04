@@ -10,6 +10,7 @@ public class PhysicsLayer {
   public static final short DISPLAY_ONLY = (1 << 11);
   public static final short ITEMS_ABOVE_PLATFORM = (1 << 12);
   public static final short SHIP = (1<<1);
+  public static final short SLIDER = (1<<1);
   public static final short LABORATORY = (1<<5);
 
   // Terrain obstacle, e.g. trees
@@ -21,6 +22,8 @@ public class PhysicsLayer {
   // NPC enemy colliders
   public static final short ENEMY_RANGE = (1 << 6);
   public static final short ENEMY_MELEE = (1 << 8);
+
+  public static final short ENEMY_PROJECTILE = (1 << 9);
   public static final short STRUCTURE = (1 << 5);
   public static final short WALL = (1 << 4);
   public static final short TURRET = (1<<4);

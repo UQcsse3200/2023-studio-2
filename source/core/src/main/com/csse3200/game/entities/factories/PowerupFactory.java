@@ -119,6 +119,11 @@ public class PowerupFactory {
      *
      * @return Entity representing a snap power-up.
      */
-    public static Entity createSnapPowerup() { return createPowerup(configs.snapPowerup);}
-    public static Entity createDeathPotion(){return createPowerup(configs.death_potion);}
+    public static Entity createSnapPowerup() {
+        return createPowerup(configs.snapPowerup);
+    }
+
+    public static Entity createDeathPotion() {
+        return createPowerup(configs.death_potion);
+    }
 }

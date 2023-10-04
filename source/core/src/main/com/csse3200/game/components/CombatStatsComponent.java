@@ -239,16 +239,25 @@ public class CombatStatsComponent extends Component {
    * @param lives the number of lives to set
    */
   public void setLives(int lives) {
-    this.lives = lives;
-    entity.getEvents().trigger("updateLives", getLives());
+    if (lives >= 0) {
+      this.lives = lives;
+      entity.getEvents().trigger("updateLives", getLives());
+    } else {
+      this.lives = 0;
+      logger.error("Cannot set lives below zero! Lives set to zero");
+    }
   }
 
   /**
    * Subtracts one life from player lives.
    */
   public void minusLife() {
-    this.lives -= 1;
-    entity.getEvents().trigger("updateLives", this.lives);
+    if (this.lives > 0) {
+      this.lives -= 1;
+      entity.getEvents().trigger("updateLives", this.lives);
+    } else {
+      logger.error("Cannot minus a life when lives are zero!");
+    }
   }
 
   /**

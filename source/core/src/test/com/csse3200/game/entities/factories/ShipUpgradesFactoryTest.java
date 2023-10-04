@@ -39,7 +39,7 @@ public class ShipUpgradesFactoryTest {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ResourceService resourceService = new ResourceService();
         ServiceLocator.registerResourceService(resourceService);
-        String[] shipUpgradesTextures = {"images/ship/Ship.png"};
+        String[] shipUpgradesTextures = {"images/powerups/health_potion.png"};
         resourceService.loadTextures(shipUpgradesTextures);
         resourceService.loadAll();
     }

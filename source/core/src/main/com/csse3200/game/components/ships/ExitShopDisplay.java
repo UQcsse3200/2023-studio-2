@@ -51,6 +51,7 @@ public class ExitShopDisplay extends UIComponent {
         miniFrame.setVisible(false);
         TextButton mainMenu = new TextButton("Main menu", skin);
         TextButton resume = new TextButton("Resume", skin);
+        TextButton minigame = new TextButton("Back to minigame", skin);
         miniFrame.add(mainMenu).pad(10f).row();
         miniFrame.add(resume);
         // Triggers an event when the button is pressed.

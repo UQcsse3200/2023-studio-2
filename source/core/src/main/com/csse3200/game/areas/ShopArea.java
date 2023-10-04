@@ -64,6 +64,8 @@ public class ShopArea extends GameArea {
 
         Entity shipUpgrade = ShipUpgradesFactory.createHealthUpgrade();
         spawnEntityAt(shipUpgrade, new GridPoint2(8, 12), true, true);
+        Entity speedUpgrade = ShipUpgradesFactory.createFuelUpgrade();
+        spawnEntityAt(speedUpgrade, new GridPoint2(7, 9), true, true);
     }
 
     /**

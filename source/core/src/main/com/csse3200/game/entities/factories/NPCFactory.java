@@ -177,6 +177,64 @@ public class NPCFactory {
     animator.startAnimation("Astro_Down");
     return Astro;
   }
+
+  public static Entity createTutnpc() {
+
+//    AITaskComponent aiComponent = new AITaskComponent();
+//    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/npc/Tutnpc.atlas", TextureAtlas.class));
+    animator.addAnimation("row-2-column-1", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-1", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-1", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-2", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-2", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-2", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-3", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-3", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-3", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-4", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-4", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-4", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-5", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-5", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-5", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-6", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-6", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-6", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-7", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-7", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-7", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-8", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-8", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-8", 0.2f, Animation.PlayMode.LOOP);
+
+
+    Entity Tutnpc =
+            new Entity()
+                    .addComponent(animator)
+                    .addComponent(new TutnpcAnimationController(new AssetManager()))
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
+                    .addComponent(new DialogComponent(dialogueBox))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new InteractionControllerComponent(true))
+                    .addComponent(new PhysicsMovementComponent());
+//                    .addComponent(aiComponent);
+
+    Tutnpc.getComponent(ColliderComponent.class).setDensity(1.5f);
+    Tutnpc.scaleHeight(0.7f);
+    String[] storytext = {"I am your Tutorial Guide", "I am here to guide you through"};
+    String[] titletext = {"", ""};
+    Tutnpc.addComponent(new InteractableComponent(entity -> {
+
+      Tutnpc.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+    }, 3f));
+    animator.startAnimation("row-2-column-1");
+    return Tutnpc;
+  }
+
   public static Entity createAstronaut(AstronautConfig astronautConfig) {
 
     AITaskComponent aiComponent = new AITaskComponent();

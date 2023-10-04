@@ -49,7 +49,11 @@ public class TerrainFactory {
     this.orientation = orientation;
   }
 
-  /**
+    public void TerrainFactory() {
+
+    }
+
+    /**
    * Create a terrain of the given type, using the orientation of the factory. This can be extended
    * to add additional game terrains.
    *

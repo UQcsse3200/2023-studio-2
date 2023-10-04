@@ -4,8 +4,13 @@ entities: {
 		{
 			class: com.csse3200.game.entities.configs.CompanionConfig
 			position: {
+<<<<<<< HEAD:source/core/assets/saves/savefile.json
+				x: 22
+				y: 24
+=======
 				x: 13
 				y: 20
+>>>>>>> main:saves/savefile.json
 			}
 			health: 100
 			baseAttack: 5
@@ -17,8 +22,13 @@ entities: {
 			class: com.csse3200.game.entities.configs.PlayerConfig
 			spritePath: images/player/player.atlas
 			position: {
+<<<<<<< HEAD:source/core/assets/saves/savefile.json
+				x: 23
+				y: 25
+=======
 				x: 14
 				y: 20
+>>>>>>> main:saves/savefile.json
 			}
 			health: 100
 			baseAttack: 10

@@ -41,25 +41,30 @@ public class ObstacleFactoryTest {
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerRenderService(new RenderService());
-        ServiceLocator.getResourceService().loadTextures(new String[] {"images/entity/tree.png",
-                "images/structures/TurretOne.png", "images/structures/TurretTwo.png"} );
-        ServiceLocator.getResourceService().loadTextureAtlases(new String[] {} );
+        ServiceLocator.getResourceService().loadTextures(new String[] {"images/structures/turret_one.png", "images/structures/turret_two.png"} );
+        ServiceLocator.getResourceService().loadTextureAtlases(new String[] {"images/structures/turret_one.atlas", "images/structures/turret_two.atlas"} );
         ServiceLocator.getResourceService().loadAll();
 
     }
 
     @Test
     void createLevelOneTurretConfigTest() {
-        PlaceableEntity turret = ObstacleFactory.createCustomTurret(turretconfigs.GetTurretConfig(TurretType.LEVEL_ONE));
-        assertEquals(200, turret.getComponent(CombatStatsComponent.class).getHealth());
-        assertEquals(2, turret.getComponent(CombatStatsComponent.class).getBaseAttack());
+        var config = turretconfigs.GetTurretConfig(TurretType.LEVEL_ONE);
 
+        PlaceableEntity turret = ObstacleFactory.createCustomTurret(config);
+
+        assertEquals(config.health, turret.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(config.damage, turret.getComponent(CombatStatsComponent.class).getBaseAttack());
     }
 
     @Test
     void createLevelTwoTurretConfigTest() {
-        PlaceableEntity turret = ObstacleFactory.createCustomTurret(turretconfigs.GetTurretConfig(TurretType.LEVEL_TWO));
-        assertEquals(500, turret.getComponent(CombatStatsComponent.class).getHealth());
-        assertEquals(5, turret.getComponent(CombatStatsComponent.class).getBaseAttack());
+
+        var config = turretconfigs.GetTurretConfig(TurretType.LEVEL_TWO);
+
+        PlaceableEntity turret = ObstacleFactory.createCustomTurret(config);
+
+        assertEquals(config.health, turret.getComponent(CombatStatsComponent.class).getHealth());
+        assertEquals(config.damage, turret.getComponent(CombatStatsComponent.class).getBaseAttack());
     }
 }

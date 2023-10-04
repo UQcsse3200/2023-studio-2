@@ -1,0 +1,11 @@
+{
+  "entityType": "EnvironmentalDamageConfig",
+  "entities": [
+    {
+      "position": {
+        "x": 30,
+        "y": 40
+      }
+    }
+    ]
+}

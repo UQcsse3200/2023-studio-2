@@ -8,6 +8,8 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static java.lang.Math.abs;
+
 /**
  * Shoots a projectile at a target in game.
  */
@@ -45,7 +47,7 @@ public class ShootTask extends DefaultTask {
      */
     public void fireProjectile(Vector2 position) {
         Vector2 currentPos = owner.getEntity().getPosition();
-        Entity bullet = ProjectileFactory.createEnemyBullet(target.getPosition(), owner.getEntity());
+
         if (currentPos.y < position.y) {
             spawn.y += 1;
         }
@@ -54,6 +56,19 @@ public class ShootTask extends DefaultTask {
         } else {
             spawn.x -= 0.5;
         }
+
+        // Calculate the square where bullet should be fired to
+        Vector2 targetLocation = target.getPosition();
+        float xDifference = spawn.x - targetLocation.x;
+        float yDifference = spawn.y - targetLocation.y;
+        float xDistance = abs(spawn.x - targetLocation.x);
+        float yDistance = abs(spawn.y - targetLocation.y);
+        float gradient = yDistance / xDistance;
+        targetLocation.y += gradient * (yDifference / yDistance);
+        targetLocation.x += 1 * (xDifference / xDistance);
+
+        Entity bullet = ProjectileFactory.createEnemyBullet(targetLocation, owner.getEntity());
+
         ServiceLocator.getStructurePlacementService().spawnEntityAtVector(bullet, spawn);
     }
 

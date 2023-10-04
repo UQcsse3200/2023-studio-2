@@ -29,9 +29,9 @@ public class DialogComponent extends Component {
      * @param title The title of the dialog box.
      * @param text  The text content of the dialog box.
      */
-    public void showdialogue(String title, String text) {
+    public void showdialogue(String[] title, String[] text) {
         dialogueBox = new DialogueBox(title, text, skin);
-        dialogueBox.setDialogueText(text);
+        dialogueBox.setDialogueText(text[0]);
         dialogueBox.showDialog(stage);
     }
 }

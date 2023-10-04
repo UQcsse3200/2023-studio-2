@@ -8,6 +8,7 @@ import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Class to control the movement of weapons that have been spawned
@@ -140,12 +141,14 @@ public abstract class WeaponControllerComponent extends Component {
     /**
      * respawn a weapon when it runs out of duration or health
      */
-    private void despawn() {
+    protected void despawn() {
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
+
         if (animator != null) {
             //entity.getEvents().trigger("playSound", "stop");
             animator.stopAnimation();
         }
+
         Gdx.app.postRunnable(entity::dispose);
     }
 
@@ -156,6 +159,11 @@ public abstract class WeaponControllerComponent extends Component {
      */
     private void setDuration(int duration) {
         this.remainingDuration = duration;
+    }
+
+    /** Returns the current weapons config **/
+    public WeaponConfig getConfig() {
+        return config;
     }
 
     /**

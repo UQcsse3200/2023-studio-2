@@ -54,7 +54,8 @@ public class MainMenuDisplay extends UIComponent {
         table.setFillParent(true);
 
         // Display game title image
-        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/escape-earth2.png", Texture.class));
+//        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/escape-earth2.png", Texture.class));
+        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/Background_Test1.png", Texture.class));
         titleImage.setWidth(Gdx.graphics.getWidth());
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);
@@ -67,7 +68,9 @@ public class MainMenuDisplay extends UIComponent {
         TextButton miniBtn = new TextButton("Space Minigame", skin);
         TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
         TextButton upgradeShip = new TextButton("Upgrade Ship", skin);
+        TextButton tutorialBtn = new TextButton("Tutorial", skin);
         TextButton brickBreakerBtn = new TextButton("brick breaker minigame", skin);
+
         // Attach listeners to buttons
         startBtn.addListener(
                 new ChangeListener() {
@@ -128,6 +131,17 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("upgrade shop");
                     }
                 });
+
+        tutorialBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Tutorial button clicked");
+                        entity.getEvents().trigger("tutorial");
+                    }
+                }
+        );
+
         brickBreakerBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -138,6 +152,7 @@ public class MainMenuDisplay extends UIComponent {
                 });
 
 
+
         // Arrange UI elements in a table layout
         table.add(titleImage);
         table.row();
@@ -146,6 +161,8 @@ public class MainMenuDisplay extends UIComponent {
         table.add(loadBtn).padTop(15f).padLeft(1200f);
         table.row();
         table.add(settingsBtn).padTop(15f).padLeft(1200f);
+        table.row();
+        table.add(tutorialBtn).padTop(15f).padLeft(1200f);
         table.row();
         table.add(miniBtn).padTop(15f).padLeft(1200f);
         table.row();
@@ -159,31 +176,31 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         stage.addActor(titleImage);
 
-        AmendAnimation();
+////        AmendAnimation();
         stage.addActor(transitionFrames);
         stage.addActor(table);
     }
 
-    private void AmendAnimation() {
-        if (frame < MainMenuScreen.MountedFrames) {
-            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
-            transitionFrames.setWidth(Gdx.graphics.getWidth());
-            transitionFrames.setHeight(Gdx.graphics.getHeight());
-            transitionFrames.setPosition(0, 0);
-            frame++;
-            lastFrameTime = System.currentTimeMillis();
-        } else {
-            frame = 1;
-        }
-    }
+//    private void AmendAnimation() {
+//        if (frame < MainMenuScreen.MountedFrames) {
+//            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+//                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
+//            transitionFrames.setWidth(Gdx.graphics.getWidth());
+//            transitionFrames.setHeight(Gdx.graphics.getHeight());
+//            transitionFrames.setPosition(0, 0);
+//            frame++;
+//            lastFrameTime = System.currentTimeMillis();
+//        } else {
+//            frame = 1;
+//        }
+//    }
 
-    @Override
-    public void update() {
-        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
-            AmendAnimation();
-        }
-    }
+//    @Override
+//    public void update() {
+//        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+//            AmendAnimation();
+//        }
+//    }
 
     @Override
     public void draw(SpriteBatch batch) {

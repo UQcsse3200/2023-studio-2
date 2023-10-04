@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.screens.TutorialScreen;
+import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.MainAlert;
@@ -40,7 +42,9 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
     entity.getEvents().addListener("upgrade shop", this::onShop);
+    entity.getEvents().addListener("tutorial", this::onTutorial);
     entity.getEvents().addListener("brick breaker minigame", this::onBrickBreaker);
+
   }
 
   /**
@@ -55,6 +59,17 @@ public class MainMenuActions extends Component {
 
     logger.info("Loading Story");
     game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
+  }
+
+  /**
+   * Swaps to the Tutorial screen.
+   */
+
+  private void onTutorial(){
+    logger.info("Loading Tutorial");
+    TitleBox titleBox = new TitleBox(game, "Tutorial","Hey! This is the tutorial of the game.",skin);
+    titleBox.showDialog(stage);
+    game.setScreen(GdxGame.ScreenType.TUTORIAL_SCREEN);
   }
 
   /**
@@ -75,6 +90,7 @@ public class MainMenuActions extends Component {
     logger.info("Exit game");
     game.exit();
   }
+
 
   /**
    * Swaps to the Settings screen.

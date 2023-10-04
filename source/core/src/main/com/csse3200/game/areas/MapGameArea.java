@@ -94,6 +94,7 @@ public class MapGameArea extends GameArea{
         spawnPortal(player);
         spawnTreeTop();
         spawnAstro();
+        spawnTutnpc();
         spawnSpawners();
         spawnJail();
 
@@ -244,6 +245,11 @@ public class MapGameArea extends GameArea{
      */
     private void spawnEnvironment() {
         TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
+
+        if (layer == null) {
+            return;
+        }
+
         List<TileEntity> environments = EnvironmentFactory.createEnvironment(layer);
 
         for (TileEntity tileEntity : environments) {
@@ -486,6 +492,16 @@ public class MapGameArea extends GameArea{
         if (astroConfig != null) {
             Entity Astro = NPCFactory.createAstro();
             spawnEntityAt(Astro, astroConfig.position, false, false);
+        }
+
+    }
+    private void spawnTutnpc() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        TutnpcConfig tutnpcConfig = mapConfig.areaEntityConfig.getEntity(TutnpcConfig.class);
+        if (tutnpcConfig != null) {
+            Entity Tutnpc = NPCFactory.createTutnpc();
+            spawnEntityAt(Tutnpc, tutnpcConfig.position, false, false);
         }
 
     }

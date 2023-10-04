@@ -4,27 +4,27 @@
     {
       class: com.csse3200.game.entities.configs.SpawnerConfig,
       "wave1" : [
-        2,
-        2,
+        1,
+        1,
         0
       ],
       "wave2" : [
-        10,
+        0,
         0,
         0
       ],
       "wave3" : [
-        10,
+        0,
         0,
         0
       ],
       "position": {
-        "x": 10,
-        "y": 45
+        "x": 40,
+        "y": 40
       },
-      "sounds": {
+      "sound": {
         "soundsMap": {
-          "enemySpawn": "sounds/enemySpawner.wav"
+          "enemySpawn": "sounds/enemySpawner.mp3"
         }
       }
     }

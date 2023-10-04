@@ -3,6 +3,8 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.physics.components.HitboxComponent;
@@ -11,8 +13,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ai.tasks.TaskRunner;
 
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 /**
  * When this entity (usually killable entities) has health = 0, it disposes the
@@ -54,7 +55,7 @@ public class DeathComponent extends Component {
             this.notkilled = false;
             AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
             animator.stopAnimation();
-            entity.getComponent(HitboxComponent.class).setLayer((short) 0);
+            entity.getComponent(TouchAttackComponent.class).dispose();
 
             Vector2 enemyBody = entity.getCenterPosition();
 
@@ -63,11 +64,10 @@ public class DeathComponent extends Component {
             // Get the duration of the death animation
             float deathAnimationDuration = animator.getAnimationDuration("death");
             // Convert the duration from seconds to milliseconds for the Timer
-            long delay = (long) (deathAnimationDuration * 1000);
+            long delay = (long) (deathAnimationDuration);
             this.isDying = true;
-            Timer timer = new Timer();
 
-            timer.schedule(new TimerTask() {
+            Timer.Task task = new Timer.Task() {
                 @Override
                 public void run() {
                     Gdx.app.postRunnable(entity::dispose);
@@ -90,10 +90,14 @@ public class DeathComponent extends Component {
                     } else if (powerupRandomiser == 18) { // 1/28 chance of double cross
                         powerup = PowerupFactory.createDoubleCrossPowerup();
                     }
+                    if (powerup == null) {
+                        return;
+                    }
                     // 5/14 chance of no powerup dropped
                     ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody);
                 }
-            }, delay); // Delay based on the death animation duration
+            };
+            Timer.schedule(task, delay);// Delay based on the death animation duration
 
         }
     }

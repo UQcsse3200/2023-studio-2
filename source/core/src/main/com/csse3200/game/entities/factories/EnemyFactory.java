@@ -68,11 +68,6 @@ public class EnemyFactory {
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
-    int health = config.health;
-    int baseAttack = config.baseAttack;
-    int speed = config.speed;
-    int specialAttack = config.specialAttack;
-
     // Cycles through all targets
     //TODO: This should probably be contained in its own AITask -
     // this doesn't allow for new entities after enemy creation
@@ -102,19 +97,20 @@ public class EnemyFactory {
                     PhysicsLayer.WEAPON),
                     1.5f))
             .addComponent(new CombatStatsComponent(
-                    health,
-                    baseAttack,
-                    1,
-                    false))
+                    config.health,
+                    config.baseAttack,
+                    config.attackMultiplier,
+                    config.isImmune))
             .addComponent(new DialogComponent(dialogueBox))
             .addComponent(new TurretTargetableComponent())
-                .addComponent(new SoundComponent(config.sound));
+            .addComponent(new SoundComponent(config.sound));
 
     if (config.type == EnemyType.Ranged || config.type == EnemyType.BossRanged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     } else {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
     }
+
     enemy.addComponent(aiComponent);
 
     if(!(config.isBoss)){
@@ -136,13 +132,6 @@ public class EnemyFactory {
     animator.addAnimation("invisible",0.5f, Animation.PlayMode.LOOP);
     enemy.addComponent(animator);
     enemy.addComponent(new EnemyAnimationController());
-
-    // Adding in animation controllers into the new enemy
-    enemy
-            .addComponent(new EnemyAnimationController())
-            // adds tasks depending on enemy type
-            .addComponent(aiComponent)
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune));
 
     // Scaling the enemy's visual size
     // UI adjustments

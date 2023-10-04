@@ -39,26 +39,41 @@ public class PowerupFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
                 .addComponent(new ItemPickupComponent(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
                 .addComponent(new PowerUpDisplayHUD(config.type));
-/*
-        powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));*/
+
+        powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));
+
         powerup.setScale(0.6f, 0.6f);
 
         // Assigns texture based on the specific PowerupType
         switch (config.type) {
-            case HEALTH_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/powerups/health_potion.png"))
-                                         .addComponent(new PowerupComponent(PowerupType.HEALTH_BOOST));}
-            case SPEED_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/powerups/speed_potion.png"))
-                                         .addComponent(new PowerupComponent(PowerupType.SPEED_BOOST));}
-            case EXTRA_LIFE -> {powerup.addComponent(new TextureRenderComponent("images/powerups/extra_life.png"))
-                                         .addComponent(new PowerupComponent(PowerupType.EXTRA_LIFE));}
-            case DOUBLE_CROSS -> {powerup.addComponent(new TextureRenderComponent("images/powerups/double_cross.png"))
-                                         .addComponent(new PowerupComponent(PowerupType.DOUBLE_CROSS));}
-            case TEMP_IMMUNITY -> {powerup.addComponent(new TextureRenderComponent("images/powerups/invincibility_potion.png"))
-                                          .addComponent(new PowerupComponent(PowerupType.TEMP_IMMUNITY));}
-            case DOUBLE_DAMAGE -> {powerup.addComponent(new TextureRenderComponent("images/powerups/double_damage.png"))
-                                          .addComponent(new PowerupComponent(PowerupType.DOUBLE_DAMAGE));}
-            case SNAP -> {powerup.addComponent(new TextureRenderComponent("images/powerups/snap.png"))
-                                 .addComponent(new PowerupComponent(PowerupType.SNAP));}
+            case HEALTH_BOOST -> {
+                powerup.addComponent(new TextureRenderComponent("images/powerups/health_potion.png"))
+                        .addComponent(new PowerupComponent(PowerupType.HEALTH_BOOST));
+            }
+            case SPEED_BOOST -> {
+                powerup.addComponent(new TextureRenderComponent("images/powerups/speed_potion.png"))
+                        .addComponent(new PowerupComponent(PowerupType.SPEED_BOOST));
+            }
+            case EXTRA_LIFE -> {
+                powerup.addComponent(new TextureRenderComponent("images/powerups/extra_life.png"))
+                        .addComponent(new PowerupComponent(PowerupType.EXTRA_LIFE));
+            }
+            case DOUBLE_CROSS -> {
+                powerup.addComponent(new TextureRenderComponent("images/powerups/double_cross.png"))
+                        .addComponent(new PowerupComponent(PowerupType.DOUBLE_CROSS));
+            }
+            case TEMP_IMMUNITY -> {
+                powerup.addComponent(new TextureRenderComponent("images/powerups/invincibility_potion.png"))
+                        .addComponent(new PowerupComponent(PowerupType.TEMP_IMMUNITY));
+            }
+            case DOUBLE_DAMAGE -> {
+                powerup.addComponent(new TextureRenderComponent("images/powerups/double_damage.png"))
+                        .addComponent(new PowerupComponent(PowerupType.DOUBLE_DAMAGE));
+            }
+            case SNAP -> {
+                powerup.addComponent(new TextureRenderComponent("images/powerups/snap.png"))
+                        .addComponent(new PowerupComponent(PowerupType.SNAP));
+            }
             default -> throw new IllegalArgumentException("You must assign a valid PowerupType");
         }
         return powerup;
@@ -123,6 +138,11 @@ public class PowerupFactory {
      *
      * @return Entity representing a snap power-up.
      */
-    public static Entity createSnapPowerup() { return createPowerup(configs.snapPowerup);}
-    public static Entity createDeathPotion(){return createPowerup(configs.death_potion);}
+    public static Entity createSnapPowerup() {
+        return createPowerup(configs.snapPowerup);
+    }
+
+    public static Entity createDeathPotion() {
+        return createPowerup(configs.death_potion);
+    }
 }

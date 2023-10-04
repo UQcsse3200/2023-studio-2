@@ -8,11 +8,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.MapConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.EnvironmentStatsComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.player.InventoryDisplayComponent;
@@ -51,6 +53,7 @@ public class MapGameArea extends GameArea{
     private boolean validLoad = true;
     private static List<Entity> itemsOnMap = new ArrayList<>();
     private String thing;
+    private static boolean freezing;
 
     public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
         try {
@@ -63,15 +66,6 @@ public class MapGameArea extends GameArea{
         this.game = game;
         this.terrainFactory = terrainFactory;
         this.playerLives = playerLives;
-    }
-
-    public static float getSpeedMult() {
-        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
-        Vector2 playerPos = getPlayer().getPosition();
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
-        Object speedMult = cell.getTile().getProperties().get("speedMult");
-
-        return speedMult != null ? (float)speedMult : 1f;
     }
 
     /**
@@ -104,6 +98,8 @@ public class MapGameArea extends GameArea{
         spawnJail();
         //spawnFire();
         //spawnBotanist();
+        //spawnEnvironmentDamage();
+        spawnFreezingArea();
 
         displayUI();
         playMusic();
@@ -159,6 +155,46 @@ public class MapGameArea extends GameArea{
             Entity portal = PortalFactory.createPortal(playerEntity, portalConfig);
             spawnEntityAt(portal, portalConfig.position, false, false);
         }
+    }
+
+    private void spawnEnvironmentDamage() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        Entity envDamage = EnvironmentalDamageFactory.createDamage();
+        spawnEntityAt(envDamage, new GridPoint2(45, 45), false, false);
+    }
+
+    private void spawnFreezingArea() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        Entity freezeArea = FreezingAreaFactory.createFreezingArea();
+        spawnEntityAt(freezeArea, new GridPoint2(40, 60), false, false);
+    }
+
+    public static float getSpeedMult() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+        Object speedMult = cell.getTile().getProperties().get("speedMult");
+
+        return speedMult != null ? (float)speedMult : 1f;
+    }
+
+    public static boolean isOnIce() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+        Object onIce = cell.getTile().getProperties().get("slide");
+
+        return onIce != null && (boolean) onIce;
+    }
+
+    public static boolean isFreezing() {
+        return freezing;
+    }
+
+    public static void toggleFreezing(Entity player) {
+        freezing = !freezing;
     }
 
     /**
@@ -352,6 +388,11 @@ public class MapGameArea extends GameArea{
             logger.info("Player not found in config file - creating generic player");
             newPlayer = PlayerFactory.createPlayer();
         }
+
+        // environmental damage
+        newPlayer.getComponent(EnvironmentStatsComponent.class).setImmunity(mapConfig);
+        newPlayer.getComponent(EnvironmentStatsComponent.class).damage(newPlayer.getComponent(CombatStatsComponent.class));
+
         newPlayer.getComponent(CombatStatsComponent.class).setLives(playerLives); // Ensures previous number of lives is maintained.
         newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         newPlayer.getEvents().addListener("death", () ->

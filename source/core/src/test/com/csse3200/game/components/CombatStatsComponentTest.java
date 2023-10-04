@@ -4,8 +4,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
-import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,8 +42,6 @@ class CombatStatsComponentTest {
 
     MockitoAnnotations.openMocks(this);
     when(entity.getEvents()).thenReturn(eventHandler);
-    entityStats.setEntity(entity);
-    entity.setEntityType("entity");
   }
 
   /**
@@ -215,18 +211,21 @@ class CombatStatsComponentTest {
 
   @Test
   void shouldTriggerHealthEvent() {
+    entityStats.setEntity(entity);
     entityStats.setHealth(50);
     verify(entity.getEvents()).trigger("updateHealth", 50);
   }
 
   @Test
   void shouldTriggerUpdateLivesEvent() {
+    entityStats.setEntity(entity);
     entityStats.setLives(3);
     verify(entity.getEvents()).trigger(eq("updateLives"), anyInt());
   }
 
   @Test
   void shouldTriggerMaxLivesEvent() {
+    entityStats.setEntity(entity);
     entityStats.setLives(4);
     entityStats.addLife();
     verify(entity.getEvents()).trigger("maxLivesAlert");

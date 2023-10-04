@@ -48,6 +48,7 @@ public class DeathComponent extends Component {
             AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
             animator.stopAnimation();
             Vector2 enemyBody = entity.getCenterPosition();
+            entity.getComponent(HitboxComponent.class).setLayer((short) 0);
 
             entity.getEvents().trigger("dispose");
             // Schedule a task to execute entity::dispose after a delay

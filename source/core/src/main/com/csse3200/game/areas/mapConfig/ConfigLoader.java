@@ -48,22 +48,6 @@ public class ConfigLoader {
     }
 
     /**
-     * Loads a GameArea from a single .json file containing all game area data.
-     * Note this may not have the best error messages
-     * @param levelName Name of level to be loade
-     * @param gameAreaName Name of game area in level to generate
-     * @return The GameAreaConfig class loaded from the .json file
-     * @throws InvalidConfigException If the file is unable to be loaded to a GameAreaConfig
-     */
-    public static GameAreaConfig loadMapFile(String levelName, String gameAreaName) throws InvalidConfigException {
-        levelName = LoadUtils.formatName(levelName);
-        String filePath = getOptionalSavePath(PATH_OPTIONS, levelName, gameAreaName + JSON_EXT);
-        GameAreaConfig gameArea = FileLoader.readClass(GameAreaConfig.class, filePath, FileLoader.Location.LOCAL);
-        if (gameArea == null) throw new InvalidConfigException("Failed to load map " + filePath);
-        return gameArea;
-    }
-
-    /**
      * Loads a folder containing various .json files that represent a given game area.
      * @param levelName Name of level to be loade
      * @param gameAreaName Name of game area in level to generate

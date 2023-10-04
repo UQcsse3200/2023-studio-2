@@ -1,13 +1,13 @@
 package com.csse3200.game.areas.mapConfig;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.utils.LoadUtils;
+import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,24 +17,29 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static com.csse3200.game.utils.LoadUtils.ROOT_PATH;
-import static com.csse3200.game.utils.LoadUtils.SAVE_PATH;
+import static com.csse3200.game.utils.LoadUtils.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
-class ConfigLoaderTest { //TODO: Implement more testing
+@Ignore //TODO: Finish Implementing Tests
+class ConfigLoaderTest {
     private static GameAreaConfig fullGameAreaConfig;
     private static GameAreaConfig gameAreaConfig;
+    private static GameConfig gameConfig;
+    private static GameConfig expectedGameConfig;
+    private static AssetsConfig assetsConfig;
+    private static HashMap<String, Object> gameState;
     private static PlayerConfig playerConfig;
     private static AreaEntityConfig areaEntityConfig;
     private static GameAreaConfig expectedGameArea;
     private static MockedStatic<LoadUtils> utilsMock;
     private static MockedStatic<FileLoader> fileLoaderMock;
+
+    private static final List<String> NAMES = List.of("earth", "mars", "pluto");
 
     private GameAreaConfig setupGameArea() {
         GameAreaConfig gameArea = new GameAreaConfig();
@@ -73,6 +78,17 @@ class ConfigLoaderTest { //TODO: Implement more testing
 
         expectedGameArea = setupGameArea();
         expectedGameArea.areaEntityConfig = setupEntities();
+
+        gameState = new HashMap<String, Object>();
+        assetsConfig = new AssetsConfig();
+
+        gameConfig = new GameConfig();
+        gameConfig.levelNames = NAMES;
+
+        expectedGameConfig = new GameConfig();
+        expectedGameConfig.levelNames = NAMES;
+        expectedGameConfig.gameState = gameState;
+        expectedGameConfig.assets = assetsConfig;
     }
 
     @AfterEach
@@ -81,53 +97,103 @@ class ConfigLoaderTest { //TODO: Implement more testing
         fileLoaderMock.close();
     }
 
-//    @Test
-    void loadNewValidGame() {
+    @Test
+    void loadNewValidGame() throws InvalidConfigException {
 
     }
 
-//    @Test
+    @Test
     void loadSavedGameFiles() {
 
     }
 
-//    @Test
-    void loadInvalidGameGameFile() {
+    @Test
+    void loadInvalidGameFile() {
 
     }
 
-//    @Test
-    void loadInvalidGameGamestateFile() {
+    @Test
+    void loadInvalidGamestateFile() {
 
     }
 
-//    @Test
+    @Test
     void loadInvalidGameAssetsFile() {
 
     }
 
+    @Test
+    void loadNewLevel() {
 
-//    @Test
-    void loadValidMapDirectory() throws InvalidConfigException {
-        fileLoaderMock.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
-                .thenReturn(gameAreaConfig);
-        fileLoaderMock.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
-                .thenReturn(areaEntityConfig);
-
-        assertEquals(ConfigLoader.loadMapDirectory("earth", LoadUtils.DEFAULT_AREA), expectedGameArea);
     }
 
-//    @Test
-    void loadInvalidMapDirectoryGameArea() {
-        fileLoaderMock.when(() -> FileLoader.readClass(eq(GameAreaConfig.class), any(), any()))
-                .thenReturn(null);
-        fileLoaderMock.when(() -> FileLoader.readClass(eq(AreaEntityConfig.class), any(), any()))
-                .thenReturn(areaEntityConfig);
+    @Test
+    void loadSavedLevel() {
 
-        assertThrows(InvalidConfigException.class, () -> ConfigLoader
-                .loadMapDirectory("earth", LoadUtils.DEFAULT_AREA));
     }
 
-    //TODO: Write tests to cover entity folder structure
-    //TODO: Write tests to cover saving
+    @Test
+    void loadInvalidLevel() {
+
+    }
+
+    @Test
+    void loadInvalidSaveLevel() {
+
+    }
+
+    @Test
+    void loadLevelInvalidSecondSave() {
+
+    }
+
+    @Test
+    void loadValidNewMapDirectory() {
+
+    }
+
+    @Test
+    void loadInvalidNewMapDirectory() {
+
+    }
+
+    @Test
+    void LoadValidSaveMapDirectory() {
+
+    }
+
+    @Test
+    void LoadInvalidSaveMapDirectory() {
+
+    }
+
+    @Test
+    void loadEntityFromFolder() {
+
+    }
+
+    @Test
+    void loadEntitiesFromFolder() {
+
+    }
+
+    @Test
+    void loadInvalidEntityFromFolder() {
+
+    }
+
+    @Test
+    void loadInvalidEntityPath() {
+
+    }
+
+    @Test
+    void loadValidConfigFile() {
+
+    }
+
+    @Test
+    void loadInvalidConfigFile() {
+
+    }
 }

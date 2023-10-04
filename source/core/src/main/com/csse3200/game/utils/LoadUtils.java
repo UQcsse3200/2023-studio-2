@@ -37,6 +37,15 @@ public class LoadUtils {
         return stringJoiner.toString();
     }
 
+    /**
+     * Overload of joinPath method with only 1 parameter.
+     * @param path Single path to return
+     * @return path parameter - nothing to join
+     */
+    public static String joinPath(String path) {
+        return path;
+    }
+
     public static boolean pathExists(String path) {
         return Gdx.files.local(path).exists();
     }

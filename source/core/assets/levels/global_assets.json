@@ -53,8 +53,9 @@
     "sounds/playerBoostRecharge.wav",
     "sounds/upgradeTreeTap.wav",
     "sounds/upgradeWeapon.wav",
-    "sounds/enemyDeath.wav"
+    "sounds/enemyDeath.wav",
+    "sounds/alert.wav"
   ],
   "particleEffectPaths": null,
-  "backgroundMusicPath": null
+  "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
 }

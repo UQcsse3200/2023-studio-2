@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
+import com.csse3200.game.components.mainmenu.MainMenuStarBackground;
+import com.csse3200.game.components.spacenavigation.NavigationBackground;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -28,10 +30,7 @@ public class MainMenuScreen extends ScreenAdapter {
   public static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  public static final int MountedFrames = 105;
-  private static final String[] mainMenuTextures = {"images/menu/escape-earth2.png"};
-  public static String[] transitionTextures = new String[MountedFrames];
-  private static final String animationPrefix = "images/main_menu_video/menu_animations";
+  private static final String[] mainMenuTextures = {"images/menu/Background_Test1.png"};
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -90,21 +89,8 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainMenuTextures);
-    loadMountedFrames();
     ServiceLocator.getResourceService().loadAll();
   }
-
-  private void loadMountedFrames() {
-    logger.debug("Loading assets");
-    ResourceService resourceService = ServiceLocator.getResourceService();
-
-    for (int i = 0; i < MountedFrames; i++) {
-      transitionTextures[i] = animationPrefix + i + ".png";
-    }
-    resourceService.loadTextures(transitionTextures);
-    ServiceLocator.getResourceService().loadAll();
-  }
-
 
   private void unloadAssets() {
     logger.debug("Unloading assets");
@@ -119,10 +105,12 @@ public class MainMenuScreen extends ScreenAdapter {
   private void createUI() {
     logger.debug("Creating ui");
     Stage stage = ServiceLocator.getRenderService().getStage();
+
     Entity ui = new Entity();
     ui.addComponent(new MainMenuDisplay())
             .addComponent(new InputDecorator(stage, 10))
             .addComponent(new MainMenuActions(game, stage, skin));
     ServiceLocator.getEntityService().register(ui);
+    stage.addActor(new MainMenuStarBackground());
   }
 }

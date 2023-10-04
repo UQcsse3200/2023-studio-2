@@ -22,6 +22,10 @@ public class PowerUpDisplayHUD extends UIComponent {
     Image SpeedUpImage = null;
     Image HealthUpImage = null;
     Image ExtraLifeImage = null;
+    Image DoubleCrossImage = null;
+    Image TempImmunityImage = null;
+    Image DoubleDamageImage = null;
+    Image SnapImage = null;
 
     public PowerUpDisplayHUD(PowerupType powerUpEntity) {
         this.powerUpEntity = powerUpEntity;
@@ -56,20 +60,20 @@ public class PowerUpDisplayHUD extends UIComponent {
         }
 
         if (powerUpEntity == PowerupType.DOUBLE_CROSS) {
-            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_cross.png", Texture.class));
-            return ExtraLifeImage;
+            DoubleCrossImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_cross.png", Texture.class));
+            return DoubleCrossImage;
         }
         if (powerUpEntity == PowerupType.TEMP_IMMUNITY) {
-            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/invincibility_potion.png", Texture.class));
-            return ExtraLifeImage;
+            TempImmunityImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/temp_immunity.png", Texture.class));
+            return TempImmunityImage;
         }
         if (powerUpEntity == PowerupType.DOUBLE_DAMAGE) {
-            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_damage.png", Texture.class));
-            return ExtraLifeImage;
+            DoubleDamageImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_damage.png", Texture.class));
+            return DoubleDamageImage;
         }
         if (powerUpEntity == PowerupType.SNAP) {
-            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/snap.png", Texture.class));
-            return ExtraLifeImage;
+            SnapImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/snap.png", Texture.class));
+            return SnapImage;
         }
         else return null;
     }

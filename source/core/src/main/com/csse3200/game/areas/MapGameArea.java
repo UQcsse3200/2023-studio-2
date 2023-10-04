@@ -12,6 +12,7 @@ import com.csse3200.game.areas.mapConfig.InvalidConfigException;
 import com.csse3200.game.areas.mapConfig.ConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.EnvironmentStatsComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.player.InventoryDisplayComponent;
@@ -49,6 +50,7 @@ public class MapGameArea extends GameArea{
     protected boolean validLoad = true;
     private static List<Entity> itemsOnMap = new ArrayList<>();
     private String thing;
+    private static boolean freezing;
 
     public MapGameArea(String levelName, String game_area, TerrainFactory terrainFactory, GdxGame game) {
         try {
@@ -60,15 +62,6 @@ public class MapGameArea extends GameArea{
         }
         this.game = game;
         this.terrainFactory = terrainFactory;
-    }
-
-    public static float getSpeedMult() {
-        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
-        Vector2 playerPos = getPlayer().getPosition();
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
-        Object speedMult = cell.getTile().getProperties().get("speedMult");
-
-        return speedMult != null ? (float)speedMult : 1f;
     }
 
     /**
@@ -97,10 +90,14 @@ public class MapGameArea extends GameArea{
         spawnPortal(player);
         spawnTreeTop();
         spawnAstro();
+        spawnTutnpc();
         spawnSpawners();
         spawnJail();
-        //spawnFire();
+
+        spawnAstronaut();
         //spawnBotanist();
+        //spawnEnvironmentDamage();
+        spawnFreezingArea();
 
         displayUI();
         playMusic();
@@ -156,6 +153,46 @@ public class MapGameArea extends GameArea{
         }
     }
 
+    private void spawnEnvironmentDamage() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        Entity envDamage = EnvironmentalDamageFactory.createDamage();
+        spawnEntityAt(envDamage, new GridPoint2(45, 45), false, false);
+    }
+
+    private void spawnFreezingArea() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        Entity freezeArea = FreezingAreaFactory.createFreezingArea();
+        spawnEntityAt(freezeArea, new GridPoint2(40, 60), false, false);
+    }
+
+    public static float getSpeedMult() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+        Object speedMult = cell.getTile().getProperties().get("speedMult");
+
+        return speedMult != null ? (float)speedMult : 1f;
+    }
+
+    public static boolean isOnIce() {
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
+        Vector2 playerPos = getPlayer().getPosition();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+        Object onIce = cell.getTile().getProperties().get("slide");
+
+        return onIce != null && (boolean) onIce;
+    }
+
+    public static boolean isFreezing() {
+        return freezing;
+    }
+
+    public static void toggleFreezing(Entity player) {
+        freezing = !freezing;
+    }
+
     /**
      * Spawns the game terrain with wallSize determined by the config file
      */
@@ -201,6 +238,11 @@ public class MapGameArea extends GameArea{
      */
     private void spawnEnvironment() {
         TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
+
+        if (layer == null) {
+            return;
+        }
+
         List<TileEntity> environments = EnvironmentFactory.createEnvironment(layer);
 
         for (TileEntity tileEntity : environments) {
@@ -211,54 +253,10 @@ public class MapGameArea extends GameArea{
     /**
      * Spawns powerups in the map at the positions as outlined by the config file
      */
-    private Entity spawnPowerups(PowerupType powerupType) {
-        Entity newPowerup;
-        switch (powerupType){
-            case HEALTH_BOOST:
-                newPowerup = PowerupFactory.createHealthPowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case SPEED_BOOST:
-                newPowerup = PowerupFactory.createSpeedPowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case TEMP_IMMUNITY:
-                newPowerup = PowerupFactory.createtempImmunityPowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case DOUBLE_DAMAGE:
-                newPowerup = PowerupFactory.createDoubleDamagePowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case DEATH_POTION:
-                newPowerup = PowerupFactory.createDeathPotion();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case EXTRA_LIFE:
-                newPowerup = PowerupFactory.createExtraLifePowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case DOUBLE_CROSS:
-                newPowerup = PowerupFactory.createDoubleCrossPowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case SNAP:
-                newPowerup = PowerupFactory.createSnapPowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            default: throw new IllegalArgumentException("You must assign a valid PowerupType");
-
-        /*for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.getEntities(PowerupConfig.class)) {
+    private void spawnPowerups(PowerupType powerupType) {
+        for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.getEntities(PowerupConfig.class)) {
             Entity powerup = PowerupFactory.createPowerup(powerupConfig);
-            spawnEntityAt(powerup, powerupConfig.position, true, false);*/
+            spawnEntityAt(powerup, powerupConfig.position, true, false);
         }
     }
 
@@ -339,6 +337,11 @@ public class MapGameArea extends GameArea{
             newPlayer = PlayerFactory.createPlayer();
         }
         newPlayer.getComponent(CombatStatsComponent.class).setLives((int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")); // Ensures previous number of lives is maintained.
+
+        // environmental damage
+        newPlayer.getComponent(EnvironmentStatsComponent.class).setImmunity(mapConfig);
+        newPlayer.getComponent(EnvironmentStatsComponent.class).damage(newPlayer.getComponent(CombatStatsComponent.class));
+
         newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         newPlayer.getEvents().addListener("death", () ->
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
@@ -390,6 +393,14 @@ public class MapGameArea extends GameArea{
             GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);
             spawnEntityAt(newCompanion, pos, true, true);
         }
+
+        newCompanion.getEvents().addListener("SpawnPowerup", (PowerupType type) -> {
+            LaboratoryConfig labConfig = mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class);
+            if (labConfig == null) return;
+            Entity powerup = PowerupFactory.createPowerup(type);
+            this.spawnEntityAt(powerup, labConfig.position, true, false);
+        });
+
         return newCompanion;
     }
 
@@ -431,6 +442,26 @@ public class MapGameArea extends GameArea{
         }
 
     }
+    private void spawnTutnpc() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        TutnpcConfig tutnpcConfig = mapConfig.areaEntityConfig.getEntity(TutnpcConfig.class);
+        if (tutnpcConfig != null) {
+            Entity Tutnpc = NPCFactory.createTutnpc();
+            spawnEntityAt(Tutnpc, tutnpcConfig.position, false, false);
+        }
+
+    }
+
+    private void spawnAstronaut() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        AstronautConfig astronautConfig = mapConfig.areaEntityConfig.getEntity(AstronautConfig.class);
+        if (astronautConfig != null) {
+            Entity astronaut = NPCFactory.createAstronaut(astronautConfig);
+            spawnEntityAt(astronaut, astronautConfig.position, false, false);
+        }
+    }
 
     private void spawnJail() {
         if (mapConfig.areaEntityConfig == null) return;
@@ -442,14 +473,6 @@ public class MapGameArea extends GameArea{
         }
 
     }
-
-    private void spawnFire(){
-        if (mapConfig.areaEntityConfig == null) return;
-
-        ShipConfig shipConfig = mapConfig.areaEntityConfig.getEntity(ShipConfig.class);
-            Entity fire = NPCFactory.createFire();
-            spawnEntityAt(fire,shipConfig.position , false, false);
-        }
 
     /**
      * Plays the game music loaded from the config file

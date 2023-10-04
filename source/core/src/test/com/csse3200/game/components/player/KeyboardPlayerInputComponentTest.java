@@ -48,7 +48,7 @@ public class KeyboardPlayerInputComponentTest {
 //        Mocking the event handling for the 'WalkEvent' entity.
         when(WalkEvent.getEvents()).thenReturn(mock(EventHandler.class));
 
-//        Testing the whole trigger Dodge Event to test Player's dodge Sound
+//        Testing the whole trigger Walk Event to test Player's walk Sound
         Sound.triggerWalkEvent();
     }
 

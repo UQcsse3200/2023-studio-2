@@ -223,14 +223,14 @@ public class SpaceNavigationScreen implements Screen {
         planet.setOrigin(64f, 64f);
 
         // Add planet event listeners
-        if (planetType > 0) {
+        if (planetType >= 0) {
             planet.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (planetType == 1) {
                         planetTravel.returnToCurrent();
-                    } else if (planetType == 2) {
-                        planetTravel.beginFullTravel();
+                    } else {
+                        planetTravel.beginInstantTravel();
                     }
                 }
 

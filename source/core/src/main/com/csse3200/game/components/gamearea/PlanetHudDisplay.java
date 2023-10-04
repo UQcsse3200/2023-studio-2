@@ -1,6 +1,5 @@
 package com.csse3200.game.components.gamearea;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -8,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
+import com.csse3200.game.entities.configs.PlayerConfig;
+import com.csse3200.game.entities.configs.SoundsConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -25,7 +26,8 @@ public class PlanetHudDisplay extends UIComponent {
     public PlanetHudDisplay(String gameAreaName, String planetImagePath) {
         this.gameAreaName = gameAreaName;
         this.planetImage = new Image(ServiceLocator.getResourceService().getAsset(planetImagePath, Texture.class));
-        planetImageFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/planet-frame.png", Texture.class));
+        planetImageFrame = new Image(ServiceLocator.getResourceService().getAsset
+                ("images/player/planet-frame.png", Texture.class));
     }
 
     @Override
@@ -53,7 +55,7 @@ public class PlanetHudDisplay extends UIComponent {
         planetStack.add(overlayTable);
         planetTable.add(planetStack).size(180f, 225f);
         planetTable.row();
-        createUpgradeTreeButton(planetTable);
+        //createUpgradeTreeButton(planetTable);
 
         stage.addActor(planetTable);
     }
@@ -70,16 +72,18 @@ public class PlanetHudDisplay extends UIComponent {
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                KeyboardPlayerInputComponent keys =
-                        ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
-                keys.clearWalking();
-                UpgradeDisplay display = UpgradeDisplay.createUpgradeDisplay();
-                ServiceLocator.getRenderService().getStage().addActor(display);
 
-                entity.getEvents().trigger("playSound", "upgradeTreeTap");
+                if (event instanceof ChangeEvent) {
+                    KeyboardPlayerInputComponent keys =
+                            ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
+                    keys.clearWalking();
+                    UpgradeDisplay display = UpgradeDisplay.createUpgradeDisplay();
+                    ServiceLocator.getRenderService().getStage().addActor(display);
+
+                    entity.getEvents().trigger("playSound", "upgradeTree");
+                }
             }
         });
-
         table.add(button);
     }
 

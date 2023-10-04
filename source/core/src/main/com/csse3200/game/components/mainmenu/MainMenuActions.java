@@ -13,8 +13,13 @@ import com.csse3200.game.ui.Popups.ChoicePopup;
 import com.csse3200.game.ui.Popups.PopupBox;
 import com.csse3200.game.utils.LoadUtils;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.screens.TutorialScreen;
+import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.MainAlert;
+import com.csse3200.game.ui.Popups.PopupBox;
 import com.csse3200.game.ui.TitleBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,12 +45,15 @@ public class MainMenuActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("start", this::onStart);
-    entity.getEvents().addListener("load", this::onLoad);
     entity.getEvents().addListener("space minigame", this::onMini);
+    entity.getEvents().addListener("load", this::onLoad);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
     entity.getEvents().addListener("upgrade shop", this::onShop);
+    entity.getEvents().addListener("tutorial", this::onTutorial);
+    entity.getEvents().addListener("brick breaker minigame", this::onBrickBreaker);
+
   }
 
   private void loadGameConfig() {
@@ -89,10 +97,19 @@ public class MainMenuActions extends Component {
 
       loadGameConfig();
 
-      logger.info("Loading Story");
-      TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
-      titleBox.showDialog(stage);
-      game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
+    logger.info("Loading Story");
+    game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
+  }
+
+  /**
+   * Swaps to the Tutorial screen.
+   */
+
+  private void onTutorial(){
+    logger.info("Loading Tutorial");
+    TitleBox titleBox = new TitleBox(game, "Tutorial","Hey! This is the tutorial of the game.",skin);
+    titleBox.showDialog(stage);
+    game.setScreen(GdxGame.ScreenType.TUTORIAL_SCREEN);
   }
 
   /**
@@ -118,7 +135,7 @@ public class MainMenuActions extends Component {
         loadGame();
     } else {
         logger.info("Loading: Failed to find save file");
-        PopupBox popupBox =  new PopupBox("No previous load found", "Load", skin);
+        PopupBox popupBox = new PopupBox("No previous load found", "Load", skin);
         popupBox.show(stage);
     }
   }
@@ -152,5 +169,9 @@ public class MainMenuActions extends Component {
   private void onShop() {
     logger.info("Launching Upgrade Shop screen");
     game.setScreen(GdxGame.ScreenType.UPGRADE_SHOP);
+  }
+  private void onBrickBreaker(){
+    logger.info("Starting brick breaker minigame screen");
+    game.setScreen(GdxGame.ScreenType.BRICK_BREAKER_SCREEN);
   }
 }

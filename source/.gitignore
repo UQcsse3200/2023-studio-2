@@ -116,3 +116,7 @@ Thumbs.db
 
 # save files
 /core/assets/save/
+/save
+
+# Git patches
+*.patch

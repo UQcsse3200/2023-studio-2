@@ -18,7 +18,6 @@ public class GameAreaConfig {
     public List<ResourceCondition> winConditions = null;
     public PlayerConfig playerConfig = null;
     public CompanionConfig companionConfig = null;
-
     public AreaEntityConfig areaEntityConfig = null;
 
     public String[] getEntityTextures() {

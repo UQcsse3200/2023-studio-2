@@ -249,7 +249,7 @@ public class StructureFactory {
         ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();
         ship.setScale(5f, 4.5f);
-        PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
+        PhysicsUtils.setScaledCollider(ship, 0.9f, 0.9f);
 
         InteractLabel interactLabel = new InteractLabel(); //code for interaction prompt
         ship.addComponent(new DistanceCheckComponent(5f, interactLabel));

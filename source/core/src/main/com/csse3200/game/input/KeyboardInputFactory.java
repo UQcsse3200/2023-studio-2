@@ -31,7 +31,10 @@ public class KeyboardInputFactory extends InputFactory {
         logger.debug("Creating Companion input handler");
         return new KeyboardCompanionInputComponent();
     }
-
+    /**
+     * Creates an input handler for the Ship
+     * @return Ship input handler
+     */
     @Override
     public InputComponent createForShip() {
         logger.debug("Creating ship input handler");
@@ -46,5 +49,21 @@ public class KeyboardInputFactory extends InputFactory {
     public InputComponent createForTerminal() {
         logger.debug("Creating terminal input handler");
         return new KeyboardTerminalInputComponent();
+    }
+    /**
+     * Creates an input handler for the ball.
+     * @return Ball input handler
+     */
+    public InputComponent createForBall() {
+        logger.debug("Creating ship input handler");
+        return new KeyboardTerminalInputComponent();
+    }
+    /**
+     * Creates an input handler for the Slider.
+     * @return Slider input handler
+     */
+    public InputComponent createForSlider(){
+        logger.debug("Creating slider input handler");
+        return new KeyboardCompanionInputComponent();
     }
 }

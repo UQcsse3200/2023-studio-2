@@ -1,0 +1,40 @@
+grenade.png
+size: 120, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+UP
+  rotate: false
+  xy: 0, 0
+  size: 30, 32
+  orig: 30, 32
+  offset: 0, 0
+  index: -1
+UP
+  rotate: false
+  xy: 30, 0
+  size: 30, 32
+  orig: 30, 32
+  offset: 0, 0
+  index: -1
+UP
+  rotate: false
+  xy: 60, 0
+  size: 30, 32
+  orig: 30, 32
+  offset: 0, 0
+  index: -1
+UP
+  rotate: false
+  xy: 90, 0
+  size: 30, 32
+  orig: 30, 32
+  offset: 0, 0
+  index: -1
+STATIC
+  rotate: false
+  xy: 0, 0
+  size: 30, 32
+  orig: 30, 32
+  offset: 0, 0
+  index: -1

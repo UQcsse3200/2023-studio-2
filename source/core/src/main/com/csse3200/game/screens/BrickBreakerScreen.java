@@ -24,6 +24,10 @@ import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The game screen containing the main game.
+ * Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
+ */
 public class BrickBreakerScreen extends ScreenAdapter {
     private final GdxGame game;
     private final PhysicsEngine physicsEngine;
@@ -31,6 +35,11 @@ public class BrickBreakerScreen extends ScreenAdapter {
     public static final Logger logger = LoggerFactory.getLogger(BrickBreakerScreen.class);
     private final Renderer renderer;
     private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
+
+    /**
+     * Method for creating the brick breaker game screen
+     * @param game Brick Breaker minigame
+     */
     public BrickBreakerScreen(GdxGame game){
         this.game = game;
         physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
@@ -46,13 +55,21 @@ public class BrickBreakerScreen extends ScreenAdapter {
         BricKBreakerGameArea bricKBreakerGameArea= new BricKBreakerGameArea(terrainFactory);
         bricKBreakerGameArea.create();
     }
-
+    /**
+     * Method for rendering the entities in the brick breaker minigame
+     * @param delta The time in seconds since the last render.
+     */
     @Override
     public void render(float delta) {
+        physicsEngine.update();
         ServiceLocator.getEntityService().update();
         renderer.render();
     }
-
+    /**
+     * Method for resizing the rendering of the entities
+     * @param width Width of the render
+     * @param height Height of the render
+     */
     @Override
     public void resize(int width, int height) {
         renderer.resize(width, height);
@@ -69,7 +86,10 @@ public class BrickBreakerScreen extends ScreenAdapter {
     public void resume() {
         logger.info("Game resumed");
     }
-
+    /**
+     * Method for disposing and unloading
+     * all assets onto the main screen
+     */
     @Override
     public void dispose() {
         logger.debug("Disposing brick breaker minigame screen");
@@ -96,6 +116,12 @@ public class BrickBreakerScreen extends ScreenAdapter {
         resourceService.unloadAssets(background);
         resourceService.clearAllAssets();
     }
+
+    /**
+     * Creates the main game's ui including components for
+     * rendering ui elements to the screen and
+     * capturing and handling ui input.
+     */
     private void createUI() {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();

@@ -60,6 +60,17 @@ public abstract class InputFactory {
    * @return Ship input handler
    */
   public abstract InputComponent createForShip();
+  /**
+   * Creates an input handler for the slider
+   *
+   * @return Slider input handler
+   */
+  public abstract InputComponent createForSlider();
+  /**
+   * Creates an input handler for the ball
+   *
+   * @return Ball input handler
+   */
   public abstract InputComponent createForBall();
   /**
    * Creates an input handler for the terminal

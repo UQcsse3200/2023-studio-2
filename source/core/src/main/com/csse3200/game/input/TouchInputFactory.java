@@ -21,12 +21,32 @@ public class TouchInputFactory extends InputFactory{
     logger.debug("Creating player input handler");
     return new TouchPlayerInputComponent();
   }
-
+  /**
+   * Creates an input handler for the ship
+   *
+   * @return Ship input handler
+   */
   @Override
   public InputComponent createForShip() {
     logger.debug("Creating ship input handler");
     return new KeyboardShipInputComponent();
   }
+  /**
+   * Creates an input handler for the slider
+   *
+   * @return Slider input handler
+   */
+  @Override
+  public InputComponent createForSlider() {
+    logger.debug("Creating ship input handler");
+    return new KeyboardShipInputComponent();
+  }
+  /**
+   * Creates an input handler for the ball
+   *
+   * @return Ball input handler
+   */
+  @Override
   public InputComponent createForBall() {
     logger.debug("Creating ball input handler");
     return new KeyboardTerminalInputComponent();

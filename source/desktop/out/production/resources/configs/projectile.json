@@ -1,6 +1,0 @@
-{
-  "bullet": {
-    "speed": 12,
-    "spritePath": "images/enemy/bullet.atlas"
-  }
-}

@@ -16,6 +16,21 @@ public class CompanionWeaponTargetComponent extends Component {
     CompanionWeaponType weaponType;
     Vector2 trackPrev;
 
+    //For the shield rotations
+    /**
+     * offsets are a value between
+     * -100 and 100
+     * It gets divided down by 20, so that the final offsets are between
+     * -5 and 5
+     *
+     * The rotation_directions are an integer, -1 or 1
+     * 0 represents growing negative, 1 represents growing positive
+     */
+    float x_rotate_offset;
+    int x_rotation_direction;
+    float y_rotate_offset;
+    int y_rotation_direction;
+
     /**
      * Class to store variables of a spawned weapon
      */
@@ -23,12 +38,24 @@ public class CompanionWeaponTargetComponent extends Component {
         this.weaponType = weaponType;
         this.entity = entity;
         this.trackPrev = entity.getPosition();
+
+        //if it is a shield, adjust the rotation offsets
+        //start shield in the far right corner
+        if (this.weaponType == CompanionWeaponType.SHIELD) {
+            x_rotate_offset = 100;
+            x_rotation_direction = 1;
+            y_rotate_offset = 0;
+            y_rotation_direction = 1;
+        }
+
     }
 
     public Vector2 get_pos_of_target() {
         Vector2 pos;
 
         switch (this.weaponType) {
+            case SHIELD:
+                return rotate_shield_around_entity();
             case Death_Potion:
                 List<Entity> enemies = EnemyFactory.getEnemyList();
                 if (!enemies.isEmpty()) {
@@ -69,5 +96,55 @@ public class CompanionWeaponTargetComponent extends Component {
         }
 
         return pos;
+    }
+
+    /**
+     * This function will rotate the shield around this entity
+     * @return - vector
+     */
+    public Vector2 rotate_shield_around_entity() {
+        //companion position
+        var companion = entity.getPosition().sub(this.trackPrev);
+
+        float scalaingFactor = 7000;
+
+        // Grab the current offsets, and scale down the offset down to between
+        // -5 and 5
+        float x_offset = x_rotate_offset / scalaingFactor;
+        float y_offset = y_rotate_offset / scalaingFactor;
+
+        //float x_offset = (float) 0.002;
+        //float y_offset = (float) 0.002;
+        // create the offset vector
+        var offsetVector = new Vector2(x_offset, y_offset);
+
+        //offset the  companion position
+        companion.add(offsetVector);
+
+        //update the offset values
+        update_shield_rotation_offsets();
+
+        //update the latest trackPrev to the new entity position
+        this.trackPrev = entity.getPosition();
+        return companion;
+    }
+
+    /**
+     * This function cycles x and y values from -100 to 100
+     * Using an incrementor.
+     */
+    public void update_shield_rotation_offsets() {
+        // if the offset has reached 100 yet, flip the direction
+        if (Math.abs(x_rotate_offset) == 100) {
+            x_rotation_direction  = x_rotation_direction*-1;
+        }
+        x_rotate_offset += x_rotation_direction;
+
+        //y
+        // if the offset has reached 100 yet, flip the direction
+        if (Math.abs(y_rotate_offset) == 100) {
+            y_rotation_direction  = y_rotation_direction*-1;
+        }
+        y_rotate_offset += y_rotation_direction;
     }
 }

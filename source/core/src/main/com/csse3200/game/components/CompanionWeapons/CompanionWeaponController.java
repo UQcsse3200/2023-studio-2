@@ -68,6 +68,8 @@ public class CompanionWeaponController extends Component {
         //switch statement to define weapon movement based on type (a projectile
         Vector2 movement = switch (this.weaponType) {
             case Death_Potion -> update_swing();
+            //get some different input numbers
+            case SHIELD -> update_static();
 
             default -> null;
         };
@@ -106,5 +108,14 @@ public class CompanionWeaponController extends Component {
         Vector2 movement = direction.scl(this.speed * Gdx.graphics.getDeltaTime());
 
         return movement;
+    }
+
+    /**
+     * required movement for static weapon display - tracks companion
+     * @return required movement
+     */
+    private Vector2 update_static() {
+        CompanionWeaponTargetComponent weaponTargetComponent = entity.getComponent(CompanionWeaponTargetComponent.class);
+        return weaponTargetComponent.get_pos_of_target();
     }
 }

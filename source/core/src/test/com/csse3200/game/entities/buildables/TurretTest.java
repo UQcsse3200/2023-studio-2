@@ -35,7 +35,7 @@ public class TurretTest {
     @BeforeEach
     public void setUp() {
         TurretConfig turretConfig = new TurretConfig();
-        turretConfig.maxAmmo = 10;
+        turretConfig.setMaxAmmo(10);
 
         resourceService = mock(ResourceService.class);
         when(resourceService.getAsset(turretConfig.spritePath, Texture.class)).thenReturn(null);
@@ -53,11 +53,11 @@ public class TurretTest {
 
     @Test
     public void testRefillAmmo() {
-        Assertions.assertEquals(10, turret.currentAmmo);
+        Assertions.assertEquals(10, turret.getCurrentAmmo());
 
         // Refill ammo to max
         turret.refillAmmo();
-        Assertions.assertEquals(10, turret.currentAmmo);
+        Assertions.assertEquals(10, turret.getCurrentAmmo());
     }
 
 
@@ -67,7 +67,7 @@ public class TurretTest {
         Assertions.assertTrue(turret.Canfire());
 
 
-        turret.currentAmmo = 0;
+        turret.setCurrentAmmo(0);
         Assertions.assertFalse(turret.Canfire());
 
 
@@ -79,16 +79,16 @@ public class TurretTest {
     @Test
     public void testRefillAmmoWithAmount() {
 
-        Assertions.assertEquals(10, turret.currentAmmo);
+        Assertions.assertEquals(10, turret.getCurrentAmmo());
 
 
         turret.refillAmmo(3);
-        Assertions.assertEquals(10, turret.currentAmmo);
+        Assertions.assertEquals(10, turret.getCurrentAmmo());
 
 
-        turret.currentAmmo = 0;
+        turret.setCurrentAmmo(0);
         turret.refillAmmo(5);
-        Assertions.assertEquals(5, turret.currentAmmo);
+        Assertions.assertEquals(5, turret.getCurrentAmmo());
     }
 
 }

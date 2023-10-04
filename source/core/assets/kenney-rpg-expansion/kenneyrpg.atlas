@@ -741,3 +741,16 @@ metalPanel_red
   orig: 100, 100
   offset: 0, 0
   index: -1
+
+treebox.png
+size: 1616, 1030
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+treebox
+  rotate: false
+  xy: 0, 0
+  size: 1616, 1030
+  orig: 1616, 1030
+  offset: 0, 0
+  index: -1

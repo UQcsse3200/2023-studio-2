@@ -11,6 +11,8 @@ public class NPCConfigs {
   public SoundsConfig sound;
   public BotanistConfig botanist = new BotanistConfig();
   public AstroConfig Astro = new AstroConfig();
+
+  public AstronautConfig astronautConfig = new AstronautConfig();
   public JailConfig Jail = new JailConfig();
   //   Enemies Factory
   public EnemyConfig meleeEnemyPTE = new EnemyConfig();

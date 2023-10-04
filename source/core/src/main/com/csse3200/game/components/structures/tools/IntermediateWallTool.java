@@ -13,7 +13,7 @@ import com.csse3200.game.services.ServiceLocator;
 /**
  * A tool which allows the player to place an intermediate wall or upgrade basic walls.
  */
-public class IntermediateWallTool extends PlacementTool {
+public class IntermediateWallTool extends ReplacementTool {
 
     /**
      * Creates a new intermediate wall tool with the given cost.
@@ -27,41 +27,6 @@ public class IntermediateWallTool extends PlacementTool {
     }
 
     /**
-     * Attempts to place the wall at the given position.
-     * If there is an existing structure at the given position, and it is a wall, replaces
-     * it with an intermediate wall.
-     *
-     * @param player - the player interacting with the tool.
-     * @param position - the position to place the structure.
-     * @return whether the intermediate wall was successfully placed.
-     */
-    @Override
-    public boolean interact(Entity player, GridPoint2 position) {
-        if (super.interact(player, position)) {
-            return true;
-        }
-
-        position = getSnapPosition(position);
-
-        var existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
-
-        if (!(existingStructure instanceof Wall)) {
-            return false;
-        }
-
-        if (!hasEnoughResources()) {
-            return false;
-        }
-
-        PlaceableEntity newStructure = createStructure(player);
-        newStructure.addComponent(new CostComponent(cost));
-
-        ServiceLocator.getStructurePlacementService().replaceStructureAt(newStructure, position, false, false);
-
-        return true;
-    }
-
-    /**
      * Creates an intermediate wall to place.
      *
      * @param player - the player placing the structure.
@@ -70,5 +35,22 @@ public class IntermediateWallTool extends PlacementTool {
     @Override
     public PlaceableEntity createStructure(Entity player) {
         return BuildablesFactory.createWall(WallType.intermediate, player);
+    }
+
+    @Override
+    public ToolResponse isPositionValid(GridPoint2 position) {
+        var validity = super.isPositionValid(position);
+
+        if (!validity.isValid()) {
+            return validity;
+        }
+
+        var existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
+
+        if (!(existingStructure instanceof Wall) && existingStructure != null) {
+            return new ToolResponse(PlacementValidity.INVALID_POSITION, "You can only upgrade walls");
+        }
+
+        return ToolResponse.valid();
     }
 }

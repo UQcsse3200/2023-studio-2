@@ -1,6 +1,7 @@
 package com.csse3200.game.components.ships;
 
 import com.badlogic.gdx.Gdx;
+import com.csse3200.game.areas.ShopArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 

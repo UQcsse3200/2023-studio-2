@@ -46,8 +46,6 @@
       "name": "Heal",
       "description": "Bandaid tool",
       "cost": {
-        "Durasteel": 50,
-        "Solstite": 50
       },
       "texture": "images/structures/heal_icon.png"
     },
@@ -55,8 +53,6 @@
       "name": "Extractor",
       "description": "Mining - its ethical.",
       "cost": {
-        "Solstite": 75
-
       },
       "texture": "images/structures/refinedExtractor.png"
     },

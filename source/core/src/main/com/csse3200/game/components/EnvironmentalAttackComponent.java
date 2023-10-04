@@ -24,8 +24,7 @@ import java.util.TimerTask;
  */
 public class EnvironmentalAttackComponent extends Component {
     private short targetLayer;
-    private float knockbackForce = 0f;
-    private CombatStatsComponent combatStats;
+
     private HitboxComponent hitboxComponent;
     private boolean leftContact;
     private Timer triggerTimer;
@@ -50,7 +49,6 @@ public class EnvironmentalAttackComponent extends Component {
     public void create() {
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
         entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
-        combatStats = entity.getComponent(CombatStatsComponent.class);
         hitboxComponent = entity.getComponent(HitboxComponent.class);
         leftContact = true;
     }
@@ -62,74 +60,20 @@ public class EnvironmentalAttackComponent extends Component {
      * @param other The targeted entity's fixture
      */
     private void onCollisionStart(Fixture me, Fixture other) {
-        if (hitboxComponent.getFixture() != me) {
-            // Not triggered by hitbox, ignore
-            return;
-        }
-
-        if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
-            // Doesn't match our target layer, ignore
-            return;
-        }
-
-        // Has come into contact
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+        EnvironmentStatsComponent targetEnvironmentStats = target.getComponent(EnvironmentStatsComponent.class);
         leftContact = false;
-        // If No Hitbox
-        if (target.getComponent(HitboxComponent.class) == null) {
-            return;
-        }
-        if (target.getComponent(HitboxComponent.class).getLayer() != PhysicsLayer.PLAYER && target.getComponent(HitboxComponent.class).getLayer() != PhysicsLayer.STRUCTURE) {
-            // Do nothing
-            logger.debug("Non-target");
-        } else if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.PLAYER || target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
-            //Damage Structure while still in contact
-            hitOnce(target, targetStats);
-        }
+        damage(targetEnvironmentStats, targetStats);
     }
 
     private void damage(EnvironmentStatsComponent targetState, CombatStatsComponent targetStats) {
-        if (targetState.getFrozenLevel() < 100) {
-            return;
-        }
         targetState.damage(targetStats);
-    }
-    private void hitOnce(Entity target, CombatStatsComponent targetStats){
-        if (targetStats != null) {
-            // Valid damage dealt
-            targetStats.hit(combatStats);
+        if (targetState.getFrozenLevel() < 100) {
+            targetState.setFrozenLevel(targetState.getFrozenLevel() + 1);
         }
-
-        // Knockback
-        PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
-        if (physicsComponent != null && knockbackForce > 0f) {
-            Body targetBody = physicsComponent.getBody();
-            Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
-            Vector2 impulse = direction.setLength(knockbackForce);
-            targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
-        }
-
-        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-        animator.stopAnimation();
-        entity.getComponent(HitboxComponent.class).setLayer((short) 0);
-
-        // Dispose Entity with animation
-        entity.getEvents().trigger("explode");
-        // Schedule a task to execute entity::dispose after a delay
-        // Get the duration of the projectile explosion animation
-        float deathAnimationDuration = animator.getAnimationDuration("explode");
-        // Convert the duration from seconds to milliseconds for the Timer
-        long delay = (long) (deathAnimationDuration * 1000);
-        Timer timer = new Timer();
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Gdx.app.postRunnable(entity::dispose);
-            }
-        }, delay); // Delay based on the dispose animation duration
-
+        // else {
+        //}
     }
 
     /**

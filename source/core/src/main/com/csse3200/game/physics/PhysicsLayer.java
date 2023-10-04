@@ -10,6 +10,7 @@ public class PhysicsLayer {
   public static final short DISPLAY_ONLY = (1 << 11);
   public static final short ITEMS_ABOVE_PLATFORM = (1 << 12);
   public static final short SHIP = (1<<1);
+  public static final short SLIDER = (1<<1);
   public static final short LABORATORY = (1<<5);
 
   // Terrain obstacle, e.g. trees

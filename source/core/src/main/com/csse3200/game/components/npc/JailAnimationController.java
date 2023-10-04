@@ -5,14 +5,22 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
+/**
+ * A component responsible for controlling the animation of a jail object.
+ */
 public class JailAnimationController extends Component {
     private final AssetManager assetManager;
-    private AnimationRenderComponent animator;
+    public AnimationRenderComponent animator;
     private TextureAtlas atlas;
 
     private float animationTimer = 0f;
-    private float animationDuration = 10f; // Adjust this to control animation speed.
+    float animationDuration = 10f; // Adjust this to control animation speed.
 
+    /**
+     * Creates a new JailAnimationController with an AssetManager for managing assets.
+     *
+     * @param assetManager The AssetManager used for loading assets.
+     */
     public JailAnimationController(AssetManager assetManager) {
         this.assetManager = assetManager;
     }
@@ -21,7 +29,7 @@ public class JailAnimationController extends Component {
     public void create() {
         super.create();
 
-        // Initialize your animator and load the atlas.
+        // Initialize the animator and load the atlas.
         animator = entity.getComponent(AnimationRenderComponent.class);
         assetManager.load("images/Jail/jail.atlas", TextureAtlas.class);
         assetManager.finishLoading();
@@ -44,7 +52,6 @@ public class JailAnimationController extends Component {
             // Switch between animations.
             switch (animator.getCurrentAnimation()) {
                 case "jail_close" -> animator.startAnimation("jail_open");
-
                 default ->
                         animator.startAnimation("jail_close");
             }

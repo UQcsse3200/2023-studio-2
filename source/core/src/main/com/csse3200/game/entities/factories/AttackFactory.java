@@ -1,12 +1,16 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.Weapons.SpecWeapon.*;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
-import com.csse3200.game.components.Weapons.WeaponTargetComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.explosives.ExplosiveComponent;
+import com.csse3200.game.components.explosives.ExplosiveConfig;
+import com.csse3200.game.components.player.WeaponComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
@@ -17,98 +21,82 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
+import java.util.ArrayList;
+
 /**
  * Class to create weapons when the player attacks
  */
 public class AttackFactory {
-  private static final WeaponConfigs configs =
-          FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
+    private static final WeaponConfigs configs =
+            FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
 
-  //TODO: REMOVE - LEGACY
-  /**
-   * Static function to create a new weapon entity
-   * @param weaponType - the type of weapon entity to be made
-   * @param initRot - the initial rotation of the player
-   * @param player - the player using this attack
-   * @return A reference to the created weapon entity
-   */
-  public static Entity createAttack(WeaponType weaponType, float initRot, Entity player) {
-    WeaponConfig config = configs.GetWeaponConfig(weaponType);
-    InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
-    playerInventory.setEquippedCooldown(config.attackCooldown);
-    playerInventory.changeEquippedAmmo(-config.ammoUse);
+    //TODO: REMOVE - LEGACY
 
-    int direction = 1;
-    switch (weaponType) {
-      case MELEE_WRENCH, MELEE_KATANA:
-        if (initRot > 120 && initRot < 300) {direction = -1;}
-        break;
-      default:
+    /**
+     * function to generate multiple attacks in a sequence attack
+     * @param weaponType
+     * @param attackDirection
+     * @param player
+     * @return
+     */
+    public static ArrayList<Entity> createAttacks(WeaponType weaponType, float attackDirection, Entity player) {
+        WeaponConfig config = configs.GetWeaponConfig(weaponType);
+        int numberOfAttacks = config.projectiles;
+
+        //Check usage requirements
+        InventoryComponent invComp = player.getComponent(InventoryComponent.class);
+        if (invComp.getCurrentAmmo() - config.ammoUse < 0) {
+            return null;
+        }
+        invComp.setEquippedCooldown(config.attackCooldown);
+        invComp.changeEquippedAmmo(-config.ammoUse);
+
+        ArrayList<Entity> attacks = new ArrayList<>();
+        for (int i = 0; i < numberOfAttacks; i++) {
+            Entity attack = createAttack(config, attackDirection, player, i);
+            attacks.add(attack);
+        }
+        return attacks;
     }
 
-    WeaponControllerComponent weaponController = new WeaponControllerComponent(weaponType,
-            config.weaponDuration,
-            initRot + config.initialRotationOffset,
-            config.weaponSpeed * direction,
-            config.rotationSpeed * direction,
-            config.animationType,
-            config.imageRotationOffset);
+    /**
+     * Static function to create a new weapon entity
+     * @param config config to weapon to create
+     * @param attackDirection - the initial rotation of the player
+     * @param player          - the player using this attack
+     * @param attackNum - the number of the attack in the sequence
+     * @return A reference to the created weapon entity
+     */
+    public static Entity createAttack(WeaponConfig config, float attackDirection, Entity player, int attackNum) {
+        WeaponControllerComponent wepCon = switch (config.type) {
+            case MELEE_WRENCH, MELEE_KATANA ->
+                    new MeleeSwingController(config, attackDirection, player);
+            case MELEE_BEE_STING -> new KillerBeeController(config, attackDirection, player, attackNum);
+            case RANGED_BOOMERANG, RANGED_BLUEMERANG -> new BoomerangController(config, attackDirection, player, attackNum);
+            case RANGED_GRENADE ->  new GrenadeController(config, attackDirection, player, attackNum);
+            case RANGED_SLINGSHOT -> new ProjectileController(config, attackDirection, player, attackNum);
+            case RANGED_HOMING -> new HomingProjectileController(config, attackDirection, player, attackNum);
+            case RANGED_MISSILES -> new HomingMissileSprayProjectileController(config, attackDirection, player, attackNum);
+            default -> throw new IllegalArgumentException("No controller defined for weapon type: " + config.type);
+        };
 
-    Entity attack =new Entity()
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WEAPON))
-                    .addComponent(new TouchAttackComponent((short)
-                            (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE)))
-                    .addComponent(weaponController);
-    attack.setEntityType("playerWeapon");
+        //Creating the Attack entity with require components
+        Entity attack = new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WEAPON))
+                .addComponent(new TouchAttackComponent((short)
+                        (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE)))
+                .addComponent(new AnimationRenderComponent(new TextureAtlas(config.textureAtlas)))
+                .addComponent(new CombatStatsComponent(config.health, (int) config.damage, 1, false))
+                .addComponent(new SoundComponent(config.sound))
+                .addComponent(wepCon);
 
-    TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
-    AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
-
-    switch (config.animationType) {
-      case 8:
-        animator.addAnimation("LEFT3", 0.07f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("RIGHT3", 0.07f, Animation.PlayMode.NORMAL);
-      case 6:
-        animator.addAnimation("LEFT2", 0.07f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("RIGHT2", 0.07f, Animation.PlayMode.NORMAL);
-      case 4:
-        animator.addAnimation("LEFT1", 0.07f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("RIGHT1", 0.07f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("DOWN", 0.07f, Animation.PlayMode.NORMAL);
-      default:
-        animator.addAnimation("UP", 0.07f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("STATIC", 0.07f, Animation.PlayMode.NORMAL);
+        //Final configurations on entity
+        attack.setEntityType("playerWeapon");
+        attack.scaleWidth(config.imageScale);
+        return attack;
     }
-
-    attack.addComponent(animator)
-            .addComponent(new CombatStatsComponent(30, 10, 1, false));
-
-    if (weaponType == WeaponType.MELEE_KATANA || weaponType == WeaponType.MELEE_BEE_STING) {
-      int dir = (int) Math.floor(initRot / 60);
-      switch (dir) {
-        case 0, 5 -> animator.startAnimation("RIGHT1");
-        case 1 -> animator.startAnimation("UP");
-        case 2, 3 -> animator.startAnimation("LEFT1");
-        case 4 -> animator.startAnimation("DOWN");
-      }
-    } else if (weaponType == WeaponType.RANGED_BOOMERANG) {
-      animator.removeAnimation("UP");
-      animator.addAnimation("UP", 0.07f, Animation.PlayMode.LOOP);
-      animator.startAnimation("UP");
-    } else {
-      animator.startAnimation("UP");
+    private AttackFactory() {
+        throw new IllegalStateException("Instantiating static util class");
     }
-
-    attack.scaleWidth(config.imageScale);
-
-    attack.addComponent(new WeaponTargetComponent(weaponType, player));
-    return attack;
-  }
-
-  private AttackFactory() {
-    throw new IllegalStateException("Instantiating static util class");
-  }
 }
-
-

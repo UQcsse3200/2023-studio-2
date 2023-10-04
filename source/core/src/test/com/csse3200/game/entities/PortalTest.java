@@ -7,8 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -50,5 +49,55 @@ public class PortalTest {
         Vector2 actual = new Vector2(10, 10);
 
         assertEquals(player.getPosition(), actual);
+    }
+
+    @Test
+    public void testTeleportWithNullEntity() {
+        Portal portal = new Portal(null);
+        // Ensure that teleporting with a null entity doesn't throw an exception
+        assertDoesNotThrow(() -> portal.teleport(player));
+    }
+
+    @Test
+    public void testTeleportToSamePosition() {
+        Vector2 initialPosition = new Vector2(player.getPosition());
+        portal.teleport(player);
+        // Ensure that teleporting to the same position doesn't change the player's position
+        assertEquals(initialPosition, player.getPosition());
+    }
+
+    @Test
+    public void testTeleportWithDifferentCompanionPosition() {
+        Entity companion = ServiceLocator.getEntityService().getCompanion();
+        companion.setPosition(10, 10);
+
+        portal.teleport(player);
+
+        Vector2 expected = new Vector2(0, 0);
+
+        assertEquals(player.getPosition(), expected);
+    }
+
+    @Test
+    public void testTeleportWithDifferentPortalPosition() {
+        portal.setPosition(20, 20);
+
+        portal.teleport(player);
+
+        Vector2 expected = new Vector2(20, 20);
+
+        assertEquals(player.getPosition(), expected);
+    }
+
+    @Test
+    public void testTeleportWithCompanionOffset() {
+        Entity companion = ServiceLocator.getEntityService().getCompanion();
+        companion.setPosition(5, 5);
+
+        portal.teleport(player);
+
+        Vector2 expected = new Vector2(0, 0);
+
+        assertEquals(player.getPosition(), expected);
     }
 }

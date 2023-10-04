@@ -32,7 +32,6 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.csse3200.game.utils.LoadUtils.joinPath;
@@ -48,8 +47,6 @@ public class MapGameArea extends GameArea{
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
     protected boolean validLoad = true;
-    private static List<Entity> itemsOnMap = new ArrayList<>();
-    private String thing;
     private static boolean freezing;
 
     public MapGameArea(String levelName, String game_area, TerrainFactory terrainFactory, GdxGame game) {
@@ -85,8 +82,8 @@ public class MapGameArea extends GameArea{
         spawnShip();
         player = spawnPlayer();
         companion = spawnCompanion();
+        spawnPowerups();
         spawnLaboratory();
-        companion.getEvents().addListener("SpawnPowerup",this::spawnPowerups);
         spawnPortal(player);
         spawnTreeTop();
         spawnAstro();
@@ -98,6 +95,7 @@ public class MapGameArea extends GameArea{
         //spawnBotanist();
         //spawnEnvironmentDamage();
         spawnFreezingArea();
+        spawnEnvironmentDamage();
 
         displayUI();
         playMusic();
@@ -227,12 +225,6 @@ public class MapGameArea extends GameArea{
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
     }
 
-    public static void removeItemOnMap(Entity entityToRemove) {
-        entityToRemove.setEnabled(false);
-        itemsOnMap.remove(entityToRemove);
-        Gdx.app.postRunnable(entityToRemove::dispose);
-    }
-
     /**
      * Spawns the game environment
      */
@@ -253,7 +245,7 @@ public class MapGameArea extends GameArea{
     /**
      * Spawns powerups in the map at the positions as outlined by the config file
      */
-    private void spawnPowerups(PowerupType powerupType) {
+    private void spawnPowerups() {
         for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.getEntities(PowerupConfig.class)) {
             Entity powerup = PowerupFactory.createPowerup(powerupConfig);
             spawnEntityAt(powerup, powerupConfig.position, true, false);

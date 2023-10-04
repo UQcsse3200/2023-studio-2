@@ -3,7 +3,6 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.*;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.configs.PowerupConfig;
 import com.csse3200.game.entities.configs.PowerupConfigs;
 import com.csse3200.game.files.FileLoader;
@@ -36,21 +35,21 @@ public class PowerupFactory {
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
                 .addComponent(new ItemPickupComponent(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
                 .addComponent(new PowerUpDisplayHUD(config.type));
-/*
-        powerup.addComponent(new InteractableComponent(powerup.getComponent(PowerupComponent.class)::applyEffect, 1f));*/
+
+        powerup.addComponent(new InteractableComponent(entity -> powerup.getComponent(PowerupComponent.class).applyEffect(), 1f));
         powerup.setScale(0.6f, 0.6f);
 
         // Assigns texture based on the specific PowerupType
         switch (config.type) {
-            case HEALTH_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/powerups/health_potion.png"))
+            case HEALTH_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/powerups/health_boost.png"))
                                          .addComponent(new PowerupComponent(PowerupType.HEALTH_BOOST));}
-            case SPEED_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/powerups/speed_potion.png"))
+            case SPEED_BOOST -> {powerup.addComponent(new TextureRenderComponent("images/powerups/speed_boost.png"))
                                          .addComponent(new PowerupComponent(PowerupType.SPEED_BOOST));}
             case EXTRA_LIFE -> {powerup.addComponent(new TextureRenderComponent("images/powerups/extra_life.png"))
                                          .addComponent(new PowerupComponent(PowerupType.EXTRA_LIFE));}
             case DOUBLE_CROSS -> {powerup.addComponent(new TextureRenderComponent("images/powerups/double_cross.png"))
                                          .addComponent(new PowerupComponent(PowerupType.DOUBLE_CROSS));}
-            case TEMP_IMMUNITY -> {powerup.addComponent(new TextureRenderComponent("images/powerups/invincibility_potion.png"))
+            case TEMP_IMMUNITY -> {powerup.addComponent(new TextureRenderComponent("images/powerups/temp_immunity.png"))
                                           .addComponent(new PowerupComponent(PowerupType.TEMP_IMMUNITY));}
             case DOUBLE_DAMAGE -> {powerup.addComponent(new TextureRenderComponent("images/powerups/double_damage.png"))
                                           .addComponent(new PowerupComponent(PowerupType.DOUBLE_DAMAGE));}

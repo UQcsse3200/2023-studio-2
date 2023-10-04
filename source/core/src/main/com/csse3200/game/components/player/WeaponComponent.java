@@ -8,6 +8,7 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.factories.AttackFactory;
 import com.csse3200.game.entities.factories.PlayerWeaponFactory;
 import com.csse3200.game.services.ServiceLocator;
+import net.dermetfan.utils.Pair;
 
 import java.util.ArrayList;
 
@@ -40,15 +41,14 @@ public class WeaponComponent extends Component {
      */
     private void playerAttacking(WeaponType weaponType, Vector2 clickPosition) {
         float attackDirection = calcRotationAngleInDegrees(entity.getCenterPosition(), clickPosition);
-        ArrayList<Entity> newAttacks = AttackFactory.createAttacks(weaponType, attackDirection, entity);
+        ArrayList<Pair<Entity, Integer>> attacks = AttackFactory.createAttacks(weaponType, attackDirection, entity);
 
-        if (newAttacks == null) {
+        if (attacks == null) {
             return;
         }
 
-        for (Entity newAttack : newAttacks) {
-            ServiceLocator.getEntityPlacementService().PlaceEntity(newAttack);
-            //newAttack.getEvents().trigger("playSound", "start");
+        for (Pair<Entity, Integer> attack : attacks) {
+            ServiceLocator.getEntityPlacementService().PlaceEntityAfter(attack.getKey(), attack.getValue());
         }
 
         InventoryComponent invComp = entity.getComponent(InventoryComponent.class);

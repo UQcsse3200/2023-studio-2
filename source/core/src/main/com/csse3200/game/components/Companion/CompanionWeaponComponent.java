@@ -1,6 +1,7 @@
 package com.csse3200.game.components.Companion;
 
 
+import com.csse3200.game.components.CompanionWeapons.CompanionWeaponTargetComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
 
@@ -8,6 +9,7 @@ import com.csse3200.game.entities.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.factories.CompanionAttackFactory;
 import com.csse3200.game.entities.factories.CompanionWeaponFactory;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 
@@ -66,9 +68,15 @@ public class CompanionWeaponComponent extends Component {
     private void makeNewHolding(CompanionWeaponType weapon) {
         if (this.CurrentWeapon  != null) {this.CurrentWeapon .dispose();}
         this.CurrentWeapon  = CompanionWeaponFactory.createCompanionWeapon(weapon, ServiceLocator.getEntityService().getCompanion());
+
         Vector2 placePos = positionInDirection(10, 0.3f, this.CurrentWeapon );
+        if (weapon == CompanionWeaponType.SHIELD) {
+            placePos = positionInDirection(90, -0.7f, this.CurrentWeapon );
+        }
+
 
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(this.CurrentWeapon , placePos);
+        this.CurrentWeapon.addComponent(new HitboxComponent());
     }
 
     private Vector2 positionInDirection(double direction, float distance, Entity attack) {

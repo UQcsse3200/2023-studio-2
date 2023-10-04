@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.ItemPickupComponent;
@@ -90,6 +91,7 @@ public class CompanionActions extends Component {
             COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
             //entity.getComponent(CombatStatsComponent.class).addHealth(40);
             entity.getEvents().trigger("companionModeChange","Defence");
+            triggerMakeCompanionShield();
         } else if (Objects.equals(mode, COMPANION_MODE_ATTACK)) {
             COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
             entity.getEvents().trigger("companionModeChange","Attack");
@@ -166,6 +168,10 @@ public class CompanionActions extends Component {
                 Gdx.input.isKeyPressed(Input.Keys.K) || Gdx.input.isKeyPressed(Input.Keys.L);
     }
 
+    public String getCompanionMode() {
+        return companionMode;
+    }
+
     public void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
@@ -217,11 +223,18 @@ public class CompanionActions extends Component {
         return COMPANION_SPEED;
     }
 
+
+    /**
+     * This funciton is to spawn a spinning shield around the companion
+     */
+    public void triggerMakeCompanionShield() {
+        ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, CompanionWeaponType.SHIELD);
+    }
+
     private void triggerInventoryEvent(String slot) {
         CompanionInventoryComponent invComp = ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class);
         invComp.setEquipped(slot);
         ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
-
     }
 
 }

@@ -60,7 +60,7 @@ public class PowerUpDisplayHUD extends UIComponent {
             return ExtraLifeImage;
         }
         if (powerUpEntity == PowerupType.TEMP_IMMUNITY) {
-            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/invincibility_potion.png", Texture.class));
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/temp_immunity.png", Texture.class));
             return ExtraLifeImage;
         }
         if (powerUpEntity == PowerupType.DOUBLE_DAMAGE) {

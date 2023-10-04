@@ -20,7 +20,7 @@
   },
 
   "tempImmunityPowerup": {
-    "imagePath": "images/powerups/invincibility_potion.png",
+    "imagePath": "images/powerups/temp_immunity.png",
     "type": "TEMP_IMMUNITY"
   },
 

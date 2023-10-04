@@ -49,7 +49,7 @@ public class PowerupFactory {
                                          .addComponent(new PowerupComponent(PowerupType.EXTRA_LIFE));}
             case DOUBLE_CROSS -> {powerup.addComponent(new TextureRenderComponent("images/powerups/double_cross.png"))
                                          .addComponent(new PowerupComponent(PowerupType.DOUBLE_CROSS));}
-            case TEMP_IMMUNITY -> {powerup.addComponent(new TextureRenderComponent("images/powerups/invincibility_potion.png"))
+            case TEMP_IMMUNITY -> {powerup.addComponent(new TextureRenderComponent("images/powerups/temp_immunity.png"))
                                           .addComponent(new PowerupComponent(PowerupType.TEMP_IMMUNITY));}
             case DOUBLE_DAMAGE -> {powerup.addComponent(new TextureRenderComponent("images/powerups/double_damage.png"))
                                           .addComponent(new PowerupComponent(PowerupType.DOUBLE_DAMAGE));}

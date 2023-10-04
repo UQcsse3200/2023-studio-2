@@ -2,14 +2,21 @@ package com.csse3200.game.rendering;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /** Provides functionality to draw lines/shapes to the screen for debug purposes. */
 public class DebugRenderer {
@@ -97,6 +104,64 @@ public class DebugRenderer {
     requestCount++;
   }
 
+  /**
+   * Draw a grid on the terrain
+   *
+   * @param startX Starting x-coordinate
+   * @param startY Starting y-coordinate
+   * @param endX Ending x-coordinate
+   * @param endY Ending y-coordinate
+   * @param cellSize Size of each cell in the grid
+   * @param color Grid color
+   */
+  public void drawGrid(float startX, float startY, float endX, float endY, float cellSize, Color color) {
+    // Ensure the ShapeRenderer is in the right mode.
+    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+    shapeRenderer.setColor(color);
+
+    // Draw vertical lines
+    for (float x = startX; x <= endX; x += cellSize) {
+      shapeRenderer.line(x, startY, x, endY);
+    }
+
+    // Draw horizontal lines
+    for (float y = startY; y <= endY; y += cellSize) {
+      shapeRenderer.line(startX, y, endX, y);
+    }
+
+    // End the drawing.
+    shapeRenderer.end();
+  }
+
+  /**
+   * Draw and fill specific grid cells
+   *
+   * @param gameAreaGrids Hashmap containing the grid coordinates to be filled
+   * @param tileSize Size of each cell in the grid
+   * @param fillColor Color to fill the cells with
+   */
+  public void drawFillSpecificGrids(HashMap<GridPoint2, Entity> gameAreaGrids, float tileSize, Color fillColor) {
+    ensureCapacity();
+
+    // Create a new color based on fillColor but with reduced opacity (e.g., 50% opacity)
+    Color semiTransparentFillColor = new Color(fillColor.r, fillColor.g, fillColor.b, 0.35f);
+
+    //Enable blending
+    Gdx.gl.glEnable(GL20.GL_BLEND);
+    shapeRenderer.begin(ShapeType.Filled);
+
+    // Fill specific squares from the hashmap
+    for (GridPoint2 point : gameAreaGrids.keySet()) {
+      float x = point.x * tileSize;
+      float y = point.y * tileSize;
+      shapeRenderer.setColor(semiTransparentFillColor);  // Use the color with lowered opacity
+      shapeRenderer.rect(x, y, tileSize, tileSize);
+    }
+
+    shapeRenderer.end();
+    Gdx.gl.glDisable(GL20.GL_BLEND);
+  }
+
   /** @param active true to enable debug drawing, false to disable */
   public void setActive(boolean active) {
     logger.info("Set debug to: {}", active);
@@ -114,6 +179,15 @@ public class DebugRenderer {
 
     if (physicsWorld != null) {
       physicsRenderer.render(physicsWorld, projMatrix);
+    }
+
+    if (ServiceLocator.getGameArea() != null) {
+      GridPoint2 mapBounds = ServiceLocator.getGameArea().getTerrain().getMapBounds(0);
+      HashMap<GridPoint2, Entity> fillerGrids = ServiceLocator.getGameArea().getAreaEntities();
+      float tileSize = ServiceLocator.getGameArea().getTerrain().getTileSize();
+      drawGrid(0, 0, mapBounds.x, mapBounds.y, tileSize, Color.WHITE);
+      shapeRenderer.end();
+      drawFillSpecificGrids(fillerGrids, tileSize, Color.RED);
     }
 
     shapeRenderer.setProjectionMatrix(projMatrix);

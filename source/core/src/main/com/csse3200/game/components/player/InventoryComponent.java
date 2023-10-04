@@ -33,7 +33,6 @@ public class InventoryComponent extends Component {
         equippedWMap.put("ranged", new InventoryItem(WeaponType.RANGED_BOOMERANG, 30, 30));
         equippedWMap.put("building", new InventoryItem(WeaponType.WOODHAMMER));
     }
-
     @Override
     public void update() {
         this.equippedWMap.get(getEquipped()).decCoolDown();
@@ -77,12 +76,6 @@ public class InventoryComponent extends Component {
      **/
     public ArrayList<WeaponType> getEquippedWeapons() {
         return equippedWMap.values().stream().map(InventoryItem::getItem).collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    // not needed anymore?
-    // TODO Connor (Used in upgrade display ~586)
-    public void placeInSlot(WeaponType weaponType) {
-        replaceSlotWithWeapon(config.GetWeaponConfig(weaponType).slotType, weaponType);
     }
 
     /**

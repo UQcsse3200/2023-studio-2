@@ -46,9 +46,26 @@ public class PowerupComponentTest {
 
         // Assert
         assertEquals(2, playerEntity.getComponent(CombatStatsComponent.class).getLives());
-
     }
+    /**
+     * Tests the effect of applying an extra life power-up to an entity's combat stats
+     * when its number of lives is already at a maximum (4).
+     * Ensures that after applying the extra life power-up, the number of entity's lives
+     * does not change.
+     */
+    @Test
+    public void testExtraLifeMaxReached() {
+        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 10, 1, false, 4))
+                .addComponent(new PlayerActions());
 
+        when(entityService.getPlayer()).thenReturn(playerEntity);
+
+        PowerupComponent powerupComponent = new PowerupComponent(PowerupType.EXTRA_LIFE);
+        powerupComponent.applyEffect();
+
+        // Assert
+        assertEquals(4, playerEntity.getComponent(CombatStatsComponent.class).getLives());
+    }
     @Test
     void shouldApplyHealthBoost() {
         Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 10, 2, false, 3))
@@ -133,6 +150,77 @@ public class PowerupComponentTest {
 
         // Assert after the duration
         assertEquals(1, playerEntity.getComponent(CombatStatsComponent.class).getAttackMultiplier());
+    }
+    /**
+     * Tests the retrieval of the type of power-up component.
+     * Ensures that the returned power-up type matches the type with which the component was initialized.
+     */
+    @Test
+    public void testGetType() {
+        // Initialise Health and Speed Powerups
+        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
+        PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST);
+        // Test Health PowerupType
+        assertNotNull(healthpowerup);
+        assertEquals(healthpowerup.getType(), PowerupType.HEALTH_BOOST);
+        assertNotSame(healthpowerup.getType(), PowerupType.SPEED_BOOST);
+        // Test Speed PowerupType
+        assertNotNull(speedpowerup);
+        assertEquals(speedpowerup.getType(), PowerupType.SPEED_BOOST);
+        assertNotSame(speedpowerup.getType(), PowerupType.HEALTH_BOOST);
+        // Test Speed and Health Powerup types
+        assertNotSame(speedpowerup.getType(), healthpowerup.getType());
+    }
+
+    /**
+     * Tests the ability to change the type of a power-up component.
+     * Ensures that after setting a new type, the returned type matches the newly set type.
+     */
+    @Test
+    public void testSetType() {
+        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
+        PowerupComponent speedpowerup = new PowerupComponent(PowerupType.SPEED_BOOST);
+        // Test setting health powerup
+        healthpowerup.setType(PowerupType.SPEED_BOOST);
+        assertEquals(healthpowerup.getType(), PowerupType.SPEED_BOOST);
+        // Test setting speed powerup
+        speedpowerup.setType(PowerupType.HEALTH_BOOST);
+        assertEquals(speedpowerup.getType(), PowerupType.HEALTH_BOOST);
+        // Test setting both back
+        speedpowerup.setType(PowerupType.SPEED_BOOST);
+        healthpowerup.setType(PowerupType.HEALTH_BOOST);
+        assertEquals(speedpowerup.getType(), PowerupType.SPEED_BOOST);
+        assertEquals(healthpowerup.getType(), PowerupType.HEALTH_BOOST);
+    }
+    /**
+     * Tests the ability to set the duration for which the power-up effect lasts.
+     * Ensures that after setting a duration, the returned duration matches the set value.
+     */
+    @Test
+    public void testSetDuration() {
+        PowerupComponent powerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
+        long testDuration1 = 100;
+        long testDuration2 = 1000;
+        // Test setting the first duration
+        powerup.setDuration(testDuration1);
+        assertEquals(testDuration1, powerup.getDuration());
+        // Test setting the second duration
+        powerup.setDuration(testDuration2);
+        assertEquals(testDuration2, powerup.getDuration());
+    }
+    /**
+     * Tests the retrieval of the duration for which the power-up effect lasts.
+     * Ensures that the returned duration matches the set value.
+     */
+    @Test
+    public void testGetDuration() {
+        PowerupComponent healthpowerup = new PowerupComponent(PowerupType.HEALTH_BOOST);
+        healthpowerup.setDuration(100);
+        long initialDuration = healthpowerup.getDuration();
+        assertTrue(initialDuration > 0);
+        long newDuration = 200;
+        healthpowerup.setDuration(newDuration);
+        assertEquals(newDuration, healthpowerup.getDuration());
     }
 
     // @Test

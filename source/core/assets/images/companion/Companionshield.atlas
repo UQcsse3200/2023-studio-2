@@ -1,0 +1,12 @@
+Companionshield .png
+size: 116, 116
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+CompanionShield
+  rotate: false
+  xy: 1, 1
+  size: 114, 114
+  orig: 400, 400
+  offset: 137, 149
+  index: -1

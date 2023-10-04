@@ -27,6 +27,8 @@ public class PlayerActions extends Component {
     private PhysicsComponent physicsComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
+    private boolean sliding = false;
+    private float freezeFactor = 1.0f;
 
     @Override
     public void create() {
@@ -43,22 +45,45 @@ public class PlayerActions extends Component {
 
     @Override
     public void update() {
+        // Set the condition to always true for now
+        if (MapGameArea.isFreezing()) {
+            if(freezeFactor > 0.25f) {
+                freezeFactor -= 0.001f;
+            } else {
+                freezeFactor = 0.25f;
+            }
+        } else {
+            if(freezeFactor < 1.0f) {
+                freezeFactor += 0.02f;
+            } else {
+                freezeFactor = 1.0f;
+            }
+        }
         if (moving) {
             updateSpeed();
         }
     }
 
     /**
-     * Updates the player's velocity in the direction they are walking
+     * The player gets slower when walking on certain frozen tiles
      */
     private void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
         float speedMult = MapGameArea.getSpeedMult();
         Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(MAX_SPEED.x * speedMult, MAX_SPEED.y * speedMult));
-        // impulse = (desiredVel - currentVel) * mass
-        Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
-        body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+        desiredVelocity.scl(freezeFactor); // Reduce speed when the condition is true (always true for now)
+
+        if(sliding) {
+            velocity.scl(0.95f);
+            if(velocity.isZero(0.01f)){
+                sliding = false;
+            }
+        }
+        else {
+            Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
+            body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+        }
     }
 
     /**
@@ -76,6 +101,7 @@ public class PlayerActions extends Component {
      */
     void stopWalking() {
         this.walkDirection = Vector2.Zero.cpy();
+        sliding = MapGameArea.isOnIce();
         updateSpeed();
         moving = false;
     }

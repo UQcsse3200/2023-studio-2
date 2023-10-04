@@ -4,10 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.player.WeaponComponent;
+import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Class to control the movement of weapons that have been spawned
@@ -60,6 +61,11 @@ public abstract class WeaponControllerComponent extends Component {
             add_animations(animator);
             initial_animation(animator);
         }
+
+        SoundComponent sComp = entity.getComponent(SoundComponent.class);
+        if (sComp != null) {
+            //sComp.playSound("start");
+        }
     }
 
     /**
@@ -73,6 +79,10 @@ public abstract class WeaponControllerComponent extends Component {
         if (--this.remainingDuration <= 0) {
             despawn();
         }
+    }
+
+    public Integer get_spawn_delay() {
+        return 0;
     }
 
     /**
@@ -131,12 +141,14 @@ public abstract class WeaponControllerComponent extends Component {
     /**
      * respawn a weapon when it runs out of duration or health
      */
-    private void despawn() {
+    protected void despawn() {
         AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
+
         if (animator != null) {
             //entity.getEvents().trigger("playSound", "stop");
             animator.stopAnimation();
         }
+
         Gdx.app.postRunnable(entity::dispose);
     }
 
@@ -147,6 +159,11 @@ public abstract class WeaponControllerComponent extends Component {
      */
     private void setDuration(int duration) {
         this.remainingDuration = duration;
+    }
+
+    /** Returns the current weapons config **/
+    public WeaponConfig getConfig() {
+        return config;
     }
 
     /**

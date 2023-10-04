@@ -1,10 +1,15 @@
 package com.csse3200.game.components.InitialSequence;
 
-
 import aurelienribon.tweenengine.TweenAccessor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+/**
+ * An accessor class for tweening the alpha (transparency) property of a Label using the Universal Tween Engine.
+ */
 public class LabelAccessor implements TweenAccessor<Label> {
+    /**
+     * Tween type for changing the alpha property.
+     */
     public static final int ALPHA = 1;
 
     @Override

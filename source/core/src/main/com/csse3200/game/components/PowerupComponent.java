@@ -1,12 +1,10 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -119,11 +117,10 @@ public class PowerupComponent extends Component {
                         enemy = enemies.get(nextInt);
                     }
                     enemies.remove(nextInt);
-                    for (Entity enemytarget : enemies) {
-                        if ((enemy != null) && (enemy != enemytarget)) {
+                    for (Entity enemyTarget : enemies) {
+                        if (enemy != enemyTarget) {
                             EnemyFactory.targetSet(
-                                    enemytarget,
-                                    enemy.getComponent(HitboxComponent.class).getLayer(),
+                                    enemyTarget,
                                     enemy.getComponent(AITaskComponent.class));
                         }
                     }

@@ -217,7 +217,7 @@ public class NPCFactory {
     Tutnpc.getComponent(ColliderComponent.class).setDensity(1.5f);
     Tutnpc.scaleHeight(0.7f);
     Tutnpc.addComponent(new InteractableComponent(entity -> {
-      Tutnpc.getComponent(DialogComponent.class).showdialogue("Dev bhai tomper hai. period.", "");
+      Tutnpc.getComponent(DialogComponent.class).showdialogue("I am your Tutorial Guide", "");
     },3f));
     animator.startAnimation("row-2-column-1");
     return Tutnpc;

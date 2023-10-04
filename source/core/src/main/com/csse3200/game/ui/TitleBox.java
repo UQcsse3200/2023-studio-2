@@ -27,7 +27,7 @@ public class TitleBox extends Dialog {
         titleLabel.setFontScale(0.2f); // Adjust font scale as needed
         titleLabel.setColor(Color.BLACK); // TitleBox Title Color can be changed here
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("thick", Label.LabelStyle.class));
+        Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("small", Label.LabelStyle.class));
         labelStyle.font.getData().setScale(0.3f); // Set the font scale to make it larger
 
         descriptionLabel = new Label(description, labelStyle);

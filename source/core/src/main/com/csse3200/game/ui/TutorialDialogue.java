@@ -17,7 +17,7 @@ public class TutorialDialogue extends Dialog {
     public TutorialDialogue(GdxGame game, String title, String content, Skin skin) {
         super(title, skin); // Set the title during initialization
         this.skin=skin;
-        Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("thick", Label.LabelStyle.class));
+        Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("small", Label.LabelStyle.class));
         labelStyle.font.getData().setScale(0.3f); // Set the font scale to make it larger
         this.content=new Label(content,labelStyle);
         create();

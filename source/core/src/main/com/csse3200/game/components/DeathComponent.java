@@ -55,8 +55,6 @@ public class DeathComponent extends Component {
             this.notkilled = false;
             AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
             animator.stopAnimation();
-            entity.getComponent(TouchAttackComponent.class).dispose();
-
             Vector2 enemyBody = entity.getCenterPosition();
 
             entity.getEvents().trigger("dispose");

@@ -3,7 +3,6 @@ package com.csse3200.game.components.structures.tools;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.csse3200.game.areas.LushGameArea;
 import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,11 +40,11 @@ public abstract class Tool {
         if (!validity.isValid()) {
             if (validity.isError()) {
                 logger.error(validity.getMessage());
-                return;
             }
 
             player.getEvents().trigger("displayWarningAtPosition", validity.getMessage(),
                     new Vector2((float) position.x / 2, (float) position.y / 2));
+            player.getEvents().trigger("playSound", "alert");
             return;
         }
 

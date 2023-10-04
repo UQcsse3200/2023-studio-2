@@ -1,31 +1,42 @@
 package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.rendering.ColorDrawable;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
+/**
+ * A custom UIComponent used which displays text within a yellow border for alerts.
+ */
 public class AlertUIComponent extends UIComponent implements IAlpha {
-    private static final float scaleFactor = 115;
+    /**
+     * The factor to reduce the scale of the batch projection.
+     */
+    private static final float SCALE_FACTOR = 135;
     private final String alert;
     private float alpha = 1.0f;
     private Table table;
     private ColorDrawable backgroundColor1;
     private ColorDrawable backgroundColor2;
+
+    /**
+     * Creates a new AlertUIComponent containing the given text.
+     * @param alert - the text to display within the component.
+     */
     public AlertUIComponent(String alert) {
         this.alert = alert;
     }
 
+    /**
+     * Creates the UI layout for the component.
+     */
     @Override
     public void create() {
         super.create();
@@ -38,7 +49,7 @@ public class AlertUIComponent extends UIComponent implements IAlpha {
         label.setColor(Color.BLACK);
 
         Texture texture = ServiceLocator.getResourceService()
-                .getAsset("images/ActionFeedback/warning.png", Texture.class);
+                .getAsset("images/action-feedback/warning.png", Texture.class);
         Image image = new Image(texture);
 
         innerTable.add(image).padLeft(5).size(30,30);
@@ -56,13 +67,19 @@ public class AlertUIComponent extends UIComponent implements IAlpha {
         table.pack();
     }
 
+    /**
+     * Draws the UI Component on to the screen by dividing the batch's projection matrix by
+     * the SCALE_FACTOR to ensure that the UI isn't drawn too large on the screen.
+     *
+     * @param batch Batch to render to.
+     */
     @Override
     protected void draw(SpriteBatch batch) {
         Matrix4 originalMatrix = batch.getProjectionMatrix().cpy();
 
         var newScale = new Vector3();
         newScale = originalMatrix.getScale(newScale);
-        newScale.scl(1/scaleFactor);
+        newScale.scl(1/ SCALE_FACTOR);
 
         var originalPosition = originalMatrix.getTranslation(new Vector3());
         var originalRotation = originalMatrix.getRotation(new Quaternion());
@@ -72,7 +89,7 @@ public class AlertUIComponent extends UIComponent implements IAlpha {
 
 
         var position = new Vector2(entity.getCenterPosition().x, entity.getPosition().y);
-        position.scl(scaleFactor);
+        position.scl(SCALE_FACTOR);
         table.setPosition(position.x, position.y);
         table.draw(batch, alpha);
         batch.setProjectionMatrix(originalMatrix); //revert projection
@@ -87,7 +104,19 @@ public class AlertUIComponent extends UIComponent implements IAlpha {
     @Override
     public void setAlpha(float alpha) {
         this.alpha = alpha;
-        backgroundColor1.setAlpha(alpha);
-        backgroundColor2.setAlpha(alpha);
+
+        if (backgroundColor1 != null && backgroundColor2 != null) {
+            backgroundColor1.setAlpha(alpha);
+            backgroundColor2.setAlpha(alpha);
+        }
+    }
+
+    /**
+     * Returns the alpha of the component.
+     *
+     * @return the alpha of the component.
+     */
+    public float getAlpha() {
+        return alpha;
     }
 }

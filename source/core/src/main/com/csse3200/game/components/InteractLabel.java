@@ -16,22 +16,18 @@ import com.csse3200.game.services.ServiceLocator;
 
 public class InteractLabel extends Table {
 
-    private Label messageLabelBeforeF;
-    private Image fButtonImage;
-    private Label messageLabelAfterF;
-
     public InteractLabel() {
         super();
 
-        TextureRegionDrawable fButtonDrawable = new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/f_button.png", Texture.class)));
-        fButtonImage = new Image(fButtonDrawable);
+        TextureRegionDrawable fButtonDrawable = new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/interface/f_button.png", Texture.class)));
+        Image fButtonImage = new Image(fButtonDrawable);
 
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
 
-        messageLabelBeforeF = new Label("Press ", skin);
+        Label messageLabelBeforeF = new Label("Press ", skin);
         messageLabelBeforeF.setColor(Color.WHITE);
 
-        messageLabelAfterF = new Label(" to interact", skin);
+        Label messageLabelAfterF = new Label(" to interact", skin);
         messageLabelAfterF.setColor(Color.WHITE);
 
         this.add(messageLabelBeforeF);

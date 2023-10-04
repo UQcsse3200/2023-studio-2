@@ -4,7 +4,6 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PopupFactory;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
@@ -22,6 +21,10 @@ public class ProductionComponent extends Component {
 
     // The time of the last tick
     long lastTime;
+
+    public Resource getProduces() {
+        return produces;
+    }
 
     // The resource type this produces
     Resource produces;

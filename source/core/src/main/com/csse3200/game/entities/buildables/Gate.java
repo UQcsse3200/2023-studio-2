@@ -2,9 +2,12 @@ package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.ParticleComponent;
 import com.csse3200.game.components.ProximityActivationComponent;
+import com.csse3200.game.components.explosives.ExplosiveComponent;
 import com.csse3200.game.components.structures.JoinLayer;
 import com.csse3200.game.components.structures.JoinableComponent;
 import com.csse3200.game.components.structures.JoinableComponentShapes;
@@ -12,6 +15,7 @@ import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.GateConfig;
+import com.csse3200.game.entities.configs.ParticleEffectsConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -26,11 +30,12 @@ public class Gate extends PlaceableEntity {
 
     private static final JoinableComponentShapes shapes =
             FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
-    private TextureAtlas openAtlas;
+    private final TextureAtlas openAtlas;
 
-    private TextureAtlas closedAtlas;
+    private final TextureAtlas closedAtlas;
 
     public Gate(Entity player) {
+        super(2, 2);
         openAtlas = ServiceLocator.getResourceService().getAsset(config.openTextureAtlas, TextureAtlas.class);
         closedAtlas = ServiceLocator.getResourceService().getAsset(config.closedTextureAtlas, TextureAtlas.class);
 
@@ -56,7 +61,6 @@ public class Gate extends PlaceableEntity {
 
 
         getComponent(JoinableComponent.class).updateTextureAtlas(openAtlas);
-
     }
 
     /**

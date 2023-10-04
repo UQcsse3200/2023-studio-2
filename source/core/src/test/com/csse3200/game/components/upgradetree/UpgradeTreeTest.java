@@ -1,7 +1,12 @@
 package com.csse3200.game.components.upgradetree;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
@@ -9,10 +14,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
@@ -43,28 +50,51 @@ public class UpgradeTreeTest {
     @Test
     public void testIsUnlocked() {
         // Ensure the defaults are true and nonUnlocks are false
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER));
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STEELHAMMER));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA));
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER.toString()));
+        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STEELHAMMER.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA.toString()));
+        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG.toString()));
     }
 
     @Test
     public void testDefaultWeapons() {
         // ensure the tree contains only the default weapons
         assertEquals(3, upgradeTree.getUnlockedWeapons().size());
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG.toString()));
     }
 
+    /**
+     * the below Test has been implemented to
+     * test the Ui of unlocking weapon and
+     * also to test the sound of it
+     */
     @Test
     public void testUnlockWeapon() {
+
+        Gdx.app = mock(Application.class);
         // Check a weapon is locked, unlock it, then check its unlocked
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER));
-        upgradeTree.unlockWeapon(WeaponType.STONEHAMMER);
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER));
+        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER.toString()));
+        upgradeTree.unlockWeapon(WeaponType.STONEHAMMER.toString());
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER.toString()));
+
+//        instance for UpgradeTree
+        UpgradeTree sound = new UpgradeTree();
+
+//        Setting the 'unlockWeaponSound' as the entity for sound events.
+        Entity unlockWeaponEvent = mock(Entity.class);
+
+//        Setting the 'unlockWeaponSound' as the entity for sound events.
+        sound.setEntity(unlockWeaponEvent);
+
+//        Mocking the event handling for the 'unlockWeaponSound' entity.
+        when(unlockWeaponEvent.getEvents()).thenReturn(mock(EventHandler.class));
+
+        Object weapon = new Object();
+//        Testing the whole trigger unlockWeaponEvent to test Player's dodge Sound
+        sound.unlockWeapon(weapon);
     }
 
     @Test void testUnlockMultipleWeapons() {

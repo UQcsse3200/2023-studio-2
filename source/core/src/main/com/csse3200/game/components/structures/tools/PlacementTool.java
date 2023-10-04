@@ -8,12 +8,16 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.StructurePlacementService;
 
 /**
  * An abstract tool which allows the player to place a structure.
  * This class must be inherited and the createEntity method implemented to function.
  */
-public abstract class PlacementTool<T extends PlaceableEntity> extends Tool {
+public abstract class PlacementTool extends Tool {
+    protected int snapX = 1;
+    protected int snapY = 1;
+    protected StructurePlacementService structurePlacementService;
 
     /**
      * Creates a new tool which allows the placing of structures with the given cost.
@@ -21,6 +25,7 @@ public abstract class PlacementTool<T extends PlaceableEntity> extends Tool {
      */
     protected PlacementTool(ObjectMap<String, Integer> cost) {
         super(cost);
+        structurePlacementService = ServiceLocator.getStructurePlacementService();
     }
 
     /**
@@ -47,11 +52,25 @@ public abstract class PlacementTool<T extends PlaceableEntity> extends Tool {
         }
 
         var resourceValidity = hasEnoughResources();
-        if (!positionValidity.isValid()) {
+        if (!resourceValidity.isValid()) {
             return resourceValidity;
         }
 
         return ToolResponse.valid();
+    }
+
+    @Override
+    public void interact(Entity player, GridPoint2 position) {
+        position = getSnapPosition(position);
+
+        super.interact(player, position);
+    }
+
+    public GridPoint2 getSnapPosition(GridPoint2 position) {
+        var diffX = position.x % snapX;
+        var diffY = position.y % snapY;
+
+        return new GridPoint2(position.x - diffX, position.y - diffY);
     }
 
     /**
@@ -60,7 +79,7 @@ public abstract class PlacementTool<T extends PlaceableEntity> extends Tool {
      * @param player - the player placing the structure.
      * @return the structure to be placed.
      */
-    public abstract T createStructure(Entity player);
+    public abstract PlaceableEntity createStructure(Entity player);
 
     /**
      * Checks whether the structure can be placed at the given position.
@@ -70,11 +89,10 @@ public abstract class PlacementTool<T extends PlaceableEntity> extends Tool {
      * @return whether the structure can be placed at the given position.
      */
     public ToolResponse isPositionValid(GridPoint2 position) {
-        var existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
+        var dummyInstance = createStructure(new Entity());
 
-
-        return existingStructure == null ? ToolResponse.valid()
-                : new ToolResponse(PlacementValidity.INVALID_POSITION, "Invalid Position");
+        return structurePlacementService.canPlaceStructureAt(dummyInstance, position) ? ToolResponse.valid()
+                : new ToolResponse(PlacementValidity.INVALID_POSITION, "Cannot place on an existing structure");
     }
 
     /**
@@ -89,11 +107,11 @@ public abstract class PlacementTool<T extends PlaceableEntity> extends Tool {
             var availableResources = stateObserver.getStateData("resource/" + resourceCost.key);
 
             if (!(availableResources instanceof Integer)) {
-                new ToolResponse(PlacementValidity.ERROR, "Cannot find required resource");
+                return new ToolResponse(PlacementValidity.ERROR, "Resource %s does not have an integer state");
             }
 
             if ((int)availableResources < resourceCost.value) {
-                new ToolResponse(PlacementValidity.INSUFFICIENT_RESOURCES,
+                return new ToolResponse(PlacementValidity.INSUFFICIENT_RESOURCES,
                         String.format("Not enough %s", resourceCost.key));
             }
         }

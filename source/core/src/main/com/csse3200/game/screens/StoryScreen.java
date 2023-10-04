@@ -10,9 +10,13 @@ import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
+import com.csse3200.game.input.InputFactory;
 import com.csse3200.game.input.InputService;
+import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
+import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -28,22 +32,28 @@ public class StoryScreen extends ScreenAdapter {
     private final GdxGame game;
     private final Renderer renderer;
     private static final String[] storyTextures = {
-            "images/P1_B.png",
-            "images/P2_B.png",
-            "images/P3_B.png",
-            "images/P4_B.png",
-            "images/P5_B.png",
-            "images/P6_B.png"
     };
 
 
     public StoryScreen(GdxGame game) {
         this.game = game;
 
+        initialiseServices();
         renderer = RenderFactory.createRenderer();
 
         loadAssets();
         createUI();
+    }
+
+    private void initialiseServices() {
+        ServiceLocator.registerInputService(
+                new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
     }
 
     @Override

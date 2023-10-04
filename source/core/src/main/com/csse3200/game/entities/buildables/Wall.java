@@ -49,7 +49,7 @@ public class Wall extends PlaceableEntity {
      * the properties stored in 'WallConfig'.
      */
     public Wall(WallType type, Entity player) {
-        super();
+        super(2, 2);
         this.type = type;
 
         WallConfig config = configs.GetWallConfig(type);

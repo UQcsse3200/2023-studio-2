@@ -193,7 +193,8 @@ public class AnimationRenderComponent extends RenderComponent {
     batch.draw(region, pos.x, pos.y, scale.x, scale.y);
     animationPlayTime += timeSource.getDeltaTime();
   }
-
+/*Added java doc to Companion stats display , spawn companion in forest game area, (spawn companion ,spawn laboratotory,spawn potion) in earth game area,keyboard companion input component,Companion Action,Companion Animation Controller,CompanionInteractionControllerComponent,
+CompanionInventoryComponent,TouchCompanionInputComponent,CombatStatsComponent,LaboratoryInventoryComponent,PotionComponent,PotionType,LaboratoryFactory,PotionFactory,LabWindow.*/
   @Override
   public void dispose() {
     atlas.dispose();

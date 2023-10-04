@@ -1,10 +1,11 @@
 package com.csse3200.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,27 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
-import com.csse3200.game.areas.ExtractorMiniGameArea;
-import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.CameraComponent;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.gamearea.PerformanceDisplay;
-import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.maingame.MainGameExitDisplay;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.factories.RenderFactory;
-import com.csse3200.game.entities.factories.StructureFactory;
-import com.csse3200.game.input.*;
-import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.screens.ExtractorMiniGameScreen;
-import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.terminal.Terminal;
-import com.csse3200.game.ui.terminal.TerminalDisplay;
 
 /**
  * This is a window that can be added to a stage to pop up for the extractor minigame.
@@ -48,7 +32,7 @@ public class ExtractorMinigameWindow extends Window {
      * @return New extractor minigame window
      */
     public static ExtractorMinigameWindow MakeNewMinigame(Entity extractor) {
-        Texture background = ServiceLocator.getResourceService().getAsset("images/SpaceMiniGameBackground.png", Texture.class);
+        Texture background = ServiceLocator.getResourceService().getAsset("images/minigame/SpaceMiniGameBackground.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new ExtractorMinigameWindow(background, extractor);
     }
@@ -74,7 +58,7 @@ public class ExtractorMinigameWindow extends Window {
         // put extractors grid
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                Image extractorImage = new Image(new Texture(Gdx.files.internal("images/extractor.png")));
+                Image extractorImage = new Image(new Texture(Gdx.files.internal("images/minigame/extractor.png")));
                 float x = col * cellSize;
                 float y = row * cellSize;
                 extractorImage.setPosition(x, y);
@@ -83,25 +67,25 @@ public class ExtractorMinigameWindow extends Window {
         }
 
         // put extinguisher and spanner
-        Image extinguisherImage = new Image(new Texture(Gdx.files.internal("images/extinguisher.png")));// TODO: change to extinguisher.png
+        Image extinguisherImage = new Image(new Texture(Gdx.files.internal("images/minigame/extinguisher.png")));// TODO: change to extinguisher.png
         extinguisherImage.setPosition(-300, 400);
         imageTable.addActor(extinguisherImage);
         extinguisherImage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 currentMouseState = MouseState.EXTINGUISHER;
-                Pixmap extinguisherPixmap = new Pixmap(Gdx.files.internal("images/extinguisherCursor.png"));// TODO: change to extinguisherCursor.png
+                Pixmap extinguisherPixmap = new Pixmap(Gdx.files.internal("images/minigame/extinguisherCursor.png"));// TODO: change to extinguisherCursor.png
                 Gdx.graphics.setCursor(Gdx.graphics.newCursor(extinguisherPixmap, 0, 0));
             }
         });
-        Image spannerImage = new Image(new Texture(Gdx.files.internal("images/spanner.png")));// TODO: change to spanner.png
+        Image spannerImage = new Image(new Texture(Gdx.files.internal("images/minigame/spanner.png")));// TODO: change to spanner.png
         spannerImage.setPosition(600, 400);
         imageTable.addActor(spannerImage);
         spannerImage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 currentMouseState = MouseState.SPANNER;
-                Pixmap spannerPixmap = new Pixmap(Gdx.files.internal("images/spannerCursor.png"));// TODO: change to spannerCursor.png
+                Pixmap spannerPixmap = new Pixmap(Gdx.files.internal("images/minigame/spannerCursor.png"));// TODO: change to spannerCursor.png
                 Gdx.graphics.setCursor(Gdx.graphics.newCursor(spannerPixmap, 0, 0));
             }
         });
@@ -110,7 +94,7 @@ public class ExtractorMinigameWindow extends Window {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 if ((row == 0 && (col == 0 || col == 2)) || (row == 2 && (col == 0 || col == 2))) {
-                    Image fireImage = new Image(new Texture(Gdx.files.internal("images/fire.png")));
+                    Image fireImage = new Image(new Texture(Gdx.files.internal("images/minigame/fire.png")));
                     fireImage.setName("fire");
                     float x = col * cellSize + 50;
                     float y = row * cellSize + 50;
@@ -133,7 +117,7 @@ public class ExtractorMinigameWindow extends Window {
                         }
                     });
                 } else {
-                    Image holeImage = new Image(new Texture(Gdx.files.internal("images/Hole.png")));
+                    Image holeImage = new Image(new Texture(Gdx.files.internal("images/minigame/Hole.png")));
                     holeImage.setName("hole");
                     float x = col * cellSize + 40;
                     float y = row * cellSize + 30;

@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ToolTest {
 
@@ -27,7 +27,12 @@ class MockTool extends Tool {
     }
 
     @Override
-    public boolean interact(Entity player, GridPoint2 position) {
-        return false;
+    protected void performInteraction(Entity player, GridPoint2 position) {
+
+    }
+
+    @Override
+    protected ToolResponse canInteract(Entity player, GridPoint2 position) {
+        return null;
     }
 }

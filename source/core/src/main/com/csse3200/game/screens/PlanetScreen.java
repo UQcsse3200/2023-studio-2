@@ -4,7 +4,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.EarthGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -42,7 +41,7 @@ public class PlanetScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(PlanetScreen.class);
     private final GdxGame game;
 
-    private final String name;
+    public final String name;
     private String nextPlanetName;
 
     private Entity player;
@@ -59,7 +58,7 @@ public class PlanetScreen extends ScreenAdapter {
 
     /** file paths of textures for screen to load. */
     private static final String[] planetTextures = {
-            "images/heart.png",
+            "images/player/heart.png",
             "images/structure-icons/gate.png",
             "images/structure-icons/wall.png",
             "images/structure-icons/stone_wall.png",
@@ -72,6 +71,15 @@ public class PlanetScreen extends ScreenAdapter {
             "images/structures/TurretTwo.png",
             "images/structures/heal_icon.png"
     };
+
+    /**
+     * Construct the PlanetScreen instance for the first planet (Earth).
+     *
+     * @param game  The current game instance to display screen on.
+     */
+    public PlanetScreen(GdxGame game) {
+        this(game, "Earth");
+    }
 
     /**
      * Construct the PlanetScreen instance for the planet of given name.
@@ -93,7 +101,6 @@ public class PlanetScreen extends ScreenAdapter {
 
         loadAssets();
         createUI();
-
         generateGameAreas();
         allGameAreas.get(currentAreaName).create();
 
@@ -125,14 +132,20 @@ public class PlanetScreen extends ScreenAdapter {
      * Generates all the appropriate game areas for the current planet based on its name.
      */
     private void generateGameAreas() {
-        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         if ("Earth".equals(name)) {
-            this.nextPlanetName = "Not Earth";
-            generateGameArea("primary", "levels/earth/main-area");
+            this.nextPlanetName = "Verdant Oasis";
+
+;            generateGameArea("primary", "levels/earth/main-area");
+        } else if ("Verdant Oasis".equals(name)){
+            this.nextPlanetName = "Glacial Desolation";
+            generateGameArea("primary", "levels/lush/main-area");
+        } else if ("Glacial Desolation".equals(name)){
+            this.nextPlanetName = "Infernal Challenge";
+            generateGameArea("primary", "levels/frozen/main-area");
+        } else if ("Infernal Challenge".equals(name)){
+            generateGameArea("primary", "levels/lush/main-area");
         } else {
-            // TODO: Extend
-            this.nextPlanetName = "Earth";
-            this.allGameAreas.put("primary", new MapGameArea("levels/lush/main-area", terrainFactory, game));
+            generateGameArea("primary", "levels/earth/main-area");
         }
     }
 
@@ -144,7 +157,7 @@ public class PlanetScreen extends ScreenAdapter {
      */
     private void generateGameArea(String name, String configPath) {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        this.allGameAreas.put(name, new MapGameArea(configPath, terrainFactory, game));
+        this.allGameAreas.put(name, new MapGameArea(configPath, terrainFactory, game, game.getPlayerLives()));
     }
 
     /**

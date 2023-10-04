@@ -39,6 +39,7 @@ public class PlayerAnimationController extends Component {
      */
     void animateLeft() {
         animator.startAnimation("Character_Left");
+        animator.startAnimation("Companion_Left");
     }
 
     /**
@@ -46,6 +47,7 @@ public class PlayerAnimationController extends Component {
      */
     void animateRight() {
         animator.startAnimation("Character_Right");
+        animator.startAnimation("Companion_Right");
     }
 
     /**
@@ -53,6 +55,7 @@ public class PlayerAnimationController extends Component {
      */
     void animateUp() {
         animator.startAnimation("Character_Up");
+        animator.startAnimation("Companion_Up");
     }
 
     /**
@@ -60,6 +63,7 @@ public class PlayerAnimationController extends Component {
      */
     void animateDown() {
         animator.startAnimation("Character_Down");
+        animator.startAnimation("Companion_Down");
     }
 
     /**
@@ -67,6 +71,7 @@ public class PlayerAnimationController extends Component {
      */
     void animateUpLeft() {
         animator.startAnimation("Character_UpLeft");
+        animator.startAnimation("Companion_UpLeft");
     }
 
     /**
@@ -74,6 +79,7 @@ public class PlayerAnimationController extends Component {
      */
     void animateUpRight() {
         animator.startAnimation("Character_UpRight");
+        animator.startAnimation("Companion_UpRight");
     }
 
     /**
@@ -81,6 +87,7 @@ public class PlayerAnimationController extends Component {
      */
     void animateDownLeft() {
         animator.startAnimation("Character_DownLeft");
+        animator.startAnimation("Companion_DownLeft");
     }
 
     /**
@@ -88,6 +95,7 @@ public class PlayerAnimationController extends Component {
      */
     void animateDownRight() {
         animator.startAnimation("Character_DownRight");
+        animator.startAnimation("Companion_DownRight");
     }
 
     /**

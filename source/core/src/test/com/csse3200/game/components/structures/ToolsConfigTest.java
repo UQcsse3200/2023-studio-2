@@ -1,7 +1,7 @@
 package com.csse3200.game.components.structures;
 
 import com.badlogic.gdx.utils.ObjectMap;
-import com.csse3200.game.components.structures.tools.*;
+import com.csse3200.game.components.structures.tools.Tool;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
 import org.junit.jupiter.api.Test;
@@ -34,9 +34,8 @@ class ToolsConfigTest {
             // assuming png for now. may need to allow other extensions at some point
             assertTrue(structureOption.value.texture.endsWith(".png"));
 
-            // level can't be null
-            assertTrue(structureOption.value.level >= 0);
-
+            // description cannot be null
+            assertNotNull(structureOption.value.description);
 
             // cost can't be null
             assertNotNull(structureOption.value.cost);

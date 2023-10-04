@@ -6,6 +6,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -76,7 +77,9 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
    */
   @Override
   public boolean keyDown(int keycode) {
-    for (InputComponent inputHandler : inputHandlers) {
+    for (int i = 0; i < inputHandlers.size(); i++) {
+      InputComponent inputHandler = inputHandlers.get(i);
+
       if (inputHandler.keyDown(keycode)) {
         logger.debug("keyDown input handled by {}", inputHandler);
         return true;
@@ -85,6 +88,7 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
     logger.debug("keyDown input was not handled");
     return false;
   }
+
 
   /**
    * Iterates over registered input handlers in descending priority and stops as soon as the input is
@@ -95,7 +99,9 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
    */
   @Override
   public boolean keyTyped(char character) {
-    for (InputComponent inputHandler : inputHandlers) {
+    for (int i = 0; i < inputHandlers.size(); i++) {
+      InputComponent inputHandler = inputHandlers.get(i);
+
       if (inputHandler.keyTyped(character)) {
         logger.debug("keyTyped input handled by {}", inputHandler);
         return true;
@@ -104,6 +110,7 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
     logger.debug("keyTyped input was not handled");
     return false;
   }
+
 
   /**
    * Iterates over registered input handlers in descending priority and stops as soon as the input is
@@ -114,7 +121,9 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
    */
   @Override
   public boolean keyUp(int keycode) {
-    for (InputComponent inputHandler : inputHandlers) {
+    for (int i = 0; i < inputHandlers.size(); i++) {
+      InputComponent inputHandler = inputHandlers.get(i);
+
       if (inputHandler.keyUp(keycode)) {
         logger.debug("keyUp input handled by {}", inputHandler);
         return true;

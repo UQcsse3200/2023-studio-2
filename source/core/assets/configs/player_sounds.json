@@ -1,0 +1,12 @@
+{
+  "soundsMap": {
+    "low_health": "sounds/playerLow_health.wav",
+    "dodge": "sounds/dodgingAlertSweep.wav",
+    "footstep": "sounds/footStepsInTheForestGround.wav",
+    "healthPowerup": "sounds/PlayerHealthRecharge.wav",
+    "boostPowerup": "sounds/playerBoostRecharge.wav",
+    "upgradeTree": "sounds/upgradeTreeTap.wav",
+    "upgradeWeapon": "sounds/upgradeWeapon.wav",
+    "alert": "sounds/alert.wav"
+  }
+}

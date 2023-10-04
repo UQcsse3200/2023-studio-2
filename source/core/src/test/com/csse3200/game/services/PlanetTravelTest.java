@@ -2,19 +2,14 @@ package com.csse3200.game.services;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Plane;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.input.InputFactory;
-import com.csse3200.game.input.InputService;
-import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 
 public class PlanetTravelTest {
     PlanetTravel planetTravel;

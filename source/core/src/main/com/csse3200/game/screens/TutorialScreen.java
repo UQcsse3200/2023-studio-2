@@ -92,12 +92,12 @@ private Stage stage;
     }
     private void showTutorialDialogueBox() {
         // Create and display the TitleBox
-        TutorialDialogue tutorialDialogue = new TutorialDialogue(game, "Tutorial", "Hello PLayer", skin);
+        TutorialDialogue tutorialDialogue = new TutorialDialogue(game, "Tutorial", "Hi! This is the tutorial of the game", skin);
         // Adjust title and skin as needed
         tutorialDialogue.showDialog(ServiceLocator.getRenderService().getStage());
 
         // Pause the game while the TitleBox is displayed
-        Gdx.graphics.setContinuousRendering(false);
+        Gdx.graphics.setContinuousRendering(true);
     }
 
     private void generateGameAreas() {
@@ -110,7 +110,6 @@ private Stage stage;
         this.allGameAreas.put(name, tutorialGameArea);
         return tutorialGameArea;
     }
-
 
     private void registerServices() {
         logger.debug(String.format("Initialising %s screen services", this.name));
@@ -221,13 +220,6 @@ private Stage stage;
         ServiceLocator.getEntityService().register(ui);
 
     }
-//    private TutorialDialogue getTutorialDialogue() {
-//        TutorialGameArea tutorialGameArea = (TutorialGameArea) allGameAreas.get(currentAreaName);
-//        if (tutorialGameArea != null) {
-//            return tutorialGameArea.getTutorialDialogue();
-//        }
-//        return null;
-//    }
 
     /**
      * Move the camera to follow the player around at screen centre.
@@ -250,6 +242,4 @@ private Stage stage;
         //Set new position
         renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
     }
-
-
 }

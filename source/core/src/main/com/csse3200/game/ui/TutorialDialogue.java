@@ -12,69 +12,60 @@ import com.csse3200.game.GdxGame;
 public class TutorialDialogue extends Dialog {
     private int nextIndex = -1;
     private Skin skin;
-    private Label content;
+    private Label contentLabel; // Changed the variable name to "contentLabel"
 
-    public TutorialDialogue(GdxGame game, String title, String content, Skin skin) {
-        super(title, skin); // Set the title during initialization
-        this.skin=skin;
+    public TutorialDialogue(GdxGame game, String title, String contentText, Skin skin) {
+        super(title, skin);
+        this.skin = skin;
+
+        // Create the LabelStyle and set the font scale
         Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("small", Label.LabelStyle.class));
-        labelStyle.font.getData().setScale(0.3f); // Set the font scale to make it larger
-        this.content=new Label(content,labelStyle);
+        labelStyle.font.getData().setScale(0.3f);
+
+        contentLabel = new Label(contentText, labelStyle); // Changed the variable name to "contentLabel"
         create();
     }
 
-        private void create() {
-            // Access the title label and center-align it
-            getTitleLabel().setAlignment(Align.center);
-            getTitleLabel().setColor(Color.BLACK);
-            getTitleLabel().setFontScale(0.35f); // Adjust font scale as needed
+    private void create() {
+        getTitleLabel().setAlignment(Align.center);
+        getTitleLabel().setColor(Color.BLACK);
+        getTitleLabel().setFontScale(0.35f);
 
+        contentLabel.setWrap(true);
+        contentLabel.setAlignment(Align.center);
+        contentLabel.setColor(Color.BLACK);
 
-            // Create and configure the content label
-            Label contentLabel = content;
-            contentLabel.setWrap(true); // Enable text wrapping
-            contentLabel.setAlignment(Align.center); // Center-align the content label
-            contentLabel.setColor(Color.BLACK);
+        TextButton okButton = new TextButton("Next", skin);
+        okButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                String[] nextMessages = {
+                        "W- Move Up\n A- Move Right \n D- Move Left \n S-Move Down ",
+                        "SpaceBar is used to Sprint",
+                        "You can swap around powers by 1,2 and 3 \n 1 is Sword \n 2 is Fire Boomerang\n 3 is hammer which builds/repair things",
+                        "After using 3 click on T to open the action picker and click on the action you want to do \n you can also directly switch by using the mouse and clicking on the action you want to do on the right "
+                };
+                String[] nextTitles = {"", "", "", ""};
 
+                nextIndex++;
 
-            // Create and configure the OK button
-            TextButton okButton = new TextButton("Next", skin);
-            okButton.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    String[] nextMessages = {"NPC: (Relieved) Thank you so much! There's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected.", "Emily: We can handle it. \nLead the way!"};
-                    String[] nextTitles = {"", ""};
-
-                    // Increment the index for the next click
-                    nextIndex++;
-
-                    // Check if there are more dialogues to show
-                    if (nextIndex < nextTitles.length) {
-                        getTitleLabel().setText(nextTitles[nextIndex]);
-                        contentLabel.setText(nextMessages[nextIndex]);
-                        getContentTable().clear();
-                        create();
-
-
-                    } else {
-                        // No more dialogues, close the last one
-                        hide();
-                    }
-
+                if (nextIndex < nextTitles.length) {
+                    getTitleLabel().setText(nextTitles[nextIndex]);
+                    contentLabel.setText(nextMessages[nextIndex]);
+                } else {
+                    hide();
                 }
-            });
-            okButton.setSize(50, 25);
+            }
+        });
+        okButton.setSize(50, 25);
 
-            // Create a table to hold the content label and OK button
-            Table contentTable = getContentTable();
-            contentTable.add(contentLabel).expandX().fillX().pad(20f).center().row(); // Center-align the content label
-            contentTable.add(okButton).pad(10f).center(); // Center-align the OK button
+        Table contentTable = getContentTable();
+        contentTable.add(contentLabel).expandX().fillX().pad(20f).center().row();
+        contentTable.add(okButton).pad(10f).center();
 
-            // Set dialog properties
-            setMovable(false);
-            setResizable(true);
-            setSize(Gdx.graphics.getWidth(), 300f); // Adjust the size as needed
-
+        setMovable(false);
+        setResizable(true);
+        setSize(Gdx.graphics.getWidth(), 300f);
     }
 
     public void showDialog(Stage stage) {

@@ -159,7 +159,7 @@ public class PlanetScreen extends ScreenAdapter {
             this.nextPlanetName = "Infernal Challenge";
             generateGameArea("primary", "levels/frozen/main-area");
         } else if ("Infernal Challenge".equals(name)){
-            generateGameArea("primary", "levels/lush/main-area");
+            generateGameArea("primary", "levels/hell/main-area");
         } else {
             generateGameArea("primary", "levels/earth/main-area");
         }

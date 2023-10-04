@@ -58,6 +58,8 @@
     "images/action-feedback/warning.png",
     "images/action-feedback/white_color_texture.png",
     "particle-effects/explosion/particle.png",
+    "images/explosives/explosive-barrel.png",
+    "images/explosives/landmine.png",
     "particle-effects/durasteel/durasteel_pixel.png",
     "images/resources/Cracked_Ground.png",
     "images/npc/astronaut_npc.png"
@@ -85,6 +87,8 @@
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
+    "sounds/explosion/grenade.mp3",
+    "sounds/explosion/landmine.mp3",
     "sounds/playerLow_health.wav",
     "sounds/dodgingAlertSweep.wav",
     "sounds/footStepsInTheForestGround.wav",

@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,6 +26,7 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
@@ -32,6 +34,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.csse3200.game.ui.UIComponent.skin;
 
 /**
  * A screen that represents a single planet of the game with its corresponding game area/s.
@@ -106,6 +110,18 @@ public class PlanetScreen extends ScreenAdapter {
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
         this.player = allGameAreas.get(currentAreaName).getPlayer();
+        if ("Earth".equals(name)) {
+            showTitleBox();
+        }
+    }
+    private void showTitleBox() {
+        // Create and display the TitleBox
+        TitleBox titleBox = new TitleBox(game, "", "NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", skin);
+        // Adjust title and skin as needed
+        titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+
+        // Pause the game while the TitleBox is displayed
+        Gdx.graphics.setContinuousRendering(false);
     }
 
     /**

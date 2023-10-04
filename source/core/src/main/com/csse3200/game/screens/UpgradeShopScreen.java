@@ -107,8 +107,6 @@ public class UpgradeShopScreen extends ScreenAdapter {
         ui.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
-                //.addComponent(new ShipStatDisplay(this.ship.getComponent(ShipActions.class)))
-                //Minigame ship factory already created the display
                 .addComponent(new ExitShopDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)

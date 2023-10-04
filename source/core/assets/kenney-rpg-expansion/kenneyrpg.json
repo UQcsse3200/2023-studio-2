@@ -36,6 +36,12 @@
       "markupEnabled": false,
       "flip": false
     }
+    "pixel_art": {
+      "file": "mago3.fnt",
+      "scaledSize": 18,
+      "markupEnabled": false,
+      "flip": false
+    }
   },
   "Color": {
     "black": {
@@ -113,6 +119,9 @@
     },
     "large": {
       "font": "thick_black"
+    }
+    "pixel_art" : {
+      "font" : "pixel_art"
     }
   },
   "ListStyle": {
@@ -195,7 +204,7 @@
   },
   "WindowStyle": {
     "default": {
-      "background": "metalPanel_red",
+      "background": "treebox",
       "titleFont": "thick_white"
     }
   }

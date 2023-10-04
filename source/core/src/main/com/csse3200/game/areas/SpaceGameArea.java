@@ -10,6 +10,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.MinigameShipFactory;
+import com.csse3200.game.entities.factories.MinigameObjectFactory;
 import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -38,7 +39,6 @@ public class SpaceGameArea extends GameArea {
     private static final String[] spaceMiniGameTextures = {
             "images/minigame/SpaceMiniGameBackground.png",
             "images/minigame/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-            "images/ship/Ship.png",
             "images/ship/Ship.png",
             "images/minigame/wormhole.png",
             "images/minigame/obstacle-enemy.png",
@@ -97,7 +97,7 @@ public class SpaceGameArea extends GameArea {
      * @param pos Start position from where the number of blocks are added
      */
     private void spawnStaticAsteroidsRight(int n, GridPoint2 pos){
-        Entity asteroid_length = ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
+        Entity asteroid_length = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
         if (n <= 0) {
             return;
         }
@@ -114,7 +114,7 @@ public class SpaceGameArea extends GameArea {
      * @param pos Start position from where the number of blocks are added on the map
      */
     private void spawnStaticAsteroidsUp(int n, GridPoint2 pos){
-        Entity asteroid_width = ObstacleFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
+        Entity asteroid_width = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
         if (n <= 0) {
             return;
         }
@@ -143,7 +143,7 @@ public class SpaceGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
         for (int i = 0; i < NUM_ENEMIES; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity rand_enemy = ObstacleFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE);
+            Entity rand_enemy = MinigameObjectFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE);
             spawnEntityAt(rand_enemy, randomPos,true,false);
         }
     }
@@ -156,7 +156,7 @@ public class SpaceGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
         for (int i = 0; i < NUM_ASTEROIDS; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity asteroid = ObstacleFactory.createAsteroid(ASTEROID_SIZE,ASTEROID_SIZE);
+            Entity asteroid = MinigameObjectFactory.createAsteroid(ASTEROID_SIZE,ASTEROID_SIZE);
             spawnEntityAt(asteroid, randomPos, false, false);
         }
     }
@@ -166,7 +166,7 @@ public class SpaceGameArea extends GameArea {
      */
     private Entity spawnGoal() {
         GridPoint2 position = new GridPoint2(56, 10);
-        Entity newGoal = ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
+        Entity newGoal = MinigameObjectFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
         //goal = ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
         spawnEntityAt(newGoal, position, false, false);
         goal = newGoal;

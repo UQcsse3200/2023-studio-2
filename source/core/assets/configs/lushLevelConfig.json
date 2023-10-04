@@ -44,7 +44,8 @@
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
-    "images/sling_shot.png"
+    "images/sling_shot.png",
+    "images/structures/TurretOne.png"
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -62,7 +63,9 @@
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
     "images/botanist.atlas",
+    "images/structures/TurretOne.atlas",
     "images/companion/Companion_spritesheet.atlas"
+
   ],
   "soundPaths": [
     "sounds/Impact4.wav"

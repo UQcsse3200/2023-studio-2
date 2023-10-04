@@ -87,7 +87,8 @@
     "sounds/upgradeWeapon.wav",
     "sounds/enemyDeath.wav",
     "sounds/companionwalksound.wav",
-    "sounds/enemySpawner.wav"
+    "sounds/enemySpawner.wav",
+    "sounds/alert.wav"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

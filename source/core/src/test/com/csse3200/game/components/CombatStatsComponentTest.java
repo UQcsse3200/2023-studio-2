@@ -2,6 +2,7 @@ package com.csse3200.game.components;
 
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
@@ -10,10 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.validateMockitoUsage;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit tests for the {@link CombatStatsComponent} class.
@@ -22,9 +23,7 @@ import static org.mockito.Mockito.validateMockitoUsage;
 class CombatStatsComponentTest {
 
   @Mock
-  RenderService renderService;
-  @Mock
-  ResourceService resourceService;
+  EventHandler eventHandler;
 
   @Mock
   Entity entity;
@@ -36,13 +35,17 @@ class CombatStatsComponentTest {
 
   @BeforeEach
   void setUp() {
-    ServiceLocator.registerRenderService(renderService);
     ServiceLocator.registerEntityService(entityService);
 
     // Set up a non-immune test entity with 100 health, 100 attack damage and no attack multiplier.
     entity = new Entity();
     entity.addComponent(new CombatStatsComponent(100, 100, 1, false));
     entityStats = entity.getComponent(CombatStatsComponent.class);
+
+    MockitoAnnotations.openMocks(this);
+    when(entity.getEvents()).thenReturn(eventHandler);
+    entityStats.setEntity(entity);
+    entity.setEntityType("entity");
   }
 
   /**
@@ -119,7 +122,7 @@ class CombatStatsComponentTest {
     entityStats.setBaseAttack(150);
     assertEquals(150, entityStats.getBaseAttack()); // basic
     entityStats.setBaseAttack(-150);
-    assertEquals(-150, entityStats.getBaseAttack()); // edge case
+    assertEquals(150, entityStats.getBaseAttack()); // edge case: don't change if base attach < 0
   }
 
   /**
@@ -211,14 +214,21 @@ class CombatStatsComponentTest {
   }
 
   @Test
-  void shouldTrigger() {
-    // player death
+  void shouldTriggerHealthEvent() {
+    entityStats.setHealth(50);
+    verify(entity.getEvents()).trigger("updateHealth", 50);
+  }
 
-    // death screen
+  @Test
+  void shouldTriggerUpdateLivesEvent() {
+    entityStats.setLives(3);
+    verify(entity.getEvents()).trigger(eq("updateLives"), anyInt());
+  }
 
-    // update lives
-
-    // max lives alert
-
+  @Test
+  void shouldTriggerMaxLivesEvent() {
+    entityStats.setLives(4);
+    entityStats.addLife();
+    verify(entity.getEvents()).trigger("maxLivesAlert");
   }
 }

@@ -42,7 +42,6 @@ public class Entity {
   private Vector2 position = Vector2.Zero.cpy();
   private GridPoint2 gridPosition = new GridPoint2(0,0);
   private Vector2 scale = new Vector2(1, 1);
-  private float rotation = 0;
   private Array<Component> createdComponents;
 
 
@@ -50,7 +49,6 @@ public class Entity {
     this.entityType = "";
     id = nextId;
     nextId++;
-    this.rotation = 0;
 
     components = new IntMap<>(4);
     eventHandler = new EventHandler();
@@ -344,8 +342,3 @@ public class Entity {
     return String.format("Entity{id=%d}", id);
   }
 }
-
-
-
-
-

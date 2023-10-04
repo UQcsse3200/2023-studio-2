@@ -13,12 +13,6 @@ public class ProjectileController extends WeaponControllerComponent {
         super(config, attackDirection, player, attackNum);
     }
 
-
-    @Override
-    public void create() {
-        super.create();
-    }
-
     @Override
     protected void initial_rotation() {
         return;

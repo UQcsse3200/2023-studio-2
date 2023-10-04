@@ -7,6 +7,7 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.BallFactory;
 import com.csse3200.game.entities.factories.MinigameShipFactory;
+import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -16,16 +17,18 @@ import java.util.ArrayList;
 
 public class BricKBreakerGameArea extends GameArea{
     public Entity ball;
+    private static final GridPoint2 SLIDER_SPAWN = new GridPoint2(5, 10);
     private static final Logger logger = LoggerFactory.getLogger(BricKBreakerGameArea.class);
     private static final GridPoint2 BALL_SPAWN = new GridPoint2(16, 5);
     private static final String[] BrickBreakerTextures = {
 
-            "images/minigame/SpaceMiniGameBackground.png",
-            "images/minigame/wormhole.png",
+
             "images/minigame/Ball.png",
+            "images/minigame/meteor.png",
 
 
-            "images/brick-game/BrickGameBackground.png"
+            "images/brick-game/BrickGameBackground.png",
+            "images/brick-game/Slider.png"
 
 
     };
@@ -44,7 +47,8 @@ public class BricKBreakerGameArea extends GameArea{
         loadAssets();
         displayUI();
         spawnTerrain();
-        spawnBall();
+        spawnStaticBrickRight(10,new GridPoint2(10,4));
+//        spawnBall();
     }
     private void spawnTerrain() {
         // Background terrain
@@ -71,6 +75,17 @@ public class BricKBreakerGameArea extends GameArea{
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
         }
+    }
+    private void spawnStaticBrickRight(int n, GridPoint2 pos){
+        Entity asteroid_length = ObstacleFactory.createStaticBrick(1f,1f);
+        if (n <= 0) {
+            return;
+        }
+        spawnEntityAt(asteroid_length, pos, false, false);
+        // Increment the position for the next asteroid
+        pos.x += 1;
+        pos.y += 0;
+        spawnStaticBrickRight(n - 1, pos); // Recursive call
     }
     private Entity spawnBall()
     {

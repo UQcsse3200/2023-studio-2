@@ -36,7 +36,9 @@ public class ReturnToPlanetDisplay extends UIComponent {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
           logger.debug("Return button clicked");
-          entity.getEvents().trigger("returnPlanet");
+          //Add once it is clear which planet it intends to return to
+          //entity.getEvents().trigger("returnPlanet");
+          entity.getEvents().trigger("exit");
         }
       });
 

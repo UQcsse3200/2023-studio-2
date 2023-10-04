@@ -31,10 +31,21 @@ public class PlanetTravel {
      * Travel from the current planet to the next planet instantly.
      */
     public void beginInstantTravel() {
-        PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
-        PlanetScreen nextPlanet = currentPlanet.getNextPlanet();
-        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
+        PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData(
+                "currentPlanet");
+        PlanetScreen nextPlanet;
+        if (currentPlanet == null) {
+            nextPlanet = new PlanetScreen(game);
+        } else {
+            nextPlanet = currentPlanet.getNextPlanet();
+            ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
+        }
+
+        //game.setScreen(nextPlanet);
+
+        // Temporary fix for space obstacle minigame to transition to a new planet
         game.setScreen(nextPlanet);
+
     }
 
     /**

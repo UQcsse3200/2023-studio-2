@@ -23,7 +23,7 @@ public class ShipActions extends Component {
     private boolean moving = false;
     private AnimationRenderComponent animator;
 
-
+    //These are used for determining ship orientation by ship velocity direction
     private final double up = 90;
     private final double down = -90;
     private final double left = 180;
@@ -34,11 +34,13 @@ public class ShipActions extends Component {
      * Initialize the health, fuel and acceleration of the ship
      * @param health
      * @param fuel
-     * @param acceleration
+     * @param acceleration Magnitude of force applied to the ship
      */
     public ShipActions(int health, int fuel, int acceleration) {
-        this.maxHealth = health;
-        this.maxFuel = fuel;
+        //temporary value of health to 1 for testing
+        this.maxHealth = health - health + 1;
+        //temporary value of fuel to 20 for testing
+        this.maxFuel = fuel - fuel + 20;
         this.currentAcceleration = acceleration;
     }
 
@@ -54,6 +56,7 @@ public class ShipActions extends Component {
         entity.getEvents().addListener("brakeOn", this::brakeOn);
         entity.getEvents().addListener("brakeOff", this::brakeOff);
 
+
         body = physicsComponent.getBody();
         body.setLinearDamping(0); //prevents the ship from stopping for no physical reason
         //body.setFixedRotation(false);
@@ -66,6 +69,9 @@ public class ShipActions extends Component {
     @Override
     public void update() {
         if (moving) {
+            if (this.maxHealth <= 0) {
+                kaboom();
+            }
             updateSpeed();
         }
     }
@@ -81,13 +87,25 @@ public class ShipActions extends Component {
         //Vector2 desiredVelocity = flyDirection.cpy().scl(MAX_SPEED);
         //impulse = (desiredVel - currentVel) * mass
         //uses impulse to apply velocity instantly
+        if (this.maxFuel > 0) {
+            boost();
+        } else {
+            // do nothing
+        }
 
-        Vector2 currentVelocity = this.flyDirection.cpy();
-        body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration), true);
         this.playAnimation(body.getLinearVelocity());
 
 
-        //scl(scalar) basically multiply the Vector2 velocity of body by a scalar. Belongs to Vector2.
+
+    }
+
+    /**
+     * Push the ship towards a given direction
+     */
+    void boost() {
+        Vector2 currentVelocity = this.flyDirection.cpy();
+        body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration), true);
+        //scl (or scalar) multiply the Vector2 velocity of body by a scalar. Belongs to Vector2.
     }
 
     /**
@@ -96,8 +114,18 @@ public class ShipActions extends Component {
      * @param direction direction to move in
      */
     void fly(Vector2 direction) {
-        this.flyDirection = direction;
-        moving = true;
+
+        //Spends fuel each button press and release
+        if (this.maxFuel > 0) {
+            this.flyDirection = direction;
+            moving = true;
+            this.maxFuel -= 1;
+            updatedFuel();
+        } else {
+            noFuel();
+
+        }
+
     }
 
     /**
@@ -204,6 +232,24 @@ public class ShipActions extends Component {
      * Inform ShipStatsDisplay about new fuel value
      */
     public void updatedFuel() {entity.getEvents().trigger("updateShipFuel");}
+
+    /**
+     * Inform ShipStatsDisplay about empty fuel tank
+     */
+    public void noFuel() { entity.getEvents().trigger("noFuel"); }
+
+    /**
+     * Inform ShipStatsDisplay ship has gone Kaboom!
+     */
+    public void kaboom() { entity.getEvents().trigger("Kaboom"); }
+
+    /**
+     * Ship hits an obstacle, reduce health by 1
+     */
+    public void hit() {
+        this.maxHealth -= 1;
+        this.updatedHealth();
+    }
 
 
 

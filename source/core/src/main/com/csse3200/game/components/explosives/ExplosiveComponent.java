@@ -8,21 +8,27 @@ import com.csse3200.game.components.ParticleComponent;
 import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.StructurePlacementService;
 
-import java.util.TimerTask;
-
+/**
+ * The ExplosiveComponent can be added to any entity to allow it to explode through an event driven system.
+ */
 public class ExplosiveComponent extends Component {
     private boolean isExploded = false;
     private boolean isChained = false;
     private final ExplosiveConfig explosiveConfig;
 
+    /**
+     * Creates the ExplosiveComponent with the given ExplosiveConfig.
+     * @param explosiveConfig - the config parameters to create the explosive component using.
+     */
     public ExplosiveComponent(ExplosiveConfig explosiveConfig) {
         this.explosiveConfig = explosiveConfig;
     }
 
+    /**
+     * Creates the component and begins listening for explode and chainExplode events.
+     */
     @Override
     public void create() {
         super.create();
@@ -31,7 +37,11 @@ public class ExplosiveComponent extends Component {
         entity.getEvents().addListener("chainExplode", this::chainExplode);
     }
 
-    public void explode() {
+    /**
+     * Detonates the explosion by creating a new entity for the particle and sound effects and deleting the entity
+     * the component is added.
+     */
+    protected void explode() {
         if (isExploded) {
             return;
         }
@@ -64,6 +74,7 @@ public class ExplosiveComponent extends Component {
             }
         }
 
+        // damages all entities in the damage radius
         for (var otherEntity : ServiceLocator.getEntityService().getEntitiesByComponent(CombatStatsComponent.class)) {
             var combatStatsComponent = otherEntity.getComponent(CombatStatsComponent.class);
 
@@ -92,7 +103,7 @@ public class ExplosiveComponent extends Component {
      * Triggered through an event when a neighbouring explosive explodes.
      * If chainable is true, this will cause this entity to explode too, otherwise nothing will happen.
      */
-    public void chainExplode(float delay) {
+    protected void chainExplode(float delay) {
         if (isChained) {
             return;
         }
@@ -100,7 +111,7 @@ public class ExplosiveComponent extends Component {
         isChained = true;
 
         if (explosiveConfig.chainable) {
-            Timer.schedule(new TimerAction(this::explode), delay);
+            Timer.schedule(new PostrunnableTask(this::explode), delay);
         }
     }
 }

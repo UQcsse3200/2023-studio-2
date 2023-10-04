@@ -157,6 +157,10 @@ public class EnemyFactory {
       }
     }
     else if (config.type == EnemyType.Melee) {
+      if (config.behaviour == EnemyBehaviour.DTE) {
+        scale = 1.2f;
+      }
+
       if (config.isBoss){
         scale = 3.0f;
       }

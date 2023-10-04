@@ -20,6 +20,7 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import net.dermetfan.utils.Pair;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ public class AttackFactory {
      * @param player
      * @return
      */
-    public static ArrayList<Entity> createAttacks(WeaponType weaponType, float attackDirection, Entity player) {
+    public static ArrayList<Pair<Entity, Integer>> createAttacks(WeaponType weaponType, float attackDirection, Entity player) {
         WeaponConfig config = configs.GetWeaponConfig(weaponType);
         int numberOfAttacks = config.projectiles;
 
@@ -51,11 +52,12 @@ public class AttackFactory {
         invComp.setEquippedCooldown(config.attackCooldown);
         invComp.changeEquippedAmmo(-config.ammoUse);
 
-        ArrayList<Entity> attacks = new ArrayList<>();
+        ArrayList<Pair<Entity, Integer>> attacks = new ArrayList<>();
         for (int i = 0; i < numberOfAttacks; i++) {
-            Entity attack = createAttack(config, attackDirection, player, i);
+            Pair<Entity, Integer> attack = createAttack(config, attackDirection, player, i);
             attacks.add(attack);
         }
+
         return attacks;
     }
 
@@ -67,7 +69,7 @@ public class AttackFactory {
      * @param attackNum - the number of the attack in the sequence
      * @return A reference to the created weapon entity
      */
-    public static Entity createAttack(WeaponConfig config, float attackDirection, Entity player, int attackNum) {
+    public static Pair<Entity, Integer> createAttack(WeaponConfig config, float attackDirection, Entity player, int attackNum) {
         WeaponControllerComponent wepCon = switch (config.type) {
             case MELEE_WRENCH, MELEE_KATANA ->
                     new MeleeSwingController(config, attackDirection, player);
@@ -94,7 +96,7 @@ public class AttackFactory {
         //Final configurations on entity
         attack.setEntityType("playerWeapon");
         attack.scaleWidth(config.imageScale);
-        return attack;
+        return new Pair<>(attack, wepCon.get_spawn_delay());
     }
     private AttackFactory() {
         throw new IllegalStateException("Instantiating static util class");

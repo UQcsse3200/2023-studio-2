@@ -3,6 +3,7 @@ package com.csse3200.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.csse3200.game.screens.TutorialScreen;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.screens.*;
 import org.slf4j.Logger;
@@ -103,7 +104,9 @@ public class GdxGame extends Game {
         return new SettingsScreen(this);
       case SPACE_MAP:
         return new SpaceMapScreen(this);
-      case EXTRACTOR_GAME:
+      case TUTORIAL_SCREEN:
+        return new TutorialScreen(this,"Tutorial");
+        case EXTRACTOR_GAME:
         return new ExtractorMiniGameScreen(this);
       case PLAYER_DEATH_0:
         return new PlayerDeathScreen(this, 0);
@@ -135,7 +138,8 @@ public class GdxGame extends Game {
   }
 
   public enum ScreenType {
-    MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME,
+
+    MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME, TUTORIAL_SCREEN,
     GAME_STORY, PLAYER_DEATH,COMPANION_DEATH, NAVIGATION_SCREEN ,INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIALL_SCREEN, BRICK_BREAKER_SCREEN,
     PLAYER_DEATH_0, PLAYER_DEATH_1, PLAYER_DEATH_2, PLAYER_DEATH_3
   }

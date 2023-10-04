@@ -1,6 +1,7 @@
 package com.csse3200.game.services;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 
@@ -22,6 +23,18 @@ public class EntityPlacementService {
      */
     public void PlaceEntity(Entity entity) {
         handler.trigger("placeEntity", entity);
+    }
+
+    public void PlaceEntityAfter(Entity entity, int delay) {
+        final Timer placeTimer = new Timer();
+        Timer.Task placeEntity = new Timer.Task() {
+            @Override
+            public void run() {
+                PlaceEntity(entity);
+                placeTimer.clear();
+            }
+        };
+        placeTimer.scheduleTask(placeEntity,(float) delay / 1000f);
     }
 
     /**

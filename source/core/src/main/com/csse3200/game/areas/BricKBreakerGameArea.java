@@ -47,7 +47,7 @@ public class BricKBreakerGameArea extends GameArea{
         loadAssets();
         displayUI();
         spawnTerrain();
-        spawnStaticBrickRight(10,new GridPoint2(10,4));
+        spawnBrickLayout();
 //        spawnBall();
     }
     private void spawnTerrain() {
@@ -86,6 +86,15 @@ public class BricKBreakerGameArea extends GameArea{
         pos.x += 1;
         pos.y += 0;
         spawnStaticBrickRight(n - 1, pos); // Recursive call
+    }
+    private void spawnBrickLayout(){
+        spawnStaticBrickRight(20,new GridPoint2(5,10));
+        spawnStaticBrickRight(20,new GridPoint2(5,11));
+        spawnStaticBrickRight(20,new GridPoint2(5,12));
+        spawnStaticBrickRight(20,new GridPoint2(5,13));
+        spawnStaticBrickRight(20,new GridPoint2(5,14));
+        spawnStaticBrickRight(20,new GridPoint2(5,15));
+
     }
     private Entity spawnBall()
     {

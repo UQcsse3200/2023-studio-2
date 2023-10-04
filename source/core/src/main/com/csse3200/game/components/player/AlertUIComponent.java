@@ -19,7 +19,7 @@ public class AlertUIComponent extends UIComponent implements IAlpha {
     /**
      * The factor to reduce the scale of the batch projection.
      */
-    private static final float SCALE_FACTOR = 115;
+    private static final float SCALE_FACTOR = 135;
     private final String alert;
     private float alpha = 1.0f;
     private Table table;

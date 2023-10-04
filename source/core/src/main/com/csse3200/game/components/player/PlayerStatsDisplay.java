@@ -4,32 +4,30 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import net.dermetfan.gdx.physics.box2d.PositionController;
-
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static java.util.Collections.max;
 
 
 /**
  * An ui component for displaying player stats, e.g. health, dodge cool down and player lives
  */
 public class PlayerStatsDisplay extends UIComponent {
-  Table container;
-  Table statsTable;
+  private final String labelStyle;
+  private Table container;
+  private Table statsTable;
   private final int maxHealth;
-  private int playerLives;
   private float healthBarWidth;
   private float dodgeBarWidth;
   private Label healthLabel;
@@ -37,12 +35,9 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image healthBarFill;
   private Image dodgeBarFill;
   private Label maxLivesLabel;
-  private Texture heartsTexture;
   private TextureRegion hearts;
   private Image livesBarFill;
-
   private InventoryComponent inventory;
-  private Entity player;
   private Label ammoLabel;
   private Table weaponImageTable;
 
@@ -51,6 +46,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param config the player config file
    */
   public PlayerStatsDisplay(PlayerConfig config) {
+    labelStyle = "small";
     maxHealth = config.health;
     healthBarWidth = 320f;
     dodgeBarWidth = 320f;
@@ -71,6 +67,9 @@ public class PlayerStatsDisplay extends UIComponent {
     entity.getEvents().addListener("maxLivesAlert", this::maxLivesReached);
     entity.getEvents().addListener("updateAmmo", this::updateAmmo);
     entity.getEvents().addListener("changeWeapon", this::updateWeapon);
+
+    InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+    this.updateAmmo(invComp.getCurrentAmmo(),invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
   }
 
   /**
@@ -90,9 +89,8 @@ public class PlayerStatsDisplay extends UIComponent {
     // Creating player HP and dodge labels
     int health = entity.getComponent(CombatStatsComponent.class).getHealth();
     CharSequence healthText = String.format("%d", health);
-    String small = "small";
-    healthLabel = new Label(healthText, skin, small);
-    dodgeLabel = new Label("Ready!", skin, small);
+    healthLabel = new Label(healthText, skin, labelStyle);
+    dodgeLabel = new Label("Ready!", skin, labelStyle);
     healthLabel.setFontScale(0.25f);
     dodgeLabel.setFontScale(0.25f);
 
@@ -105,8 +103,40 @@ public class PlayerStatsDisplay extends UIComponent {
     createAmmoBar(innerTable);
     statsTable.add(innerTable).left();
 
+    Stack planetDisplay = new Stack();
     container.add(statsTable);
+    container.add(planetDisplay).size(170f,225f);
+    container.row();
+    createUpgradeTreeButton(container);
     stage.addActor(container);
+  }
+
+  /**
+   * @param table - Used to add Column/Rows and define the actors
+   * createUpgradeTreeButton() - creating button and defining it on the top left
+   *                              also playing the sound when on tapping it
+   *
+   */
+
+  public void createUpgradeTreeButton(Table table) {
+    TextButton button = new TextButton("Upgrade Tree", skin);
+
+    button.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+
+        if (event instanceof ChangeEvent) {
+          KeyboardPlayerInputComponent keys =
+                  ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
+          keys.clearWalking();
+          UpgradeDisplay display = UpgradeDisplay.createUpgradeDisplay();
+          ServiceLocator.getRenderService().getStage().addActor(display);
+
+          entity.getEvents().trigger("playSound", "upgradeTree");
+        }
+      }
+    });
+    table.add(button).left();
   }
 
   /**
@@ -153,11 +183,11 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param parentTable the table which the player lives information is contained within
    */
   public void createLivesBar(Table parentTable) {
-    playerLives = entity.getComponent(CombatStatsComponent.class).getLives();
+    int playerLives = entity.getComponent(CombatStatsComponent.class).getLives();
     Image livesBarFrame;
     livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
 
-    heartsTexture = ServiceLocator.getResourceService().getAsset("images/player/hearts.png", Texture.class);
+    Texture heartsTexture = ServiceLocator.getResourceService().getAsset("images/player/hearts.png", Texture.class);
     hearts = new TextureRegion(heartsTexture,
             playerLives * 15,
             13);
@@ -181,7 +211,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param parentTable the table which the ammo information is contained within
    */
   public void createAmmoBar(Table parentTable) {
-    player = ServiceLocator.getEntityService().getPlayer();
+    Entity player = ServiceLocator.getEntityService().getPlayer();
     inventory = player.getComponent(InventoryComponent.class);
 
     Image ammoBarFrame;
@@ -192,7 +222,7 @@ public class PlayerStatsDisplay extends UIComponent {
     int currentAmmo = inventory.getCurrentAmmo();
     int maxAmmo = inventory.getCurrentMaxAmmo();
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-    ammoLabel = new Label(ammoText, skin, "small");
+    ammoLabel = new Label(ammoText, skin, labelStyle);
     ammoLabel.setFontScale(0.21f);
 
     Table ammoFrameTable = new Table();
@@ -257,7 +287,7 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   public void updatePlayerLives(int lives) {
     hearts.setRegionWidth(lives * 15);
-    livesBarFill.setWidth(lives * 30);
+    livesBarFill.setWidth(lives * 30f);
   }
 
   /**
@@ -265,9 +295,9 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param currentAmmo the current ammo of the weapon equipped
    * @param maxAmmo the max ammo of the weapon equipped
    */
-  public void updateAmmo(int currentAmmo, int maxAmmo) {
+  public void updateAmmo(int currentAmmo, int maxAmmo, int ammoUse) {
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-    if (maxAmmo == 100) {  // todo: make non-ammo things not have ammo
+    if (ammoUse == 0) {
       ammoText = "    -";
     }
     ammoLabel.setText(ammoText);
@@ -282,7 +312,7 @@ public class PlayerStatsDisplay extends UIComponent {
     Image weaponImage = new Image( new Texture(config.imagePath));
     weaponImageTable.clear();
     weaponImageTable.add(weaponImage).size(30f);
-    updateAmmo(inventory.getCurrentAmmo(), inventory.getCurrentMaxAmmo());
+    updateAmmo(inventory.getCurrentAmmo(), inventory.getCurrentMaxAmmo(), inventory.getCurrentAmmoUse());
   }
 
   /**
@@ -294,7 +324,7 @@ public class PlayerStatsDisplay extends UIComponent {
     maxLivesAlert = new Table();
     maxLivesAlert.top().left();
     maxLivesAlert.setFillParent(true);
-    maxLivesLabel = new Label("Max Player Lives Reached", skin, "small");
+    maxLivesLabel = new Label("Max Player Lives Reached", skin, labelStyle);
 
     maxLivesAlert.add(maxLivesLabel).padTop(250).padLeft(5f);
     //launch the table onto the screen

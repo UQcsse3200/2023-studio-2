@@ -68,6 +68,8 @@ public class MainMenuDisplay extends UIComponent {
         TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
         TextButton upgradeShip = new TextButton("Upgrade Ship", skin);
         TextButton tutorialBtn = new TextButton("Tutorial", skin);
+        TextButton brickBreakerBtn = new TextButton("brick breaker minigame", skin);
+
         // Attach listeners to buttons
         startBtn.addListener(
                 new ChangeListener() {
@@ -128,6 +130,7 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("upgrade shop");
                     }
                 });
+
         tutorialBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -137,6 +140,17 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 }
         );
+
+        brickBreakerBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("brick breaker button clikced");
+                        entity.getEvents().trigger("brick breaker minigame");
+                    }
+                });
+
+
 
         // Arrange UI elements in a table layout
         table.add(titleImage);
@@ -156,6 +170,8 @@ public class MainMenuDisplay extends UIComponent {
         table.add(exitBtn).padTop(15f).padLeft(1200f);
         table.row();
         table.add(upgradeShip).padTop(15f).padLeft(1200f);
+        table.row();
+        table.add(brickBreakerBtn).padTop(15f).padLeft(1200f);
         table.row();
         stage.addActor(titleImage);
 

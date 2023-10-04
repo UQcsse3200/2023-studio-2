@@ -13,6 +13,8 @@ public class GateTool extends PlacementTool {
      */
     public GateTool(ObjectMap<String, Integer> cost) {
         super(cost);
+        snapX = 2;
+        snapY = 2;
     }
 
     @Override

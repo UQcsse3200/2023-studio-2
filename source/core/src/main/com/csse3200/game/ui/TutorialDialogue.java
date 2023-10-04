@@ -15,7 +15,7 @@ public class TutorialDialogue extends Dialog {
     private Label contentLabel; // Changed the variable name to "contentLabel"
 
     public TutorialDialogue(GdxGame game, String title, String contentText, Skin skin) {
-        super(title, skin);
+        super("", skin);
         this.skin = skin;
 
         // Create the LabelStyle and set the font scale
@@ -65,7 +65,7 @@ public class TutorialDialogue extends Dialog {
 
         setMovable(false);
         setResizable(true);
-        setSize(Gdx.graphics.getWidth(), 300f);
+        setSize(Gdx.graphics.getWidth(), 550f);
     }
 
     public void showDialog(Stage stage) {

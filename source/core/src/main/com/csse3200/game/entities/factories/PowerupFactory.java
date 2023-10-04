@@ -33,9 +33,6 @@ public class PowerupFactory {
         // Initialise and resize a new Powerup
         Entity powerup = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new PowerupComponent(config.type))
-                .addComponent(new TextureRenderComponent(config.spritePath))
-                .addComponent(new PowerupComponent(config.type))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
                 .addComponent(new ItemPickupComponent(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
                 .addComponent(new PowerUpDisplayHUD(config.type));
@@ -105,7 +102,7 @@ public class PowerupFactory {
      *
      * @return Entity representing a temp immunity power-up.
      */
-    public static Entity createtempImmunityPowerup() {
+    public static Entity createTempImmunityPowerup() {
         return createPowerup(configs.tempImmunityPowerup);
     }
 

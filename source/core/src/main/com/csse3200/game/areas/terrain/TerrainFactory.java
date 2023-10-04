@@ -95,6 +95,10 @@ public class TerrainFactory {
         TextureRegion extractorRepair =
                 new TextureRegion(resourceService.getAsset("images/minigame/ExtractorMiniGameBackground.png", Texture.class));
         return createExtractorDemoTerrain(1f, extractorRepair);
+      case BRICK_DEMO:
+        TextureRegion brickBreak=
+                new TextureRegion(resourceService.getAsset("images/brick-game/BrickGameBackground.png", Texture.class));
+        return createBrickGameTerrain(1f, brickBreak);
       default:
         return null;
     }
@@ -127,6 +131,14 @@ public class TerrainFactory {
           float tileWorldSize, TextureRegion spaceVoid) {
     GridPoint2 tilePixelSize = new GridPoint2(spaceVoid.getRegionWidth(),spaceVoid.getRegionHeight());
     TiledMap tiledMap = createSpaceDemoTiles(tilePixelSize,spaceVoid);
+    TiledMapRenderer renderer= createRenderer(tiledMap,tileWorldSize/tilePixelSize.x);
+    return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
+  }
+
+  private TerrainComponent createBrickGameTerrain(
+          float tileWorldSize, TextureRegion brickBreak) {
+    GridPoint2 tilePixelSize = new GridPoint2(brickBreak.getRegionWidth(),brickBreak.getRegionHeight());
+    TiledMap tiledMap = createSpaceDemoTiles(tilePixelSize,brickBreak);
     TiledMapRenderer renderer= createRenderer(tiledMap,tileWorldSize/tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
@@ -170,6 +182,8 @@ public class TerrainFactory {
     FOREST_DEMO_ISO,
     FOREST_DEMO_HEX,
     SPACE_DEMO,
+    BRICK_DEMO,
+
     REPAIR_DEMO
   }
 }

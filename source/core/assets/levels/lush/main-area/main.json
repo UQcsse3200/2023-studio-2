@@ -54,13 +54,21 @@
     "images/player/hearts.png",
     "images/space_navigation_planet_1.png",
     "images/planets/space_navigation_planet_1.png",
-    "images/npc/Astro_NPC.png",
     "map/treetoplush.png",
     "images/action-feedback/warning.png",
     "images/action-feedback/white_color_texture.png",
     "particle-effects/explosion/particle.png",
+    "images/explosives/explosive-barrel.png",
+    "images/explosives/landmine.png",
     "particle-effects/durasteel/durasteel_pixel.png",
-    "images/resources/Cracked_Ground.png"
+    "images/resources/Cracked_Ground.png",
+<<<<<<< HEAD
+    "images/structures/turret_one.png",
+    "images/structures/turret_two.png",
+    "images/structure-icons/adv_turret.png"
+=======
+    "images/npc/astronaut_npc.png"
+>>>>>>> main
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -80,20 +88,27 @@
     "images/botanist.atlas",
     "images/companion/Companion_spritesheet.atlas",
     "images/npc/Astro_NPC.atlas",
-    "images/structures/ExtractorAnimation.atlas"
+    "images/structures/ExtractorAnimation.atlas",
+    "images/structures/turret_one.atlas",
+    "images/structures/turret_two.atlas",
+    "images/npc/astronaut_npc.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
-    "sounds/playerLow_health.mp3",
-    "sounds/dodgingAlertSweep.mp3",
-    "sounds/footStepsInTheForestGround.mp3",
-    "sounds/PlayerHealthRecharge.mp3",
-    "sounds/playerBoostRecharge.mp3",
-    "sounds/upgradeTreeTap.mp3",
-    "sounds/upgradeWeapon.mp3",
-    "sounds/enemyDeath.mp3",
-    "sounds/companionwalksound.mp3",
-    "sounds/enemySpawner.mp3"
+    "sounds/Healing/HealingWalls.mp3",
+    "sounds/explosion/grenade.mp3",
+    "sounds/explosion/landmine.mp3",
+    "sounds/playerLow_health.wav",
+    "sounds/dodgingAlertSweep.wav",
+    "sounds/footStepsInTheForestGround.wav",
+    "sounds/PlayerHealthRecharge.wav",
+    "sounds/playerBoostRecharge.wav",
+    "sounds/upgradeTreeTap.wav",
+    "sounds/upgradeWeapon.wav",
+    "sounds/enemyDeath.wav",
+    "sounds/companionwalksound.wav",
+    "sounds/turret_shoot.mp3",
+    "sounds/alert.wav"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

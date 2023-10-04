@@ -8,7 +8,7 @@ import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.screens.InitialScreen;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
@@ -16,6 +16,9 @@ import static org.mockito.Mockito.verify;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Unit tests for the {@link InitialScreen} class.
+ */
 public class InitialScreenTest {
 
     private Set<String> loadedAssets;
@@ -33,6 +36,9 @@ public class InitialScreenTest {
         loadedAssets = new HashSet<>();
     }
 
+    /**
+     * Test asset loading in {@link InitialScreen}.
+     */
     @Test
     void testInitialScreenAssetLoading() {
         // Create an instance of the InitialScreen

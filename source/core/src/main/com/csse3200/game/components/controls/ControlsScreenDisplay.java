@@ -32,7 +32,7 @@ public class ControlsScreenDisplay extends UIComponent {
         table.setFillParent(true);
 
         ArrayList<String> storyImages = new ArrayList<>();
-        storyImages.add("images/Controls.png");
+        storyImages.add("images/controls-images/Controls.png");
         int start = 0;
 
         Texture storyLine = new Texture(Gdx.files.internal(storyImages.get(start)));
@@ -105,8 +105,8 @@ public class ControlsScreenDisplay extends UIComponent {
 
 
 
-        String exitTexture = "images/on_exit.png";
-        String exitTextureHover = "images/on_exit_hover.PNG";
+        String exitTexture = "images/controls-images/on_exit.png";
+        String exitTextureHover = "images/controls-images/on_exit_hover.PNG";
         ImageButton exitBtn;
         exitBtn = bothButtons.draw(exitTexture, exitTextureHover);
         exitBtn.setPosition(810f, 80f);

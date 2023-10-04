@@ -13,9 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 /**
  * Exit button but specified for the Shop implementation only
@@ -92,6 +95,7 @@ public class ExitShopDisplay extends UIComponent {
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Back to minigame button clicked");
                         entity.getEvents().trigger("exit");
+                        game.setScreen(GdxGame.ScreenType.SPACE_MAP);
                     }
                 }
         );

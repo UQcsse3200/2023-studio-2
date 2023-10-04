@@ -42,6 +42,7 @@ public class ShipUpgradesFactoryTest {
         String[] shipUpgradesTextures = {"images/powerups/health_potion.png"};
         String[] fuelUpgradesTextures = {"images/powerups/speed_potion.png"};
         resourceService.loadTextures(shipUpgradesTextures);
+        resourceService.loadTextures(fuelUpgradesTextures);
         resourceService.loadAll();
     }
 
@@ -53,9 +54,9 @@ public class ShipUpgradesFactoryTest {
     @Test
     public void testCreateUpgrade() {
         Entity shipUpgrade = ShipUpgradesFactory.createHealthUpgrade();
+        Entity fuelUpgrade = ShipUpgradesFactory.createFuelUpgrade();
         ShipUpgradesType type = shipUpgrade.getComponent(ShipUpgradesComponent.class).getType();
-        ShipUpgradesType fuel = shipUpgrade.getComponent(ShipUpgradesComponent.class).getType();
-        assertNotNull(fuel);
+        ShipUpgradesType fuel = fuelUpgrade.getComponent(ShipUpgradesComponent.class).getType();
         assertNotNull(shipUpgrade);
 
         assertEquals(type, ShipUpgradesType.HEALTH_UPGRADE);

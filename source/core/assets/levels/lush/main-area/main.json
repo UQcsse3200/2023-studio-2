@@ -103,7 +103,8 @@
     "sounds/upgradeWeapon.wav",
     "sounds/enemyDeath.wav",
     "sounds/companionwalksound.wav",
-    "sounds/enemySpawner.wav"
+    "sounds/enemySpawner.wav",
+    "sounds/turret_shoot.mp3"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

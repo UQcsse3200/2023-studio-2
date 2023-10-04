@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.*;
+import com.csse3200.game.components.flags.EnemyFlag;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.structures.TurretTargetableComponent;
 import com.csse3200.game.components.tasks.AimTask;
@@ -28,7 +29,12 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.csse3200.game.physics.PhysicsLayer.ENEMY_MELEE;
+import static com.csse3200.game.physics.PhysicsLayer.ENEMY_RANGE;
+
 /**
  * Factory to create non-playable enemies entities with predefined components.
  *
@@ -45,6 +51,7 @@ public class EnemyFactory {
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
   public static DialogueBox dialogueBox;
 
+  public static List<Entity> enemiesList = new ArrayList<Entity>();
   /**
    * Creates an enemy - using the default config as defined by the type and behaviour
    * @param type - enemy type
@@ -63,7 +70,7 @@ public class EnemyFactory {
    * also helps in triggering sound
    */
   public static Entity createEnemy(EnemyConfig config) {
-    System.out.println(config.type);
+//    System.out.println(config.type);
     AnimationRenderComponent animator;
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -108,12 +115,13 @@ public class EnemyFactory {
                     false))
             .addComponent(new DialogComponent(dialogueBox))
             .addComponent(new TurretTargetableComponent())
-                .addComponent(new SoundComponent(config.sound));
+                .addComponent(new SoundComponent(config.sound))
+                .addComponent(new EnemyFlag());
 
     if (config.type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     } else {
-      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
+      enemy.getComponent(HitboxComponent.class).setLayer(ENEMY_MELEE);
     }
     enemy.addComponent(aiComponent);
 
@@ -144,6 +152,10 @@ public class EnemyFactory {
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     PhysicsUtils.setScaledCollider(enemy, 0.45f, 0.2f);
     enemy.scaleHeight(getEnemyscale(config));
+
+    if(!(config.isBoss)){
+      enemiesList.add(enemy);
+    }
 
     return enemy;
   }
@@ -182,13 +194,13 @@ public class EnemyFactory {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     }
     if (type == EnemyType.Melee) {
-      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
+      enemy.getComponent(HitboxComponent.class).setLayer(ENEMY_MELEE);
     }
     if (type == EnemyType.BossRanged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     }
     if (type == EnemyType.BossMelee) {
-      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
+      enemy.getComponent(HitboxComponent.class).setLayer(ENEMY_MELEE);
     }
   }
 
@@ -205,11 +217,11 @@ public class EnemyFactory {
     boolean isStructure = PhysicsLayer.contains(layer, PhysicsLayer.STRUCTURE);
     boolean matchingBehaviour = isPlayer && behaviour == EnemyBehaviour.PTE || isStructure && behaviour == EnemyBehaviour.DTE;
 
-    int priority = matchingBehaviour ? 10 : 0; //Matching behaviour and target gives priority 10
+    int priority = matchingBehaviour ? 10 : 0;
     float viewDistance = 100f;
     float maxChaseDistance = 100f;
 
-    if (type == EnemyType.Melee && !isPlayer && !matchingBehaviour) priority = 5; //Special case for player targeting melee
+    if (type == EnemyType.Melee && !isPlayer && !matchingBehaviour) priority = 5;
 
     //Special case for shooting player
     if (type == EnemyType.Ranged || type == EnemyType.BossRanged) {
@@ -226,6 +238,38 @@ public class EnemyFactory {
       aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
     }
   }
+
+  public static void targetSet(Entity target, short enemylayer, AITaskComponent aiTaskComponent) {
+    short layer = target.getComponent(HitboxComponent.class).getLayer();
+    boolean isEnemy = PhysicsLayer.contains(layer, (short) (PhysicsLayer.ENEMY_RANGE | ENEMY_MELEE));
+
+    int priority = isEnemy ? 10 : 0;
+    float viewDistance = 100f;
+    float maxChaseDistance = 100f;
+
+    if (PhysicsLayer.contains(layer, ENEMY_MELEE)){
+      priority = 10;
+    }
+
+    if (PhysicsLayer.contains(layer, ENEMY_RANGE)) {
+      float aimDelay = 2f;
+      float range = 3f;
+      float shootDistance = 3f;
+      viewDistance = 100f;
+      maxChaseDistance = 100f;
+
+      aiTaskComponent.addTask(new AimTask(aimDelay, target, range));
+      aiTaskComponent.addTask(new RunTask(target, 11, 2f));
+      aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
+    } else {
+      aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+    }
+  }
+
+  public static List<Entity> getEnemyList(){
+    return enemiesList;
+  }
+
 
   /**
    * Throws error when attempting the instantiating of static class

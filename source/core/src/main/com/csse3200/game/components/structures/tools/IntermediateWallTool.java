@@ -21,6 +21,9 @@ public class IntermediateWallTool extends PlacementTool {
      */
     public IntermediateWallTool(ObjectMap<String, Integer> cost) {
         super(cost);
+
+        snapX = 2;
+        snapY = 2;
     }
 
     /**
@@ -37,6 +40,8 @@ public class IntermediateWallTool extends PlacementTool {
         if (super.interact(player, position)) {
             return true;
         }
+
+        position = getSnapPosition(position);
 
         var existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
 

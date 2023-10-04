@@ -1,53 +1,113 @@
 {
   "RANGED_SLINGSHOT": {
     "name" : "Slingshot",
+    "health" : 1,
     "description": "Reliable range, decent damage. Ideal for distant targets.",
     "damage" : 50,
     "weaponSpeed": 10,
     "weaponDuration": 50,
     "rotationSpeed": 0,
-    "initialRotationOffset": 0,
-    "imageRotationOffset": 45,
     "textureAtlas": "images/weapons/slingshot.atlas",
-    "imageScale" : 1,
+    "imageScale" : 0.5,
     "animationType" : 1,
     "imagePath" : "images/weapons/slingshotStatic.png",
     "type" : "RANGED_SLINGSHOT",
-    "slotType" : "ranged"
+    "slotType" : "ranged",
+    "ammoUse" : 0,
+
+    "sound": {"soundsMap": {}}
   },
 
   "RANGED_BOOMERANG": {
     "name" : "Boomerang",
+    "health" : 1,
     "description": "Capable of hitting multiple enemies at once, a versatile choice.",
     "damage" : 25,
     "weaponSpeed": 4,
     "weaponDuration": 155,
     "rotationSpeed": 2,
-    "initialRotationOffset": 0,
-    "imageRotationOffset": 45,
     "textureAtlas": "images/weapons/boomerang.atlas",
     "imageScale" : 0.5,
     "animationType" : 1,
     "imagePath" : "images/weapons/boomerangStatic.png",
     "type" : "RANGED_BOOMERANG",
-    "slotType" : "ranged"
+    "slotType" : "ranged",
+
+    "sound": {"soundsMap": {}}
+  },
+
+  "RANGED_BLUEMERANG": {
+    "name" : "Bluemerang",
+    "health" : 1,
+    "description": "its blue!",
+    "damage" : 25,
+    "weaponSpeed": 6,
+    "weaponDuration": 55,
+    "rotationSpeed": 2,
+    "textureAtlas": "images/weapons/bluemerang.atlas",
+    "imageScale" : 0.5,
+    "animationType" : 1,
+    "imagePath" : "images/weapons/bluemerangStatic.png",
+    "type" : "RANGED_BLUEMERANG",
+    "slotType" : "ranged",
+    "projectiles" : 2,
+
+    "sound": {"soundsMap": {}}
+  },
+
+  "RANGED_MISSILES": {
+    "name" : "Missile Swarm",
+    "health" : 1,
+    "description": "Spray a rocket array and watch your enemies pray",
+    "damage" : 40,
+    "weaponSpeed": 5,
+    "weaponDuration": 90,
+    "rotationSpeed": 0,
+    "textureAtlas": "images/weapons/rocket2.atlas",
+    "imageScale" : 0.8,
+    "animationType" : 8,
+    "imagePath" : "images/weapons/rocket_image2.png",
+    "type" : "RANGED_MISSILES",
+    "slotType" : "ranged",
+    "projectiles" : 4,
+
+    "sound": {"soundsMap": {}}
+  },
+
+  "RANGED_GRENADE": {
+    "name" : "Grenade",
+    "health" : 1000,
+    "description": "Boom boom!",
+    "damage" : 0,
+    "weaponSpeed": 4,
+    "weaponDuration": 120,
+    "rotationSpeed": 1,
+    "textureAtlas": "images/weapons/grenade.atlas",
+    "imageScale" : 0.5,
+    "animationType" : 1,
+    "imagePath" : "images/explosives/grenade.png",
+    "type" : "RANGED_GRENADE",
+    "slotType" : "ranged",
+
+    "sound": {"soundsMap": {}}
   },
 
   "RANGED_HOMING": {
     "name" : "Friendly Missile",
+    "health" : 1,
     "description": "No need to aim perfectly! It finds its way by following warmth. Just launch and watch it make new friends!",
     "damage" : 100,
     "weaponSpeed": 5,
     "weaponDuration": 300,
-    "rotationSpeed": 0,
-    "initialRotationOffset": 0,
-    "imageRotationOffset": 45,
+    "rotationSpeed": 5,
     "textureAtlas": "images/weapons/rocket.atlas",
     "imageScale" : 1.2,
     "animationType" : 8,
     "imagePath" : "images/weapons/rocket_image.png",
     "type" : "RANGED_HOMING",
-    "slotType" : "ranged"
+    "slotType" : "ranged",
+
+    "sound": {"soundsMap": {}}
   },
 
   "MELEE_WRENCH": {
@@ -57,15 +117,15 @@
     "weaponSpeed": 10,
     "weaponDuration": 10,
     "rotationSpeed": 1,
-    "initialRotationOffset": -90,
-    "imageRotationOffset": 45,
     "attackCooldown": 50,
     "textureAtlas": "images/weapons/wrench.atlas",
     "imageScale" : 0.8,
     "animationType" : 1,
     "imagePath" : "images/weapons/wrench.png",
     "type" : "MELEE_WRENCH",
-    "slotType" : "melee"
+    "slotType" : "melee",
+
+    "sound": {"soundsMap": {}}
   },
 
   "MELEE_KATANA": {
@@ -75,8 +135,6 @@
     "weaponSpeed": 4,
     "weaponDuration": 20,
     "rotationSpeed": 1,
-    "initialRotationOffset": -90,
-    "imageRotationOffset": 45,
     "attackCooldown": 20,
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 0.8,
@@ -84,7 +142,9 @@
     "imagePath" : "images/upgradetree/sword.png",
     "type" : "MELEE_KATANA",
     "slotType" : "melee",
-    "ammoUse" : 0
+    "ammoUse" : 0,
+
+    "sound": {"soundsMap": {}}
   },
 
   "MELEE_BEE_STING": {
@@ -94,16 +154,17 @@
     "weaponSpeed": 4,
     "weaponDuration": 45,
     "rotationSpeed": 0,
-    "initialRotationOffset": 0,
-    "imageRotationOffset": 45,
     "attackCooldown": 10,
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 0.6,
     "animationType" : 4,
-    "imagePath" : "images/weapons/bee_sting.png",
+    "imagePath" : "images/weapons/multiSwordStatic.png",
     "type" : "MELEE_BEE_STING",
     "slotType" : "melee",
-    "ammoUse" : 1
+    "ammoUse" : 5,
+    "projectiles" : 8,
+
+    "sound": {"soundsMap": {}}
   },
 
   "STICK": {
@@ -113,14 +174,20 @@
     "weaponSpeed": 0.75,
     "weaponDuration": 50,
     "rotationSpeed": 6,
-    "initialRotationOffset": 90,
-    "imageRotationOffset": 45,
     "attackCooldown": 10,
     "textureAtlas": "images/weapons/sword.atlas",
     "imageScale" : 1,
     "imagePath" : "images/upgradetree/stick.png",
     "type" : "STICK",
-    "slotType" : "melee"
+    "slotType" : "melee",
+
+    "sound": {
+      "soundsMap": {
+        "start": "sounds/dodgingAlertSweep.wav",
+        "mid" : "sounds/footStepsInTheForestGround.wav",
+        "stop" : "sounds/PlayerHealthRecharge.wav"
+      }
+    }
   },
 
   "WOODHAMMER": {
@@ -132,7 +199,9 @@
     "imagePath" : "images/upgradetree/hammer1.png",
     "type" : "WOODHAMMER",
     "slotType" : "building",
-    "ammoUse" : 0
+    "ammoUse" : 0,
+
+    "sound": {"soundsMap": {}}
   },
 
   "STONEHAMMER": {
@@ -141,7 +210,8 @@
     "imagePath" : "images/upgradetree/hammer2.png",
     "type" : "STONEHAMMER",
     "slotType" : "building",
-    "ammoUse" : 0
+    "ammoUse" : 0,
+    "sound": {"soundsMap": {}}
   },
 
   "STEELHAMMER": {
@@ -150,6 +220,7 @@
     "imagePath" : "images/upgradetree/hammer2.png",
     "type" : "STEELHAMMER",
     "slotType" : "building",
-    "ammoUse" : 0
+    "ammoUse" : 0,
+    "sound": {"soundsMap": {}}
   }
 }

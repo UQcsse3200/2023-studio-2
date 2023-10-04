@@ -66,7 +66,7 @@ public class PowerupFactoryTest {
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
-        assertEquals(type, PowerupType.HEALTH_BOOST);
+        assertEquals(PowerupType.HEALTH_BOOST, type);
     }
 
     /**
@@ -80,7 +80,7 @@ public class PowerupFactoryTest {
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
-        assertEquals(type, PowerupType.SPEED_BOOST);
+        assertEquals(PowerupType.SPEED_BOOST, type);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class PowerupFactoryTest {
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
-        assertEquals(type, PowerupType.HEALTH_BOOST);
+        assertEquals(PowerupType.HEALTH_BOOST, type);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class PowerupFactoryTest {
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
-        assertEquals(type, PowerupType.SPEED_BOOST);
+        assertEquals(PowerupType.SPEED_BOOST, type);
     }
 
     /**

@@ -102,6 +102,7 @@ public class UpgradeNode {
     public void addChild(UpgradeNode child) {
         child.setParent(this);
         this.children.add(child);
+        this.depth += 1;
     }
 
     /**

@@ -5,7 +5,8 @@
     "footstep": "sounds/footStepsInTheForestGround.wav",
     "healthPowerup": "sounds/PlayerHealthRecharge.wav",
     "boostPowerup": "sounds/playerBoostRecharge.wav",
-    "upgradeTreeTap": "sounds/upgradeTreeTap.wav",
-    "upgradeWeapon": "sounds/upgradeWeapon.wav"
+    "upgradeTree": "sounds/upgradeTreeTap.wav",
+    "upgradeWeapon": "sounds/upgradeWeapon.wav",
+    "alert": "sounds/alert.wav"
   }
 }

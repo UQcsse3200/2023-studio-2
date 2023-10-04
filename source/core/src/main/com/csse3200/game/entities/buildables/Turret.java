@@ -1,13 +1,18 @@
 package com.csse3200.game.entities.buildables;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.FOVComponent;
 import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
+import com.csse3200.game.components.structures.TurretAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.TurretConfig;
@@ -17,6 +22,8 @@ import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.AtlasRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -52,11 +59,16 @@ public class Turret extends PlaceableEntity{
      */
     public Turret(TurretConfig turretConfig) {
         super(2, 2);
+        setScale(1.8f,1.8f);
 
+        AnimationRenderComponent animator = new AnimationRenderComponent(
+                ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, TextureAtlas.class)
+        ); // create animation render component
+        animator.addAnimation("normal", 0.05f, Animation.PlayMode.NORMAL); // add animation
+        animator.addAnimation("shoot", 0.05f, Animation.PlayMode.NORMAL); // add animation
         maxAmmo = turretConfig.maxAmmo; // set max ammo
         currentAmmo = maxAmmo;
         damage = turretConfig.damage; // set damage
-        var texture = ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, Texture.class); // load texture
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody)); // add physics component
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.TURRET)); // add collider component
@@ -64,56 +76,10 @@ public class Turret extends PlaceableEntity{
         addComponent(new CombatStatsComponent(turretConfig.health, turretConfig.damage, // add combat stats component
                 turretConfig.attackMultiplier, turretConfig.isImmune));
         addComponent(new HealthBarComponent(true)); // add health bar component
-        addComponent(new TextureRenderComponent(texture)); // add texture render component
         addComponent(new FOVComponent(4f, this::startDamage, this::stopDamage)); // add fov component
-        addComponent(new StructureDestroyComponent()); // add structure destroy component
-    }
-
-    /**
-     * Refill the turret's ammunition to its maximum capacity.
-     */
-    public void refillAmmo() {
-        currentAmmo = maxAmmo; // set current ammo to max ammo
-    }
-
-    /**
-     * Check if the turret can fire (has ammunition).
-     *
-     * @return True if the turret can fire, else false.
-     */
-
-    public boolean Canfire() {
-        return  (currentAmmo > 0) ; // return true if current ammo is greater than 0
-    }
-
-    /**
-     * Refill the turret's ammunition by the given amount.
-     * @param ammo The amount of ammunition to refill.
-     */
-    public void refillAmmo(int ammo) {
-        if (currentAmmo + ammo <= maxAmmo) {
-            currentAmmo += ammo;
-        }
-    }
-
-    /**
-     * Interact with the turret. This method can be called by a player entity to perform an interaction.
-     *
-     * @param player The player entity interacting with the turret.
-     */
-    public void interact(Entity player) {
-        int requiredAmmo = maxAmmo - currentAmmo; // calculate required ammo
-        var gameStateObserver = ServiceLocator.getGameStateObserverService(); // get game state observer
-        int availableResources = (int) gameStateObserver.getStateData("resource/nebulite"); // get available resources
-
-        if (availableResources >= requiredAmmo) {
-            gameStateObserver.trigger("resourceAdd", "nebulite", -requiredAmmo); // remove resources
-            refillAmmo(requiredAmmo);
-            System.out.println("Turret ammo refilled!"); // print message
-        } else {
-            System.out.println("Insufficient resources to refill turret ammo."); // print message
-
-        }
+        addComponent(new StructureDestroyComponent());// add structure destroy component
+        addComponent(animator); // add animation render component
+        addComponent(new TurretAnimationController());
     }
 
     /**
@@ -142,7 +108,7 @@ public class Turret extends PlaceableEntity{
         if(combatStatsComponent.getHealth() < combatStatsComponent.getMaxHealth()) {
             healthBarComponent.setEnabled(true);
         }
-        else if(combatStatsComponent.getHealth() == combatStatsComponent.getMaxHealth()) {
+        else if (combatStatsComponent.getHealth() == combatStatsComponent.getMaxHealth()) {
             healthBarComponent.setEnabled(false);
         }
         else {
@@ -156,26 +122,10 @@ public class Turret extends PlaceableEntity{
         focus.getComponent(HealthBarComponent.class).setEnabled(true);
         if (System.currentTimeMillis() - this.start > 1000) {
             giveDamage(focus);
+            Sound shootingSound = ServiceLocator.getResourceService().getAsset("sounds/turret_shoot.mp3", Sound.class);
+            shootingSound.play(1);
+            rotateTurret(focus);
             this.start = System.currentTimeMillis();
-            stopDamage(focus);
-
-        }
-    }
-
-    /**
-     * Interact with the turret to refill its ammunition using player resources.
-     *
-     * @param player The player entity interacting with the turret.
-     */
-    public void interactWithTurret(Entity player) {
-        int requiredAmmo = maxAmmo - currentAmmo;
-        var GamestateObserver = ServiceLocator.getGameStateObserverService();
-        int AvailableResources = (int)GamestateObserver.getStateData("resource/nebulite");
-        if (AvailableResources >= requiredAmmo) {
-            GamestateObserver.trigger("resourceAdd", "nebulite", -requiredAmmo);
-            refillAmmo(requiredAmmo);
-        } else {
-            // Handle insufficient resources (optional)
         }
     }
 
@@ -185,6 +135,7 @@ public class Turret extends PlaceableEntity{
      */
     public void stopDamage(Entity focus) {
 
+        this.getComponent(AnimationRenderComponent.class).startAnimation("normal"); // set animation
         if (focus.getComponent(CombatStatsComponent.class) != null && focus.getComponent(CombatStatsComponent.class).getHealth() > 0) {
             focus.getComponent(HealthBarComponent.class).setEnabled(false);
         }
@@ -197,7 +148,7 @@ public class Turret extends PlaceableEntity{
     public void giveDamage(Entity focus) {
         if (focus.getComponent(CombatStatsComponent.class) != null) {
             focus.getComponent(CombatStatsComponent.class).setHealth(focus.getComponent(CombatStatsComponent.class).getHealth() - damage);
-            rotateTurret(focus);
+            /*rotateTurret(focus);*/
             currentAmmo --;
         }
     }
@@ -208,12 +159,62 @@ public class Turret extends PlaceableEntity{
      */
     public void rotateTurret(Entity focus) {
         var target = new Vector2(focus.getCenterPosition().x, focus.getCenterPosition().y);
-        var position = new Vector2(this.getPosition().x, this.getPosition().y);
+        var position = new Vector2(this.getCenterPosition().x, this.getCenterPosition().y);
         float angle = MathUtils.atan2(target.y - position.y, target.x - position.x);
         float degrees = MathUtils.radiansToDegrees * angle;
 
-        TextureRenderComponent textureComponent = getComponent(TextureRenderComponent.class);
-        textureComponent.setRotation(degrees - 90);
+        AnimationRenderComponent textureComponent = getComponent(AnimationRenderComponent.class);
+        if (textureComponent != null) {
+            textureComponent.setRotation(degrees - 90);
+        }
+        this.getComponent(AnimationRenderComponent.class).startAnimation("shoot"); // set animation
+    }
+
+    /**
+     * Interact with the turret. This method can be called by a player entity to perform an interaction.
+     *
+     * @param player The player entity interacting with the turret.
+     */
+    public void interact(Entity player) {
+        int requiredAmmo = maxAmmo - currentAmmo; // calculate required ammo
+        var gameStateObserver = ServiceLocator.getGameStateObserverService(); // get game state observer
+        int availableResources = (int) gameStateObserver.getStateData("resource/nebulite"); // get available resources
+
+        if (availableResources >= requiredAmmo) {
+            gameStateObserver.trigger("resourceAdd", "nebulite", -requiredAmmo); // remove resources
+            refillAmmo(requiredAmmo);
+            System.out.println("Turret ammo refilled!"); // print message
+        } else {
+            System.out.println("Insufficient resources to refill turret ammo."); // print message
+
+        }
+    }
+
+    /**
+     * Refill the turret's ammunition to its maximum capacity.
+     */
+    public void refillAmmo() {
+        currentAmmo = maxAmmo; // set current ammo to max ammo
+    }
+
+    /**
+     * Check if the turret can fire (has ammunition).
+     *
+     * @return True if the turret can fire, else false.
+     */
+
+    public boolean Canfire() {
+        return  (currentAmmo > 0) ; // return true if current ammo is greater than 0
+    }
+
+    /**
+     * Refill the turret's ammunition by the given amount.
+     * @param ammo The amount of ammunition to refill.
+     */
+    public void refillAmmo(int ammo) {
+        if (currentAmmo + ammo <= maxAmmo) {
+            currentAmmo += ammo;
+        }
     }
 
     /**

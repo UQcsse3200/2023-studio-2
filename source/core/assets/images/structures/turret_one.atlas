@@ -1,0 +1,62 @@
+turret_one.png
+ size: 1024, 128
+ format: RGBA8888
+ filter: Nearest,Nearest
+ repeat: none
+ normal
+   rotate: false
+   xy: 0, 0
+   size: 128, 128
+   orig: 0, 0
+   offset: 0, 0
+   index: 0
+ shoot
+   rotate: false
+   xy: 128, 0
+   size: 128, 128
+   orig: 0, 0
+   offset: 0, 0
+   index: 1
+ shoot
+   rotate: false
+   xy: 256, 0
+   size: 128, 128
+   orig: 0, 0
+   offset: 0, 0
+   index: 2
+ shoot
+   rotate: false
+   xy: 384, 0
+   size: 128, 128
+   orig: 0, 0
+   offset: 0, 0
+   index: 3
+ shoot
+   rotate: false
+   xy: 512, 0
+   size: 128, 128
+   orig: 0, 0
+   offset: 0, 0
+   index: 4
+ shoot
+   rotate: false
+   xy: 640, 0
+   size: 128, 128
+   orig: 0, 0
+   offset: 0, 0
+   index: 5
+ shoot
+   rotate: false
+   xy: 768, 0
+   size: 128, 128
+   orig: 0, 0
+   offset: 0, 0
+   index: 6
+ shoot
+   rotate: false
+   xy: 896, 0
+   size: 128, 128
+   orig: 0, 0
+   offset: 0, 0
+   index: 7
+

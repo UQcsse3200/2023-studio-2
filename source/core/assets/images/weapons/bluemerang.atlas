@@ -1,0 +1,40 @@
+bluemerang.png
+size: 64, 16
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+UP
+  rotate: false
+  xy: 0, 0
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+UP
+  rotate: false
+  xy: 16, 0
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+UP
+  rotate: false
+  xy: 32, 0
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+UP
+  rotate: false
+  xy: 48, 0
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+STATIC
+  rotate: false
+  xy: 0, 0
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1

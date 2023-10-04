@@ -1,10 +1,13 @@
 package com.csse3200.game.components.mainmenu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.screens.PlanetScreen;
+import com.csse3200.game.screens.TutorialScreen;
+import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.MainAlert;
@@ -39,6 +42,9 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
     entity.getEvents().addListener("upgrade shop", this::onShop);
+    entity.getEvents().addListener("tutorial", this::onTutorial);
+    entity.getEvents().addListener("brick breaker minigame", this::onBrickBreaker);
+
   }
 
   /**
@@ -52,9 +58,18 @@ public class MainMenuActions extends Component {
     alertBox.showDialog(stage);
 
     logger.info("Loading Story");
-    TitleBox titleBox = new TitleBox(game,"Story Introduction", skin);
-    titleBox.showDialog(stage);
     game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
+  }
+
+  /**
+   * Swaps to the Tutorial screen.
+   */
+
+  private void onTutorial(){
+    logger.info("Loading Tutorial");
+    TitleBox titleBox = new TitleBox(game, "Tutorial","Hey! This is the tutorial of the game.",skin);
+    titleBox.showDialog(stage);
+    game.setScreen(GdxGame.ScreenType.TUTORIAL_SCREEN);
   }
 
   /**
@@ -75,6 +90,7 @@ public class MainMenuActions extends Component {
     logger.info("Exit game");
     game.exit();
   }
+
 
   /**
    * Swaps to the Settings screen.
@@ -97,5 +113,9 @@ public class MainMenuActions extends Component {
   private void onShop() {
     logger.info("Launching Upgrade Shop screen");
     game.setScreen(GdxGame.ScreenType.UPGRADE_SHOP);
+  }
+  private void onBrickBreaker(){
+    logger.info("Starting brick breaker minigame screen");
+    game.setScreen(GdxGame.ScreenType.BRICK_BREAKER_SCREEN);
   }
 }

@@ -62,7 +62,7 @@ public class PowerupFactoryTest {
      */
     @Test
     public void testCreateHealthPowerup() {
-        Entity powerup = PowerupFactory.createHealthPowerup();
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
@@ -76,7 +76,7 @@ public class PowerupFactoryTest {
      */
     @Test
     public void testCreateSpeedPowerup() {
-        Entity powerup = PowerupFactory.createSpeedPowerup();
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
@@ -112,7 +112,7 @@ public class PowerupFactoryTest {
      */
     @Test
     public void testCreateExtraLifePowerup() {
-        Entity powerup = PowerupFactory.createExtraLifePowerup();
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.EXTRA_LIFE);
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
@@ -142,7 +142,7 @@ public class PowerupFactoryTest {
      */
     @Test
     public void testCreateDoubleCrossPowerup() {
-        Entity powerup = PowerupFactory.createDoubleCrossPowerup();
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.DOUBLE_CROSS);
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
@@ -172,7 +172,7 @@ public class PowerupFactoryTest {
      */
     @Test
     public void testCreateDoubleDamagePowerup() {
-        Entity powerup = PowerupFactory.createDoubleDamagePowerup();
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.DOUBLE_DAMAGE);
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
@@ -202,7 +202,7 @@ public class PowerupFactoryTest {
      */
     @Test
     public void testCreateSnapPowerup() {
-        Entity powerup = PowerupFactory.createSnapPowerup();
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.SNAP);
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
@@ -232,7 +232,7 @@ public class PowerupFactoryTest {
      */
     @Test
     public void testCreateTempImmunityPowerup() {
-        Entity powerup = PowerupFactory.createTempImmunityPowerup();
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.TEMP_IMMUNITY);
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);

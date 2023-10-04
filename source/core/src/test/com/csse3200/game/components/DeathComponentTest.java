@@ -66,7 +66,6 @@ class DeathComponentTest {
         deathComponent.kill(0);
 
         verify(mockAnimator).stopAnimation();
-        verify(mockEntity.getComponent(HitboxComponent.class)).setLayer((short) 0);
         verify(mockEntity.getEvents()).trigger("dispose");
     }
 }

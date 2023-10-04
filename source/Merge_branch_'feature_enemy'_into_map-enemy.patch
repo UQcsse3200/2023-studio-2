@@ -1,0 +1,633 @@
+Subject: [PATCH] Merge branch 'feature/enemy' into map-enemy
+---
+Index: source/core/assets/levels/earth/main-area/entities.json
+===================================================================
+diff --git a/source/core/assets/levels/earth/main-area/entities.json b/source/core/assets/levels/earth/main-area/entities.json
+--- a/source/core/assets/levels/earth/main-area/entities.json	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/assets/levels/earth/main-area/entities.json	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -1,24 +1,49 @@
+ {
++  "ship": {
++    "spritePath": "images/LeftShip.png",
++    "position": {
++      "x": 33,
++      "y": 67
++    }
++  },
+   "spawners": [
+     {
+       "wave1" : [
+-        1,
++        10,
+         0,
+         0
+       ],
+       "wave2" : [
+-        0,
+-        0,
++        10,
++        5,
+         0
+       ],
+       "wave3" : [
+-        0,
+-        0,
++        10,
++        10,
+         0
+       ],
+       "position": {
+-        "x": 10,
+-        "y": 45
++        "x": 40,
++        "y": 40
++      }
++    }
++  ],
++  "portals": [
++    {
++      "teleportX" : 40,
++      "teleportY" : 5,
++      "position": {
++        "x": 30,
++        "y": 40
++      }
++    },
++    {
++      "teleportX" : 16,
++      "teleportY" : 20,
++      "position": {
++        "x": 78,
++        "y": 10
+       }
+     }
+   ],
+@@ -33,5 +58,11 @@
+         "y": 30
+       }
+     }
+-  ]
++  ],
++  "upgradeBench": {
++    "position" : {
++      "x": 20,
++      "y": 40
++    }
++  }
+ }
+\ No newline at end of file
+Index: source/core/src/main/com/csse3200/game/areas/GameArea.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/main/com/csse3200/game/areas/GameArea.java b/source/core/src/main/com/csse3200/game/areas/GameArea.java
+--- a/source/core/src/main/com/csse3200/game/areas/GameArea.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/main/com/csse3200/game/areas/GameArea.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -1,5 +1,6 @@
+ package com.csse3200.game.areas;
+ 
++import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+ import com.badlogic.gdx.math.GridPoint2;
+ import com.badlogic.gdx.math.Vector2;
+ import com.badlogic.gdx.utils.Disposable;
+@@ -15,6 +16,7 @@
+ 
+ import java.util.ArrayList;
+ import java.util.HashMap;
++import java.util.Map;
+ import java.util.List;
+ 
+ /**
+Index: source/core/src/main/com/csse3200/game/components/npc/PathFinder.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/main/com/csse3200/game/components/npc/PathFinder.java b/source/core/src/main/com/csse3200/game/components/npc/PathFinder.java
+--- a/source/core/src/main/com/csse3200/game/components/npc/PathFinder.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/main/com/csse3200/game/components/npc/PathFinder.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -89,10 +89,10 @@
+     }
+ 
+     private static class Node implements Comparable<Node> {
+-        private int moveCost;
+-        private int heuristic;
+-        private int gridX;
+-        private int gridY;
++        private final int moveCost;
++        private final int heuristic;
++        private final int gridX;
++        private final int gridY;
+         private int totalCost;
+         private Node parent;
+ 
+Index: source/core/src/main/com/csse3200/game/components/npc/SpawnerComponent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/main/com/csse3200/game/components/npc/SpawnerComponent.java b/source/core/src/main/com/csse3200/game/components/npc/SpawnerComponent.java
+--- a/source/core/src/main/com/csse3200/game/components/npc/SpawnerComponent.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/main/com/csse3200/game/components/npc/SpawnerComponent.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -79,13 +79,25 @@
+         lastTime = currentTime;
+     }
+ 
++    /**
++     *
++     * @param currentTime - checks the time to handle and release the new enemy wave
++     *  The handleEnemySpawn() handles when to spawn enemies and
++     *                    also trigger sound while spawning.
++     */
+     private void handleEnemySpawn(long currentTime) {
+         if (meleeEnemiesToSpawn > 0) {
+             spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
+             meleeEnemiesToSpawn--;
++            if (entity != null) {
++                entity.getEvents().trigger("playSound", "enemySpawn"); // triggering spawning sound effects
++            }
+         } else if (rangedEnemiesToSpawn > 0) {
+             spawnEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
+             rangedEnemiesToSpawn--;
++            if (entity != null) {
++                entity.getEvents().trigger("playSound", "enemySpawn"); // triggering spawning sound effects
++            }
+         }
+         enemiesSpawned++;
+         lastTime = currentTime;
+Index: source/core/src/main/com/csse3200/game/components/tasks/ChaseTask.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/main/com/csse3200/game/components/tasks/ChaseTask.java b/source/core/src/main/com/csse3200/game/components/tasks/ChaseTask.java
+--- a/source/core/src/main/com/csse3200/game/components/tasks/ChaseTask.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/main/com/csse3200/game/components/tasks/ChaseTask.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -11,10 +11,12 @@
+ import com.csse3200.game.physics.raycast.RaycastHit;
+ import com.csse3200.game.rendering.DebugRenderer;
+ import com.csse3200.game.services.ServiceLocator;
+-import com.badlogic.gdx.utils.Timer;
++
++
+ import java.util.ArrayList;
++import java.util.Timer;
++import java.util.TimerTask;
+ import java.util.List;
+-
+ import static com.csse3200.game.components.npc.PathFinder.findPath;
+ 
+ /** Chases a target entity until they get too far away or line of sight is lost */
+@@ -27,6 +29,8 @@
+   private MovementTask movementTask;
+   private List<GridPoint2> path;
+   private GridPoint2 targetPosition;
++  private char direction;
++
+   /**
+    * @param target The entity to chase.
+    * @param priority Task priority when chasing (0 when not chasing).
+@@ -68,10 +72,21 @@
+     movementTask = new MovementTask(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
+     movementTask.create(owner);
+     movementTask.start();
++    direction = getDirection(target.getPosition());
++
++    direction = getDirection(target.getPosition());
++
++    if(direction == '<'){
++      this.owner.getEntity().getEvents().trigger("chaseLeft");
++    }
++    if(direction == '>'||direction == '='){
++      this.owner.getEntity().getEvents().trigger("chaseStart");
++    }
+   }
+ 
+   @Override
+   public void update() {
++    char direction2 = getDirection(target.getPosition());
+     movementTask.update();
+     //check if it reached the tile (the first tile of the path in the start() function)
+     if (movementTask.getStatus() != Status.ACTIVE) {
+@@ -109,6 +124,9 @@
+         movementTask.update();
+       }
+     }
++    if (direction != direction2){
++      start();
++    }
+   }
+ 
+   @Override
+Index: source/core/src/main/com/csse3200/game/components/tasks/MovementTask.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/main/com/csse3200/game/components/tasks/MovementTask.java b/source/core/src/main/com/csse3200/game/components/tasks/MovementTask.java
+--- a/source/core/src/main/com/csse3200/game/components/tasks/MovementTask.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/main/com/csse3200/game/components/tasks/MovementTask.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -44,6 +44,7 @@
+     lastPos = owner.getEntity().getPosition();
+   }
+ 
++
+   @Override
+   public void update() {
+     if (isAtTarget() || isAtTargetGrid()) {
+@@ -96,4 +97,7 @@
+     Vector2 currentPosition = owner.getEntity().getPosition();
+     return currentPosition.sub(target).x < 0 ? "right" : "left";
+   }
++  public void setSpeed(Vector2 speed){
++    movementComponent.changeMaxSpeed(speed);
++  }
+ }
+\ No newline at end of file
+Index: source/core/src/main/com/csse3200/game/entities/Entity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/main/com/csse3200/game/entities/Entity.java b/source/core/src/main/com/csse3200/game/entities/Entity.java
+--- a/source/core/src/main/com/csse3200/game/entities/Entity.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/main/com/csse3200/game/entities/Entity.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -11,6 +11,9 @@
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
++import java.util.ArrayList;
++import java.util.List;
++
+ /**
+  * Core entity class. Entities exist in the game and are updated each frame. All entities have a
+  * position and scale, but have no default behaviour. Components should be added to an entity to
+@@ -215,6 +218,25 @@
+     return (T) components.get(componentType.getId());
+   }
+ 
++  /**
++   * Get the components of type T on the entity.
++   *
++   * @param type The component class, e.g. RenderComponent.class
++   * @param <T> The component type, e.g. RenderComponent
++   * @return The entity component, or null if nonexistent.
++   */
++  @SuppressWarnings("unchecked")
++  public <T> List<T> getComponents(Class<T> type) {
++    List<T> matchedComponents = new ArrayList<>();
++
++    for (var component : components.values()) {
++      if (type.isInstance(component)) {
++        matchedComponents.add((T) component);
++      }
++    }
++    return matchedComponents;
++  }
++
+   /**
+    * Add a component to the entity. Can only be called before the entity is registered in the world.
+    *
+Index: source/core/src/main/com/csse3200/game/entities/factories/EnemyFactory.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/main/com/csse3200/game/entities/factories/EnemyFactory.java b/source/core/src/main/com/csse3200/game/entities/factories/EnemyFactory.java
+--- a/source/core/src/main/com/csse3200/game/entities/factories/EnemyFactory.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/main/com/csse3200/game/entities/factories/EnemyFactory.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -1,25 +1,13 @@
+ package com.csse3200.game.entities.factories;
+ 
+-import com.badlogic.gdx.utils.Array;
+-import com.csse3200.game.components.tasks.RunTask;
+-import com.csse3200.game.entities.configs.NPCConfigs;
+-import com.csse3200.game.services.ServiceLocator;
+-import com.csse3200.game.components.*;
+-import com.csse3200.game.ui.DialogComponent;
+-import com.csse3200.game.ui.DialogueBox;
+ import com.badlogic.gdx.graphics.g2d.Animation;
+ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+ import com.badlogic.gdx.math.Vector2;
+ import com.csse3200.game.ai.tasks.AITaskComponent;
+-import com.csse3200.game.components.CombatStatsComponent;
+-import com.csse3200.game.components.DeathComponent;
+-import com.csse3200.game.components.HealthBarComponent;
+-import com.csse3200.game.components.TouchAttackComponent;
++import com.csse3200.game.components.*;
+ import com.csse3200.game.components.npc.EnemyAnimationController;
+ import com.csse3200.game.components.structures.TurretTargetableComponent;
+-import com.csse3200.game.components.tasks.AimTask;
+-import com.csse3200.game.components.tasks.ChaseTask;
+-import com.csse3200.game.components.tasks.WanderTask;
++import com.csse3200.game.components.tasks.*;
+ import com.csse3200.game.entities.Entity;
+ import com.csse3200.game.entities.configs.EnemyConfig;
+ import com.csse3200.game.entities.configs.NPCConfigs;
+@@ -33,6 +21,10 @@
+ import com.csse3200.game.physics.components.PhysicsComponent;
+ import com.csse3200.game.physics.components.PhysicsMovementComponent;
+ import com.csse3200.game.rendering.AnimationRenderComponent;
++import com.csse3200.game.services.ServiceLocator;
++import com.csse3200.game.ui.DialogComponent;
++import com.csse3200.game.ui.DialogueBox;
++
+ import java.util.List;
+ /**
+  * Factory to create non-playable enemies entities with predefined components.
+@@ -65,10 +57,12 @@
+    *
+    * @param config - config file to replicate entity from
+    * @return entity
++   * also helps in triggering sound
+    */
+   public static Entity createEnemy(EnemyConfig config) {
+     System.out.println(config.type);
+     AnimationRenderComponent animator;
++    // Choose behaviour for enemy
+     AITaskComponent aiComponent = new AITaskComponent();
+     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+ 
+@@ -111,7 +105,8 @@
+                     1,
+                     false))
+             .addComponent(new DialogComponent(dialogueBox))
+-            .addComponent(new TurretTargetableComponent());
++            .addComponent(new TurretTargetableComponent())
++                .addComponent(new SoundComponent(config.sound));
+ 
+     if (config.type == EnemyType.Ranged) {
+       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
+@@ -132,6 +127,7 @@
+     animator.addAnimation("death", 0.2f, Animation.PlayMode.LOOP);
+     animator.addAnimation("chaseLeft",0.3f,Animation.PlayMode.LOOP_REVERSED);
+     animator.addAnimation("attackLeft",0.05f,Animation.PlayMode.LOOP_REVERSED);
++    animator.addAnimation("invisible",0.5f, Animation.PlayMode.LOOP);
+     enemy.addComponent(animator);
+     enemy.addComponent(new EnemyAnimationController());
+ 
+@@ -224,7 +220,23 @@
+       aiTaskComponent.addTask(new RunTask(target, 11, 2f));
+       aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
+     } else {
+-      aiTaskComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
++      addBehaviour(type, aiTaskComponent, target, priority, viewDistance, maxChaseDistance);
++    }
++  }
++
++  static void addBehaviour(EnemyType type, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance) {
++    // Select behaviour
++    if (type == EnemyType.Melee) {
++      // Default
++      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
++    } else if (type == EnemyType.BossMelee) {
++      // Sprint 2 Boss
++      aiComponent.addTask(new BossTask(type, target, priority, viewDistance, maxChaseDistance));
++    } else if (type == EnemyType.BossRanged) {
++      // Todo: add task here
++    } else {
++      // Default task
++      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
+     }
+   }
+ 
+Index: source/core/src/main/com/csse3200/game/entities/factories/ObstacleFactory.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/main/com/csse3200/game/entities/factories/ObstacleFactory.java b/source/core/src/main/com/csse3200/game/entities/factories/ObstacleFactory.java
+--- a/source/core/src/main/com/csse3200/game/entities/factories/ObstacleFactory.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/main/com/csse3200/game/entities/factories/ObstacleFactory.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -5,6 +5,7 @@
+ import com.csse3200.game.areas.terrain.TerrainComponent;
+ import com.csse3200.game.entities.Entity;
+ import com.csse3200.game.entities.PlaceableEntity;
++import com.csse3200.game.entities.buildables.Turret;
+ import com.csse3200.game.entities.buildables.TurretType;
+ import com.csse3200.game.entities.configs.*;
+ import com.csse3200.game.files.FileLoader;
+@@ -14,7 +15,6 @@
+ import com.csse3200.game.physics.components.HitboxComponent;
+ import com.csse3200.game.physics.components.PhysicsComponent;
+ import com.csse3200.game.rendering.TextureRenderComponent;
+-import com.csse3200.game.entities.buildables.Turret;
+ 
+ /**
+  * Factory to create obstacle entities.
+@@ -102,17 +102,17 @@
+    * Creates a tree top entity.
+    * @return entity
+    */
+-  public static Entity createTreeTop() {
++  public static Entity createTreeTop(TreeTopConfig treeTopConfig) {
+     Entity treeTop =
+             new Entity()
+-                    .addComponent(new TextureRenderComponent("map/treetop.png")) // Replace with the path to your tree top texture
++                    .addComponent(new TextureRenderComponent(treeTopConfig.spritePath)) // Replace with the path to your tree top texture
+                     .addComponent(new PhysicsComponent())
+                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE));
+ 
+     treeTop.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+     treeTop.getComponent(TextureRenderComponent.class).scaleEntity();
+-    treeTop.scaleHeight(30f);
+-    PhysicsUtils.setScaledCollider(treeTop, 0.5f, 0.2f);
++    treeTop.scaleHeight(treeTopConfig.scaleH);
++    PhysicsUtils.setScaledCollider(treeTop, treeTopConfig.scaleX, treeTopConfig.scaleY);
+     return treeTop;
+   }
+ 
+@@ -157,7 +157,7 @@
+     ColliderComponent asteroidCollider = new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE);
+     //asteroidCollider.setRestitution(restitution); bounce removed
+     Entity asteroid = new Entity()
+-            .addComponent(new TextureRenderComponent("images/meteor.png"))
++            .addComponent(new TextureRenderComponent("images/minigame/meteor.png"))
+             .addComponent(new PhysicsComponent().setBodyType(BodyType.DynamicBody))
+             .addComponent(asteroidCollider);
+     asteroid.setScale(width, height);
+@@ -219,7 +219,7 @@
+             //.addComponent(new TextureRenderComponent(config.spritePath))
+ 
+ 
+-            .addComponent(new TextureRenderComponent("images/wormhole.png"));
++            .addComponent(new TextureRenderComponent("images/minigame/wormhole.png"));
+     //NEED to decide spritePath texture or png texture
+     goal.setScale(config.scale);
+ 
+Index: source/core/src/main/com/csse3200/game/physics/PhysicsLayer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/main/com/csse3200/game/physics/PhysicsLayer.java b/source/core/src/main/com/csse3200/game/physics/PhysicsLayer.java
+--- a/source/core/src/main/com/csse3200/game/physics/PhysicsLayer.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/main/com/csse3200/game/physics/PhysicsLayer.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -2,6 +2,7 @@
+ 
+ public class PhysicsLayer {
+   public static final short NONE = 0;
++  @SuppressWarnings("PointlessBitwiseExpression")
+   public static final short DEFAULT = (1 << 0);
+   public static final short PLAYER = (1 << 1);
+ 
+Index: source/core/src/main/com/csse3200/game/screens/PlanetScreen.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/main/com/csse3200/game/screens/PlanetScreen.java b/source/core/src/main/com/csse3200/game/screens/PlanetScreen.java
+--- a/source/core/src/main/com/csse3200/game/screens/PlanetScreen.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/main/com/csse3200/game/screens/PlanetScreen.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -41,7 +41,7 @@
+     private static final Logger logger = LoggerFactory.getLogger(PlanetScreen.class);
+     private final GdxGame game;
+ 
+-    private final String name;
++    public final String name;
+     private String nextPlanetName;
+ 
+     private Entity player;
+@@ -58,7 +58,7 @@
+ 
+     /** file paths of textures for screen to load. */
+     private static final String[] planetTextures = {
+-            "images/heart.png",
++            "images/player/heart.png",
+             "images/structure-icons/gate.png",
+             "images/structure-icons/wall.png",
+             "images/structure-icons/stone_wall.png",
+@@ -72,6 +72,15 @@
+             "images/structures/heal_icon.png"
+     };
+ 
++    /**
++     * Construct the PlanetScreen instance for the first planet (Earth).
++     *
++     * @param game  The current game instance to display screen on.
++     */
++    public PlanetScreen(GdxGame game) {
++        this(game, "Earth");
++    }
++
+     /**
+      * Construct the PlanetScreen instance for the planet of given name.
+      *
+@@ -92,7 +101,6 @@
+ 
+         loadAssets();
+         createUI();
+-
+         generateGameAreas();
+         allGameAreas.get(currentAreaName).create();
+ 
+@@ -124,15 +132,20 @@
+      * Generates all the appropriate game areas for the current planet based on its name.
+      */
+     private void generateGameAreas() {
+-        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+         if ("Earth".equals(name)) {
+-            this.nextPlanetName = "Not Earth";
+-            generateGameArea("primary", "levels/earth/main-area");
++            this.nextPlanetName = "Verdant Oasis";
++
++;            generateGameArea("primary", "levels/earth/main-area");
++        } else if ("Verdant Oasis".equals(name)){
++            this.nextPlanetName = "Glacial Desolation";
++            generateGameArea("primary", "levels/lush/main-area");
++        } else if ("Glacial Desolation".equals(name)){
++            this.nextPlanetName = "Infernal Challenge";
++            generateGameArea("primary", "levels/frozen/main-area");
++        } else if ("Infernal Challenge".equals(name)){
++            generateGameArea("primary", "levels/lush/main-area");
+         } else {
+-            // TODO: Extend
+-            this.nextPlanetName = "Earth";
+-            this.allGameAreas.put("primary", new MapGameArea("levels/lush/main-area", terrainFactory, game));
+-
++            generateGameArea("primary", "levels/earth/main-area");
+         }
+     }
+ 
+@@ -144,7 +157,7 @@
+      */
+     private void generateGameArea(String name, String configPath) {
+         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+-        GameArea gameArea = new MapGameArea(configPath, terrainFactory, game);
++        GameArea gameArea = new MapGameArea(configPath, terrainFactory, game, game.getPlayerLives());
+         this.allGameAreas.put(name, gameArea);
+         ServiceLocator.registerGameArea(gameArea);
+     }
+@@ -286,4 +299,4 @@
+         renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
+     }
+ 
+-}
++}
+\ No newline at end of file
+Index: source/core/src/test/com/csse3200/game/areas/terrain/TerrainComponentTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/test/com/csse3200/game/areas/terrain/TerrainComponentTest.java b/source/core/src/test/com/csse3200/game/areas/terrain/TerrainComponentTest.java
+--- a/source/core/src/test/com/csse3200/game/areas/terrain/TerrainComponentTest.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/test/com/csse3200/game/areas/terrain/TerrainComponentTest.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -1,8 +1,5 @@
+ package com.csse3200.game.areas.terrain;
+ 
+-import static org.junit.jupiter.api.Assertions.assertEquals;
+-import static org.mockito.Mockito.mock;
+-
+ import com.badlogic.gdx.graphics.OrthographicCamera;
+ import com.badlogic.gdx.maps.tiled.TiledMap;
+ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+@@ -13,6 +10,9 @@
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.api.extension.ExtendWith;
+ 
++import static org.junit.jupiter.api.Assertions.assertEquals;
++import static org.mockito.Mockito.mock;
++
+ @ExtendWith(GameExtension.class)
+ class TerrainComponentTest {
+   @Test
+Index: source/core/src/test/com/csse3200/game/components/tasks/MovementTaskTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/source/core/src/test/com/csse3200/game/components/tasks/MovementTaskTest.java b/source/core/src/test/com/csse3200/game/components/tasks/MovementTaskTest.java
+--- a/source/core/src/test/com/csse3200/game/components/tasks/MovementTaskTest.java	(revision 2b4d7aebebc25b6818a6edf38e2aeb7426ed60b7)
++++ b/source/core/src/test/com/csse3200/game/components/tasks/MovementTaskTest.java	(revision 61ae5b6b582eb1459e12c8eaec6867ec24c541d4)
+@@ -1,24 +1,22 @@
+ package com.csse3200.game.components.tasks;
+ 
+-import static org.junit.jupiter.api.Assertions.assertEquals;
+-import static org.junit.jupiter.api.Assertions.assertFalse;
+-import static org.junit.jupiter.api.Assertions.assertTrue;
+-import static org.mockito.Mockito.mock;
+-import static org.mockito.Mockito.when;
+-
+ import com.badlogic.gdx.math.Vector2;
+ import com.csse3200.game.ai.tasks.Task.Status;
+ import com.csse3200.game.entities.Entity;
+ import com.csse3200.game.extensions.GameExtension;
++import com.csse3200.game.physics.PhysicsService;
+ import com.csse3200.game.physics.components.PhysicsComponent;
+ import com.csse3200.game.physics.components.PhysicsMovementComponent;
+-import com.csse3200.game.physics.PhysicsService;
+ import com.csse3200.game.services.GameTime;
+ import com.csse3200.game.services.ServiceLocator;
+ import org.junit.jupiter.api.BeforeEach;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.api.extension.ExtendWith;
+ 
++import static org.junit.jupiter.api.Assertions.*;
++import static org.mockito.Mockito.mock;
++import static org.mockito.Mockito.when;
++
+ @ExtendWith(GameExtension.class)
+ class MovementTaskTest {
+   @BeforeEach

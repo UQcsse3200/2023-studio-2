@@ -12,6 +12,7 @@ import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
@@ -92,6 +93,7 @@ public class ObstacleFactory {
   public static Entity createEnvironment(float sizeX, float sizeY, float posX, float posY) {
     Entity environment =
             new Entity().addComponent(new PhysicsComponent())
+                    .addComponent(new HitboxComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
     environment.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);

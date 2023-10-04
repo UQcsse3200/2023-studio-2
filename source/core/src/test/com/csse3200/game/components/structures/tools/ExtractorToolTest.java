@@ -62,11 +62,10 @@ class ExtractorToolTest {
 
             when(structurePlacementService.getStructureAt(new GridPoint2(0, 0))).thenReturn(fissure);
 
-            assertTrue(extractorTool.isPositionValid(new GridPoint2(0, 0), mock(Fissure.class)));
+            assertTrue(extractorTool.isPositionValid(new GridPoint2(0, 0)).isValid());
 
-            when(stateObserver.getStateData("extractorsTotal/" + Resource.Durasteel)).thenReturn(5);
-
-            assertFalse(extractorTool.isPositionValid(new GridPoint2(0, 0), mock(PlaceableEntity.class)));
+        when(structurePlacementService.getStructureAt(new GridPoint2(1, 1))).thenReturn(mock(PlaceableEntity.class));
+            assertFalse(extractorTool.isPositionValid(new GridPoint2(1, 1)).isValid());
     }
 
 }

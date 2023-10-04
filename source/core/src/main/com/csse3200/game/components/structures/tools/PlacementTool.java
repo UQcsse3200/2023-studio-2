@@ -13,7 +13,7 @@ import com.csse3200.game.services.ServiceLocator;
  * An abstract tool which allows the player to place a structure.
  * This class must be inherited and the createEntity method implemented to function.
  */
-public abstract class PlacementTool extends Tool {
+public abstract class PlacementTool<T extends PlaceableEntity> extends Tool {
 
     /**
      * Creates a new tool which allows the placing of structures with the given cost.
@@ -32,25 +32,26 @@ public abstract class PlacementTool extends Tool {
      * @return whether the structure was successfully placed.
      */
     @Override
-    public boolean interact(Entity player, GridPoint2 position) {
-        if (!isPositionValid(position)) {
-            player.getEvents().trigger("displayWarningAtPosition", "Invalid position",
-                    new Vector2((float) position.x / 2, (float) position.y / 2));
-            return false;
-        }
-
-        if (!hasEnoughResources()) {
-            player.getEvents().trigger("displayWarningAtPosition", "Insufficient resources",
-                    new Vector2((float) position.x / 2, (float) position.y / 2));
-            return false;
-        }
-
+    protected void performInteraction(Entity player, GridPoint2 position) {
         PlaceableEntity newStructure = createStructure(player);
         newStructure.addComponent(new CostComponent(cost));
 
         ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position, false, false);
+    }
 
-        return true;
+    @Override
+    protected ToolResponse canInteract(Entity player, GridPoint2 position) {
+        var positionValidity = isPositionValid(position);
+        if (!positionValidity.isValid()) {
+            return positionValidity;
+        }
+
+        var resourceValidity = hasEnoughResources();
+        if (!positionValidity.isValid()) {
+            return resourceValidity;
+        }
+
+        return ToolResponse.valid();
     }
 
     /**
@@ -59,7 +60,7 @@ public abstract class PlacementTool extends Tool {
      * @param player - the player placing the structure.
      * @return the structure to be placed.
      */
-    public abstract PlaceableEntity createStructure(Entity player);
+    public abstract T createStructure(Entity player);
 
     /**
      * Checks whether the structure can be placed at the given position.
@@ -68,10 +69,12 @@ public abstract class PlacementTool extends Tool {
      * @param position - the position the structure is trying to be placed at.
      * @return whether the structure can be placed at the given position.
      */
-    public boolean isPositionValid(GridPoint2 position) {
+    public ToolResponse isPositionValid(GridPoint2 position) {
         var existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
 
-        return existingStructure == null;
+
+        return existingStructure == null ? ToolResponse.valid()
+                : new ToolResponse(PlacementValidity.INVALID_POSITION, "Invalid Position");
     }
 
     /**
@@ -79,21 +82,22 @@ public abstract class PlacementTool extends Tool {
      *
      * @return whether the player has sufficient resources to place the structure.
      */
-    public boolean hasEnoughResources() {
+    public ToolResponse hasEnoughResources() {
         GameStateObserver stateObserver = ServiceLocator.getGameStateObserverService();
 
         for (var resourceCost : cost.entries()) {
             var availableResources = stateObserver.getStateData("resource/" + resourceCost.key);
 
             if (!(availableResources instanceof Integer)) {
-                return false;
+                new ToolResponse(PlacementValidity.ERROR, "Cannot find required resource");
             }
 
             if ((int)availableResources < resourceCost.value) {
-                return false;
+                new ToolResponse(PlacementValidity.INSUFFICIENT_RESOURCES,
+                        String.format("Not enough %s", resourceCost.key));
             }
         }
 
-        return true;
+        return ToolResponse.valid();
     }
 }

@@ -57,6 +57,7 @@
     "images/explosives/landmine.png",
     "images/resources/Cracked_Ground.png",
     "images/enemy/botanist.png",
+    "images/weapons/rocket_image.png",
     "images/structures/turret_one.png",
     "images/structures/turret_one.png",
     "images/structure-icons/adv_turret.png"
@@ -77,6 +78,7 @@
     "images/companion/Companion_spritesheet.atlas",
     "images/minigame/fire.atlas",
     "images/structures/ExtractorAnimation.atlas",
+    "images/weapons/rocket.atlas",
     "images/structures/turret_one.atlas",
     "images/structures/turret_two.atlas"
   ],

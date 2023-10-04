@@ -10,6 +10,8 @@ public class WeaponConfig extends BaseEntityConfig {
     public String name = "";
     public String description = "";
 
+    public int health = 30;
+
     //Weapon stats
     public float damage = 0;
     public float weaponSpeed = 0;

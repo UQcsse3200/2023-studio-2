@@ -33,6 +33,19 @@ public class SoundComponent extends Component {
     }
 
     /**
+     * Creates a new SoundComponent which contains the specified sound
+     *
+     * @param soundId - the id of the given sound
+     * @param soundPath - the path to locate the sound
+     */
+    public SoundComponent(String soundId, String soundPath) {
+        this.soundsConfig = new SoundsConfig();
+        this.soundsConfig.soundsMap.put(soundId, soundPath);
+        sounds = new HashMap<>();
+        looping = new HashSet<>();
+    }
+
+    /**
      * Loads the sounds specified in the config file into a hashmap for later use.
      */
     @Override

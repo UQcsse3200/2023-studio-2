@@ -56,6 +56,9 @@
     "images/npc/Astro_NPC.png",
     "images/player/widestatbar.png",
     "images/player/heart.png",
+    "images/space_navigation_planet_2.png",
+    "images/explosives/explosive-barrel.png",
+    "images/explosives/landmine.png",
     "images/player/hearts.png",
     "images/space_navigation_planet_2.png",
     "images/planets/space_navigation_planet_2.png",
@@ -86,6 +89,8 @@
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
+    "sounds/explosion/grenade.mp3",
+    "sounds/explosion/landmine.mp3",
     "sounds/playerLow_health.wav",
     "sounds/dodgingAlertSweep.wav",
     "sounds/footStepsInTheForestGround.wav",

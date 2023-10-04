@@ -22,10 +22,6 @@ import com.csse3200.game.entities.Portal;
 public class PortalFactory {
 
 
-    //public static Entity createPortal(Entity player) {
-       // return createPortal(player);
-    //}
-
     public static Entity createPortal(Entity player, PortalConfig config) {
 
         Entity portal = new Portal(player)

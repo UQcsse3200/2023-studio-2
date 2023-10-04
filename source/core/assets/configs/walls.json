@@ -10,5 +10,10 @@
     "gate": {
         "health": 200,
         "spritePath": "images/structures/gate.atlas"
+    },
+  "sounds": {
+    "soundsMap": {
+      "wallHeal": "sounds/Healing/HealingWalls.mp3"
     }
+  }
 }

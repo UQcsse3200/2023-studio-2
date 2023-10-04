@@ -173,7 +173,9 @@ public class PlanetScreen extends ScreenAdapter {
      */
     private void generateGameArea(String name, String configPath) {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        this.allGameAreas.put(name, new MapGameArea(configPath, terrainFactory, game, game.getPlayerLives()));
+        GameArea gameArea = new MapGameArea(configPath, terrainFactory, game, game.getPlayerLives());
+        this.allGameAreas.put(name, gameArea);
+        ServiceLocator.registerGameArea(gameArea);
     }
 
     /**

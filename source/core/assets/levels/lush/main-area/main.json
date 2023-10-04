@@ -62,7 +62,13 @@
     "images/explosives/landmine.png",
     "particle-effects/durasteel/durasteel_pixel.png",
     "images/resources/Cracked_Ground.png",
+<<<<<<< HEAD
+    "images/structures/turret_one.png",
+    "images/structures/turret_two.png",
+    "images/structure-icons/adv_turret.png"
+=======
     "images/npc/astronaut_npc.png"
+>>>>>>> main
   ],
   "textureAtlasPaths": [
     "images/terrain_iso_grass.atlas",
@@ -83,10 +89,13 @@
     "images/companion/Companion_spritesheet.atlas",
     "images/npc/Astro_NPC.atlas",
     "images/structures/ExtractorAnimation.atlas",
+    "images/structures/turret_one.atlas",
+    "images/structures/turret_two.atlas",
     "images/npc/astronaut_npc.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
+    "sounds/Healing/HealingWalls.mp3",
     "sounds/explosion/grenade.mp3",
     "sounds/explosion/landmine.mp3",
     "sounds/playerLow_health.wav",
@@ -98,7 +107,7 @@
     "sounds/upgradeWeapon.wav",
     "sounds/enemyDeath.wav",
     "sounds/companionwalksound.wav",
-    "sounds/enemySpawner.wav"
+    "sounds/turret_shoot.mp3",
     "sounds/alert.wav"
   ],
   "particleEffectPaths": [

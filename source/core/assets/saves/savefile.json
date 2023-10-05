@@ -1,0 +1,39 @@
+{
+entities: {
+	CompanionConfig: [
+		{
+			class: com.csse3200.game.entities.configs.CompanionConfig
+			position: {
+				x: 4
+				y: 21
+			}
+			health: 50
+			baseAttack: 10
+			attackMultiplier: 1
+		}
+	]
+	PlayerConfig: [
+		{
+			class: com.csse3200.game.entities.configs.PlayerConfig
+			spritePath: images/player/player.atlas
+			position: {
+				x: 4
+				y: 19
+			}
+			health: 100
+			baseAttack: 10
+			sounds: {
+				soundsMap: {
+					low_health: sounds/playerLow_health.wav
+					dodge: sounds/dodgingAlertSweep.wav
+					boostPowerup: sounds/playerBoostRecharge.wav
+					healthPowerup: sounds/PlayerHealthRecharge.wav
+					footstep: sounds/footStepsInTheForestGround.wav
+					upgradeWeapon: sounds/upgradeWeapon.wav
+					upgradeTree: sounds/upgradeTreeTap.wav
+				}
+			}
+		}
+	]
+}
+}

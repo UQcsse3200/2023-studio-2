@@ -13,5 +13,9 @@ public class TurretConfig extends HealthEntityConfig {
         attackMultiplier = 1;
         isImmune = false;
     }
+
+    public void setMaxAmmo(int maxAmmo) {
+        this.maxAmmo = maxAmmo;
+    }
 }
 

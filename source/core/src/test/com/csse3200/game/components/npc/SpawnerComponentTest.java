@@ -4,18 +4,9 @@
  */
 package com.csse3200.game.components.npc;
 
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
-import com.csse3200.game.services.GameTime;
 import com.csse3200.game.entities.configs.SpawnerConfig;
-import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 //import com.csse3200.game.entities.factories.EnemyFactory;
 
 import java.util.ArrayList;

@@ -21,6 +21,7 @@
       "map/portal.png",
       "map/treetoplush.png",
       "particle-effects/explosion/particle.png",
+      "images/npc/astronaut_npc.png",
       "images/space_navigation_planet_2.png"
     ],
     "textureAtlasPaths": [
@@ -30,6 +31,7 @@
       "images/boss_enemy.atlas",
       "images/botanist.atlas",
       "images/weapons/wrench.atlas",
+      "images/npc/astronaut_npc.atlas",
       "images/botanist.atlas"
     ],
     "soundPaths": [

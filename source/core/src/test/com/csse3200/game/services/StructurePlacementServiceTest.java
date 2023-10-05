@@ -8,10 +8,16 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Test class for the {@link StructurePlacementService}.
+ */
 public class StructurePlacementServiceTest {
 
     private StructurePlacementService structurePlacementService;
 
+    /**
+     * Set up the test environment.
+     */
     @Before
     public void setUp() {
         // Mock the event handler for testing
@@ -21,6 +27,9 @@ public class StructurePlacementServiceTest {
         structurePlacementService = new StructurePlacementService(mockEventHandler);
     }
 
+    /**
+     * Test case for the {@link StructurePlacementService#getStructurePosition(PlaceableEntity)} method.
+     */
     @Test
     public void testGetStructurePosition() {
         // Create a sample entity with a width and height of 2
@@ -37,6 +46,9 @@ public class StructurePlacementServiceTest {
         assertEquals(expectedPosition, actualPosition);
     }
 
+    /**
+     * Test case for the {@link StructurePlacementService#canPlaceStructureAt(PlaceableEntity, GridPoint2)} method.
+     */
     @Test
     public void testCanPlaceStructureAt() {
         // Create a sample entity with a width and height of 2

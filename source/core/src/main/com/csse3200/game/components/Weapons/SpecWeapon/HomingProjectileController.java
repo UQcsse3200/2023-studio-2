@@ -26,7 +26,7 @@ public class HomingProjectileController extends ProjectileController {
         explosiveConfig.damageRadius = 2.5f;
         explosiveConfig.chainRadius = 3.0f;
         explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
-        //explosiveConfig.soundPath = "sounds/explosion/grenade.mp3";
+        explosiveConfig.soundPath = "sounds/explosion/grenade.mp3";
 
         var explode = new ExplosiveComponent(explosiveConfig);
         entity.addComponent(explode);

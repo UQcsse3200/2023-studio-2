@@ -99,6 +99,9 @@ public class Invisible extends DefaultTask implements PriorityTask {
 
     }
 
+    /**
+     * Reduce movement speed and update movement task
+     */
     @Override
     public void update() {
         char direction2 = getDirection(target.getPosition());
@@ -117,12 +120,20 @@ public class Invisible extends DefaultTask implements PriorityTask {
         }
     }
 
+
+    /**
+     * Pause task
+     */
     @Override
     public void stop() {
         super.stop();
         movementTask.stop();
     }
 
+    /**
+     * return priority
+     * @return integer representing priority
+     */
     @Override
     public int getPriority() {
         if (status == Status.ACTIVE) {
@@ -131,9 +142,18 @@ public class Invisible extends DefaultTask implements PriorityTask {
         return getInactivePriority();
     }
 
+    /**
+     * Calculate distance
+     * @return distance to target
+     */
     private float getDistanceToTarget() {
         return owner.getEntity().getPosition().dst(target.getPosition());
     }
+
+    /**
+     * Get currently active priority
+     * @return int priority
+     */
 
     private int getActivePriority() {
         float dst = getDistanceToTarget();
@@ -143,6 +163,10 @@ public class Invisible extends DefaultTask implements PriorityTask {
         return priority;
     }
 
+    /**
+     * Get currently inactive priority
+     * @return int priority
+     */
     private int getInactivePriority() {
         float dst = getDistanceToTarget();
         if (dst < viewDistance && dst > shootDistance && isTargetVisible()) {
@@ -150,6 +174,11 @@ public class Invisible extends DefaultTask implements PriorityTask {
         }
         return -1;
     }
+
+    /**
+     * Calculate and returns a boolean if the target is in range
+     * @return true if in range vice versa
+     */
 
     private boolean isTargetVisible() {
         Vector2 from = owner.getEntity().getCenterPosition();

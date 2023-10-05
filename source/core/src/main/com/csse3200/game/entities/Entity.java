@@ -42,7 +42,6 @@ public class Entity {
   private boolean created = false;
   private Vector2 position = Vector2.Zero.cpy();
   private Vector2 scale = new Vector2(1, 1);
-  private float rotation = 0;
   private Array<Component> createdComponents;
 
 
@@ -50,7 +49,6 @@ public class Entity {
     this.entityType = "";
     id = nextId;
     nextId++;
-    this.rotation = 0;
 
     components = new IntMap<>(4);
     eventHandler = new EventHandler();
@@ -334,15 +332,4 @@ public class Entity {
   public String toString() {
     return String.format("Entity{id=%d}", id);
   }
-
-  public int getResourceAmount(Resource resource) {
-    return 0;
-  }
-
-  public void subtractResource(Resource resource, int requiredDurasteel) {
-  }
 }
-
-
-
-

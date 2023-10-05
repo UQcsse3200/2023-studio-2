@@ -1,7 +1,8 @@
 package com.csse3200.game.services;
 
-import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.events.EventHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import java.util.Map;
  * to interface with the stored game state data using event calls and triggers.
  */
 public class GameStateObserver extends EventHandler {
+    private static final Logger logger = LoggerFactory.getLogger(GameStateObserver.class);
 
     // The instance to define game state interaction. Preserved across Observers unless reset.
     private static GameStateInteraction stateInteraction = new GameStateInteraction();
@@ -29,6 +31,7 @@ public class GameStateObserver extends EventHandler {
      * @param gameStateInteractor  The chosen GameStateInteraction for Observers to interface with.
      */
     public  GameStateObserver(GameStateInteraction gameStateInteractor) {
+        logger.info("Creating GameStateObserver");
         stateInteraction = gameStateInteractor;
         this.generateStateListeners();
     }
@@ -44,7 +47,8 @@ public class GameStateObserver extends EventHandler {
         this.addListener("extractorsTotal", stateInteraction::updateTotalExtractors);
         this.addListener("resourceMax", stateInteraction::updateMaxResources);
         this.addListener("extractorsMax", stateInteraction::updateMaxExtractors);
-        this.addListener("updatePlayer", stateInteraction::put);
+        this.addListener("updatePlayer", stateInteraction::updatePlayer);
+        this.addListener("remove", stateInteraction::remove);
     }
 
     /**
@@ -65,5 +69,12 @@ public class GameStateObserver extends EventHandler {
         return stateInteraction.get(key);
     }
 
-
+    public void loadGameStateMap(Map<String, Object> gameStateMap) {
+        logger.info("Loading in GameState file");
+        GameState gameState = new GameState();
+        for (Map.Entry<String, Object> entry : gameStateMap.entrySet()) {
+            gameState.put(entry.getKey(), entry.getValue());
+        }
+        stateInteraction = new GameStateInteraction(gameState);
+    }
 }

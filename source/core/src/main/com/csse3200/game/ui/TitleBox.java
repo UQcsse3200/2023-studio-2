@@ -36,6 +36,7 @@ public class TitleBox extends Dialog {
         descriptionLabel.setColor(Color.BLACK); // Enable text wrapping
 
 
+
         TextButton okButton = new TextButton("OK", skin);
         button(okButton, true);
 

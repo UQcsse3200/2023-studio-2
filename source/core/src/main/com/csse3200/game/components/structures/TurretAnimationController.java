@@ -1,8 +1,6 @@
 package com.csse3200.game.components.structures;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.FOVComponent;
-import com.csse3200.game.entities.buildables.Turret;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class TurretAnimationController extends Component {

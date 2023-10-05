@@ -1,13 +1,13 @@
 {
   "healthPowerup": {
-    "imagePath": "images/powerups/health_potion.png",
-    "spritePath": "images/powerups/health_potion.png",
+    "imagePath": "images/powerups/health_boost.png",
+    "spritePath": "images/powerups/health_boost.png",
     "type": "HEALTH_BOOST"
   },
 
   "speedPowerup": {
-    "imagePath": "images/powerups/speed_potion.png",
-    "spritePath": "images/powerups/speed_potion.png",
+    "imagePath": "images/powerups/speed_boost.png",
+    "spritePath": "images/powerups/speed_boost.png",
     "type": "SPEED_BOOST"
   },
 
@@ -24,8 +24,8 @@
   },
 
   "tempImmunityPowerup": {
-    "imagePath": "images/powerups/invincibility_potion.png",
-    "spritePath": "images/powerups/invincibility_potion.png",
+    "imagePath": "images/powerups/temp_immunity.png",
+    "spritePath": "images/powerups/temp_immunity.png",
     "type": "TEMP_IMMUNITY"
   },
 

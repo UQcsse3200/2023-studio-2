@@ -69,23 +69,25 @@ public class DeathComponent extends Component {
                     Entity powerup = null;
 
                     if (powerupRandomiser < 6) { // 3/14 chance of speed boost
-                        powerup = PowerupFactory.createSpeedPowerup();
-                    } else if (powerupRandomiser < 12) { // 3/14 chance of speed boost
-                        powerup = PowerupFactory.createHealthPowerup();
+                        powerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
+                    } else if (powerupRandomiser < 12) { // 3/14 chance of health boost
+                        powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
                     } else if (powerupRandomiser < 14) { // 2/14 chance of temp immunity
-                        powerup = PowerupFactory.createTempImmunityPowerup();
+                        powerup = PowerupFactory.createPowerup(PowerupType.TEMP_IMMUNITY);
                     } else if (powerupRandomiser < 16) { // 2/14 chance of double damage
-                        powerup = PowerupFactory.createDoubleDamagePowerup();
+                        powerup = PowerupFactory.createPowerup(PowerupType.DOUBLE_DAMAGE);
                     } else if (powerupRandomiser == 17) { // 1/28 chance of extra health
-                        powerup = PowerupFactory.createExtraLifePowerup();
+                        powerup = PowerupFactory.createPowerup(PowerupType.EXTRA_LIFE);
                     } else if (powerupRandomiser == 18) { // 1/28 chance of double cross
-                        powerup = PowerupFactory.createDoubleCrossPowerup();
+                        powerup = PowerupFactory.createPowerup(PowerupType.DOUBLE_CROSS);
                     }
                     if (powerup == null) {
                         return;
                     }
                     // 5/14 chance of no powerup dropped
-                    ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody.cpy());
+                    if (powerup != null) {
+                        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody);
+                    }
                 }
             };
             Timer.schedule(task, delay);// Delay based on the death animation duration

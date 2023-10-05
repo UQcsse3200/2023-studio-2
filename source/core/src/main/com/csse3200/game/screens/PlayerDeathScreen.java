@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * The game screen indicating a player's death and options to either restart or exit game.
  */
 public class PlayerDeathScreen extends ScreenAdapter {
-    SoundsConfig soundsConfig = FileLoader.readClass(SoundsConfig.class, "configs/deathScreen.json", FileLoader.Location.INTERNAL);
+    SoundsConfig soundsConfig = FileLoader.readClass(SoundsConfig.class, "configs/deathScreen.json", FileLoader.Location.LOCAL);
     public static final Logger logger = LoggerFactory.getLogger(PlayerDeathScreen.class);
     private final GdxGame game;
     private final Renderer renderer;
@@ -30,14 +30,12 @@ public class PlayerDeathScreen extends ScreenAdapter {
             "sounds/playerDeathRespawn.wav",
             "sounds/playerDead.wav"
     };
-    private int lives;
 
     private final DeathScreenDisplay deathScreenDisplay;
 
     public PlayerDeathScreen(GdxGame game, int lives) {
         this.game = game;
-        game.setPlayerLives(lives);
-        this.lives = lives;
+        ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", lives);
         deathScreenDisplay = new DeathScreenDisplay(lives);
         renderer = RenderFactory.createRenderer();
         loadAssets();
@@ -100,7 +98,7 @@ public class PlayerDeathScreen extends ScreenAdapter {
         Entity ui = new Entity();
         ui.addComponent(deathScreenDisplay)
                 .addComponent(new InputDecorator(stage, 10))
-                .addComponent(new DeathScreenActions(game, lives))
+                .addComponent(new DeathScreenActions(game, (int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")))
                 .addComponent(new SoundComponent(soundsConfig));
         ServiceLocator.getEntityService().register(ui);
     }

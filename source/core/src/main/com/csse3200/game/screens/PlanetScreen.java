@@ -120,7 +120,7 @@ public class PlanetScreen extends ScreenAdapter {
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
         this.player = allGameAreas.get(currentAreaName).getPlayer();
-        if ("Earth".equals(name)) {
+        if ("earth".equals(name)) {
             showTitleBox();
         }
     }

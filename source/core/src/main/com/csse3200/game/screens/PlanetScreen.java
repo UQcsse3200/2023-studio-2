@@ -123,6 +123,7 @@ public class PlanetScreen extends ScreenAdapter {
         if ("earth".equals(name)) {
             showTitleBox();
         }
+        ServiceLocator.registerGameArea(this.allGameAreas.get(currentAreaName));
     }
 
     private void showTitleBox() {
@@ -206,7 +207,6 @@ public class PlanetScreen extends ScreenAdapter {
 
         GameArea gameArea = new MapGameArea(levelName, areaName, terrainFactory, game);
         this.allGameAreas.put(name, gameArea);
-        ServiceLocator.registerGameArea(gameArea);
     }
 
     /**

@@ -36,6 +36,12 @@ public class IntermediateWallTool extends ReplacementTool {
         return BuildablesFactory.createWall(WallType.intermediate, player);
     }
 
+    /**
+     * Returns whether the position is valid. It is valid if it is replacing no structure,
+     * or is replacing a wall.
+     * @param position - the position the structure is trying to be placed at.
+     * @return whether the position is valid.
+     */
     @Override
     public ToolResponse isPositionValid(GridPoint2 position) {
         var validity = super.isPositionValid(position);

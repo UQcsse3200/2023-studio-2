@@ -5,6 +5,9 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.factories.ExplosivesFactory;
 
+/**
+ * Used by the player to place explosive barrels.
+ */
 public class ExplosiveBarrelTool extends PlacementTool {
     /**
      * Creates a new tool which allows the placing of structures with the given cost.
@@ -15,6 +18,11 @@ public class ExplosiveBarrelTool extends PlacementTool {
         super(cost);
     }
 
+    /**
+     * Creates a new explosive barrel.
+     * @param player - the player placing the structure.
+     * @return a new explosive barrel.
+     */
     @Override
     public PlaceableEntity createStructure(Entity player) {
         return ExplosivesFactory.createExplosiveBarrel();

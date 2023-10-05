@@ -7,10 +7,17 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.resources.Resource;
 
+/**
+ * This tool allows the user to heal structures.
+ */
 public class Healing extends Tool {
     private int requiredSolstite;
     private int requiredDurasteel;
 
+    /**
+     * Creates a new healing tool with the given cost.
+     * @param cost - the cost of the healing tool.
+     */
     public Healing(ObjectMap<String, Integer> cost) {
         super(cost);
     }
@@ -21,9 +28,8 @@ public class Healing extends Tool {
      * also trigger Sound effects while healing
      * @param player - the player interacting with the tool.
      * @param position - the position being interacted with.
-     * @return
+     * @return a ToolResponse containing whether the position is valid.
      */
-
     @Override
     protected ToolResponse canInteract(Entity player, GridPoint2 position) {
 
@@ -56,8 +62,14 @@ public class Healing extends Tool {
         return ToolResponse.valid();
     }
 
+    /**
+     * Heals the structure at the given position.
+     *
+     * @param player - the player using the tool.
+     * @param position - the position to use the tool.
+     */
     @Override
-    public void performInteraction(Entity player, GridPoint2 position) {// Deduct the required resources
+    protected void performInteraction(Entity player, GridPoint2 position) {// Deduct the required resources
         deductResources(requiredDurasteel, requiredSolstite);
 
         Entity entity = new Entity();
@@ -71,12 +83,21 @@ public class Healing extends Tool {
         combatStats.setHealth(combatStats.getMaxHealth());
     }
 
-    // Determine the selected entity based on the player's click position
+    /**
+     * Gets the clicked on structure.
+     * @param position - the click position.
+     * @return the structure clicked on.
+     */
     private Entity determineSelectedEntity(GridPoint2 position) {
         return ServiceLocator.getStructurePlacementService().getStructureAt(position);
     }
 
-    // Check if the player has enough Durasteel and Solstite for healing
+    /**
+     * Checks if the player has enough resources to use the tool.
+     * @param requiredDurasteel - how much durasteel they need.
+     * @param requiredSolstite - how much solstite they need.
+     * @return whether the player has sufficient resources.
+     */
     private boolean playerHasEnoughResources(int requiredDurasteel, int requiredSolstite) {
         try {
             int playerDurasteel = (int)ServiceLocator.getGameStateObserverService()
@@ -90,10 +111,16 @@ public class Healing extends Tool {
         }
     }
 
-    // Deduct the required Durasteel and Solstite from the player's resources
+    /**
+     * Removes the given resources from the player.
+     * @param requiredDurasteel - the amount of durasteel to remove.
+     * @param requiredSolstite - the amount of solstite to remove.
+     */
     private void deductResources(int requiredDurasteel, int requiredSolstite) {
-        ServiceLocator.getGameStateObserverService().trigger("resourceAdd", Resource.Durasteel.toString(), -requiredDurasteel);
-        ServiceLocator.getGameStateObserverService().trigger("resourceAdd", Resource.Solstite.toString(), -requiredSolstite);
+        ServiceLocator.getGameStateObserverService().trigger("resourceAdd",
+                Resource.Durasteel.toString(), -requiredDurasteel);
+        ServiceLocator.getGameStateObserverService().trigger("resourceAdd",
+                Resource.Solstite.toString(), -requiredSolstite);
     }
 }
 

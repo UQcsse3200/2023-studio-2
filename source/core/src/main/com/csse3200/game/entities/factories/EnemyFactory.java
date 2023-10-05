@@ -165,9 +165,9 @@ public class EnemyFactory {
   }
 
   /**
-   * Function to set the physicsLayer of the desired enemy
-   *
-   * @param type
+   * Sets the enemy's type depending on type given
+   * @param enemy The enemy to work with
+   * @param type The type the enemy needs to be
    */
   private static void EnemyTypeSelector(Entity enemy, EnemyType type) {
     enemy.addComponent(new HitboxComponent());
@@ -187,10 +187,11 @@ public class EnemyFactory {
 
   /**
    * Function to set the behaviour of the desired enemy
-   *
    * @param target The player entity
    * @param type Melee, Ranged, Boss or Mixture of the referred
    * @param behaviour Player or Destructible Targeting
+   * @param aiTaskComponent The enemy's aiComponent
+   * @param isBoss Boolean indicating if enemy is a boss type
    */
   private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
@@ -207,6 +208,16 @@ public class EnemyFactory {
     addBehaviour(type, aiTaskComponent, target, priority, viewDistance, maxChaseDistance, isBoss);
   }
 
+  /**
+   * Helper Method that edits the aicomponent of enemies. Boss enemies and Ranged enemies requires different tasks.
+   * @param type Type of enemy
+   * @param aiComponent aiComponent of the enemy
+   * @param target the Player's entity
+   * @param priority given priority to enemy entity
+   * @param viewDistance view distance for ranged enemies
+   * @param maxChaseDistance max chase distance for enemies
+   * @param isBoss boolean for boss check
+   */
   static void addBehaviour(EnemyType type, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance, boolean isBoss) {
     // Select behaviour
     if (isBoss) {
@@ -237,6 +248,11 @@ public class EnemyFactory {
     }
   }
 
+  /**
+   * Sets a target for an enemy
+   * @param target The player's entity
+   * @param aiTaskComponent the enemy's aiComponent
+   */
   public static void targetSet(Entity target, AITaskComponent aiTaskComponent) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
     boolean isEnemy = PhysicsLayer.contains(layer, (short) (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE));
@@ -264,6 +280,10 @@ public class EnemyFactory {
     }
   }
 
+  /**
+   * Helper to return the list of all current enemies on field
+   * @return List of all Entities classifed as entities
+   */
   public static List<Entity> getEnemyList(){
     return enemiesList;
   }

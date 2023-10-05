@@ -47,7 +47,7 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   public PlayerStatsDisplay(PlayerConfig config) {
     labelStyle = "small";
-    maxHealth = config.health;
+    maxHealth = config.maxHealth;
     healthBarWidth = 320f;
     dodgeBarWidth = 320f;
   }

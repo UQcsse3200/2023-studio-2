@@ -1,11 +1,9 @@
 package com.csse3200.game.components;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Companion.CompanionInventoryComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,5 +60,5 @@ public class ItemPickupComponent extends Component {
             companionInventory.addPowerup(entityOfComponent);
         }
         // Remove the item from the game area
-        MapGameArea.removeItemOnMap(entityOfComponent);
+        Gdx.app.postRunnable(entity::dispose);
     }}

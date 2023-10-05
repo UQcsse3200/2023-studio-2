@@ -19,7 +19,6 @@ import static com.badlogic.gdx.Gdx.app;
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   private ScreenType screenType;
-  private int playerLives = 3; // As found in player config files.
 
   @Override
   public void create() {
@@ -63,24 +62,6 @@ public class GdxGame extends Game {
    */
   public ScreenType getScreenType() {
     return this.screenType;
-  }
-
-  /**
-   * Sets the number of lives player currently has. This is used to store number of
-   * lives between screen changes (eg. respawn, exit etc).
-   * @param lives Number of remaining lives player has.
-   */
-  public void setPlayerLives(int lives) {
-    this.playerLives = lives;
-  }
-
-  /**
-   * Returns the number of lives player currently has. This is accessed when
-   * respawning player between screen changes (eg. respawn/exit etc).
-   * @return Number of remaining lives player has.
-   */
-  public int getPlayerLives() {
-    return this.playerLives;
   }
 
   @Override

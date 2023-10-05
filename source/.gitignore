@@ -115,5 +115,8 @@ Thumbs.db
 /ios/IOSLauncher.app.dSYM
 
 # save files
-/core/assets/saves/
-/saves
+/core/assets/save/
+/save
+
+# Git patches
+*.patch

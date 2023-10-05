@@ -55,7 +55,7 @@ public class PowerUpDisplayHUD extends UIComponent {
         }
 
         if (powerUpEntity == PowerupType.EXTRA_LIFE) {
-            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/extra_life.png", Texture.class));
+            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/extralife.png", Texture.class));
             return ExtraLifeImage;
         }
 

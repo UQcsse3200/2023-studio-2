@@ -37,7 +37,7 @@ public class StructureDestroyComponent extends Component {
             return;
         }
 
-        if (!combatStatsComponent.isDead()) {
+        if (Boolean.FALSE.equals(combatStatsComponent.isDead())) {
             return;
         }
 

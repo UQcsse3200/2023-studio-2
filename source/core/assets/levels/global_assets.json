@@ -54,7 +54,8 @@
     "sounds/upgradeTreeTap.wav",
     "sounds/upgradeWeapon.wav",
     "sounds/enemyDeath.wav",
-    "sounds/alert.wav"
+    "sounds/alert.wav",
+    "sounds/explosion/grenade.mp3"
   ],
   "particleEffectPaths": null,
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav"

@@ -1,7 +1,7 @@
 {
   "botanist": {
-    "health": 50,
-    "healingAbility": 15
+    "health": 100,
+    "healingAbility": 10
   }
 }
 

@@ -6,7 +6,6 @@ import org.junit.Test;
 import java.io.File;
 
 public class CleanImages {
-
     @Test
     public void rejectImagesInRoot() {
         var files = new File("./images").list();

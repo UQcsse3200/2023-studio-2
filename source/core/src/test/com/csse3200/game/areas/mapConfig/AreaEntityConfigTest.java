@@ -11,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,6 +40,11 @@ class AreaEntityConfigTest {
         areaEntityConfig.entities.put(ExtractorConfig.class.toString(), List.of(extractor1, extractor2));
 
         unorderedMatch(areaEntityConfig.getAllConfigs(), List.of(player, enemy1, enemy2, extractor1, extractor2));
+    }
+
+    @Test
+    void getNoEntities() {
+        assertEquals(areaEntityConfig.getAllConfigs(), new ArrayList<>());
     }
 
     @Test
@@ -79,6 +86,54 @@ class AreaEntityConfigTest {
 
         assertTrue(areaEntityConfig.getEntities(EnemyConfig.class).contains(enemy1));
         assertTrue(areaEntityConfig.getEntities(EnemyConfig.class).contains(enemy2));
+    }
+
+    @Test
+    void addMultipleEntitesAtOnce() {
+        SaveableComponent<EnemyConfig> enemySaveable = new SaveableComponent<>(e -> enemy1, EnemyConfig.class);
+        Entity e1 = new Entity().addComponent(enemySaveable);
+
+        SaveableComponent<EnemyConfig> enemySaveable2 = new SaveableComponent<>(e -> enemy2, EnemyConfig.class);
+        Entity e2 = new Entity().addComponent(enemySaveable2);
+
+        SaveableComponent<PlayerConfig> playerSaveable = new SaveableComponent<>(e -> player, PlayerConfig.class);
+        Entity p = new Entity().addComponent(playerSaveable);
+
+        areaEntityConfig.addEntities(List.of(e1, e2, p));
+
+        assertTrue(areaEntityConfig.getEntities(EnemyConfig.class).contains(enemy1));
+        assertTrue(areaEntityConfig.getEntities(EnemyConfig.class).contains(enemy2));
+        assertEquals(areaEntityConfig.getEntity(PlayerConfig.class), player);
+    }
+
+    @Test
+    void addEntrytoMap() throws InvalidConfigException {
+        List<Object> pList = List.of(player);
+        areaEntityConfig.addEntry(Map.entry(player.getClass().getSimpleName(), pList));
+
+        assertEquals(areaEntityConfig.getEntity(PlayerConfig.class), player);
+    }
+
+    @Test
+    void addMultipleEntriestoMap() throws InvalidConfigException {
+        List<Object> pList = List.of(player);
+        areaEntityConfig.addEntry(Map.entry(player.getClass().getSimpleName(), pList));
+
+        List<Object> eList = List.of(enemy1);
+        areaEntityConfig.addEntry(Map.entry(enemy1.getClass().getSimpleName(), eList));
+
+        assertEquals(areaEntityConfig.getEntity(PlayerConfig.class), player);
+        assertEquals(areaEntityConfig.getEntity(EnemyConfig.class), enemy1);
+    }
+
+    @Test
+    void addDuplicateEntriestoMap() throws InvalidConfigException {
+        List<Object> e1List = List.of(enemy1);
+        areaEntityConfig.addEntry(Map.entry(enemy1.getClass().getSimpleName(), e1List));
+
+        List<Object> e2List = List.of(enemy2);
+        assertThrows(InvalidConfigException.class,
+                () -> areaEntityConfig.addEntry(Map.entry(enemy2.getClass().getSimpleName(), e2List)));
     }
 
     private void unorderedMatch(List<?> expectedTextures, List<?> output) {

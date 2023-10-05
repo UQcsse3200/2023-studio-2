@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import com.csse3200.game.utils.LoadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,27 +55,31 @@ public class MainMenuDisplay extends UIComponent {
         table.setFillParent(true);
 
         // Display game title image
-        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/escape-earth2.png", Texture.class));
+        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/main-menu.png", Texture.class));
         titleImage.setWidth(Gdx.graphics.getWidth());
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);
 
+        boolean validLoad = LoadUtils.pathExists(LoadUtils.SAVE_PATH, LoadUtils.GAMESTATE_FILE);
+
         // Create buttons for various menu options
         TextButton startBtn = new TextButton("Start", skin);
-        TextButton loadBtn = new TextButton("Load Story", skin);
+        TextButton loadBtn = new TextButton("Load Save", skin, validLoad ? "default" : "invalid");
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Exit", skin);
         TextButton miniBtn = new TextButton("Space Minigame", skin);
         TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
         TextButton upgradeShip = new TextButton("Upgrade Ship", skin);
+        TextButton tutorialBtn = new TextButton("Tutorial", skin);
         TextButton brickBreakerBtn = new TextButton("brick breaker minigame", skin);
+
         // Attach listeners to buttons
         startBtn.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Start button clicked");
-                        entity.getEvents().trigger("start");
+                        entity.getEvents().trigger("start", validLoad);
                     }
                 });
         loadBtn.addListener(
@@ -82,7 +87,7 @@ public class MainMenuDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Load button clicked");
-                        entity.getEvents().trigger("load");
+                        entity.getEvents().trigger("load", validLoad);
                     }
                 });
         settingsBtn.addListener(
@@ -128,6 +133,17 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("upgrade shop");
                     }
                 });
+
+        tutorialBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Tutorial button clicked");
+                        entity.getEvents().trigger("tutorial");
+                    }
+                }
+        );
+
         brickBreakerBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -138,6 +154,7 @@ public class MainMenuDisplay extends UIComponent {
                 });
 
 
+
         // Arrange UI elements in a table layout
         table.add(titleImage);
         table.row();
@@ -146,6 +163,8 @@ public class MainMenuDisplay extends UIComponent {
         table.add(loadBtn).padTop(15f).padLeft(1200f);
         table.row();
         table.add(settingsBtn).padTop(15f).padLeft(1200f);
+        table.row();
+        table.add(tutorialBtn).padTop(15f).padLeft(1200f);
         table.row();
         table.add(miniBtn).padTop(15f).padLeft(1200f);
         table.row();
@@ -159,31 +178,31 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         stage.addActor(titleImage);
 
-        AmendAnimation();
+////        AmendAnimation();
         stage.addActor(transitionFrames);
         stage.addActor(table);
     }
 
-    private void AmendAnimation() {
-        if (frame < MainMenuScreen.MountedFrames) {
-            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
-            transitionFrames.setWidth(Gdx.graphics.getWidth());
-            transitionFrames.setHeight(Gdx.graphics.getHeight());
-            transitionFrames.setPosition(0, 0);
-            frame++;
-            lastFrameTime = System.currentTimeMillis();
-        } else {
-            frame = 1;
-        }
-    }
+//    private void AmendAnimation() {
+//        if (frame < MainMenuScreen.MountedFrames) {
+//            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
+//                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
+//            transitionFrames.setWidth(Gdx.graphics.getWidth());
+//            transitionFrames.setHeight(Gdx.graphics.getHeight());
+//            transitionFrames.setPosition(0, 0);
+//            frame++;
+//            lastFrameTime = System.currentTimeMillis();
+//        } else {
+//            frame = 1;
+//        }
+//    }
 
-    @Override
-    public void update() {
-        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
-            AmendAnimation();
-        }
-    }
+//    @Override
+//    public void update() {
+//        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
+//            AmendAnimation();
+//        }
+//    }
 
     @Override
     public void draw(SpriteBatch batch) {

@@ -47,7 +47,7 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   public PlayerStatsDisplay(PlayerConfig config) {
     labelStyle = "small";
-    maxHealth = config.health;
+    maxHealth = config.maxHealth;
     healthBarWidth = 320f;
     dodgeBarWidth = 320f;
   }
@@ -77,11 +77,13 @@ public class PlayerStatsDisplay extends UIComponent {
    * @see Table for positioning options
    */
   private void addActors() {
+    // Create parent table to hold all elements
     container = new Table();
     container.top().left();
     container.setFillParent(true);
     container.padTop(20f).padLeft(190f);
 
+    // Create table to hold the health bar and dodge bar
     statsTable = new Table();
     statsTable.top().left();
     container.setFillParent(true);
@@ -94,6 +96,7 @@ public class PlayerStatsDisplay extends UIComponent {
     healthLabel.setFontScale(0.25f);
     dodgeLabel.setFontScale(0.25f);
 
+    // Creating HUD elements and placing them into appropriate tables
     createHealthBar(statsTable);
     statsTable.row();
     createDodgeBar(statsTable);
@@ -103,9 +106,8 @@ public class PlayerStatsDisplay extends UIComponent {
     createAmmoBar(innerTable);
     statsTable.add(innerTable).left();
 
-    Stack planetDisplay = new Stack();
+    // Places completed tables
     container.add(statsTable);
-    container.add(planetDisplay).size(170f,225f);
     container.row();
     createUpgradeTreeButton(container);
     stage.addActor(container);
@@ -117,7 +119,6 @@ public class PlayerStatsDisplay extends UIComponent {
    *                              also playing the sound when on tapping it
    *
    */
-
   public void createUpgradeTreeButton(Table table) {
     TextButton button = new TextButton("Upgrade Tree", skin);
 
@@ -144,13 +145,16 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param parentTable the table which the health bar is contained within
    */
   public void createHealthBar(Table parentTable) {
+    // Retrieve health bar assets
     Image healthBarFrame;
     healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
 
+    // Creates table to hold and set width of health bar
     Table healthBarTable = new Table();
     healthBarTable.add(healthBarFill).size(healthBarWidth - 40f, 30f).padRight(5).padTop(3);
 
+    // Stacks the health bar fill on the frame
     Stack healthStack = new Stack();
     healthStack.add(healthBarFrame);
     healthStack.add(healthBarTable);
@@ -164,16 +168,20 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param parentTable the table which the dodge bar is contained within
    */
   public void createDodgeBar(Table parentTable) {
+    // Retrieve dodge bar assets
     Image dodgeBarFrame;
     dodgeBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     dodgeBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill2.png", Texture.class));
 
+    // Creates table to hold and set width of dodge bar
     Table dodgeBarTable = new Table();
     dodgeBarTable.add(dodgeBarFill).size((dodgeBarWidth - 40f), 30f).padRight(5).padTop(3);
 
+    // Stacks the dodge bar fill on the frame
     Stack dodgeStack = new Stack();
     dodgeStack.add(dodgeBarFrame);
     dodgeStack.add(dodgeBarTable);
+
     parentTable.add(dodgeStack).size(dodgeBarWidth, 40f).pad(5).padTop(10);
     parentTable.add(dodgeLabel).left();
   }
@@ -183,10 +191,12 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param parentTable the table which the player lives information is contained within
    */
   public void createLivesBar(Table parentTable) {
+    // Retrieve lives bar asset and number of player lives
     int playerLives = entity.getComponent(CombatStatsComponent.class).getLives();
     Image livesBarFrame;
     livesBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
 
+    // Set hearts texture width to the number of heaths * width of each heart
     Texture heartsTexture = ServiceLocator.getResourceService().getAsset("images/player/hearts.png", Texture.class);
     hearts = new TextureRegion(heartsTexture,
             playerLives * 15,
@@ -200,6 +210,7 @@ public class PlayerStatsDisplay extends UIComponent {
     Table livesTable = new Table();
     livesTable.add(livesBarFrame).size(150f, 65f);
 
+    // Stacks the hearts on the lives bar frame
     Stack livesStack = new Stack();
     livesStack.add(livesTable);
     livesStack.add(heartsTable);
@@ -217,6 +228,7 @@ public class PlayerStatsDisplay extends UIComponent {
     Image ammoBarFrame;
     ammoBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
 
+    // Retrieves current weapon and ammo
     WeaponConfig config = inventory.getConfigs().GetWeaponConfig(inventory.getEquippedType());
     Image weaponImage = new Image( new Texture(config.imagePath));
     int currentAmmo = inventory.getCurrentAmmo();
@@ -235,6 +247,7 @@ public class PlayerStatsDisplay extends UIComponent {
     ammoInfo.add(weaponImageTable).left().pad(5).padTop(10);
     ammoInfo.add(ammoLabel).size(80f).right().pad(5).padTop(10);
 
+    // Stacks ammo information on the ammo bar frame
     Stack ammoStack = new Stack();
     ammoStack.add(ammoFrameTable);
     ammoStack.add(ammoInfo);
@@ -251,7 +264,9 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param health player health
    */
   public void updatePlayerHealthUI(int health) {
+    // Update the health label
     healthLabel.setText(health);
+    // Update the health bar width
     healthBarWidth = 280f * health / maxHealth;
     healthBarFill.setSize(healthBarWidth, 30f);
   }
@@ -260,9 +275,13 @@ public class PlayerStatsDisplay extends UIComponent {
    * Updates the visible avaliability of the dodge movement when used by the player
    */
   public void updateDodgeUsed() {
+    // Update the dodge label
     CharSequence dodgeText = "";
     dodgeLabel.setText(dodgeText);
+
+    // Update the dodge bar width
     dodgeBarFill.setSize(0, 30f);
+    // Create refill animation
     dodgeBarFill.addAction(
             Actions.sequence(
                     Actions.parallel(
@@ -276,8 +295,10 @@ public class PlayerStatsDisplay extends UIComponent {
    * Updates the visible avaliability of the dodge when it becomes available
    */
   public void updateDodgeRefreshed() {
+    // Update dodge label
     CharSequence dodgeText = "Ready!";
     dodgeLabel.setText(dodgeText);
+    // Update dodge bar width
     dodgeBarFill.setSize(dodgeBarWidth - 40f, 30f);
   }
 
@@ -286,8 +307,8 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param lives the number that is being updated to
    */
   public void updatePlayerLives(int lives) {
-    hearts.setRegionWidth(lives * 15);
-    livesBarFill.setWidth(lives * 30f);
+    hearts.setRegionWidth(lives * 15); // Changes the heart texture
+    livesBarFill.setWidth(lives * 30f); // Updates the width of the heart image
   }
 
   /**
@@ -296,6 +317,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param maxAmmo the max ammo of the weapon equipped
    */
   public void updateAmmo(int currentAmmo, int maxAmmo, int ammoUse) {
+    // Updates the numerical ammunition values
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
     if (ammoUse == 0) {
       ammoText = "    -";
@@ -308,10 +330,12 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param weapon the new weapon
    */
   public void updateWeapon(WeaponType weapon) {
+    // Changes the weapon image in the ammo bar
     WeaponConfig config = inventory.getConfigs().GetWeaponConfig(weapon);
     Image weaponImage = new Image( new Texture(config.imagePath));
     weaponImageTable.clear();
     weaponImageTable.add(weaponImage).size(30f);
+    // Updates ammo levels
     updateAmmo(inventory.getCurrentAmmo(), inventory.getCurrentMaxAmmo(), inventory.getCurrentAmmoUse());
   }
 

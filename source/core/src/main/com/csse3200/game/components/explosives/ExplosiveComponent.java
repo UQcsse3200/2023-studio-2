@@ -8,21 +8,28 @@ import com.csse3200.game.components.ParticleComponent;
 import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.services.StructurePlacementService;
 
-import java.util.TimerTask;
-
+/**
+ * The ExplosiveComponent can be added to any entity to allow it to explode through an event driven system.
+ */
 public class ExplosiveComponent extends Component {
     private boolean isExploded = false;
     private boolean isChained = false;
     private final ExplosiveConfig explosiveConfig;
+    private static final String EFFECT_NAME = "explosion";
 
+    /**
+     * Creates the ExplosiveComponent with the given ExplosiveConfig.
+     * @param explosiveConfig - the config parameters to create the explosive component using.
+     */
     public ExplosiveComponent(ExplosiveConfig explosiveConfig) {
         this.explosiveConfig = explosiveConfig;
     }
 
+    /**
+     * Creates the component and begins listening for explode and chainExplode events.
+     */
     @Override
     public void create() {
         super.create();
@@ -31,7 +38,11 @@ public class ExplosiveComponent extends Component {
         entity.getEvents().addListener("chainExplode", this::chainExplode);
     }
 
-    public void explode() {
+    /**
+     * Detonates the explosion by creating a new entity for the particle and sound effects and deleting the entity
+     * the component is added.
+     */
+    protected void explode() {
         if (isExploded) {
             return;
         }
@@ -39,17 +50,17 @@ public class ExplosiveComponent extends Component {
 
         var explosionEntity = new Entity();
         if (explosiveConfig.effectPath != null) {
-            explosionEntity.addComponent(new ParticleComponent("explosion", explosiveConfig.effectPath));
+            explosionEntity.addComponent(new ParticleComponent(EFFECT_NAME, explosiveConfig.effectPath));
         }
         if (explosiveConfig.soundPath != null) {
-            explosionEntity.addComponent(new SoundComponent("explosion", explosiveConfig.soundPath));
+            explosionEntity.addComponent(new SoundComponent(EFFECT_NAME, explosiveConfig.soundPath));
         }
 
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(explosionEntity, entity.getPosition());
 
         // triggers the explosion sound and effect if they exist within the entity
-        explosionEntity.getEvents().trigger("startEffect", "explosion");
-        explosionEntity.getEvents().trigger("playSound", "explosion");
+        explosionEntity.getEvents().trigger("startEffect", EFFECT_NAME);
+        explosionEntity.getEvents().trigger("playSound", EFFECT_NAME);
 
         // notify explosives within chain radius
         for (var otherEntity : ServiceLocator.getEntityService().getEntitiesByComponent(ExplosiveComponent.class)) {
@@ -64,6 +75,7 @@ public class ExplosiveComponent extends Component {
             }
         }
 
+        // damages all entities in the damage radius
         for (var otherEntity : ServiceLocator.getEntityService().getEntitiesByComponent(CombatStatsComponent.class)) {
             var combatStatsComponent = otherEntity.getComponent(CombatStatsComponent.class);
 
@@ -81,8 +93,8 @@ public class ExplosiveComponent extends Component {
         }
 
         // deletes the entity
-        if (entity instanceof PlaceableEntity) {
-            ServiceLocator.getStructurePlacementService().removeStructure((PlaceableEntity)entity);
+        if (entity instanceof PlaceableEntity placeableEntity) {
+            ServiceLocator.getStructurePlacementService().removeStructure(placeableEntity);
         } else {
             Gdx.app.postRunnable(entity::dispose);
         }
@@ -92,7 +104,7 @@ public class ExplosiveComponent extends Component {
      * Triggered through an event when a neighbouring explosive explodes.
      * If chainable is true, this will cause this entity to explode too, otherwise nothing will happen.
      */
-    public void chainExplode(float delay) {
+    protected void chainExplode(float delay) {
         if (isChained) {
             return;
         }
@@ -100,7 +112,7 @@ public class ExplosiveComponent extends Component {
         isChained = true;
 
         if (explosiveConfig.chainable) {
-            Timer.schedule(new TimerAction(this::explode), delay);
+            Timer.schedule(new PostrunnableTask(this::explode), delay);
         }
     }
 }

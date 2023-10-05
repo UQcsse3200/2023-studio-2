@@ -30,7 +30,7 @@ public class ProximityTriggerComponent extends Component {
     @Override
     public void update() {
         for (var otherEntity : ServiceLocator.getEntityService().getEntitiesByComponent(flagComponent)) {
-            if (entity.getPosition().dst(otherEntity.getPosition()) <= radius) {
+            if (entity.getCenterPosition().dst(otherEntity.getCenterPosition()) <= radius) {
                 func.call();
                 return;
             }

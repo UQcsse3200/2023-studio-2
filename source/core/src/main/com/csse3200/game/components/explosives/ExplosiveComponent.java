@@ -18,6 +18,7 @@ public class ExplosiveComponent extends Component {
     private boolean isExploded = false;
     private boolean isChained = false;
     private final ExplosiveConfig explosiveConfig;
+    private static final String EFFECT_NAME = "explosion";
 
     public ExplosiveComponent(ExplosiveConfig explosiveConfig) {
         this.explosiveConfig = explosiveConfig;
@@ -39,17 +40,17 @@ public class ExplosiveComponent extends Component {
 
         var explosionEntity = new Entity();
         if (explosiveConfig.effectPath != null) {
-            explosionEntity.addComponent(new ParticleComponent("explosion", explosiveConfig.effectPath));
+            explosionEntity.addComponent(new ParticleComponent(EFFECT_NAME, explosiveConfig.effectPath));
         }
         if (explosiveConfig.soundPath != null) {
-            explosionEntity.addComponent(new SoundComponent("explosion", explosiveConfig.soundPath));
+            explosionEntity.addComponent(new SoundComponent(EFFECT_NAME, explosiveConfig.soundPath));
         }
 
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(explosionEntity, entity.getPosition());
 
         // triggers the explosion sound and effect if they exist within the entity
-        explosionEntity.getEvents().trigger("startEffect", "explosion");
-        explosionEntity.getEvents().trigger("playSound", "explosion");
+        explosionEntity.getEvents().trigger("startEffect", EFFECT_NAME);
+        explosionEntity.getEvents().trigger("playSound", EFFECT_NAME);
 
         // notify explosives within chain radius
         for (var otherEntity : ServiceLocator.getEntityService().getEntitiesByComponent(ExplosiveComponent.class)) {
@@ -81,8 +82,8 @@ public class ExplosiveComponent extends Component {
         }
 
         // deletes the entity
-        if (entity instanceof PlaceableEntity) {
-            ServiceLocator.getStructurePlacementService().removeStructure((PlaceableEntity)entity);
+        if (entity instanceof PlaceableEntity placeableEntity) {
+            ServiceLocator.getStructurePlacementService().removeStructure(placeableEntity);
         } else {
             Gdx.app.postRunnable(entity::dispose);
         }

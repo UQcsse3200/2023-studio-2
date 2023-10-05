@@ -1,53 +1,3 @@
-/*package com.csse3200.game.components.structures.tools;
-
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.utils.ObjectMap;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.services.ServiceLocator;
-
-public class Healing extends Tool {
-
-    public Healing(ObjectMap<String, Integer> cost) {
-        super(cost);
-    }
-
-    @Override
-    protected ToolResponse canInteract(Entity player, GridPoint2 position) {
-
-        // For checking whether the player has clicked on an entity
-        Entity clickedEntity = determineSelectedEntity(position);
-        // If no entity is clicked, return false
-        if (clickedEntity == null) {
-            return new ToolResponse(PlacementValidity.INVALID, "No structure to heal");
-        }
-
-        // For checking whether the clicked entity has a CombatStatsComponent
-        CombatStatsComponent combatStats = clickedEntity.getComponent(CombatStatsComponent.class);
-        // If the clicked entity does not have a CombatStatsComponent, return false
-        if (combatStats == null) {
-            return new ToolResponse(PlacementValidity.INVALID, "Cannot be healed");
-        }
-
-        return ToolResponse.valid();
-    }
-
-    @Override
-    public void performInteraction(Entity player, GridPoint2 position) {
-        Entity clickedEntity = determineSelectedEntity(position);
-        CombatStatsComponent combatStats = clickedEntity.getComponent(CombatStatsComponent.class);
-        // For setting the health of the clicked entity to 100
-        combatStats.setHealth(combatStats.getMaxHealth());
-    }
-
-    // Determine the selected entity based on the player's click position
-    private Entity determineSelectedEntity(GridPoint2 position) {
-        return ServiceLocator.getStructurePlacementService().getStructureAt(position);
-    }
-}
-
-**/
-
 package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.math.GridPoint2;
@@ -61,11 +11,8 @@ public class Healing extends Tool {
     private int requiredSolstite;
     private int requiredDurasteel;
 
-    //    private final Sound healingSound;
     public Healing(ObjectMap<String, Integer> cost) {
         super(cost);
-
-       // healingSound = Gdx.audio.newSound(Gdx.files.internal("sounds/healing_sound.wav"));
     }
 
 

@@ -1,6 +1,5 @@
 package com.csse3200.game.components;
 
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
 public class ProximityTriggerComponent extends Component {

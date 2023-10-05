@@ -13,12 +13,11 @@ import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.services.ServiceLocator;
 
 public class ExtractorTool extends ReplacementTool {
-
     public ExtractorTool(ObjectMap<String, Integer> cost) {
         super(cost, true);
     }
 
-    Resource produces = Resource.Durasteel; // TODO make this depend on the position
+    Resource produces = Resource.Durasteel;
 
     /**
      * Creates a new extractor producing the resource of the location it is being placed, and increments the total amount of

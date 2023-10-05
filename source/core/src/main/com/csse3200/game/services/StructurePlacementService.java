@@ -109,11 +109,7 @@ public class StructurePlacementService {
         }
     }
 
-    public void setPlacedStructures(Map<GridPoint2, PlaceableEntity> placedStructures) {
-    }
 
-    public void setPosition(Map<PlaceableEntity, GridPoint2> position) {
-    }
 
     public static class placeStructureAtArgs {
         private Entity entity;

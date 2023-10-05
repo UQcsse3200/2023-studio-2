@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.*;
+import com.csse3200.game.components.flags.EnemyFlag;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.structures.TurretTargetableComponent;
 import com.csse3200.game.components.tasks.*;
@@ -64,14 +65,8 @@ public class EnemyFactory {
   public static Entity createEnemy(EnemyConfig config) {
     System.out.println(config.type);
     AnimationRenderComponent animator;
-    // Choose behaviour for enemy
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
-
-    int health = config.health;
-    int baseAttack = config.baseAttack;
-    int speed = config.speed;
-    int specialAttack = config.specialAttack;
 
     // Cycles through all targets
     //TODO: This should probably be contained in its own AITask -
@@ -102,19 +97,21 @@ public class EnemyFactory {
                     PhysicsLayer.WEAPON),
                     1.5f))
             .addComponent(new CombatStatsComponent(
-                    health,
-                    baseAttack,
-                    1,
-                    false))
+                    config.health,
+                    config.baseAttack,
+                    config.attackMultiplier,
+                    config.isImmune))
             .addComponent(new DialogComponent(dialogueBox))
             .addComponent(new TurretTargetableComponent())
-                .addComponent(new SoundComponent(config.sound));
+            .addComponent(new SoundComponent(config.sound))
+            .addComponent(new EnemyFlag());
 
     if (config.type == EnemyType.Ranged || config.type == EnemyType.BossRanged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     } else {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
     }
+
     enemy.addComponent(aiComponent);
 
     if(!(config.isBoss)){
@@ -136,13 +133,6 @@ public class EnemyFactory {
     animator.addAnimation("invisible",0.5f, Animation.PlayMode.LOOP);
     enemy.addComponent(animator);
     enemy.addComponent(new EnemyAnimationController());
-
-    // Adding in animation controllers into the new enemy
-    enemy
-            .addComponent(new EnemyAnimationController())
-            // adds tasks depending on enemy type
-            .addComponent(aiComponent)
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune));
 
     // Scaling the enemy's visual size
     // UI adjustments
@@ -175,9 +165,9 @@ public class EnemyFactory {
   }
 
   /**
-   * Function to set the physicsLayer of the desired enemy
-   *
-   * @param type
+   * Sets the enemy's type depending on type given
+   * @param enemy The enemy to work with
+   * @param type The type the enemy needs to be
    */
   private static void EnemyTypeSelector(Entity enemy, EnemyType type) {
     enemy.addComponent(new HitboxComponent());
@@ -197,10 +187,11 @@ public class EnemyFactory {
 
   /**
    * Function to set the behaviour of the desired enemy
-   *
    * @param target The player entity
    * @param type Melee, Ranged, Boss or Mixture of the referred
    * @param behaviour Player or Destructible Targeting
+   * @param aiTaskComponent The enemy's aiComponent
+   * @param isBoss Boolean indicating if enemy is a boss type
    */
   private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
@@ -217,6 +208,16 @@ public class EnemyFactory {
     addBehaviour(type, aiTaskComponent, target, priority, viewDistance, maxChaseDistance, isBoss);
   }
 
+  /**
+   * Helper Method that edits the aicomponent of enemies. Boss enemies and Ranged enemies requires different tasks.
+   * @param type Type of enemy
+   * @param aiComponent aiComponent of the enemy
+   * @param target the Player's entity
+   * @param priority given priority to enemy entity
+   * @param viewDistance view distance for ranged enemies
+   * @param maxChaseDistance max chase distance for enemies
+   * @param isBoss boolean for boss check
+   */
   static void addBehaviour(EnemyType type, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance, boolean isBoss) {
     // Select behaviour
     if (isBoss) {
@@ -247,6 +248,11 @@ public class EnemyFactory {
     }
   }
 
+  /**
+   * Sets a target for an enemy
+   * @param target The player's entity
+   * @param aiTaskComponent the enemy's aiComponent
+   */
   public static void targetSet(Entity target, AITaskComponent aiTaskComponent) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
     boolean isEnemy = PhysicsLayer.contains(layer, (short) (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE));
@@ -274,6 +280,10 @@ public class EnemyFactory {
     }
   }
 
+  /**
+   * Helper to return the list of all current enemies on field
+   * @return List of all Entities classifed as entities
+   */
   public static List<Entity> getEnemyList(){
     return enemiesList;
   }

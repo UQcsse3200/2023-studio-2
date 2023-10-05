@@ -221,8 +221,6 @@ public class StructureFactory {
         return createShip(game, requirements, defaultShip);
     }
 
-    //CONFLICT HERE
-
     /**
      * Creates a ship entity that matches the config file
      */
@@ -241,6 +239,12 @@ public class StructureFactory {
                                 ServiceLocator.getRenderService().getStage().addActor(shipPopup);
                             }
                         }, 5));
+
+        ship.addComponent(new SaveableComponent<ShipConfig>(s -> {
+            ShipConfig shipConfig = config;
+            shipConfig.position = s.getGridPosition();
+            return shipConfig;
+        }, ShipConfig.class));
 
         ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();

@@ -9,16 +9,14 @@ import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
- * Fires Boss' Special Attack
+ * Fires Ranged Boss' Projectiles
  */
 public class SprayTask extends DefaultTask implements PriorityTask {
     private boolean hasShot;
-
-    private float radius;
     private Entity target;
 
     /**
-     * Creates new Special Attack Task
+     * Creates new Spray Task, will send one instance of projectiles that sprays similar to shotgun bursts
      */
     public SprayTask(Entity target) {
         this.target = target;
@@ -68,6 +66,10 @@ public class SprayTask extends DefaultTask implements PriorityTask {
         }
     }
 
+    /**
+     * Sets the target to attack
+     * @param target the Player's entity
+     */
     public void setTarget(Entity target) {
         this.target = target;
     }

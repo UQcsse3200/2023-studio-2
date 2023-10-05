@@ -235,6 +235,46 @@ public class NPCFactory {
     return Tutnpc;
   }
 
+  public static Entity createHellman() {
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/npc/Hellman.atlas", TextureAtlas.class));
+    animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-4", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-5", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-6", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-7", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-8", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-9", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-10", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-11", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-12", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-13", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-14", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle", 0.01f, Animation.PlayMode.NORMAL);
+
+    Entity Hellman =
+            new Entity()
+                    .addComponent(animator)
+                    .addComponent(new HellmanAnimationController())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
+                    .addComponent(new DialogComponent(dialogueBox))
+                    .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                    .addComponent(new InteractionControllerComponent(true))
+                    .addComponent(new PhysicsMovementComponent());
+
+    Hellman.getComponent(ColliderComponent.class).setDensity(1.5f);
+    Hellman.scaleHeight(1.5f);
+    String[] storytext = {"I am your Tutorial Guide", "I am here to guide you through"};
+    String[] titletext = {"", ""};
+    Hellman.addComponent(new InteractableComponent(entity -> {
+      Hellman.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+    }, 3f));
+    return Hellman;
+  }
   public static Entity createAstronaut(AstronautConfig astronautConfig) {
 
     AITaskComponent aiComponent = new AITaskComponent();

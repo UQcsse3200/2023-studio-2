@@ -95,6 +95,7 @@ public class MapGameArea extends GameArea{
         spawnTreeTop();
         spawnAstro();
         spawnTutnpc();
+        spawnHellman();
         spawnSpawners();
         spawnJail();
 
@@ -502,6 +503,16 @@ public class MapGameArea extends GameArea{
         if (tutnpcConfig != null) {
             Entity Tutnpc = NPCFactory.createTutnpc();
             spawnEntityAt(Tutnpc, tutnpcConfig.position, false, false);
+        }
+
+    }
+    private void spawnHellman() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        HellmanConfig hellmanConfig = mapConfig.areaEntityConfig.getEntity(HellmanConfig.class);
+        if (hellmanConfig != null) {
+            Entity hellman = NPCFactory.createHellman();
+            spawnEntityAt(hellman, hellmanConfig.position, false, false);
         }
 
     }

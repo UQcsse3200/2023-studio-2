@@ -53,6 +53,7 @@
     "map/treetop.png",
     "particle-effects/explosion/particle.png",
     "images/resources/Cracked_Ground.png",
+    "images/npc/Tutnpc.png",
     "images/enemy/botanist.png"
   ],
   "textureAtlasPaths": [
@@ -70,6 +71,7 @@
     "images/structures/closed_gate.atlas",
     "images/companion/Companion_spritesheet.atlas",
     "images/minigame/fire.atlas",
+    "images/npc/Tutnpc.atlas",
     "images/structures/ExtractorAnimation.atlas"
   ],
   "soundPaths": [

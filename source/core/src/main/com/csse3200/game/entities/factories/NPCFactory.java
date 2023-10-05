@@ -267,8 +267,8 @@ public class NPCFactory {
                     .addComponent(new PhysicsMovementComponent());
 
     Hellman.getComponent(ColliderComponent.class).setDensity(1.5f);
-    Hellman.scaleHeight(1.5f);
-    String[] storytext = {"I am your Tutorial Guide", "I am here to guide you through"};
+    Hellman.scaleHeight(2.0f);
+    String[] storytext = {"If you defeat this boss,\n I will help you find a suitable planet", "You will find the boss on the \nother side of the portal."};
     String[] titletext = {"", ""};
     Hellman.addComponent(new InteractableComponent(entity -> {
       Hellman.getComponent(DialogComponent.class).showdialogue(storytext, titletext);

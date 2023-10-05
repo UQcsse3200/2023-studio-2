@@ -2,16 +2,14 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
+import com.csse3200.game.areas.mapConfig.AssetsConfig;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import com.csse3200.game.areas.mapConfig.InvalidConfigException;
-import com.csse3200.game.areas.mapConfig.MapConfigLoader;
+import com.csse3200.game.areas.mapConfig.ConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.EnvironmentStatsComponent;
@@ -34,10 +32,9 @@ import com.csse3200.game.utils.math.GridPoint2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.io.File;
 import java.util.List;
+
+import static com.csse3200.game.utils.LoadUtils.joinPath;
 
 /**
  * A Base Game Area for any level.
@@ -49,23 +46,19 @@ public class MapGameArea extends GameArea{
     private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
-    private int playerLives;
-    private boolean validLoad = true;
-    private static List<Entity> itemsOnMap = new ArrayList<>();
-    private String thing;
+    protected boolean validLoad = true;
     private static boolean freezing;
 
-    public MapGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
+    public MapGameArea(String levelName, String game_area, TerrainFactory terrainFactory, GdxGame game) {
         try {
-            mapConfig = MapConfigLoader.loadMapDirectory(configPath);
-            logger.info("Successfully loaded map {}", configPath);
+            mapConfig = ConfigLoader.loadMapDirectory(levelName, game_area);
+            logger.info("Successfully loaded map {}", joinPath(levelName, game_area));
         } catch (InvalidConfigException exception) {
-            logger.error("FAILED TO LOAD GAME - RETURNING TO MAIN MENU", exception);
+            logger.error("FAILED TO LOAD GAME IN CONSTRUCTOR - {}", exception.getMessage());
             validLoad = false;
         }
         this.game = game;
         this.terrainFactory = terrainFactory;
-        this.playerLives = playerLives;
     }
 
     /**
@@ -89,11 +82,12 @@ public class MapGameArea extends GameArea{
         spawnShip();
         player = spawnPlayer();
         companion = spawnCompanion();
+        spawnPowerups();
         spawnLaboratory();
-        companion.getEvents().addListener("SpawnPowerup",this::spawnPowerups);
         spawnPortal(player);
         spawnTreeTop();
         spawnAstro();
+        spawnTutnpc();
         spawnSpawners();
         spawnJail();
 
@@ -101,7 +95,7 @@ public class MapGameArea extends GameArea{
         //spawnBotanist();
         //spawnEnvironmentDamage();
         spawnFreezingArea();
-
+        spawnEnvironmentDamage();
 
         displayUI();
         playMusic();
@@ -115,17 +109,15 @@ public class MapGameArea extends GameArea{
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
 
+        if (mapConfig == null) return;
         resourceService.loadDynamicAssets(mapConfig.getEntityTextures());
-        if (mapConfig.texturePaths != null)
-            resourceService.loadTextures(mapConfig.texturePaths);
-        if (mapConfig.textureAtlasPaths != null)
-            resourceService.loadTextureAtlases(mapConfig.textureAtlasPaths);
-        if (mapConfig.soundPaths != null)
-            resourceService.loadSounds(mapConfig.soundPaths);
-        if (mapConfig.particleEffectPaths != null)
-            resourceService.loadParticleEffects(mapConfig.particleEffectPaths);
-        if (mapConfig.backgroundMusicPath != null)
-            resourceService.loadMusic(new String[] {mapConfig.backgroundMusicPath});
+        if (mapConfig.planetImage != null)
+            resourceService.loadTextures(new String[] {mapConfig.planetImage});
+        AssetsConfig assets = mapConfig.assets;
+
+        if (assets != null) {
+            assets.load(resourceService);
+        }
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -233,17 +225,16 @@ public class MapGameArea extends GameArea{
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
     }
 
-    public static void removeItemOnMap(Entity entityToRemove) {
-        entityToRemove.setEnabled(false);
-        itemsOnMap.remove(entityToRemove);
-        Gdx.app.postRunnable(entityToRemove::dispose);
-    }
-
     /**
      * Spawns the game environment
      */
     private void spawnEnvironment() {
         TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Tree Base");
+
+        if (layer == null) {
+            return;
+        }
+
         List<TileEntity> environments = EnvironmentFactory.createEnvironment(layer);
 
         for (TileEntity tileEntity : environments) {
@@ -254,54 +245,10 @@ public class MapGameArea extends GameArea{
     /**
      * Spawns powerups in the map at the positions as outlined by the config file
      */
-    private Entity spawnPowerups(PowerupType powerupType) {
-        Entity newPowerup;
-        switch (powerupType){
-            case HEALTH_BOOST:
-                newPowerup = PowerupFactory.createHealthPowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case SPEED_BOOST:
-                newPowerup = PowerupFactory.createSpeedPowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case TEMP_IMMUNITY:
-                newPowerup = PowerupFactory.createTempImmunityPowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case DOUBLE_DAMAGE:
-                newPowerup = PowerupFactory.createDoubleDamagePowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case DEATH_POTION:
-                newPowerup = PowerupFactory.createDeathPotion();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case EXTRA_LIFE:
-                newPowerup = PowerupFactory.createExtraLifePowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case DOUBLE_CROSS:
-                newPowerup = PowerupFactory.createDoubleCrossPowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            case SNAP:
-                newPowerup = PowerupFactory.createSnapPowerup();
-                itemsOnMap.add(newPowerup);
-                spawnEntityAt(newPowerup,mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class).position,true,false);
-                return newPowerup;
-            default: throw new IllegalArgumentException("You must assign a valid PowerupType");
-
-        /*for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.getEntities(PowerupConfig.class)) {
+    private void spawnPowerups() {
+        for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.getEntities(PowerupConfig.class)) {
             Entity powerup = PowerupFactory.createPowerup(powerupConfig);
-            spawnEntityAt(powerup, powerupConfig.position, true, false);*/
+            spawnEntityAt(powerup, powerupConfig.position, true, false);
         }
     }
 
@@ -315,19 +262,10 @@ public class MapGameArea extends GameArea{
         int steps = 64;
         int maxResource = 1000;
 
-        //TODO: MOVE TO CONFIG
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(),  (int) maxResource);
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(),  (int) maxResource);
-        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(),  (int) maxResource);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Nebulite.toString(),  (int) 0);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Durasteel.toString(),  (int) 0);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsCount", Resource.Solstite.toString(),  (int) 0);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Nebulite.toString(),  (int) 0);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Durasteel.toString(),  (int) 0);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Solstite.toString(),  (int) 0);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Nebulite.toString(),  (int) 4);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Durasteel.toString(),  (int) 4);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Solstite.toString(),  (int) 4);
+        // Sets extractor count
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Nebulite.toString(),  0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Durasteel.toString(),  0);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Solstite.toString(),  0);
 
         ResourceDisplay resourceDisplayComponent = new ResourceDisplay(scale, steps, maxResource)
                 .withResource(Resource.Durasteel)
@@ -390,17 +328,16 @@ public class MapGameArea extends GameArea{
             logger.info("Player not found in config file - creating generic player");
             newPlayer = PlayerFactory.createPlayer();
         }
+        newPlayer.getComponent(CombatStatsComponent.class).setLives((int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")); // Ensures previous number of lives is maintained.
 
         // environmental damage
         newPlayer.getComponent(EnvironmentStatsComponent.class).setImmunity(mapConfig);
         newPlayer.getComponent(EnvironmentStatsComponent.class).damage(newPlayer.getComponent(CombatStatsComponent.class));
 
-        newPlayer.getComponent(CombatStatsComponent.class).setLives(playerLives); // Ensures previous number of lives is maintained.
         newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         newPlayer.getEvents().addListener("death", () ->
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH))
         );
-        ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "player", newPlayer);
 
         if (playerConfig != null && playerConfig.position != null) {
             spawnEntityAt(newPlayer, playerConfig.position, true, true);
@@ -448,6 +385,14 @@ public class MapGameArea extends GameArea{
             GridPoint2 pos = new GridPoint2(terrain.getMapBounds(0).x/2,terrain.getMapBounds(0).y/2);
             spawnEntityAt(newCompanion, pos, true, true);
         }
+
+        newCompanion.getEvents().addListener("SpawnPowerup", (PowerupType type) -> {
+            LaboratoryConfig labConfig = mapConfig.areaEntityConfig.getEntity(LaboratoryConfig.class);
+            if (labConfig == null) return;
+            Entity powerup = PowerupFactory.createPowerup(type);
+            this.spawnEntityAt(powerup, labConfig.position, true, false);
+        });
+
         return newCompanion;
     }
 
@@ -489,6 +434,16 @@ public class MapGameArea extends GameArea{
         }
 
     }
+    private void spawnTutnpc() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        TutnpcConfig tutnpcConfig = mapConfig.areaEntityConfig.getEntity(TutnpcConfig.class);
+        if (tutnpcConfig != null) {
+            Entity Tutnpc = NPCFactory.createTutnpc();
+            spawnEntityAt(Tutnpc, tutnpcConfig.position, false, false);
+        }
+
+    }
 
     private void spawnAstronaut() {
         if (mapConfig.areaEntityConfig == null) return;
@@ -515,10 +470,10 @@ public class MapGameArea extends GameArea{
      * Plays the game music loaded from the config file
      */
     private void playMusic() {
-        if (mapConfig.backgroundMusicPath == null) return;
+        if (mapConfig.assets == null || mapConfig.assets.backgroundMusicPath == null) return;
         UserSettings.Settings settings = UserSettings.get();
 
-        Music music = ServiceLocator.getResourceService().getAsset(mapConfig.backgroundMusicPath, Music.class);
+        Music music = ServiceLocator.getResourceService().getAsset(mapConfig.assets.backgroundMusicPath, Music.class);
         music.setLooping(true);
         music.setVolume(settings.musicVolume);
         music.play();
@@ -527,8 +482,8 @@ public class MapGameArea extends GameArea{
     @Override
     public void dispose() {
         super.dispose();
-        if (mapConfig != null && mapConfig.backgroundMusicPath != null) {
-            ServiceLocator.getResourceService().getAsset(mapConfig.backgroundMusicPath, Music.class).stop();
+        if (mapConfig != null && mapConfig.assets != null && mapConfig.assets.backgroundMusicPath != null) {
+            ServiceLocator.getResourceService().getAsset(mapConfig.assets.backgroundMusicPath, Music.class).stop();
         }
         this.unloadAssets();
     }
@@ -541,19 +496,15 @@ public class MapGameArea extends GameArea{
         ResourceService resourceService = ServiceLocator.getResourceService();
 
         if (mapConfig == null) return;
+        resourceService.loadDynamicAssets(mapConfig.getEntityTextures());
+        AssetsConfig assets = mapConfig.assets;
 
         if (mapConfig.getEntityTextures() != null)
             resourceService.unloadAssets(mapConfig.getEntityTextures());
-        if (mapConfig.texturePaths != null)
-            resourceService.unloadAssets(mapConfig.texturePaths);
-        if (mapConfig.textureAtlasPaths != null)
-            resourceService.unloadAssets(mapConfig.textureAtlasPaths);
-        if (mapConfig.soundPaths != null)
-            resourceService.unloadAssets(mapConfig.soundPaths);
-        if (mapConfig.particleEffectPaths != null)
-            resourceService.unloadAssets(mapConfig.particleEffectPaths);
-        if (mapConfig.backgroundMusicPath != null)
-            resourceService.unloadAssets(new String[] {mapConfig.backgroundMusicPath});
+
+        if (assets != null) {
+            assets.unload(resourceService);
+        }
     }
 
     /**

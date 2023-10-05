@@ -98,7 +98,8 @@ public class SpaceMapScreen extends ScreenAdapter {
     public void Exitonc(float d)
     {
         if(d < 1.0) {
-            this.unloadAssets();
+            this.dispose();
+            //this.unloadAssets();
             new PlanetTravel(game).beginInstantTravel();
         }
     }
@@ -158,7 +159,7 @@ public class SpaceMapScreen extends ScreenAdapter {
         Entity ui = new Entity();
         ui.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
-                .addComponent(new ObstacleMiniGameActions(this.game,stage))
+                .addComponent(new ObstacleMiniGameActions(this.game,stage, this))
                 .addComponent(new ReturnToPlanetDisplay())
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)

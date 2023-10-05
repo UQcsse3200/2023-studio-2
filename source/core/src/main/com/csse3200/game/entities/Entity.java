@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ComponentType;
+import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -41,7 +42,6 @@ public class Entity {
   private boolean created = false;
   private Vector2 position = Vector2.Zero.cpy();
   private Vector2 scale = new Vector2(1, 1);
-  private float rotation = 0;
   private Array<Component> createdComponents;
 
 
@@ -49,7 +49,6 @@ public class Entity {
     this.entityType = "";
     id = nextId;
     nextId++;
-    this.rotation = 0;
 
     components = new IntMap<>(4);
     eventHandler = new EventHandler();
@@ -334,8 +333,3 @@ public class Entity {
     return String.format("Entity{id=%d}", id);
   }
 }
-
-
-
-
-

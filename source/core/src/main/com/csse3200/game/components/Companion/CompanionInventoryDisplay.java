@@ -82,6 +82,9 @@ public class CompanionInventoryDisplay extends Window {
         ServiceLocator.getInputService().register(inputOverrideComponent);
     }
 
+    /**
+     * Creates and adds all the powerups for the table
+     */
     private void addPowerups() {
         PowerupConfig deathPotion = powerupConfigs.GetPowerupConfig(PowerupType.DEATH_POTION);
         PowerupConfig healthPotion = powerupConfigs.GetPowerupConfig(PowerupType.HEALTH_BOOST);
@@ -235,6 +238,10 @@ public class CompanionInventoryDisplay extends Window {
         countButton.setText(String.valueOf(count));
     }
 
+    /**
+     * Creates the title at the top of the inventory
+     * @return - a table which can be added to another table to show where the inventory is
+     */
     private Table createTitleTable() {
         Table titleTable = new Table();
         Label title = new Label("INVENTORY", skin, "large");
@@ -247,16 +254,27 @@ public class CompanionInventoryDisplay extends Window {
         return titleTable;
     }
 
+    /**
+     * This function sets the windows scale up correctly
+     * and places it ont he far left middle of the screen
+     */
     private void setupWindowDimensions() {
         Stage stage = ServiceLocator.getRenderService().getStage();
-        setWidth(stage.getWidth() * WINDOW_WIDTH_SCALE / 2 - 20f);
+        setWidth((float) (stage.getWidth() * WINDOW_WIDTH_SCALE / 2.5 - 40f));
         setHeight(stage.getHeight() * WINDOW_HEIGHT_SCALE / 2 + 10f);
         setPosition(
                 //stage.getWidth() / 2 - getWidth() / 2 * getScaleX(),
-                stage.getWidth() * (1 - WINDOW_WIDTH_SCALE / 2),
+                //stage.getWidth() * (1 - WINDOW_WIDTH_SCALE / 2),
+                0,
                 stage.getHeight() / 2 - getHeight() / 2 * getScaleY());
     }
 
+    /**
+     * Drawing a powerup button
+     * @param path - unsure
+     * @param size - unsire
+     * @return - unsure
+     */
     private TextureRegionDrawable createTextureRegionDrawable(String path, float size) {
         TextureRegionDrawable drawable = new TextureRegionDrawable(new Texture(path));
         drawable.setMinSize(size, size);
@@ -264,6 +282,10 @@ public class CompanionInventoryDisplay extends Window {
     }
 
 
+    /**
+     * Creating an exit button on the top right of the table, to exit the upgrade tree page
+     * @return - exits the tree and returns the table
+     */
     private Table createExitButton() {
         TextButton exitButton = new TextButton("X", skin);
         Table table = new Table();
@@ -281,6 +303,9 @@ public class CompanionInventoryDisplay extends Window {
     }
 
 
+    /**
+     * removes the UI element
+     */
     private void exitUpgradeTree() {
         remove();
     }

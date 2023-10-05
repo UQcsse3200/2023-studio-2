@@ -4,7 +4,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
-import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -34,13 +33,13 @@ public class MainGameActions extends Component {
    */
   private void onExit() {
     logger.info("Exiting main game screen");
-    game.setPlayerLives(config.lives); // Resets number of player's lives.
+    ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", config.lives);
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 
   protected void onReturnPlanet() {
     logger.info("Exiting to current planet screen");
-    game.setPlayerLives(config.lives); // Resets number of player's lives.
+    ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", config.lives);
     new PlanetTravel(game).returnToCurrent();
   }
 

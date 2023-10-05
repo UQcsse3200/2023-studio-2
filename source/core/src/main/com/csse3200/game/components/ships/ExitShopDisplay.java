@@ -13,9 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 /**
  * Exit button but specified for the Shop implementation only
@@ -51,8 +54,10 @@ public class ExitShopDisplay extends UIComponent {
         miniFrame.setVisible(false);
         TextButton mainMenu = new TextButton("Main menu", skin);
         TextButton resume = new TextButton("Resume", skin);
+        TextButton minigame = new TextButton("Back to minigame", skin);
         miniFrame.add(mainMenu).pad(10f).row();
-        miniFrame.add(resume);
+        miniFrame.add(resume).pad(10f).row();
+        miniFrame.add(minigame);
         // Triggers an event when the button is pressed.
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         Color color = new Color(1f, 1f, 1f, 0.4f); // white with 30% opacity
@@ -84,7 +89,16 @@ public class ExitShopDisplay extends UIComponent {
                 miniFrame.setVisible(false); // Hide the mini-frame when Current Game button is clicked
             }
         });
-
+        minigame.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Back to minigame button clicked");
+                        entity.getEvents().trigger("exit");
+                        game.setScreen(GdxGame.ScreenType.SPACE_MAP);
+                    }
+                }
+        );
         table.add(back).padTop(10f).padRight(10f);
         stage.addActor(miniFrame);
         stage.addActor(table);

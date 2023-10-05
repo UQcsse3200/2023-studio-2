@@ -192,7 +192,7 @@ public class ObstacleFactory {
 
   public static Entity createBorder(float width, float height) {
     Entity asteroid = new Entity()
-            .addComponent(new TextureRenderComponent("images/stone.png"))
+            .addComponent(new TextureRenderComponent("images/structure-icons/stone_wall.png"))
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     asteroid.setScale(width, height);

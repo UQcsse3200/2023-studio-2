@@ -74,9 +74,6 @@
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
-    "sounds/Healing/HealingWalls.mp3",
-    "sounds/explosion/grenade.mp3",
-    "sounds/explosion/landmine.mp3",
     "sounds/playerLow_health.wav",
     "sounds/dodgingAlertSweep.wav",
     "sounds/footStepsInTheForestGround.wav",
@@ -88,7 +85,9 @@
     "sounds/companionwalksound.wav",
     "sounds/enemySpawner.wav",
     "sounds/turret_shoot.mp3",
-    "sounds/alert.wav"
+    "sounds/alert.wav",
+    "sounds/explosion/grenade.mp3",
+    "sounds/explosion/landmine.mp3"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

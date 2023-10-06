@@ -38,14 +38,17 @@
     "images/player/hearts.png",
     "images/explosives/explosive-barrel.png",
     "images/explosives/grenade.png",
-    "images/explosives/landmine.png"
+    "images/explosives/landmine.png",
+    "images/structure-icons/adv_turret.png"
   ],
   "textureAtlasPaths": [
     "images/structures/stone_wall.atlas",
     "images/structures/dirt_wall.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
-    "images/player/player.atlas"
+    "images/player/player.atlas",
+    "images/structures/turret_one.atlas",
+    "images/structures/turret_two.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
@@ -59,8 +62,8 @@
     "sounds/enemyDeath.wav",
     "sounds/alert.wav",
     "sounds/explosion/grenade.mp3",
-    "sounds/explosion/landmine.mp3"
-
+    "sounds/explosion/landmine.mp3",
+    "sounds/turret_shoot.mp3"
   ],
   "particleEffectPaths": null,
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav"

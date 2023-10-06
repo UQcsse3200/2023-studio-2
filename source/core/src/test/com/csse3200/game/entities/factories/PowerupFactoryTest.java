@@ -62,11 +62,11 @@ public class PowerupFactoryTest {
      */
     @Test
     public void testCreateHealthPowerup() {
-        Entity powerup = PowerupFactory.createHealthPowerup();
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
-        assertEquals(type, PowerupType.HEALTH_BOOST);
+        assertEquals(PowerupType.HEALTH_BOOST, type);
     }
 
     /**
@@ -76,11 +76,11 @@ public class PowerupFactoryTest {
      */
     @Test
     public void testCreateSpeedPowerup() {
-        Entity powerup = PowerupFactory.createSpeedPowerup();
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
-        assertEquals(type, PowerupType.SPEED_BOOST);
+        assertEquals(PowerupType.SPEED_BOOST, type);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class PowerupFactoryTest {
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
-        assertEquals(type, PowerupType.HEALTH_BOOST);
+        assertEquals(PowerupType.HEALTH_BOOST, type);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class PowerupFactoryTest {
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
-        assertEquals(type, PowerupType.SPEED_BOOST);
+        assertEquals(PowerupType.SPEED_BOOST, type);
     }
 
     /**
@@ -112,7 +112,7 @@ public class PowerupFactoryTest {
      */
     @Test
     public void testCreateExtraLifePowerup() {
-        Entity powerup = PowerupFactory.createExtraLifePowerup();
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.EXTRA_LIFE);
         PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
 
         assertNotNull(powerup);
@@ -134,5 +134,125 @@ public class PowerupFactoryTest {
 
         assertNotNull(powerup);
         assertEquals(PowerupType.EXTRA_LIFE, type);
+    }
+    /**
+     * Test the creation of an double cross powerup entity.
+     * This test verifies that the entity created by PowerupFactory is not null
+     * and is of the expected double cross type.
+     */
+    @Test
+    public void testCreateDoubleCrossPowerup() {
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.DOUBLE_CROSS);
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(PowerupType.DOUBLE_CROSS, type);
+    }
+
+    /**
+     * Test the creation of an double cross powerup config.
+     * This test verifies that the config created by PowerupConfig is not null
+     * and is of the expected double cross type.
+     */
+    @Test
+    void createDoubleCrossPowerupConfigTest() {
+        PowerupConfig config = configs.doubleCrossPowerup;
+        assertNotNull(config);
+        Entity powerup = PowerupFactory.createPowerup(config);
+
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(PowerupType.DOUBLE_CROSS, type);
+    }
+    /**
+     * Test the creation of an double damage powerup entity.
+     * This test verifies that the entity created by PowerupFactory is not null
+     * and is of the expected double damage type.
+     */
+    @Test
+    public void testCreateDoubleDamagePowerup() {
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.DOUBLE_DAMAGE);
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(PowerupType.DOUBLE_DAMAGE, type);
+    }
+
+    /**
+     * Test the creation of an double damage powerup config.
+     * This test verifies that the config created by PowerupConfig is not null
+     * and is of the expected double damage type.
+     */
+    @Test
+    void createDoubleDamagePowerupConfigTest() {
+        PowerupConfig config = configs.doubleDamagePowerup;
+        assertNotNull(config);
+        Entity powerup = PowerupFactory.createPowerup(config);
+
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(PowerupType.DOUBLE_DAMAGE, type);
+    }
+    /**
+     * Test the creation of an snap powerup entity.
+     * This test verifies that the entity created by PowerupFactory is not null
+     * and is of the expected snap type.
+     */
+    @Test
+    public void testCreateSnapPowerup() {
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.SNAP);
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(PowerupType.SNAP, type);
+    }
+
+    /**
+     * Test the creation of an snap powerup config.
+     * This test verifies that the config created by PowerupConfig is not null
+     * and is of the expected snap type.
+     */
+    @Test
+    void createSnapPowerupConfigTest() {
+        PowerupConfig config = configs.snapPowerup;
+        assertNotNull(config);
+        Entity powerup = PowerupFactory.createPowerup(config);
+
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(PowerupType.SNAP, type);
+    }
+    /**
+     * Test the creation of an temp immunity powerup entity.
+     * This test verifies that the entity created by PowerupFactory is not null
+     * and is of the expected temp immunity type.
+     */
+    @Test
+    public void testCreateTempImmunityPowerup() {
+        Entity powerup = PowerupFactory.createPowerup(PowerupType.TEMP_IMMUNITY);
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(PowerupType.TEMP_IMMUNITY, type);
+    }
+
+    /**
+     * Test the creation of an temp immunity powerup config.
+     * This test verifies that the config created by PowerupConfig is not null
+     * and is of the expected temp immunity type.
+     */
+    @Test
+    void createTempImmunityPowerupConfigTest() {
+        PowerupConfig config = configs.tempImmunityPowerup;
+        assertNotNull(config);
+        Entity powerup = PowerupFactory.createPowerup(config);
+
+        PowerupType type = powerup.getComponent(PowerupComponent.class).getType();
+
+        assertNotNull(powerup);
+        assertEquals(PowerupType.TEMP_IMMUNITY, type);
     }
 }

@@ -11,7 +11,7 @@ import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
 public class SpawnerComponent extends Component {
-    public static final long WAVE_DELAY = 5000;  // 20 seconds
+    public static final long WAVE_DELAY = 5000;  // 5 seconds
 public static final long SPAWN_DELAY = 3000;  // 3 seconds
 
     public final GameTime timer;
@@ -102,7 +102,7 @@ public static final long SPAWN_DELAY = 3000;  // 3 seconds
                 entity.getEvents().trigger("playSound", "enemySpawn"); // triggering spawning sound effects
             }
         } else if (rangedEnemiesToSpawn > 0) {
-            spawnEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
+            spawnEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
             rangedEnemiesToSpawn--;
             if (entity != null) {
                 entity.getEvents().trigger("playSound", "enemySpawn"); // triggering spawning sound effects

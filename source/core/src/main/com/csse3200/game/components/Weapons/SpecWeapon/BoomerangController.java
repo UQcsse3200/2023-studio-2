@@ -24,7 +24,6 @@ public class BoomerangController extends WeaponControllerComponent {
 
     @Override
     protected void initial_rotation() {
-        System.out.println(attackNum);
         currentRotation += 45 * (attackNum % 2 == 0 ? 1 : -1);;
     }
 

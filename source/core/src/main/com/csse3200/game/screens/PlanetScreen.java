@@ -7,14 +7,17 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.MapGameArea;
+import com.csse3200.game.areas.mapConfig.*;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputFactory;
@@ -29,12 +32,14 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
+import com.csse3200.game.utils.LoadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.csse3200.game.utils.LoadUtils.*;
 import static com.csse3200.game.ui.UIComponent.skin;
 
 /**
@@ -46,12 +51,14 @@ public class PlanetScreen extends ScreenAdapter {
     private final GdxGame game;
 
     public final String name;
-    private String nextPlanetName;
+    private String nextPlanetName = null;
 
     private Entity player;
 
-    private String currentAreaName = "primary";
+    private String currentAreaName = DEFAULT_AREA;
     private final Map<String, GameArea> allGameAreas = new HashMap<>();
+
+    private LevelConfig levelConfig = null;
 
     /** Starting position of the camera */
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
@@ -61,28 +68,15 @@ public class PlanetScreen extends ScreenAdapter {
     private PhysicsEngine physicsEngine;
 
     /** file paths of textures for screen to load. */
-    private static final String[] planetTextures = {
-            "images/player/heart.png",
-            "images/structure-icons/gate.png",
-            "images/structure-icons/wall.png",
-            "images/structure-icons/stone_wall.png",
-            "images/structure-icons/turret.png",
-            "images/structures/closed_gate.png",
-            "images/structures/open_gate.png",
-            "images/structures/dirt_wall.png",
-            "images/structures/stone_wall.png",
-            "images/structures/TurretOne.png",
-            "images/structures/TurretTwo.png",
-            "images/structures/heal_icon.png"
-    };
+    private AssetsConfig assets = null;
 
     /**
      * Construct the PlanetScreen instance for the first planet (Earth).
      *
      * @param game  The current game instance to display screen on.
      */
-    public PlanetScreen(GdxGame game) {
-        this(game, "Earth");
+    public PlanetScreen(GdxGame game, String name, String areaName) {
+        this(game, name);
     }
 
     /**
@@ -94,6 +88,15 @@ public class PlanetScreen extends ScreenAdapter {
     public PlanetScreen(GdxGame game, String name) {
         this.game = game;
         this.name = name;
+        this.assets = FileLoader.readClass(AssetsConfig.class, "levels/global_assets.json");
+
+        String levelName = LoadUtils.formatName(name);
+        try {
+            this.levelConfig = ConfigLoader.loadLevel(levelName);
+            this.nextPlanetName = this.levelConfig.nextPlanet;
+        } catch (InvalidConfigException e) {
+            logger.error("FAILED TO LOAD LEVEL DATA FOR " + levelName);
+        }
     }
 
     /**
@@ -103,17 +106,26 @@ public class PlanetScreen extends ScreenAdapter {
     public void show() {
         registerServices();
 
+        populateGameState();
+
         loadAssets();
         createUI();
         generateGameAreas();
-        allGameAreas.get(currentAreaName).create();
+        if (!invalidStateKey("gameArea")) {
+            this.currentAreaName = (String) ServiceLocator.getGameStateObserverService().getStateData("gameArea");
+        } else {
+            ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "gameArea", currentAreaName);
+        }
+        this.allGameAreas.get(currentAreaName).create();
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
         this.player = allGameAreas.get(currentAreaName).getPlayer();
-        if ("Earth".equals(name)) {
+        if ("earth".equals(name)) {
             showTitleBox();
         }
+        ServiceLocator.registerGameArea(this.allGameAreas.get(currentAreaName));
     }
+
     private void showTitleBox() {
         // Create and display the TitleBox
         TitleBox titleBox = new TitleBox(game, "", "NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", skin);
@@ -125,57 +137,76 @@ public class PlanetScreen extends ScreenAdapter {
     }
 
     /**
-     * Get the next planet in the sequence after the current planet.
+     * Get the next planet's name in the sequence after the current planet.
      *
-     * @return  The PlanetScreen instance for the next planet.
+     * @return  The name of the next planet.
      */
-    public PlanetScreen getNextPlanet() {
-        return new PlanetScreen(this.game, this.nextPlanetName);
+    public String getNextPlanetName() {
+        return this.nextPlanetName;
     }
 
     /**
      * Sets the current game area the player is on.
      *
      * @param name  The name of the game area.
+     * @return      Whether the new game area was set correctly.
      */
-    public void setCurrentArea(String name) {
-        this.allGameAreas.get(currentAreaName).dispose();
-        this.currentAreaName = name;
-        this.allGameAreas.get(currentAreaName).create();
+    public boolean setCurrentArea(String name) {
+        if (this.allGameAreas.containsKey(name)) {
+            this.allGameAreas.get(currentAreaName).dispose();
+            this.currentAreaName = name;
+            this.allGameAreas.get(currentAreaName).create();
+            ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "gameArea", this.currentAreaName);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Populates the game state with important constants or default values if not set yet.
+     */
+    private void populateGameState(){
+        if (invalidStateKey("player/lives")) ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", 3);
+        if (invalidStateKey("nextPlanet")) ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", getNextPlanetName());
+
+        int maxResource = 1000;
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Nebulite.toString(), maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Durasteel.toString(), maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("resourceMax", Resource.Solstite.toString(), maxResource);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Nebulite.toString(), 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Durasteel.toString(), 4);
+        ServiceLocator.getGameStateObserverService().trigger("extractorsMax", Resource.Solstite.toString(), 4);
+    }
+
+    private boolean invalidStateKey(String key) {
+        return ServiceLocator.getGameStateObserverService().getStateData(key) == null;
     }
 
     /**
      * Generates all the appropriate game areas for the current planet based on its name.
      */
     private void generateGameAreas() {
-        if ("Earth".equals(name)) {
-            this.nextPlanetName = "Verdant Oasis";
+        String levelName = formatName(name);
 
-;            generateGameArea("primary", "levels/earth/main-area");
-        } else if ("Verdant Oasis".equals(name)){
-            this.nextPlanetName = "Glacial Desolation";
-            generateGameArea("primary", "levels/lush/main-area");
-        } else if ("Glacial Desolation".equals(name)){
-            this.nextPlanetName = "Infernal Challenge";
-            generateGameArea("primary", "levels/frozen/main-area");
-        } else if ("Infernal Challenge".equals(name)){
-            generateGameArea("primary", "levels/hell/main-area");
-        } else {
-            generateGameArea("primary", "levels/earth/main-area");
+        if (this.levelConfig != null) {
+            for (String area : this.levelConfig.areaNames) {
+                generateGameArea(levelName, area);
+            }
         }
     }
 
     /**
      * Initialises a new game area with a given name based upon the config file.
      *
-     * @param name  The name of the game area to create.
-     * @param configPath    The configPath to load.
+     * @param levelName  The name of the level to load.
+     * @param areaName The nam of the game area to be loaded from the level.
      */
-    private void generateGameArea(String name, String configPath) {
+    private void generateGameArea(String levelName, String areaName) {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        GameArea gameArea = new MapGameArea(configPath, terrainFactory, game, game.getPlayerLives());
+        this.allGameAreas.put(areaName, new MapGameArea(levelName, areaName, terrainFactory, game));
+
+        GameArea gameArea = new MapGameArea(levelName, areaName, terrainFactory, game);
         this.allGameAreas.put(name, gameArea);
-        ServiceLocator.registerGameArea(gameArea);
     }
 
     /**
@@ -234,7 +265,16 @@ public class PlanetScreen extends ScreenAdapter {
      */
     @Override
     public void dispose() {
+        saveGame();
         this.clear();
+    }
+
+    private void saveGame() {
+        String path = String.format("%s/%s/%s/entities.json", SAVE_PATH, this.name, this.currentAreaName);
+        ServiceLocator.getEntityService().saveCurrentArea(path);
+
+        Map<String, Object> gameStateEntries = new HashMap<>(ServiceLocator.getGameStateObserverService().getFullStateData());
+        FileLoader.writeClass(gameStateEntries, joinPath(SAVE_PATH, GAMESTATE_FILE), FileLoader.Location.LOCAL);
     }
 
     /**
@@ -249,6 +289,7 @@ public class PlanetScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
+        ServiceLocator.getGameStateObserverService().trigger("remove", "gameArea");
     }
 
     /**
@@ -257,7 +298,9 @@ public class PlanetScreen extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(planetTextures);
+        if (assets != null) {
+            assets.load(resourceService);
+        }
         ServiceLocator.getResourceService().loadAll();
     }
 
@@ -267,7 +310,9 @@ public class PlanetScreen extends ScreenAdapter {
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(planetTextures);
+        if (assets != null) {
+            assets.unload(resourceService);
+        }
     }
 
     /**

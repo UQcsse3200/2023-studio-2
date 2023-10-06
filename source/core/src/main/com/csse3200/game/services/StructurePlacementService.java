@@ -109,6 +109,8 @@ public class StructurePlacementService {
         }
     }
 
+
+
     public static class placeStructureAtArgs {
         private Entity entity;
         private GridPoint2 tilePos;

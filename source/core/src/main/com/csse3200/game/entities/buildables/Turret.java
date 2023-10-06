@@ -239,4 +239,12 @@ public class Turret extends PlaceableEntity{
     public int hashCode() {
         return Objects.hash(super.hashCode(), start, type, maxAmmo, damage);
     }
+
+    public int getCurrentAmmo() {
+        return this.currentAmmo;
+    }
+
+    public void setCurrentAmmo(int currentAmmo) {
+        this.currentAmmo = currentAmmo;
+    }
 }

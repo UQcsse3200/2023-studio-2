@@ -221,8 +221,6 @@ public class StructureFactory {
         return createShip(game, requirements, defaultShip);
     }
 
-    //CONFLICT HERE
-
     /**
      * Creates a ship entity that matches the config file
      */
@@ -242,10 +240,16 @@ public class StructureFactory {
                             }
                         }, 5));
 
+        ship.addComponent(new SaveableComponent<ShipConfig>(s -> {
+            ShipConfig shipConfig = config;
+            shipConfig.position = s.getGridPosition();
+            return shipConfig;
+        }, ShipConfig.class));
+
         ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();
         ship.setScale(5f, 4.5f);
-        PhysicsUtils.setScaledCollider(ship, 0.9f, 0.7f);
+        PhysicsUtils.setScaledCollider(ship, 0.9f, 0.9f);
 
         InteractLabel interactLabel = new InteractLabel(); //code for interaction prompt
         ship.addComponent(new DistanceCheckComponent(5f, interactLabel));

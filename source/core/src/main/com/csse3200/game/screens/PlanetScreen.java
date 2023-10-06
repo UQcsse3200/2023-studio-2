@@ -56,7 +56,7 @@ public class PlanetScreen extends ScreenAdapter {
     private Entity player;
 
     private String currentAreaName = DEFAULT_AREA;
-    private final Map<String, GameArea> allGameAreas = new HashMap<>();
+    private final Map<String, MapGameArea> allGameAreas = new HashMap<>();
 
     private LevelConfig levelConfig = null;
 
@@ -163,6 +163,14 @@ public class PlanetScreen extends ScreenAdapter {
     }
 
     /**
+     * Get the currently displayed game area
+     * @return  MapGameArea being utilised.
+     */
+    public MapGameArea getCurrentGameArea(){
+        return this.allGameAreas.get(currentAreaName);
+    }
+
+    /**
      * Populates the game state with important constants or default values if not set yet.
      */
     private void populateGameState(){
@@ -205,7 +213,7 @@ public class PlanetScreen extends ScreenAdapter {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         this.allGameAreas.put(areaName, new MapGameArea(levelName, areaName, terrainFactory, game));
 
-        GameArea gameArea = new MapGameArea(levelName, areaName, terrainFactory, game);
+        MapGameArea gameArea = new MapGameArea(levelName, areaName, terrainFactory, game);
         this.allGameAreas.put(name, gameArea);
     }
 

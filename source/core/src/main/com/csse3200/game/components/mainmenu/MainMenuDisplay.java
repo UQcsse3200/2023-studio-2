@@ -55,8 +55,7 @@ public class MainMenuDisplay extends UIComponent {
         table.setFillParent(true);
 
         // Display game title image
-//        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/escape-earth2.png", Texture.class));
-        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/Background_Test1.png", Texture.class));
+        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/main-menu.png", Texture.class));
         titleImage.setWidth(Gdx.graphics.getWidth());
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);

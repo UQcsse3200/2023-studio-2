@@ -35,7 +35,10 @@
     "images/resources/solstite.png",
     "images/resources/Cracked_Ground.png",
     "images/player/bar-fill2.png",
-    "images/player/hearts.png"
+    "images/player/hearts.png",
+    "images/explosives/explosive-barrel.png",
+    "images/explosives/grenade.png",
+    "images/explosives/landmine.png"
   ],
   "textureAtlasPaths": [
     "images/structures/stone_wall.atlas",
@@ -55,7 +58,9 @@
     "sounds/upgradeWeapon.wav",
     "sounds/enemyDeath.wav",
     "sounds/alert.wav",
-    "sounds/explosion/grenade.mp3"
+    "sounds/explosion/grenade.mp3",
+    "sounds/explosion/landmine.mp3"
+
   ],
   "particleEffectPaths": null,
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav"

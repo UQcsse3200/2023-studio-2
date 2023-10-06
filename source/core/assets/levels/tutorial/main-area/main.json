@@ -53,7 +53,8 @@
     "map/treetop.png",
     "particle-effects/explosion/particle.png",
     "images/resources/Cracked_Ground.png",
-    "images/enemy/botanist.png"
+    "images/enemy/botanist.png",
+    "images/npc/Tutnpc.png"
   ],
   "textureAtlasPaths": [
     "images/enemy/troll_enemy.atlas",
@@ -70,13 +71,11 @@
     "images/structures/closed_gate.atlas",
     "images/companion/Companion_spritesheet.atlas",
     "images/minigame/fire.atlas",
-    "images/structures/ExtractorAnimation.atlas"
+    "images/structures/ExtractorAnimation.atlas",
+    "images/npc/Tutnpc.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
-    "sounds/Healing/HealingWalls.mp3",
-    "sounds/explosion/grenade.mp3",
-    "sounds/explosion/landmine.mp3",
     "sounds/playerLow_health.wav",
     "sounds/dodgingAlertSweep.wav",
     "sounds/footStepsInTheForestGround.wav",
@@ -89,7 +88,8 @@
     "sounds/enemySpawner.wav",
     "sounds/turret_shoot.mp3",
     "sounds/alert.wav",
-    "sounds/explosion/grenade.mp3"
+    "sounds/explosion/grenade.mp3",
+    "sounds/explosion/landmine.mp3"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

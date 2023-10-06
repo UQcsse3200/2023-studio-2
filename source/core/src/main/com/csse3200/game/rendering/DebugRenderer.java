@@ -183,10 +183,9 @@ public class DebugRenderer {
 
     if (ServiceLocator.getGameArea() != null) {
       GridPoint2 mapBounds = ServiceLocator.getGameArea().getTerrain().getMapBounds(0);
-      HashMap<GridPoint2, Entity> fillerGrids = ServiceLocator.getGameArea().getAreaEntities();
       float tileSize = ServiceLocator.getGameArea().getTerrain().getTileSize();
+      HashMap<GridPoint2, Entity> fillerGrids = ServiceLocator.getGameArea().getAreaEntities();
       drawGrid(0, 0, mapBounds.x, mapBounds.y, tileSize, Color.WHITE);
-      shapeRenderer.end();
       drawFillSpecificGrids(fillerGrids, tileSize, Color.RED);
     }
 

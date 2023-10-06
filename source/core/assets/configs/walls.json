@@ -1,19 +1,29 @@
 {
   "basic": {
     "health": 200,
-    "spritePath": "images/structures/dirt_wall.atlas"
+    "spritePath": "images/structures/dirt_wall.atlas",
+    "sounds": {
+      "soundsMap": {
+        "wallHeal": "sounds/Healing/HealingWalls.mp3"
+      }
+    }
   },
   "intermediate": {
     "health": 400,
-    "spritePath": "images/structures/stone_wall.atlas"
+    "spritePath": "images/structures/stone_wall.atlas",
+    "sounds": {
+      "soundsMap": {
+        "wallHeal": "sounds/Healing/HealingWalls.mp3"
+      }
+    }
   },
     "gate": {
         "health": 200,
-        "spritePath": "images/structures/gate.atlas"
-    },
-  "sounds": {
-    "soundsMap": {
-      "wallHeal": "sounds/Healing/HealingWalls.mp3"
+        "spritePath": "images/structures/gate.atlas",
+      "sounds": {
+        "soundsMap": {
+          "wallHeal": "sounds/Healing/HealingWalls.mp3"
+        }
+      }
     }
-  }
 }

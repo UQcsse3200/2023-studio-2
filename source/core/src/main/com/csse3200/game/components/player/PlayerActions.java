@@ -25,7 +25,7 @@ public class PlayerActions extends Component {
 
     private final EntityService entityService = new EntityService();
     private PhysicsComponent physicsComponent;
-    private Vector2 walkDirection = Vector2.Zero.cpy();
+    Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
     private boolean sliding = false;
     private float freezeFactor = 1.0f;
@@ -183,4 +183,7 @@ public class PlayerActions extends Component {
     }
 
 
+    public boolean isMoving() {
+        return false;
+    }
 }

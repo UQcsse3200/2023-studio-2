@@ -17,11 +17,11 @@ public class MovementTask extends DefaultTask {
   private static final Logger logger = LoggerFactory.getLogger(MovementTask.class);
 
   private final GameTime gameTime;
-  private Vector2 target;
+  protected Vector2 target;
   private float stopDistance = 0.01f;
   private long lastTimeMoved;
   private Vector2 lastPos;
-  private PhysicsMovementComponent movementComponent;
+  protected PhysicsMovementComponent movementComponent;
 
   public MovementTask(Vector2 target) {
     this.target = target;
@@ -68,17 +68,17 @@ public class MovementTask extends DefaultTask {
     logger.debug("Stopping movement");
   }
 
-  private boolean isAtTarget() {
-    return owner.getEntity().getPosition().dst(target) <= stopDistance;
+  protected boolean isAtTarget() {
+    return owner.getEntity().getCenterPosition().dst(target) <= stopDistance;
   }
 
-  private boolean isAtTargetGrid() {
+  protected boolean isAtTargetGrid() {
     GridPoint2 startGrid = owner.getEntity().getGridPosition();
     GridPoint2 targetGrid = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target);
     return targetGrid.equals(startGrid);
   }
 
-  private void checkIfStuck() {
+  protected void checkIfStuck() {
     if (didMove()) {
       lastTimeMoved = gameTime.getTime();
       lastPos = owner.getEntity().getPosition();

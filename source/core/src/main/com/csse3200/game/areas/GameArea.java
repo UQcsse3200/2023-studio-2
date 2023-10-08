@@ -130,7 +130,7 @@ public abstract class GameArea implements Disposable {
           Vector2 topRight = new Vector2(position.x + scale.x, position.y + scale.y);
           Vector2 bottomLeft = new Vector2(position.x, position.y);
 
-// Convert these to grid coordinates using your existing function
+// Convert these to grid coordinates
           GridPoint2 gridTopRight = terrain.worldPositionToTile(topRight);
           GridPoint2 gridBottomLeft = terrain.worldPositionToTile(bottomLeft);
 

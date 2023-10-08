@@ -199,7 +199,7 @@ public class EnemyFactory {
    */
   private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
-    boolean isPlayer = PhysicsLayer.contains(layer, (short) (PhysicsLayer.PLAYER | PhysicsLayer.COMPANION));
+    boolean isPlayer = PhysicsLayer.contains(layer, PhysicsLayer.PLAYER);
     boolean isStructure = PhysicsLayer.contains(layer, PhysicsLayer.STRUCTURE);
     boolean matchingBehaviour = isPlayer && behaviour == EnemyBehaviour.PTE || isStructure && behaviour == EnemyBehaviour.DTE;
 
@@ -207,7 +207,10 @@ public class EnemyFactory {
     float viewDistance = 100f;
     float maxChaseDistance = 100f;
 
-    if (type == EnemyType.Melee && !isPlayer && !matchingBehaviour) priority = 5; //Special case for player targeting melee
+    if (isPlayer && behaviour == EnemyBehaviour.DTE) {
+      //Special case for player targeting meleeDTE will add chaseTask of prio 9
+      priority = 9;
+    }
     // Select and add the necessary behaviour
     addBehaviour(type, aiTaskComponent, target, priority, viewDistance, maxChaseDistance, isBoss);
   }

@@ -9,16 +9,22 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
+import com.csse3200.game.components.mainmenu.InsertButtons;
+import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 
 /**
  * The user interface component responsible for displaying the initial story sequence.
@@ -33,6 +39,7 @@ public class InitialScreenDisplay extends UIComponent {
     private Image planet;
     private Table rootTable;
     private Label storyLabel;
+    private ArrayList<String> InitialScreenImages;
 
     /**
      * Creates a new instance of the InitialScreenDisplay.
@@ -50,6 +57,8 @@ public class InitialScreenDisplay extends UIComponent {
         // Load the BitmapFont
         font = new BitmapFont();
         addUIElements();
+        entity.getEvents().addListener("next", this::nextScene);
+        entity.getEvents().addListener("previous", this::prevScene);
     }
 
     private void addUIElements() {
@@ -111,12 +120,15 @@ public class InitialScreenDisplay extends UIComponent {
         });
 
         // Add the "Continue" button to the rootTable and center it at the bottom
-        rootTable.add(continueButton).expandX().bottom().padBottom(30f);
+       // rootTable.add(continueButton).expandX().bottom().padBottom(30f);
 
         // Add actors to the stage
         stage.addActor(background);
         stage.addActor(planet);
         stage.addActor(rootTable);
+        InitialScreenImages = new ArrayList<>();
+        InitialScreenImages.add("images/menu/InitialScreenImage.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-2.png");
 
         RepeatAction repeatAction = Actions.forever(
                 Actions.sequence(
@@ -130,6 +142,44 @@ public class InitialScreenDisplay extends UIComponent {
 
         // Start printing text letter by letter
         printTextLetterByLetter(story, storyLabel, 0.035f, 0.5f);
+
+
+        InsertButtons bothButtons = new InsertButtons();
+        // Create next button
+        String nextTexture = "images/interface/next_cut.png";
+        String nextTextureHover = "images/interface/next_cut_hover.png";
+        ImageButton nextBtn = bothButtons.draw(nextTexture, nextTextureHover);
+
+        // Create previous button
+        String prevTexture = "images/interface/prev_cut.png";
+        String prevTextureHover = "images/interface/prev_cut_hover.png";
+        ImageButton prevBtn = bothButtons.draw(prevTexture, prevTextureHover);
+
+
+        // Attach listeners to navigation buttons
+        nextBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Next button clicked");
+                        entity.getEvents().trigger("next");
+                    }
+                });
+
+
+        prevBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Previous button clicked");
+                        entity.getEvents().trigger("previous");
+                    }
+                });
+
+        rootTable.add(prevBtn).left().width(70f).padBottom(300f);
+        rootTable.add(nextBtn).right().width(70f).padBottom(300f);
+        stage.addActor(rootTable);
+
     }
 
     private void printTextLetterByLetter(final String text, final Label label, final float speed, final float initialDelay) {
@@ -150,8 +200,25 @@ public class InitialScreenDisplay extends UIComponent {
             }
         }, initialDelay, speed, text.length() - 1);
     }
+    int start = 0;
+    int end = 2;
+    private void nextScene() {
+        if (start < end) {
+            Drawable next = new TextureRegionDrawable(new Texture(Gdx.files.internal(InitialScreenImages.get(start))));
+            rootTable.setBackground(next);
+            start += 1;
+        } else {
+            new PlanetTravel(game).returnToCurrent();
+        }
+    }
 
-
+    private void prevScene() {
+        if (end - start > 0 && start > 0) {
+            Drawable prev = new TextureRegionDrawable(new Texture(Gdx.files.internal(InitialScreenImages.get(start - 1))));
+            rootTable.setBackground(prev);
+            start -= 1;
+        }
+    }
 
     @Override
     protected void draw(SpriteBatch batch) {

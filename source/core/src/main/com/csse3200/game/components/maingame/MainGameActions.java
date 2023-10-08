@@ -27,7 +27,7 @@ public class MainGameActions extends Component {
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("returnPlanet", this::onReturnPlanet);
-    entity.getEvents().addListener("menu", this::onMenu);
+
 
 
   }
@@ -45,12 +45,4 @@ public class MainGameActions extends Component {
     ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", config.lives);
     new PlanetTravel(game).returnToCurrent();
   }
-
-  private void onMenu(){
-    logger.info("Displaying game menu screen");
-    ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", config.lives);
-    MainGameMenuDisplay mainGameMenuDisplay = new MainGameMenuDisplay(entity);
-    mainGameMenuDisplay.create();
-  }
-
 }

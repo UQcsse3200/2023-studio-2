@@ -20,6 +20,8 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+
 /**
  * The user interface component responsible for displaying the initial story sequence.
  */
@@ -82,7 +84,8 @@ public class InitialScreenDisplay extends UIComponent {
 
         // The initial text you want to display
         String story = "Earth has become a desolate wasteland ravaged by a deadly virus.\n" +
-                "last hope lies among the stars. You are one of the few survivors.";
+                " The Last hope lies among the stars. You are one of the few survivors.\n"+"Embark on a perilous journey to secure humanity's future.\n"
+                + "Traverse the cosmos guided by advanced AI.\n"+"Face unknown challenges in huge cosmos and fight against them .\n"+"The fate of humanity rests in your hands.";
 
         // Configure the Label
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
@@ -128,12 +131,39 @@ public class InitialScreenDisplay extends UIComponent {
         // Apply the RepeatAction to the planet image
         planet.addAction(repeatAction);
 
-        // Start printing text letter by letter
-        printTextLetterByLetter(story, storyLabel, 0.035f, 0.5f);
+        // Start printing text line by line
+        printTextLineByLine(story, storyLabel, 2.7f, 0.5f);
     }
 
-    private void printTextLetterByLetter(final String text, final Label label, final float speed, final float initialDelay) {
+    private void printTextLineByLine(final String text, final Label label, final float speed, final float initialDelay) {
         label.setText(""); // Clear the label text initially
+        String[] lines = text.split("\n");
+        int[] lineIndex = {0};
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                if (lineIndex[0] < lines.length) {
+                    String currentLine = lines[lineIndex[0]];
+                    label.setText(currentLine);
+                    fadeIn(label);
+
+                    // Increment the line index for the next run
+                    lineIndex[0]++;
+
+                    // If this is not the first line, fade out the previous line
+                    if (lineIndex[0] > 1) {
+                        fadeOut(label);
+                    }
+                } else {
+                    // Stop the Timer when all lines are displayed
+                    this.cancel();
+                }
+            }
+        }, initialDelay, speed, lines.length - 1);
+    }
+
+    private void animateText(final String text, final Label label, final float speed, Runnable onComplete) {
         Timer.schedule(new Timer.Task() {
             int charIndex = 0;
 
@@ -142,14 +172,27 @@ public class InitialScreenDisplay extends UIComponent {
                 if (charIndex < text.length()) {
                     char currentChar = text.charAt(charIndex);
                     label.setText(label.getText().toString() + currentChar);
+                    fadeIn(label);  // Add a fadeIn effect if needed
+
                     charIndex++;
                 } else {
                     // Stop the Timer when all characters are printed
                     this.cancel();
+                    onComplete.run();  // Call onComplete action (transition to next line)
                 }
             }
-        }, initialDelay, speed, text.length() - 1);
+        }, 0, speed, text.length() - 1);
     }
+
+
+    private void fadeIn(Actor actor) {
+        actor.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(0.5f)));
+    }
+
+    private void fadeOut(Actor actor) {
+        actor.addAction(Actions.sequence(Actions.fadeOut(0.5f), Actions.alpha(1)));
+    }
+
 
 
 

@@ -36,7 +36,23 @@
       "images/npc/astronaut_npc.atlas",
       "images/npc/Hellman.atlas"
     ],
-    "soundPaths": null,
+    "soundPaths": [
+        "sounds/Impact4.wav",
+        "sounds/playerLow_health.wav",
+        "sounds/dodgingAlertSweep.wav",
+        "sounds/footStepsInTheForestGround.wav",
+        "sounds/PlayerHealthRecharge.wav",
+        "sounds/playerBoostRecharge.wav",
+        "sounds/upgradeTreeTap.wav",
+        "sounds/upgradeWeapon.wav",
+        "sounds/enemyDeath.wav",
+        "sounds/companionwalksound.wav",
+        "sounds/enemySpawner.wav",
+        "sounds/turret_shoot.mp3",
+        "sounds/alert.wav",
+        "sounds/explosion/grenade.mp3",
+        "sounds/explosion/landmine.mp3"
+    ],
     "particleEffectPaths": [
       "particle-effects/explosion/explosion.effect"
     ],

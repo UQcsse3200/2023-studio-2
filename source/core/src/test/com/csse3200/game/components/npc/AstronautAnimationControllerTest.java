@@ -65,5 +65,6 @@ class AstronautAnimationControllerTest {
 
         controller.update();
     }
+
 }
 

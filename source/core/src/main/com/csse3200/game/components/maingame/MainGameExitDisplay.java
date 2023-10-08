@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.components.controls.ControlsScreenDisplay;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +82,7 @@ public class MainGameExitDisplay extends UIComponent {
               @Override
               public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Control Screen button clicked");
-                game.setScreen(GdxGame.ScreenType.CONTROL_SCREEN);
+                game.setScreen(GdxGame.ScreenType.CONTROL_SCREEN_GAME);
               }
             });
     resume.addListener(new ClickListener() {

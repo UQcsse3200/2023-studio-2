@@ -25,6 +25,7 @@ public class ControlsScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(StoryScreen.class);
     private final GdxGame game;
     public Renderer renderer;
+    private boolean Isgame;
     private static final String[] storyTextures = {
             "images/controls-images/Controls.png"
     };
@@ -34,8 +35,9 @@ public class ControlsScreen extends ScreenAdapter {
      *
      * @param game The GdxGame instance.
      */
-    public ControlsScreen(GdxGame game) {
+    public ControlsScreen(GdxGame game, boolean isgame) {
         this.game = game;
+        Isgame =isgame;
 
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
@@ -101,7 +103,7 @@ public class ControlsScreen extends ScreenAdapter {
                 ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
         Entity ui = new Entity();
-        ui.addComponent(new ControlsScreenDisplay())
+        ui.addComponent(new ControlsScreenDisplay(game,Isgame))
                 .addComponent(new InputDecorator(stage, 10))
                 .addComponent(new ControlsScreenActions(game));
         ServiceLocator.getEntityService().register(ui);

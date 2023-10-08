@@ -108,7 +108,9 @@ public class GdxGame extends Game {
       case UPGRADE_SHOP:
         return new UpgradeShopScreen(this);
       case CONTROL_SCREEN:
-        return new ControlsScreen(this);
+        return new ControlsScreen(this,false);
+      case CONTROL_SCREEN_GAME:
+        return new ControlsScreen(this,true);
       case INITIALL_SCREEN:
         return new InitialScreen(this);
       case BRICK_BREAKER_SCREEN:
@@ -122,7 +124,7 @@ public class GdxGame extends Game {
 
     MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME, TUTORIAL_SCREEN,
     GAME_STORY, PLAYER_DEATH,COMPANION_DEATH, NAVIGATION_SCREEN ,INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIALL_SCREEN, BRICK_BREAKER_SCREEN,
-    PLAYER_DEATH_0, PLAYER_DEATH_1, PLAYER_DEATH_2, PLAYER_DEATH_3
+    PLAYER_DEATH_0, PLAYER_DEATH_1, PLAYER_DEATH_2, PLAYER_DEATH_3, CONTROL_SCREEN_GAME
   }
   /**
    * Exit the game.

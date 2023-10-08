@@ -27,9 +27,6 @@ public class MainGameActions extends Component {
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("returnPlanet", this::onReturnPlanet);
-
-
-
   }
   /**
    * Swaps to the Main Menu screen.

@@ -45,7 +45,7 @@ public class ControlsScreenTest {
     @Test
     void testControlsScreenAssetLoading() {
         Gdx.app.postRunnable(() -> {
-            ControlsScreen controlsScreen = new ControlsScreen(game);
+            ControlsScreen controlsScreen = new ControlsScreen(game,false);
 
             // Simulate rendering and resizing
             controlsScreen.render(0.1f);

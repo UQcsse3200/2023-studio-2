@@ -59,6 +59,7 @@ public class InitialScreenDisplay extends UIComponent {
         addUIElements();
         entity.getEvents().addListener("next", this::nextScene);
         entity.getEvents().addListener("previous", this::prevScene);
+        entity.getEvents().addListener("skip", this::onSkip);
     }
 
     private void addUIElements() {
@@ -143,6 +144,11 @@ public class InitialScreenDisplay extends UIComponent {
         String prevTextureHover = "images/interface/prev_cut_hover.png";
         ImageButton prevBtn = bothButtons.draw(prevTexture, prevTextureHover);
 
+        // Create skip button
+        String skipTexture = "images/interface/skip_btn.png";
+        String skipTextureHover = "images/interface/skip_btn_hover.png";
+        ImageButton skipBtn = bothButtons.draw(skipTexture, skipTextureHover);
+
         // Attach listeners to navigation buttons
         nextBtn.addListener(
                 new ChangeListener() {
@@ -161,15 +167,29 @@ public class InitialScreenDisplay extends UIComponent {
                         entity.getEvents().trigger("previous");
                     }
                 });
+        skipBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Skip button clicked");
+                        entity.getEvents().trigger("skip");
+                    }
+                });
 
-        // Create a new table for navigation buttons
+
+// Create a new table for navigation buttons
         Table buttonTable = new Table();
         buttonTable.center().setFillParent(true); // Set table to fill the parent and center-align vertically and horizontally
         buttonTable.pad(0, 20f, 0, 20f); // Adjust the padding to control button placement
 
         buttonTable.add(prevBtn).left().width(70f).center().padBottom(20f);
-        buttonTable.add().expand().center();
-        buttonTable.add(nextBtn).right().width(70f).center().padBottom(20f);
+        buttonTable.add().expand().center(); // Empty cell for center alignment
+        buttonTable.add(skipBtn).expand().top().right().width(200f); // Skip button
+
+// Add the "Next" button to the right-most cell
+        buttonTable.add(nextBtn).right().width(70f).center().padBottom(20f).padLeft(20f); // Next button
+        buttonTable.row(); // Move to the next row
+
 
         // Create a Stack to overlay the text label and buttons
         Stack stack = new Stack();
@@ -233,6 +253,11 @@ public class InitialScreenDisplay extends UIComponent {
             Texture prevImageTexture = new Texture(Gdx.files.internal(InitialScreenImages.get(start)));
             backgroundImage.setDrawable(new TextureRegionDrawable(prevImageTexture));
         }
+    }
+
+    private void onSkip() {
+        logger.info("Skipping to game");
+        new PlanetTravel(game).returnToCurrent();
     }
 
     @Override

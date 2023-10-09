@@ -119,6 +119,8 @@ public class CombatStatsComponent extends Component {
         };
         timer.schedule(killPlayer, 1); // Animation lasts for 1 second before death screen is triggered
       } else if (isDead() && entity.getEntityType().equals("companion")) {
+        entity.getComponent(FollowComponent.class).setFollowSpeed(0f);
+        entity.getEvents().trigger("companionDeath");
         final Timer timer1 = new Timer();
         Timer.Task killCompanion = new Timer.Task() {
           @Override

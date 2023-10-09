@@ -37,7 +37,7 @@ public class CompanionAnimationController extends Component {
         entity.getEvents().addListener("walkDownLeft", this::animateDownLeft);
         entity.getEvents().addListener("walkDownRight", this::animateDownRight);
         entity.getEvents().addListener("walkStopAnimation", this::animateStop);
-       /* entity.getEvents().addListener("walkStopAnimation", this::animateStop);*/
+        entity.getEvents().addListener("CompanionDeath", this::animateDown);
     }
 
     /**

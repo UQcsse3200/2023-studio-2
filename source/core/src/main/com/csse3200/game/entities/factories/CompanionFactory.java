@@ -88,10 +88,10 @@ public class CompanionFactory {
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new FollowComponent(player,1f))
                         .addComponent(new InteractionControllerComponent(false));
-                         companion.addComponent(new SaveableComponent<>(p -> {
+                         companion.addComponent(new SaveableComponent<>(c -> {
                                CompanionConfig companionConfig = config;
-                               companionConfig.position = new GridPoint2((int) companion.getPosition().x, (int)companion.getPosition().y);
-                               companionConfig.health = companion.getComponent(CombatStatsComponent.class).getHealth();
+                               companionConfig.position = c.getGridPosition();
+                               companionConfig.health = c.getComponent(CombatStatsComponent.class).getHealth();
                                return companionConfig;
                                          }, CompanionConfig.class));
 

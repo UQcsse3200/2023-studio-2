@@ -37,7 +37,6 @@ public class MainGameExitDisplay extends UIComponent {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
           logger.debug("Exit button clicked");
-          ServiceLocator.getEntityService().saveCurrentArea();
           entity.getEvents().trigger("exit");
         }
       });

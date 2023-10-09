@@ -106,7 +106,7 @@ private Stage stage;
     }
     private TutorialGameArea generateGameArea(String name, String configPath) {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        TutorialGameArea tutorialGameArea = new TutorialGameArea(configPath, terrainFactory, game, game.getPlayerLives());
+        TutorialGameArea tutorialGameArea = new TutorialGameArea(terrainFactory, game);
         this.allGameAreas.put(name, tutorialGameArea);
         return tutorialGameArea;
     }

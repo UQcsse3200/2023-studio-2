@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.utils.LoadUtils;
 import com.csse3200.game.components.spacenavigation.NavigationBackground;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
@@ -136,22 +137,22 @@ public class SpaceNavigationScreen implements Screen {
         // LibGDX's Scene2D ui framework is imperative, so we have to explicitly define the planet grid:
         // Row 1
 
-        String currentPlanetName = ((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet")).name;
+        String currentPlanetName = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
+        String nextPlanetName = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
 
         for (int i = 0; i < planetNames.length; i++) {
 
             // Create planet sprite,
             table.add(createPlanetTable(i, planetSize,
-                    (Objects.equals(planetNames[i], currentPlanetName)) ? 1 :
-                            (i != 0 && Objects.equals(planetNames[i - 1], currentPlanetName)) ? 2 : 0
+                    (Objects.equals(LoadUtils.formatName(planetNames[i]), currentPlanetName)) ? 1 :
+                            (Objects.equals(LoadUtils.formatName(planetNames[i]), nextPlanetName)) ? 2 : 0
             ));
 
             if (i != planetNames.length - 1) {
                 table.add(createArrow(
-                        Objects.equals(planetNames[i], currentPlanetName) ? "right" : "right-grey"
+                        Objects.equals(LoadUtils.formatName(planetNames[i]), currentPlanetName) ? "right" : "right-grey"
                 )).pad(arrowPadding).width(arrowSize).height(arrowSize);
             }
-
         }
 
         stage.addActor(table);
@@ -194,6 +195,7 @@ public class SpaceNavigationScreen implements Screen {
      * Creates a table for a specific planet which includes its image and name.
      * @param planetIndex Index of the planet in the planetTextures array.
      * @param planetSize Size for displaying the planet image.
+     * @param planetType Type of planet to be created. 1 - current planet, 2 - next planet
      * @return A new Table instance containing the planet image and its name.
      */
     private Table createPlanetTable(int planetIndex, int planetSize, int planetType) {
@@ -211,6 +213,7 @@ public class SpaceNavigationScreen implements Screen {
     /**
      * Creates an image of a planet.
      * @param planetIndex Index of the planet in the planetTextures array.
+     * @param planetType Type of planet to be created. 1 - current planet, 2 - next planet
      * @return A new Image instance for the planet.
      */
     private Image createPlanet(int planetIndex, int planetType) {
@@ -227,7 +230,7 @@ public class SpaceNavigationScreen implements Screen {
                     if (planetType == 1) {
                         planetTravel.returnToCurrent();
                     } else {
-                        planetTravel.instantTravelNamed(planetNames[planetIndex]);
+                        planetTravel.beginInstantTravel();
                     }
                 }
 

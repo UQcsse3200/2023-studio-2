@@ -15,8 +15,8 @@ public class TutorialGameArea extends MapGameArea {
    // private TutorialDialogue tutorialDialogue;
 
 
-    public TutorialGameArea(String configPath, TerrainFactory terrainFactory, GdxGame game, int playerLives) {
-        super(configPath, terrainFactory, game, playerLives);
+    public TutorialGameArea(TerrainFactory terrainFactory, GdxGame game) {
+        super("tutorial", "main_area", terrainFactory, game);
     }
 
 

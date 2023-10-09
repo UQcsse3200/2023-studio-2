@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
@@ -16,10 +17,7 @@ import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.GameStateObserver;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +30,7 @@ public class MainMenuScreen extends ScreenAdapter {
   public static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  private static final String[] mainMenuTextures = {"images/menu/Background_Test1.png"};
+  private static final String[] mainMenuTextures = {"images/menu/main-menu.png"};
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -54,7 +52,7 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerTimeSource(new GameTime());
     ServiceLocator.registerPhysicsService(new PhysicsService());
-    ServiceLocator.registerGameStateObserverService(new GameStateObserver());
+    ServiceLocator.registerGameStateObserverService(new GameStateObserver(new GameStateInteraction()));
   }
 
   @Override

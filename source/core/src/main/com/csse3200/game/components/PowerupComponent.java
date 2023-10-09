@@ -3,6 +3,7 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.Gdx;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.Companion.CompanionActions;
+import com.csse3200.game.components.Companion.CompanionInventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.EnemyFactory;
@@ -27,6 +28,8 @@ public class PowerupComponent extends Component {
     private long duration;
 
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
+    Entity companionEntity = ServiceLocator.getEntityService().getCompanion();
 
     /**
      * Assigns a type and targetLayer value to a given Powerup
@@ -54,6 +57,7 @@ public class PowerupComponent extends Component {
                 player.getComponent(CombatStatsComponent.class).setHealth(100);
                 companion.getComponent(CombatStatsComponent.class).setHealth(50);
                 player.getEvents().trigger("playSound", "healthPowerup"); // plays sound when health powerup selected
+
                 break;
 
             case SPEED_BOOST:
@@ -145,11 +149,26 @@ public class PowerupComponent extends Component {
                         enemy.dispose();
                     }
                 }
+            case DEATH_POTION:
+                if (player.getComponent(PlayerActions.class) == null) {
+                    return;
+                } else {
+                    return;
+                }
 
             default:
                 throw new IllegalArgumentException("You must specify a valid PowerupType");
         }
 
+    }
+
+    public void updateInventory(){
+        CompanionInventoryComponent companionInventory = companionEntity.getComponent(CompanionInventoryComponent.class);
+        Entity entityOfComponent = getEntity();
+        if (companionInventory != null) {
+            companionInventory.addPowerup(entityOfComponent);
+        }
+        logger.debug("powerupadded");
         if (entity != null) {
             Gdx.app.postRunnable(entity::dispose);
         }

@@ -82,7 +82,6 @@ public class MapGameArea extends GameArea{
         spawnShip();
         player = spawnPlayer();
         companion = spawnCompanion();
-        spawnPowerups();
         spawnLaboratory();
         spawnPortal(player);
         spawnTreeTop();

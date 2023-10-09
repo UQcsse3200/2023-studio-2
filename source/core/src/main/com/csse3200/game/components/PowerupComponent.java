@@ -168,7 +168,7 @@ public class PowerupComponent extends Component {
         if (companionInventory != null) {
             companionInventory.addPowerup(entityOfComponent);
         }
-        logger.debug("powerupadded");
+        logger.debug("powerup picked up");
         if (entity != null) {
             Gdx.app.postRunnable(entity::dispose);
         }

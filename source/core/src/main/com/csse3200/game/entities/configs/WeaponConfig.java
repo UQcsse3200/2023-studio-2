@@ -16,7 +16,7 @@ public class WeaponConfig extends BaseEntityConfig {
     public float damage = 0;
     public float weaponSpeed = 0;
     public float rotationSpeed = 0;
-    public int weaponDuration = 0;
+    public float weaponDuration = 5000;
     public int attackCooldown = 5;
     public int ammoUse = 1;
     public int projectiles = 1;

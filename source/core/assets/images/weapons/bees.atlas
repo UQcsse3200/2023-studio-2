@@ -17,10 +17,3 @@ ATTACK1
   orig: 42, 42
   offset: 0, 0
   index: 1
-STATIC
-  rotate: false
-  xy: 84, 42
-  size: 42, 42
-  orig: 42, 42
-  offset: 0, 0
-  index: 0

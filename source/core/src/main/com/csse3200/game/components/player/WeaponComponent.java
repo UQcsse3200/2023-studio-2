@@ -40,8 +40,7 @@ public class WeaponComponent extends Component {
      * @param clickPosition - click location of mouse
      */
     private void playerAttacking(WeaponType weaponType, Vector2 clickPosition) {
-        float attackDirection = calcRotationAngleInDegrees(entity.getCenterPosition(), clickPosition);
-        ArrayList<Pair<Entity, Integer>> attacks = AttackFactory.createAttacks(weaponType, attackDirection, entity);
+        ArrayList<Pair<Entity, Integer>> attacks = AttackFactory.createAttacks(weaponType, clickPosition, entity);
 
         if (attacks == null) {
             return;
@@ -52,6 +51,7 @@ public class WeaponComponent extends Component {
         }
 
         InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+        float attackDirection = calcRotationAngleInDegrees(entity.getCenterPosition(), clickPosition);
         makeNewHolding(weaponType, attackDirection);
         entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(),
                 invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());

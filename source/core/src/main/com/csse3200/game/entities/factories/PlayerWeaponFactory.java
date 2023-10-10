@@ -41,6 +41,9 @@ public class PlayerWeaponFactory {
 
         attack.setEntityType("playerStaticWeapon");
         attack.scaleWidth(config.imageScale / 2);
+        if (weaponType == WeaponType.RANGED_NUKE) {
+            attack.scaleWidth(0.5f);
+        }
         return attack;
     }
 

@@ -12,6 +12,8 @@ public enum WeaponType {
     RANGED_BLUEMERANG,
     RANGED_MISSILES,
     RANGED_HOMING,
+    RANGED_NUKE,
+
     STATIC_WEAPON,
     STICK,
     WOODHAMMER,

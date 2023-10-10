@@ -8,6 +8,7 @@ import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -16,13 +17,15 @@ import com.csse3200.game.services.ServiceLocator;
 public abstract class WeaponControllerComponent extends Component {
     protected WeaponConfig config;
     /* Variable to hold the remaining life (in game ticks) of a weapon */
-    protected int remainingDuration;
+    protected float remainingDuration;
     /* The rotation of the weapon indicating its "forward" direction*/
     protected float currentRotation;
     /* Reference to player entity */
     protected final Entity player;
     /* attack Number in sequence */
     protected int attackNum = 0;
+    /* game time */
+    private final GameTime timeSource;
 
     /* animator used to control visual*/
     protected AnimationRenderComponent animator = null;
@@ -38,6 +41,7 @@ public abstract class WeaponControllerComponent extends Component {
         this.remainingDuration = config.weaponDuration;
         this.currentRotation = attackDirection;
         this.attackNum = attackNum;
+        timeSource = ServiceLocator.getTimeSource();
     }
 
 
@@ -49,6 +53,7 @@ public abstract class WeaponControllerComponent extends Component {
         this.config = config;
         this.remainingDuration = config.weaponDuration;
         this.currentRotation = attackDirection;
+        timeSource = ServiceLocator.getTimeSource();
     }
 
     /**
@@ -75,7 +80,10 @@ public abstract class WeaponControllerComponent extends Component {
         rotate();
         move();
         reanimate();
-        if (--this.remainingDuration <= 0) {
+
+        remainingDuration -= timeSource.getDeltaTime() * 100;
+        System.out.println(remainingDuration);
+        if (this.remainingDuration <= 0) {
             despawn();
         }
     }

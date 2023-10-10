@@ -121,6 +121,7 @@ public class UpgradeDisplay extends Window {
         WeaponConfig grenadeConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_GRENADE);
         WeaponConfig multiMissile = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_MISSILES);
         WeaponConfig bluemerang = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BLUEMERANG);
+        WeaponConfig nuke = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_NUKE);
 
 
         ToolConfig dirtConfig = structureTools.toolConfigs
@@ -142,8 +143,10 @@ public class UpgradeDisplay extends Window {
         UpgradeNode swordNode = new UpgradeNode(katanaConfig);
         UpgradeNode wrenchNode = new UpgradeNode(meleeWrench);
         UpgradeNode beeNode = new UpgradeNode(beeConfig);
+        UpgradeNode nukeNode = new UpgradeNode(nuke);
         swordNode.addChild(wrenchNode);
         swordNode.addChild(beeNode);
+        beeNode.addChild(nukeNode);
         trees.add(swordNode);
 
         // Ranged Tree

@@ -108,9 +108,9 @@ public class GdxGame extends Game {
       case UPGRADE_SHOP:
         return new UpgradeShopScreen(this);
       case CONTROL_SCREEN:
-        return new ControlsScreen(this,false);
+        return new ControlsScreen(this,"Controls");
       case CONTROL_SCREEN_GAME:
-        return new ControlsScreen(this,true);
+        return new ControlsScreen(this,"Controls");
       case INITIALL_SCREEN:
         return new InitialScreen(this);
       case BRICK_BREAKER_SCREEN:

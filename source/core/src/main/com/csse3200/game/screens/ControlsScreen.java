@@ -1,5 +1,6 @@
 package com.csse3200.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -140,7 +141,7 @@ public class ControlsScreen extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
-        renderer.resize(width, 700);
+        renderer.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()-400);
         logger.trace("Resized renderer: ({} x {})", width, height);
     }
 

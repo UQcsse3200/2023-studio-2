@@ -92,7 +92,7 @@
   "RANGED_NUKE": {
     "name" : "Nuke",
     "health" : 1000,
-    "description": "its a nuke",
+    "description": "Don't use them all at once",
     "damage" : 0,
     "weaponSpeed": 0.1,
     "weaponDuration": 500,
@@ -144,7 +144,7 @@
     "description": "Rich history, swift slashes. Its balance between speed and damage makes it deadly in close quarters.",
     "damage" : 33,
     "weaponSpeed": 4,
-    "weaponDuration": 30,
+    "weaponDuration": 26,
     "rotationSpeed": 1,
     "attackCooldown": 20,
     "textureAtlas": "images/weapons/sword.atlas",

@@ -45,7 +45,6 @@ public class GrenadeController extends WeaponControllerComponent {
 
     @Override
     protected void initial_rotation() {
-        System.out.println(attackNum);
         currentRotation += 45 * attackSide;
     }
 

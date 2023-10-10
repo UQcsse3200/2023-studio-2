@@ -28,9 +28,9 @@ public class NukeController extends WeaponControllerComponent {
         super.create();
         var explosiveConfig = new ExplosiveConfig();
         explosiveConfig.chainable = false;
-        explosiveConfig.damage = 20;
-        explosiveConfig.damageRadius = 2.5f;
-        explosiveConfig.chainRadius = 3.0f;
+        explosiveConfig.damage = 50;
+        explosiveConfig.damageRadius = 50f;
+        explosiveConfig.chainRadius = 80.0f;
         explosiveConfig.effectPath = "particle-effects/explosion/bigBallCombustion.effect";
         explosiveConfig.soundPath = "sounds/explosion/grenade.mp3";
 

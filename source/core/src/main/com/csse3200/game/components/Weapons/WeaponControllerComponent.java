@@ -82,7 +82,6 @@ public abstract class WeaponControllerComponent extends Component {
         reanimate();
 
         remainingDuration -= timeSource.getDeltaTime() * 100;
-        System.out.println(remainingDuration);
         if (this.remainingDuration <= 0) {
             despawn();
         }
@@ -105,7 +104,10 @@ public abstract class WeaponControllerComponent extends Component {
      */
     protected void set_sound() {
         SoundComponent sComp = entity.getComponent(SoundComponent.class);
-        //sComp.playSound("start");
+        if (sComp.checkExists("start")) {
+            sComp.playSound("start");
+        }
+
     }
 
     /**

@@ -3,6 +3,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.CompanionInventoryComponent;
+import com.csse3200.game.components.CompanionWeapons.PowerUpController;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponController;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponTargetComponent;
@@ -84,7 +85,11 @@ public class CompanionAttackFactory {
                 case 4 -> animator.startAnimation("DOWN");
             }}
             attack.scaleWidth(config.imageScale);
+            // Create the PowerUpController for the Death Potion
+            PowerUpController powerUpController = new PowerUpController(config);
 
+            // Set up the PowerUpController
+            attack.addComponent(powerUpController);
             attack.addComponent(new CompanionWeaponTargetComponent(weaponType, Companion));
             return attack;
         }

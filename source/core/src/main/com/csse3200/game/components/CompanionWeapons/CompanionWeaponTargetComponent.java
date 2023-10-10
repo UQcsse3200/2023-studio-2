@@ -42,29 +42,7 @@ public class CompanionWeaponTargetComponent extends Component {
             case SHIELD:
                 return rotate_shield_around_entity();
             case Death_Potion:
-                if (!inCombat) {
-                    List<Entity> enemies = EnemyFactory.getEnemyList();
-                    if (!enemies.isEmpty()) {
-                        Entity enemy = enemies.get(currentTargetIndex);
-                        if (enemy != null) {
-                            inCombat = true;
-                            pos = enemy.getPosition();
-                            Timer.schedule(new Timer.Task() {
-                                @Override
-                                public void run() {
-                                    if (enemies.contains(enemy)) {
-                                        enemy.getComponent(CombatStatsComponent.class).setHealth(0);
-                                        inCombat = false;
-                                    }
-                                }
-                            }, 2f);
-                            trackPrev = pos;
-                            currentTargetIndex = (currentTargetIndex + 1) % enemies.size();
-                            return pos;
-                        }
-                    }
-                }
-                return inCombat ? EnemyFactory.getEnemyList().get(currentTargetIndex).getPosition() : trackPrev;
+                return handleDeathPotion();
             default:
                 return new Vector2(0, 0);
         }
@@ -92,5 +70,48 @@ public class CompanionWeaponTargetComponent extends Component {
             y_rotation_direction *= -1;
         }
         y_rotate_offset += y_rotation_direction;
+    }
+    private Vector2 handleDeathPotion() {
+        List<Entity> enemies = EnemyFactory.getEnemyList();
+        if (!inCombat) {
+            if (!enemies.isEmpty()) {
+                Entity enemy = getNextLiveEnemy(enemies);
+                if (enemy != null) {
+                    inCombat = true;
+                    Vector2 pos = enemy.getPosition();
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            if (enemies.contains(enemy)) {
+                                enemy.getComponent(CombatStatsComponent.class).setHealth(0);
+                                inCombat = false;
+                                enemies.remove(enemy);
+                            }
+                        }
+                    }, 2f);
+                    trackPrev = pos;
+                    return pos;
+                }
+            }
+        }
+        return inCombat ? enemies.get(currentTargetIndex).getPosition() : trackPrev;
+    }
+
+    private Entity getNextLiveEnemy(List<Entity> enemies) {
+        int numEnemies = enemies.size();
+        int originalTargetIndex = currentTargetIndex;
+
+        while (true) {
+            Entity enemy = enemies.get(currentTargetIndex);
+            if (enemy != null && enemy.getComponent(CombatStatsComponent.class).getHealth() > 0) {
+                return enemy;
+            }
+            currentTargetIndex = (currentTargetIndex + 1) % numEnemies;
+
+            if (currentTargetIndex == originalTargetIndex) {
+                break;
+            }
+        }
+        return null;
     }
 }

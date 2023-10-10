@@ -61,10 +61,6 @@ public class CompanionWeaponController extends Component {
      */
 
     public void update() {
-//        if (--this.remainingDuration <= 0) {
-//            this.despawn();
-//            return;
-//        }
         //switch statement to define weapon movement based on type (a projectile
         Vector2 movement = switch (this.weaponType) {
             case Death_Potion -> update_swing();
@@ -82,18 +78,15 @@ public class CompanionWeaponController extends Component {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
-                    // Dispose of the entity (potion) here
-                    entity.dispose();
+                    despawn();
                 }
             }, POTION_DISPOSE_DELAY);
         }
     }
-//    private void despawn() {
-//        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-//        animator.stopAnimation();
-//        Gdx.app.postRunnable(entity::dispose);
-//    }
-//
+   private void despawn() {
+        Gdx.app.postRunnable(entity::dispose);
+    }
+
 
 
 

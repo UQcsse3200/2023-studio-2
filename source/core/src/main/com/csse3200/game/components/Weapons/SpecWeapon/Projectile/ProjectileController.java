@@ -1,4 +1,4 @@
-package com.csse3200.game.components.Weapons.SpecWeapon;
+package com.csse3200.game.components.Weapons.SpecWeapon.Projectile;
 
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.entities.Entity;
@@ -20,6 +20,7 @@ public class ProjectileController extends WeaponControllerComponent {
 
     @Override
     protected void initial_position() {
+        //Set base controller to have projectiles spawn slightly infront of player
         entity.setPosition(player.getCenterPosition()
                 .mulAdd(entity.getScale(), -0.5f)
                 .add(positionInDirection(currentRotation, 0.5f))
@@ -27,8 +28,9 @@ public class ProjectileController extends WeaponControllerComponent {
     }
 
     @Override
-    protected void initial_animation(AnimationRenderComponent animator) {
-        animator.startAnimation("UP");
+    protected void initial_animation() {
+        animator.startAnimation("ATTACK");
+        animator.setRotation(currentRotation);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package com.csse3200.game.components.Weapons.SpecWeapon;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
@@ -14,6 +17,16 @@ public class StaticController extends WeaponControllerComponent {
         super(config, 0, player);
         this.remainingDuration = config.slotType.equals("building") ? Integer.MAX_VALUE : 20;
         this.player_last_pos = player.getPosition();
+    }
+
+    @Override
+    protected void set_animations() {
+        return;
+    }
+
+    @Override
+    protected void set_sound() {
+        return;
     }
 
     @Override
@@ -31,7 +44,7 @@ public class StaticController extends WeaponControllerComponent {
     }
 
     @Override
-    protected void initial_animation(AnimationRenderComponent animator) {
+    protected void initial_animation() {
         return;
     }
 
@@ -50,5 +63,10 @@ public class StaticController extends WeaponControllerComponent {
     @Override
     protected void reanimate() {
         return;
+    }
+
+    @Override
+    protected void despawn () {
+        Gdx.app.postRunnable(entity::dispose);
     }
 }

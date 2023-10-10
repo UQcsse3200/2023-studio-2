@@ -1,16 +1,17 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.SpecWeapon.*;
+import com.csse3200.game.components.Weapons.SpecWeapon.GrenadeController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.HomingMissileSprayProjectileController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.HomingProjectileController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.KillerBeeController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.ProjectileController;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.explosives.ExplosiveComponent;
-import com.csse3200.game.components.explosives.ExplosiveConfig;
-import com.csse3200.game.components.player.WeaponComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;

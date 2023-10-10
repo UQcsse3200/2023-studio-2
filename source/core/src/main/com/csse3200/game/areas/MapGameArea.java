@@ -42,7 +42,7 @@ import static com.csse3200.game.utils.LoadUtils.joinPath;
  */
 public class MapGameArea extends GameArea{
 
-    private GameAreaConfig mapConfig = null;
+    public GameAreaConfig mapConfig = null;
     private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
@@ -316,7 +316,7 @@ public class MapGameArea extends GameArea{
      * If that is null, then spawns at the centre of the map
      * @return The player entity created
      */
-    private Entity spawnPlayer() {
+    protected Entity spawnPlayer() {
         Entity newPlayer;
         PlayerConfig playerConfig = null;
         if (mapConfig.areaEntityConfig != null) {

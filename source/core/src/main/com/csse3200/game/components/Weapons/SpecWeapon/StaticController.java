@@ -13,8 +13,9 @@ public class StaticController extends WeaponControllerComponent {
     private Vector2 player_last_pos;
 
     public StaticController(WeaponConfig config,
+                            float attackDirection,
                             Entity player) {
-        super(config, 0, player);
+        super(config, attackDirection, player);
         this.remainingDuration = config.slotType.equals("building") ? Integer.MAX_VALUE : 20;
         this.player_last_pos = player.getPosition();
     }
@@ -36,10 +37,9 @@ public class StaticController extends WeaponControllerComponent {
 
     @Override
     protected void initial_position() {
-        entity.setPosition(player.getPosition()
-                .add(player.getScale().scl(0.5f))
-                .sub(entity.getScale().scl(0f))
-                .add(new Vector2(0.15f, -0.2f))
+        entity.setPosition(player.getCenterPosition()
+                .mulAdd(entity.getScale(), -0.5f)
+                .add(positionInDirection(currentRotation, 0.5f))
         );
     }
 

@@ -2,14 +2,18 @@ package com.csse3200.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ControlGameArea;
 import com.csse3200.game.areas.GameArea;
 
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
+import com.csse3200.game.components.controls.ControlsScreenDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
@@ -75,6 +79,7 @@ public class ControlsScreen extends ScreenAdapter {
     public ControlsScreen(GdxGame game, String name) {
         this.game = game;
         this.name = name;
+        this.stage=ServiceLocator.getRenderService().getStage();
     }
 
     @Override
@@ -90,6 +95,14 @@ public class ControlsScreen extends ScreenAdapter {
         logger.debug((String.format("Initialising %s screen entities", this.name)));
         //showTutorialDialogueBox();
         this.player = GameArea.getPlayer();
+
+        Texture storyLine = new Texture(Gdx.files.internal("images/controls-images/Controls.png"));
+        TextureRegionDrawable storyBackground = new TextureRegionDrawable(storyLine);
+        Image image = new Image(storyBackground);
+        image.setHeight(Gdx.graphics.getHeight()/2-150);
+        image.setWidth(Gdx.graphics.getWidth());
+        image.setPosition(0,stage.getHeight()-image.getHeight());
+        stage.addActor(image);
     }
 //    private void showTutorialDialogueBox() {
 //        // Create and display the TitleBox
@@ -215,9 +228,9 @@ public class ControlsScreen extends ScreenAdapter {
 
         Entity ui = new Entity();
         boolean Isgame = false;
-        //ui.addComponent(new ControlsScreenDisplay(game, Isgame))
-                ui.addComponent(new InputDecorator(stage, 10))
-              //  .addComponent(new ControlsScreenActions(game))
+        //ui.addComponent(new ControlsScreenDisplay(game, Isgame));
+        ui.addComponent(new InputDecorator(stage, 10))
+                //  .addComponent(new ControlsScreenActions(game))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
                 .addComponent(new MainGameExitDisplay())

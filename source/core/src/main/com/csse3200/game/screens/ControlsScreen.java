@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ControlGameArea;
@@ -17,6 +20,7 @@ import com.csse3200.game.components.controls.ControlsScreenDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.components.mainmenu.InsertButtons;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -79,7 +83,7 @@ public class ControlsScreen extends ScreenAdapter {
     public ControlsScreen(GdxGame game, String name) {
         this.game = game;
         this.name = name;
-        this.stage=ServiceLocator.getRenderService().getStage();
+
     }
 
     @Override
@@ -95,6 +99,7 @@ public class ControlsScreen extends ScreenAdapter {
         logger.debug((String.format("Initialising %s screen entities", this.name)));
         //showTutorialDialogueBox();
         this.player = GameArea.getPlayer();
+        this.stage=renderer.getStage();
 
         Texture storyLine = new Texture(Gdx.files.internal("images/controls-images/Controls.png"));
         TextureRegionDrawable storyBackground = new TextureRegionDrawable(storyLine);
@@ -103,6 +108,26 @@ public class ControlsScreen extends ScreenAdapter {
         image.setWidth(Gdx.graphics.getWidth());
         image.setPosition(0,stage.getHeight()-image.getHeight());
         stage.addActor(image);
+
+        InsertButtons bothButtons = new InsertButtons();
+
+        String exitTexture = "images/controls-images/on_exit.png";
+        String exitTextureHover = "images/controls-images/on_exit_hover.PNG";
+        ImageButton exitBtn;
+        exitBtn = bothButtons.draw(exitTexture, exitTextureHover);
+        exitBtn.setPosition(stage.getWidth()-300f, stage.getHeight()-1100f);
+        exitBtn.setSize(250, 100);
+
+        Entity entity = new Entity();
+        exitBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("Exit button clicked");
+                entity.getEvents().trigger("exit");
+            }
+        });
+
+        stage.addActor(exitBtn);
     }
 //    private void showTutorialDialogueBox() {
 //        // Create and display the TitleBox

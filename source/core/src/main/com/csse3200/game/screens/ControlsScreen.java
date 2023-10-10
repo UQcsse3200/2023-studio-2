@@ -52,6 +52,8 @@ public class ControlsScreen extends ScreenAdapter {
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
 
+    ControlGameArea controlGameArea;
+
     /**
      * file paths of textures for screen to load.
      */
@@ -105,7 +107,7 @@ public class ControlsScreen extends ScreenAdapter {
 
     private void generateGameArea() {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        ControlGameArea controlGameArea = new ControlGameArea(terrainFactory, game);
+        controlGameArea = new ControlGameArea(terrainFactory, game);
         this.allGameAreas.put("primary", controlGameArea);
     }
 
@@ -141,7 +143,14 @@ public class ControlsScreen extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
-        renderer.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()-400);
+        //renderer.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()-400);
+        // Example: Change the camera's viewport to half the size
+        renderer.getCamera().resize(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2,15);
+        renderer.getCamera().update();
+        renderer.render();
+
+
+
         logger.trace("Resized renderer: ({} x {})", width, height);
     }
 

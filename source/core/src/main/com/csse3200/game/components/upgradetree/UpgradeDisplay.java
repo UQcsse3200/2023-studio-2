@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -42,8 +43,8 @@ import java.util.List;
  * The class extends the Window class from libGDX to represent a pop-up or overlay menu in the game.
  */
 public class UpgradeDisplay extends Window {
-    private static final float WINDOW_WIDTH_SCALE = 0.65f;
-    private static final float WINDOW_HEIGHT_SCALE = 0.65f;
+    private static final float WINDOW_WIDTH_SCALE = 0.85f;
+    private static final float WINDOW_HEIGHT_SCALE = 0.75f;
     private static final float SIZE = 64f;
     private static final String MATERIALS_FORMAT = "%d";
     private final InputOverrideComponent inputOverrideComponent;
@@ -86,8 +87,7 @@ public class UpgradeDisplay extends Window {
         structurePicker = player.getComponent(StructureToolPicker.class);
         this.upgradeBench = player;
 
-        // todo: remove this testing line - just gives max resources in upgrade tree
-        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-1000);
+        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-500); // todo: remove for final release
 
         setupWindowDimensions();
 
@@ -118,7 +118,7 @@ public class UpgradeDisplay extends Window {
         WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
         WeaponConfig rocketConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_HOMING);
         WeaponConfig beeConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_BEE_STING);
-
+        WeaponConfig grenadeConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_GRENADE);
         WeaponConfig multiMissile = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_MISSILES);
         WeaponConfig bluemerang = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BLUEMERANG);
 
@@ -131,6 +131,12 @@ public class UpgradeDisplay extends Window {
                 .get("com.csse3200.game.components.structures.tools.IntermediateWallTool");
         ToolConfig turretConfig = structureTools.toolConfigs
                 .get("com.csse3200.game.components.structures.tools.TurretTool");
+        ToolConfig advancedTurretConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.AdvTurretTool");
+        ToolConfig landmineConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.LandmineTool");
+        ToolConfig barrelConfig = structureTools.toolConfigs
+                .get("com.csse3200.game.components.structures.tools.ExplosiveBarrelTool");
 
         // Melee Tree
         UpgradeNode swordNode = new UpgradeNode(katanaConfig);
@@ -144,12 +150,14 @@ public class UpgradeDisplay extends Window {
         UpgradeNode slingShotNode = new UpgradeNode(slingshotConfig);
         UpgradeNode rocketNode = new UpgradeNode(rocketConfig);
         UpgradeNode boomerangNode = new UpgradeNode(boomerangConfig);
+        UpgradeNode grenadeNode = new UpgradeNode(grenadeConfig);
         UpgradeNode multiMissileNode = new UpgradeNode(multiMissile);
         UpgradeNode bluemerangNode = new UpgradeNode(bluemerang);
+        boomerangNode.addChild(grenadeNode);
         boomerangNode.addChild(slingShotNode);
-        boomerangNode.addChild(bluemerangNode);
-        slingShotNode.addChild(rocketNode);
-        slingShotNode.addChild(multiMissileNode);
+        slingShotNode.addChild(bluemerangNode);
+        grenadeNode.addChild(multiMissileNode);
+        grenadeNode.addChild(rocketNode);
         trees.add(boomerangNode);
 
         // Build Tree
@@ -158,11 +166,17 @@ public class UpgradeDisplay extends Window {
         UpgradeNode gateNode = new UpgradeNode(gateConfig);
         UpgradeNode stoneNode = new UpgradeNode(stoneConfig);
         UpgradeNode turretNode = new UpgradeNode(turretConfig);
+        UpgradeNode advancedTurretNode = new UpgradeNode(advancedTurretConfig);
+        UpgradeNode landmineNode = new UpgradeNode(landmineConfig);
+        UpgradeNode barrelNode = new UpgradeNode(barrelConfig);
         buildRoot = new UpgradeNode(woodhammerConfig);
+        buildRoot.addChild(turretNode);
         buildRoot.addChild(dirtNode);
         dirtNode.addChild(gateNode);
         dirtNode.addChild(stoneNode);
-        buildRoot.addChild(turretNode);
+        turretNode.addChild(advancedTurretNode);
+        buildRoot.addChild(landmineNode);
+        landmineNode.addChild(barrelNode);
         trees.add(buildRoot);
     }
 
@@ -171,12 +185,11 @@ public class UpgradeDisplay extends Window {
      */
     private Table createTitleTable() {
         Table titleTable = new Table();
-        Label title = new Label("UPGRADE TREE", skin, "large");
-        title.setColor(Color.BLACK);
-        title.setFontScale(0.5F, 0.5F);
+        Label title = new Label("Upgrades", skin, "pixel_art");
+        title.setFontScale(2F, 2F);
         titleTable.add(title);
         titleTable.setPosition((getWidth() * getScaleX() / 2),
-                (float) (getHeight() * getScaleY() * 0.88));
+                (float) (getHeight() * getScaleY() * 0.86));
 
         return titleTable;
     }
@@ -189,16 +202,18 @@ public class UpgradeDisplay extends Window {
     private Group createUpgradeButtons() {
 
         Group group = new Group();
-
         buildTrees();
-
-        nodeXSpacing = (float) ((getWidth() * getScaleX()) / (trees.size() * 2.8)); // 2
+        nodeXSpacing = (float) ((getWidth() * getScaleX()) / (trees.size() * 2.5));
         nodeYSpacing = (getHeight() * getScaleY()) / 4;
+        float allocatedWidth = (getWidth() * getScaleX()) / (trees.size() * 1.2f);
+        float treeX ;
+        float startY;
 
         for (UpgradeNode treeRoot : trees) {
-            float treeX = (trees.indexOf(treeRoot) + 1) * getWidth() * getScaleX()
-                    / (trees.size() + 1) - nodeXSpacing / 6;
-            float startY = getHeight() - (getHeight() / 3);
+            int treeIndex = trees.indexOf(treeRoot);
+            treeX = (treeIndex + 0.75f) * allocatedWidth;
+            startY = getHeight() - (getHeight() / 3);
+
             createAndPositionNodes(treeRoot, treeX, startY, group, 0);
         }
 
@@ -592,7 +607,8 @@ public class UpgradeDisplay extends Window {
                 UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
                 if (stats.isWeaponUnlocked(node.getName())) {
                     InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
-                    playerInventory.placeInSlot(node.getWeaponType());
+                    WeaponConfig config = playerInventory.getConfigs().GetWeaponConfig(node.getWeaponType());
+                    playerInventory.replaceSlotWithWeapon(config.slotType, node.getWeaponType());
                     player.getEvents().trigger("updateHotbar");
                 }
             }

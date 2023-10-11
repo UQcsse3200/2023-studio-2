@@ -1,7 +1,6 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.audio.Sound;
-import com.csse3200.game.components.MiniDisplay.MiniScreenDisplay;
 import com.csse3200.game.entities.configs.SoundsConfig;
 import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.ServiceLocator;
@@ -21,6 +20,7 @@ public class SoundComponent extends Component {
     private final SoundsConfig soundsConfig;
     private final Map<String, Sound> sounds;
     private final Set<String> looping;
+    private static final String SOUND_DOES_NOT_EXIST = "Sound {} does not exist for entity {}";
 
     /**
      * Creates a new SoundComponent using the sounds specified in the soundsConfig file.
@@ -28,6 +28,19 @@ public class SoundComponent extends Component {
      */
     public SoundComponent(SoundsConfig soundsConfig) {
         this.soundsConfig = soundsConfig;
+        sounds = new HashMap<>();
+        looping = new HashSet<>();
+    }
+
+    /**
+     * Creates a new SoundComponent which contains the specified sound
+     *
+     * @param soundId - the id of the given sound
+     * @param soundPath - the path to locate the sound
+     */
+    public SoundComponent(String soundId, String soundPath) {
+        this.soundsConfig = new SoundsConfig();
+        this.soundsConfig.soundsMap.put(soundId, soundPath);
         sounds = new HashMap<>();
         looping = new HashSet<>();
     }
@@ -41,7 +54,7 @@ public class SoundComponent extends Component {
 
         // loads the sounds and stores them in a map for later access
         for (var entry : soundsConfig.soundsMap.entries()) {
-            logger.debug("Entity {} loading in sound {} with id {}", entity.toString(), entry.value, entry.key);
+            logger.debug("Entity {} loading in sound {} with id {}", entity, entry.value, entry.key);
 
             Sound sound = ServiceLocator.getResourceService().getAsset(entry.value, Sound.class);
 
@@ -64,12 +77,12 @@ public class SoundComponent extends Component {
      * @param soundName - the name of the sound to play as specified in the config file.
      */
     public void playSound(String soundName) {
-        logger.debug("Entity {} playing sound {}", entity.toString(), soundName);
+        logger.debug("Entity {} playing sound {}", entity, soundName);
 
         var sound = sounds.get(soundName);
 
         if (sound == null) {
-            logger.warn("Sound {} does not exist for entity {}", soundName, entity.toString());
+            logger.warn(SOUND_DOES_NOT_EXIST, soundName, entity);
             return;
         }
 
@@ -87,11 +100,11 @@ public class SoundComponent extends Component {
             return;
         }
 
-        logger.debug("Begin looping sound {} for entity {}", soundName, entity.toString());
+        logger.debug("Begin looping sound {} for entity {}", soundName, entity);
         var sound = sounds.get(soundName);
 
         if (sound == null) {
-            logger.warn("Sound {} does not exist for entity {}", soundName, entity.toString());
+            logger.warn(SOUND_DOES_NOT_EXIST, soundName, entity);
             return;
         }
 
@@ -106,11 +119,11 @@ public class SoundComponent extends Component {
      * @param soundName - the name of the sound to stop as specified in the config file.
      */
     public void stopSound(String soundName) {
-        logger.debug("Stop sound {} for entity {}", soundName, entity.toString());
+        logger.debug("Stop sound {} for entity {}", soundName, entity);
         var sound = sounds.get(soundName);
 
         if (sound == null) {
-            logger.warn("Sound {} does not exist for entity {}", soundName, entity.toString());
+            logger.warn(SOUND_DOES_NOT_EXIST, soundName, entity);
             return;
         }
 

@@ -2,19 +2,12 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.GridPoint2;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.ProximityControllerComponent;
-import com.csse3200.game.components.SaveableComponent;
-import com.csse3200.game.components.SoundComponent;
-import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.*;
 import com.csse3200.game.components.player.*;
 import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
@@ -96,7 +89,8 @@ public class PlayerFactory {
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                         .addComponent(new PlayerActions())
-                        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
+                        .addComponent(new CombatStatsComponent(config.maxHealth, config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
+                        .addComponent(new EnvironmentStatsComponent())
                         .addComponent(new InventoryComponent(weaponConfigs))
                         .addComponent(inputComponent)
                         .addComponent(new PlayerStatsDisplay(config))
@@ -114,11 +108,13 @@ public class PlayerFactory {
 
         player.addComponent(new SaveableComponent<>(p -> {
                 PlayerConfig playerConfig = config;
-                playerConfig.position = new GridPoint2((int) player.getPosition().x, (int)player.getPosition().y);
-                playerConfig.health = player.getComponent(CombatStatsComponent.class).getHealth();
+                //TODO: FIX LOADING POSITION
+                playerConfig.position = p.getGridPosition();
+                playerConfig.health = p.getComponent(CombatStatsComponent.class).getHealth();
+                playerConfig.maxHealth = p.getComponent(CombatStatsComponent.class).getMaxHealth();
                 return playerConfig;
             }, PlayerConfig.class));
-
+        player.getComponent(CombatStatsComponent.class).setHealth(config.health);
         PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
         player.getComponent(ColliderComponent.class).setDensity(1.5f);
         animator.startAnimation("Character_StandDown");

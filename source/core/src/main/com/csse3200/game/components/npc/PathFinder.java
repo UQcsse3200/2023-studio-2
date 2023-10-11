@@ -2,35 +2,51 @@ package com.csse3200.game.components.npc;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.*;
 
+/**
+ * Pathfinder class that uses the A * algorithm to determine the closest path from a starting grid location to the
+ * target gird location.
+ */
 public class PathFinder {
+    static final Set<Node> closed = new HashSet<>();
 
+    /**
+     * Helper fucntion to return the node set of closed path. Used for the pathfinder test
+     * @return closed
+     */
+    public static Set<Node> getClosedSet() {
+        return closed;
+    }
+
+    /**
+     * Returns a list of grid points which is the path closest from start to the target location
+     * @param start
+     * @param target
+     * @return List of grids
+     */
     public static List<GridPoint2> findPath(GridPoint2 start, GridPoint2 target) {
         final GameArea map = ServiceLocator.getGameArea();
         final PriorityQueue<Node> open = new PriorityQueue<Node>();
-        final Set<Node> closed = new HashSet<>();
         final Node[][] nodeMap = new Node[map.getTerrain().getMapBounds(0).x][map.getTerrain().getMapBounds(0).y];
         Node current;
 
+        // Add every node to node map if:
+        // - No entity on it
+        // - Entity is on it, but it is a bullet, enemy or the target entity
         for (int x = 0; x < nodeMap.length; x++) {
             for (int y = 0; y < nodeMap[0].length; y++) {
                 int heuristic = Math.abs(x - target.x) + Math.abs(y - target.y);
                 Node node = new Node(10, heuristic, x, y);
 
-                if (!(map.getAreaEntities().get(new GridPoint2(x, y)) == null)) {
-                    if (map.getAreaEntities().get(new GridPoint2(x, y)).getComponent(HitboxComponent.class) != null) {
-                        if (map.getAreaEntities().get(new GridPoint2(x, y)).getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.ENEMY_RANGE ||
-                                map.getAreaEntities().get(new GridPoint2(x, y)).getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.ENEMY_MELEE) {
-                            closed.add(node);
-                        }
-                    }
+                Entity entityOnGridPoint = map.getAreaEntities().get(new GridPoint2(x, y));
+                // if there is an entity on the grid
+                if (entityOnGridPoint != null) {
+                    closed.add(node);
                 }
-
                 nodeMap[x][y] = node;
             }
         }
@@ -59,7 +75,7 @@ public class PathFinder {
 
                         int calculatedCost = neighbor.heuristic + neighbor.moveCost + current.totalCost;
 
-                        if (calculatedCost < neighbor.totalCost || open.contains(neighbor)) {
+                        if (calculatedCost < neighbor.totalCost || !open.contains(neighbor)) {
                             neighbor.totalCost = calculatedCost;
                             neighbor.parent = current;
 
@@ -71,7 +87,6 @@ public class PathFinder {
                 }
             }
         } while(!open.isEmpty());
-
         return List.of(start);
     }
 
@@ -85,7 +100,7 @@ public class PathFinder {
         return path;
     }
 
-    private static class Node implements Comparable<Node> {
+    public static class Node implements Comparable<Node> {
         private final int moveCost;
         private final int heuristic;
         private final int gridX;

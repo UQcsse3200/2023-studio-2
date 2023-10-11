@@ -12,12 +12,15 @@ import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.services.ServiceLocator;
 
+/**
+ * Tool used to place extractors.
+ */
 public class ExtractorTool extends ReplacementTool {
     public ExtractorTool(ObjectMap<String, Integer> cost) {
-        super(cost);
+        super(cost, true);
     }
 
-    Resource produces = Resource.Durasteel; // TODO make this depend on the position
+    Resource produces = Resource.Durasteel;
 
     /**
      * Creates a new extractor producing the resource of the location it is being placed, and increments the total amount of
@@ -41,14 +44,17 @@ public class ExtractorTool extends ReplacementTool {
      * @return whether the extractor can be placed
      */
     @Override
-    public boolean isPositionValid(GridPoint2 position, PlaceableEntity structure) {
-        PlaceableEntity existingStructure = ServiceLocator.getStructurePlacementService().getStructureAt(position);
-        if (existingStructure == null) {
-            return false;
+    public ToolResponse isPositionValid(GridPoint2 position) {
+        var validity = super.isPositionValid(position);
+
+        if (!validity.isValid()) {
+            return validity;
         }
+
+        var existingStructure = structurePlacementService.getStructureAt(position);
         FissureComponent productionComponent = existingStructure.getComponent(FissureComponent.class);
         if (productionComponent == null) {
-            return false;
+            return new ToolResponse(PlacementValidity.INVALID_POSITION, "Must be placed on a fissure");
         }
 
         Resource resource = productionComponent.getProduces();
@@ -63,7 +69,8 @@ public class ExtractorTool extends ReplacementTool {
             count = 0;
         }
 
-        return (int) max > (int) count;
+        return (int) max > (int) count ? ToolResponse.valid() :
+                new ToolResponse(PlacementValidity.INVALID_POSITION, "Extractor limit exceeded");
     }
 }
 

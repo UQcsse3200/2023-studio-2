@@ -39,8 +39,10 @@ public class ShipUpgradesFactoryTest {
         ServiceLocator.registerPhysicsService(new PhysicsService());
         ResourceService resourceService = new ResourceService();
         ServiceLocator.registerResourceService(resourceService);
-        String[] shipUpgradesTextures = {"images/ship/Ship.png"};
+        String[] shipUpgradesTextures = {"images/powerups/health_potion.png"};
+        String[] fuelUpgradesTextures = {"images/powerups/speed_potion.png"};
         resourceService.loadTextures(shipUpgradesTextures);
+        resourceService.loadTextures(fuelUpgradesTextures);
         resourceService.loadAll();
     }
 
@@ -52,11 +54,13 @@ public class ShipUpgradesFactoryTest {
     @Test
     public void testCreateUpgrade() {
         Entity shipUpgrade = ShipUpgradesFactory.createHealthUpgrade();
+        Entity fuelUpgrade = ShipUpgradesFactory.createFuelUpgrade();
         ShipUpgradesType type = shipUpgrade.getComponent(ShipUpgradesComponent.class).getType();
-
+        ShipUpgradesType fuel = fuelUpgrade.getComponent(ShipUpgradesComponent.class).getType();
         assertNotNull(shipUpgrade);
 
         assertEquals(type, ShipUpgradesType.HEALTH_UPGRADE);
+        assertEquals(fuel, ShipUpgradesType.FUEL_UPGRADE);
     }
 
 }

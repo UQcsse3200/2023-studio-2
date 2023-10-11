@@ -1,11 +1,14 @@
 package com.csse3200.game.services;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.screens.PlanetScreen;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Responsible for travel between planets and stored the number of planets remaining
  */
 public class PlanetTravel {
+    private static final Logger logger = LoggerFactory.getLogger(PlanetTravel.class);
     /**
      * The variable to set screen for the minigame
      */
@@ -31,29 +34,25 @@ public class PlanetTravel {
      * Travel from the current planet to the next planet instantly.
      */
     public void beginInstantTravel() {
-        PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData(
-                "currentPlanet");
-        PlanetScreen nextPlanet;
-        if (currentPlanet == null) {
-            nextPlanet = new PlanetScreen(game);
+        String nextPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
+        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
+        if (!nextPlanet.equals("infernal_challenge")) {
+            //TODO: MAKE SHOW WIN SCREEN?
+            PlanetScreen planet = new PlanetScreen(game, nextPlanet);
+            ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", planet.getNextPlanetName());
+            game.setScreen(planet);
         } else {
-            nextPlanet = currentPlanet.getNextPlanet();
-            ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
+            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+            logger.info("FINISHED GAME! - Returning to main menu");
         }
-
-        //game.setScreen(nextPlanet);
-
-        // Temporary fix for space obstacle minigame to transition to a new planet
-        game.setScreen(nextPlanet);
-
     }
 
     /**
      * Travel back to the currently loaded planet.
      */
     public void returnToCurrent() {
-        PlanetScreen currentPlanet = (PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
-        game.setScreen(currentPlanet);
+        String currentPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
+        game.setScreen(new PlanetScreen(game, currentPlanet));
     }
 
     /**

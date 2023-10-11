@@ -21,15 +21,17 @@ import java.util.ArrayList;
 public class ShopArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ShopArea.class);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(7, 10);
-    private static final float STATIC_ASTEROID_SIZE = 1f;
+    private static final float STATIC_ASTEROID_SIZE = 1.17f;
     private static final ShipUpgradesConfig shipUpgradesConfig = new ShipUpgradesConfig();
     private final ShipUpgradesFactory shipUpgradesFactory = new ShipUpgradesFactory();
+    private int health;
+    private int fuel;
 
     private static final String[] spaceMiniGameTextures = {
             "images/minigame/SpaceMiniGameBackground.png",
-            "images/stone.png",
-            "images/ship/Ship.png",
-            "images/ship/Ship.png"
+            "images/structure-icons/stone_wall.png",
+            "images/powerups/health_potion.png",
+            "images/powerups/speed_potion.png"
     };
     private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
     private final TerrainFactory terrainFactory;
@@ -43,6 +45,9 @@ public class ShopArea extends GameArea {
         super();
         this.terrainFactory = terrainFactory;
         this.targetables = new ArrayList<>();
+        //By default user has one for each bottle
+        this.health = 1;
+        this.fuel = 1;
     }
 
     /**
@@ -61,10 +66,18 @@ public class ShopArea extends GameArea {
      * Spawns ShipUpgrades in the map at the position specified
      */
     private void spawnShipUpgrades() {
-
-        Entity shipUpgrade = ShipUpgradesFactory.createHealthUpgrade();
-        spawnEntityAt(shipUpgrade, new GridPoint2(8, 12), true, true);
+        for (int i = 0; i < this.health; i++) {
+            Entity shipUpgrade = ShipUpgradesFactory.createHealthUpgrade();
+            spawnEntityAt(shipUpgrade, new GridPoint2(8, 12), true, true);
+        }
+        for (int i = 0; i < this.health; i++) {
+            Entity speedUpgrade = ShipUpgradesFactory.createFuelUpgrade();
+            spawnEntityAt(speedUpgrade, new GridPoint2(7, 9), true, true);
+        }
     }
+
+    private void reduceHealth() { this.health -= 1;}
+    private void reduceFuel() {this.fuel -= 1;}
 
     /**
      * Recursively calls n number of stones starting from position to the right
@@ -168,4 +181,5 @@ public class ShopArea extends GameArea {
         super.dispose();
         this.unloadAssets();
     }
+
 }

@@ -6,6 +6,7 @@
     "healthPowerup": "sounds/PlayerHealthRecharge.wav",
     "boostPowerup": "sounds/playerBoostRecharge.wav",
     "upgradeTree": "sounds/upgradeTreeTap.wav",
-    "upgradeWeapon": "sounds/upgradeWeapon.wav"
+    "upgradeWeapon": "sounds/upgradeWeapon.wav",
+    "alert": "sounds/alert.wav"
   }
 }

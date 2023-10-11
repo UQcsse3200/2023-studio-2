@@ -134,15 +134,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 }
                 return true;
             }
-            case Keys.NUM_1 -> {
+            case Keys.M -> {
                 triggerInventoryEvent("melee");
                 return true;
             }
-            case Keys.NUM_2 -> {
+            case Keys.R -> {
                 triggerInventoryEvent("ranged");
                 return true;
             }
-            case Keys.NUM_3 -> {
+            case Keys.H -> {
                 triggerInventoryEvent("building");
                 return true;
             }

@@ -32,7 +32,6 @@ public abstract class Tool {
      *
      * @param player - the player interacting with the tool.
      * @param position - the position being interacted with.
-     * @return whether the tool was successfully interacted with.
      */
     public void interact(Entity player, GridPoint2 position) {
         var validity = canInteract(player, position);
@@ -51,8 +50,19 @@ public abstract class Tool {
         performInteraction(player, position);
     }
 
+    /**
+     * Peforms the tools interaction at the given position.
+     * @param player - the player using the tool.
+     * @param position - the position to use the tool.
+     */
     protected abstract void performInteraction(Entity player, GridPoint2 position);
 
+    /**
+     * Returns whether the player can interact at the given position.
+     * @param player - the player attempting to interact.
+     * @param position - the position to interact.
+     * @return whether the player can interact at the position.
+     */
     protected abstract ToolResponse canInteract(Entity player, GridPoint2 position);
 
     /**

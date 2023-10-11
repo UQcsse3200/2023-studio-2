@@ -1,7 +1,6 @@
 package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.structures.CostComponent;
 import com.csse3200.game.entities.Entity;
@@ -29,12 +28,10 @@ public abstract class PlacementTool extends Tool {
     }
 
     /**
-     * Attempts to place a structure at the specified position.
-     * If the position is already occupied or the player has insufficient resources, does nothing.
+     * Places the structure returned by createStructure() at the given position.
      *
      * @param player - the player interacting with the tool.
      * @param position - the position to place the structure.
-     * @return whether the structure was successfully placed.
      */
     @Override
     protected void performInteraction(Entity player, GridPoint2 position) {
@@ -44,6 +41,14 @@ public abstract class PlacementTool extends Tool {
         ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position, false, false);
     }
 
+    /**
+     * Returns ToolResponse.valid() if the position is not occupied and the player
+     * has insufficient resources, otherwise returns an invalid response.
+     *
+     * @param player - the player attempting to interact.
+     * @param position - the position to interact.
+     * @return whether the position can be interacted with.
+     */
     @Override
     protected ToolResponse canInteract(Entity player, GridPoint2 position) {
         var positionValidity = isPositionValid(position);
@@ -59,6 +64,12 @@ public abstract class PlacementTool extends Tool {
         return ToolResponse.valid();
     }
 
+    /**
+     * Snaps the position to the tools individual grid and then calls the parents implementation.
+     *
+     * @param player - the player interacting with the tool.
+     * @param position - the position being interacted with.
+     */
     @Override
     public void interact(Entity player, GridPoint2 position) {
         position = getSnapPosition(position);
@@ -66,6 +77,12 @@ public abstract class PlacementTool extends Tool {
         super.interact(player, position);
     }
 
+    /**
+     * Snaps the position to the tools individual grid.
+     *
+     * @param position - the position unsnapped.
+     * @return the snapped position.
+     */
     public GridPoint2 getSnapPosition(GridPoint2 position) {
         var diffX = position.x % snapX;
         var diffY = position.y % snapY;

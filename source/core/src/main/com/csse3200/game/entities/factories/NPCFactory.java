@@ -295,14 +295,18 @@ public class NPCFactory {
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsMovementComponent());
-    Jail.addComponent(new InteractableComponent(entity -> {Jail.dispose();
+    Jail.addComponent(new InteractableComponent(entity -> {
+      // To previously make the jail dissapear, we were disposing of it, now we simply make it dissapear by scaling it
+      // to zero. See https://github.com/UQcsse3200/2023-studio-2/issues/473
+      Jail.setScale(0.0f, 0.0f);
+
       String[] storytext= {"NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!"
               ,"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected."
               ,"Emily: We can handle it. \nLead the way!"};
       String[] titletext= {"","",""};
-      Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);},1f));
+      Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);}
+            ,1f));
     Jail.scaleHeight(1.7f);
-    animator.startAnimation("jail_close");
     return Jail;
   }
   public static Entity createFire() {

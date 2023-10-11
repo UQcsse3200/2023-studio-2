@@ -71,6 +71,11 @@ public class CompanionWeaponTargetComponent extends Component {
         }
         y_rotate_offset += y_rotation_direction;
     }
+
+    /**
+     *
+     * @return
+     */
     private Vector2 handleDeathPotion() {
         List<Entity> enemies = EnemyFactory.getEnemyList();
         if (!inCombat) {
@@ -97,6 +102,11 @@ public class CompanionWeaponTargetComponent extends Component {
         return inCombat ? enemies.get(currentTargetIndex).getPosition() : trackPrev;
     }
 
+    /**
+     * Get the first live enemy available. Then, once that one is dead, it finds a new target.
+     * @param enemies - list of enemies on the map
+     * @return - the enemy that it is currently targeting
+     */
     private Entity getNextLiveEnemy(List<Entity> enemies) {
         int numEnemies = enemies.size();
         int originalTargetIndex = currentTargetIndex;

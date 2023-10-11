@@ -92,9 +92,11 @@ public class InitialScreenDisplay extends UIComponent {
 
         // The initial text you want to display
         stories = new ArrayList<>();
-        stories.add("Earth has become a desolate wasteland ravaged by a deadly virus.\n" +
-                "Last hope lies among the stars. You are one of the few survivors.");
-        stories.add("This is the second text you want to display when 'Next' is pressed.");
+        stories.add( "Amidst Earth's ruins, you stand, humanity's last hope in the cosmic expanse." );
+        stories.add("Meet Dr. Emily Carter, a fellow Scientist who remains untouched by the virus ");
+        stories.add("With courage intertwined, you both embrace the unknown, a symbiotic bond on this journey.");
+        stories.add("Behold the spacecraft provided by Astro , a sentinel of possibility, ready to breach the celestial unknown.");
+        stories.add("Step into destiny's vessel, as you and Emily set course for the uncharted cosmic domain.");
 
         String story = stories.get(currentStoryIndex);
 
@@ -117,6 +119,9 @@ public class InitialScreenDisplay extends UIComponent {
         InitialScreenImages = new ArrayList<>();
         InitialScreenImages.add("images/menu/InitialScreenImage.png");
         InitialScreenImages.add("images/menu/InitialScreenImage-2.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-3.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-4.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-5.png");
 
         RepeatAction repeatAction = Actions.forever(
                 Actions.sequence(
@@ -221,7 +226,7 @@ public class InitialScreenDisplay extends UIComponent {
     }
 
     int start = 0;
-    int end = 1; // Change this to the number of images you have - 1
+    int end = 4; // Change this to the number of images you have - 1
 
     private void nextScene() {
         if (start < end) {

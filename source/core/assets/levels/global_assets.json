@@ -57,6 +57,7 @@
     "sounds/footStepsInTheForestGround.wav",
     "sounds/PlayerHealthRecharge.wav",
     "sounds/playerBoostRecharge.wav",
+    "sounds/playerDead.wav",
     "sounds/upgradeTreeTap.wav",
     "sounds/upgradeWeapon.wav",
     "sounds/enemyDeath.wav",

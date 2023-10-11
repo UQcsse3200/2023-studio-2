@@ -57,8 +57,6 @@ public class CompanionDeathScreen extends ScreenAdapter {
     public void dispose() {
         renderer.dispose();
         unloadAssets();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getEntityService().dispose();
         ServiceLocator.clear();
     }
 

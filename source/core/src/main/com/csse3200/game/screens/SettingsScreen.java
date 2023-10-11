@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.mainmenu.MainMenuStarBackground;
+import com.csse3200.game.components.backgrounds.StarBackground;
 import com.csse3200.game.components.settingsmenu.SettingsMenuDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -116,6 +116,6 @@ public class SettingsScreen extends ScreenAdapter {
         Entity ui = new Entity();
         ui.addComponent(new SettingsMenuDisplay(game)).addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(ui);
-        stage.addActor(new MainMenuStarBackground());
+        stage.addActor(new StarBackground(20));
     }
 }

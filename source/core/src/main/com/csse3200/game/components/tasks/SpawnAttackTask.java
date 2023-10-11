@@ -6,6 +6,7 @@ import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyName;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.services.GameTime;
@@ -14,6 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
+
+import static com.csse3200.game.entities.enemies.EnemyName.redGhost;
 
 /**
  * Waits around for a set amount of time and then spawns two entities. Will then spawn new entities once
@@ -126,8 +129,8 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
     }
 
     if (entities.isEmpty()) {
-      Entity enemyOne = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
-      Entity enemyTwo = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
+      Entity enemyOne = EnemyFactory.createEnemy(redGhost);
+      Entity enemyTwo = EnemyFactory.createEnemy(redGhost);
 
       System.out.println("adding enemies");
       entities.add(enemyOne);
@@ -145,7 +148,7 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
       spawnTask.start(entities.get(0), entities.get(1));
     } else if (entities.size() == 1) {
       System.out.println("respawning");
-      Entity enemyOne = EnemyFactory.createEnemy(EnemyType.Ranged, EnemyBehaviour.PTE);
+      Entity enemyOne = EnemyFactory.createEnemy(redGhost);
 
       entities.add(enemyOne);
 

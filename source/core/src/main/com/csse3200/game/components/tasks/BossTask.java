@@ -67,10 +67,10 @@ public class BossTask extends DefaultTask implements PriorityTask {
     movementTask.create(owner);
     float attackRadius = 10;
     // Boss Type
-    if (this.bossType == EnemyType.BossMelee) {
+    if (this.bossType == EnemyType.Melee) {
       specialAttackTask = new SpecialAttackTask(attackRadius);
       specialAttackTask.create(owner);
-    } else if (this.bossType == EnemyType.BossRanged) {
+    } else if (this.bossType == EnemyType.Ranged) {
       // Shoots spray periodically
       waitTask = new WaitTask(5);
       waitTask.create(owner);
@@ -107,7 +107,7 @@ public class BossTask extends DefaultTask implements PriorityTask {
       this.owner.getEntity().getEvents().trigger("standing");
     }
     // Boss Melee
-    if (this.bossType == EnemyType.BossMelee) {
+    if (this.bossType == EnemyType.Melee) {
       // Check if health is below threshold
       if ((currentHealth / maxHealth) * 100 <= 50.0f && !unleashed) {
         System.out.println("Special Attack Incoming");
@@ -120,7 +120,7 @@ public class BossTask extends DefaultTask implements PriorityTask {
       }
     }
     // Boss Ranged
-    if (this.bossType == EnemyType.BossRanged) {
+    if (this.bossType == EnemyType.Ranged) {
       if (waitTask.getStatus() == Status.ACTIVE) {
         waitTask.update();
       }

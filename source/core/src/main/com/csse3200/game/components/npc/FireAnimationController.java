@@ -41,6 +41,12 @@ public class FireAnimationController extends Component {
     }
 
     @Override
+    public void dispose() {
+        super.dispose();
+        assetManager.dispose();
+    }
+
+    @Override
     public void update() {
         super.update();
 

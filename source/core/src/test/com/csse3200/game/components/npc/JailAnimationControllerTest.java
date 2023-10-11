@@ -37,7 +37,7 @@ class JailAnimationControllerTest {
 
         when(assetManager.get("images/Jail/jail.atlas")).thenReturn(atlas);
 
-        controller = new JailAnimationController(assetManager);
+        controller = new JailAnimationController(new AssetManager());
 
         controller.entity = mock(Entity.class);
 

@@ -292,7 +292,6 @@ public class NPCFactory {
                     .addComponent(animator)
                     .addComponent(new JailAnimationController(new AssetManager()))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsMovementComponent());
     Jail.addComponent(new InteractableComponent(entity -> {

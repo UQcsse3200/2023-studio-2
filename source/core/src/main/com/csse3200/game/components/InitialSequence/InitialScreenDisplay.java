@@ -40,6 +40,9 @@ public class InitialScreenDisplay extends UIComponent {
     private Image backgroundImage;
     private ArrayList<String> stories;
     private int currentStoryIndex = 0;
+    private boolean textAnimationInProgress = false;  // Flag to track text animation progress
+    private boolean next=false;
+    private boolean prev=false;
 
     /**
      * Creates a new instance of the InitialScreenDisplay.
@@ -93,9 +96,9 @@ public class InitialScreenDisplay extends UIComponent {
         // The initial text you want to display
         stories = new ArrayList<>();
         stories.add( "Amidst Earth's ruins, you stand, humanity's last hope in the cosmic expanse." );
-        stories.add("Meet Dr. Emily Carter, a fellow Scientist who remains untouched by the virus ");
+        stories.add("Meet Dr. Emily Carter, a fellow Scientist who remains untouched by the virus.");
         stories.add("With courage intertwined, you both embrace the unknown, a symbiotic bond on this journey.");
-        stories.add("Behold the spacecraft provided by Astro , a sentinel of possibility, ready to breach the celestial unknown.");
+        stories.add("Behold Astro's spacecraft, a sentinel of possibility, ready to explore the celestial unknown.");
         stories.add("Step into destiny's vessel, as you and Emily set course for the uncharted cosmic domain.");
 
         String story = stories.get(currentStoryIndex);
@@ -155,21 +158,25 @@ public class InitialScreenDisplay extends UIComponent {
         ImageButton skipBtn = bothButtons.draw(skipTexture, skipTextureHover);
 
         // Attach listeners to navigation buttons
-        nextBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Next button clicked");
-                        entity.getEvents().trigger("next");
-                    }
-                });
+            nextBtn.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                            logger.debug("Next button clicked");
+                            entity.getEvents().trigger("next");
+                        }
+
+                    });
+
+
+
 
         prevBtn.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Previous button clicked");
-                        entity.getEvents().trigger("previous");
+                      entity.getEvents().trigger("previous");
                     }
                 });
         skipBtn.addListener(
@@ -217,6 +224,11 @@ public class InitialScreenDisplay extends UIComponent {
                     char currentChar = text.charAt(charIndex);
                     label.setText(label.getText().toString() + currentChar);
                     charIndex++;
+                    if (charIndex == text.length()-1) {
+                        next = true;
+                        prev = true;
+                        textAnimationInProgress = false;  // Animation complete, reset the flag
+                    }
                 } else {
                     // Stop the Timer when all characters are printed
                     this.cancel();
@@ -224,39 +236,46 @@ public class InitialScreenDisplay extends UIComponent {
             }
         }, initialDelay, speed, text.length() - 1);
     }
-
     int start = 0;
     int end = 4; // Change this to the number of images you have - 1
 
     private void nextScene() {
-        if (start < end) {
-            start += 1;
-            currentStoryIndex += 1;
-            if (currentStoryIndex < stories.size()) {
-                String newStory = stories.get(currentStoryIndex);
-                storyLabel.clearActions();
-                storyLabel.setText("");
-                printTextLetterByLetter(newStory, storyLabel, 0.035f, 0.5f);
+        if (next && !textAnimationInProgress) {
+            if (start < end) {
+                start += 1;
+                currentStoryIndex += 1;
+                if (currentStoryIndex < stories.size()) {
+                    textAnimationInProgress = true;  // Set the flag to indicate text animation is in progress
+                    storyLabel.clearActions();
+                    storyLabel.setText("");
+                    String newStory = stories.get(currentStoryIndex);
+                    printTextLetterByLetter(newStory, storyLabel, 0.035f, 0.5f);
+                }
+                Texture newImageTexture = new Texture(Gdx.files.internal(InitialScreenImages.get(start)));
+                backgroundImage.setDrawable(new TextureRegionDrawable(newImageTexture));
+            } else {
+                new PlanetTravel(game).returnToCurrent();
             }
-            Texture newImageTexture = new Texture(Gdx.files.internal(InitialScreenImages.get(start)));
-            backgroundImage.setDrawable(new TextureRegionDrawable(newImageTexture));
-        } else {
-            new PlanetTravel(game).returnToCurrent();
         }
     }
 
+
+
     private void prevScene() {
-        if (start > 0) {
-            start -= 1;
-            currentStoryIndex -= 1;
-            if (currentStoryIndex >= 0) {
-                String prevStory = stories.get(currentStoryIndex);
-                storyLabel.clearActions();
-                storyLabel.setText("");
-                printTextLetterByLetter(prevStory, storyLabel, 0.035f, 0.5f);
+        if (prev && !textAnimationInProgress) {
+            if (start > 0) {
+                start -= 1;
+                currentStoryIndex -= 1;
+                if (currentStoryIndex >= 0) {
+                    textAnimationInProgress = true;  // Set the flag to indicate text animation is in progress
+                    storyLabel.clearActions();
+                    storyLabel.setText("");
+                    String prevStory = stories.get(currentStoryIndex);
+                    printTextLetterByLetter(prevStory, storyLabel, 0.035f, 0.5f);
+                }
+                Texture prevImageTexture = new Texture(Gdx.files.internal(InitialScreenImages.get(start)));
+                backgroundImage.setDrawable(new TextureRegionDrawable(prevImageTexture));
             }
-            Texture prevImageTexture = new Texture(Gdx.files.internal(InitialScreenImages.get(start)));
-            backgroundImage.setDrawable(new TextureRegionDrawable(prevImageTexture));
         }
     }
 

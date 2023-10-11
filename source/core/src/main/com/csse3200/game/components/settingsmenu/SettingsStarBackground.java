@@ -29,7 +29,7 @@ public class SettingsStarBackground extends Actor {
     /**
      * The number of star sprites in the background.
      */
-    private int numOfSprites = 15;
+    private int numOfSprites = 30;
 
     /**
      * Array to store the time passed for each sprite's animation.

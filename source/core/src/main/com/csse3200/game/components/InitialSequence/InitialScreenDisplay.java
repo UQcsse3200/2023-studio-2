@@ -1,5 +1,7 @@
 package com.csse3200.game.components.InitialSequence;
-
+/**
+ * The package containing the user interface components for the initial story sequence.
+ */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -65,6 +67,10 @@ public class InitialScreenDisplay extends UIComponent {
         entity.getEvents().addListener("skip", this::onSkip);
     }
 
+    /**
+     * Adds UI elements to the stage.
+     * Loads background image, animated planet, and sets up the initial text and buttons.
+     */
     private void addUIElements() {
         // Load the background starfield image.
         background =
@@ -212,7 +218,14 @@ public class InitialScreenDisplay extends UIComponent {
         // Add the stack to the stage
         stage.addActor(stack);
     }
-
+    /**
+     * Prints text letter by letter with a specified speed and initial delay.
+     *
+     * @param text         The text to print.
+     * @param label        The label to display the text.
+     * @param speed        The speed at which to print the text.
+     * @param initialDelay The initial delay before starting the printing.
+     */
     private void printTextLetterByLetter(final String text, final Label label, final float speed, final float initialDelay) {
         label.setText(""); // Clear the label text initially
         Timer.schedule(new Timer.Task() {
@@ -239,6 +252,10 @@ public class InitialScreenDisplay extends UIComponent {
     int start = 0;
     int end = 4; // Change this to the number of images you have - 1
 
+    /**
+     * Moves to the next scene when triggered by a button click.
+     * Checks if animation is in progress and if it's possible to move to the next scene.
+     */
     private void nextScene() {
         if (next && !textAnimationInProgress) {
             if (start < end) {
@@ -259,7 +276,10 @@ public class InitialScreenDisplay extends UIComponent {
         }
     }
 
-
+    /**
+     * Moves to the previous scene when triggered by a button click.
+     * Checks if animation is in progress and if it's possible to move to the previous scene.
+     */
 
     private void prevScene() {
         if (prev && !textAnimationInProgress) {
@@ -278,7 +298,9 @@ public class InitialScreenDisplay extends UIComponent {
             }
         }
     }
-
+    /**
+     * Skips to the game by initiating the planet travel.
+     */
     private void onSkip() {
         logger.info("Skipping to game");
         new PlanetTravel(game).returnToCurrent();

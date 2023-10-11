@@ -29,7 +29,7 @@ public class LoadUtils {
      * @param paths List of paths to join together
      * @return String of all the path strings joined by a path seperator
      */
-    public static String joinPath(String... paths) {
+    public static String joinPath(List<String> paths) {
         StringJoiner stringJoiner = new StringJoiner(File.separator);
         for (String part: paths) {
             stringJoiner.add(part);
@@ -37,21 +37,8 @@ public class LoadUtils {
         return stringJoiner.toString();
     }
 
-    /**
-     * Overload of joinPath method with only 1 parameter.
-     * @param path Single path to return
-     * @return path parameter - nothing to join
-     */
-    public static String joinPath(String path) {
-        return path;
-    }
-
     public static boolean pathExists(String path) {
         return Gdx.files.local(path).exists();
-    }
-
-    public static boolean pathExists(String... paths) {
-        return pathExists(joinPath(paths));
     }
 
     /**
@@ -63,7 +50,7 @@ public class LoadUtils {
      */
     public static String getOptionalSavePath(List<String> roots, String path) throws InvalidConfigException {
         for (String root : roots) {
-            String filePath = joinPath(root, path);
+            String filePath = joinPath(List.of(root, path));
             if (pathExists(filePath)) {
                 return filePath;
             }
@@ -79,7 +66,7 @@ public class LoadUtils {
      * @return String file path of first valid file
      * @throws InvalidConfigException If no valid file is found.
      */
-    public static String getOptionalSavePath(List<String> roots, String... paths) throws InvalidConfigException {
+    public static String getOptionalSavePath(List<String> roots, List<String> paths) throws InvalidConfigException {
         return getOptionalSavePath(roots, joinPath(paths));
     }
 

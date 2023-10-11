@@ -30,9 +30,13 @@ class ConfigLoaderTest {
     private static GameAreaConfig fullGameAreaConfig;
     private static GameAreaConfig gameAreaConfig;
     private static GameConfig gameConfig;
+    private static GameConfig saveGameConfig;
     private static GameConfig expectedGameConfig;
+    private static GameConfig expectedSaveGameConfig;
     private static AssetsConfig assetsConfig;
+    private static AssetsConfig saveAssetsConfig;
     private static HashMap<String, Object> gameState;
+    private static HashMap<String, Object> saveGameState;
     private static PlayerConfig playerConfig;
     private static AreaEntityConfig areaEntityConfig;
     private static GameAreaConfig expectedGameArea;
@@ -40,6 +44,7 @@ class ConfigLoaderTest {
     private static MockedStatic<FileLoader> fileLoaderMock;
 
     private static final List<String> NAMES = List.of("earth", "mars", "pluto");
+    private static final List<String> SAVE_NAMES = List.of("earth", "mars");
 
     private GameAreaConfig setupGameArea() {
         GameAreaConfig gameArea = new GameAreaConfig();
@@ -79,16 +84,27 @@ class ConfigLoaderTest {
         expectedGameArea = setupGameArea();
         expectedGameArea.areaEntityConfig = setupEntities();
 
-        gameState = new HashMap<String, Object>();
-        assetsConfig = new AssetsConfig();
-
         gameConfig = new GameConfig();
         gameConfig.levelNames = NAMES;
+        gameState = new HashMap<>();
+        gameState.put("Test", new Object());
+        assetsConfig = new AssetsConfig();
+
+        saveGameConfig = new GameConfig();
+        saveGameConfig.levelNames = SAVE_NAMES;
+        saveGameState = new HashMap<>();
+        saveGameState.put("SavedTest", new Object());
+        saveAssetsConfig = new AssetsConfig();
 
         expectedGameConfig = new GameConfig();
         expectedGameConfig.levelNames = NAMES;
         expectedGameConfig.gameState = gameState;
         expectedGameConfig.assets = assetsConfig;
+
+        expectedSaveGameConfig = new GameConfig();
+        expectedSaveGameConfig.levelNames = SAVE_NAMES;
+        expectedSaveGameConfig.gameState = saveGameState;
+        expectedSaveGameConfig.assets = saveAssetsConfig;
     }
 
     @AfterEach
@@ -99,12 +115,24 @@ class ConfigLoaderTest {
 
     @Test
     void loadNewValidGame() throws InvalidConfigException {
-
+        utilsMock.when(() -> LoadUtils.pathExists(contains(SAVE_PATH))).thenReturn(false);
+        fileLoaderMock.when(() -> FileLoader.readClass(any(), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(null);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(GameConfig.class), contains(ROOT_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(gameConfig);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(HashMap.class), contains(ROOT_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(gameState);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(AssetsConfig.class), contains(ROOT_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(assetsConfig);
+        GameConfig loadedConfig = ConfigLoader.loadGame();
+        assertEquals(loadedConfig, expectedGameConfig);
     }
 
     @Test
-    void loadSavedGameFiles() {
-
+    void loadSavedGameFiles() throws InvalidConfigException {
+        utilsMock.when(() -> LoadUtils.pathExists(contains(SAVE_PATH))).thenReturn(true);
+        fileLoaderMock.when(() -> FileLoader.readClass(any(), contains(ROOT_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(null);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(GameConfig.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(saveGameConfig);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(HashMap.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(saveGameState);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(AssetsConfig.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(saveAssetsConfig);
+        GameConfig loadedConfig = ConfigLoader.loadGame();
+        assertEquals(loadedConfig, expectedSaveGameConfig);
     }
 
     @Test

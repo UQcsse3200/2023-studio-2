@@ -52,7 +52,7 @@ public class MapGameArea extends GameArea{
     public MapGameArea(String levelName, String game_area, TerrainFactory terrainFactory, GdxGame game) {
         try {
             mapConfig = ConfigLoader.loadMapDirectory(levelName, game_area);
-            logger.info("Successfully loaded map {}", joinPath(levelName, game_area));
+            logger.info("Successfully loaded map {}", joinPath(List.of(levelName, game_area)));
         } catch (InvalidConfigException exception) {
             logger.error("FAILED TO LOAD GAME IN CONSTRUCTOR - {}", exception.getMessage());
             validLoad = false;

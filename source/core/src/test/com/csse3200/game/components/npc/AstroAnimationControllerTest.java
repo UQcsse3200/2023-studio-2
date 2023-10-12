@@ -19,9 +19,6 @@ import static org.mockito.Mockito.*;
 class AstroAnimationControllerTest {
 
     @Mock
-    AssetManager assetManager;
-
-    @Mock
     AnimationRenderComponent animator;
 
     @Mock
@@ -33,9 +30,7 @@ class AstroAnimationControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        when(assetManager.get("images/npc/Astro_NPC.atlas")).thenReturn(atlas);
-
-        controller = new AstroAnimationController(assetManager);
+        controller = new AstroAnimationController();
 
         controller.entity = mock(Entity.class);
 
@@ -51,8 +46,6 @@ class AstroAnimationControllerTest {
         controller.create();
 
         verify(animator).startAnimation("Astro_Down");
-        verify(assetManager).load(anyString(), eq(TextureAtlas.class));
-        verify(assetManager).finishLoading();
     }
 
     /**

@@ -42,5 +42,4 @@ public class MainGameActions extends Component {
     ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", config.lives);
     new PlanetTravel(game).returnToCurrent();
   }
-
 }

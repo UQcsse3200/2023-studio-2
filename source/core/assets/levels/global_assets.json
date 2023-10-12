@@ -26,6 +26,10 @@
     "images/action-feedback/white_color_texture.png",
     "images/action-feedback/warning.png",
     "images/player/bar-fill.png",
+    "images/player/bar-fill2.png",
+    "images/player/bar-fill3.png",
+    "images/player/bar-fill4.png",
+    "images/player/bar-fill5.png",
     "images/player/planet-frame.png",
     "images/player/statbar.png",
     "images/player/widestatbar.png",
@@ -34,7 +38,6 @@
     "images/resources/nebulite.png",
     "images/resources/solstite.png",
     "images/resources/Cracked_Ground.png",
-    "images/player/bar-fill2.png",
     "images/player/hearts.png"
   ],
   "textureAtlasPaths": [

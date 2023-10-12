@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
@@ -34,6 +35,10 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label dodgeLabel;
   private Image healthBarFill;
   private Image dodgeBarFill;
+  private TextureRegionDrawable highHealth;
+  private TextureRegionDrawable medHealth;
+  private TextureRegionDrawable lowHealth;
+  private Image dodgeBarSecondaryFill;
   private Label maxLivesLabel;
   private TextureRegion hearts;
   private Image livesBarFill;
@@ -149,6 +154,9 @@ public class PlayerStatsDisplay extends UIComponent {
     Image healthBarFrame;
     healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
+    highHealth = new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
+    medHealth = new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset("images/player/bar-fill4.png", Texture.class));
+    lowHealth = new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset("images/player/bar-fill5.png", Texture.class));
 
     // Creates table to hold and set width of health bar
     Table healthBarTable = new Table();
@@ -269,6 +277,15 @@ public class PlayerStatsDisplay extends UIComponent {
     // Update the health bar width
     healthBarWidth = 280f * health / maxHealth;
     healthBarFill.setSize(healthBarWidth, 30f);
+
+    float healthPercent = (float) health/maxHealth;
+    if (healthPercent > 0.4) {
+      healthBarFill.setDrawable(highHealth);
+    } else if (healthPercent > 0.2) {
+      healthBarFill.setDrawable(medHealth);
+    } else {
+      healthBarFill.setDrawable(lowHealth);
+    }
   }
 
   /**
@@ -281,6 +298,10 @@ public class PlayerStatsDisplay extends UIComponent {
 
     // Update the dodge bar width
     dodgeBarFill.setSize(0, 30f);
+
+    // Update dodge bar colour
+    dodgeBarFill.setDrawable(new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset("images/player/bar-fill3.png", Texture.class)));
+
     // Create refill animation
     dodgeBarFill.addAction(
             Actions.sequence(
@@ -298,6 +319,10 @@ public class PlayerStatsDisplay extends UIComponent {
     // Update dodge label
     CharSequence dodgeText = "Ready!";
     dodgeLabel.setText(dodgeText);
+
+    // Update dodge bar colour
+    dodgeBarFill.setDrawable(new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset("images/player/bar-fill2.png", Texture.class)));
+
     // Update dodge bar width
     dodgeBarFill.setSize(dodgeBarWidth - 40f, 30f);
   }

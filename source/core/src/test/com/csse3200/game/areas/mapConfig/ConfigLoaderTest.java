@@ -20,6 +20,7 @@ import java.util.List;
 
 import static com.csse3200.game.utils.LoadUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -137,17 +138,52 @@ class ConfigLoaderTest {
 
     @Test
     void loadInvalidGameFile() {
-
+        utilsMock.when(() -> LoadUtils.pathExists(contains(SAVE_PATH))).thenReturn(false);
+        fileLoaderMock.when(() -> FileLoader.readClass(any(), contains(ROOT_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(null);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(GameConfig.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(null);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(HashMap.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(saveGameState);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(AssetsConfig.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(saveAssetsConfig);
+        assertThrows(InvalidConfigException.class, ConfigLoader::loadGame);
     }
 
     @Test
     void loadInvalidGamestateFile() {
-
+        utilsMock.when(() -> LoadUtils.pathExists(contains(SAVE_PATH))).thenReturn(false);
+        fileLoaderMock.when(() -> FileLoader.readClass(any(), contains(ROOT_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(null);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(GameConfig.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(saveGameConfig);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(HashMap.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(null);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(AssetsConfig.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(saveAssetsConfig);
+        assertThrows(InvalidConfigException.class, ConfigLoader::loadGame);
     }
 
     @Test
     void loadInvalidGameAssetsFile() {
+        utilsMock.when(() -> LoadUtils.pathExists(contains(SAVE_PATH))).thenReturn(true);
+        fileLoaderMock.when(() -> FileLoader.readClass(any(), contains(ROOT_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(null);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(GameConfig.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(saveGameConfig);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(HashMap.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(saveGameState);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(AssetsConfig.class), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(null);
+        assertThrows(InvalidConfigException.class, ConfigLoader::loadGame);
+    }
 
+    @Test
+    void loadSavedGameFileWhenExists() throws InvalidConfigException {
+        String save_game_file_path = joinPath(List.of(SAVE_PATH, GAME_FILE));
+        utilsMock.when(() -> LoadUtils.pathExists(contains(SAVE_PATH))).thenReturn(false);
+        utilsMock.when(() -> LoadUtils.pathExists(eq(save_game_file_path))).thenReturn(true);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(GameConfig.class), any(), eq(FileLoader.Location.LOCAL))).thenReturn(null);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(GameConfig.class), eq(save_game_file_path), eq(FileLoader.Location.LOCAL))).thenReturn(saveGameConfig);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(HashMap.class), any(), eq(FileLoader.Location.LOCAL))).thenReturn(null);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(HashMap.class), contains(ROOT_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(gameState);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(AssetsConfig.class), any(), eq(FileLoader.Location.LOCAL))).thenReturn(null);
+        fileLoaderMock.when(() -> FileLoader.readClass(eq(AssetsConfig.class), contains(ROOT_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(assetsConfig);
+
+        GameConfig expectedGame = new GameConfig();
+        expectedGame.levelNames = SAVE_NAMES;
+        expectedGame.gameState = gameState;
+        expectedGame.assets = assetsConfig;
+
+        assertEquals(expectedGame, ConfigLoader.loadGame());
     }
 
     @Test

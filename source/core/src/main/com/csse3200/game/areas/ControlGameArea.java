@@ -1,28 +1,25 @@
-// TutorialGameArea.java
+// ControlGameArea.java
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.terrain.TerrainFactory;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.EnvironmentStatsComponent;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.factories.PlayerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TutorialGameArea extends MapGameArea {
-    private static final Logger logger = LoggerFactory.getLogger(TutorialGameArea.class);
+public class ControlGameArea extends MapGameArea {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControlGameArea.class);
     private int stepIndex = 0;
     //private KeyboardInputTutorialStep[] tutorialSteps;
     // private TutorialDialogue tutorialDialogue;
 
 
-    public TutorialGameArea(TerrainFactory terrainFactory, GdxGame game) {
-        super("tutorial", "main_area", terrainFactory, game);
+    public ControlGameArea(TerrainFactory terrainFactory, GdxGame game) {
+        super("controls", "main_area", terrainFactory, game);
     }
 
 

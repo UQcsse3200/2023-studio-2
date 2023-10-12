@@ -2,9 +2,9 @@ package com.csse3200.game.components.npc;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.csse3200.game.components.npc.AstronautAnimationController;
-import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -14,9 +14,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for the {@link AstronautAnimationController} class.
+ * Unit tests for the {@link HellmanAnimationController} class.
  */
-class AstronautAnimationControllerTest {
+class HellmanAnimationControllerTest {
 
     @Mock
     AssetManager assetManager;
@@ -27,24 +27,23 @@ class AstronautAnimationControllerTest {
     @Mock
     TextureAtlas atlas;
 
-    AstronautAnimationController controller;
+    HellmanAnimationController controller;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        when(assetManager.get("images/npc/astronaut_npc.atlas")).thenReturn(atlas);
+        when(assetManager.get("images/npc/Hellman.atlas")).thenReturn(atlas);
 
-        controller = new AstronautAnimationController();
+        controller = new HellmanAnimationController();
 
         controller.entity = mock(Entity.class);
 
         when(controller.entity.getComponent(AnimationRenderComponent.class)).thenReturn(animator);
-
     }
 
     /**
-     * Test the {@link AstronautAnimationController#create()} method.
+     * Test the {@link HellmanAnimationController#create()} method.
      */
     @Test
     void testCreate() {
@@ -55,16 +54,15 @@ class AstronautAnimationControllerTest {
     }
 
     /**
-     * Test the {@link AstronautAnimationController#update()} method.
+     * Test the {@link HellmanAnimationController#update()} method.
      */
     @Test
     void testUpdate() {
         controller.animationDuration = 10f;
 
-        when(animator.getCurrentAnimation()).thenReturn("row-2-column-2");
+        when(animator.getCurrentAnimation()).thenReturn("row-1-column-12");
 
         controller.update();
+
     }
-
 }
-

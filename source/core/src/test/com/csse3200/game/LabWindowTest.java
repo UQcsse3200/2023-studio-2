@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.windows.LabWindow;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

@@ -52,17 +52,18 @@ public class EnvironmentStatsComponent extends Component {
     }
 
     // Damage over time effect, has a five second delay. Repeats every second.
-    // Effect checks whether or not you are in an applicable area
+    // Effect checks whether user is in an applicable area
     public void damage(CombatStatsComponent player) {
-
-        if (!getImmunity()) {
+        if (!player.getImmunity()) {
             Timer timer = new Timer();
             timer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
-                    player.addHealth(-1);
-                    if (player.getHealth() <= 0) {
-                        timer.stop();
+                    if (!player.getImmunity()) {
+                        player.addHealth(-1);
+                        if (player.getHealth() <= 0) {
+                            timer.stop();
+                        }
                     }
                 }
             },1,1);

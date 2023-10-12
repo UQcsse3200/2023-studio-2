@@ -2,7 +2,9 @@ package com.csse3200.game.components.maingame;
 
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.pause.PauseWindow;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.EnvironmentStatsComponent;
+import com.csse3200.game.windows.PauseWindow;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
@@ -50,6 +52,7 @@ public class MainGameActions extends Component {
         entity.setEnabled(false);
       }
     }
+    ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(true);
     ServiceLocator.getRenderService().getStage().addActor(pauseWindow);
 }
 
@@ -69,6 +72,7 @@ public class MainGameActions extends Component {
     logger.info("Exiting to current planet screen");
     ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", config.lives);
     new PlanetTravel(game).returnToCurrent();
+    ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
   }
 
   /**
@@ -79,6 +83,7 @@ public class MainGameActions extends Component {
     for (Entity entity : entityList) {
       entity.setEnabled(true);
     }
+    ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
   }
 
 }

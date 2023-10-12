@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,11 @@ public class MainGamePauseDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(MainGamePauseDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
+  private GdxGame.ScreenType screen;
+
+  public MainGamePauseDisplay(GdxGame.ScreenType screen){
+    this.screen = screen;
+  }
 
   @Override
   public void create() {
@@ -35,8 +41,14 @@ public class MainGamePauseDisplay extends UIComponent {
       new ChangeListener() {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
-          logger.debug("Pause button clicked");
-          entity.getEvents().trigger("pause");
+          if (screen == GdxGame.ScreenType.GAME_STORY) {
+            logger.debug("Pause button clicked");
+            entity.getEvents().trigger("pause");
+          }
+          else {
+            logger.debug("Exit button clicked");
+            entity.getEvents().trigger("exitPressed");
+          }
         }
       });
 

@@ -93,7 +93,7 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
         ui.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
-                .addComponent(new MainGamePauseDisplay())
+                .addComponent(new MainGamePauseDisplay(this.game.getScreenType()))
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay());

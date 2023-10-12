@@ -180,7 +180,7 @@ public class CompanionStatsDisplay extends UIComponent {
         //PART 1
         //get the background image
         Image backgroundBarFrame;
-        backgroundBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
+        backgroundBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/longandwidestatbar.png", Texture.class));
 
         //create the modes text
         CharSequence companionModeText = "Mode: Normal";
@@ -191,7 +191,7 @@ public class CompanionStatsDisplay extends UIComponent {
         //create the mode table
         Table modesTable = new Table();
         //add the background
-        modesTable.add(backgroundBarFrame).size(300f, 65f);
+        modesTable.add(backgroundBarFrame).size(healthBarWidth, 65f);
 
         // add text to a table
         Table modesTextTable = new Table();

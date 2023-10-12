@@ -67,12 +67,39 @@ public class CompanionPowerupInventoryComponent extends Component {
     }
 
     /**
+     * getter class to get the hashmap - mostly for the UI
+     * @return - hashmap of the powerup inventory amounts
+     */
+    public HashMap<PowerupType, Integer> getPowerupsInventory() {
+        return this.powerupsInventoryAmount;
+    }
+
+    /**
      * Return the amount of powerups in the inventory
      * @param type - what type of powerup
      * @return Integer amount of powerups of that type in inventory, or NULL if that type is not inside the powerup inventory
      */
     public Integer getPowerupInventoryCount(PowerupType type) {
         return powerupsInventoryAmount.get(type);
+    }
+
+    /**
+     * function that is trying to use a specific powerup type
+     * @param type - the type of powerup to use
+     */
+    public void useSpecificPowerup(PowerupType type) {
+        //check we have that type
+
+        //check we have >0
+
+        //use that powerup type
+
+        //remove one of those powerups from the powerup inventory
+
+        //update the UI
+
+
+        return;
     }
 
 
@@ -146,7 +173,9 @@ public class CompanionPowerupInventoryComponent extends Component {
         }
         //if we have a companion entity to trigger
         if (companion != null) {
-            companion.getEvents().trigger("powerupInventoryChange", powerupsInventoryAmount);
+            companion.getEvents().trigger("powerupInventoryChange");
         }
     }
+
+
 }

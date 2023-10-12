@@ -146,6 +146,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 triggerInventoryEvent("building");
                 return true;
             }
+            case Keys.NUM_0, Keys.NUM_1, Keys.NUM_2, Keys.NUM_3, Keys.NUM_4,
+                    Keys.NUM_5, Keys.NUM_6, Keys.NUM_7, Keys.NUM_8, Keys.NUM_9 -> {
+                int index = keycode - (Keys.NUM_0 + 1) % 10;
+                entity.getEvents().trigger("selectToolIndex", index);
+                return true;
+            }
             case Keys.W, Keys.S, Keys.A, Keys.D -> {
                 triggerWalkEvent();
                 return true;

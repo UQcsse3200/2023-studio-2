@@ -37,6 +37,7 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("walkStop", this::stopWalking);
         entity.getEvents().addListener("attack", this::attack);
         entity.getEvents().addListener("place", this::place);
+        entity.getEvents().addListener("selectToolIndex", this::selectToolIndex);
         entity.getEvents().addListener("remove", this::remove);
         entity.getEvents().addListener("dodged", this::dodged);
         entity.getEvents().addListener("change_structure", this::changeStructure);
@@ -154,6 +155,16 @@ public class PlayerActions extends Component {
 
         var structurePicker = getEntity().getComponent(StructureToolPicker.class);
         structurePicker.interact(gridPosition);
+    }
+
+    /**
+     * Selects the tool at the given index in the structure picker.
+     *
+     * @param index - the index of the tool to select.
+     */
+    void selectToolIndex(int index) {
+        var structurePicker = getEntity().getComponent(StructureToolPicker.class);
+        structurePicker.selectIndex(index);
     }
 
     /**

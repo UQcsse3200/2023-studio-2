@@ -21,8 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * This component can be placed onto the player and allows them to select and interact
@@ -32,23 +31,27 @@ public class StructureToolPicker extends UIComponent {
 
     private final Logger logger;
     private final Table table;
-    private final ArrayList<Button> buttons;
+    private final Map<Tool, Button> buttons;
 
     private final HashSet<String> unlockedTools;
 
     private final ToolsConfig structureTools =
             FileLoader.readClass(ToolsConfig.class, "configs/structure_tools.json");
     private Tool selectedTool;
+    private final Map<String, Tool> tools;
+    private final List<Tool> selectableTools;
 
     /**
      * Creates a new structure tool picker
      */
     public StructureToolPicker() {
         super();
-        buttons = new ArrayList<>();
+        buttons = new HashMap<>();
         logger = LoggerFactory.getLogger(StructureToolPicker.class);
         table = new Table();
         unlockedTools = new HashSet<>();
+        tools = new HashMap<>();
+        selectableTools = new ArrayList<>();
 
         // Default buildables
         unlockedTools.add("Extractor");
@@ -61,7 +64,16 @@ public class StructureToolPicker extends UIComponent {
     @Override
     public void create() {
         super.create();
+
+        for (var option : structureTools.toolConfigs) {
+            var tool = getTool(option.key, option.value.cost);
+
+            tools.put(option.key, tool);
+        }
+
         addActors();
+
+        stage.addActor(table);
     }
 
     /**
@@ -71,55 +83,43 @@ public class StructureToolPicker extends UIComponent {
      */
     void addActors() {
         table.clear();
+        buttons.clear();
 
         table.align(Align.center);
-        table.center();
+        table.center().bottom().padBottom(10);
         table.setFillParent(true);
 
         for (var option : structureTools.toolConfigs) {
-            var optionValue = option.value;
-            var tool = getTool(option.key, optionValue.cost);
-
             // skip items which are not unlocked
             if (!isToolUnlocked(option.value.name)) {
                 continue;
             }
 
+            var tool = tools.get(option.key);
+
+            var optionValue = option.value;
+
             var button = new Button(skin);
-            var buttonTable = new Table();
-            buttonTable.center();
-            var nameLabel = new Label(optionValue.name, skin);
-            nameLabel.setColor(Color.BLACK);
             var image = new Image(ServiceLocator.getResourceService().getAsset(optionValue.texture, Texture.class));
 
-            buttonTable.add(image).size(30,30).right();
-            buttonTable.add(nameLabel).padLeft(10).left();
-
-            for (var cost : optionValue.cost) {
-                var costLabel = new Label(String.format("%s - %d", cost.key, cost.value), skin);
-                costLabel.setColor(Color.BLACK);
-
-                buttonTable.row().colspan(2);
-                buttonTable.add(costLabel).padTop(10).center();
+            button.add(image).size(30,30);
+            if (selectedTool != tool) {
+                button.setColor(1f, 1f, 1f, 0.5f);
+            } else {
+                button.setColor(1f, 1f, 1f, 1f);
             }
 
             image.setScaling(Scaling.fill);
-            button.add(buttonTable);
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    selectedTool = tool;
-                    hide();
+                    setSelectedTool(tool);
                 }
             });
-            buttons.add(button);
-            table.row().padTop(10);
-            table.add(button).width(280);
+            buttons.put(tool, button);
+            selectableTools.add(tool);
+            table.add(button).width(30 + button.getPadLeft() + button.getPadRight());
         }
-
-        stage.addActor(table);
-
-        table.setVisible(false);
     }
 
     /**
@@ -159,6 +159,19 @@ public class StructureToolPicker extends UIComponent {
     }
 
     /**
+     * Selects the tool at the given index.
+     *
+     * @param index - the index of the tool to select.
+     */
+    public void selectIndex(int index) {
+        if (index < 0 || index >= selectableTools.size()) {
+            return;
+        }
+
+        setSelectedTool(selectableTools.get(index));
+    }
+
+    /**
      * Returns the unlocked status as a boolean
      *
      * @param toolName - the simple name of the tool, e.g. 'Dirt Wall'
@@ -173,6 +186,14 @@ public class StructureToolPicker extends UIComponent {
      * @param tool - the tool to be selected.
      */
     public void setSelectedTool(Tool tool) {
+        if (selectedTool != null && buttons.containsKey(selectedTool)) {
+            buttons.get(selectedTool).setColor(1f, 1f, 1f, 0.5f);
+        }
+
+        if (buttons.containsKey(tool)) {
+            buttons.get(tool).setColor(1f, 1f, 1f, 1f);
+        }
+
         this.selectedTool = tool;
     }
 

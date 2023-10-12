@@ -1,6 +1,6 @@
 {
-  "bullet": {
+  "BlueBullet": {
     "speed": 12,
-    "spritePath": "images/enemy/bullet.atlas"
+    "spritePath": "images/enemy/BlueBullet/BlueBullet.atlas"
   }
 }

@@ -107,7 +107,7 @@ public class Invisible extends DefaultTask implements PriorityTask {
         char direction2 = getDirection(target.getPosition());
         movementTask.setTarget(target.getPosition());
         if(isInvis){
-            movementTask.setSpeed(new Vector2(3f,3f));
+            movementTask.setSpeed(new Vector2(2f,2f));
         }else{
             movementTask.setSpeed(new Vector2(0.5f,0.5f));
         }

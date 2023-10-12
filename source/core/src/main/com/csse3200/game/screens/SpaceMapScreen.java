@@ -125,6 +125,7 @@ public class SpaceMapScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
+        ServiceLocator.clear();
     }
 
     /**

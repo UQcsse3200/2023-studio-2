@@ -3,14 +3,7 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.components.Weapons.SpecWeapon.HomingMissileSprayProjectileController;
-import com.csse3200.game.components.Weapons.SpecWeapon.HomingProjectileController;
-import com.csse3200.game.components.Weapons.WeaponControllerComponent;
-import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.explosives.ExplosiveComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.WeaponConfig;
-import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
@@ -102,17 +95,19 @@ public class TouchAttackComponent extends Component {
     }
 
     // Targeting STRUCTURE entity type
-    if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+    if (PhysicsLayer.contains(target.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.STRUCTURE)) {
       // Schedule the trigger every 2 seconds
       Timer.Task task = new Timer.Task() {
         @Override
         public void run() {
           if (!leftContact) {
             hitOnce(target, source, sourceStats, targetStats);
+          } else {
+            cancel();
           }
         }
       };
-      Timer.schedule(task, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
+      Timer.schedule(task, 2, 2); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
     } else {
       // hit once, push away
       hitOnce(target, source, sourceStats, targetStats);

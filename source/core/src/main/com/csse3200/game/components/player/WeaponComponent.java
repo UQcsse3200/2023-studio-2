@@ -40,8 +40,7 @@ public class WeaponComponent extends Component {
      * @param clickPosition - click location of mouse
      */
     private void playerAttacking(WeaponType weaponType, Vector2 clickPosition) {
-        float attackDirection = calcRotationAngleInDegrees(entity.getCenterPosition(), clickPosition);
-        ArrayList<Pair<Entity, Integer>> attacks = AttackFactory.createAttacks(weaponType, attackDirection, entity);
+        ArrayList<Pair<Entity, Integer>> attacks = AttackFactory.createAttacks(weaponType, clickPosition, entity);
 
         if (attacks == null) {
             return;
@@ -52,7 +51,8 @@ public class WeaponComponent extends Component {
         }
 
         InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
-        makeNewHolding(weaponType);
+        float attackDirection = calcRotationAngleInDegrees(entity.getCenterPosition(), clickPosition);
+        makeNewHolding(weaponType, attackDirection);
         entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(),
                 invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
     }
@@ -62,7 +62,7 @@ public class WeaponComponent extends Component {
         WeaponConfig config = invComp.getConfigs().GetWeaponConfig(weaponType);
 
         if (config.slotType.equals("building")) {
-            makeNewHolding(weaponType);
+            makeNewHolding(weaponType, 0);
         } else if (this.holdingWeapon != null) {
             this.holdingWeapon.dispose();
         }
@@ -73,11 +73,11 @@ public class WeaponComponent extends Component {
      *
      * @param weapon - weapon to make the player hold
      */
-    private void makeNewHolding(WeaponType weapon) {
+    private void makeNewHolding(WeaponType weapon, float attackDirection) {
         if (this.holdingWeapon != null) {
             this.holdingWeapon.dispose();
         }
-        this.holdingWeapon = PlayerWeaponFactory.createPlayerWeapon(weapon, entity);
+        this.holdingWeapon = PlayerWeaponFactory.createPlayerWeapon(weapon, attackDirection, entity);
         ServiceLocator.getEntityPlacementService().PlaceEntity(this.holdingWeapon);
     }
 

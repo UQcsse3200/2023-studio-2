@@ -21,6 +21,7 @@
       "map/portal.png",
       "map/treetoplush.png",
       "particle-effects/explosion/particle.png",
+      "images/npc/astronaut_npc.png",
       "images/space_navigation_planet_2.png"
     ],
     "textureAtlasPaths": [
@@ -30,11 +31,29 @@
       "images/boss_enemy.atlas",
       "images/botanist.atlas",
       "images/weapons/wrench.atlas",
+      "images/npc/astronaut_npc.atlas",
       "images/botanist.atlas"
     ],
-    "soundPaths": null,
+    "soundPaths": [
+      "sounds/Impact4.wav",
+      "sounds/playerLow_health.wav",
+      "sounds/dodgingAlertSweep.wav",
+      "sounds/footStepsInTheForestGround.wav",
+      "sounds/PlayerHealthRecharge.wav",
+      "sounds/playerBoostRecharge.wav",
+      "sounds/upgradeTreeTap.wav",
+      "sounds/upgradeWeapon.wav",
+      "sounds/enemyDeath.wav",
+      "sounds/companionwalksound.wav",
+      "sounds/enemySpawner.wav",
+      "sounds/turret_shoot.mp3",
+      "sounds/alert.wav",
+      "sounds/explosion/grenade.mp3",
+      "sounds/explosion/landmine.mp3"
+    ],
     "particleEffectPaths": [
-      "particle-effects/explosion/explosion.effect"
+      "particle-effects/explosion/explosion.effect",
+      "particle-effects/explosion/bigBallCombustion.effect"
     ],
     "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
   },

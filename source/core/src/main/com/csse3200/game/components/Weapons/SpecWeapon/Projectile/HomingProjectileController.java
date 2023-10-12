@@ -1,14 +1,12 @@
-package com.csse3200.game.components.Weapons.SpecWeapon;
+package com.csse3200.game.components.Weapons.SpecWeapon.Projectile;
 
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.ProjectileController;
 import com.csse3200.game.components.explosives.ExplosiveComponent;
 import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class HomingProjectileController extends ProjectileController {
     public HomingProjectileController(WeaponConfig config,
@@ -33,10 +31,6 @@ public class HomingProjectileController extends ProjectileController {
         explode.create();
     }
 
-    @Override
-    protected void initial_animation(AnimationRenderComponent animator) {
-        reanimate();
-    }
 
     @Override
     protected void rotate() {
@@ -66,18 +60,7 @@ public class HomingProjectileController extends ProjectileController {
 
     @Override
     protected void reanimate() {
-        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-        int dir = (int) (((currentRotation + 22.5f + 360f) % 360) / 45);
-        switch (dir) {
-            case 0 -> animator.startAnimation("RIGHT2");
-            case 1 -> animator.startAnimation("RIGHT1");
-            case 2 -> animator.startAnimation("UP");
-            case 3 -> animator.startAnimation("LEFT1");
-            case 4 -> animator.startAnimation("LEFT2");
-            case 5 -> animator.startAnimation("LEFT3");
-            case 6 -> animator.startAnimation("DOWN");
-            case 7 -> animator.startAnimation("RIGHT3");
-        }
+        animator.setRotation(currentRotation);
     }
 
     @Override

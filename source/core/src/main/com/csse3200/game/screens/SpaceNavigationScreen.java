@@ -310,5 +310,7 @@ public class SpaceNavigationScreen implements Screen {
         for(Texture texture : arrowTextures){
             texture.dispose();
         }
+
+        ServiceLocator.clear();
     }
 }

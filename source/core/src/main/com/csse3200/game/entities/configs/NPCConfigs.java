@@ -1,13 +1,16 @@
 package com.csse3200.game.entities.configs;
 
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyName;
 import com.csse3200.game.entities.enemies.EnemyType;
+
+import java.util.Objects;
 
 /**
  * Defines all NPC configs to be loaded by Related Factories.
  */
 public class NPCConfigs {
-  public BaseEntityConfig ghost = new BaseEntityConfig();
+
   public SoundsConfig sound;
   public BotanistConfig botanist = new BotanistConfig();
   public AstroConfig Astro = new AstroConfig();
@@ -17,49 +20,35 @@ public class NPCConfigs {
 
   public JailConfig Jail = new JailConfig();
   //   Enemies Factory
-  public EnemyConfig meleeEnemyPTE = new EnemyConfig();
-  public EnemyConfig meleeEnemyDTE = new EnemyConfig();
-  public EnemyConfig rangeEnemyPTE = new EnemyConfig();
-  public EnemyConfig rangeEnemyDTE = new EnemyConfig();
-  public EnemyConfig meleeBossPTE = new EnemyConfig();
-  public EnemyConfig meleeBossDTE = new EnemyConfig();
+  public EnemyConfig redGhost = new EnemyConfig();
+  public EnemyConfig roboMan = new EnemyConfig();
+  public EnemyConfig chain = new EnemyConfig();
+  public EnemyConfig necromancer = new EnemyConfig();
+  public EnemyConfig Knight = new EnemyConfig();
   public EnemyConfig rangeBossPTE = new EnemyConfig();
-  public EnemyConfig rangeBossDTE = new EnemyConfig();
 
-  public EnemyConfig GetEnemyConfig(EnemyType type, EnemyBehaviour behaviour) {
-    EnemyConfig config = null;
-    if (type == EnemyType.Ranged) {
-      if (behaviour ==  EnemyBehaviour.DTE) {
-        config = rangeEnemyDTE;
+  public EnemyConfig GetEnemyConfig(EnemyName name) {
+      EnemyConfig config = null;
+      switch (name) {
+          case redGhost:
+               config = redGhost;
+              break;
+          case chain:
+              config = chain;
+              break;
+          case necromancer:
+              config = necromancer;
+              break;
+          case roboMan:
+              config = roboMan;
+              break;
+          case Knight:
+              config = Knight;
+              break;
+          case rangeBossPTE:
+              config = rangeBossPTE;
+              break;
       }
-      if (behaviour ==  EnemyBehaviour.PTE) {
-        config = rangeEnemyPTE;
-      }
-    }
-    if (type == EnemyType.Melee) {
-      if (behaviour == EnemyBehaviour.DTE) {
-        config = meleeEnemyDTE;
-      }
-      if (behaviour ==  EnemyBehaviour.PTE) {
-        config = meleeEnemyPTE;
-      }
-    }
-    if (type == EnemyType.BossRanged) {
-      if (behaviour ==  EnemyBehaviour.DTE) {
-        config = rangeBossDTE;
-      }
-      if (behaviour ==  EnemyBehaviour.PTE) {
-        config = rangeBossPTE;
-      }
-    }
-    if (type == EnemyType.BossMelee) {
-      if (behaviour == EnemyBehaviour.DTE) {
-        config = meleeBossDTE;
-      }
-      if (behaviour ==  EnemyBehaviour.PTE) {
-        config = meleeBossPTE;
-      }
-    }
-    return config;
+      return config;
   }
 }

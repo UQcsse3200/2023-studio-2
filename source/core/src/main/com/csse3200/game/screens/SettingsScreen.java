@@ -100,9 +100,6 @@ public class SettingsScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         renderer.dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getEntityService().dispose();
-
         ServiceLocator.clear();
     }
 

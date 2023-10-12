@@ -96,6 +96,7 @@ public class BrickBreakerScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
+        ServiceLocator.clear();
     }
     /**
      * Loads all assets

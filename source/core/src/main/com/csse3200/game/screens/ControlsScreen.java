@@ -212,6 +212,7 @@ public class ControlsScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         this.clear();
+
     }
 
     /**

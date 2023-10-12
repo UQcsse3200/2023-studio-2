@@ -74,6 +74,11 @@ public class UpgradeShopScreen extends ScreenAdapter {
         createUI();
     }
 
+    @Override
+    public void dispose() {
+        unloadAssets();
+        ServiceLocator.clear();
+    }
 
     /**
      * Renders the screen.

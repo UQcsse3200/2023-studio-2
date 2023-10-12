@@ -1,31 +1,25 @@
-package com.csse3200.game;
+package com.csse3200.game.components.pause;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
 
-import static com.csse3200.game.screens.MainMenuScreen.logger;
-
 /**
- * This is a window that can be added to a stage to pop up for the extractor Laboratory.
+ * This is a window which opens when the pause button is pressed. The user is given the choice
+ * to either return to the game or exit to the main menu.
  */
 public class PauseWindow extends Window {
     private final InputOverrideComponent inputOverrideComponent;
-    Table buttonTable;
-    Entity entity;
-    Table exit;
+    private Entity entity;
 
     public static PauseWindow MakeNewPauseWindow(Entity entity) {
         Texture background = new Texture("images/structures/panel.png");
@@ -36,18 +30,13 @@ public class PauseWindow extends Window {
     public PauseWindow(Texture background, Entity entity) {
         super("", new WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
         this.entity = entity;
-        // Here set up the window to be centered on the stage with 80% width and 65% height.
         Stage stage = ServiceLocator.getRenderService().getStage();
         setWidth((float) (stage.getWidth() * 0.50));
         setHeight((float) (stage.getHeight() * 0.50));
         setPosition(stage.getWidth() / 2 - getWidth() / 2 * getScaleX(), stage.getHeight() / 2 - getHeight() / 2 * getScaleY());
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
-        // Create a Table to hold the buttons and center them within the window
-        Table buttonTable = new Table();
-        buttonTable.setFillParent(true);
-        // Fill the entire LabWindow
-
-        Table exit = new Table();
+        Table pauseTable = new Table();
+        pauseTable.setFillParent(true);
 
         TextButton returnToGameButton = new TextButton("Return to Game", skin);
         TextButton returnToMainMenuButton = new TextButton("Exit to Main Menu", skin);
@@ -55,7 +44,7 @@ public class PauseWindow extends Window {
         gamePausedLabel.setFontScale(0.5f);
 
 
-        float buttonWidth = 150f; // Adjust as needed
+        float buttonWidth = 150f;
         float buttonHeight = 180f;
 
         returnToGameButton.setWidth(buttonWidth);
@@ -64,14 +53,13 @@ public class PauseWindow extends Window {
         returnToMainMenuButton.setWidth(buttonWidth);
         returnToMainMenuButton.setHeight(buttonHeight);
 
-        buttonTable.top();
-        buttonTable.add(gamePausedLabel).padTop(70);
-        buttonTable.row();
-        buttonTable.add(returnToGameButton).padTop(70).padLeft(20);
-        buttonTable.row();
-        buttonTable.add(returnToMainMenuButton).padTop(50).padLeft(20);
-        addActor(buttonTable);
-        addActor(exit);
+        pauseTable.top();
+        pauseTable.add(gamePausedLabel).padTop(70);
+        pauseTable.row();
+        pauseTable.add(returnToGameButton).padTop(70).padLeft(20);
+        pauseTable.row();
+        pauseTable.add(returnToMainMenuButton).padTop(50).padLeft(20);
+        addActor(pauseTable);
 
 
         returnToGameButton.addListener(new ClickListener() {
@@ -92,20 +80,23 @@ public class PauseWindow extends Window {
     }
 
     /**
-     * Call this method to exit the Laboratory
+     * Returns to current game, and removes pause window.
      */
     private void exitToGame() {
         entity.getEvents().trigger("returnPressed");
         remove();
     }
 
+    /**
+     * Exits to main menu screen, and removes pause window.
+     */
     private void exitToMainMenu() {
         entity.getEvents().trigger("exitPressed");
         remove();
     }
 
     /**
-     * Call this method to exit the Laboratory and repair the extractor's health.
+     * This method removes the pause window popup and its buttons/label.
      */
 
     @Override

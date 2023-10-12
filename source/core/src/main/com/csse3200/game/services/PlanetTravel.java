@@ -55,8 +55,7 @@ public class PlanetTravel {
         String currentPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
         game.setScreen(new PlanetScreen(game, currentPlanet));
         ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setHealth(100);
-        ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setHealth(50);
-
+        ServiceLocator.getEntityService().getCompanion().getComponent(CombatStatsComponent.class).setHealth(50);
     }
 
     /**

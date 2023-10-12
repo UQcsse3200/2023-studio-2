@@ -1,4 +1,4 @@
-package com.csse3200.game;
+package com.csse3200.game.components.pause;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;

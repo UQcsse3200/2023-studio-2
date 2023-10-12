@@ -451,7 +451,7 @@ public class MapGameArea extends GameArea{
         AstronautConfig astronautConfig = mapConfig.areaEntityConfig.getEntity(AstronautConfig.class);
         if (astronautConfig != null) {
             Entity astronaut = NPCFactory.createAstronaut(astronautConfig);
-            spawnEntityAt(astronaut, astronautConfig.position, false, false);
+            spawnEntityAt(astronaut, astronautConfig.position, true, true);
         }
     }
 
@@ -461,9 +461,8 @@ public class MapGameArea extends GameArea{
         JailConfig jailConfig = mapConfig.areaEntityConfig.getEntity(JailConfig.class);
         if (jailConfig != null) {
             Entity Jail = NPCFactory.createJail(jailConfig);
-            spawnEntityAt(Jail, jailConfig.position, false, false);
+            spawnEntityAt(Jail, jailConfig.position, true, true);
         }
-
     }
 
     /**

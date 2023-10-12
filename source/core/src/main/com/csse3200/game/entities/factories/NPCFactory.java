@@ -253,7 +253,6 @@ public class NPCFactory {
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
-                    .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
     astronaut.addComponent(new InteractableComponent(entity -> {
       String[] storytext= {"Hello I am Astronaut","I am here to guide you through"};
@@ -270,6 +269,7 @@ public class NPCFactory {
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset(jailConfig.spritePath, TextureAtlas.class));
     animator.addAnimation("jail_close", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("jail_open", 0.2f, Animation.PlayMode.LOOP);
 
     Entity Jail =
             new Entity()
@@ -283,10 +283,12 @@ public class NPCFactory {
                 ,"Emily: We can handle it. \nLead the way!"};
         String[] titletext= {"","",""};
         Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
-        Jail.dispose();
-      }
-            ,1f));
+        animator.startAnimation("jail_open");
+      },1f));
+
     Jail.scaleHeight(1.7f);
+    animator.startAnimation("jail_close");
+
     return Jail;
   }
   public static Entity createFire() {

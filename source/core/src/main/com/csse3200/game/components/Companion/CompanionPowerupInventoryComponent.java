@@ -64,9 +64,7 @@ public class CompanionPowerupInventoryComponent extends Component {
         }
         //there has been a powerup inventory change
         sendUIPowerupInventoryChange();
-    }
-
-    /**
+    }   /**
      * getter class to get the hashmap - mostly for the UI
      * @return - hashmap of the powerup inventory amounts
      */
@@ -82,6 +80,9 @@ public class CompanionPowerupInventoryComponent extends Component {
     public Integer getPowerupInventoryCount(PowerupType type) {
         return powerupsInventoryAmount.get(type);
     }
+
+
+    public void removePowerupsInventoryAmount(PowerupType type, int num){powerupsInventoryAmount.put(type, getPowerupInventoryCount(type)-num);}
 
     /**
      * function that is trying to use a specific powerup type

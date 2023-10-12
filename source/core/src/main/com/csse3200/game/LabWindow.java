@@ -13,6 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.Companion.CompanionPowerupInventoryComponent;
 import com.csse3200.game.components.PowerupType;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
+import com.csse3200.game.components.upgradetree.UpgradeNode;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -123,23 +126,33 @@ public class LabWindow extends Window {
 
             Image potionImageWidget = new Image(potionImage);
             potionButton[i] = new TextButton(potionName, skin);
-            buttonTable.add(potionImageWidget).width(100).height(64);;
+            buttonTable.add(potionImageWidget).width(100).height(64);
             buttonTable.add(potionButton[i]).pad(20);
             int finalI = i;
-            potionButton[i].addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
+            PowerupType powerupType = getPowerupTypeForPotionName(potionNames[finalI]);
+
+
+            if (!canUnlockPowerup(powerupType))
+            {lockButton(potionButton[i]);}
+            else
+            {
+                potionButton[i].addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
                         PowerupType powerupType = getPowerupTypeForPotionName(potionNames[finalI]);
+                        updateAvailableMaterials(powerupType);
                         ServiceLocator.getEntityService().getCompanion().getEvents().trigger("SpawnPowerup", powerupType);
                         failLaboratory();
 
-                }
-            });
+                    }
+                });
+            }
 
             if(i==2) {
                 buttonTable.row();
             }
         }
+
         addActor(buttonTable);
         inputOverrideComponent = new InputOverrideComponent();
         ServiceLocator.getInputService().register(inputOverrideComponent);
@@ -180,5 +193,60 @@ public class LabWindow extends Window {
     public boolean remove() {
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
         return super.remove();
+    }
+
+    private Image lockButton(TextButton potionButton) {
+
+        Image lock = new Image(new Texture("images/upgradetree/lock.png"));
+        lock.setSize(potionButton.getWidth(), potionButton.getHeight());
+        potionButton.addActor(lock);
+        potionButton.setColor(0.5f, 0.5f, 0.5f, 0.5f);
+        return lock;
+    }
+/*    private void handleUnlocking(TextButton potionButton, Image lockImage) {
+
+        // Set the node to unlocked
+        potionButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
+        lockImage.remove();
+    }
+
+    private ChangeListener unlockButton(TextButton potionButton, Image lockImage) {
+        return new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                handleUnlocking(potionButton, lockImage);
+            }
+        };
+    }*/
+    private boolean canUnlockPowerup(PowerupType powerupType) {
+        // Implement your logic to check if the powerup can be unlocked
+        if (powerupType == PowerupType.EXTRA_LIFE) {
+            return Health_powerups >= 2;
+        } else if (powerupType == PowerupType.DOUBLE_CROSS) {
+            return Health_powerups >= 1 && Speed_powerups >= 1;
+        } else if (powerupType == PowerupType.DOUBLE_DAMAGE) {
+            return Speed_powerups >= 2;
+        } else if (powerupType == PowerupType.SNAP) {
+            return Health_powerups >= 2 && Speed_powerups >= 2;
+        } else if (powerupType == PowerupType.TEMP_IMMUNITY) {
+            return Health_powerups >= 2 && Speed_powerups >= 1;
+        }
+        return false;
+    }
+    private void updateAvailableMaterials(PowerupType powerupType) {
+        if (powerupType == PowerupType.EXTRA_LIFE) {
+            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.HEALTH_BOOST,2);
+        } else if (powerupType == PowerupType.DOUBLE_CROSS) {
+            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.HEALTH_BOOST,1);
+            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.SPEED_BOOST,1);
+        } else if (powerupType == PowerupType.DOUBLE_DAMAGE) {
+            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.SPEED_BOOST,2);
+        } else if (powerupType == PowerupType.SNAP) {
+            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.HEALTH_BOOST,2);
+            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.SPEED_BOOST,2);
+        } else if (powerupType == PowerupType.TEMP_IMMUNITY) {
+            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.HEALTH_BOOST,2);
+            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.SPEED_BOOST,1);
+        }
     }
 }

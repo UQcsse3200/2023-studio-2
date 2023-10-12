@@ -460,7 +460,7 @@ public class MapGameArea extends GameArea{
 
         JailConfig jailConfig = mapConfig.areaEntityConfig.getEntity(JailConfig.class);
         if (jailConfig != null) {
-            Entity Jail = NPCFactory.createJail();
+            Entity Jail = NPCFactory.createJail(jailConfig);
             spawnEntityAt(Jail, jailConfig.position, false, false);
         }
 

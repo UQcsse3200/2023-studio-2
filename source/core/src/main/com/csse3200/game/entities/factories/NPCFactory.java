@@ -17,10 +17,7 @@ import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.AstronautConfig;
-import com.csse3200.game.entities.configs.BotanistConfig;
-import com.csse3200.game.entities.configs.AstroConfig;
-import com.csse3200.game.entities.configs.NPCConfigs;
+import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -242,7 +239,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/npc/astronaut_npc.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset(astronautConfig.spritePath, TextureAtlas.class));
     animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
@@ -280,30 +277,27 @@ public class NPCFactory {
     astronaut.scaleHeight(1f);
     return astronaut;
   }
-  public static Entity createJail() {
+  public static Entity createJail(JailConfig jailConfig) {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/Jail/jail.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset(jailConfig.spritePath, TextureAtlas.class));
     animator.addAnimation("jail_close", 0.2f, Animation.PlayMode.LOOP);
 
     Entity Jail =
             new Entity()
                     .addComponent(animator)
-                    .addComponent(new JailAnimationController(new AssetManager()))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsMovementComponent());
     Jail.addComponent(new InteractableComponent(entity -> {
-      // To previously make the jail dissapear, we were disposing of it, now we simply make it dissapear by scaling it
-      // to zero. See https://github.com/UQcsse3200/2023-studio-2/issues/473
-      Jail.setScale(0.0f, 0.0f);
-
-      String[] storytext= {"NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!"
-              ,"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected."
-              ,"Emily: We can handle it. \nLead the way!"};
-      String[] titletext= {"","",""};
-      Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);}
+        String[] storytext= {"NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!"
+                ,"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected."
+                ,"Emily: We can handle it. \nLead the way!"};
+        String[] titletext= {"","",""};
+        Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+        Jail.dispose();
+      }
             ,1f));
     Jail.scaleHeight(1.7f);
     return Jail;

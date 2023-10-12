@@ -33,10 +33,8 @@ public class CompanionInventoryComponent extends Component {
     // A single queue for all power-ups
     private final Deque<Entity> powerupQueue = new ArrayDeque<>(INVENTORY_SIZE);
 
-    private final int[] itemQuantity = new int[INVENTORY_SIZE];
 
-
-    // Add a HashMap to store counts for each power-up type
+    // Add a HashMap to store counts for each power-up type. DOESN'T DO ANYTHING
     private final HashMap<PowerupType, Integer> powerupCounts = new HashMap<>();
 
     private  String equipped = "ranged";
@@ -119,8 +117,6 @@ public class CompanionInventoryComponent extends Component {
     public void addPowerup(Entity item) {
         if (powerupQueue.size() < INVENTORY_SIZE) {
             powerupQueue.add(item);
-            ++itemQuantity[powerupQueue.size() - 1];
-
             // Identify the power-up type and update the count
             PowerupType powerupType = identifyPowerupType(item);
             if (powerupType != null) {
@@ -143,8 +139,10 @@ public class CompanionInventoryComponent extends Component {
     public boolean useNextPowerup() {
         if (!powerupQueue.isEmpty()) {
             Entity powerup = powerupQueue.poll();
+            if (powerup == null) {
+                logger.info("YOURE CALLING A DEAD POWERUP");
+            }
             powerup.getComponent(PowerupComponent.class).applyEffect();
-            --itemQuantity[0];
             return true;
         }
         return false;

@@ -161,6 +161,7 @@ public class CompanionActions extends Component {
 //        }
 //    }
 
+
     private boolean isMovementKeyPressed() {
         // Check if any of the movement keys are pressed (I, J, K, L)
         return Gdx.input.isKeyPressed(Input.Keys.I) || Gdx.input.isKeyPressed(Input.Keys.J) ||

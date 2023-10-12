@@ -2,7 +2,7 @@
   "entityType": "LaboratoryConfig",
   "entities": [
     {
-      "class": "com.csse3200.game.entities.configs.LaboratoryConfig",
+      class: com.csse3200.game.entities.configs.LaboratoryConfig,
       "spritePath": "images/companion/laboratoryinferno.png",
       "position": {"x":34,
         "y": 49

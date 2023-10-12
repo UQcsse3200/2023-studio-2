@@ -200,11 +200,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                 return true;
             }
 
-            case Keys.P -> {
-                triggerInventoryEvent("ranged");
-                return true;
-            }
-
             case Keys.I -> {
                 flagW = 1;
                 if (getMovFlagSum() == 1) {
@@ -251,13 +246,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                     diagonal();
                 }
                 triggerWalkEvent();
-                return true;
-            }
-            case Keys.M -> {
-                InteractionControllerComponent interactionController = entity.getComponent(InteractionControllerComponent.class);
-                if (interactionController != null) {
-                    interactionController.interact();
-                }
                 return true;
             }
             default -> {

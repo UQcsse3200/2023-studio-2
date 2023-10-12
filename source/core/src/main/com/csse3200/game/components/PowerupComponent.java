@@ -153,6 +153,7 @@ public class PowerupComponent extends Component {
                 if (player.getComponent(PlayerActions.class) == null) {
                     return;
                 } else {
+                    companion.getComponent(CompanionActions.class).triggerInventoryEvent("ranged");
                     return;
                 }
 

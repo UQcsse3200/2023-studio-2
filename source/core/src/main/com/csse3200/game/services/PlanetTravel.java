@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.screens.PlanetScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,9 @@ public class PlanetTravel {
     public void returnToCurrent() {
         String currentPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
         game.setScreen(new PlanetScreen(game, currentPlanet));
+        ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setHealth(100);
+        ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setHealth(50);
+
     }
 
     /**

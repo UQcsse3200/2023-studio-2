@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Displays a button to exit the Main Game screen to the Main Menu screen.
  */
-public class MainGameExitDisplay extends UIComponent {
-  private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
+public class MainGamePauseDisplay extends UIComponent {
+  private static final Logger logger = LoggerFactory.getLogger(MainGamePauseDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
 
@@ -36,8 +36,8 @@ public class MainGameExitDisplay extends UIComponent {
       new ChangeListener() {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
-          logger.debug("Exit button clicked");
-          entity.getEvents().trigger("exit");
+          logger.debug("Pause button clicked");
+          entity.getEvents().trigger("pause");
         }
       });
 

@@ -34,9 +34,4 @@ public class ExtinguisherInputComponent extends InputComponent {
         }
         return false; // Event not consumed
     }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
 }

@@ -1,13 +1,11 @@
 package com.csse3200.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import com.csse3200.game.components.mainmenu.MainMenuStarBackground;
-import com.csse3200.game.components.spacenavigation.NavigationBackground;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;

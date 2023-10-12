@@ -121,10 +121,6 @@ public class TouchAttackComponent extends Component {
    */
   private void hitOnce(Entity target, Entity source, CombatStatsComponent sourceStats, CombatStatsComponent targetStats){
     if (targetStats != null && sourceStats != null) {
-//      if(dialogue != null) {
-//        dialogue.showdialogue("You hit a Ghost");
-//      }
-      //targetStats.hit(combatStats);
 
       // Valid damage dealt
       if (source.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.ENEMY_MELEE ||

@@ -38,9 +38,6 @@ public class ObstacleMiniGameActions extends MainGameActions {
     @Override
     public void create() {
         entity.getEvents().addListener("exit", this::onExit);
-
-        //Temporary.
-        //entity.getEvents().addListener("returnPlanet", this::onReturnPlanet);
     }
 
     /**

@@ -6,18 +6,10 @@
  */
 package com.csse3200.game.components;
 
-import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.Timer;
-
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
-import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-//import java.util.Timer;
-//import java.util.TimerTask;
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities

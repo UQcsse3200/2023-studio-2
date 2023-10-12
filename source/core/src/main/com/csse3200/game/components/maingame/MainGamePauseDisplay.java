@@ -41,7 +41,7 @@ public class MainGamePauseDisplay extends UIComponent {
       new ChangeListener() {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
-          if (screen == GdxGame.ScreenType.GAME_STORY) {
+          if (screen == GdxGame.ScreenType.GAME_STORY || screen == GdxGame.ScreenType.PLAYER_DEATH_0 || screen == GdxGame.ScreenType.PLAYER_DEATH_1 || screen == GdxGame.ScreenType.PLAYER_DEATH_2 || screen == GdxGame.ScreenType.PLAYER_DEATH_3) {
             logger.debug("Pause button clicked");
             entity.getEvents().trigger("pause");
           }

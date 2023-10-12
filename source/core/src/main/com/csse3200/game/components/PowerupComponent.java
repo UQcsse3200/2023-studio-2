@@ -162,6 +162,9 @@ public class PowerupComponent extends Component {
 
     }
 
+    /**
+     * This adds this powerup to the inventory component
+     */
     public void updateInventory(){
         CompanionInventoryComponent companionInventory = companionEntity.getComponent(CompanionInventoryComponent.class);
         Entity entityOfComponent = getEntity();

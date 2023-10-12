@@ -83,7 +83,11 @@ public class CompanionWeaponController extends Component {
             }, POTION_DISPOSE_DELAY);
         }
     }
-   private void despawn() {
+
+    /**
+     * Despawn the weapon
+     */
+    private void despawn() {
         entity.getEvents().trigger("explode");
         Gdx.app.postRunnable(entity::dispose);
     }

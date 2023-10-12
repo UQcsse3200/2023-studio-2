@@ -75,8 +75,11 @@ public class DeathComponent extends Component {
                             powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
                         }
                     }
+                    if (powerup == null) {
+                        return;
+                    }
                     // Hence 5, 6, 7, 8 out of 8, 1/2 chance of nothing
-                    ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody);
+                    ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody.cpy());
                 }
             };
             Timer.schedule(task, delay);// Delay based on the death animation duration

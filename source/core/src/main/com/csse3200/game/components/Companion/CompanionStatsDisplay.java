@@ -63,7 +63,6 @@ public class CompanionStatsDisplay extends UIComponent {
     private boolean isInvincible = true;
 
     private boolean isInfiniteHealth = true;
-    private Label ammoLabel;
     private CompanionInventoryComponent Inventory;
 
     /**
@@ -86,7 +85,6 @@ public class CompanionStatsDisplay extends UIComponent {
         // Listen for events related to health updates
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
         entity.getEvents().addListener("companionModeChange", this::updateCompanionModeUI);
-        entity.getEvents().addListener("updateAmmo", this::updateAmmo);
 //        entity.getEvents().addListener("changeWeapon", this::updateWeapon);
     }
 
@@ -232,20 +230,6 @@ public class CompanionStatsDisplay extends UIComponent {
         });
 
         statsTable.add(button);
-    }
-
-    /**
-     * For weapons with a set number of ammo/pieces
-     * Function which updates the amount of ammo seen on screen, for weapons with limited number of uses
-     * @param currentAmmo - amount of ammo in the weapon left
-     * @param maxAmmo - amount of total ammo storage in that weapon
-     */
-    public void updateAmmo(int currentAmmo, int maxAmmo) {
-        CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-        if (maxAmmo == 100) {  // todo: make non-ammo things not have ammo
-            ammoText = "    -";
-        }
-        ammoLabel.setText(ammoText);
     }
 
     /**

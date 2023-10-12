@@ -36,13 +36,20 @@ public class CompanionInGameAlerts extends UIComponent {
     public Label alertLabel;
     //The player entity associated with this companion.
     public Entity player = ServiceLocator.getEntityService().getPlayer();
+    public Entity companion = ServiceLocator.getEntityService().getCompanion();
+
+
+    //store the previous player health and previous companion health
+    public int previousPlayerHealth;
+    public int previousCompanionHealth;
+
+
     private static final Logger logger = LoggerFactory.getLogger(CompanionInGameAlerts.class);
 
     /**
      * Default constructor for the companions in game alerts
      */
     public CompanionInGameAlerts() {
-
     }
 
     /**
@@ -60,6 +67,8 @@ public class CompanionInGameAlerts extends UIComponent {
         //Player has a health change
         player.getEvents().addListener("updateHealth", this::playerHealthUpdate);
 
+        previousPlayerHealth = player.getComponent(CombatStatsComponent.class).getHealth();
+        previousCompanionHealth = entity.getComponent(CombatStatsComponent.class).getHealth();
     }
 
     /**
@@ -67,7 +76,6 @@ public class CompanionInGameAlerts extends UIComponent {
      */
     private void addActors() {
         return;
-
     }
 
     /**
@@ -87,7 +95,6 @@ public class CompanionInGameAlerts extends UIComponent {
     public Vector2 getCurrentPosition() {
         PhysicsComponent companionPhysics = entity.getComponent(PhysicsComponent.class);
         return companionPhysics.getBody().getPosition();
-
     }
 
     /**
@@ -95,17 +102,18 @@ public class CompanionInGameAlerts extends UIComponent {
      * @param alertText - this is the TEXTSTRING which will go on the alert. Must be provided
      */
     private void addFollowingAlert(CharSequence alertText) {
-
-
-        //FIND WHERE THE COMPANION IS
+        //FIND WHERE THE COMPANION IS IN THE GAME
         Vector2 companionPosition = getCurrentPosition();
-
+        if (alertLabel != null) {
+            alertLabel.remove();
+        }
         //create the alert
         alertLabel = new Label(alertText,skin);
         alertLabel.setFontScale(0.2f);
 
-        //set the position to be at the companion
-        alertLabel.setPosition(companionPosition.x,companionPosition.y);
+        //set the position to be above the companions UI SECTION
+        alertLabel.setPosition(100,240);
+
 
         stage.addActor(alertLabel);
 
@@ -120,7 +128,7 @@ public class CompanionInGameAlerts extends UIComponent {
                 timer.purge();
             }
         };
-        timer.schedule(removeAlert, 10000); // removes alert after 1 second (3000 is good)
+        timer.schedule(removeAlert, 1000); // removes alert after 1 second (3000 is good)
     }
 
     /**
@@ -128,11 +136,23 @@ public class CompanionInGameAlerts extends UIComponent {
      * @param health - the health of the companion
      */
     public void companionHealthUpdate(int health) {
-        if (health <= 100) {
-            //add an alert
-            CharSequence companionAlertUpdate = String.format("Companion Health Low! %d", health);
-            addFollowingAlert(companionAlertUpdate);
+        //check that the companion hasn't actually increased health
+        int changeInHealth = previousCompanionHealth - health;
+        //if the change in health is positive, that means that the health is decreasing.
+        if (changeInHealth > 0) {
+            previousCompanionHealth = health;
+            //if health below 10, and youre alive, make alert
+            if (health <= 10 && health > 0) {
+                //add an alert
+                CharSequence companionAlertUpdate = String.format("Companion Health Critically Low! %d", health);
+                addFollowingAlert(companionAlertUpdate);
+            } else if (health <= 25 && health > 0) {
+                //add an alert
+                CharSequence companionAlertUpdate = String.format("Companion Health Low! %d", health);
+                addFollowingAlert(companionAlertUpdate);
+            }
         }
+
     }
 
     /**
@@ -140,11 +160,19 @@ public class CompanionInGameAlerts extends UIComponent {
      * @param health - the health of the companion
      */
     public void playerHealthUpdate(int health) {
-        if (health <= 50) {
-            // add an alert
-            CharSequence companionAlertUpdate = String.format("Oh no! Player Health Low! %d", health);
-            addFollowingAlert(companionAlertUpdate);
+        //check that the companion hasn't actually increased health
+        int changeInHealth = previousPlayerHealth - health;
+        //if the change in health is positive, that means that the health is decreasing.
+        if (changeInHealth > 0) {
+            previousPlayerHealth = health;
+            //if the player health is 20% of its theoretical max health
+            if (health <= 20 && health > 0) {
+                // add an alert
+                CharSequence companionAlertUpdate = String.format("Player Health Low! %d", health);
+                addFollowingAlert(companionAlertUpdate);
+            }
         }
+
     }
 
 
@@ -162,6 +190,9 @@ public class CompanionInGameAlerts extends UIComponent {
      */
     @Override
     public void dispose() {
+        if (alertLabel != null) {
+            alertLabel.remove();
+        }
         super.dispose();
     }
 }

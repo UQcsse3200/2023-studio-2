@@ -13,9 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.Companion.CompanionPowerupInventoryComponent;
 import com.csse3200.game.components.PowerupType;
-import com.csse3200.game.components.upgradetree.UpgradeDisplay;
-import com.csse3200.game.components.upgradetree.UpgradeNode;
-import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -152,7 +149,6 @@ public class LabWindow extends Window {
                 buttonTable.row();
             }
         }
-
         addActor(buttonTable);
         inputOverrideComponent = new InputOverrideComponent();
         ServiceLocator.getInputService().register(inputOverrideComponent);

@@ -131,6 +131,7 @@ public class CompanionInventoryComponent extends Component {
         }
     }
 
+
     /**
      * Retrieves and uses the next power-up from the companion's inventory, regardless of its type.
      *

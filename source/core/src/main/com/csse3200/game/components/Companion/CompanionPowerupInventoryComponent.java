@@ -35,6 +35,10 @@ public class CompanionPowerupInventoryComponent extends Component {
     //setup loger
     private static final Logger logger = LoggerFactory.getLogger(CompanionDeathScreenActions.class);
 
+    //grab the companion for triggers
+
+    public Entity companion = null;
+
 
     /**
      * Constructor
@@ -58,6 +62,8 @@ public class CompanionPowerupInventoryComponent extends Component {
             //set its value to zero
             powerupsInventoryAmount.put(type, 0);
         }
+        //there has been a powerup inventory change
+        sendUIPowerupInventoryChange();
     }
 
     /**
@@ -95,7 +101,8 @@ public class CompanionPowerupInventoryComponent extends Component {
         //WHENEVER A POTION PICKED UP, SHOW NEW COUNTS
         logger.info(powerupsInventoryAmount.toString());
 
-        //CALL AN UPDATE TO THE UI
+        //there has been a powerup inventory change
+        sendUIPowerupInventoryChange();
     }
 
     /**
@@ -120,10 +127,26 @@ public class CompanionPowerupInventoryComponent extends Component {
                 //spawn a death potion weapon
                 //THIS HARDCODE LINE CREATES A NEW DEATH POTION FROM TRIGGER TO WEAPON CLASS
                 ServiceLocator.getEntityService().getCompanion().getEvents().trigger("changeWeapon", CompanionWeaponType.Death_Potion);
-                //call PowerupInventoryAmountChange
+
+                //there has been a powerup inventory change
+                sendUIPowerupInventoryChange();
             }
         }
     }
 
+    /**
+     * This function calls a trigger to the UI to update the counts for all of the powerups for the inventory UI
+     */
+    public void sendUIPowerupInventoryChange() {
+        //call a trigger intended for the powerup inventory display, send the hashmap
 
+        //if companion hasn't been initialised
+        if (companion == null) {
+            companion = ServiceLocator.getEntityService().getCompanion();
+        }
+        //if we have a companion entity to trigger
+        if (companion != null) {
+            companion.getEvents().trigger("powerupInventoryChange", powerupsInventoryAmount);
+        }
+    }
 }

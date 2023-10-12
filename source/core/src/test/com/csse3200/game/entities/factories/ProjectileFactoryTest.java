@@ -29,6 +29,7 @@ import org.mockito.Mock;
 
 import java.util.ArrayList;
 
+import static com.csse3200.game.entities.enemies.EnemyName.redGhost;
 import static com.csse3200.game.entities.factories.EnemyFactory.createEnemy;
 import static com.csse3200.game.entities.factories.ProjectileFactory.createEnemyBullet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -72,7 +73,7 @@ public class ProjectileFactoryTest {
         ArrayList<Entity> targetList = new ArrayList<>();
         Entity newPlayer = new Entity().addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
         targetList.add(newPlayer);
-        Entity enemy = createEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
+        Entity enemy = createEnemy(redGhost);
         Vector2 bulletPosition = new Vector2(1f, 1f);
         Entity bullet = createEnemyBullet(bulletPosition,enemy);
 
@@ -82,7 +83,7 @@ public class ProjectileFactoryTest {
 
     @Test
     void createEnemyBulletConfigTest() {
-        Entity enemy = createEnemy(enemyConfigs.GetEnemyConfig(EnemyType.Melee, EnemyBehaviour.PTE));
+        Entity enemy = createEnemy(enemyConfigs.GetEnemyConfig(redGhost));
         Vector2 bulletPosition = new Vector2(1f, 1f);
         Entity bullet = createEnemyBullet(bulletPosition, enemy, configs.GetProjectileConfig());
 

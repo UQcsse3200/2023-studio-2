@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.entities.configs.CompanionWeaponConfig;
-import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
 
 public class CompanionWeaponController extends Component {
     CompanionWeaponType weaponType;
@@ -43,7 +40,7 @@ public class CompanionWeaponController extends Component {
         this.imageRotationOffset = imageRotationOffset;
     }
 
-
+    @Override
     public void create() {
         this.entity.getEvents().addListener("death", this::setDuration);
     }
@@ -60,16 +57,13 @@ public class CompanionWeaponController extends Component {
      * Function to control projectile movement once it has spawned
      */
 
+    @Override
     public void update() {
-//        if (--this.remainingDuration <= 0) {
-//            this.despawn();
-//            return;
-//        }
         //switch statement to define weapon movement based on type (a projectile
         Vector2 movement = switch (this.weaponType) {
-            case Death_Potion -> update_swing();
+            case DEATH_POTION -> updateSwing();
             //get some different input numbers
-            case SHIELD -> update_static();
+            case SHIELD -> updateStatic();
 
             default -> null;
         };
@@ -78,7 +72,7 @@ public class CompanionWeaponController extends Component {
         Vector2 position = entity.getPosition();
         //Update position and rotation of projectile
         entity.setPosition(new Vector2(position.x + movement.x, position.y + movement.y));
-        if (this.weaponType == CompanionWeaponType.Death_Potion) {
+        if (this.weaponType == CompanionWeaponType.DEATH_POTION) {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -88,34 +82,24 @@ public class CompanionWeaponController extends Component {
             }, POTION_DISPOSE_DELAY);
         }
     }
-//    private void despawn() {
-//        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-//        animator.stopAnimation();
-//        Gdx.app.postRunnable(entity::dispose);
-//    }
-//
 
-
-
-    private Vector2 update_swing() {
+    private Vector2 updateSwing() {
         CompanionWeaponTargetComponent weaponTargetComponent = entity.getComponent(CompanionWeaponTargetComponent.class);
-        Vector2 targetPosition = weaponTargetComponent.get_pos_of_target();
+        Vector2 targetPosition = weaponTargetComponent.getPosOfTarget();
 
         // Calculate the direction vector towards the target
         Vector2 direction = targetPosition.cpy().sub(entity.getPosition()).nor();
 
         // Update the position based on the direction and speed
-        Vector2 movement = direction.scl(this.speed * Gdx.graphics.getDeltaTime());
-
-        return movement;
+        return direction.scl(this.speed * Gdx.graphics.getDeltaTime());
     }
 
     /**
      * required movement for static weapon display - tracks companion
      * @return required movement
      */
-    private Vector2 update_static() {
+    private Vector2 updateStatic() {
         CompanionWeaponTargetComponent weaponTargetComponent = entity.getComponent(CompanionWeaponTargetComponent.class);
-        return weaponTargetComponent.get_pos_of_target();
+        return weaponTargetComponent.getPosOfTarget();
     }
 }

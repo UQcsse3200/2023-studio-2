@@ -43,7 +43,7 @@ public class CompanionWeaponComponent extends Component {
 
         int spawnAngleOffset = 0;
         switch (weaponType) {
-            case Death_Potion:
+            case DEATH_POTION:
                 if (initialRotation < 120 || initialRotation > 300) {
                     spawnAngleOffset += 40;
                 } else {

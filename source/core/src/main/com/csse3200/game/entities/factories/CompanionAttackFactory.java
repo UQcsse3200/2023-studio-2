@@ -29,7 +29,7 @@ public class CompanionAttackFactory {
 
         int direction = 1;
         switch (weaponType) {
-            case Death_Potion:
+            case DEATH_POTION:
                 if (initRot > 120 && initRot < 300) {
                     direction = -1;
                 }
@@ -75,7 +75,7 @@ public class CompanionAttackFactory {
         attack.addComponent(animator)
                 .addComponent(new CombatStatsComponent(30, 10, 1, false));
 
-        if (weaponType == CompanionWeaponType.Death_Potion) {
+        if (weaponType == CompanionWeaponType.DEATH_POTION) {
             int dir = (int) Math.floor(initRot / 60);
             switch (dir) {
                 case 0, 5 -> animator.startAnimation("RIGHT1");

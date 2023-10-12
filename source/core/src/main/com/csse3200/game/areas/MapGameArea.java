@@ -429,7 +429,7 @@ public class MapGameArea extends GameArea{
 
         AstroConfig astroConfig = mapConfig.areaEntityConfig.getEntity(AstroConfig.class);
         if (astroConfig != null) {
-            Entity Astro = NPCFactory.createAstro();
+            Entity Astro = NPCFactory.createAstro(astroConfig);
             spawnEntityAt(Astro, astroConfig.position, false, false);
         }
 
@@ -439,7 +439,7 @@ public class MapGameArea extends GameArea{
 
         TutnpcConfig tutnpcConfig = mapConfig.areaEntityConfig.getEntity(TutnpcConfig.class);
         if (tutnpcConfig != null) {
-            Entity Tutnpc = NPCFactory.createTutnpc();
+            Entity Tutnpc = NPCFactory.createTutnpc(tutnpcConfig);
             spawnEntityAt(Tutnpc, tutnpcConfig.position, false, false);
         }
 

@@ -49,18 +49,6 @@ public class NPCFactory {
   /** Configuration class for NPC properties. */
   private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
-  /** Asset manager to load and manage assets. */
-  public AssetManager assetManager;
-
-  /**
-   * Creates an instance of NPCFactory.
-   *
-   * @param assetManager The asset manager to use for asset loading.
-   */
-  public NPCFactory(AssetManager assetManager) {
-    this.assetManager = assetManager;
-  }
-
 //  public static Entity createGhost(Entity target) {
 //
 //    Entity ghost = createBaseNPC(target);
@@ -90,7 +78,6 @@ public class NPCFactory {
     return createBotanist(configs.botanist);
   }
 
-
   /**
    * Creates a Botanist NPC to match the config file
    * @return The created Botanist NPC entity.
@@ -102,7 +89,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/botanist.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class));
     animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-1-column-4", 0.01f, Animation.PlayMode.LOOP);
@@ -137,14 +124,14 @@ public class NPCFactory {
    * Creates a Astro NPC to match the config file
    * @return The created Astro NPC entity.
    */
-  public static Entity createAstro() {
+  public static Entity createAstro(AstroConfig astroConfig) {
 
 //    AITaskComponent aiComponent = new AITaskComponent();
 //    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/npc/Astro_NPC.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset(astroConfig.spritePath, TextureAtlas.class));
     animator.addAnimation("Astro_Up", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("Astro_UpLeft", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("Astro_Left", 0.2f, Animation.PlayMode.LOOP);
@@ -157,7 +144,7 @@ public class NPCFactory {
     Entity Astro =
             new Entity()
                     .addComponent(animator)
-                    .addComponent(new AstroAnimationController(new AssetManager()))
+                    .addComponent(new AstroAnimationController())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
@@ -175,14 +162,14 @@ public class NPCFactory {
     return Astro;
   }
 
-  public static Entity createTutnpc() {
+  public static Entity createTutnpc(TutnpcConfig tutnpcConfig) {
 
 //    AITaskComponent aiComponent = new AITaskComponent();
 //    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/npc/Tutnpc.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset(tutnpcConfig.spritePath, TextureAtlas.class));
     animator.addAnimation("row-2-column-1", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-3-column-1", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-4-column-1", 0.2f, Animation.PlayMode.LOOP);
@@ -212,7 +199,7 @@ public class NPCFactory {
     Entity Tutnpc =
             new Entity()
                     .addComponent(animator)
-                    .addComponent(new TutnpcAnimationController(new AssetManager()))
+                    .addComponent(new TutnpcAnimationController())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
@@ -316,7 +303,7 @@ public class NPCFactory {
     Entity fire =
             new Entity()
                     .addComponent(animator)
-                    .addComponent(new FireAnimationController(new AssetManager()));
+                    .addComponent(new FireAnimationController());
 
     return fire;
   }

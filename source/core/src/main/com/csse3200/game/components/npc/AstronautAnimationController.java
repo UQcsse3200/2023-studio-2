@@ -9,7 +9,6 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
  * Controls the animation of an astronaut NPC using LibGDX's AnimationRenderComponent.
  */
 public class AstronautAnimationController extends Component {
-    private final AssetManager assetManager;
     private AnimationRenderComponent animator;
     private TextureAtlas atlas;
 
@@ -19,9 +18,7 @@ public class AstronautAnimationController extends Component {
     /**
      * Creates a new AstronautAnimationController with an AssetManager for managing assets.
      */
-    public AstronautAnimationController() {
-        this.assetManager = new AssetManager();
-    }
+    public AstronautAnimationController() {}
 
     @Override
     public void create() {
@@ -37,7 +34,6 @@ public class AstronautAnimationController extends Component {
     @Override
     public void dispose() {
         super.dispose();
-        assetManager.dispose();
     }
 
     @Override

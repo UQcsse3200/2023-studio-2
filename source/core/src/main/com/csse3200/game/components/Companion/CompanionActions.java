@@ -230,6 +230,10 @@ public class CompanionActions extends Component {
         ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, CompanionWeaponType.SHIELD);
     }
 
+    /**
+     * trigger the creation of any
+     * @param slot
+     */
     public void triggerInventoryEvent(String slot) {
         CompanionInventoryComponent invComp = ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class);
         invComp.setEquipped(slot);

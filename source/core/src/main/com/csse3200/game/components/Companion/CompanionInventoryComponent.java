@@ -27,6 +27,22 @@ public class CompanionInventoryComponent extends Component {
     int maxAmmo;
     private int attackCooldown;
 
+    private static final Logger logger = LoggerFactory.getLogger(CompanionInventoryComponent.class);
+    private static final int INVENTORY_SIZE = 7;
+
+    // A single queue for all power-ups
+    private final Deque<Entity> powerupQueue = new ArrayDeque<>(INVENTORY_SIZE);
+
+    private final int[] itemQuantity = new int[INVENTORY_SIZE];
+
+
+    // Add a HashMap to store counts for each power-up type
+    private final HashMap<PowerupType, Integer> powerupCounts = new HashMap<>();
+
+    private  String equipped = "ranged";
+    private final LinkedHashMap<String, CompanionInventoryComponent> equippedWMap = new LinkedHashMap<>(); // preserves insert order
+    private CompanionWeaponConfigs config;
+
     public CompanionInventoryComponent(CompanionWeaponType weaponType, int ammo, int maxAmmo) {
         this.weaponType = weaponType;
         this.ammoCount = ammo;
@@ -67,17 +83,7 @@ public class CompanionInventoryComponent extends Component {
             return;
         attackCooldown--;
     }
-    private static final Logger logger = LoggerFactory.getLogger(CompanionInventoryComponent.class);
-    private static final int INVENTORY_SIZE = 7;
 
-    // A single queue for all power-ups
-    private final Deque<Entity> powerupQueue = new ArrayDeque<>(INVENTORY_SIZE);
-
-    private final int[] itemQuantity = new int[INVENTORY_SIZE];
-
-
-    // Add a HashMap to store counts for each power-up type
-    private final HashMap<PowerupType, Integer> powerupCounts = new HashMap<>();
 
     public CompanionInventoryComponent() {
         // Initialize power-up counts
@@ -143,11 +149,6 @@ public class CompanionInventoryComponent extends Component {
         }
         return false;
     }
-
-    private  String equipped = "ranged";
-    private final LinkedHashMap<String, CompanionInventoryComponent> equippedWMap = new LinkedHashMap<>(); // preserves insert order
-    private CompanionWeaponConfigs config;
-
 
     public void create() {
 

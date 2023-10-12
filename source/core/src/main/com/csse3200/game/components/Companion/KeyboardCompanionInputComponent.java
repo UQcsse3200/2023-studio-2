@@ -4,15 +4,11 @@
  */
 package com.csse3200.game.components.Companion;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
 import com.csse3200.game.components.player.InteractionControllerComponent;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;

@@ -245,7 +245,6 @@ public class DebugRenderer {
     public Vector2 pos;
     public Color color;
     public float lineWidth;
-
     public Vector2 end;
   }
 

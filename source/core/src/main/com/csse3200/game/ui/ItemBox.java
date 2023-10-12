@@ -48,10 +48,7 @@ public class ItemBox {
         if (!showing){
             return false;
         }
-        if(Gdx.input.isButtonPressed(0) && rectangle2.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())){
-            return true;
-        }
-        return false;
+        return (Gdx.input.isButtonPressed(0) && rectangle2.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()));
     }
 
 }

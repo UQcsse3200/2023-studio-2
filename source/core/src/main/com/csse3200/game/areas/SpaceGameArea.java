@@ -11,7 +11,6 @@ import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.MinigameShipFactory;
 import com.csse3200.game.entities.factories.MinigameObjectFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.RandomUtils;
@@ -47,8 +46,6 @@ public class SpaceGameArea extends GameArea {
     private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
     private static final String[] spaceMusic = {backgroundMusic};
     private final TerrainFactory terrainFactory;
-    private final ArrayList<Entity> targetables;
-
     private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
 
     /**
@@ -97,11 +94,11 @@ public class SpaceGameArea extends GameArea {
      * @param pos Start position from where the number of blocks are added
      */
     private void spawnStaticAsteroidsRight(int n, GridPoint2 pos){
-        Entity asteroid_length = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
+        Entity asteroidlength = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
         if (n <= 0) {
             return;
         }
-        spawnEntityAt(asteroid_length, pos, false, false);
+        spawnEntityAt(asteroidlength, pos, false, false);
         // Increment the position for the next asteroid
         pos.x += 1;
         pos.y += 0;
@@ -114,11 +111,11 @@ public class SpaceGameArea extends GameArea {
      * @param pos Start position from where the number of blocks are added on the map
      */
     private void spawnStaticAsteroidsUp(int n, GridPoint2 pos){
-        Entity asteroid_width = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
+        Entity asteroidwidth = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
         if (n <= 0) {
             return;
         }
-        spawnEntityAt(asteroid_width, pos, false, false);
+        spawnEntityAt(asteroidwidth, pos, false, false);
         // Increment the position for the next asteroid
         pos.y += 1;
         spawnStaticAsteroidsUp(n - 1, pos); // Recursive call
@@ -143,8 +140,8 @@ public class SpaceGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
         for (int i = 0; i < NUM_ENEMIES; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity rand_enemy = MinigameObjectFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE);
-            spawnEntityAt(rand_enemy, randomPos,true,false);
+            Entity randomenemy = MinigameObjectFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE);
+            spawnEntityAt(randomenemy, randomPos,true,false);
         }
     }
 

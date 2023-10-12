@@ -35,7 +35,6 @@ public class ShopArea extends GameArea {
     };
     private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
     private final TerrainFactory terrainFactory;
-    private final ArrayList<Entity> targetables;
 
     /**
      * Constructor for initializing terrain area

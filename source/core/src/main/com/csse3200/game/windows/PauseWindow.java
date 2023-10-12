@@ -21,7 +21,7 @@ public class PauseWindow extends Window {
     private final InputOverrideComponent inputOverrideComponent;
     private Entity entity;
 
-    public static PauseWindow MakeNewPauseWindow(Entity entity) {
+    public static PauseWindow makeNewPauseWindow(Entity entity) {
         Texture background = new Texture("images/structures/panel.png");
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new PauseWindow(background, entity);
@@ -54,9 +54,9 @@ public class PauseWindow extends Window {
         returnToMainMenuButton.setHeight(buttonHeight);
 
         pauseTable.top();
-        pauseTable.add(gamePausedLabel).padTop(70);
+        pauseTable.add(gamePausedLabel).padTop(90);
         pauseTable.row();
-        pauseTable.add(returnToGameButton).padTop(70).padLeft(20);
+        pauseTable.add(returnToGameButton).padTop(90).padLeft(20);
         pauseTable.row();
         pauseTable.add(returnToMainMenuButton).padTop(50).padLeft(20);
         addActor(pauseTable);

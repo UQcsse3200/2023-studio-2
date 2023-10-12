@@ -409,7 +409,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
      */
     private Vector2 mouseToGamePos(int screenX, int screenY) {
         this.lastMousePos = ServiceLocator.getTerrainService()
-                .ScreenCoordsToGameCoords(screenX, screenY).scl(0.5f);
+                .screenCoordsToGameCoords(screenX, screenY).scl(0.5f);
         return this.lastMousePos.cpy();
     }
 

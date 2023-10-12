@@ -89,7 +89,7 @@ public class ProductionComponent extends Component {
 
             if (!this.damaged) {
                 Entity popup = new PopupFactory().createPopup(this.produces);
-                ServiceLocator.getEntityPlacementService().PlaceEntityAt(popup, this.entity.getPosition().add(this.entity.getScale().scl(0.65F)));
+                ServiceLocator.getEntityPlacementService().placeEntityAt(popup, this.entity.getPosition().add(this.entity.getScale().scl(0.65F)));
             }
         }
     }

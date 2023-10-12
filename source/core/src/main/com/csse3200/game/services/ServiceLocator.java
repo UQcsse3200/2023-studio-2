@@ -27,11 +27,11 @@ public class ServiceLocator {
   private static TerrainService terrainService;
   private static EntityPlacementService entityPlacementService;
   private static GameStateObserver gameStateObserverService;
-  private static GameArea GameArea;
-  public static GameArea getGameArea(){return GameArea;}
+  private static GameArea gameArea;
+  public static GameArea getGameArea(){return gameArea;}
 
   public static void registerGameArea(GameArea area){
-    GameArea=area;
+    gameArea =area;
   }
 
   private static StructurePlacementService structurePlacementService;

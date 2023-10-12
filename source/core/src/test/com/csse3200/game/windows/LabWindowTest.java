@@ -33,7 +33,7 @@ class LabWindowTest {
     @Test
     public void labWindowNotNull() {
         Entity dummyEntity = new Entity(); // Create a dummy entity for testing
-        LabWindow labWindow = LabWindow.MakeNewLaboratory();
+        LabWindow labWindow = LabWindow.makeNewLaboratory();
         stage.addActor(labWindow);
 
         // Add images of potions in front of the lab window

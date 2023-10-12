@@ -56,7 +56,7 @@ public class ExplosiveComponent extends Component {
             explosionEntity.addComponent(new SoundComponent(EFFECT_NAME, explosiveConfig.soundPath));
         }
 
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(explosionEntity, entity.getPosition());
+        ServiceLocator.getEntityPlacementService().placeEntityAt(explosionEntity, entity.getPosition());
 
         // triggers the explosion sound and effect if they exist within the entity
         explosionEntity.getEvents().trigger("startEffect", EFFECT_NAME);

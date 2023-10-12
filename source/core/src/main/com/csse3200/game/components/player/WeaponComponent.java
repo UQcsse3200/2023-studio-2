@@ -47,7 +47,7 @@ public class WeaponComponent extends Component {
         }
 
         for (Pair<Entity, Integer> attack : attacks) {
-            ServiceLocator.getEntityPlacementService().PlaceEntityAfter(attack.getKey(), attack.getValue());
+            ServiceLocator.getEntityPlacementService().placeEntityAfter(attack.getKey(), attack.getValue());
         }
 
         InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
@@ -78,7 +78,7 @@ public class WeaponComponent extends Component {
             this.holdingWeapon.dispose();
         }
         this.holdingWeapon = PlayerWeaponFactory.createPlayerWeapon(weapon, attackDirection, entity);
-        ServiceLocator.getEntityPlacementService().PlaceEntity(this.holdingWeapon);
+        ServiceLocator.getEntityPlacementService().placeEntity(this.holdingWeapon);
     }
 
     /**

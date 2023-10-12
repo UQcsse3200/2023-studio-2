@@ -46,7 +46,6 @@ public class EnvironmentStatsComponent extends Component {
      * 
      */
     public void setImmunity(GameAreaConfig mapConfig) {
-        //System.out.println(mapConfig.mapName);
         this.isImmune = !mapConfig.mapName.equals("Earth");
         
     }

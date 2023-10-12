@@ -33,7 +33,7 @@ public class Turret extends PlaceableEntity{
     private long start = System.currentTimeMillis(); // start time
 
     TurretType type; // turret type
-    public int currentAmmo; // current ammo
+    private int currentAmmo; // current ammo
 
     int maxAmmo; // max ammo
     int damage; // damage
@@ -103,7 +103,7 @@ public class Turret extends PlaceableEntity{
             healthBarComponent.setEnabled(false);
         }
 
-        if (focusCombatStatsComponent.getHealth() <= 0 || !Canfire()) {
+        if (focusCombatStatsComponent.getHealth() <= 0 || !canFire()) {
             return;
         }
         // give damage until health is 0
@@ -191,7 +191,7 @@ public class Turret extends PlaceableEntity{
      * @return True if the turret can fire, else false.
      */
 
-    public boolean Canfire() {
+    public boolean canFire() {
         return  (currentAmmo > 0) ; // return true if current ammo is greater than 0
     }
 

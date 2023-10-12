@@ -45,7 +45,7 @@ public class MainGameActions extends Component {
    */
   private void onPauseButton() {
     logger.info("Opening Pause Menu");
-    PauseWindow pauseWindow = PauseWindow.MakeNewPauseWindow(entity);
+    PauseWindow pauseWindow = PauseWindow.makeNewPauseWindow(entity);
     entityList = ServiceLocator.getEntityService().getEntities();
     for (Entity entity : entityList) {
       if (entity.getId() != getEntity().getId()) {

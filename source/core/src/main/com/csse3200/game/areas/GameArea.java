@@ -1,6 +1,5 @@
 package com.csse3200.game.areas;
 
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -16,7 +15,6 @@ import com.csse3200.game.services.StructurePlacementService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 
 /**
@@ -138,7 +136,7 @@ public abstract class GameArea implements Disposable {
           for (int x = gridBottomLeft.x; x < gridTopRight.x; x++) {
             for (int y = gridBottomLeft.y; y < gridTopRight.y; y++) {
               GridPoint2 gridPoint = new GridPoint2(x, y);
-              if (!(pathFinderGrids.containsKey(gridPoint))) {
+              if (!pathFinderGrids.containsKey(gridPoint)) {
                 pathFinderGrids.put(gridPoint, entity);
               }
             }

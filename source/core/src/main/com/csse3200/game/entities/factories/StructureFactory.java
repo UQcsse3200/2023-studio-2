@@ -92,7 +92,7 @@ public class StructureFactory {
             CombatStatsComponent healthStats = extractor.getComponent(CombatStatsComponent.class);
 
             if (healthStats.isDead()) {
-                ExtractorMinigameWindow minigame = ExtractorMinigameWindow.MakeNewMinigame(extractor);
+                ExtractorMinigameWindow minigame = ExtractorMinigameWindow.makeNewMinigame(extractor);
                 ServiceLocator.getRenderService().getStage().addActor(minigame);
             }
         }, 5f));

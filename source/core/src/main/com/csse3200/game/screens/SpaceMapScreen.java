@@ -85,7 +85,7 @@ public class SpaceMapScreen extends ScreenAdapter {
         // Calculate the distance between the ship and the goal
         float distance = SpaceGameArea.calculateDistance(ship, goal);
         distanceDisplay.updateDistanceUI(distance);
-        Exitonc(distance);
+        exitonc(distance);
         renderer.render();
 
     }
@@ -95,7 +95,7 @@ public class SpaceMapScreen extends ScreenAdapter {
      * to the main screen of the game
      * @param d Distance of the spaceship from the exit goal
      */
-    public void Exitonc(float d)
+    public void exitonc(float d)
     {
         if(d < 1.0) {
             this.dispose();

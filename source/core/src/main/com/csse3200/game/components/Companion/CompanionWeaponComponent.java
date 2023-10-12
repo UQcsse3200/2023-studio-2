@@ -57,7 +57,7 @@ public class CompanionWeaponComponent extends Component {
         float distance = 1.25f;
         Entity newAttack = CompanionAttackFactory.createAttack(weaponType, initialRotation,ServiceLocator.getEntityService().getCompanion());
         var newPos = positionInDirection(initialRotation + spawnAngleOffset, distance, newAttack);
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
+        ServiceLocator.getEntityPlacementService().placeEntityAt(newAttack, newPos);
 //        CompanionInventoryComponent invComp= ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class);
 //        ServiceLocator.getEntityService().getCompanion().getEvents().trigger("updateAmmo", invComp.GetCurrentAmmo(), invComp.GetCurrentMaxAmmo());
     }
@@ -73,7 +73,7 @@ public class CompanionWeaponComponent extends Component {
         }
 
 
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(this.CurrentWeapon , placePos);
+        ServiceLocator.getEntityPlacementService().placeEntityAt(this.CurrentWeapon , placePos);
         this.CurrentWeapon.addComponent(new HitboxComponent());
     }
 

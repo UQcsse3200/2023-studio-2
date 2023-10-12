@@ -24,7 +24,7 @@ public class LabWindow extends Window {
     Table buttonTable;
     Table exit;
 
-    public static LabWindow MakeNewLaboratory() {
+    public static LabWindow makeNewLaboratory() {
         Texture background = new Texture("images/companion/lab.png");
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new LabWindow(background);
@@ -40,11 +40,10 @@ public class LabWindow extends Window {
         setPosition(stage.getWidth() / 2 - getWidth() / 2 * getScaleX(), stage.getHeight() / 2 - getHeight() / 2 * getScaleY());
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         // Create a Table to hold the buttons and center them within the window
-        Table buttonTable = new Table();
+        buttonTable = new Table();
         buttonTable.setFillParent(true);
         // Fill the entire LabWindow
 
-        Table exit = new Table();
         Texture deathpotionImage = new Texture("images/powerups/death_potion.png");
         Texture speedpotionImage = new Texture("images/powerups/speed_boost.png");
         Texture healthpotionImage = new Texture("images/powerups/health_boost.png");

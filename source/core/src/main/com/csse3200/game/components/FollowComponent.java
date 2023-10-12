@@ -3,8 +3,6 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
-import org.slf4j.Logger;
-
 
 public class FollowComponent extends Component{
     private final Entity followEntity;

@@ -37,6 +37,7 @@ public class PowerupComponent extends Component {
      */
     @Override
     public void create() {
+        // creates the powerup component.
     }
 
     /**
@@ -141,6 +142,7 @@ public class PowerupComponent extends Component {
                         }
                         enemy.dispose();
                     }
+                    break;
                 }
 
             default:

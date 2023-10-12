@@ -3,8 +3,6 @@ package com.csse3200.game.components.player;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.configs.WeaponConfigs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

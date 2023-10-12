@@ -44,6 +44,8 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.badlogic.gdx.Gdx.app;
+
 public class ControlsScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(PlanetScreen.class);
     private final GdxGame game;
@@ -126,8 +128,13 @@ public class ControlsScreen extends ScreenAdapter {
                 entity.getEvents().trigger("exit");
             }
         });
+        entity.getEvents().addListener("exit", this::onExit);
 
         stage.addActor(exitBtn);
+
+    }
+    public void onExit() {
+        game.setScreen(GdxGame.ScreenType.SETTINGS);
     }
 //    private void showTutorialDialogueBox() {
 //        // Create and display the TitleBox

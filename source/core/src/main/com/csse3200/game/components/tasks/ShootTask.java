@@ -59,15 +59,18 @@ public class ShootTask extends DefaultTask {
 
         // Calculate the square where bullet should be fired to
         Vector2 targetLocation = target.getPosition();
-        float xDifference = spawn.x - targetLocation.x;
-        float yDifference = spawn.y - targetLocation.y;
-        float xDistance = abs(spawn.x - targetLocation.x);
-        float yDistance = abs(spawn.y - targetLocation.y);
-        float gradient = yDistance / xDistance;
-        targetLocation.y += gradient * (yDifference / yDistance);
-        targetLocation.x += 1 * (xDifference / xDistance);
+        float finalX;
+        float finalY;
+        if (targetLocation.x == spawn.x) {
+            finalX = targetLocation.x;
+            finalY = targetLocation.y + 1 * (targetLocation.y - spawn.y) / abs(targetLocation.y - spawn.y);
+        } else {
+            float gradient = (targetLocation.y - spawn.y) / (targetLocation.x - spawn.x);
+            finalX = targetLocation.x + 1 * (targetLocation.x - spawn.x) / abs(targetLocation.x - spawn.x);
+            finalY = targetLocation.y + gradient * 1 * (targetLocation.x - spawn.x) / abs(targetLocation.x - spawn.x);
+        }
 
-        Entity bullet = ProjectileFactory.createEnemyBullet(targetLocation, owner.getEntity());
+        Entity bullet = ProjectileFactory.createEnemyBullet(new Vector2(finalX, finalY), owner.getEntity());
 
         ServiceLocator.getStructurePlacementService().spawnEntityAtVector(bullet, spawn);
     }

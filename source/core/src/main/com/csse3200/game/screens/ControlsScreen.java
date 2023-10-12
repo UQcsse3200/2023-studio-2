@@ -65,10 +65,6 @@ public class ControlsScreen extends ScreenAdapter {
         renderer.dispose();
         unloadAssets();
 
-        ServiceLocator.getEntityService().dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getResourceService().dispose();
-
         ServiceLocator.clear();
     }
 

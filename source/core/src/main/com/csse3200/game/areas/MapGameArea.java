@@ -429,7 +429,7 @@ public class MapGameArea extends GameArea{
 
         AstroConfig astroConfig = mapConfig.areaEntityConfig.getEntity(AstroConfig.class);
         if (astroConfig != null) {
-            Entity Astro = NPCFactory.createAstro();
+            Entity Astro = NPCFactory.createAstro(astroConfig);
             spawnEntityAt(Astro, astroConfig.position, false, false);
         }
 
@@ -439,7 +439,7 @@ public class MapGameArea extends GameArea{
 
         TutnpcConfig tutnpcConfig = mapConfig.areaEntityConfig.getEntity(TutnpcConfig.class);
         if (tutnpcConfig != null) {
-            Entity Tutnpc = NPCFactory.createTutnpc();
+            Entity Tutnpc = NPCFactory.createTutnpc(tutnpcConfig);
             spawnEntityAt(Tutnpc, tutnpcConfig.position, false, false);
         }
 
@@ -451,7 +451,7 @@ public class MapGameArea extends GameArea{
         AstronautConfig astronautConfig = mapConfig.areaEntityConfig.getEntity(AstronautConfig.class);
         if (astronautConfig != null) {
             Entity astronaut = NPCFactory.createAstronaut(astronautConfig);
-            spawnEntityAt(astronaut, astronautConfig.position, false, false);
+            spawnEntityAt(astronaut, astronautConfig.position, true, true);
         }
     }
 
@@ -460,10 +460,9 @@ public class MapGameArea extends GameArea{
 
         JailConfig jailConfig = mapConfig.areaEntityConfig.getEntity(JailConfig.class);
         if (jailConfig != null) {
-            Entity Jail = NPCFactory.createJail();
-            spawnEntityAt(Jail, jailConfig.position, false, false);
+            Entity Jail = NPCFactory.createJail(jailConfig);
+            spawnEntityAt(Jail, jailConfig.position, true, true);
         }
-
     }
 
     /**

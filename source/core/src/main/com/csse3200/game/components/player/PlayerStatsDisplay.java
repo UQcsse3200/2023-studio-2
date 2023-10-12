@@ -26,8 +26,6 @@ import java.util.TimerTask;
  */
 public class PlayerStatsDisplay extends UIComponent {
   private final String labelStyle;
-  private Table container;
-  private Table statsTable;
   private final int maxHealth;
   private float healthBarWidth;
   private float dodgeBarWidth;
@@ -38,7 +36,6 @@ public class PlayerStatsDisplay extends UIComponent {
   private TextureRegionDrawable highHealth;
   private TextureRegionDrawable medHealth;
   private TextureRegionDrawable lowHealth;
-  private Image dodgeBarSecondaryFill;
   private Label maxLivesLabel;
   private TextureRegion hearts;
   private Image livesBarFill;
@@ -83,13 +80,13 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   private void addActors() {
     // Create parent table to hold all elements
-    container = new Table();
+    Table container = new Table();
     container.top().left();
     container.setFillParent(true);
     container.padTop(20f).padLeft(190f);
 
     // Create table to hold the health bar and dodge bar
-    statsTable = new Table();
+    Table statsTable = new Table();
     statsTable.top().left();
     container.setFillParent(true);
 

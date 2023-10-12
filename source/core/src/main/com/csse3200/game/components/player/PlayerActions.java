@@ -7,12 +7,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -21,9 +18,8 @@ import com.csse3200.game.services.ServiceLocator;
  * and when triggered should call methods within this class.
  */
 public class PlayerActions extends Component {
-    private static Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
+    private Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
-    private final EntityService entityService = new EntityService();
     private PhysicsComponent physicsComponent;
     Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
@@ -40,7 +36,6 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("remove", this::remove);
         entity.getEvents().addListener("dodged", this::dodged);
         entity.getEvents().addListener("change_structure", this::changeStructure);
-        GameStateInteraction gameStateInteraction = new GameStateInteraction();
     }
 
     @Override

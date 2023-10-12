@@ -12,7 +12,6 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 public class AstroAnimationController extends Component {
     private final AssetManager assetManager;
     private AnimationRenderComponent animator;
-    private TextureAtlas atlas;
 
     float animationTimer = 0f;
     float animationDuration = 10f; // Adjust this to control animation speed.
@@ -34,7 +33,7 @@ public class AstroAnimationController extends Component {
         animator = entity.getComponent(AnimationRenderComponent.class);
         assetManager.load("images/npc/Astro_NPC.atlas", TextureAtlas.class);
         assetManager.finishLoading();
-        atlas = assetManager.get("images/npc/Astro_NPC.atlas");
+        TextureAtlas atlas = assetManager.get("images/npc/Astro_NPC.atlas");
 
         // Start with the default animation.
         animator.startAnimation("Astro_Down");

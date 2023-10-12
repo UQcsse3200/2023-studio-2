@@ -151,7 +151,7 @@ public class CompanionInventoryComponent extends Component {
 
     public void create() {
 
-        equippedWMap.put("ranged", new CompanionInventoryComponent(CompanionWeaponType.Death_Potion, 30, 30));
+        equippedWMap.put("ranged", new CompanionInventoryComponent(CompanionWeaponType.DEATH_POTION, 30, 30));
 
     }
 

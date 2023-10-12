@@ -50,11 +50,6 @@ public class ProductionComponent extends Component {
         this.damaged = true;
     }
 
-    @Override
-    public void create() {
-        super.create();
-    }
-
     /**
      * getProductionModifier returns a value between 0 and 1 for how efficient the extractor is.
      * For example a fully functioning extractor would have an efficiency of 1.0, and a broken one 0.0.

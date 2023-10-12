@@ -1,7 +1,6 @@
 package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.FOVComponent;
 import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.components.structures.TurretAnimationController;
 import com.csse3200.game.entities.Entity;
@@ -23,8 +21,6 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.AtlasRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.Objects;
@@ -80,14 +76,6 @@ public class Turret extends PlaceableEntity{
         addComponent(new StructureDestroyComponent());// add structure destroy component
         addComponent(animator); // add animation render component
         addComponent(new TurretAnimationController());
-    }
-
-    /**
-     * This method is used to update the turret.
-     */
-    @Override
-    public void update() {
-        super.update();
     }
 
     /**

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponController;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponTargetComponent;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
-import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionWeaponConfig;
 import com.csse3200.game.entities.configs.CompanionWeaponConfigs;
@@ -22,7 +21,7 @@ public class CompanionWeaponFactory {
         CompanionWeaponConfig config = configs.GetWeaponConfig(weaponType);
 
         CompanionWeaponController weaponController = new CompanionWeaponController(
-                CompanionWeaponType.Death_Potion,
+                CompanionWeaponType.DEATH_POTION,
                 config.weaponDuration, config.currentRotation,
                 config.weaponSpeed,
                 config.rotationSpeed,

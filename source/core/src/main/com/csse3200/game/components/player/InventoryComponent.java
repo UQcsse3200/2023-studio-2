@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
  * Can also be used as a more generic component for other entities.
  */
 public class InventoryComponent extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
     private String equipped = "melee";
     private final LinkedHashMap<String, InventoryItem> equippedWMap = new LinkedHashMap<>(); // preserves insert order
     private final WeaponConfigs config;

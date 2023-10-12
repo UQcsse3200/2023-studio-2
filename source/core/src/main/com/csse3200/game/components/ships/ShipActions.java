@@ -59,8 +59,6 @@ public class ShipActions extends Component {
 
         body = physicsComponent.getBody();
         body.setLinearDamping(0); //prevents the ship from stopping for no physical reason
-        //body.setFixedRotation(false);
-
     }
 
     /**

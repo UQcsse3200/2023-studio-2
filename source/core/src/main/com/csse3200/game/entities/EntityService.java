@@ -27,7 +27,6 @@ public class EntityService {
   public Array<Entity> getEntities() {
     return entities;
   }
-
   public void saveCurrentArea(String path) {
     AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
     areaEntityConfig.addEntities(getEntitiesByComponent(SaveableComponent.class));

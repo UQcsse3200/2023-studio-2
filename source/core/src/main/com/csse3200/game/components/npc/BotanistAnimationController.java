@@ -30,7 +30,6 @@ public class BotanistAnimationController extends Component {
         animator = entity.getComponent(AnimationRenderComponent.class);
         assetManager.load("images/botanist.atlas", TextureAtlas.class);
         assetManager.finishLoading();
-        TextureAtlas atlas = assetManager.get("images/botanist.atlas");
 
         // Start with the default animation.
         animator.startAnimation("row-1-column-1");

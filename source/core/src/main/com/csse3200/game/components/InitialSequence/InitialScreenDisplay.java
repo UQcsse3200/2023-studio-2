@@ -15,7 +15,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.GdxGame.ScreenType;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.AlertBox;
-import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +26,10 @@ public class InitialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(InitialScreenDisplay.class);
     private final GdxGame game;
     private BitmapFont font;
-    private float spaceSpeed = 5;
     private float planetToTextPadding = 150;
     private Image background;
     private Image planet;
     private Table rootTable;
-    private Label storyLabel;
 
     /**
      * Creates a new instance of the InitialScreenDisplay.
@@ -87,7 +84,7 @@ public class InitialScreenDisplay extends UIComponent {
         // Configure the Label
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
         labelStyle.font.getData().setScale(0.4f); // Set the font size (adjust the scale as needed)
-        storyLabel = new Label("", labelStyle);
+        Label storyLabel = new Label("", labelStyle);
         storyLabel.setAlignment(Align.center);
         storyLabel.setWrap(false); // Allow text wrapping
         storyLabel.setWidth(Gdx.graphics.getWidth());
@@ -160,11 +157,6 @@ public class InitialScreenDisplay extends UIComponent {
 
     @Override
     public void update() {
-        // This movement logic is triggered on every frame until the middle of the planet hits its target position on the screen.
-//        if (planet.getY(Align.center) >= rootTable.getY() + planetToTextPadding) {
-//            planet.setY(planet.getY() - spaceSpeed); // Move the planet
-//            background.setY(background.getY() - spaceSpeed); // Move the background
-//        }
         stage.act(Gdx.graphics.getDeltaTime());
     }
 

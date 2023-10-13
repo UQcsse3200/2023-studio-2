@@ -69,7 +69,8 @@
     "sounds/alert.wav",
     "sounds/explosion/grenade.mp3",
     "sounds/explosion/landmine.mp3",
-    "sounds/turret_shoot.mp3"
+    "sounds/turret_shoot.mp3",
+    "sounds/ExitButton.wav"
   ],
   "particleEffectPaths": null,
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav"

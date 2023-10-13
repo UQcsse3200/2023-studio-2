@@ -93,7 +93,8 @@
     "sounds/turret_shoot.mp3",
     "sounds/alert.wav",
     "sounds/explosion/grenade.mp3",
-    "sounds/explosion/landmine.mp3"
+    "sounds/explosion/landmine.mp3",
+    "sounds/ExitButton.wav"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

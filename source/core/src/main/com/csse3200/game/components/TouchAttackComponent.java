@@ -102,17 +102,19 @@ public class TouchAttackComponent extends Component {
     }
 
     // Targeting STRUCTURE entity type
-    if (target.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.STRUCTURE) {
+    if (PhysicsLayer.contains(target.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.STRUCTURE)) {
       // Schedule the trigger every 2 seconds
       Timer.Task task = new Timer.Task() {
         @Override
         public void run() {
           if (!leftContact) {
             hitOnce(target, source, sourceStats, targetStats);
+          } else {
+            cancel();
           }
         }
       };
-      Timer.schedule(task, 2000, 2000); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
+      Timer.schedule(task, 2, 2); // Initial delay: 2000, Repeat every 2000 milliseconds (2 seconds)
     } else {
       // hit once, push away
       hitOnce(target, source, sourceStats, targetStats);

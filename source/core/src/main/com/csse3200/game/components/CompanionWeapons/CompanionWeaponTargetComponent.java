@@ -50,6 +50,12 @@ public class CompanionWeaponTargetComponent extends Component {
 
     }
 
+    /**
+     * Finds the position of where the entity should be
+     * For shield, that is circling the companion
+     * for Death_potion, that is finding the nearest enemy
+     * @return - Vector2 position
+     */
     public Vector2 get_pos_of_target() {
         Vector2 pos;
 
@@ -100,12 +106,15 @@ public class CompanionWeaponTargetComponent extends Component {
 
     /**
      * This function will rotate the shield around this entity
+     *
+     *
      * @return - vector
      */
     public Vector2 rotate_shield_around_entity() {
         //companion position
         var companion = entity.getPosition().sub(this.trackPrev);
 
+        //The bigger this number, the slower the shield rotates around
         float scalaingFactor = 7000;
 
         // Grab the current offsets, and scale down the offset down to between

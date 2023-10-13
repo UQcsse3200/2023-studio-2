@@ -1,0 +1,13 @@
+{
+  "entityType": "JailConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.JailConfig,
+      "spritePath": "images/Jail/jail.atlas",
+      "position" : {
+        "x": 24,
+        "y": 51
+      }
+    }
+  ]
+}

@@ -74,6 +74,7 @@ public class StoryScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
+        ServiceLocator.clear();
     }
 
     private void loadAssets() {

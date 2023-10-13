@@ -1,24 +1,36 @@
 package com.csse3200.game.components.npc;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.areas.GameArea;
-import com.csse3200.game.areas.MapGameArea;
-import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.*;
 
+/**
+ * Pathfinder class that uses the A * algorithm to determine the closest path from a starting grid location to the
+ * target gird location.
+ */
 public class PathFinder {
+    static final Set<Node> closed = new HashSet<>();
 
+    /**
+     * Helper fucntion to return the node set of closed path. Used for the pathfinder test
+     * @return closed
+     */
+    public static Set<Node> getClosedSet() {
+        return closed;
+    }
+
+    /**
+     * Returns a list of grid points which is the path closest from start to the target location
+     * @param start
+     * @param target
+     * @return List of grids
+     */
     public static List<GridPoint2> findPath(GridPoint2 start, GridPoint2 target) {
         final GameArea map = ServiceLocator.getGameArea();
         final PriorityQueue<Node> open = new PriorityQueue<Node>();
-        final Set<Node> closed = new HashSet<>();
         final Node[][] nodeMap = new Node[map.getTerrain().getMapBounds(0).x][map.getTerrain().getMapBounds(0).y];
         Node current;
 
@@ -88,7 +100,7 @@ public class PathFinder {
         return path;
     }
 
-    private static class Node implements Comparable<Node> {
+    public static class Node implements Comparable<Node> {
         private final int moveCost;
         private final int heuristic;
         private final int gridX;

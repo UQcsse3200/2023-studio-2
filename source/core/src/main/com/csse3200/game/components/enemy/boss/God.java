@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 
+import com.csse3200.game.ai.tasks.Task;
 import com.csse3200.game.components.tasks.MovementTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
@@ -14,13 +15,27 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * This task involves firing bullets in a sequential manner with
+ * incrementing angles to create a spiraling effect.
+ *
+ */
 public class God extends DefaultTask implements PriorityTask {
     private boolean switchMode = false;
-    private boolean Mode = false;
+    private boolean Mode = true;
     private final Entity target;
     private MovementTask movementTask;
     private Vector2[] locations;
 
+
+    /**
+     *
+     * @param target target entity
+     * @param priority  priority tas
+     * @param viewDistance  viewing distance for chasing
+     * @param maxChaseDistance max chasing distance
+     */
     public God(Entity target, int priority, float viewDistance, float maxChaseDistance){
         this.target = target;
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -29,6 +44,8 @@ public class God extends DefaultTask implements PriorityTask {
         ScheduledExecutorService scheduler2 = Executors.newScheduledThreadPool(1);
         scheduler2.scheduleAtFixedRate(this::toggleMode, 0, 2, TimeUnit.SECONDS);
     }
+
+
     /**
      * Switches the speed variable
      */
@@ -37,13 +54,26 @@ public class God extends DefaultTask implements PriorityTask {
         Mode = true;
     }
 
-    private void toggleMode() {
+    /**
+     * Toggle the firing mode. If true fires and false otherwise
+     */
+    public void toggleMode() {
         // Toggle the speed field
         switchMode = true;
     }
 
+    /**
+     * Get the mode of the entity
+     * @return boolean value for that mode
+     */
+    public boolean getMode(){
+        return Mode;
+    }
 
 
+    /**
+     * Initialise enemy movement task and set speed variable
+     */
     @Override
     public void start() {
         super.start();
@@ -51,24 +81,25 @@ public class God extends DefaultTask implements PriorityTask {
         movementTask.create(owner);
         movementTask.start();
         movementTask.setSpeed(new Vector2(0.5f,0.5f));
-
     }
+
+
+    /**
+     * Firing single with angle incremented each time to create spiral attack
+     * Update movement task
+     */
 
     @Override
     public void update() {
         movementTask.setTarget(target.getPosition());
-            if(switchMode){
-                movementTask.stop();
-            }
-            else{
-                movementTask.start();
-            }
+        movementTask.update();
+        movementTask.start();
 
             if(Mode){
                 locations = generateAngle(owner.getEntity().getCenterPosition());
                 final int[] index = {0}; // Initialize an array to keep track of the current index
 
-// Define a task that will run after a delay
+                // Define a task that will run after a delay
                 Timer.Task spawnBulletTask = new Timer.Task() {
                     @Override
                     public void run() {
@@ -88,9 +119,14 @@ public class God extends DefaultTask implements PriorityTask {
                 Timer.schedule(spawnBulletTask, initialDelay, delayBetweenIterations);
                 Mode = false;
             }
-
     }
 
+
+    /**
+     * Get the direction of each bullet divided evenly across 360 degree.
+     * @param owner position of enemy
+     * @return  bullet vector location
+     */
     private Vector2[] generateAngle(Vector2 owner ){
         float radius = 10f;
 
@@ -126,8 +162,10 @@ public class God extends DefaultTask implements PriorityTask {
         return positions;
     }
 
-
-
+    /**
+     * Return the priority for this task
+     * @return integer represent priority
+     */
     @Override
     public int getPriority() {
         return 10;

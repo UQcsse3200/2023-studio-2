@@ -4,21 +4,13 @@
  */
 package com.csse3200.game.components.npc;
 
-import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
-import com.csse3200.game.services.GameTime;
 import com.csse3200.game.entities.configs.SpawnerConfig;
-import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 //import com.csse3200.game.entities.factories.EnemyFactory;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -68,11 +60,15 @@ public class SpawnerComponentTest {
     @Test
     public void testHandleNewWave_FirstWave() {
 
-        config.wave1 = new int[]{1, 2, 0};
+        LinkedHashMap<String, Integer> waveList = new LinkedHashMap<>();
+        waveList.put("redGhost", 1);
+        waveList.put("necromancer", 1);
+        waveList.put("Knight", 1);
+        config.wave1 = waveList;
         spawner.handleNewWave(spawner.timer.getTime());
-        assertEquals(1, spawner.meleeEnemiesToSpawn);
-        assertEquals(2, spawner.rangedEnemiesToSpawn);
-        assertEquals(0, spawner.bossEnemiesToSpawn);
+        assertEquals(1, spawner.enemyType1ToSpawn);
+        assertEquals(1, spawner.enemyType2ToSpawn);
+        assertEquals(1, spawner.enemyType3ToSpawn);
         assertEquals(1, spawner.currentWave);
         assertTrue(spawner.isSpawning);
     }

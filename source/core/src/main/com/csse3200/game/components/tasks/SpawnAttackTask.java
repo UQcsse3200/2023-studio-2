@@ -3,57 +3,73 @@ package com.csse3200.game.components.tasks;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
 import com.csse3200.game.ai.tasks.Task;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyName;
+import com.csse3200.game.entities.enemies.EnemyType;
+import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.services.GameTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
+
+import static com.csse3200.game.entities.enemies.EnemyName.redGhost;
 
 /**
- * Waits around for a set amount of time and then fires a projectile at a target.
+ * Waits around for a set amount of time and then spawns two entities. Will then spawn new entities once
+ * old entities are killed so there are still two entities.
  */
 public class SpawnAttackTask extends DefaultTask implements PriorityTask {
-  private final int priority = 5;
+  private final int priority;
   private static final Logger logger = LoggerFactory.getLogger(SpawnAttackTask.class);
   private final float waitTime;
   private WaitTask waitTask;
   private Task currentTask;
   private SpawnTask spawnTask;
   private final Entity target;
-  private final float range;
   private final GameTime timer;
   private long lastSpawnTime;
-  private int numSpawns = 0;
-  private ArrayList<Entity> entities;
+  private static int numSpawns = 0;
+  private static final ArrayList<Entity> entities = new ArrayList<>();
 
   /**
-   * creates an aim task.
+   * creates a spawn attack task.
    *
    * @param waitTime How long in seconds to wait between spawning enemies.
    * @param target   The target for the enemies
-   * @param range    The range before entity stops chasing and starts spawning.
    */
-  public SpawnAttackTask(float waitTime, Entity target, float range) {
+  public SpawnAttackTask(float waitTime, Entity target, int priority) {
     this.waitTime = waitTime;
     this.target = target;
-    this.range = range;
+    this.priority = priority;
     this.timer = new GameTime();
     lastSpawnTime = timer.getTime();
-    entities = new ArrayList<>();
   }
 
   @Override
   public int getPriority() {
-    if (status == Status.ACTIVE) {
-      return getActivePriority();
+
+    ListIterator<Entity> iterator = entities.listIterator();
+
+    while (iterator.hasNext()) {
+      Entity element = iterator.next();
+      if (element.getComponent(CombatStatsComponent.class).getHealth() == 0) {
+        iterator.remove();
+      }
+    }
+    if (((timer.getTime() - lastSpawnTime > 2f) && entities.size() != 2) || numSpawns == 0) {
+      return priority;
     }
 
-    return getInactivePriority();
+    return -1;
   }
 
   @Override
   public void start() {
+    System.out.println("starting");
     super.start();
 
     waitTask = new WaitTask(waitTime);
@@ -71,48 +87,21 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
   @Override
   public void update() {
     if (currentTask.getStatus() != Status.ACTIVE) {
-      if (currentTask == waitTask && ((timer.getTime() - lastSpawnTime > 10000) || numSpawns == 0)) {
+      ListIterator<Entity> iterator = entities.listIterator();
+
+      while (iterator.hasNext()) {
+        Entity element = iterator.next();
+        if (element.getComponent(CombatStatsComponent.class).getHealth() == 0) {
+          iterator.remove();
+        }
+      }
+      if (entities.size() != 2) {
         startSpawning();
       } else {
         startWaiting();
       }
     }
     currentTask.update();
-  }
-
-  /**
-   * Returns the distance between the current entity and the target location.
-   *
-   * @return The distance between the owner's entity and the target location.
-   */
-  private float getDistanceToTarget() {
-    return owner.getEntity().getPosition().dst(target.getPosition());
-  }
-
-  /**
-   * Returns the priority if task is currently active.
-   *
-   * @return The current priority.
-   */
-  private int getActivePriority() {
-    float dst = getDistanceToTarget();
-    if (dst > range) {
-      return -1; // Too far, stop chasing
-    }
-    return priority;
-  }
-
-  /**
-   * Returns the priority if task is currently inactive.
-   *
-   * @return The current priority.
-   */
-  private int getInactivePriority() {
-    float dst = getDistanceToTarget();
-    if (dst <= range) {
-      return priority;
-    }
-    return -1;
   }
 
   /**
@@ -125,14 +114,66 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
   }
 
   /**
-   * Makes the entity aim.
+   * Calculates the number of enemies to spawn based on the size of the entities array. Then uses the SpawnTask
+   * to spawn new enemies appropriately.
    */
   private void startSpawning() {
-    logger.debug("Starting spwning");
-    this.owner.getEntity().getEvents().trigger("standing");
-    lastSpawnTime = timer.getTime();
-    numSpawns = 1;
-    swapTask(spawnTask);
+    System.out.println(entities.size());
+    ListIterator<Entity> iterator = entities.listIterator();
+
+    while (iterator.hasNext()) {
+      Entity element = iterator.next();
+      if (element.getComponent(CombatStatsComponent.class).getHealth() == 0) {
+        iterator.remove();
+      }
+    }
+
+    if (entities.isEmpty()) {
+      Entity enemyOne = EnemyFactory.createEnemy(redGhost);
+      Entity enemyTwo = EnemyFactory.createEnemy(redGhost);
+
+      System.out.println("adding enemies");
+      entities.add(enemyOne);
+      entities.add(enemyTwo);
+
+      logger.debug("Starting spawning");
+      this.owner.getEntity().getEvents().trigger("standing");
+      lastSpawnTime = timer.getTime();
+      numSpawns += 1;
+
+      if (currentTask != null) {
+        currentTask.stop();
+      }
+      currentTask = spawnTask;
+      spawnTask.start(entities.get(0), entities.get(1));
+    } else if (entities.size() == 1) {
+      System.out.println("respawning");
+      Entity enemyOne = EnemyFactory.createEnemy(redGhost);
+
+      entities.add(enemyOne);
+
+      logger.debug("Starting spawning");
+      this.owner.getEntity().getEvents().trigger("standing");
+      lastSpawnTime = timer.getTime();
+      numSpawns += 1;
+
+      if (currentTask != null) {
+        currentTask.stop();
+      }
+      currentTask = spawnTask;
+      spawnTask.start(entities.get(1));
+    } else {
+      logger.debug("Starting spawning");
+      this.owner.getEntity().getEvents().trigger("standing");
+      lastSpawnTime = timer.getTime();
+      numSpawns += 1;
+
+      if (currentTask != null) {
+        currentTask.stop();
+      }
+      currentTask = spawnTask;
+      spawnTask.start();
+    }
   }
 
   /**

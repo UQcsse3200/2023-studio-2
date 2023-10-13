@@ -153,8 +153,11 @@ public class MapGameArea extends GameArea{
     }
 
     private void spawnSafeZone(Entity playerEntity) {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        SafeZoneConfig safeZoneConfig = mapConfig.areaEntityConfig.getEntity(SafeZoneConfig.class);
         Entity safeZone = SafeZoneFactory.createSafeZone(playerEntity);
-        spawnEntityAt(safeZone, new GridPoint2(10, 50), false, false);
+        spawnEntityAt(safeZone, safeZoneConfig.position, false, false);
     }
 
     private void spawnEnvironmentDamage() {

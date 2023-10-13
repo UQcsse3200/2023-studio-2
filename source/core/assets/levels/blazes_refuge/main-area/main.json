@@ -103,7 +103,7 @@
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 
-  "mapName": "Infernal Challenge",
+  "mapName": "Blaze's Refuge",
   "planetImage": "images/planets/space_navigation_planet_3.png",
   "terrainPath": "map/Firemap02.tmx",
   "winConditions": [

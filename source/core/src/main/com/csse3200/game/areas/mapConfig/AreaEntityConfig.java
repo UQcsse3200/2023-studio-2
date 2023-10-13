@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class AreaEntityConfig {
     private static final String DUPLICATE_ENTITY_KEY = "Duplicate entity type key in config files";
 
-    public static final HashMap<String, List<Object>> entities = new HashMap<>();
+    public HashMap<String, List<Object>> entities = new HashMap<>();
 
     /**
      * Returns a list of the type of entity from the game area.
@@ -23,7 +23,8 @@ public class AreaEntityConfig {
      */
     public <T extends BaseEntityConfig> List<T> getEntities(Class<T> entityType) {
         if (entities.get(entityType.getSimpleName()) == null) return new ArrayList<>();
-        return entities.get(entityType.getSimpleName()).stream().map(o -> (T) o).toList();
+
+        return entities.get(entityType.getSimpleName()).stream().map(o -> (T) o).collect(Collectors.toList());
 
     }
 
@@ -48,7 +49,8 @@ public class AreaEntityConfig {
      * Returns a list of all config entities in the game area
      */
     public List<BaseEntityConfig> getAllConfigs() {
-        List<BaseEntityConfig> configs;
+
+        List<BaseEntityConfig> configs = new ArrayList<>();
         return entities.values().stream()
                 .map(this::castList)
                 .flatMap(Collection::stream)

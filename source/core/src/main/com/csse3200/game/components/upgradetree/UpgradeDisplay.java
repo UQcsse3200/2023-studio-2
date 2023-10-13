@@ -31,7 +31,6 @@ import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -374,13 +373,16 @@ public class UpgradeDisplay extends Window {
         table.setPosition(((float) (getWidth() * getScaleX() * 0.91)),
                 (float) (getHeight() * getScaleY() * 0.88));
 
+        UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
+
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                exitUpgradeTree();
+                exitUpgradeTree(stats);
             }
         });
         return table;
+
     }
 
     /**
@@ -670,7 +672,8 @@ public class UpgradeDisplay extends Window {
     /**
      * Exit the upgrade tree menu.
      */
-    private void exitUpgradeTree() {
+    private void exitUpgradeTree(UpgradeTree stats) {
+        stats.triggerSound();
         remove();
     }
 

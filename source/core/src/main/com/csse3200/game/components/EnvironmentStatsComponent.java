@@ -46,6 +46,10 @@ public class EnvironmentStatsComponent extends Component {
         this.frozenLevel = newFrozenLevel;
     }
 
+    public Boolean getIsSafe() {
+        return this.isSafeMap;
+    }
+
     public Boolean getImmunity() {
         return isImmune;
     }

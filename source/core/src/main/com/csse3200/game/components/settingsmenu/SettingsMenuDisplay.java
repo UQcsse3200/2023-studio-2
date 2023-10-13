@@ -163,7 +163,7 @@ public class SettingsMenuDisplay extends UIComponent {
                 entity.getEvents().trigger("ok");
               }
             });
-    table.add(okButton).expandX().center();
+    // table.add(okButton).expandX().center();
 
     // Events on inputs
     uiScaleSlider.addListener(
@@ -271,7 +271,7 @@ public class SettingsMenuDisplay extends UIComponent {
 
   private void onOK() {
     logger.info("Start game");
-    game.setScreen(ScreenType.CONTROL_SCREEN);
+    //game.setScreen(ScreenType.CONTROL_SCREEN);
   }
 
   private Integer parseOrNull(String num) {

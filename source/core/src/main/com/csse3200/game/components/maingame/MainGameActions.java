@@ -71,7 +71,7 @@ public class MainGameActions extends Component {
    */
   private void onControlsButton() {
     logger.debug("Control Screen button clicked");
-    game.setScreen(GdxGame.ScreenType.CONTROL_SCREEN_GAME);
+    game.setScreen(GdxGame.ScreenType.CONTROL_SCREEN);
   }
 
   /**

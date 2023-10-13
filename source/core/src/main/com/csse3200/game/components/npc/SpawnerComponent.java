@@ -4,11 +4,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.SpawnerConfig;
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
+import com.csse3200.game.entities.enemies.EnemyName;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
+
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class SpawnerComponent extends Component {
     public static final long WAVE_DELAY = 5000;  // 5 seconds
@@ -16,15 +19,17 @@ public static final long SPAWN_DELAY = 3000;  // 3 seconds
 
     public final GameTime timer;
     public final SpawnerConfig config;
-
     public long lastTime;
     public int currentWave = 0;
     public boolean isSpawning = false;
     public int enemiesToSpawn = 0;
     public int enemiesSpawned = 0;
-    public int meleeEnemiesToSpawn = 0;
-    public int rangedEnemiesToSpawn = 0;
-    public int bossEnemiesToSpawn = 0;
+    public EnemyName enemyType1 = null;
+    public EnemyName enemyType2 = null;
+    public EnemyName enemyType3 = null;
+    public int enemyType1ToSpawn = 0;
+    public int enemyType2ToSpawn = 0;
+    public int enemyType3ToSpawn = 0;
 
 
     public SpawnerComponent(SpawnerConfig config) {
@@ -32,8 +37,6 @@ public static final long SPAWN_DELAY = 3000;  // 3 seconds
         this.lastTime = timer.getTime();
         this.config = config;
     }
-
-    // ... [Getter and Setter methods remain unchanged] ...
 
     @Override
     public void update() {
@@ -62,7 +65,7 @@ public static final long SPAWN_DELAY = 3000;  // 3 seconds
     }
 
     public void handleNewWave(long currentTime) {
-        int[] currentConfig;
+        LinkedHashMap<String, Integer> currentConfig;
         switch (currentWave) {
             case 0:
                 currentConfig = config.wave1;
@@ -76,7 +79,7 @@ public static final long SPAWN_DELAY = 3000;  // 3 seconds
             default:
                 return;
         }
-        spawnEnemies(currentConfig[0], currentConfig[1], currentConfig[2]);
+        spawnEnemies(currentConfig);
         currentWave++;
         lastTime = currentTime;
     }
@@ -88,22 +91,21 @@ public static final long SPAWN_DELAY = 3000;  // 3 seconds
      *                    also trigger sound while spawning.
      */
     public void handleEnemySpawn(long currentTime) {
-        if (bossEnemiesToSpawn > 0) {
-            spawnEnemy(EnemyType.BossMelee, EnemyBehaviour.PTE);
-//            spawnEnemy(EnemyType.BossRanged, EnemyBehaviour.PTE);
-            bossEnemiesToSpawn--;
+        if (enemyType1ToSpawn > 0) {
+            spawnEnemy(enemyType1);
+            enemyType1ToSpawn--;
             if (entity != null) {
                 entity.getEvents().trigger("playSound", "enemySpawn"); // triggering spawning sound effects
             }
-        } else if (meleeEnemiesToSpawn > 0) {
-            spawnEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
-            meleeEnemiesToSpawn--;
+        } else if (enemyType2ToSpawn > 0) {
+            spawnEnemy(enemyType2);
+            enemyType2ToSpawn--;
             if (entity != null) {
                 entity.getEvents().trigger("playSound", "enemySpawn"); // triggering spawning sound effects
             }
-        } else if (rangedEnemiesToSpawn > 0) {
-            spawnEnemy(EnemyType.Melee, EnemyBehaviour.DTE);
-            rangedEnemiesToSpawn--;
+        } else if (enemyType3ToSpawn > 0) {
+            spawnEnemy(enemyType3);
+            enemyType3ToSpawn--;
             if (entity != null) {
                 entity.getEvents().trigger("playSound", "enemySpawn"); // triggering spawning sound effects
             }
@@ -118,18 +120,26 @@ public static final long SPAWN_DELAY = 3000;  // 3 seconds
         enemiesSpawned = 0;
     }
 
-    public void spawnEnemies(int meleeCount, int rangedCount, int bossCount) {
+    public void spawnEnemies(LinkedHashMap<String, Integer> currentConfig) {
         isSpawning = true;
-        enemiesToSpawn = meleeCount + rangedCount + bossCount;
-        enemiesSpawned = 0;
-        meleeEnemiesToSpawn = meleeCount;
-        rangedEnemiesToSpawn = rangedCount;
-        bossEnemiesToSpawn = bossCount;
+        for (Map.Entry<String, Integer> entry : currentConfig.entrySet()) {
+            if (enemyType1 == null) {
+                enemyType1 = EnemyName.getEnemyName(entry.getKey());
+                enemyType1ToSpawn = entry.getValue();
+            } else if (enemyType2 == null) {
+                enemyType2 = EnemyName.getEnemyName(entry.getKey());
+                enemyType2ToSpawn = entry.getValue();
+            } else if (enemyType3 == null) {
+                enemyType3 = EnemyName.getEnemyName(entry.getKey());
+                enemyType3ToSpawn = entry.getValue();
+            }
+        }
+        enemiesToSpawn = enemyType1ToSpawn + enemyType2ToSpawn + enemyType3ToSpawn;
     }
 
-    public void spawnEnemy(EnemyType enemyType, EnemyBehaviour behaviour) {
+    public void spawnEnemy(EnemyName name) {
         Vector2 worldPos = entity.getCenterPosition();
-        Entity enemy = EnemyFactory.createEnemy(enemyType, behaviour);
+        Entity enemy = EnemyFactory.createEnemy(name);
         ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemy, worldPos);
     }
 }

@@ -42,7 +42,7 @@ import static com.csse3200.game.utils.LoadUtils.joinPath;
  */
 public class MapGameArea extends GameArea{
 
-    private GameAreaConfig mapConfig = null;
+    public GameAreaConfig mapConfig = null;
     private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
@@ -88,6 +88,7 @@ public class MapGameArea extends GameArea{
         spawnTreeTop();
         spawnAstro();
         spawnTutnpc();
+        spawnHellman();
         spawnSpawners();
         spawnJail();
 
@@ -315,7 +316,7 @@ public class MapGameArea extends GameArea{
      * If that is null, then spawns at the centre of the map
      * @return The player entity created
      */
-    private Entity spawnPlayer() {
+    protected Entity spawnPlayer() {
         Entity newPlayer;
         PlayerConfig playerConfig = null;
         if (mapConfig.areaEntityConfig != null) {
@@ -429,7 +430,7 @@ public class MapGameArea extends GameArea{
 
         AstroConfig astroConfig = mapConfig.areaEntityConfig.getEntity(AstroConfig.class);
         if (astroConfig != null) {
-            Entity Astro = NPCFactory.createAstro();
+            Entity Astro = NPCFactory.createAstro(astroConfig);
             spawnEntityAt(Astro, astroConfig.position, false, false);
         }
 
@@ -439,8 +440,18 @@ public class MapGameArea extends GameArea{
 
         TutnpcConfig tutnpcConfig = mapConfig.areaEntityConfig.getEntity(TutnpcConfig.class);
         if (tutnpcConfig != null) {
-            Entity Tutnpc = NPCFactory.createTutnpc();
+            Entity Tutnpc = NPCFactory.createTutnpc(tutnpcConfig);
             spawnEntityAt(Tutnpc, tutnpcConfig.position, false, false);
+        }
+
+    }
+    private void spawnHellman() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        HellmanConfig hellmanConfig = mapConfig.areaEntityConfig.getEntity(HellmanConfig.class);
+        if (hellmanConfig != null) {
+            Entity hellman = NPCFactory.createHellman();
+            spawnEntityAt(hellman, hellmanConfig.position, false, false);
         }
 
     }
@@ -451,7 +462,7 @@ public class MapGameArea extends GameArea{
         AstronautConfig astronautConfig = mapConfig.areaEntityConfig.getEntity(AstronautConfig.class);
         if (astronautConfig != null) {
             Entity astronaut = NPCFactory.createAstronaut(astronautConfig);
-            spawnEntityAt(astronaut, astronautConfig.position, false, false);
+            spawnEntityAt(astronaut, astronautConfig.position, true, true);
         }
     }
 
@@ -460,10 +471,9 @@ public class MapGameArea extends GameArea{
 
         JailConfig jailConfig = mapConfig.areaEntityConfig.getEntity(JailConfig.class);
         if (jailConfig != null) {
-            Entity Jail = NPCFactory.createJail();
-            spawnEntityAt(Jail, jailConfig.position, false, false);
+            Entity Jail = NPCFactory.createJail(jailConfig);
+            spawnEntityAt(Jail, jailConfig.position, true, true);
         }
-
     }
 
     /**

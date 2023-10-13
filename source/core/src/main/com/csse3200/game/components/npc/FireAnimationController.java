@@ -10,7 +10,6 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
  * It loads the required assets, updates the animation, and controls its speed.
  */
 public class FireAnimationController extends Component {
-    private final AssetManager assetManager;
     private AnimationRenderComponent animator;
     private TextureAtlas atlas;
 
@@ -18,13 +17,9 @@ public class FireAnimationController extends Component {
     private float animationDuration = 10f; // Adjust this to control animation speed.
 
     /**
-     * Creates a new FireAnimationController with an AssetManager for managing assets.
-     *
-     * @param assetManager The AssetManager used to load and manage game assets.
+     * Creates a new FireAnimationController.
      */
-    public FireAnimationController(AssetManager assetManager) {
-        this.assetManager = assetManager;
-    }
+    public FireAnimationController() {}
 
     @Override
     public void create() {
@@ -32,9 +27,6 @@ public class FireAnimationController extends Component {
 
         // Initialize your animator and load the atlas.
         animator = entity.getComponent(AnimationRenderComponent.class);
-        assetManager.load("images/minigame/fire.atlas", TextureAtlas.class);
-        assetManager.finishLoading();
-        atlas = assetManager.get("images/minigame/fire.atlas");
 
         // Start with the default animation.
         animator.startAnimation("image_part1");

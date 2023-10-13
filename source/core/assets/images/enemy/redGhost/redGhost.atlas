@@ -1,4 +1,4 @@
-baseEnemyMelee.png
+redGhost.png
 size: 6000, 200
 format: RGBA8888
 filter: Nearest,Nearest

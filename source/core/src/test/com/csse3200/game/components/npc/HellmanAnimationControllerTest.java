@@ -5,20 +5,18 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for the {@link JailAnimationController} class.
+ * Unit tests for the {@link HellmanAnimationController} class.
  */
-class JailAnimationControllerTest {
+class HellmanAnimationControllerTest {
 
     @Mock
     AssetManager assetManager;
@@ -29,15 +27,15 @@ class JailAnimationControllerTest {
     @Mock
     TextureAtlas atlas;
 
-    JailAnimationController controller;
+    HellmanAnimationController controller;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        when(assetManager.get("images/Jail/jail.atlas")).thenReturn(atlas);
+        when(assetManager.get("images/npc/Hellman.atlas")).thenReturn(atlas);
 
-        controller = new JailAnimationController(assetManager);
+        controller = new HellmanAnimationController();
 
         controller.entity = mock(Entity.class);
 
@@ -45,26 +43,26 @@ class JailAnimationControllerTest {
     }
 
     /**
-     * Test the {@link JailAnimationController#create()} method.
+     * Test the {@link HellmanAnimationController#create()} method.
      */
     @Test
     void testCreate() {
         controller.create();
 
-        verify(animator).startAnimation("jail_close");
-        verify(assetManager).load(anyString(), eq(TextureAtlas.class));
-        verify(assetManager).finishLoading();
+        verify(animator).startAnimation("row-1-column-1");
+
     }
 
     /**
-     * Test the {@link JailAnimationController#update()} method.
+     * Test the {@link HellmanAnimationController#update()} method.
      */
     @Test
     void testUpdate() {
-        controller.animationDuration= 10f;
+        controller.animationDuration = 10f;
 
-        when(animator.getCurrentAnimation()).thenReturn("jail_close");
+        when(animator.getCurrentAnimation()).thenReturn("row-1-column-12");
 
         controller.update();
+
     }
 }

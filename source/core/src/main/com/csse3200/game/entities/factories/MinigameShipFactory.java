@@ -1,5 +1,4 @@
 package com.csse3200.game.entities.factories;
-
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.player.InteractionControllerComponent;

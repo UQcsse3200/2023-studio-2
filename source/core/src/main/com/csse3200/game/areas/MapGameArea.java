@@ -157,6 +157,9 @@ public class MapGameArea extends GameArea{
         if (mapConfig.areaEntityConfig == null) return;
 
         SafeZoneConfig safeZoneConfig = mapConfig.areaEntityConfig.getEntity(SafeZoneConfig.class);
+
+        if (safeZoneConfig == null) return;
+
         Entity safeZone = SafeZoneFactory.createSafeZone(playerEntity);
         spawnEntityAt(safeZone, safeZoneConfig.position, false, false);
     }
@@ -341,7 +344,7 @@ public class MapGameArea extends GameArea{
         newPlayer.getComponent(CombatStatsComponent.class).setLives((int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")); // Ensures previous number of lives is maintained.
 
         // environmental damage
-        //newPlayer.getComponent(EnvironmentStatsComponent.class).setSafeMap(mapConfig);
+        newPlayer.getComponent(EnvironmentStatsComponent.class).setSafeMap(mapConfig);
         newPlayer.getComponent(EnvironmentStatsComponent.class).damage(newPlayer.getComponent(CombatStatsComponent.class));
 
         newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);

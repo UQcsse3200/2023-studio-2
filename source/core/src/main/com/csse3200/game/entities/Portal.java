@@ -23,7 +23,7 @@ public class Portal extends Entity {
      */
     public Portal(Entity player) {
         super();
-        addComponent(new ProximityActivationComponent(0.5f, player, this::teleport, this::teleport));
+        addComponent(new ProximityActivationComponent(0.3f, player, this::teleport, this::teleport));
     }
 
     /**

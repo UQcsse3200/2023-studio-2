@@ -108,7 +108,6 @@ public class PlayerFactory {
 
         player.addComponent(new SaveableComponent<>(p -> {
                 PlayerConfig playerConfig = config;
-                //TODO: FIX LOADING POSITION
                 playerConfig.position = p.getGridPosition();
                 playerConfig.health = p.getComponent(CombatStatsComponent.class).getHealth();
                 playerConfig.maxHealth = p.getComponent(CombatStatsComponent.class).getMaxHealth();

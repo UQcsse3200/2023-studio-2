@@ -57,6 +57,13 @@ public class UpgradeTree extends Component {
         }
     }
 
+    public void triggerSound() {
+        if (entity != null) {
+            entity.getEvents().trigger("playSound","exitButton");
+        }
+
+    }
+
     /**
      * Checks if a given weapon type is already unlocked.
      * @param weapon The type of weapon to check.

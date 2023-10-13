@@ -37,7 +37,7 @@ public class PlanetTravel {
     public void beginInstantTravel() {
         String nextPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
         ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
-        if (!nextPlanet.equals("infernal_challenge")) {
+        if (!nextPlanet.equals("blazes_refuge")) {
             //TODO: MAKE SHOW WIN SCREEN?
             PlanetScreen planet = new PlanetScreen(game, nextPlanet);
             ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", planet.getNextPlanetName());

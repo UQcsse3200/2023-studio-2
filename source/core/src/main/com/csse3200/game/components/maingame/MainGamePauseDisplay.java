@@ -34,20 +34,19 @@ public class MainGamePauseDisplay extends UIComponent {
     table.top().right();
     table.setFillParent(true);
 
-    TextButton mainMenuBtn = new TextButton("Exit", skin);
-
+    TextButton mainMenuBtn = new TextButton("Menu", skin);
     // Triggers an event when the button is pressed.
     mainMenuBtn.addListener(
       new ChangeListener() {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
-          if (screen == GdxGame.ScreenType.GAME_STORY || screen == GdxGame.ScreenType.PLAYER_DEATH_0 || screen == GdxGame.ScreenType.PLAYER_DEATH_1 || screen == GdxGame.ScreenType.PLAYER_DEATH_2 || screen == GdxGame.ScreenType.PLAYER_DEATH_3) {
+          if (screen == GdxGame.ScreenType.BRICK_BREAKER_SCREEN || screen == GdxGame.ScreenType.EXTRACTOR_GAME || screen == GdxGame.ScreenType.SPACEMINI_SCREEN || screen == GdxGame.ScreenType.MINI_SCREEN || screen == GdxGame.ScreenType.TUTORIAL_SCREEN) {
             logger.debug("Pause button clicked");
-            entity.getEvents().trigger("pause");
+            entity.getEvents().trigger("exitPressed");
           }
           else {
             logger.debug("Exit button clicked");
-            entity.getEvents().trigger("exitPressed");
+            entity.getEvents().trigger("pause");
           }
         }
       });

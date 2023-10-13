@@ -10,7 +10,6 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class BotanistAnimationController extends Component {
-    private final AssetManager assetManager;
     private AnimationRenderComponent animator;
 
     private float animationTimer = 0f;
@@ -18,18 +17,14 @@ public class BotanistAnimationController extends Component {
     /**
      * Creates a new BotanistAnimationController with an AssetManager for managing assets.
      */
-    public BotanistAnimationController() {
-        this.assetManager = new AssetManager();
-    }
+    public BotanistAnimationController() {}
 
     @Override
     public void create() {
         super.create();
 
-        // Initialize your animator and load the atlas.
+        // Initialize your animator
         animator = entity.getComponent(AnimationRenderComponent.class);
-        assetManager.load("images/botanist.atlas", TextureAtlas.class);
-        assetManager.finishLoading();
 
         // Start with the default animation.
         animator.startAnimation("row-1-column-1");

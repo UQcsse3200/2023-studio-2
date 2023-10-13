@@ -39,6 +39,7 @@ public class PauseWindow extends Window {
         pauseTable.setFillParent(true);
 
         TextButton returnToGameButton = new TextButton("Return to Game", skin);
+        TextButton controlsButton = new TextButton("Controls", skin);
         TextButton returnToMainMenuButton = new TextButton("Exit to Main Menu", skin);
         Label gamePausedLabel = new Label("Game Paused", skin, "large");
         gamePausedLabel.setFontScale(0.5f);
@@ -53,12 +54,17 @@ public class PauseWindow extends Window {
         returnToMainMenuButton.setWidth(buttonWidth);
         returnToMainMenuButton.setHeight(buttonHeight);
 
+        controlsButton.setWidth(buttonWidth);
+        controlsButton.setHeight(buttonHeight);
+
         pauseTable.top();
-        pauseTable.add(gamePausedLabel).padTop(90);
+        pauseTable.add(gamePausedLabel).padTop(80);
         pauseTable.row();
-        pauseTable.add(returnToGameButton).padTop(90).padLeft(20);
+        pauseTable.add(returnToGameButton).padTop(45).padLeft(20);
         pauseTable.row();
-        pauseTable.add(returnToMainMenuButton).padTop(50).padLeft(20);
+        pauseTable.add(controlsButton).padTop(30).padLeft(20);
+        pauseTable.row();
+        pauseTable.add(returnToMainMenuButton).padTop(30).padLeft(20);
         addActor(pauseTable);
 
 
@@ -66,6 +72,12 @@ public class PauseWindow extends Window {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 exitToGame();
+            }
+        });
+        controlsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                exitToControls();
             }
         });
         returnToMainMenuButton.addListener(new ClickListener() {
@@ -84,6 +96,14 @@ public class PauseWindow extends Window {
      */
     private void exitToGame() {
         entity.getEvents().trigger("returnPressed");
+        remove();
+    }
+
+    /**
+     * Exits to controls screen, and removes pause window.
+     */
+    private void exitToControls() {
+        entity.getEvents().trigger("controlsPressed");
         remove();
     }
 

@@ -1,4 +1,4 @@
-bullet.png
+BlueBullet.png
 size: 2000,500
 format: RGBA8888
 filter: Nearest,Nearest

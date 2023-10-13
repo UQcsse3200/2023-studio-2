@@ -175,6 +175,7 @@ private Stage stage;
 
         renderer.dispose();
         unloadAssets();
+        ServiceLocator.clear();
     }
 
     /**

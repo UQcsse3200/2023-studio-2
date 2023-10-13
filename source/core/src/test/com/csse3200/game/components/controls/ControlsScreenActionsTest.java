@@ -1,6 +1,7 @@
 package com.csse3200.game.components.controls;
 
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
@@ -20,7 +21,7 @@ class ControlsScreenActionsTest {
     @BeforeEach
     void setUp() {
         game = mock(GdxGame.class);
-        controlsScreenActions = new ControlsScreenActions(game);
+        controlsScreenActions = new ControlsScreenActions(game, (int) ServiceLocator.getGameStateObserverService().getStateData("player/lives"));
     }
 
     /**

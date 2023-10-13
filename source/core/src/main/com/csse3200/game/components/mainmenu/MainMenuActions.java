@@ -93,7 +93,7 @@ public class MainMenuActions extends Component {
       loadGameConfig();
 
     logger.info("Loading Story");
-    game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
+    game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN);
   }
 
   /**

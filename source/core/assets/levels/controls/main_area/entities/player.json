@@ -1,0 +1,17 @@
+{
+  "entityType": "PlayerConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.PlayerConfig,
+      "position": {
+        "x": 30,
+        "y": 70
+      },
+      "health": 100,
+      "baseAttack": 10,
+      "attackMultiplier": 1,
+      "isImmune": true,
+      "spritePath": "images/player/player.atlas"
+    }
+  ]
+}

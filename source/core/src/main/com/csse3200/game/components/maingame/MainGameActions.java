@@ -39,6 +39,7 @@ public class MainGameActions extends Component {
     entity.getEvents().addListener("returnPlanet", this::onReturnPlanet);
     entity.getEvents().addListener("exitPressed", this::onExit);
     entity.getEvents().addListener("returnPressed", this::onReturnButton);
+    entity.getEvents().addListener("controlsPressed", this::onControlsButton);
   }
   /**
    * Opens pause window.
@@ -66,6 +67,14 @@ public class MainGameActions extends Component {
   }
 
   /**
+   * Exits to Controls screen. Closes pause window.
+   */
+  private void onControlsButton() {
+    logger.debug("Control Screen button clicked");
+    game.setScreen(GdxGame.ScreenType.CONTROL_SCREEN_GAME);
+  }
+
+  /**
    * Returns to current planet screen.
    */
   protected void onReturnPlanet() {
@@ -85,5 +94,4 @@ public class MainGameActions extends Component {
     }
     ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
   }
-
 }

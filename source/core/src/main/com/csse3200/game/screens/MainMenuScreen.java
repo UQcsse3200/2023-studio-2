@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
-import com.csse3200.game.components.mainmenu.MainMenuStarBackground;
+import com.csse3200.game.components.backgrounds.StarBackground;
 import com.csse3200.game.components.spacenavigation.NavigationBackground;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -45,6 +45,8 @@ public class MainMenuScreen extends ScreenAdapter {
   }
 
   private void initialiseServices() {
+    ServiceLocator.clear();
+
     ServiceLocator.registerInputService(
             new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
     ServiceLocator.registerResourceService(new ResourceService());
@@ -83,6 +85,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
     renderer.dispose();
     unloadAssets();
+    ServiceLocator.clear();
   }
 
   private void loadAssets() {
@@ -111,6 +114,6 @@ public class MainMenuScreen extends ScreenAdapter {
             .addComponent(new InputDecorator(stage, 10))
             .addComponent(new MainMenuActions(game, stage, skin));
     ServiceLocator.getEntityService().register(ui);
-    stage.addActor(new MainMenuStarBackground());
+    stage.addActor(new StarBackground(15));
   }
 }

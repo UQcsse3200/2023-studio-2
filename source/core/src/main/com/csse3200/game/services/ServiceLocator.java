@@ -119,6 +119,7 @@ public class ServiceLocator {
   }
 
   public static void clear() {
+    dispose();
     entityService = null;
     renderService = null;
     physicsService = null;
@@ -133,4 +134,12 @@ public class ServiceLocator {
     throw new IllegalStateException("Instantiating static util class");
   }
 
+  public static void dispose() {
+    if (entityService != null)
+      entityService.dispose();
+    if (renderService != null)
+      renderService.dispose();
+    if (resourceService != null)
+      resourceService.dispose();
+  }
 }

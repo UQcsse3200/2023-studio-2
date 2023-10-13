@@ -1,5 +1,7 @@
 package com.csse3200.game.components.InitialSequence;
-
+/**
+ * The package containing the user interface components for the initial story sequence.
+ */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -9,16 +11,19 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.GdxGame.ScreenType;
+import com.csse3200.game.components.mainmenu.InsertButtons;
+import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.AlertBox;
-import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 
 /**
  * The user interface component responsible for displaying the initial story sequence.
@@ -33,6 +38,13 @@ public class InitialScreenDisplay extends UIComponent {
     private Image planet;
     private Table rootTable;
     private Label storyLabel;
+    private ArrayList<String> InitialScreenImages;
+    private Image backgroundImage;
+    private ArrayList<String> stories;
+    private int currentStoryIndex = 0;
+    private boolean textAnimationInProgress = false;  // Flag to track text animation progress
+    private boolean next=false;
+    private boolean prev=false;
 
     /**
      * Creates a new instance of the InitialScreenDisplay.
@@ -50,8 +62,15 @@ public class InitialScreenDisplay extends UIComponent {
         // Load the BitmapFont
         font = new BitmapFont();
         addUIElements();
+        entity.getEvents().addListener("next", this::nextScene);
+        entity.getEvents().addListener("previous", this::prevScene);
+        entity.getEvents().addListener("skip", this::onSkip);
     }
 
+    /**
+     * Adds UI elements to the stage.
+     * Loads background image, animated planet, and sets up the initial text and buttons.
+     */
     private void addUIElements() {
         // Load the background starfield image.
         background =
@@ -81,13 +100,19 @@ public class InitialScreenDisplay extends UIComponent {
         rootTable.center(); // Center-align content vertically
 
         // The initial text you want to display
-        String story = "Earth has become a desolate wasteland ravaged by a deadly virus.\n" +
-                "last hope lies among the stars. You are one of the few survivors.";
+        stories = new ArrayList<>();
+        stories.add( "Amidst Earth's ruins, you stand, humanity's last hope in the cosmic expanse." );
+        stories.add("Meet Dr. Emily Carter, a fellow Scientist who remains untouched by the virus.");
+        stories.add("With courage intertwined, you both embrace the unknown, a symbiotic bond on this journey.");
+        stories.add("Behold Astro's spacecraft, a sentinel of possibility, ready to explore the celestial unknown.");
+        stories.add("Step into destiny's vessel, as you and Emily set course for the uncharted cosmic domain.");
+
+        String story = stories.get(currentStoryIndex);
 
         // Configure the Label
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
         labelStyle.font.getData().setScale(0.4f); // Set the font size (adjust the scale as needed)
-        storyLabel = new Label("", labelStyle);
+        storyLabel = new Label(story, labelStyle);
         storyLabel.setAlignment(Align.center);
         storyLabel.setWrap(false); // Allow text wrapping
         storyLabel.setWidth(Gdx.graphics.getWidth());
@@ -96,27 +121,16 @@ public class InitialScreenDisplay extends UIComponent {
         rootTable.add(storyLabel).expandX().center().padTop(900f);
         rootTable.row().padTop(30f);
 
-        TextButton continueButton = new TextButton("Continue", skin);
-        continueButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Continue button clicked");
-
-                AlertBox alertBox = new AlertBox(game, "Alert Box", skin);
-                alertBox.showDialog(stage);
-
-                logger.info("Loading Story");
-                game.setScreen(ScreenType.GAME_STORY);
-            }
-        });
-
-        // Add the "Continue" button to the rootTable and center it at the bottom
-        rootTable.add(continueButton).expandX().bottom().padBottom(30f);
-
         // Add actors to the stage
         stage.addActor(background);
         stage.addActor(planet);
         stage.addActor(rootTable);
+        InitialScreenImages = new ArrayList<>();
+        InitialScreenImages.add("images/menu/InitialScreenImage.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-2.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-3.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-4.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-5.png");
 
         RepeatAction repeatAction = Actions.forever(
                 Actions.sequence(
@@ -124,14 +138,94 @@ public class InitialScreenDisplay extends UIComponent {
                         Actions.moveBy(0, -planetToTextPadding, 4.0f) // Move down
                 )
         );
+        backgroundImage = new Image(new Texture(Gdx.files.internal(InitialScreenImages.get(0))));
+        stage.addActor(backgroundImage);
 
         // Apply the RepeatAction to the planet image
         planet.addAction(repeatAction);
 
         // Start printing text letter by letter
         printTextLetterByLetter(story, storyLabel, 0.035f, 0.5f);
-    }
 
+        InsertButtons bothButtons = new InsertButtons();
+        // Create next button
+        String nextTexture = "images/interface/next_cut.png";
+        String nextTextureHover = "images/interface/next_cut_hover.png";
+        ImageButton nextBtn = bothButtons.draw(nextTexture, nextTextureHover);
+
+        // Create previous button
+        String prevTexture = "images/interface/prev_cut.png";
+        String prevTextureHover = "images/interface/prev_cut_hover.png";
+        ImageButton prevBtn = bothButtons.draw(prevTexture, prevTextureHover);
+
+        // Create skip button
+        String skipTexture = "images/interface/skip_btn.png";
+        String skipTextureHover = "images/interface/skip_btn_hover.png";
+        ImageButton skipBtn = bothButtons.draw(skipTexture, skipTextureHover);
+
+        // Attach listeners to navigation buttons
+            nextBtn.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                            logger.debug("Next button clicked");
+                            entity.getEvents().trigger("next");
+                        }
+
+                    });
+
+
+
+
+        prevBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Previous button clicked");
+                      entity.getEvents().trigger("previous");
+                    }
+                });
+        skipBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Skip button clicked");
+                        entity.getEvents().trigger("skip");
+                    }
+                });
+
+
+// Create a new table for navigation buttons
+        Table buttonTable = new Table();
+        buttonTable.center().setFillParent(true); // Set table to fill the parent and center-align vertically and horizontally
+        buttonTable.pad(0, 20f, 0, 20f); // Adjust the padding to control button placement
+
+        buttonTable.add(prevBtn).left().width(70f).center().padBottom(20f);
+        buttonTable.add().expand().center(); // Empty cell for center alignment
+        buttonTable.add(skipBtn).expand().top().right().width(200f); // Skip button
+
+// Add the "Next" button to the right-most cell
+        buttonTable.add(nextBtn).right().width(70f).center().padBottom(20f).padLeft(20f); // Next button
+        buttonTable.row(); // Move to the next row
+
+
+        // Create a Stack to overlay the text label and buttons
+        Stack stack = new Stack();
+        stack.setFillParent(true);
+        stack.add(rootTable);
+        stack.add(buttonTable);
+
+        // Add the stack to the stage
+        stage.addActor(stack);
+    }
+    /**
+     * Prints text letter by letter with a specified speed and initial delay.
+     *
+     * @param text         The text to print.
+     * @param label        The label to display the text.
+     * @param speed        The speed at which to print the text.
+     * @param initialDelay The initial delay before starting the printing.
+     */
     private void printTextLetterByLetter(final String text, final Label label, final float speed, final float initialDelay) {
         label.setText(""); // Clear the label text initially
         Timer.schedule(new Timer.Task() {
@@ -143,6 +237,11 @@ public class InitialScreenDisplay extends UIComponent {
                     char currentChar = text.charAt(charIndex);
                     label.setText(label.getText().toString() + currentChar);
                     charIndex++;
+                    if (charIndex == text.length()-1) {
+                        next = true;
+                        prev = true;
+                        textAnimationInProgress = false;  // Animation complete, reset the flag
+                    }
                 } else {
                     // Stop the Timer when all characters are printed
                     this.cancel();
@@ -150,8 +249,62 @@ public class InitialScreenDisplay extends UIComponent {
             }
         }, initialDelay, speed, text.length() - 1);
     }
+    int start = 0;
+    int end = 4; // Change this to the number of images you have - 1
 
+    /**
+     * Moves to the next scene when triggered by a button click.
+     * Checks if animation is in progress and if it's possible to move to the next scene.
+     */
+    private void nextScene() {
+        if (next && !textAnimationInProgress) {
+            if (start < end) {
+                start += 1;
+                currentStoryIndex += 1;
+                if (currentStoryIndex < stories.size()) {
+                    textAnimationInProgress = true;  // Set the flag to indicate text animation is in progress
+                    storyLabel.clearActions();
+                    storyLabel.setText("");
+                    String newStory = stories.get(currentStoryIndex);
+                    printTextLetterByLetter(newStory, storyLabel, 0.035f, 0.5f);
+                }
+                Texture newImageTexture = new Texture(Gdx.files.internal(InitialScreenImages.get(start)));
+                backgroundImage.setDrawable(new TextureRegionDrawable(newImageTexture));
+            } else {
+                new PlanetTravel(game).returnToCurrent();
+            }
+        }
+    }
 
+    /**
+     * Moves to the previous scene when triggered by a button click.
+     * Checks if animation is in progress and if it's possible to move to the previous scene.
+     */
+
+    private void prevScene() {
+        if (prev && !textAnimationInProgress) {
+            if (start > 0) {
+                start -= 1;
+                currentStoryIndex -= 1;
+                if (currentStoryIndex >= 0) {
+                    textAnimationInProgress = true;  // Set the flag to indicate text animation is in progress
+                    storyLabel.clearActions();
+                    storyLabel.setText("");
+                    String prevStory = stories.get(currentStoryIndex);
+                    printTextLetterByLetter(prevStory, storyLabel, 0.035f, 0.5f);
+                }
+                Texture prevImageTexture = new Texture(Gdx.files.internal(InitialScreenImages.get(start)));
+                backgroundImage.setDrawable(new TextureRegionDrawable(prevImageTexture));
+            }
+        }
+    }
+    /**
+     * Skips to the game by initiating the planet travel.
+     */
+    private void onSkip() {
+        logger.info("Skipping to game");
+        new PlanetTravel(game).returnToCurrent();
+    }
 
     @Override
     protected void draw(SpriteBatch batch) {
@@ -161,10 +314,10 @@ public class InitialScreenDisplay extends UIComponent {
     @Override
     public void update() {
         // This movement logic is triggered on every frame until the middle of the planet hits its target position on the screen.
-//        if (planet.getY(Align.center) >= rootTable.getY() + planetToTextPadding) {
-//            planet.setY(planet.getY() - spaceSpeed); // Move the planet
-//            background.setY(background.getY() - spaceSpeed); // Move the background
-//        }
+        //        if (planet.getY(Align.center) >= rootTable.getY() + planetToTextPadding) {
+        //            planet.setY(planet.getY() - spaceSpeed); // Move the planet
+        //            background.setY(background.getY() - spaceSpeed); // Move the background
+        //        }
         stage.act(Gdx.graphics.getDeltaTime());
     }
 

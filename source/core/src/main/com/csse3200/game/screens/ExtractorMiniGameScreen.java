@@ -76,6 +76,7 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
         super.dispose();
         this.unloadAssets();
+        ServiceLocator.clear();
     }
 
 

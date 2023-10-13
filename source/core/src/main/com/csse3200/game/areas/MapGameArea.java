@@ -49,10 +49,10 @@ public class MapGameArea extends GameArea{
     protected boolean validLoad = true;
     private static boolean freezing;
 
-    public MapGameArea(String levelName, String game_area, TerrainFactory terrainFactory, GdxGame game) {
+    public MapGameArea(String levelName, String gamearea, TerrainFactory terrainFactory, GdxGame game) {
         try {
-            mapConfig = ConfigLoader.loadMapDirectory(levelName, game_area);
-            logger.info("Successfully loaded map {}", joinPath(levelName, game_area));
+            mapConfig = ConfigLoader.loadMapDirectory(levelName, gamearea);
+            logger.info("Successfully loaded map {}", joinPath(levelName, gamearea));
         } catch (InvalidConfigException exception) {
             logger.error("FAILED TO LOAD GAME IN CONSTRUCTOR - {}", exception.getMessage());
             validLoad = false;
@@ -93,7 +93,7 @@ public class MapGameArea extends GameArea{
         spawnJail();
 
         spawnAstronaut();
-        //spawnBotanist();
+
         //spawnEnvironmentDamage();
         spawnFreezingArea();
         spawnEnvironmentDamage();
@@ -430,8 +430,8 @@ public class MapGameArea extends GameArea{
 
         AstroConfig astroConfig = mapConfig.areaEntityConfig.getEntity(AstroConfig.class);
         if (astroConfig != null) {
-            Entity Astro = NPCFactory.createAstro(astroConfig);
-            spawnEntityAt(Astro, astroConfig.position, false, false);
+            Entity astro = NPCFactory.createAstro(astroConfig);
+            spawnEntityAt(astro, astroConfig.position, false, false);
         }
 
     }

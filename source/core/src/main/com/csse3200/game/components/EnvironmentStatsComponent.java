@@ -61,7 +61,6 @@ public class EnvironmentStatsComponent extends Component {
     }
 
     public void setIsImmune() {
-        System.out.println("YES");
         this.isImmune = true;
     }
 
@@ -69,26 +68,24 @@ public class EnvironmentStatsComponent extends Component {
         this.isImmune = false;
     }
 
-    // Damage over time effect, has a five second delay. Repeats every second.
-    // Effect checks whether or not you are in an applicable area
+    // Damage over time effect, has a five-second delay. Repeats every second.
+    // Effect checks whether you are in an applicable area
     public void damage(CombatStatsComponent player) {
         if (this.isSafeMap) {
             return;
         }
-        if (!getImmunity()) {
-            Timer timer = new Timer();
-            timer.scheduleTask(new Timer.Task() {
-                @Override
-                public void run() {
-                    if (getImmunity()) {
-                        return;
-                    }
-                    player.addHealth(-1);
-                    if (player.getHealth() <= 0) {
-                        timer.stop();
-                    }
+        Timer timer = new Timer();
+        timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                if (getImmunity()) {
+                    return;
                 }
-            },1,1);
-        }
+                player.addHealth(-1);
+                if (player.getHealth() <= 0) {
+                    timer.stop();
+                }
+            }
+        },1,1);
     }
 }

@@ -74,6 +74,7 @@ public class StructureToolPicker extends UIComponent {
         addActors();
 
         stage.addActor(table);
+        hide(); // Initialise hidden
     }
 
     /**

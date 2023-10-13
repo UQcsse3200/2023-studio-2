@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.services.ServiceLocator;
@@ -28,6 +29,8 @@ public class InventoryDisplayComponent extends UIComponent {
     InventoryComponent inventory;
     Entity player;
 
+    StructureToolPicker structureToolPicker;
+
     /**
      * Initialises the inventory display.
      * Listens for weapon changes and updates currently equipped weapon display.
@@ -35,6 +38,7 @@ public class InventoryDisplayComponent extends UIComponent {
     public InventoryDisplayComponent() {
         player = ServiceLocator.getEntityService().getPlayer();
         inventory = player.getComponent(InventoryComponent.class);
+        structureToolPicker = player.getComponent(StructureToolPicker.class);
         makeTable();
         player.getEvents().addListener("updateHotbar", this::equipEvent);
     }
@@ -69,6 +73,13 @@ public class InventoryDisplayComponent extends UIComponent {
                 public void changed(ChangeEvent event, Actor actor) {
                     inventory.changeEquipped(currentWeapon);
                     player.getEvents().trigger("changeWeapon", currentWeapon);
+
+                    if (weapon == WeaponType.WOODHAMMER) {
+                        structureToolPicker.show();
+                    } else {
+                        structureToolPicker.hide();
+                    }
+
                     equipEvent();
                 }
             });

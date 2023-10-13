@@ -440,8 +440,8 @@ public class MapGameArea extends GameArea{
 
         TutnpcConfig tutnpcConfig = mapConfig.areaEntityConfig.getEntity(TutnpcConfig.class);
         if (tutnpcConfig != null) {
-            Entity Tutnpc = NPCFactory.createTutnpc(tutnpcConfig);
-            spawnEntityAt(Tutnpc, tutnpcConfig.position, false, false);
+            Entity tutnpc = NPCFactory.createTutnpc(tutnpcConfig);
+            spawnEntityAt(tutnpc, tutnpcConfig.position, false, false);
         }
 
     }
@@ -471,8 +471,8 @@ public class MapGameArea extends GameArea{
 
         JailConfig jailConfig = mapConfig.areaEntityConfig.getEntity(JailConfig.class);
         if (jailConfig != null) {
-            Entity Jail = NPCFactory.createJail(jailConfig);
-            spawnEntityAt(Jail, jailConfig.position, true, true);
+            Entity jail = NPCFactory.createJail(jailConfig);
+            spawnEntityAt(jail, jailConfig.position, true, true);
         }
     }
 

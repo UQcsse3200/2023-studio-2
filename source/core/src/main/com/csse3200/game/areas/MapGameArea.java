@@ -340,7 +340,7 @@ public class MapGameArea extends GameArea{
         newPlayer.getComponent(CombatStatsComponent.class).setLives((int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")); // Ensures previous number of lives is maintained.
 
         // environmental damage
-        //newPlayer.getComponent(EnvironmentStatsComponent.class).setImmunity(mapConfig);
+        //newPlayer.getComponent(EnvironmentStatsComponent.class).setSafeMap(mapConfig);
         newPlayer.getComponent(EnvironmentStatsComponent.class).damage(newPlayer.getComponent(CombatStatsComponent.class));
 
         newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);

@@ -23,7 +23,7 @@ public class SafeZone extends Entity {
      */
     public SafeZone(Entity player) {
         super();
-        addComponent(new ProximityActivationComponent(3f, player, this::setSafe, this::setSafe));
+        addComponent(new ProximityActivationComponent(3f, player, this::setSafe, this::setUnsafe));
     }
 
     /**
@@ -35,15 +35,7 @@ public class SafeZone extends Entity {
         player.getComponent(EnvironmentStatsComponent.class).setIsImmune();
     }
 
-    /**
-     * Sets the teleport location.
-     *
-     * @param x new x position
-     * @param y new y position
-     */
-    @Override
-    public void setPosition(float x, float y) {
-        this.x = x;
-        this.y = y;
+    public void setUnsafe(Entity player) {
+        player.getComponent(EnvironmentStatsComponent.class).setNotImmune();
     }
 }

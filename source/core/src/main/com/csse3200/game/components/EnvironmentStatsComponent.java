@@ -29,6 +29,8 @@ public class EnvironmentStatsComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(EnvironmentStatsComponent.class);
     private Boolean isImmune = false;
 
+    private boolean isSafeMap = false;
+
     private int frozenLevel;
 
     public EnvironmentStatsComponent() {
@@ -53,10 +55,9 @@ public class EnvironmentStatsComponent extends Component {
      *
      * 
      */
-    public void setImmunity(GameAreaConfig mapConfig) {
-        //System.out.println(mapConfig.mapName);
-        this.isImmune = !mapConfig.mapName.equals("Earth");
-        
+    public void setSafeMap(GameAreaConfig mapConfig) {
+        System.out.println(mapConfig.mapName);
+        this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Verdant Oasis"));
     }
 
     public void setIsImmune() {
@@ -64,17 +65,23 @@ public class EnvironmentStatsComponent extends Component {
         this.isImmune = true;
     }
 
+    public void setNotImmune() {
+        this.isImmune = false;
+    }
+
     // Damage over time effect, has a five second delay. Repeats every second.
     // Effect checks whether or not you are in an applicable area
     public void damage(CombatStatsComponent player) {
-
+        if (this.isSafeMap) {
+            return;
+        }
         if (!getImmunity()) {
             Timer timer = new Timer();
             timer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
                     if (getImmunity()) {
-                        timer.stop();
+                        return;
                     }
                     player.addHealth(-1);
                     if (player.getHealth() <= 0) {

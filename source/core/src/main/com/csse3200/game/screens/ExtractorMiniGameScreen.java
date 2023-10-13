@@ -29,7 +29,7 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
     private static final String[] textures =
             {"images/minigame/fire.png", "images/minigame/Hole.png", "images/minigame/extractor.png", "images/minigame/spanner.png",
                     "images/minigame/extinguisher.png", "images/minigame/extinguisherCursor.png", "images/minigame/spannerCursor.png",
-                    "images/bang.png"};
+                    "images/minigame/bang.png"};
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 

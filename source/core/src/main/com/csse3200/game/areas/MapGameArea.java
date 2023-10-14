@@ -261,6 +261,7 @@ public class MapGameArea extends GameArea{
     private void spawnPowerups() {
         for (PowerupConfig powerupConfig: mapConfig.areaEntityConfig.getEntities(PowerupConfig.class)) {
             Entity powerup = PowerupFactory.createPowerup(powerupConfig);
+            System.out.println(powerupConfig.position);
             spawnEntityAt(powerup, powerupConfig.position, true, false);
         }
     }

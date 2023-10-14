@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
@@ -63,7 +64,7 @@ public class WeaponComponent extends Component {
 
         if (config.slotType.equals("building")) {
             makeNewHolding(weaponType, 0);
-        } else if (this.holdingWeapon != null) {
+        } else if (this.holdingWeapon != null && !this.holdingWeapon.getDisposed()) {
             this.holdingWeapon.dispose();
         }
     }
@@ -74,7 +75,7 @@ public class WeaponComponent extends Component {
      * @param weapon - weapon to make the player hold
      */
     private void makeNewHolding(WeaponType weapon, float attackDirection) {
-        if (this.holdingWeapon != null) {
+        if (this.holdingWeapon != null && !this.holdingWeapon.getDisposed()) {
             this.holdingWeapon.dispose();
         }
         this.holdingWeapon = PlayerWeaponFactory.createPlayerWeapon(weapon, attackDirection, entity);

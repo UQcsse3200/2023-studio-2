@@ -81,7 +81,7 @@ public class NukeController extends WeaponControllerComponent {
     @Override
     protected void move() {
      var pos = entity.getCenterPosition();
-     entity.setScale(entity.getScale().sub(0.006f, 0.006f));
+     entity.setScale(entity.getScale().sub(0.000f, 0.000f).scl(0.996f));
      entity.setPosition(pos.mulAdd(entity.getScale(), -0.5f));
         return;
     }

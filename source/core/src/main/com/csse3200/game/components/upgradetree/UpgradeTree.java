@@ -57,6 +57,10 @@ public class UpgradeTree extends Component {
         }
     }
 
+    /**
+     * triggerSound function will be called while exiting the upgradeTree's exit button
+     * function is called in UpgradeDisplay class
+     */
     public void triggerSound() {
         if (entity != null) {
             entity.getEvents().trigger("playSound","exitButton");

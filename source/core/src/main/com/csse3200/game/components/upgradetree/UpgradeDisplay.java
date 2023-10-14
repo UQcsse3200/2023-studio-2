@@ -365,6 +365,7 @@ public class UpgradeDisplay extends Window {
      * Creates an exit button for the upgrade tree display.
      *
      * @return The created exit button.
+     *
      */
     private Table createExitButton() {
         TextButton exitButton = new TextButton("X", skin);
@@ -373,6 +374,7 @@ public class UpgradeDisplay extends Window {
         table.setPosition(((float) (getWidth() * getScaleX() * 0.91)),
                 (float) (getHeight() * getScaleY() * 0.88));
 
+//        stats - object creation to call methods from UpgradeTree class
         UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
 
         exitButton.addListener(new ChangeListener() {
@@ -671,6 +673,7 @@ public class UpgradeDisplay extends Window {
 
     /**
      * Exit the upgrade tree menu.
+     * also trigger sound on mouse click
      */
     private void exitUpgradeTree(UpgradeTree stats) {
         stats.triggerSound();

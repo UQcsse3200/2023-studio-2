@@ -186,10 +186,17 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Keys.N -> {
+                //ATTACK IS A SOUND THING - AND IT ISN'T  ACTIVATED
                 ServiceLocator.getEntityService().getCompanion().getEvents().trigger("attack");
                 long currentTime = TimeUtils.millis();
                 if (currentTime - lastNKeyPressTime >= COOLDOWN_TIME) {
-                ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class).useNextPowerup();
+                    //TRY TO USE THE DEATH POTION
+                    //OLD INVENTORY SPAWNER
+                    //ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class).useNextPowerup();
+
+                    // Use new inventory to spawn a brand new death potion weapon
+                    ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupInventoryComponent.class).tryCreateDeathPowerupFromPowerupInventory();
+
                     lastNKeyPressTime = currentTime;
                 }else {logger.debug("powerup cooldown");}
                 return true;
@@ -197,11 +204,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
 
             case Keys.B -> {
                 entity.getEvents().trigger("CompanionSwitchMode");
-                return true;
-            }
-
-            case Keys.P -> {
-                triggerInventoryEvent("ranged");
                 return true;
             }
 
@@ -251,13 +253,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                     diagonal();
                 }
                 triggerWalkEvent();
-                return true;
-            }
-            case Keys.M -> {
-                InteractionControllerComponent interactionController = entity.getComponent(InteractionControllerComponent.class);
-                if (interactionController != null) {
-                    interactionController.interact();
-                }
                 return true;
             }
             default -> {

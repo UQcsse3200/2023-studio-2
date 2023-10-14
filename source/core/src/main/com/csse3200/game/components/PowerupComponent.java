@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.Companion.CompanionInventoryComponent;
+import com.csse3200.game.components.Companion.CompanionPowerupInventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.EnemyFactory;
@@ -153,6 +154,7 @@ public class PowerupComponent extends Component {
                 if (player.getComponent(PlayerActions.class) == null) {
                     return;
                 } else {
+                    companion.getComponent(CompanionActions.class).triggerInventoryEvent("ranged");
                     return;
                 }
 
@@ -163,6 +165,35 @@ public class PowerupComponent extends Component {
     }
 
     /**
+     * NEW UPDATE POWERUP INVENTORY
+     *
+     * It will get the new powerup inventory
+     *
+     *
+     * It will add the powerup type to the new powerup inventory
+     *
+     * It will then remove the power-up from the ground
+     */
+    public void updatePowerupInventory() {
+        //get the new powerup inventory
+        CompanionPowerupInventoryComponent companionPowerupInventory = companionEntity.getComponent(CompanionPowerupInventoryComponent.class);
+
+        //if the powerup inventory is not null, add it to the new inventory
+        if (companionPowerupInventory != null) {
+            // within the powerup inventory, add one of this type to the inventory
+            companionPowerupInventory.addPowerupToPowerupInventory(getType());
+        }
+
+        //Now that this power-up has been added to the inventory, REMOVE IT FROM THE GRAPHICS SYSTEM
+        if (entity != null) {
+            Gdx.app.postRunnable(entity::dispose);
+        }
+    }
+
+    /**
+     * LEGACY INVENTORY WHICH INVOLVES WEAPONS
+     *
+     *
      * This adds this powerup to the inventory component
      */
     public void updateInventory(){
@@ -171,7 +202,9 @@ public class PowerupComponent extends Component {
         if (companionInventory != null) {
             companionInventory.addPowerup(entityOfComponent);
         }
-        logger.debug("powerup picked up");
+        logger.info("powerup HAS picked up");
+
+        //REMOVE THE ENTITY FROM THE GRAPHICS SYSTEM?
         if (entity != null) {
             Gdx.app.postRunnable(entity::dispose);
         }

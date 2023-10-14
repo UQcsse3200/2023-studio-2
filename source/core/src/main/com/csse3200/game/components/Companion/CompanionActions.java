@@ -91,7 +91,6 @@ public class CompanionActions extends Component {
         } else if (Objects.equals(mode, COMPANION_MODE_ATTACK)) {
             COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
             entity.getEvents().trigger("companionModeChange","Attack");
-            triggerInventoryEvent("ranged");
         }
     }
 
@@ -157,6 +156,7 @@ public class CompanionActions extends Component {
 //                break;
 //        }
 //    }
+
 
     private boolean isMovementKeyPressed() {
         // Check if any of the movement keys are pressed (I, J, K, L)
@@ -227,7 +227,11 @@ public class CompanionActions extends Component {
         ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, CompanionWeaponType.SHIELD);
     }
 
-    private void triggerInventoryEvent(String slot) {
+    /**
+     * trigger the creation of any
+     * @param slot
+     */
+    public void triggerInventoryEvent(String slot) {
         CompanionInventoryComponent invComp = ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class);
         invComp.setEquipped(slot);
         ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());

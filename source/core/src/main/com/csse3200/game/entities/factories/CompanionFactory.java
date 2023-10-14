@@ -92,6 +92,7 @@ public class CompanionFactory {
                         .addComponent(new CompanionInventoryComponent(weaponConfigs))
                         .addComponent(new CompanionInGameAlerts())
                         .addComponent(new CompanionAnimationController())
+                        .addComponent(new CompanionPowerupInventoryComponent())
                         .addComponent(new FollowComponent(player,1f))
                         .addComponent(new InteractionControllerComponent(false));
                          companion.addComponent(new SaveableComponent<>(c -> {

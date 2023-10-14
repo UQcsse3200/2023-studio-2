@@ -78,14 +78,14 @@ class InventoryDisplayComponentTest {
         when(inventoryComponent.getEquippedType()).thenReturn(equippedWeapon);
 
         // This ensures non-equipped weapons are greyed out (all rgba is 0.5f)
-        component.updateButtonTableColor(button, nonEquipped);
+        component.updateButtonColor(button, nonEquipped);
         assertEquals(0.5f, button.getColor().r);
         assertEquals(0.5f, button.getColor().g);
         assertEquals(0.5f, button.getColor().b);
         assertEquals(0.5f, button.getColor().a);
 
         // This ensures equipped weapons are NOT greyed out
-        component.updateButtonTableColor(button, equippedWeapon);
+        component.updateButtonColor(button, equippedWeapon);
         assertEquals(1f, button.getColor().r);
         assertEquals(1f, button.getColor().g);
         assertEquals(1f, button.getColor().b);

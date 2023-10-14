@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -72,10 +73,18 @@ public class InventoryComponent extends Component {
     }
 
     /**
-     * Returns the current equipped weapons represented in a hash map
+     * Returns the current equipped weapons represented in an array
      **/
     public ArrayList<WeaponType> getEquippedWeapons() {
         return equippedWMap.values().stream().map(InventoryItem::getItem).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    /**
+     * Returns a mapping of item and its respective slot
+     * @return LinkedHashMap - a hash map containing the slot and item
+     */
+    public Map<String, InventoryItem> getEquippedWMap() {
+        return equippedWMap;
     }
 
     /**
@@ -151,7 +160,7 @@ public class InventoryComponent extends Component {
     /**
      * Private class to store inventory items
      */
-    private class InventoryItem {
+    public class InventoryItem {
         private WeaponType weaponType;
         private int ammoCount;
         private int maxAmmo;

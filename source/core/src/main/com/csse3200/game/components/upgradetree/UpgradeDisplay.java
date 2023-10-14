@@ -653,6 +653,7 @@ public class UpgradeDisplay extends Window {
         weaponButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
         stats.subtractMaterials(node.getNodeCost());
         stats.unlockWeapon(node.getName());
+        player.getEvents().trigger("updateHotbar");
 
         // Add it to the StructurePicker menu if buildable
         if (node.getWeaponType() == null) {

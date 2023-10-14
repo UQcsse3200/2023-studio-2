@@ -59,16 +59,17 @@ public class MainMenuStarBackground extends Actor {
             animations[i] = new Animation<>(0.1f, frames);
             animations[i].setPlayMode(Animation.PlayMode.LOOP_PINGPONG); // Ping pong effect
 
-            // No stars in the rightmost quarter of screen, overlapping with menu buttons
+            // No stars in the rightmost quarter of the screen, overlapping with menu buttons
             int x = MathUtils.random(0, Gdx.graphics.getWidth());
-            // TODO CHANGE THE AREAS OF SCREEN AFFECTED
-            while (x > 3 * (Gdx.graphics.getWidth() / 4) && x < 0.9 * (Gdx.graphics.getWidth())) {
-                x = MathUtils.random(0, Gdx.graphics.getWidth());
-            }
+            int y = MathUtils.random((Gdx.graphics.getHeight() / 3), (int) (0.85 * Gdx.graphics.getHeight()));
 
-            // No stars in the top 15% or bottom third of screen
-            int y = MathUtils.random((Gdx.graphics.getHeight() / 3),
-                    (int) (0.85 * Gdx.graphics.getHeight()));
+            // TODO CHANGE THE AREAS OF SCREEN AFFECTED
+            while ((x >= (140 / 1280f) * Gdx.graphics.getWidth() && x <= (690 / 1280f) * Gdx.graphics.getWidth() && y >= (500 / 720f) * Gdx.graphics.getHeight() && y <= (600 / 720f) * Gdx.graphics.getHeight()) ||
+                    (x >= (400 / 1280f) * Gdx.graphics.getWidth() && x <= (500 / 1280f) * Gdx.graphics.getWidth() && y >= (340 / 720f) * Gdx.graphics.getHeight() && y <= (250 / 720f) * Gdx.graphics.getHeight()) ||
+                    (x >= (950 / 1280f) * Gdx.graphics.getWidth() && x <= (1130 / 1280f) * Gdx.graphics.getWidth() && y >= (150 / 720f) * Gdx.graphics.getHeight() && y <= (550 / 720f) * Gdx.graphics.getHeight())) {
+                x = MathUtils.random(0, Gdx.graphics.getWidth());
+                y = MathUtils.random((Gdx.graphics.getHeight() / 3), (int) (0.85 * Gdx.graphics.getHeight()));
+            }
 
             spritePositions[i] = new Vector2(x, y);
             stateTimes[i] = MathUtils.random(0f, 1f);  // Offset animation start times

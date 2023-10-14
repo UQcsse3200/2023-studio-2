@@ -141,22 +141,13 @@ public class EnemyFactory {
    * @param config The type of the enemy for which the scale is to be determined.
    * @return The scaling factor for the provided enemy type.
    */
-  static float getEnemyscale(EnemyConfig config){
+  static float getEnemyscale(EnemyConfig config) {
     float scale = 1f;
-
-    if (config.type == EnemyType.Ranged) {
-      if (config.isBoss){
-        scale = 3.0f;
-      }
-    }
-    else if (config.type == EnemyType.Melee) {
-      if (config.behaviour == EnemyBehaviour.DTE) {
-        scale = 1.2f;
-      }
-
-      if (config.isBoss){
-        scale = 3.0f;
-      }
+    switch (config.name) {
+      case chain -> scale = 1.5f;
+      case necromancer -> scale = 2.5f;
+      case Knight -> scale = 3f;
+      case Guardian -> scale = 3f;
     }
     return scale;
   }

@@ -8,7 +8,8 @@ public enum EnemyName {
     roboMan,
     necromancer,
     Knight,
-    rangeBossPTE;
+    rangeBossPTE,
+    Guardian;
 
     public static EnemyName getEnemyName(String name) {
         return switch (name) {
@@ -18,6 +19,7 @@ public enum EnemyName {
             case "roboMan" -> roboMan;
             case "Knight" -> Knight;
             case "rangeBossPTE" -> rangeBossPTE;
+            case "Guardian" -> Guardian;
             default -> null;
         };
     }

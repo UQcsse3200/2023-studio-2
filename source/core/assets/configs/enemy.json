@@ -81,6 +81,24 @@
     }
   },
 
+  "Guardian": {
+    "name": "Guardian",
+    "health": 100,
+    "baseAttack": 25,
+    "speed": 8,
+    "behaviour": "PTE",
+    "type": "Melee",
+    "spritePath": "images/enemy/guardian/guardian.atlas",
+    "isBoss": true,
+
+    "sound": {
+      "soundsMap": {
+        "enemyDeath": "sounds/enemyDeath.wav",
+        "enemySpawn": "sounds/enemySpawner.wav"
+      }
+    }
+  },
+
   "rangeBossPTE": {
     "name": "rangeBossPTE",
     "health": 100,

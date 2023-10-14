@@ -72,7 +72,6 @@
     "type": "Melee",
     "spritePath": "images/enemy/Knight/Knight.atlas",
     "isBoss": true,
-
     "sound": {
       "soundsMap": {
         "enemyDeath": "sounds/enemyDeath.wav",
@@ -90,7 +89,6 @@
     "type": "Melee",
     "spritePath": "images/enemy/guardian/guardian.atlas",
     "isBoss": true,
-
     "sound": {
       "soundsMap": {
         "enemyDeath": "sounds/enemyDeath.wav",

@@ -28,7 +28,7 @@ public class SafeZone extends Entity {
     /**
      * Gives the player environmental damage immunity
      *
-     * @param player - the player entering the portal
+     * @param player - the player in the safe zone
      */
     public void setSafe(Entity player) {
         player.getComponent(EnvironmentStatsComponent.class).setIsImmune();
@@ -37,7 +37,7 @@ public class SafeZone extends Entity {
     /**
      * Removes the player's environmental damage immunity
      *
-     * @param player - the player entering the portal
+     * @param player - the player in the safe zone
      */
     public void setUnsafe(Entity player) {
         player.getComponent(EnvironmentStatsComponent.class).setNotImmune();

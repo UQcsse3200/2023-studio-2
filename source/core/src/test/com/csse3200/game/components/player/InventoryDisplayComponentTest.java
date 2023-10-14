@@ -2,6 +2,8 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
@@ -13,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -29,6 +33,8 @@ class InventoryDisplayComponentTest {
     InventoryComponent inventoryComponent;
     @Mock
     EventHandler eventHandler;
+    @Mock
+    UpgradeTree upgradeTree;
 
     @BeforeEach
     void beforeEach() {
@@ -36,15 +42,23 @@ class InventoryDisplayComponentTest {
         when(entityService.getPlayer()).thenReturn(player);
         when(player.getComponent(InventoryComponent.class)).thenReturn(inventoryComponent);
         when(player.getEvents()).thenReturn(eventHandler);
+        lenient().when(player.getComponent(UpgradeTree.class)).thenReturn(upgradeTree);
     }
 
     @Test
     void testMakeTable() {
         var component = new InventoryDisplayComponent();
         component.makeTable();
-
         assertNotNull(component.table);
     }
+
+    @Test
+    void testMakeHotbar() {
+        var component = new InventoryDisplayComponent();
+        when(upgradeTree.getUnlockedWeapons()).thenReturn(new ArrayList<>());
+        component.makeHotbar();
+    }
+
 
     @AfterEach
     void afterEach() {

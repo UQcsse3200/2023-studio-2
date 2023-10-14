@@ -45,8 +45,8 @@ public class InventoryDisplayComponent extends UIComponent {
         player = ServiceLocator.getEntityService().getPlayer();
         inventory = player.getComponent(InventoryComponent.class);
         structureToolPicker = player.getComponent(StructureToolPicker.class);
-        makeHotbar();
         makeTable();
+        makeHotbar();
         player.getEvents().addListener("updateHotbar", this::equipEvent);
     }
 
@@ -96,14 +96,14 @@ public class InventoryDisplayComponent extends UIComponent {
         }
     }
 
-    private void makeHotbar() {
+    void makeHotbar() {
         hotbar.align(Align.center);
         hotbar.center().bottom().padBottom(10);
         hotbar.setFillParent(true);
-        WeaponConfig equippedConfig = inventory.getConfigs().GetWeaponConfig(inventory.getEquippedType());
-        String equippedCategory = equippedConfig.slotType;
-        for (var str : player.getComponent(UpgradeTree.class).getUnlockedWeapons()) {
 
+        for (var str : player.getComponent(UpgradeTree.class).getUnlockedWeapons()) {
+            WeaponConfig equippedConfig = inventory.getConfigs().GetWeaponConfig(inventory.getEquippedType());
+            String equippedCategory = equippedConfig.slotType;
             WeaponType weaponType = WeaponType.valueOf(String.valueOf(str)); // cursed
             WeaponConfig config = inventory.getConfigs().GetWeaponConfig(weaponType);
             if (weaponType.equals(WeaponType.WOODHAMMER) || !config.slotType.equals(equippedCategory)) {

@@ -13,6 +13,7 @@ public class CompanionWeaponTargetComponent extends Component {
     Entity entity;
     CompanionWeaponType weaponType;
     Vector2 trackPrev;
+    private Random random = new Random();
 
     //For the shield rotations
     /**
@@ -63,7 +64,6 @@ public class CompanionWeaponTargetComponent extends Component {
             case DEATH_POTION:
                 List<Entity> enemies = EnemyFactory.getEnemyList();
                 if (!enemies.isEmpty()) {
-                    Random random = new Random();
                     int randomIndex = random.nextInt(enemies.size());
                     Entity enemy = enemies.get(randomIndex);
                     if (enemy != null) {

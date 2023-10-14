@@ -51,7 +51,7 @@ public class KillerBeeController extends ProjectileController {
     @Override
     protected void initial_rotation() {
         currentRotation = ((int) (((currentRotation + 22.5f) % 360) / 45f)) * 45f;
-        currentRotation = ((currentRotation + (float) ((attackNum * (90 / 7) - 45))) + 360) % 360;
+        currentRotation = ((currentRotation + (float) (attackNum * ((double) 90 / 7) - 45)) + 360) % 360;
     }
 
     @Override

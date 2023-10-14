@@ -15,8 +15,6 @@ import com.csse3200.game.screens.SpaceMapScreen;
 public class ObstacleMiniGameActions extends MainGameActions {
     private static final Logger logger = LoggerFactory.getLogger(ObstacleMiniGameActions.class);
     private final GdxGame game;
-    private final Stage stage;
-    private final SpaceMapScreen screen;
 
     /**
      * Creates a ObstacleMiniGameActions that handles events that exit SpaceGameScreen
@@ -27,8 +25,6 @@ public class ObstacleMiniGameActions extends MainGameActions {
     public ObstacleMiniGameActions(GdxGame game, Stage stage, SpaceMapScreen screen) {
         super(game);
         this.game = game;
-        this.stage = stage;
-        this.screen = screen;
     }
 
 
@@ -37,13 +33,13 @@ public class ObstacleMiniGameActions extends MainGameActions {
      */
     @Override
     public void create() {
-        entity.getEvents().addListener("exit", this::onExit);
+        entity.getEvents().addListener("exit", this::exit);
     }
 
     /**
      * Swaps to the Main Menu screen.
      */
-    private void onExit() {
+    private void exit() {
         logger.info("Exiting main game screen");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }

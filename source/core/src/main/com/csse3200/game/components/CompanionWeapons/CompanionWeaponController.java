@@ -65,7 +65,7 @@ public class CompanionWeaponController extends Component {
             //get some different input numbers
             case SHIELD -> updateStatic();
 
-            default -> null;
+            default -> updateStatic();
         };
 
         //Reference to current position of the projectile

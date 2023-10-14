@@ -106,7 +106,7 @@ public class ControlsScreen extends ScreenAdapter {
         Texture storyLine = new Texture(Gdx.files.internal("images/controls-images/Controls.png"));
         TextureRegionDrawable storyBackground = new TextureRegionDrawable(storyLine);
         Image image = new Image(storyBackground);
-        image.setHeight(Gdx.graphics.getHeight()/2-150);
+        image.setHeight((float) Gdx.graphics.getHeight() / 2 - 150);
         image.setWidth(Gdx.graphics.getWidth());
         image.setPosition(0,stage.getHeight()-image.getHeight());
         stage.addActor(image);

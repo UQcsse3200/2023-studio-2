@@ -7,6 +7,6 @@ public class SafeZoneConfig extends BaseEntityConfig{
     public int teleportY;
 
     public SafeZoneConfig() {
-        spritePath = "map/Fire.png";
+        spritePath = "map/heatzone.png";
     }
 }

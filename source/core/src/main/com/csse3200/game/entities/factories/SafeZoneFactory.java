@@ -30,7 +30,7 @@ public class SafeZoneFactory {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE))
                 .addComponent(new TextureRenderComponent(config.spritePath));
         safeZone.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
-        safeZone.setScale(1.0f, 1.0f);
+        safeZone.setScale(5.0f, 5.0f);
         return safeZone;
     }
 

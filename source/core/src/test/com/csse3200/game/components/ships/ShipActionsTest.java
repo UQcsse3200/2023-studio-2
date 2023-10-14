@@ -8,6 +8,7 @@ import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.services.ServiceLocator;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -39,7 +40,7 @@ public class ShipActionsTest {
         ship = new Entity();
         ship.addComponent(physicsComponent);
         ship.addComponent(new ShipActions(100, 100, 1));
-        ship = ship.getComponent(ShipActions.class);
+        //ship = ship.getComponent(ShipActions.class);
     }
 
 }

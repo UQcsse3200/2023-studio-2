@@ -74,4 +74,9 @@ public class CompanionDeathScreenDisplay extends UIComponent {
         tableButtons.clear();
         super.dispose();
     }
+
+
+    public void setTexture(Texture mock) {
+
+    }
 }

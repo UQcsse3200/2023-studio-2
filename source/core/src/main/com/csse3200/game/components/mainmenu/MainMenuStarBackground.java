@@ -7,40 +7,38 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.csse3200.game.components.spacenavigation.StarBackground;
 
 // This is heavily inspired by the Space Team's Space Minigame screen
-public class MainMenuStarBackground extends Actor {
-    /**
-     * The texture for the space background of the navigation screen.
-     */
-    private Texture spaceBackground;
+public class MainMenuStarBackground extends StarBackground {
 
     /**
      * Array of animations for individual star sprites.
      */
-    private Animation<TextureRegion>[] animations;
+    private final Animation<TextureRegion>[] animations;
 
     /**
      * Array of positions for individual star sprites.
      */
-    private Vector2[] spritePositions;
+    private final Vector2[] spritePositions;
 
     /**
      * The number of star sprites in the background.
      */
-    private int numOfSprites = 15;
+    private final int numOfSprites = 15;
 
     /**
      * Array to store the time passed for each sprite's animation.
      */
-    private float[] stateTimes;  // Time passed for each sprite's animation
+    private final float[] stateTimes;  // Time passed for each sprite's animation
 
     /**
      * Constructs a new NavigationBackground instance.
      * Loads necessary textures and initializes the star animations and positions.
      */
     public MainMenuStarBackground() {
+
+        super(15);
 
         int numOfFrames = 8;
         TextureRegion[] frames = new TextureRegion[numOfFrames];

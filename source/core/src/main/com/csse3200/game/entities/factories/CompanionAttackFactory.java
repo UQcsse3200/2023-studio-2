@@ -19,8 +19,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 public class CompanionAttackFactory {
-    private static final CompanionWeaponConfigs configs =
-            FileLoader.readClass(CompanionWeaponConfigs.class, "configs/CompanionWeapon.json");
+    private static final CompanionWeaponConfigs configs = new CompanionWeaponConfigs();
 
     public static Entity createAttack(CompanionWeaponType weaponType, float initRot, Entity Companion) {
         CompanionWeaponConfig config = configs.GetWeaponConfig(weaponType);
@@ -44,7 +43,7 @@ public class CompanionAttackFactory {
                 config.weaponSpeed * direction,
                 config.rotationSpeed * direction,
                 config.animationType,
-                config.imageRotationOffset);
+                config.imageRotationOffset, config.textureAtlas);
 
         Entity attack = new Entity()
                 .addComponent(new PhysicsComponent())
@@ -54,37 +53,11 @@ public class CompanionAttackFactory {
                 .addComponent(weaponController);
         attack.setEntityType("ComapanionWeapon");
 
-        TextureAtlas atlas = new TextureAtlas(config.textureAtlas);
-        AnimationRenderComponent animator = new AnimationRenderComponent(atlas);
 
-        switch (config.animationType) {
-            case 8:
-                animator.addAnimation("LEFT3", 0.07f, Animation.PlayMode.NORMAL);
-                animator.addAnimation("RIGHT3", 0.07f, Animation.PlayMode.NORMAL);
-            case 6:
-                animator.addAnimation("LEFT2", 0.07f, Animation.PlayMode.NORMAL);
-                animator.addAnimation("RIGHT2", 0.07f, Animation.PlayMode.NORMAL);
-            case 4:
-                animator.addAnimation("LEFT1", 0.07f, Animation.PlayMode.NORMAL);
-                animator.addAnimation("RIGHT1", 0.07f, Animation.PlayMode.NORMAL);
-                animator.addAnimation("DOWN", 0.07f, Animation.PlayMode.NORMAL);
-            default:
-                animator.addAnimation("UP", 0.07f, Animation.PlayMode.NORMAL);
-                animator.addAnimation("STATIC", 0.07f, Animation.PlayMode.NORMAL);
-        }
+                attack.addComponent(new CombatStatsComponent(30, 10, 1, false));
 
-        attack.addComponent(animator)
-                .addComponent(new CombatStatsComponent(30, 10, 1, false));
 
-        if (weaponType == CompanionWeaponType.Death_Potion) {
-            int dir = (int) Math.floor(initRot / 60);
-            switch (dir) {
-                case 0, 5 -> animator.startAnimation("RIGHT1");
-                case 1 -> animator.startAnimation("UP");
-                case 2, 3 -> animator.startAnimation("LEFT1");
-                case 4 -> animator.startAnimation("DOWN");
-            }}
-            attack.scaleWidth(config.imageScale);
+        attack.scaleWidth(config.imageScale);
             // Create the PowerUpController for the Death Potion
             PowerUpController powerUpController = new PowerUpController(config);
 

@@ -382,20 +382,4 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
 
     }
-
-    /**
-     * Calculates the rotation angle in degrees between two points.
-     *
-     * @param centerPt The center point.
-     * @param targetPt The target point.
-     * @return The rotation angle in degrees.
-     */
-    private double calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt) {
-        double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
-        if (angle < 0) {
-            angle += 360;
-        }
-        return angle;
-    }
-
 }

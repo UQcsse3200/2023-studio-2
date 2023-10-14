@@ -1,7 +1,4 @@
 package com.csse3200.game.components.Companion;
-
-
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponTargetComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
 
@@ -28,14 +25,14 @@ public class CompanionWeaponComponent extends Component {
     public void create() {
         ServiceLocator.getEntityService().getCompanion().getEvents().addListener("weaponAttack", this::playerAttacking);
         ServiceLocator.getEntityService().getCompanion().getEvents().addListener("changeWeapon", this::makeNewHolding);
-        ServiceLocator.getEntityService().getCompanion().getEvents().addListener("updateAmmo", this::tempPrintAmmo);
+//        ServiceLocator.getEntityService().getCompanion().getEvents().addListener("updateAmmo", this::tempPrintAmmo);
         this.CurrentWeapon = null;
         /*makeNewHolding(CompanionWeaponType.Death_Potion);*/
     }
 
-    private void tempPrintAmmo(int ammo, int maxAmmo) {
-        System.out.println("Currently: " + ammo + " / " + maxAmmo);
-    }
+//    private void tempPrintAmmo(int ammo, int maxAmmo) {
+//        System.out.println("Currently: " + ammo + " / " + maxAmmo);
+//    }
 
 
     private void playerAttacking(CompanionWeaponType weaponType, Vector2 clickPosition) {
@@ -60,8 +57,6 @@ public class CompanionWeaponComponent extends Component {
         Entity newAttack = CompanionAttackFactory.createAttack(weaponType, initialRotation,ServiceLocator.getEntityService().getCompanion());
         var newPos = positionInDirection(initialRotation + spawnAngleOffset, distance, newAttack);
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
-//        CompanionInventoryComponent invComp= ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class);
-//        ServiceLocator.getEntityService().getCompanion().getEvents().trigger("updateAmmo", invComp.GetCurrentAmmo(), invComp.GetCurrentMaxAmmo());
     }
 
     // change the weapon in use

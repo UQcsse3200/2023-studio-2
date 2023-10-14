@@ -1,5 +1,4 @@
 package com.csse3200.game.components.Companion;
-
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -10,7 +9,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
  */
 public class CompanionAnimationController extends Component {
     AnimationRenderComponent animator;
-    AnimationRenderComponent infanimator;
+
 
     /**
      * Creates the CompanionAnimationController and sets up event listeners for animations.
@@ -19,12 +18,7 @@ public class CompanionAnimationController extends Component {
     public void create() {
         super.create();
 
-        // Initialize infant companion animation renderer and set event listeners
-       /* infanimator = this.entity.getComponent(AnimationRenderComponent.class);
-        entity.getEvents().addListener("walkLeft1", this::infanimateLeft);
-        entity.getEvents().addListener("walkRight1", this::infanimateRight);
-        entity.getEvents().addListener("walkUp1", this::infanimateUp);
-        entity.getEvents().addListener("walkDown1", this::infanimateDown);*/
+
 
         // Initialize companion animation renderer and set event listeners
         animator = this.entity.getComponent(AnimationRenderComponent.class);

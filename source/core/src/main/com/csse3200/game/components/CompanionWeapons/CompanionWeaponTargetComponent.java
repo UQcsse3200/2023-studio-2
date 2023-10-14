@@ -1,14 +1,16 @@
 package com.csse3200.game.components.CompanionWeapons;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.explosives.PostrunnableTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.EnemyFactory;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.List;
-import java.util.Random;
 
 public class CompanionWeaponTargetComponent extends Component {
     Entity entity;
@@ -56,6 +58,7 @@ public class CompanionWeaponTargetComponent extends Component {
         var offsetVector = new Vector2(x_offset, y_offset);
         companion.add(offsetVector);
         update_shield_rotation_offsets();
+        updateSHIELD();
         trackPrev = entity.getPosition();
         return companion;
     }
@@ -73,7 +76,6 @@ public class CompanionWeaponTargetComponent extends Component {
     }
 
     /**
-     *
      * @return
      */
     private Vector2 handleDeathPotion() {
@@ -104,6 +106,7 @@ public class CompanionWeaponTargetComponent extends Component {
 
     /**
      * Get the first live enemy available. Then, once that one is dead, it finds a new target.
+     *
      * @param enemies - list of enemies on the map
      * @return - the enemy that it is currently targeting
      */
@@ -124,4 +127,64 @@ public class CompanionWeaponTargetComponent extends Component {
         }
         return null;
     }
+    Entity companion = ServiceLocator.getEntityService().getCompanion();
+
+    public void updateSHIELD() {
+
+        for (var otherEntity :  EnemyFactory.getEnemyList()) {
+            if (otherEntity == entity) {
+                continue;
+            }
+
+            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
+
+            if (distance <= 1.1f) {
+                otherEntity.getEvents().trigger("chainExplode", distance/1.1f * 0.4f);
+            }
+        }
+
+
+
+        for (Entity otherEntity : EnemyFactory.getEnemyList()) {
+            if (otherEntity == entity ) {
+                continue;
+            }
+
+            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
+            if (distance <= 1.1f) {
+                otherEntity.getEvents().trigger(" SHIELD_2", distance/1.1f * 0.4f);
+            }
+        }
+        for (var otherEntity :  EnemyFactory.getEnemyList()) {
+            var combatStatsComponent = otherEntity.getComponent(CombatStatsComponent.class);
+
+
+
+            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
+
+            if (distance <= 1.1f) {
+                combatStatsComponent.addHealth((int) (( 1.1f - distance)
+                        / 1.1f * - 25 ));
+            }
+        }
+
+    }
+    private boolean isChained = false;
+    protected void chainExplode(float delay) {
+        if (isChained) {
+            return;
+        }
+
+//        isChained = true;
+
+        if (5==5) {
+            Timer.schedule(new PostrunnableTask(this::updateSHIELD), delay);
+        }
+    }
+    public void create() {
+
+        this.entity.getEvents().addListener(" SHIELD_2", this::updateSHIELD);
+        this.entity.getEvents().addListener("chainExplode", this::chainExplode);
+    }
+
 }

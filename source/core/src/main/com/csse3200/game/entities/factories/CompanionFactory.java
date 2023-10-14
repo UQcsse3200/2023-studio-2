@@ -16,10 +16,13 @@ import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
+import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionConfig;
+import com.csse3200.game.entities.configs.CompanionWeaponConfigs;
 import com.csse3200.game.entities.configs.PlayerConfig;
+import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -40,7 +43,8 @@ import java.util.Objects;
 public class CompanionFactory {
     private static final CompanionConfig config =
             FileLoader.readClass(CompanionConfig.class, "configs/companion.json");
-
+    private static final CompanionWeaponConfigs weaponConfigs =
+            new CompanionWeaponConfigs();
     public static Entity createCompanion(){
        return createCompanion(config);
     }
@@ -80,10 +84,12 @@ public class CompanionFactory {
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
                         .addComponent(animator)
+
                         .addComponent(new HealthBarComponent(true))
                         .addComponent(new CompanionWeaponComponent())
                         /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay(config))
+                        .addComponent(new CompanionInventoryComponent(weaponConfigs))
                         .addComponent(new CompanionInGameAlerts())
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new FollowComponent(player,1f))

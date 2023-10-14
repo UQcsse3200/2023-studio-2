@@ -1,10 +1,8 @@
 package com.csse3200.game.areas;
-
 import com.badlogic.gdx.audio.Music;
 import com.csse3200.game.files.UserSettings;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
@@ -30,11 +28,9 @@ public class SpaceGameArea extends GameArea {
     private static final float STATIC_ASTEROID_SIZE =0.9f;
     private static final float WORMHOLE_SIZE = 0.9f;
     private static final int NUM_ENEMIES = 10;
-    private float distance;
     private Entity ship;
     private Entity goal;
     private static final int NUM_ASTEROIDS = 100;
-    private Label distanceLabel;
     private static final String[] spaceMiniGameTextures = {
             "images/minigame/SpaceMiniGameBackground.png",
             "images/minigame/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
@@ -43,9 +39,12 @@ public class SpaceGameArea extends GameArea {
             "images/minigame/obstacle-enemy.png",
             "images/minigame/mainship.png"
     };
-    private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
-    private static final String[] spaceMusic = {backgroundMusic};
+    private static final String BackgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
+    private static final String[] spaceMusic = {BackgroundMusic};
     private final TerrainFactory terrainFactory;
+
+    private final ArrayList<Entity> TargeTables;
+
     private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
 
     /**
@@ -55,7 +54,7 @@ public class SpaceGameArea extends GameArea {
     public SpaceGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
-        this.targetables = new ArrayList<>();
+        this.TargeTables = new ArrayList<>();
     }
 
     /**
@@ -68,20 +67,17 @@ public class SpaceGameArea extends GameArea {
         displayUI();
         playMusic();
         spawnTerrain();
-        Entity newShip = spawnShip();
         spawnAsteroids();
-        Entity goal = spawnGoal();
         createBoundary();
         spawnEnemy();
 
     }
-
     /**
      * Method for the background music of the game
      */
     private void playMusic() {
         UserSettings.Settings settings = UserSettings.get();
-        Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+        Music music = ServiceLocator.getResourceService().getAsset(BackgroundMusic, Music.class);
         music.setLooping(true);
         music.setVolume(settings.musicVolume);
         music.play();
@@ -111,11 +107,12 @@ public class SpaceGameArea extends GameArea {
      * @param pos Start position from where the number of blocks are added on the map
      */
     private void spawnStaticAsteroidsUp(int n, GridPoint2 pos){
-        Entity asteroidwidth = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
+        Entity asteroidWidth = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
         if (n <= 0) {
             return;
         }
-        spawnEntityAt(asteroidwidth, pos, false, false);
+        spawnEntityAt(asteroidWidth, pos, false, false);
+
         // Increment the position for the next asteroid
         pos.y += 1;
         spawnStaticAsteroidsUp(n - 1, pos); // Recursive call
@@ -193,7 +190,6 @@ public class SpaceGameArea extends GameArea {
         float tileSize = terrain.getTileSize();
         GridPoint2 tileBounds = terrain.getMapBounds(0);
         Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
-
     }
 
 
@@ -204,7 +200,7 @@ public class SpaceGameArea extends GameArea {
     {
         Entity newShip = MinigameShipFactory.createMinigameShip();
         spawnEntityAt(newShip, SHIP_SPAWN, true, true);
-        targetables.add(newShip);
+        TargeTables.add(newShip);
         ship = newShip;
         return newShip;
     }

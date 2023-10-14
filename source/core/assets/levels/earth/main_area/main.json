@@ -57,7 +57,7 @@
       "images/action-feedback/warning.png",
       "map/treetop.png",
       "particle-effects/explosion/particle.png",
-      "images/resources/Cracked_Ground.png",
+      "images/resources/Cracked_Ground.png"
     ],
     "textureAtlasPaths": [
       "images/npc/Astro_NPC.atlas",

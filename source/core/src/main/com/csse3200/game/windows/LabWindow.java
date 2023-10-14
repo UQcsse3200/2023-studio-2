@@ -40,10 +40,11 @@ public class LabWindow extends Window {
         setPosition(stage.getWidth() / 2 - getWidth() / 2 * getScaleX(), stage.getHeight() / 2 - getHeight() / 2 * getScaleY());
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         // Create a Table to hold the buttons and center them within the window
-        buttonTable = new Table();
-        buttonTable.setFillParent(true);
-        // Fill the entire LabWindow
+        Table buttonTable = new Table();
+        this.buttonTable = new Table();
+        this.buttonTable.setFillParent(true);
 
+        // Fill the entire LabWindow
         Texture deathpotionImage = new Texture("images/powerups/death_potion.png");
         Texture speedpotionImage = new Texture("images/powerups/speed_boost.png");
         Texture healthpotionImage = new Texture("images/powerups/health_boost.png");
@@ -126,11 +127,9 @@ public class LabWindow extends Window {
         buttonTable.add(potion7).padTop(70).padLeft(40);
         buttonTable.add(potion8).padTop(70).padLeft(40);
         buttonTable.row(); //Move to the next row
-//        buttonTable.add(returnToGameButton).padTop(100).padLeft(600);
+
         addActor(buttonTable);
         //addActor(exit);
-
-//
 
         Table button2Table = new Table();
         button2Table.setFillParent(true);

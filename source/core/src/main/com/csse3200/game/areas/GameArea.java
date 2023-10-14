@@ -12,7 +12,6 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.StructurePlacementService;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,24 +32,30 @@ public abstract class GameArea implements Disposable {
   protected StructurePlacementService structurePlacementService;
   protected ArrayList<Entity> targetables;
 
-  public GameArea() {
+  protected GameArea() {
     areaEntities = new ArrayList<>();
     pathFinderGrids = new HashMap<>();
     this.targetables = new ArrayList<>();
   }
 
-  /** Create the game area in the world. */
+  /**
+   * Create the game area in the world.
+   */
   public abstract void create();
 
-  /** Dispose of all internal entities in the area */
+  /**
+   * Dispose of all internal entities in the area
+   */
   public void dispose() {
     for (var entity : areaEntities) {
-      if (entity.getDisposed()) {continue;}
+      if (entity.getDisposed()) {
+        continue;
+      }
       entity.dispose();
     }
   }
 
-  public TerrainComponent getTerrain(){
+  public TerrainComponent getTerrain() {
     return terrain;
   }
 
@@ -67,7 +72,7 @@ public abstract class GameArea implements Disposable {
     handler.addListener("fireBullet",
             (StructurePlacementService.spawnEntityAtVectorArgs args) ->
                     spawnEntityAtVector(args.getEntity(), args.getWorldPos())
-  );
+    );
     handler.addListener("placeStructureAt",
             (StructurePlacementService.placeStructureAtArgs args) ->
                     spawnEntityAt(args.getEntity(), args.getTilePos(), args.isCenterX(), args.isCenterY())
@@ -100,7 +105,8 @@ public abstract class GameArea implements Disposable {
   /**
    * Function to listen for "placeEntityAt" trigger and repond by
    * placing entitiy at specified position.
-   * @param entity - Entity to be placed
+   *
+   * @param entity   - Entity to be placed
    * @param position - position for where entity should be placed
    */
   protected void placeEntityAt(Entity entity, Vector2 position) {
@@ -115,31 +121,27 @@ public abstract class GameArea implements Disposable {
    */
   protected void spawnEntity(Entity entity) {
     areaEntities.add(entity);
-    if (terrain == null) {
-      pathFinderGrids.put(null, entity);
-    } else {
-      if (entity.getComponent(ColliderComponent.class) != null) {
-        if (PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.LABORATORY) ||
-            PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.OBSTACLE) ||
-            PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.SHIP)) {
-          Vector2 position = entity.getPosition();
-          Vector2 scale = entity.getScale();
+    if (terrain != null && entity.getComponent(ColliderComponent.class) != null) {
+      if (PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.LABORATORY) ||
+              PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.OBSTACLE) ||
+              PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.SHIP)) {
+        Vector2 position = entity.getPosition();
+        Vector2 scale = entity.getScale();
 
-// Calculate the four corners of the entity
-          Vector2 topRight = new Vector2(position.x + scale.x, position.y + scale.y);
-          Vector2 bottomLeft = new Vector2(position.x, position.y);
+        // Calculate the four corners of the entity
+        Vector2 topRight = new Vector2(position.x + scale.x, position.y + scale.y);
+        Vector2 bottomLeft = new Vector2(position.x, position.y);
 
-// Convert these to grid coordinates
-          GridPoint2 gridTopRight = terrain.worldPositionToTile(topRight);
-          GridPoint2 gridBottomLeft = terrain.worldPositionToTile(bottomLeft);
+        // Convert these to grid coordinates
+        GridPoint2 gridTopRight = terrain.worldPositionToTile(topRight);
+        GridPoint2 gridBottomLeft = terrain.worldPositionToTile(bottomLeft);
 
-// Iterate through the grid coordinates and add them to the HashMap
-          for (int x = gridBottomLeft.x; x < gridTopRight.x; x++) {
-            for (int y = gridBottomLeft.y; y < gridTopRight.y; y++) {
-              GridPoint2 gridPoint = new GridPoint2(x, y);
-              if (!pathFinderGrids.containsKey(gridPoint)) {
-                pathFinderGrids.put(gridPoint, entity);
-              }
+        // Iterate through the grid coordinates and add them to the HashMap
+        for (int x = gridBottomLeft.x; x < gridTopRight.x; x++) {
+          for (int y = gridBottomLeft.y; y < gridTopRight.y; y++) {
+            GridPoint2 gridPoint = new GridPoint2(x, y);
+            if (!pathFinderGrids.containsKey(gridPoint)) {
+              pathFinderGrids.put(gridPoint, entity);
             }
           }
         }
@@ -147,14 +149,12 @@ public abstract class GameArea implements Disposable {
     }
     ServiceLocator.getEntityService().register(entity);
   }
-
-
   /**
    * Spawns the player entity and adds them to the list of targetable entities
    */
-  protected void spawnPlayer(GridPoint2 PLAYER_SPAWN) {
+  protected void spawnPlayer(GridPoint2 playerSpawn) {
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newPlayer,playerSpawn, true, true);
     targetables.add(newPlayer);
     player = newPlayer;
   }

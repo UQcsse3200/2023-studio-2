@@ -62,8 +62,6 @@ public class BrickBreakerGameArea extends GameArea{
         displayUI();
         spawnTerrain();
         spawnBrickLayout();
-        Entity newSlider = spawnSlider();
-        //spawnBall();
     }
     /**
      * Method for spawning terrain for background of obstacle minigame
@@ -76,10 +74,7 @@ public class BrickBreakerGameArea extends GameArea{
         // Terrain walls
         float tileSize = terrain.getTileSize();
         GridPoint2 tileBounds = terrain.getMapBounds(0);
-        Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
-
     }
-
     /**
      * method to display UI
      */
@@ -108,11 +103,11 @@ public class BrickBreakerGameArea extends GameArea{
      * @param pos Start position from where the number of blocks are added
      */
     private void spawnStaticBrickRight(int n, GridPoint2 pos){
-        Entity asteroid_length = ObstacleFactory.createStaticBrick(1f,1f);
+        Entity asteroidLength = ObstacleFactory.createStaticBrick(1f,1f);
         if (n <= 0) {
             return;
         }
-        spawnEntityAt(asteroid_length, pos, false, false);
+        spawnEntityAt(asteroidLength, pos, false, false);
         // Increment the position for the next asteroid
         pos.x += 1;
         pos.y += 0;

@@ -22,8 +22,6 @@ public class ShopArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ShopArea.class);
     private static final GridPoint2 SHIP_SPAWN = new GridPoint2(7, 10);
     private static final float STATIC_ASTEROID_SIZE = 1.17f;
-    private static final ShipUpgradesConfig shipUpgradesConfig = new ShipUpgradesConfig();
-    private final ShipUpgradesFactory shipUpgradesFactory = new ShipUpgradesFactory();
     private int health;
     private int fuel;
 
@@ -36,6 +34,9 @@ public class ShopArea extends GameArea {
     private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
     private final TerrainFactory terrainFactory;
 
+    private final ArrayList<Entity> targeTables;
+
+
     /**
      * Constructor for initializing terrain area
      * @param terrainFactory Terrain factory being used in the area
@@ -43,7 +44,7 @@ public class ShopArea extends GameArea {
     public ShopArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
-        this.targetables = new ArrayList<>();
+        this.targeTables = new ArrayList<>();
         //By default user has one for each bottle
         this.health = 1;
         this.fuel = 1;
@@ -74,10 +75,6 @@ public class ShopArea extends GameArea {
             spawnEntityAt(speedUpgrade, new GridPoint2(7, 9), true, true);
         }
     }
-
-    private void reduceHealth() { this.health -= 1;}
-    private void reduceFuel() {this.fuel -= 1;}
-
     /**
      * Recursively calls n number of stones starting from position to the right
      * @param n Number of stones
@@ -132,14 +129,7 @@ public class ShopArea extends GameArea {
         // Background terrain
         terrain = terrainFactory.createSpaceTerrain(TerrainFactory.TerrainType.SPACE_DEMO);
         spawnEntity(new Entity().addComponent(terrain));
-
-        // Terrain walls
-        float tileSize = terrain.getTileSize();
-        GridPoint2 tileBounds = terrain.getMapBounds(0);
-        Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
-
     }
-
     /**
      * Method for spawning ship on the shop
      */
@@ -147,7 +137,7 @@ public class ShopArea extends GameArea {
     {
         Entity newShip = MinigameShipFactory.createMinigameShip();
         spawnEntityAt(newShip, SHIP_SPAWN, true, true);
-        targetables.add(newShip);
+        targeTables.add(newShip);
     }
 
     /**

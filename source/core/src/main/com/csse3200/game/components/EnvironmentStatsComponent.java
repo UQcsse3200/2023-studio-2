@@ -21,6 +21,8 @@ public class EnvironmentStatsComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(EnvironmentStatsComponent.class);
     private Boolean isImmune = false;
 
+    private boolean isSafeMap = false;
+
     private int frozenLevel;
 
     public EnvironmentStatsComponent() {
@@ -36,36 +38,53 @@ public class EnvironmentStatsComponent extends Component {
         this.frozenLevel = newFrozenLevel;
     }
 
+    public Boolean getIsSafe() {
+        return this.isSafeMap;
+    }
+
     public Boolean getImmunity() {
         return isImmune;
     }
 
-    /**
-     * Sets the entity's immunity status.
-     *
-     * 
-     */
-    public void setImmunity(GameAreaConfig mapConfig) {
-        this.isImmune = !mapConfig.mapName.equals("Earth");
-        
+
+    public void setSafeMap(GameAreaConfig mapConfig) {
+        System.out.println(mapConfig.mapName);
+        this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Verdant Oasis"));
     }
 
-    // Damage over time effect, has a five second delay. Repeats every second.
-    // Effect checks whether user is in an applicable area
+    /**
+     * Sets the entity's immunity status.
+     */
+    public void setIsImmune() {
+        this.isImmune = true;
+    }
+
+    /**
+     * Resets the entity's immunity status.
+     */
+    public void setNotImmune() {
+        this.isImmune = false;
+    }
+
+    /** Damages over time effect, has a five-second delay. Repeats every second.
+     *  Effect checks whether you are in an applicable area
+     */
     public void damage(CombatStatsComponent player) {
-        if (!player.getImmunity()) {
-            Timer timer = new Timer();
-            timer.scheduleTask(new Timer.Task() {
-                @Override
-                public void run() {
-                    if (!player.getImmunity()) {
-                        player.addHealth(-1);
-                        if (player.getHealth() <= 0) {
-                            timer.stop();
-                        }
-                    }
-                }
-            },1,1);
+        if (this.isSafeMap) {
+            return;
         }
+        Timer timer = new Timer();
+        timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                if (getImmunity()) {
+                    return;
+                }
+                player.addHealth(-1);
+                if (player.getHealth() <= 0) {
+                    timer.stop();
+                }
+            }
+        },1,1);
     }
 }

@@ -97,6 +97,7 @@ public class MapGameArea extends GameArea{
         //spawnEnvironmentDamage();
         spawnFreezingArea();
         spawnEnvironmentDamage();
+        spawnSafeZone(player);
 
         displayUI();
         playMusic();
@@ -150,6 +151,17 @@ public class MapGameArea extends GameArea{
             Entity portal = PortalFactory.createPortal(playerEntity, portalConfig);
             spawnEntityAt(portal, portalConfig.position, false, false);
         }
+    }
+
+    private void spawnSafeZone(Entity playerEntity) {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        SafeZoneConfig safeZoneConfig = mapConfig.areaEntityConfig.getEntity(SafeZoneConfig.class);
+
+        if (safeZoneConfig == null) return;
+
+        Entity safeZone = SafeZoneFactory.createSafeZone(playerEntity);
+        spawnEntityAt(safeZone, safeZoneConfig.position, false, false);
     }
 
     private void spawnEnvironmentDamage() {
@@ -332,7 +344,7 @@ public class MapGameArea extends GameArea{
         newPlayer.getComponent(CombatStatsComponent.class).setLives((int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")); // Ensures previous number of lives is maintained.
 
         // environmental damage
-        newPlayer.getComponent(EnvironmentStatsComponent.class).setImmunity(mapConfig);
+        newPlayer.getComponent(EnvironmentStatsComponent.class).setSafeMap(mapConfig);
         newPlayer.getComponent(EnvironmentStatsComponent.class).damage(newPlayer.getComponent(CombatStatsComponent.class));
 
         newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);

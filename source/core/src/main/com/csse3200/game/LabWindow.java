@@ -226,6 +226,8 @@ public class LabWindow extends Window {
             return Health_powerups >= 2 && Speed_powerups >= 2;
         } else if (powerupType == PowerupType.TEMP_IMMUNITY) {
             return Health_powerups >= 2 && Speed_powerups >= 1;
+        } else if (powerupType == PowerupType.DEATH_POTION) {
+            return Health_powerups >= 1;
         }
         return false;
     }
@@ -243,6 +245,8 @@ public class LabWindow extends Window {
         } else if (powerupType == PowerupType.TEMP_IMMUNITY) {
             companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.HEALTH_BOOST,2);
             companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.SPEED_BOOST,1);
+        } else if (powerupType == PowerupType.DEATH_POTION) {
+            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.HEALTH_BOOST,1);
         }
     }
 }

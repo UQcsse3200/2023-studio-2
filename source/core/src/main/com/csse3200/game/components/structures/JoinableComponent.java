@@ -65,14 +65,11 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
         this.layer = layer;
         this.shapes = shapes;
 
-        joinedInDirectionMap = new EnumMap<>(JoinDirection.class) {
-            {
-                put(JoinDirection.UP, false);
-                put(JoinDirection.DOWN, false);
-                put(JoinDirection.LEFT, false);
-                put(JoinDirection.RIGHT, false);
-            }
-        };
+        joinedInDirectionMap = new EnumMap<>(JoinDirection.class);
+        joinedInDirectionMap.put(JoinDirection.UP, false);
+        joinedInDirectionMap.put(JoinDirection.DOWN, false);
+        joinedInDirectionMap.put(JoinDirection.LEFT, false);
+        joinedInDirectionMap.put(JoinDirection.RIGHT, false);
     }
 
 

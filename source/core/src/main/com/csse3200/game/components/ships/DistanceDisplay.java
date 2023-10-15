@@ -35,7 +35,6 @@ public class DistanceDisplay extends UIComponent {
 
         // Distance text
         CharSequence distanceText = "Distance: N/A";
-        //distanceLabel = new Label(distanceText, skin, "large");
         distanceLabel = new Label(distanceText, skin, "title");
 
         table.add(distanceLabel);

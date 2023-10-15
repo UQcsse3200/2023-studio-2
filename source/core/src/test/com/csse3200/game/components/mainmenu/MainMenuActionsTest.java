@@ -1,7 +1,8 @@
-package com.csse3200.game;
+package com.csse3200.game.components.mainmenu;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;

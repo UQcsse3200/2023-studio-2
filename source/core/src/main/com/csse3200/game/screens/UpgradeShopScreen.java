@@ -32,12 +32,9 @@ import org.slf4j.LoggerFactory;
  */
 public class UpgradeShopScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(UpgradeShopScreen.class);
-
     private final GdxGame game;
     private Entity ship;
-
     private static final Vector2 CAMERA_POSITION = new Vector2(10, 11);
-
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
 

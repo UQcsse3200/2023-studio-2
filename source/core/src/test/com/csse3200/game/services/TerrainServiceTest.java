@@ -23,7 +23,7 @@ public class TerrainServiceTest {
     }
 
     /**
-     * Test the {@link TerrainService#ScreenCoordsToGameCoords(int, int)} method.
+     * Test the {@link TerrainService#screenCoordsToGameCoords(int, int)} method.
      * It verifies that screen coordinates are correctly converted to game coordinates.
      */
     @Test
@@ -43,7 +43,7 @@ public class TerrainServiceTest {
         when(terrain.unproject(new Vector3(screenX, screenY, 0))).thenReturn(mockUnprojectResult);
 
         // Call the method to convert screen coordinates to game coordinates
-        Vector2 result = terrainService.ScreenCoordsToGameCoords(screenX, screenY);
+        Vector2 result = terrainService.screenCoordsToGameCoords(screenX, screenY);
 
         // Define the expected result
         Vector2 expected = new Vector2(1.0f, 2.0f);

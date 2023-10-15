@@ -11,7 +11,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.components.maingame.MainGamePauseDisplay;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -36,6 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.csse3200.game.utils.LoadUtils.*;
@@ -282,7 +283,7 @@ public class PlanetScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().saveCurrentArea(path);
 
         Map<String, Object> gameStateEntries = new HashMap<>(ServiceLocator.getGameStateObserverService().getFullStateData());
-        FileLoader.writeClass(gameStateEntries, joinPath(SAVE_PATH, GAMESTATE_FILE), FileLoader.Location.LOCAL);
+        FileLoader.writeClass(gameStateEntries, joinPath(List.of(SAVE_PATH, GAMESTATE_FILE)), FileLoader.Location.LOCAL);
     }
 
     /**
@@ -333,7 +334,7 @@ public class PlanetScreen extends ScreenAdapter {
         ui.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
-                .addComponent(new MainGameExitDisplay())
+                .addComponent(new MainGamePauseDisplay(this.game.getScreenType()))
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay());

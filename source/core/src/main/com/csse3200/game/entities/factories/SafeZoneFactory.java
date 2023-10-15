@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.PowerupComponent;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.SafeZone;
@@ -28,7 +29,11 @@ public class SafeZoneFactory {
         Entity safeZone = new SafeZone(player)
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE))
-                .addComponent(new TextureRenderComponent(config.spritePath));
+                .addComponent(new TextureRenderComponent(config.spritePath))
+                .addComponent(new SaveableComponent<>(s -> {
+                    config.position = s.getGridPosition();
+                    return config;
+                }, SafeZoneConfig.class));
         safeZone.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         safeZone.setScale(5.0f, 5.0f);
         return safeZone;

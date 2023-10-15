@@ -148,14 +148,15 @@ public class NPCFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/npc/Astro_NPC.atlas", TextureAtlas.class));
-    animator.addAnimation("Astro_Up", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_UpLeft", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_Left", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_DownLeft", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_Down", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_DownRight", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_Right", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_UpRight", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_Up", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_UpLeft", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_Left", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_DownLeft", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_Down", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_DownRight", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_Right", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_UpRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_StandDown", 0.2f);
 
     Entity Astro =
             new Entity()
@@ -174,7 +175,7 @@ public class NPCFactory {
       Astro.getComponent(FollowComponent.class).setEntity(Astro);
       Astro.getComponent(FollowComponent.class).setFollowSpeed(1f);
     },3f));
-    animator.startAnimation("Astro_Down");
+    animator.startAnimation("Astro_StandDown");
     return Astro;
   }
 
@@ -272,7 +273,7 @@ public class NPCFactory {
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
     astronaut.addComponent(new InteractableComponent(entity -> {
-      String[] storytext= {"Hello I am Astronaut","I am here to guide you through"};
+      String[] storytext= {"Hello, I've been stuck here for weeks","Can I please come with you?"};
       String[] titletext= {"",""};
       astronaut.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
     },10f));

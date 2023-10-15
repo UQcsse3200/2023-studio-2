@@ -5,8 +5,8 @@
       class: com.csse3200.game.entities.configs.ShipConfig,
       "spritePath": "images/ship/Ship.png",
       "position": {
-        "x": 53,
-        "y": 60
+        "x": 33,
+        "y": 67
       }
     }
   ]

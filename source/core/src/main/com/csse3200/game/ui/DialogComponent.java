@@ -11,7 +11,7 @@ import com.csse3200.game.services.ServiceLocator;
 import static com.csse3200.game.ui.UIComponent.skin;
 
 public class DialogComponent extends Component {
-    public Stage stage = ServiceLocator.getRenderService().getStage();
+    public static final Stage stage = ServiceLocator.getRenderService().getStage();
     private DialogueBox dialogueBox;
 
     /**

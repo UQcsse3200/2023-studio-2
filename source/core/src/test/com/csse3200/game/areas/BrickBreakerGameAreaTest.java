@@ -3,7 +3,6 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.areas.BricKBreakerGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.Before;
@@ -15,13 +14,13 @@ import static org.junit.Assert.assertEquals;
 
 @ExtendWith(GameExtension.class)
 public class BrickBreakerGameAreaTest {
-    private BricKBreakerGameArea brickBreakerGameArea;
+    private BrickBreakerGameArea brickBreakerGameArea;
     private TerrainFactory terrainFactory;
 
     @Before
     public void setUp() {
         terrainFactory = mock(TerrainFactory.class);
-        brickBreakerGameArea = new BricKBreakerGameArea(terrainFactory);
+        brickBreakerGameArea = new BrickBreakerGameArea(terrainFactory);
     }
 
     @Test

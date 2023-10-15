@@ -167,6 +167,9 @@ public class UpgradeNode {
      * @return int: the nodes cost
      */
     public int getNodeCost() {
+        if (getWeaponType() == WeaponType.RANGED_NUKE) {
+            return 1000;
+        }
         return BASE_COST * (this.getDepth() + 1);
     }
 }

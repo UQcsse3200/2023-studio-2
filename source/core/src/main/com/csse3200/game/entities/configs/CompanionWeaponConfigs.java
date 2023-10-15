@@ -23,7 +23,7 @@ public class CompanionWeaponConfigs {
                 1f,                       // Image Scale
                 "images/weapons/sword.atlas",   // Texture Atlas
                 "images/powerups/death_potion.png",// Image Path
-                CompanionWeaponType.Death_Potion, // Companion Weapon Type
+                CompanionWeaponType.DEATH_POTION, // Companion Weapon Type
                 "new slot type"             // Slot Type
         );
 
@@ -50,7 +50,7 @@ public class CompanionWeaponConfigs {
 
     public CompanionWeaponConfig GetWeaponConfig(CompanionWeaponType type) {
         return switch (type) {
-            case Death_Potion -> Death_Potion;
+            case DEATH_POTION -> Death_Potion;
             case SHIELD -> SHIELD;
             default -> null; // Handle default case appropriately
         };

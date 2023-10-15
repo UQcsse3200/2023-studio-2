@@ -3,7 +3,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.csse3200.game.ExtractorMinigameWindow;
+import com.csse3200.game.windows.ExtractorMinigameWindow;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
@@ -92,7 +92,7 @@ public class StructureFactory {
             CombatStatsComponent healthStats = extractor.getComponent(CombatStatsComponent.class);
 
             if (healthStats.isDead()) {
-                ExtractorMinigameWindow minigame = ExtractorMinigameWindow.MakeNewMinigame(extractor);
+                ExtractorMinigameWindow minigame = ExtractorMinigameWindow.makeNewMinigame(extractor);
                 ServiceLocator.getRenderService().getStage().addActor(minigame);
             }
         }, 5f));

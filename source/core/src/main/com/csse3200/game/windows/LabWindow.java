@@ -1,4 +1,4 @@
-package com.csse3200.game;
+package com.csse3200.game.windows;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import com.csse3200.game.components.PowerupType;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -25,7 +24,7 @@ public class LabWindow extends Window {
     Table buttonTable;
     Table exit;
 
-    public static LabWindow MakeNewLaboratory() {
+    public static LabWindow makeNewLaboratory() {
         Texture background = new Texture("images/companion/lab.png");
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new LabWindow(background);
@@ -42,10 +41,10 @@ public class LabWindow extends Window {
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         // Create a Table to hold the buttons and center them within the window
         Table buttonTable = new Table();
-        buttonTable.setFillParent(true);
-        // Fill the entire LabWindow
+        this.buttonTable = new Table();
+        this.buttonTable.setFillParent(true);
 
-        Table exit = new Table();
+        // Fill the entire LabWindow
         Texture deathpotionImage = new Texture("images/powerups/death_potion.png");
         Texture speedpotionImage = new Texture("images/powerups/speed_boost.png");
         Texture healthpotionImage = new Texture("images/powerups/health_boost.png");
@@ -128,11 +127,9 @@ public class LabWindow extends Window {
         buttonTable.add(potion7).padTop(70).padLeft(40);
         buttonTable.add(potion8).padTop(70).padLeft(40);
         buttonTable.row(); //Move to the next row
-//        buttonTable.add(returnToGameButton).padTop(100).padLeft(600);
+
         addActor(buttonTable);
         //addActor(exit);
-
-//
 
         Table button2Table = new Table();
         button2Table.setFillParent(true);

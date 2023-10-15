@@ -20,7 +20,7 @@ import java.util.Map;
  * depending on its neighbours.
  */
 public class JoinableComponent extends AtlasRenderComponent {
-    private final Map<JoinDirection, Boolean> JoinedInDirectionMap = new HashMap<>() {
+    private final Map<JoinDirection, Boolean> joinedInDirectionMap = new HashMap<>() {
         {
             put(JoinDirection.UP, false);
             put(JoinDirection.DOWN, false);
@@ -57,10 +57,10 @@ public class JoinableComponent extends AtlasRenderComponent {
         Entity right = structurePlacementService.getStructureAt(centrePosition.cpy().add(2,0));
 
         // adds whether there is a wall in each direction to the JoinDirection array.
-        JoinedInDirectionMap.put(JoinDirection.UP, isEntityJoinable(up));
-        JoinedInDirectionMap.put(JoinDirection.DOWN, isEntityJoinable(down));
-        JoinedInDirectionMap.put(JoinDirection.LEFT, isEntityJoinable(left));
-        JoinedInDirectionMap.put(JoinDirection.RIGHT, isEntityJoinable(right));
+        joinedInDirectionMap.put(JoinDirection.UP, isEntityJoinable(up));
+        joinedInDirectionMap.put(JoinDirection.DOWN, isEntityJoinable(down));
+        joinedInDirectionMap.put(JoinDirection.LEFT, isEntityJoinable(left));
+        joinedInDirectionMap.put(JoinDirection.RIGHT, isEntityJoinable(right));
 
         updateAtlasTexture();
         updateShape();
@@ -108,7 +108,7 @@ public class JoinableComponent extends AtlasRenderComponent {
      * @param isJoined - whether the entity is joined in the given direction.
      */
     public void updateJoin(JoinDirection direction, boolean isJoined) {
-        JoinedInDirectionMap.put(direction, isJoined);
+        joinedInDirectionMap.put(direction, isJoined);
         updateAtlasTexture();
         updateShape();
     }
@@ -138,19 +138,19 @@ public class JoinableComponent extends AtlasRenderComponent {
     private String deriveCardinalityId() {
         List<String> regions = new ArrayList<>();
 
-        if (JoinedInDirectionMap.get(JoinDirection.LEFT)) {
+        if (joinedInDirectionMap.get(JoinDirection.LEFT)) {
             regions.add("left");
         }
 
-        if (JoinedInDirectionMap.get(JoinDirection.UP)) {
+        if (joinedInDirectionMap.get(JoinDirection.UP)) {
             regions.add("up");
         }
 
-        if (JoinedInDirectionMap.get(JoinDirection.RIGHT)) {
+        if (joinedInDirectionMap.get(JoinDirection.RIGHT)) {
             regions.add("right");
         }
 
-        if (JoinedInDirectionMap.get(JoinDirection.DOWN)) {
+        if (joinedInDirectionMap.get(JoinDirection.DOWN)) {
             regions.add("down");
         }
 

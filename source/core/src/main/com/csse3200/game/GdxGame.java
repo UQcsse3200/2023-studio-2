@@ -99,7 +99,7 @@ public class GdxGame extends Game {
         return new PlayerDeathScreen(this, 3);
       case COMPANION_DEATH:
         return new CompanionDeathScreen(this);
-      case INITIAL_SCREEN:
+      case MINI_SCREEN:
         return new MiniScreen(this);
       case SPACEMINI_SCREEN:
         return new MiniScreen(this);
@@ -109,9 +109,7 @@ public class GdxGame extends Game {
         return new UpgradeShopScreen(this);
       case CONTROL_SCREEN:
         return new ControlsScreen(this,"Controls");
-      case CONTROL_SCREEN_GAME:
-        return new ControlsScreen(this,"Controls");
-      case INITIALL_SCREEN:
+      case INITIAL_SCREEN:
         return new InitialScreen(this);
       case BRICK_BREAKER_SCREEN:
         return new BrickBreakerScreen(this);
@@ -123,8 +121,8 @@ public class GdxGame extends Game {
   public enum ScreenType {
 
     MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME, TUTORIAL_SCREEN,
-    GAME_STORY, PLAYER_DEATH,COMPANION_DEATH, NAVIGATION_SCREEN ,INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIALL_SCREEN, BRICK_BREAKER_SCREEN,
-    PLAYER_DEATH_0, PLAYER_DEATH_1, PLAYER_DEATH_2, PLAYER_DEATH_3, CONTROL_SCREEN_GAME
+    GAME_STORY, PLAYER_DEATH,COMPANION_DEATH, NAVIGATION_SCREEN ,MINI_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIAL_SCREEN, BRICK_BREAKER_SCREEN,
+    PLAYER_DEATH_0, PLAYER_DEATH_1, PLAYER_DEATH_2, PLAYER_DEATH_3
   }
   /**
    * Exit the game.

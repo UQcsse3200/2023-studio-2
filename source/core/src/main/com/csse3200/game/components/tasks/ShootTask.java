@@ -64,6 +64,9 @@ public class ShootTask extends DefaultTask {
         if (targetLocation.x == spawn.x) {
             finalX = targetLocation.x;
             finalY = targetLocation.y + 1 * (targetLocation.y - spawn.y) / abs(targetLocation.y - spawn.y);
+        } else if (targetLocation.y == spawn.y) {
+            finalX = targetLocation.x + 1 * (targetLocation.x - spawn.x) / abs(targetLocation.x - spawn.x);
+            finalY = targetLocation.y;
         } else {
             float gradient = (targetLocation.y - spawn.y) / (targetLocation.x - spawn.x);
             finalX = targetLocation.x + 1 * (targetLocation.x - spawn.x) / abs(targetLocation.x - spawn.x);

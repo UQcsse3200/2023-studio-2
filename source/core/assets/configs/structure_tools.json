@@ -42,7 +42,7 @@
       },
       "texture": "images/structure-icons/adv_turret.png"
     },
-    "com.csse3200.game.components.structures.tools.Healing": {
+    "com.csse3200.game.components.structures.tools.HealTool": {
       "name": "Heal",
       "description": "Bandaid tool",
       "cost": {

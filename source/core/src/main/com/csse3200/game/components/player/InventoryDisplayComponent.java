@@ -104,7 +104,14 @@ public class InventoryDisplayComponent extends UIComponent {
         for (var str : player.getComponent(UpgradeTree.class).getUnlockedWeapons()) {
             WeaponConfig equippedConfig = inventory.getConfigs().GetWeaponConfig(inventory.getEquippedType());
             String equippedCategory = equippedConfig.slotType;
-            WeaponType weaponType = WeaponType.valueOf(String.valueOf(str)); // cursed
+
+            WeaponType weaponType = null;
+            try { // dont look plz..
+                weaponType = WeaponType.valueOf(String.valueOf(str));
+            } catch (IllegalArgumentException e) {
+                continue;
+            }
+
             WeaponConfig config = inventory.getConfigs().GetWeaponConfig(weaponType);
             if (weaponType.equals(WeaponType.WOODHAMMER) || !config.slotType.equals(equippedCategory)) {
                 continue;

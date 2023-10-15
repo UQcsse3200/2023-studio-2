@@ -137,7 +137,7 @@ public class NPCFactory {
   }
 
   /**
-   * Creates a Astro NPC to match the config file
+   * Creates an Astro NPC to match the config file
    * @return The created Astro NPC entity.
    */
   public static Entity createAstro() {

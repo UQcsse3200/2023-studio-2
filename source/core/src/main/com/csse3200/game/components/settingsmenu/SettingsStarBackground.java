@@ -61,7 +61,7 @@ public class SettingsStarBackground extends StarBackground {
             int y = MathUtils.random(0, Gdx.graphics.getHeight());
 
             while ((x >= (65 / 1280f) * Gdx.graphics.getWidth() && x <= (260 / 1280f) * Gdx.graphics.getWidth() && y >= (520 / 720f) * Gdx.graphics.getHeight() && y <= (670 / 720f) * Gdx.graphics.getHeight()) ||
-                    (x >= (500 / 1280f) * Gdx.graphics.getWidth() && x <= (730 / 1280f) * Gdx.graphics.getWidth() && y >= (560 / 720f) * Gdx.graphics.getHeight() && y <= (620 / 720f) * Gdx.graphics.getHeight()) ||
+                    (x >= (415 / 1280f) * Gdx.graphics.getWidth() && x <= (830 / 1280f) * Gdx.graphics.getWidth() && y >= (580 / 720f) * Gdx.graphics.getHeight() && y <= (650 / 720f) * Gdx.graphics.getHeight()) ||
                     (x >= (1000 / 1280f) * Gdx.graphics.getWidth() && x <= (1175 / 1280f) * Gdx.graphics.getWidth() && y >= (320 / 720f) * Gdx.graphics.getHeight() && y <= (485 / 720f) * Gdx.graphics.getHeight()) ||
                     (x >= (1050 / 1280f) * Gdx.graphics.getWidth() && x <= (1220 / 1280f) * Gdx.graphics.getWidth() && y >= (535 / 720f) * Gdx.graphics.getHeight() && y <= (690 / 720f) * Gdx.graphics.getHeight())) {
                 x = MathUtils.random(0, Gdx.graphics.getWidth());

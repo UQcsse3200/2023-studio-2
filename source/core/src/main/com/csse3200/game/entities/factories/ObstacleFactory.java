@@ -3,6 +3,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.buildables.Turret;
@@ -110,7 +111,11 @@ public class ObstacleFactory {
             new Entity()
                     .addComponent(new TextureRenderComponent(treeTopConfig.spritePath)) // Replace with the path to your tree top texture
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE));
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE))
+                    .addComponent(new SaveableComponent<>(s -> {
+                      treeTopConfig.position = s.getGridPosition();
+                      return treeTopConfig;
+                    }, TreeTopConfig.class));
 
     treeTop.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     treeTop.getComponent(TextureRenderComponent.class).scaleEntity();

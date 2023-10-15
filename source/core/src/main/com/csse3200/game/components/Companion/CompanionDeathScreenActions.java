@@ -40,7 +40,7 @@ public class CompanionDeathScreenActions extends Component {
     /**
      * Handles the exit event by launching the main menu screen.
      */
-    private void onExit() {
+    public void onExit() {
         logger.info("Launching main menu screen");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
@@ -48,9 +48,10 @@ public class CompanionDeathScreenActions extends Component {
     /**
      * Handles the respawn event by relaunching the main game screen.
      */
-    private void onRespawn() {
+    public void onRespawn() {
         logger.info("Relaunching main game screen");
         new PlanetTravel(game).returnToCurrent();
         ServiceLocator.getEntityService().getCompanion().getComponent(CombatStatsComponent.class).setHealth(100);
     }
 }
+

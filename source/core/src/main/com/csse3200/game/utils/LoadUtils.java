@@ -20,6 +20,7 @@ public class LoadUtils {
     public static final String ENTITIES_PATH = "entities";
     public static final String FAIL_MESSAGE = "Failed to load config of type ";
     public static final String FAIL_ENTITY = "Failed to load entities config";
+    public static final String FAIL_READ_CLASS = "Failed to read file of type ";
     public static final String NO_LEVELS_ERROR = "No levels found in " + GAME_FILE;
     public static final String NO_FILE_FOUND = "No config file found ";
     public static final List<String> PATH_OPTIONS = List.of(SAVE_PATH, ROOT_PATH);

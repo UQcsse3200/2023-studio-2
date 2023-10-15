@@ -27,11 +27,13 @@ public class ConfigLoader {
     public static GameConfig loadGame() throws InvalidConfigException {
         String path = getOptionalSavePath(PATH_OPTIONS, GAME_FILE);
         GameConfig gameConfig = FileLoader.readClass(GameConfig.class, path, FileLoader.Location.LOCAL);
-        if (gameConfig == null) throw new InvalidConfigException(FAIL_MESSAGE + GameConfig.class.getSimpleName());
+        if (gameConfig == null) throw new InvalidConfigException(FAIL_READ_CLASS + GAME_FILE);
         String statePath = getOptionalSavePath(PATH_OPTIONS, GAMESTATE_FILE);
         gameConfig.gameState = FileLoader.readClass(HashMap.class, statePath, FileLoader.Location.LOCAL);
+        if (gameConfig.gameState == null) throw new InvalidConfigException(FAIL_READ_CLASS + GAMESTATE_FILE);
         String assetPath = getOptionalSavePath(PATH_OPTIONS, ASSETS_FILE);
         gameConfig.assets = FileLoader.readClass(AssetsConfig.class, assetPath, FileLoader.Location.LOCAL);
+        if (gameConfig.assets == null) throw new InvalidConfigException(FAIL_READ_CLASS + ASSETS_FILE);
         return gameConfig;
     }
 

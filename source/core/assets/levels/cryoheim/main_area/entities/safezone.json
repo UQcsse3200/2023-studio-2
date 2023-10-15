@@ -4,8 +4,8 @@
     {
       class: com.csse3200.game.entities.configs.SafeZoneConfig,
       "position": {
-        "x": 10,
-        "y": 50
+        "x": 25,
+        "y": 67
       }
     }
   ]

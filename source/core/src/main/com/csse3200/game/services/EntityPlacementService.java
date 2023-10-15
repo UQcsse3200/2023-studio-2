@@ -21,20 +21,20 @@ public class EntityPlacementService {
      * Function relay place entity call to listeners - passes provided entity
      * @param entity - entity to be relayed
      */
-    public void PlaceEntity(Entity entity) {
+    public void placeEntity(Entity entity) {
         handler.trigger("placeEntity", entity);
     }
 
-    public void PlaceEntityAfter(Entity entity, int delay) {
+    public void placeEntityAfter(Entity entity, int delay) {
         final Timer placeTimer = new Timer();
         Timer.Task placeEntity = new Timer.Task() {
             @Override
             public void run() {
-                PlaceEntity(entity);
+                placeEntity(entity);
                 placeTimer.clear();
             }
         };
-        placeTimer.scheduleTask(placeEntity,(float) delay / 1000f);
+        placeTimer.scheduleTask(placeEntity,delay / 1000f);
     }
 
     /**
@@ -42,7 +42,7 @@ public class EntityPlacementService {
      * @param entity - the entity to be relayed
      * @param position - a Vector 2 indicatoring a position to be relayed
      */
-    public void PlaceEntityAt(Entity entity, Vector2 position) {
+    public void placeEntityAt(Entity entity, Vector2 position) {
         handler.trigger("placeEntityAt", entity, position);
     }
 }

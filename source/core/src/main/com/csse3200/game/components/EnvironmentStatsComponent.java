@@ -6,18 +6,10 @@
  */
 package com.csse3200.game.components;
 
-import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.Timer;
-
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
-import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
-import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-//import java.util.Timer;
-//import java.util.TimerTask;
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
@@ -54,26 +46,29 @@ public class EnvironmentStatsComponent extends Component {
         return isImmune;
     }
 
-    /**
-     * Sets the entity's immunity status.
-     *
-     * 
-     */
+
     public void setSafeMap(GameAreaConfig mapConfig) {
         System.out.println(mapConfig.mapName);
         this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Verdant Oasis"));
     }
 
+    /**
+     * Sets the entity's immunity status.
+     */
     public void setIsImmune() {
         this.isImmune = true;
     }
 
+    /**
+     * Resets the entity's immunity status.
+     */
     public void setNotImmune() {
         this.isImmune = false;
     }
 
-    // Damage over time effect, has a five-second delay. Repeats every second.
-    // Effect checks whether you are in an applicable area
+    /** Damages over time effect, has a five-second delay. Repeats every second.
+     *  Effect checks whether you are in an applicable area
+     */
     public void damage(CombatStatsComponent player) {
         if (this.isSafeMap) {
             return;

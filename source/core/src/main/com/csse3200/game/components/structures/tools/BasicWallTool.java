@@ -27,7 +27,7 @@ public class BasicWallTool extends PlacementTool {
      */
     @Override
     public PlaceableEntity createStructure(Entity player) {
-        return BuildablesFactory.createWall(WallType.basic, player);
+        return BuildablesFactory.createWall(WallType.BASIC, player);
     }
 
 }

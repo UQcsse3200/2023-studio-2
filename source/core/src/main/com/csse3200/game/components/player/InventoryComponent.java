@@ -3,8 +3,6 @@ package com.csse3200.game.components.player;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.configs.WeaponConfigs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -17,7 +15,6 @@ import java.util.stream.Collectors;
  * Can also be used as a more generic component for other entities.
  */
 public class InventoryComponent extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
     private String equipped = "melee";
     private final LinkedHashMap<String, InventoryItem> equippedWMap = new LinkedHashMap<>(); // preserves insert order
     private final WeaponConfigs config;

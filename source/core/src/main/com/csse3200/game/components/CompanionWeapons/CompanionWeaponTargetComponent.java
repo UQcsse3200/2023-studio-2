@@ -3,9 +3,7 @@ package com.csse3200.game.components.CompanionWeapons;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.components.Companion.KeyboardCompanionInputComponent;
 import com.csse3200.game.entities.factories.EnemyFactory;
 
 import java.util.List;
@@ -15,6 +13,7 @@ public class CompanionWeaponTargetComponent extends Component {
     Entity entity;
     CompanionWeaponType weaponType;
     Vector2 trackPrev;
+    private Random random = new Random();
 
     //For the shield rotations
     /**
@@ -56,16 +55,15 @@ public class CompanionWeaponTargetComponent extends Component {
      * for Death_potion, that is finding the nearest enemy
      * @return - Vector2 position
      */
-    public Vector2 get_pos_of_target() {
+    public Vector2 getPosOfTarget() {
         Vector2 pos;
 
         switch (this.weaponType) {
             case SHIELD:
-                return rotate_shield_around_entity();
-            case Death_Potion:
+                return rotateShieldAroundEntity();
+            case DEATH_POTION:
                 List<Entity> enemies = EnemyFactory.getEnemyList();
                 if (!enemies.isEmpty()) {
-                    Random random = new Random();
                     int randomIndex = random.nextInt(enemies.size());
                     Entity enemy = enemies.get(randomIndex);
                     if (enemy != null) {
@@ -110,7 +108,7 @@ public class CompanionWeaponTargetComponent extends Component {
      *
      * @return - vector
      */
-    public Vector2 rotate_shield_around_entity() {
+    public Vector2 rotateShieldAroundEntity() {
         //companion position
         var companion = entity.getPosition().sub(this.trackPrev);
 
@@ -122,8 +120,6 @@ public class CompanionWeaponTargetComponent extends Component {
         float x_offset = x_rotate_offset / scalaingFactor;
         float y_offset = y_rotate_offset / scalaingFactor;
 
-        //float x_offset = (float) 0.002;
-        //float y_offset = (float) 0.002;
         // create the offset vector
         var offsetVector = new Vector2(x_offset, y_offset);
 
@@ -131,7 +127,7 @@ public class CompanionWeaponTargetComponent extends Component {
         companion.add(offsetVector);
 
         //update the offset values
-        update_shield_rotation_offsets();
+        updateShieldRotationOffsets();
 
         //update the latest trackPrev to the new entity position
         this.trackPrev = entity.getPosition();
@@ -142,7 +138,7 @@ public class CompanionWeaponTargetComponent extends Component {
      * This function cycles x and y values from -100 to 100
      * Using an incrementor.
      */
-    public void update_shield_rotation_offsets() {
+    public void updateShieldRotationOffsets() {
         // if the offset has reached 100 yet, flip the direction
         if (Math.abs(x_rotate_offset) == 100) {
             x_rotation_direction  = x_rotation_direction*-1;

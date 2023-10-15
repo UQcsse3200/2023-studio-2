@@ -121,7 +121,9 @@ public class ResourceDisplay extends UIComponent {
         barStack.add(barForegroundImage);
 
         table.row();
-        table.add(barStack).size(resourceBarTexture.getWidth()*scale, resourceBarTexture.getHeight()*scale).pad(5);
+        table.add(barStack).size(
+                (float) resourceBarTexture.getWidth() * scale,
+                (float) resourceBarTexture.getHeight() * scale).pad(5);
 
         return this;
     }

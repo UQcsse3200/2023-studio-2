@@ -1,27 +1,12 @@
 package com.csse3200.game.components.Companion;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
-import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.player.InventoryComponent;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.CompanionWeaponConfig;
-import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -6,13 +6,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.GameArea;
-//import com.csse3200.game.areas.TutorialDialogue;
 import com.csse3200.game.areas.TutorialGameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.components.maingame.MainGamePauseDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -27,7 +26,6 @@ import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.TitleBox;
 import com.csse3200.game.ui.TutorialDialogue;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
@@ -213,7 +211,7 @@ private Stage stage;
         ui.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
-                .addComponent(new MainGameExitDisplay())
+                .addComponent(new MainGamePauseDisplay(this.game.getScreenType()))
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay());

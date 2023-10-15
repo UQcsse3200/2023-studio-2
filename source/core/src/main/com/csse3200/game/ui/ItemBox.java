@@ -9,7 +9,7 @@ import com.csse3200.game.rendering.Renderer;
 
 public class ItemBox {
     ShapeRenderer shapeRenderer = new ShapeRenderer();
-    Rectangle rectangle = new Rectangle(Gdx.graphics.getWidth() - 360,300,350,350);
+    Rectangle rectangle = new Rectangle((float) Gdx.graphics.getWidth() - 360,300,350,350);
     Rectangle rectangle2 = new Rectangle(rectangle.getX(),rectangle.getY() + rectangle.getHeight() - 100,100,100);
 
     Entity extractorIcon;
@@ -32,7 +32,8 @@ public class ItemBox {
             return;
         }
 
-        Vector2 extractorIconPos = renderer.getCamera().getWorldPositionFromScreen(new Vector2(Gdx.graphics.getWidth() - 360,Gdx.graphics.getHeight() - 550));
+        Vector2 extractorIconPos = renderer.getCamera().getWorldPositionFromScreen(
+                new Vector2((float) Gdx.graphics.getWidth() - 360,(float) Gdx.graphics.getHeight() - 550));
         extractorIcon.setPosition(extractorIconPos.x,extractorIconPos.y);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -48,10 +49,8 @@ public class ItemBox {
         if (!showing){
             return false;
         }
-        if(Gdx.input.isButtonPressed(0) && rectangle2.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())){
-            return true;
-        }
-        return false;
+        return (Gdx.input.isButtonPressed(0)
+                && rectangle2.contains(Gdx.input.getX(), (float) Gdx.graphics.getHeight() - Gdx.input.getY()));
     }
 
 }

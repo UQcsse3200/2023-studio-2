@@ -1,4 +1,4 @@
-package com.csse3200.game;
+package com.csse3200.game.windows;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -31,7 +31,7 @@ public class ExtractorMinigameWindow extends Window {
      * @param extractor This extractor will be repaired to max health if the minigame is finished correctly.
      * @return New extractor minigame window
      */
-    public static ExtractorMinigameWindow MakeNewMinigame(Entity extractor) {
+    public static ExtractorMinigameWindow makeNewMinigame(Entity extractor) {
         Texture background = ServiceLocator.getResourceService().getAsset("images/minigame/SpaceMiniGameBackground.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new ExtractorMinigameWindow(background, extractor);

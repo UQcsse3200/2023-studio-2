@@ -53,7 +53,7 @@ public class MinigameShipFactory {
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SHIP))
-                        .addComponent(new ShipActions(stats.health, stats.fuel, stats.acceleration))
+                        .addComponent(new ShipActions(stats.acceleration))
                         .addComponent(new ShipStatDisplay())
                         .addComponent(inputComponent)
                         .addComponent(new InteractionControllerComponent(false));

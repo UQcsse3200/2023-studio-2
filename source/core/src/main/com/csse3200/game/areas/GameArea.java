@@ -1,4 +1,5 @@
 package com.csse3200.game.areas;
+
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -37,17 +38,24 @@ public abstract class GameArea implements Disposable {
     this.targetables = new ArrayList<>();
   }
 
-  /** Create the game area in the world. */
+  /**
+   * Create the game area in the world.
+   */
   public abstract void create();
 
-  /** Dispose of all internal entities in the area */
+  /**
+   * Dispose of all internal entities in the area
+   */
   public void dispose() {
     for (var entity : areaEntities) {
+      if (entity.getDisposed()) {
+        continue;
+      }
       entity.dispose();
     }
   }
 
-  public TerrainComponent getTerrain(){
+  public TerrainComponent getTerrain() {
     return terrain;
   }
 
@@ -64,7 +72,7 @@ public abstract class GameArea implements Disposable {
     handler.addListener("fireBullet",
             (StructurePlacementService.spawnEntityAtVectorArgs args) ->
                     spawnEntityAtVector(args.getEntity(), args.getWorldPos())
-  );
+    );
     handler.addListener("placeStructureAt",
             (StructurePlacementService.placeStructureAtArgs args) ->
                     spawnEntityAt(args.getEntity(), args.getTilePos(), args.isCenterX(), args.isCenterY())
@@ -97,7 +105,8 @@ public abstract class GameArea implements Disposable {
   /**
    * Function to listen for "placeEntityAt" trigger and repond by
    * placing entitiy at specified position.
-   * @param entity - Entity to be placed
+   *
+   * @param entity   - Entity to be placed
    * @param position - position for where entity should be placed
    */
   protected void placeEntityAt(Entity entity, Vector2 position) {
@@ -131,7 +140,9 @@ public abstract class GameArea implements Disposable {
         for (int x = gridBottomLeft.x; x < gridTopRight.x; x++) {
           for (int y = gridBottomLeft.y; y < gridTopRight.y; y++) {
             GridPoint2 gridPoint = new GridPoint2(x, y);
-            pathFinderGrids.computeIfAbsent(gridPoint, key -> entity);
+            if (!pathFinderGrids.containsKey(gridPoint)) {
+              pathFinderGrids.put(gridPoint, entity);
+            }
           }
         }
       }

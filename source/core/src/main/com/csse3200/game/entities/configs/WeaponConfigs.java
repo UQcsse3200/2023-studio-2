@@ -19,6 +19,7 @@ public class WeaponConfigs {
     public WeaponConfig WOODHAMMER = new WeaponConfig();
     public WeaponConfig STONEHAMMER = new WeaponConfig();
     public WeaponConfig STEELHAMMER = new WeaponConfig();
+    public WeaponConfig RANGED_NUKE = new WeaponConfig();
 
     public WeaponConfig GetWeaponConfig(WeaponType type) {
         return switch (type) {
@@ -31,6 +32,7 @@ public class WeaponConfigs {
             case RANGED_BLUEMERANG -> RANGED_BLUEMERANG;
             case RANGED_HOMING -> RANGED_HOMING;
             case RANGED_MISSILES -> RANGED_MISSILES;
+            case RANGED_NUKE -> RANGED_NUKE;
             case STICK -> STICK;
             case WOODHAMMER -> WOODHAMMER;
             case STONEHAMMER -> STONEHAMMER;

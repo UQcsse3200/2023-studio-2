@@ -8,12 +8,9 @@ package com.csse3200.game.components.mainmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 import com.csse3200.game.utils.LoadUtils;
@@ -33,11 +30,8 @@ public class MainMenuDisplay extends UIComponent {
     private static final float Z_INDEX = 2f;
     private Table table;
 
-    public static int frame;
+    public int frame;
     private Image transitionFrames;
-    private long lastFrameTime;
-    private final int fps = 17;
-    private final long frameDuration =  (long)(800 / fps);
 
     @Override
     public void create() {
@@ -180,31 +174,9 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         stage.addActor(titleImage);
 
-////        AmendAnimation();
         stage.addActor(transitionFrames);
         stage.addActor(table);
     }
-
-//    private void AmendAnimation() {
-//        if (frame < MainMenuScreen.MountedFrames) {
-//            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-//                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
-//            transitionFrames.setWidth(Gdx.graphics.getWidth());
-//            transitionFrames.setHeight(Gdx.graphics.getHeight());
-//            transitionFrames.setPosition(0, 0);
-//            frame++;
-//            lastFrameTime = System.currentTimeMillis();
-//        } else {
-//            frame = 1;
-//        }
-//    }
-
-//    @Override
-//    public void update() {
-//        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
-//            AmendAnimation();
-//        }
-//    }
 
     @Override
     public void draw(SpriteBatch batch) {

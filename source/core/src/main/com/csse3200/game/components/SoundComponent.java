@@ -130,4 +130,13 @@ public class SoundComponent extends Component {
         sound.stop();
         looping.remove(soundName);
     }
+
+    /**
+     * Checks if a sound is present in the sounds map and returns true if it is.
+     * @param soundName - the name of the sound to stop as specified in the config file.
+     * @return true if the sound exists other false
+     */
+    public boolean checkExists(String soundName) {
+        return sounds.get(soundName) != null;
+    }
 }

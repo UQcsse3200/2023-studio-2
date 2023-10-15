@@ -1,10 +1,8 @@
 package com.csse3200.game.components.Companion;
 
 
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponTargetComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
-
 import com.csse3200.game.entities.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.factories.CompanionAttackFactory;
@@ -45,7 +43,7 @@ public class CompanionWeaponComponent extends Component {
 
         int spawnAngleOffset = 0;
         switch (weaponType) {
-            case Death_Potion:
+            case DEATH_POTION:
                 if (initialRotation < 120 || initialRotation > 300) {
                     spawnAngleOffset += 40;
                 } else {
@@ -59,7 +57,7 @@ public class CompanionWeaponComponent extends Component {
         float distance = 1.25f;
         Entity newAttack = CompanionAttackFactory.createAttack(weaponType, initialRotation,ServiceLocator.getEntityService().getCompanion());
         var newPos = positionInDirection(initialRotation + spawnAngleOffset, distance, newAttack);
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
+        ServiceLocator.getEntityPlacementService().placeEntityAt(newAttack, newPos);
 //        CompanionInventoryComponent invComp= ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class);
 //        ServiceLocator.getEntityService().getCompanion().getEvents().trigger("updateAmmo", invComp.GetCurrentAmmo(), invComp.GetCurrentMaxAmmo());
     }
@@ -75,7 +73,7 @@ public class CompanionWeaponComponent extends Component {
         }
 
 
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(this.CurrentWeapon , placePos);
+        ServiceLocator.getEntityPlacementService().placeEntityAt(this.CurrentWeapon , placePos);
         this.CurrentWeapon.addComponent(new HitboxComponent());
     }
 

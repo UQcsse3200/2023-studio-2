@@ -1,9 +1,11 @@
-package com.csse3200.game.components.Weapons.SpecWeapon;
+package com.csse3200.game.components.Weapons.SpecWeapon.Projectile;
 
+import com.csse3200.game.components.explosives.ExplosiveComponent;
+import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 
-public class HomingMissileSprayProjectileController extends HomingProjectileController {
+public class HomingMissileSprayProjectileController extends ProjectileController {
     private float speed;
 
     public HomingMissileSprayProjectileController(WeaponConfig config,
@@ -14,7 +16,23 @@ public class HomingMissileSprayProjectileController extends HomingProjectileCont
     }
 
     @Override
-    public Integer get_spawn_delay() {
+    public void create() {
+        super.create();
+        var explosiveConfig = new ExplosiveConfig();
+        explosiveConfig.chainable = false;
+        explosiveConfig.damage = 20;
+        explosiveConfig.damageRadius = 2.5f;
+        explosiveConfig.chainRadius = 3.0f;
+        explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
+        explosiveConfig.soundPath = "sounds/explosion/grenade.mp3";
+
+        var explode = new ExplosiveComponent(explosiveConfig);
+        entity.addComponent(explode);
+        explode.create();
+    }
+
+    @Override
+    public int get_spawn_delay() {
         return switch (attackNum) {
             case 0 -> 100;
             case 1 -> 400;
@@ -34,9 +52,14 @@ public class HomingMissileSprayProjectileController extends HomingProjectileCont
 
     @Override
     protected void move() {
-        speed += 0.3;
+        speed += 0.3f;
         entity.setPosition(entity.getPosition()
                 .add(positionInDirection(currentRotation, 0.01f * this.speed))
         );
+    }
+
+    @Override
+    protected void despawn() {
+        entity.getEvents().trigger("explode");
     }
 }

@@ -14,8 +14,8 @@ public class ExplosiveBarrelTool extends PlacementTool {
      *
      * @param cost - the cost of the entity being placed.
      */
-    public ExplosiveBarrelTool(ObjectMap<String, Integer> cost) {
-        super(cost);
+    public ExplosiveBarrelTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
+        super(cost, ordering, texture);
     }
 
     /**

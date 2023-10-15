@@ -66,7 +66,11 @@ public class StructureToolPicker extends UIComponent {
         super.create();
 
         for (var option : structureTools.toolConfigs) {
-            var tool = getTool(option.key, option.value.cost);
+            var tool = getTool(option.key, option.value.cost, option.value.ordering, option.value.texture);
+
+            if (tool == null) {
+                continue;
+            }
 
             tools.put(option.key, tool);
         }
@@ -99,10 +103,14 @@ public class StructureToolPicker extends UIComponent {
 
             var tool = tools.get(option.key);
 
-            var optionValue = option.value;
+            selectableTools.add(tool);
+        }
 
+        Collections.sort(selectableTools);
+
+        for (var tool : selectableTools) {
             var button = new Button(skin);
-            var image = new Image(ServiceLocator.getResourceService().getAsset(optionValue.texture, Texture.class));
+            var image = new Image(ServiceLocator.getResourceService().getAsset(tool.getTexture(), Texture.class));
 
             button.add(image).size(30,30);
             if (selectedTool != tool) {
@@ -119,7 +127,6 @@ public class StructureToolPicker extends UIComponent {
                 }
             });
             buttons.put(tool, button);
-            selectableTools.add(tool);
             table.add(button).width(30 + button.getPadLeft() + button.getPadRight());
         }
     }
@@ -131,11 +138,12 @@ public class StructureToolPicker extends UIComponent {
      * @param cost - the cost of the tool
      * @return an instance of the specified tool class if it exists, otherwise null
      */
-    private Tool getTool(String key, ObjectMap<String, Integer> cost) {
+    private Tool getTool(String key, ObjectMap<String, Integer> cost, int ordering, String texture) {
         try {
             Class<?> cls = Class.forName(key);
 
-            Object obj = cls.getDeclaredConstructor(ObjectMap.class).newInstance(cost);
+            Object obj = cls.getDeclaredConstructor(ObjectMap.class, int.class, String.class)
+                    .newInstance(cost, ordering, texture);
 
             if (obj instanceof Tool tool) {
                 return tool;

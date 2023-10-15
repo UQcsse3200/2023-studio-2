@@ -10,20 +10,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ToolTest {
 
     @Test
-    void getCost() {
+    void testState() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
         cost.put("resource1", 10);
         cost.put("resource2", 20);
 
-        var tool = new MockTool(cost);
+        var tool = new MockTool(cost, 0, "image.png");
 
         assertEquals(tool.getCost(), cost);
+        assertEquals(tool.getTexture(), "image.png");
     }
 }
 
 class MockTool extends Tool {
-    public MockTool(ObjectMap<String, Integer> cost) {
-        super(cost);
+    public MockTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
+        super(cost, ordering, texture);
     }
 
     @Override

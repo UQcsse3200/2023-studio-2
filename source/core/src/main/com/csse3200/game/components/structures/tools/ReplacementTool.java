@@ -19,8 +19,8 @@ public abstract class ReplacementTool extends PlacementTool {
      * Creates a new tool which allows the placing of structures with the given cost.
      * @param cost - the cost of the entity being placed.
      */
-    protected ReplacementTool(ObjectMap<String, Integer> cost) {
-        this(cost, false);
+    protected ReplacementTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
+        this(cost, ordering, texture, false);
     }
 
     /**
@@ -28,9 +28,8 @@ public abstract class ReplacementTool extends PlacementTool {
      * @param cost - the cost of the entity being placed.
      * @param mustPlace - whether the new structure must replace another structure.
      */
-    protected ReplacementTool(ObjectMap<String, Integer> cost, boolean mustPlace) {
-
-        super(cost);
+    protected ReplacementTool(ObjectMap<String, Integer> cost, int ordering, String texture, boolean mustPlace) {
+        super(cost, ordering, texture);
         this.mustReplace = mustPlace;
     }
 

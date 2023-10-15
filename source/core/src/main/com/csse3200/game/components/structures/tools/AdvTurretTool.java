@@ -14,8 +14,8 @@ public class AdvTurretTool extends PlacementTool {
      * Creates a new turret tool with the given cost.
      * @param cost - the cost of a turret.
      */
-    public AdvTurretTool(ObjectMap<String, Integer> cost) {
-        super(cost);
+    public AdvTurretTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
+        super(cost, ordering, texture);
     }
 
     /**

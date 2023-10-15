@@ -16,8 +16,8 @@ import com.csse3200.game.services.ServiceLocator;
  * Tool used to place extractors.
  */
 public class ExtractorTool extends ReplacementTool {
-    public ExtractorTool(ObjectMap<String, Integer> cost) {
-        super(cost, true);
+    public ExtractorTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
+        super(cost, ordering, texture, true);
     }
 
     Resource produces = Resource.Durasteel;

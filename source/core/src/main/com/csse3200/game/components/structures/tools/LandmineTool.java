@@ -14,8 +14,8 @@ public class LandmineTool extends PlacementTool {
      *
      * @param cost - the cost of the entity being placed.
      */
-    public LandmineTool(ObjectMap<String, Integer> cost) {
-        super(cost);
+    public LandmineTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
+        super(cost, ordering, texture);
     }
 
     /**

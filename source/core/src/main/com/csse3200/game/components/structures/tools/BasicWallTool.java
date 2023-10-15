@@ -14,8 +14,8 @@ public class BasicWallTool extends PlacementTool {
      * Creates a new basic wall tool with the given cost.
      * @param cost - the cost of a basic wall.
      */
-    public BasicWallTool(ObjectMap<String, Integer> cost) {
-        super(cost);
+    public BasicWallTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
+        super(cost, ordering, texture);
         snapX = 2;
         snapY = 2;
     }

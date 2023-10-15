@@ -18,8 +18,8 @@ public class Healing extends Tool {
      * Creates a new healing tool with the given cost.
      * @param cost - the cost of the healing tool.
      */
-    public Healing(ObjectMap<String, Integer> cost) {
-        super(cost);
+    public Healing(ObjectMap<String, Integer> cost, int ordering, String texture) {
+        super(cost, ordering, texture);
     }
 
 

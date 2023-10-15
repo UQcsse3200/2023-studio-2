@@ -2,7 +2,7 @@
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="90" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
  <tileset firstgid="1" source="ice is nice.tsx"/>
  <tileset firstgid="31" source="snowWIP.tsx"/>
- <layer id="1" name="Tile Layer 1" width="90" height="90">
+ <layer id="1" name="Base" width="90" height="90">
   <data encoding="csv">
 3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,16,13,13,1,1,13,13,16,13,13,1,1,1,1,1,1,13,13,1,1,1,1,1,13,13,
 3,3,3,3,13,1,16,13,11,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,16,19,19,1,1,13,13,16,13,13,13,13,13,1,13,13,13,13,13,16,16,13,1,1,13,

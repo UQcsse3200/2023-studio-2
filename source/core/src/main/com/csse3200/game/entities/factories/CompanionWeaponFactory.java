@@ -5,6 +5,7 @@ import com.csse3200.game.components.CompanionWeapons.CompanionWeaponController;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponTargetComponent;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.ParticleComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionWeaponConfig;
 import com.csse3200.game.entities.configs.CompanionWeaponConfigs;
@@ -29,6 +30,8 @@ public class CompanionWeaponFactory {
                 config.initialRotationOffset,config.textureAtlas
 
         );
+
+
 
 
         //if it is a death potion, return that
@@ -58,6 +61,7 @@ public class CompanionWeaponFactory {
 
         Entity attack = new Entity().addComponent(weaponController);
         attack.setEntityType("CompanionStaticWeapon");
+        attack.addComponent(new ParticleComponent(config.effects));
 
         Texture texture = new Texture(config.imagePath);
         attack.addComponent(new TextureRenderComponent(texture));

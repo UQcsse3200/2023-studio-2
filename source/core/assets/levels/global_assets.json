@@ -65,6 +65,8 @@
     "sounds/explosion/landmine.mp3",
     "sounds/turret_shoot.mp3"
   ],
-  "particleEffectPaths": null,
+  "particleEffectPaths": [
+    "particle-effects/deathpotion/Death.effect"
+  ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
 }

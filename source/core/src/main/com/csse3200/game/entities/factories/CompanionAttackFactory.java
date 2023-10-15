@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.CompanionInventoryComponent;
 import com.csse3200.game.components.CompanionWeapons.PowerUpController;
+import com.csse3200.game.components.ParticleComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponController;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponTargetComponent;
@@ -52,6 +53,8 @@ public class CompanionAttackFactory {
                         (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE)))
                 .addComponent(weaponController);
         attack.setEntityType("ComapanionWeapon");
+
+        attack.addComponent(new ParticleComponent(config.effects));
 
 
                 attack.addComponent(new CombatStatsComponent(30, 10, 1, false));

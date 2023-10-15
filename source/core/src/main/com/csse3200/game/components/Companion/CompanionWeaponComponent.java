@@ -72,6 +72,7 @@ public class CompanionWeaponComponent extends Component {
 
         ServiceLocator.getEntityPlacementService().PlaceEntityAt(this.CurrentWeapon , placePos);
         this.CurrentWeapon.addComponent(new HitboxComponent());
+        this.CurrentWeapon.getEvents().trigger("startEffect", "deathPotion");
     }
 
     private Vector2 positionInDirection(double direction, float distance, Entity attack) {

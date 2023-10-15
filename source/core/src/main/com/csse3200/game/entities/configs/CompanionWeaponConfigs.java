@@ -32,6 +32,12 @@ public class CompanionWeaponConfigs {
                 "ranged"    ,1         // Slot Type
         );
 
+
+        ParticleEffectsConfig explosiveConfig = new ParticleEffectsConfig();
+        explosiveConfig.effectsMap.put("deathPotion", "particle-effects/deathpotion/Death.effect");
+
+        Death_Potion.effects = explosiveConfig;
+
         //initialise the shield here
         SHIELD = new CompanionWeaponConfig(
                 "SHIELD",            // Name

@@ -94,7 +94,6 @@ public class CompanionWeaponController extends Component {
      * Despawn the weapon
      */
     private void despawn() {
-        entity.getEvents().trigger("explode");
         Gdx.app.postRunnable(entity::dispose);
     }
 

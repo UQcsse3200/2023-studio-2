@@ -25,15 +25,5 @@ public class PowerUpController extends CompanionWeaponController {
     @Override
     public void create(){
         super.create();
-        ExplosiveConfig explosiveConfig = new ExplosiveConfig();
-        explosiveConfig.chainable = false;
-        explosiveConfig.damage = 20;
-        explosiveConfig.damageRadius = 2.5f;
-        explosiveConfig.chainRadius = 3.0f;
-        explosiveConfig.effectPath = "particle-effects/deathpotion/Death.effect";
-
-        var explode = new ExplosiveComponent(explosiveConfig);
-        entity.addComponent(explode);
-        explode.create();
     }
 }

@@ -26,6 +26,7 @@ public class CompanionWeaponConfig extends BaseEntityConfig {
 
     public float range = 10.0f; // Set a fixed maximum range of 200 units for the projectile
     public int attackNum =0;
+    public ParticleEffectsConfig effects = new ParticleEffectsConfig();
 
 
 

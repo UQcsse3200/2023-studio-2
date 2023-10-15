@@ -64,6 +64,7 @@ public class UpgradeNode {
         this.children = new ArrayList<>();
         this.depth = 0;
         this.config = config;
+        this.parent = null;
     }
 
     UpgradeNode(ToolConfig config) {
@@ -73,6 +74,7 @@ public class UpgradeNode {
         this.children = new ArrayList<>();
         this.depth = 0;
         this.config = config;
+        this.parent = null;
     }
 
     /** Gets the config file associated with the tool **/

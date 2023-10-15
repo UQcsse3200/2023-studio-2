@@ -154,6 +154,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                     Keys.NUM_5, Keys.NUM_6, Keys.NUM_7, Keys.NUM_8, Keys.NUM_9 -> {
                 int index = keycode - (Keys.NUM_0 + 1) % 10;
                 entity.getEvents().trigger("selectToolIndex", index);
+                entity.getEvents().trigger("selectWeaponIndex", index);
                 return true;
             }
             case Keys.W, Keys.S, Keys.A, Keys.D -> {

@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.structures.ToolConfig;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
@@ -48,6 +49,7 @@ public class InventoryDisplayComponent extends UIComponent {
         makeTable();
         makeHotbar();
         player.getEvents().addListener("updateHotbar", this::equipEvent);
+        player.getEvents().addListener("selectWeaponIndex", this::selectIndex);
     }
 
     /**
@@ -101,24 +103,23 @@ public class InventoryDisplayComponent extends UIComponent {
         hotbar.center().bottom().padBottom(10);
         hotbar.setFillParent(true);
 
-        for (var str : player.getComponent(UpgradeTree.class).getUnlockedWeapons()) {
+        for (Object config : player.getComponent(UpgradeTree.class).getUnlockedWeaponsConfigs()) {
             WeaponConfig equippedConfig = inventory.getConfigs().GetWeaponConfig(inventory.getEquippedType());
             String equippedCategory = equippedConfig.slotType;
 
-            WeaponType weaponType = null;
-            try { // dont look plz..
-                weaponType = WeaponType.valueOf(String.valueOf(str));
-            } catch (IllegalArgumentException e) {
+            if (config instanceof ToolConfig) {
                 continue;
             }
 
-            WeaponConfig config = inventory.getConfigs().GetWeaponConfig(weaponType);
-            if (weaponType.equals(WeaponType.WOODHAMMER) || !config.slotType.equals(equippedCategory)) {
+            WeaponConfig weaponConfig = (WeaponConfig) config;
+            WeaponType weaponType = weaponConfig.type;
+
+            if (weaponType.equals(WeaponType.WOODHAMMER) || !weaponConfig.slotType.equals(equippedCategory)) {
                 continue;
             }
 
             var button = new Button(skin);
-            var image = new Image(new Texture(config.imagePath));
+            var image = new Image(new Texture(weaponConfig.imagePath));
             button.add(image).size(30,30);
             updateButtonColor(button, weaponType);
 
@@ -127,13 +128,13 @@ public class InventoryDisplayComponent extends UIComponent {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    inventory.replaceSlotWithWeapon(config.slotType, weaponToEquip);
+                    inventory.replaceSlotWithWeapon(weaponConfig.slotType, weaponToEquip);
                     player.getEvents().trigger("changeWeapon", weaponToEquip);
                     equipEvent();
                 }
             });
 
-            buttons.put(config, button);
+            buttons.put(weaponConfig, button);
             hotbar.add(button).width(30 + button.getPadLeft() + button.getPadRight());
         }
     }
@@ -182,6 +183,19 @@ public class InventoryDisplayComponent extends UIComponent {
         table.padBottom(45f).padRight(45f);
         stage.addActor(table);
         stage.addActor(hotbar);
+    }
+
+    public void selectIndex(int index) {
+        System.out.println("IN");
+        if (index < 0 || index > 9) {
+            logger.warn("Invalid index selected: " + index);
+            return;
+        }
+
+        List<String> keys = new ArrayList<>(inventory.getEquippedWMap().keySet());
+        keys.get(index);
+
+
     }
 
     /**

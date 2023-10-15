@@ -44,7 +44,7 @@ public class UpgradeTreeTest {
 
     @Test
     public void testGetUnlockedWeaponsSize() {
-        assertEquals(3, upgradeTree.getUnlockedWeapons().size());
+        assertEquals(3, upgradeTree.getUnlockedWeaponsConfigs().size());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class UpgradeTreeTest {
     @Test
     public void testDefaultWeapons() {
         // ensure the tree contains only the default weapons
-        assertEquals(3, upgradeTree.getUnlockedWeapons().size());
+        assertEquals(3, upgradeTree.getUnlockedWeaponsConfigs().size());
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA.toString()));
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER.toString()));
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG.toString()));
@@ -114,7 +114,7 @@ public class UpgradeTreeTest {
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING));
 
         // Ensure there are now 6 weapons in total unlocked, including default weapons
-        assertEquals(6, upgradeTree.getUnlockedWeapons().size());
+        assertEquals(6, upgradeTree.getUnlockedWeaponsConfigs().size());
     }
 
     @Test

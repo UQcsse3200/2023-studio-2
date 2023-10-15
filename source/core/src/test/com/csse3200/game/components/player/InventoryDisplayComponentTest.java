@@ -55,7 +55,7 @@ class InventoryDisplayComponentTest {
     @Test
     void testMakeHotbar() {
         var component = new InventoryDisplayComponent();
-        when(upgradeTree.getUnlockedWeapons()).thenReturn(new ArrayList<>());
+        when(upgradeTree.getUnlockedWeaponsConfigs()).thenReturn(new ArrayList<>());
         component.makeHotbar();
     }
 

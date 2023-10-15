@@ -114,14 +114,16 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      * TODO: Add button to go left in power-up inventory list
      */
     public void addLeftButton() {
-        return;
+        //CREATE BUTTON AND LINK IT TO THIS FUNCTION ON PRESS
+        decreaseIndexInPowerupActivationList();
     }
 
     /**
      * TODO: Add button to go right in power-up inventory list
      */
     public void addRightButton() {
-        return;
+        //CREATE BUTTON AND LINK IT TO THIS FUNCTION ON PRESS
+        increaseIndexInPowerupActivationList();
     }
 
     /**
@@ -137,7 +139,17 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      * TODO: UI element to that display type of powerup, and simply bind the ON CLICK event to the pressedSpecificPowerupToBeUsed
      */
     public void setUISpecificPowerup() {
-        return;
+
+        // given the current index, display a specific type of powerup
+        PowerupType displayThisType = localPowerupActivationList.get(powerupActivationlistIndex);
+        // you need to fetch the correct button and put it on the screen
+
+        // MAKE SURE BUTTON IS BOUND TO THIS FUNCTION
+        pressedSpecificPowerupToBeUsed();
+
+        //PRINT THE NEW TYPE THAT IS SELECTED
+        logger.info(localPowerupActivationList.toString());
+        logger.info(displayThisType.toString());
     }
 
     /**
@@ -160,6 +172,17 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
     public void updatePowerupInventoryActivation() {
         // fetch the updated inventory
         fetchLatestPowerupInventory();
+
+        // re-create arrayList of the powerups available
+        updateArrayListOfPowerupInventory();
+
+        //make sure there is a powerup to be activated, otherwise display nothing
+        if (localPowerupActivationList.isEmpty()) {
+            setUIEmptyPowerupInventory();
+        } else {
+            //there is an element in the list, display the power up at the current index
+            setUISpecificPowerup();
+        }
     }
 
     /**
@@ -168,28 +191,56 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      * if list is one, it'll refresh the UI object to the same power-up
      */
     public void increaseIndexInPowerupActivationList() {
-        return;
+
+        if (!localPowerupActivationList.isEmpty()) {
+            //increase by 1
+            powerupActivationlistIndex++;
+            //if you've gone outside the bounds
+            if (powerupActivationlistIndex > localPowerupActivationList.size()) {
+                powerupActivationlistIndex = 0;
+            }
+            //update the saved power type
+            updateSavedPowerupType();
+            // update the UI
+            setUISpecificPowerup();
+        }
     }
 
     /**
      * Function called when "left" button is pressed, to iterate DOWN the list of powerups available
      */
     public void decreaseIndexInPowerupActivationList() {
-        return;
+
+        if (!localPowerupActivationList.isEmpty()) {
+            //increase by 1
+            powerupActivationlistIndex--;
+            //if you've gone outside the bounds
+            if (powerupActivationlistIndex < 0) {
+                //set the index to the size of the list, minus one for zero index
+                powerupActivationlistIndex = localPowerupActivationList.size() - 1;
+            }
+            //save the new type
+            updateSavedPowerupType();
+            // update the UI
+            setUISpecificPowerup();
+        }
     }
 
     /**
      * PREREQ: Can only call this function if the list is > 0 and activation index is all correct
      */
     public void updateSavedPowerupType() {
-        return;
+        previousPowerupType = localPowerupActivationList.get(powerupActivationlistIndex);
     }
 
     /**
      * Function to be called when any type of powerup on the screen which is not null is pressed
      */
     public void pressedSpecificPowerupToBeUsed() {
-        return;
+        // given the current index, display a specific type of powerup
+        PowerupType displayThisType = localPowerupActivationList.get(powerupActivationlistIndex);
+        // this will go into the inventory, check we have one, and then activate the powerup, then call changePowerupInventory
+        ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupInventoryComponent.class).useSpecificPowerup(displayThisType);
     }
 
     /**
@@ -198,7 +249,20 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      *
      */
     public void updateArrayListOfPowerupInventory() {
-        return;
+        //reset the list
+        localPowerupActivationList = new ArrayList<>();
+
+        // iterate through the hashmap
+        for (Map.Entry<PowerupType, Integer> entry : localPowerupsInventoryAmount.entrySet()) {
+            PowerupType type = entry.getKey();
+            Integer count = entry.getValue();
+            // if there are more than one of a particular powerup, add it to the powerupActivationList
+            if (count > 0) {
+                localPowerupActivationList.add(type);
+            }
+        }
+
+        updateSavedIndex();
     }
 
 
@@ -211,7 +275,35 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      *
      */
     public void updateSavedIndex() {
-        return;
+        //if you have something saved
+        if (previousPowerupType!= null) {
+            // if the list is not empty
+            if (!localPowerupActivationList.isEmpty()) {
+                // does the list has my previous saved type in the list, set the index
+                if (localPowerupActivationList.contains(previousPowerupType)) {
+                    // set the current index to the powerup type of the previously activated index
+                    powerupActivationlistIndex = localPowerupActivationList.indexOf(previousPowerupType);
+                } else {
+                    //set the previous powerup type to the first index of the arraylist
+                    powerupActivationlistIndex = 0;
+                    previousPowerupType = localPowerupActivationList.get(powerupActivationlistIndex);
+                }
+            } else {
+                // list is empty, set previous saved type to null
+                previousPowerupType = null;
+            }
+        } else {
+            // you haven't saved anything
+
+            // if the list is not empty, make the saved whatever you are looking at
+            if (!localPowerupActivationList.isEmpty()) {
+                //set the previous powerup type to the first index of the arraylist
+                powerupActivationlistIndex = 0;
+                previousPowerupType = localPowerupActivationList.get(powerupActivationlistIndex);
+            } else {
+                // if there is an empty list, do nothing and keep it null
+            }
+        }
     }
 
     /**

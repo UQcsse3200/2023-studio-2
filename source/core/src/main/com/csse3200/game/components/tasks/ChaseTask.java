@@ -1,6 +1,7 @@
 package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
 import com.csse3200.game.ai.tasks.PriorityTask;
@@ -19,7 +20,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private final float viewDistance;
   private final float maxChaseDistance;
   private float shootDistance;
-  private MovementTask movementTask;
+  private PathMovementTask pathMovementTask;
   private List<GridPoint2> path;
   private GridPoint2 targetPosition;
   private char currentDirection;
@@ -62,70 +63,40 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     //get the list of grids which is the path to take to reach the target
     path = PathFinder.findPath(owner.getEntity().getGridPosition(), targetPosition);
     //create the movementTask and input the vector position of the first tile of the path
-    movementTask = new MovementTask(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
-    movementTask.create(owner);
-    movementTask.start();
+    pathMovementTask = new PathMovementTask(path);
+    pathMovementTask.create(owner);
+    pathMovementTask.start();
     startDirectionalAnimation();
   }
 
   @Override
   public void update() {
-
     Entity entity = owner.getEntity();
     DeathComponent deathComponent = entity.getComponent(DeathComponent.class);
     // Check if the enemy is running death animation before allowing it to chase
-    if (entity != null && deathComponent != null && deathComponent.getIsDying()) {
+    if (deathComponent != null && deathComponent.getIsDying()) {
       // Stop chasing if the enemy is being disposed(delay) and running the death animation
-      movementTask.stop();
-    } else {
+        pathMovementTask.stop();
+    } else if (targetPosition.equals(ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition()))){
         char newDirection = getDirection(target.getPosition());
-        movementTask.update();
-        //check if it reached the tile (the first tile of the path in the start() function)
-        if (movementTask.getStatus() != Status.ACTIVE) {
-            //if the tile was reach then find the new targetlocation
-            targetPosition = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition());
-            //check if we're already at the tile or not
-            if (!owner.getEntity().getGridPosition().equals(targetPosition)) {
-                //if we are not at the player tile then find the new path
-                path = PathFinder.findPath(owner.getEntity().getGridPosition(), targetPosition);
-                //set a new target to the movementtask
-                movementTask.setTarget(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
-                //start the movementtask again
-                movementTask.start();
-            } else {
-                movementTask.update();
-            }
-        } else {
-            //if we didn't reach the tile yet
-            //then check whether we should continue to go to the tile or just find a new path, check by seeing if the targets location has changed
-            if (!(targetPosition.equals(ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition())))) {
-                if (owner.getEntity().getGridPosition().equals(targetPosition)) {
-                    return;
-                } else {
-                    //if it has changed then stop the movementtask
-                    movementTask.stop();
-                    //find the new targetlocation
-                    targetPosition = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition());
-                    if (!owner.getEntity().getGridPosition().equals(targetPosition)) {
-                        path = PathFinder.findPath(owner.getEntity().getGridPosition(), targetPosition);
-                        movementTask.setTarget(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)));
-                        movementTask.start();
-                    }
-                }
-            } else {
-                movementTask.update();
-            }
+        pathMovementTask.update();
+        //check if it reached the destination
+        if (pathMovementTask.getStatus().equals(Status.FAILED)) {
+            recalculate();
         }
         if (currentDirection != newDirection){
             startDirectionalAnimation();
         }
-      }
+      } else {
+      targetPosition = ServiceLocator.getGameArea().getTerrain().worldPositionToTile(target.getCenterPosition());
+      recalculate();
+    }
   }
 
   @Override
   public void stop() {
     super.stop();
-    movementTask.stop();
+    pathMovementTask.stop();
   }
 
   @Override
@@ -180,6 +151,13 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     if(currentDirection == '>'|| currentDirection == '='){
       this.owner.getEntity().getEvents().trigger("chaseStart");
     }
+  }
+
+  protected void recalculate() {
+      //update the path
+      path = PathFinder.findPath(owner.getEntity().getGridPosition(), targetPosition);
+      //set a new target to the movementtask
+      pathMovementTask.setNewPath(path);
   }
 
 }

@@ -12,11 +12,7 @@ public class DistanceCheckComponent extends Component {
     }
 
     public void checkDistance(Entity player) {
-        if (entity.getCenterPosition().dst(player.getCenterPosition()) <= proximityDistance) {
-            interactLabel.setVisible(true);
-        } else {
-            interactLabel.setVisible(false);
-        }
+        interactLabel.setVisible(entity.getCenterPosition().dst(player.getCenterPosition()) <= proximityDistance);
     }
 }
 

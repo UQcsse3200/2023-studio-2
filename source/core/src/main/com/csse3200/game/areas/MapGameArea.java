@@ -42,17 +42,17 @@ import static com.csse3200.game.utils.LoadUtils.joinPath;
  */
 public class MapGameArea extends GameArea{
 
-    private GameAreaConfig mapConfig = null;
+    public GameAreaConfig mapConfig = null;
     private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
     protected boolean validLoad = true;
     private static boolean freezing;
 
-    public MapGameArea(String levelName, String game_area, TerrainFactory terrainFactory, GdxGame game) {
+    public MapGameArea(String levelName, String gamearea, TerrainFactory terrainFactory, GdxGame game) {
         try {
-            mapConfig = ConfigLoader.loadMapDirectory(levelName, game_area);
-            logger.info("Successfully loaded map {}", joinPath(levelName, game_area));
+            mapConfig = ConfigLoader.loadMapDirectory(levelName, gamearea);
+            logger.info("Successfully loaded map {}", joinPath(levelName, gamearea));
         } catch (InvalidConfigException exception) {
             logger.error("FAILED TO LOAD GAME IN CONSTRUCTOR - {}", exception.getMessage());
             validLoad = false;
@@ -88,14 +88,16 @@ public class MapGameArea extends GameArea{
         spawnTreeTop();
         spawnAstro();
         spawnTutnpc();
+        spawnHellman();
         spawnSpawners();
         spawnJail();
 
         spawnAstronaut();
-        //spawnBotanist();
+
         //spawnEnvironmentDamage();
         spawnFreezingArea();
         spawnEnvironmentDamage();
+        spawnSafeZone(player);
 
         displayUI();
         playMusic();
@@ -149,6 +151,17 @@ public class MapGameArea extends GameArea{
             Entity portal = PortalFactory.createPortal(playerEntity, portalConfig);
             spawnEntityAt(portal, portalConfig.position, false, false);
         }
+    }
+
+    private void spawnSafeZone(Entity playerEntity) {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        SafeZoneConfig safeZoneConfig = mapConfig.areaEntityConfig.getEntity(SafeZoneConfig.class);
+
+        if (safeZoneConfig == null) return;
+
+        Entity safeZone = SafeZoneFactory.createSafeZone(playerEntity);
+        spawnEntityAt(safeZone, safeZoneConfig.position, false, false);
     }
 
     private void spawnEnvironmentDamage() {
@@ -315,7 +328,7 @@ public class MapGameArea extends GameArea{
      * If that is null, then spawns at the centre of the map
      * @return The player entity created
      */
-    private Entity spawnPlayer() {
+    protected Entity spawnPlayer() {
         Entity newPlayer;
         PlayerConfig playerConfig = null;
         if (mapConfig.areaEntityConfig != null) {
@@ -331,7 +344,7 @@ public class MapGameArea extends GameArea{
         newPlayer.getComponent(CombatStatsComponent.class).setLives((int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")); // Ensures previous number of lives is maintained.
 
         // environmental damage
-        newPlayer.getComponent(EnvironmentStatsComponent.class).setImmunity(mapConfig);
+        newPlayer.getComponent(EnvironmentStatsComponent.class).setSafeMap(mapConfig);
         newPlayer.getComponent(EnvironmentStatsComponent.class).damage(newPlayer.getComponent(CombatStatsComponent.class));
 
         newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
@@ -429,8 +442,8 @@ public class MapGameArea extends GameArea{
 
         AstroConfig astroConfig = mapConfig.areaEntityConfig.getEntity(AstroConfig.class);
         if (astroConfig != null) {
-            Entity Astro = NPCFactory.createAstro();
-            spawnEntityAt(Astro, astroConfig.position, false, false);
+            Entity astro = NPCFactory.createAstro(astroConfig);
+            spawnEntityAt(astro, astroConfig.position, false, false);
         }
 
     }
@@ -439,8 +452,18 @@ public class MapGameArea extends GameArea{
 
         TutnpcConfig tutnpcConfig = mapConfig.areaEntityConfig.getEntity(TutnpcConfig.class);
         if (tutnpcConfig != null) {
-            Entity Tutnpc = NPCFactory.createTutnpc();
-            spawnEntityAt(Tutnpc, tutnpcConfig.position, false, false);
+            Entity tutnpc = NPCFactory.createTutnpc(tutnpcConfig);
+            spawnEntityAt(tutnpc, tutnpcConfig.position, false, false);
+        }
+
+    }
+    private void spawnHellman() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        HellmanConfig hellmanConfig = mapConfig.areaEntityConfig.getEntity(HellmanConfig.class);
+        if (hellmanConfig != null) {
+            Entity hellman = NPCFactory.createHellman();
+            spawnEntityAt(hellman, hellmanConfig.position, false, false);
         }
 
     }
@@ -451,7 +474,7 @@ public class MapGameArea extends GameArea{
         AstronautConfig astronautConfig = mapConfig.areaEntityConfig.getEntity(AstronautConfig.class);
         if (astronautConfig != null) {
             Entity astronaut = NPCFactory.createAstronaut(astronautConfig);
-            spawnEntityAt(astronaut, astronautConfig.position, false, false);
+            spawnEntityAt(astronaut, astronautConfig.position, true, true);
         }
     }
 
@@ -460,10 +483,9 @@ public class MapGameArea extends GameArea{
 
         JailConfig jailConfig = mapConfig.areaEntityConfig.getEntity(JailConfig.class);
         if (jailConfig != null) {
-            Entity Jail = NPCFactory.createJail();
-            spawnEntityAt(Jail, jailConfig.position, false, false);
+            Entity jail = NPCFactory.createJail(jailConfig);
+            spawnEntityAt(jail, jailConfig.position, true, true);
         }
-
     }
 
     /**

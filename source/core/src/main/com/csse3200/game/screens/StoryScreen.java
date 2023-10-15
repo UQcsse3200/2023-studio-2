@@ -8,7 +8,6 @@ import com.csse3200.game.components.story.StoryDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
-import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
 import com.csse3200.game.input.InputFactory;
 import com.csse3200.game.input.InputService;
@@ -74,6 +73,7 @@ public class StoryScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
+        ServiceLocator.clear();
     }
 
     private void loadAssets() {
@@ -96,8 +96,6 @@ public class StoryScreen extends ScreenAdapter {
     private void createUI() {
         logger.debug("Creating ui");
         Stage stage = ServiceLocator.getRenderService().getStage();
-        InputComponent inputComponent =
-                ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
         Entity ui = new Entity();
         ui.addComponent(new StoryDisplay())

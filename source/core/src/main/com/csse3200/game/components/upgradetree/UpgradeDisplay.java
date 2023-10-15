@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Timer;
-import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.structures.StructureToolPicker;
@@ -33,7 +31,6 @@ import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -121,6 +118,7 @@ public class UpgradeDisplay extends Window {
         WeaponConfig grenadeConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_GRENADE);
         WeaponConfig multiMissile = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_MISSILES);
         WeaponConfig bluemerang = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BLUEMERANG);
+        WeaponConfig nuke = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_NUKE);
 
 
         ToolConfig dirtConfig = structureTools.toolConfigs
@@ -142,8 +140,10 @@ public class UpgradeDisplay extends Window {
         UpgradeNode swordNode = new UpgradeNode(katanaConfig);
         UpgradeNode wrenchNode = new UpgradeNode(meleeWrench);
         UpgradeNode beeNode = new UpgradeNode(beeConfig);
+        UpgradeNode nukeNode = new UpgradeNode(nuke);
         swordNode.addChild(wrenchNode);
         swordNode.addChild(beeNode);
+        beeNode.addChild(nukeNode);
         trees.add(swordNode);
 
         // Ranged Tree
@@ -365,6 +365,7 @@ public class UpgradeDisplay extends Window {
      * Creates an exit button for the upgrade tree display.
      *
      * @return The created exit button.
+     *
      */
     private Table createExitButton() {
         TextButton exitButton = new TextButton("X", skin);
@@ -373,13 +374,17 @@ public class UpgradeDisplay extends Window {
         table.setPosition(((float) (getWidth() * getScaleX() * 0.91)),
                 (float) (getHeight() * getScaleY() * 0.88));
 
+//        stats - object creation to call methods from UpgradeTree class
+        UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
+
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                exitUpgradeTree();
+                exitUpgradeTree(stats);
             }
         });
         return table;
+
     }
 
     /**
@@ -668,8 +673,10 @@ public class UpgradeDisplay extends Window {
 
     /**
      * Exit the upgrade tree menu.
+     * also trigger sound on mouse click
      */
-    private void exitUpgradeTree() {
+    private void exitUpgradeTree(UpgradeTree stats) {
+        stats.triggerSound();
         remove();
     }
 

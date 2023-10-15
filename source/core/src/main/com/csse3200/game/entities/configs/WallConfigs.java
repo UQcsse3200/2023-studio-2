@@ -15,9 +15,9 @@ public class WallConfigs {
 
     public WallConfig GetWallConfig(WallType type) {
         return switch (type) {
-            case basic -> basic;
-            case intermediate -> intermediate;
-            case gate -> gate;
+            case BASIC -> basic;
+            case INTERMEDIATE -> intermediate;
+            case GATE -> gate;
         };
     }
 }

@@ -5,13 +5,10 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.WeaponConfig;
-import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
@@ -33,6 +30,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     private static final int DODGE_DURATION = 300;
     private static final String CHANGEWEAPON = "changeWeapon";
     private static final String WALKSTOP = "walkStop";
+    private static final String BUILDING = "building";
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean dodgeAvailable = true;
     private Entity player;
@@ -129,7 +127,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 return true;
             }
             case Keys.T -> {
-                if (playerInventory.getEquipped().equals("building")) {
+                if (playerInventory.getEquipped().equals(BUILDING)) {
                     entity.getEvents().trigger("change_structure");
                 }
                 return true;
@@ -143,7 +141,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 return true;
             }
             case Keys.NUM_3 -> {
-                triggerInventoryEvent("building");
+                triggerInventoryEvent(BUILDING);
                 return true;
             }
             case Keys.W, Keys.S, Keys.A, Keys.D -> {
@@ -204,7 +202,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 }
                 break;
             // building
-            case "building":
+            case BUILDING:
                 if (button == Input.Buttons.LEFT) {
                     entity.getEvents().trigger("place", screenX, screenY);
                 } else if (button == Input.Buttons.RIGHT) {
@@ -300,7 +298,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 }
                 case DOWNRIGHT -> {
                     entity.getEvents().trigger("walkDownRight");
-                    companion.getEvents().trigger("walkDownLeft");
+                    companion.getEvents().trigger("walkDownRight");
                 }
                 default -> entity.getEvents().trigger(WALKSTOP);
             }
@@ -411,7 +409,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
      */
     private Vector2 mouseToGamePos(int screenX, int screenY) {
         this.lastMousePos = ServiceLocator.getTerrainService()
-                .ScreenCoordsToGameCoords(screenX, screenY).scl(0.5f);
+                .screenCoordsToGameCoords(screenX, screenY).scl(0.5f);
         return this.lastMousePos.cpy();
     }
 

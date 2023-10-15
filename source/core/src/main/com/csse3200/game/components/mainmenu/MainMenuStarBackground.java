@@ -7,9 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.spacenavigation.StarBackground;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.csse3200.game.components.backgrounds.StarBackground;
+//import com.csse3200.game.components.spacenavigation.StarBackground;
 
-// This is heavily inspired by the Space Team's Space Minigame screen
 public class MainMenuStarBackground extends StarBackground {
 
     /**
@@ -36,9 +37,8 @@ public class MainMenuStarBackground extends StarBackground {
      * Constructs a new NavigationBackground instance.
      * Loads necessary textures and initializes the star animations and positions.
      */
-    public MainMenuStarBackground() {
-
-        super(15);
+    public MainMenuStarBackground(int stars) {
+        super(30);
 
         int numOfFrames = 8;
         TextureRegion[] frames = new TextureRegion[numOfFrames];
@@ -61,7 +61,6 @@ public class MainMenuStarBackground extends StarBackground {
             int x = MathUtils.random(0, Gdx.graphics.getWidth());
             int y = MathUtils.random((Gdx.graphics.getHeight() / 3), (int) (0.85 * Gdx.graphics.getHeight()));
 
-            // TODO CHANGE THE AREAS OF SCREEN AFFECTED
             while ((x >= (140 / 1280f) * Gdx.graphics.getWidth() && x <= (690 / 1280f) * Gdx.graphics.getWidth() && y >= (500 / 720f) * Gdx.graphics.getHeight() && y <= (600 / 720f) * Gdx.graphics.getHeight()) ||
                     (x >= (400 / 1280f) * Gdx.graphics.getWidth() && x <= (500 / 1280f) * Gdx.graphics.getWidth() && y >= (340 / 720f) * Gdx.graphics.getHeight() && y <= (250 / 720f) * Gdx.graphics.getHeight()) ||
                     (x >= (950 / 1280f) * Gdx.graphics.getWidth() && x <= (1130 / 1280f) * Gdx.graphics.getWidth() && y >= (150 / 720f) * Gdx.graphics.getHeight() && y <= (550 / 720f) * Gdx.graphics.getHeight())) {

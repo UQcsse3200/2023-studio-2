@@ -38,7 +38,7 @@ public class TouchInputFactory extends InputFactory{
    */
   @Override
   public InputComponent createForSlider() {
-    logger.debug("Creating ship input handler");
+    logger.debug("Creating slider input handler");
     return new KeyboardShipInputComponent();
   }
   /**

@@ -9,12 +9,8 @@ public class TerrainService {
     public TerrainService(TerrainComponent terrain) {
         this.terrain = terrain;
     }
-    public Vector2 ScreenCoordsToGameCoords(int screenX, int screenY) {
+    public Vector2 screenCoordsToGameCoords(int screenX, int screenY) {
         var location = terrain.unproject(new Vector3(screenX, screenY, 0));
         return new Vector2(location.x, location.y);
-
-
     }
-
-
 }

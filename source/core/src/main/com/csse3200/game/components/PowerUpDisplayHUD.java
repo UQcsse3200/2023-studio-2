@@ -16,21 +16,22 @@ import com.csse3200.game.ui.UIComponent;
 public class PowerUpDisplayHUD extends UIComponent {
     Table table;
 
-    public PowerupType powerUpEntity;
-    private Label PowerUpLabel;
+    private PowerupType powerupentity;
+    private Label poweruplabel;
 
-    Image SpeedUpImage = null;
-    Image HealthUpImage = null;
-    Image ExtraLifeImage = null;
-    Image DoubleCrossImage = null;
-    Image TempImmunityImage = null;
-    Image DoubleDamageImage = null;
-    Image SnapImage = null;
+    Image speedupimage = null;
+    Image healthupimage = null;
+    Image extralifeimage = null;
+    Image doublecrossimage = null;
+    Image tempimmunityimage = null;
+    Image doubledamageimage = null;
+    Image snapimage = null;
 
     public PowerUpDisplayHUD(PowerupType powerUpEntity) {
-        this.powerUpEntity = powerUpEntity;
+        this.powerupentity = powerUpEntity;
     }
 
+    @Override
     public void create() {
         super.create();
         addActors();
@@ -44,36 +45,36 @@ public class PowerUpDisplayHUD extends UIComponent {
     //
     public Image selectPowerUp() {
 
-        if (powerUpEntity == PowerupType.HEALTH_BOOST) {
-            HealthUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/health_boost.png", Texture.class));
-            return HealthUpImage;
+        if (powerupentity == PowerupType.HEALTH_BOOST) {
+            healthupimage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/health_boost.png", Texture.class));
+            return healthupimage;
         }
 
-        if (powerUpEntity == PowerupType.SPEED_BOOST) {
-            SpeedUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/speed_boost.png", Texture.class));
-            return SpeedUpImage;
+        if (powerupentity == PowerupType.SPEED_BOOST) {
+            speedupimage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/speed_boost.png", Texture.class));
+            return speedupimage;
         }
 
-        if (powerUpEntity == PowerupType.EXTRA_LIFE) {
-            ExtraLifeImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/extralife.png", Texture.class));
-            return ExtraLifeImage;
+        if (powerupentity == PowerupType.EXTRA_LIFE) {
+            extralifeimage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/extra_life.png", Texture.class));
+            return extralifeimage;
         }
 
-        if (powerUpEntity == PowerupType.DOUBLE_CROSS) {
-            DoubleCrossImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_cross.png", Texture.class));
-            return DoubleCrossImage;
+        if (powerupentity == PowerupType.DOUBLE_CROSS) {
+            doublecrossimage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_cross.png", Texture.class));
+            return doublecrossimage;
         }
-        if (powerUpEntity == PowerupType.TEMP_IMMUNITY) {
-            TempImmunityImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/temp_immunity.png", Texture.class));
-            return TempImmunityImage;
+        if (powerupentity == PowerupType.TEMP_IMMUNITY) {
+            tempimmunityimage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/temp_immunity.png", Texture.class));
+            return tempimmunityimage;
         }
-        if (powerUpEntity == PowerupType.DOUBLE_DAMAGE) {
-            DoubleDamageImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_damage.png", Texture.class));
-            return DoubleDamageImage;
+        if (powerupentity == PowerupType.DOUBLE_DAMAGE) {
+            doubledamageimage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/double_damage.png", Texture.class));
+            return doubledamageimage;
         }
-        if (powerUpEntity == PowerupType.SNAP) {
-            SnapImage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/snap.png", Texture.class));
-            return SnapImage;
+        if (powerupentity == PowerupType.SNAP) {
+            snapimage = new Image(ServiceLocator.getResourceService().getAsset("images/powerups/snap.png", Texture.class));
+            return snapimage;
         }
         else return null;
     }
@@ -92,18 +93,18 @@ public class PowerUpDisplayHUD extends UIComponent {
         float powerUpLength = 40f;
         String powerUp = " ";
         CharSequence powerUpText = String.format("Current PowerUp : %s",powerUp);
-        PowerUpLabel = new Label(powerUpText, skin,"small");
-        table.add(PowerUpLabel);
+        poweruplabel = new Label(powerUpText, skin,"small");
+        table.add(poweruplabel);
 
-        if (selectPowerUp() == HealthUpImage) {
-            table.add(HealthUpImage).size(powerUpLength).pad(5);
+        if (selectPowerUp() == healthupimage) {
+            table.add(healthupimage).size(powerUpLength).pad(5);
         }
-        else if (selectPowerUp() == SpeedUpImage) {
+        else if (selectPowerUp() == speedupimage) {
             // timer task on applyEffect
-            table.add(SpeedUpImage).size(powerUpLength).pad(5);
+            table.add(speedupimage).size(powerUpLength).pad(5);
         }
-        else if (selectPowerUp() == ExtraLifeImage) {
-            table.add(ExtraLifeImage).size(powerUpLength).pad(5);
+        else if (selectPowerUp() == extralifeimage) {
+            table.add(extralifeimage).size(powerUpLength).pad(5);
         }
         // stage.addActor(table); todo: fix
     }
@@ -113,6 +114,7 @@ public class PowerUpDisplayHUD extends UIComponent {
      */
 
     protected void draw(SpriteBatch batch) {
+        // Drawing is handled by the stage
     }
 
     /**
@@ -121,14 +123,14 @@ public class PowerUpDisplayHUD extends UIComponent {
      */
     public void updatePowerUpDisplayUi(String powerUp) {
         CharSequence text = String.format("Current PowerUp: %s", powerUp);
-        PowerUpLabel.setText(text);
+        poweruplabel.setText(text);
         selectPowerUp();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        PowerUpLabel.remove();
+        poweruplabel.remove();
         selectPowerUp();
     }
 }

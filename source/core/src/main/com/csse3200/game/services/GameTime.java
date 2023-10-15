@@ -26,17 +26,23 @@ public class GameTime {
     this.timeScale = timeScale;
   }
 
-  /** @return time passed since the last frame in seconds, scaled by time scale. */
+  /**
+   * @return time passed since the last frame in seconds, scaled by time scale.
+   */
   public float getDeltaTime() {
     return Gdx.graphics.getDeltaTime() * timeScale;
   }
 
-  /** @return time passed since the last frame in seconds, not affected by time scale. */
+  /**
+   * @return time passed since the last frame in seconds, not affected by time scale.
+   */
   public float getRawDeltaTime() {
     return Gdx.graphics.getDeltaTime();
   }
 
-  /** @return time passed since the game started in milliseconds */
+  /**
+   * @return time passed since the game started in milliseconds
+   */
   public long getTime() {
     return TimeUtils.timeSinceMillis(startTime);
   }

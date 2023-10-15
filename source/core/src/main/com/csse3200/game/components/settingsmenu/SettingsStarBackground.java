@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.spacenavigation.StarBackground;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.csse3200.game.components.backgrounds.StarBackground;
+//import com.csse3200.game.components.spacenavigation.StarBackground;
 
 // This is heavily inspired by the Space Team's Space Minigame screen
 public class SettingsStarBackground extends StarBackground {
@@ -36,8 +38,8 @@ public class SettingsStarBackground extends StarBackground {
      * Constructs a new NavigationBackground instance.
      * Loads necessary textures and initializes the star animations and positions.
      */
-    public SettingsStarBackground() {
-        super(30);
+    public SettingsStarBackground(int stars) {
+        super(15);
 
         int numOfFrames = 8;
         TextureRegion[] frames = new TextureRegion[numOfFrames];
@@ -62,6 +64,7 @@ public class SettingsStarBackground extends StarBackground {
 
             while ((x >= (65 / 1280f) * Gdx.graphics.getWidth() && x <= (260 / 1280f) * Gdx.graphics.getWidth() && y >= (520 / 720f) * Gdx.graphics.getHeight() && y <= (670 / 720f) * Gdx.graphics.getHeight()) ||
                     (x >= (415 / 1280f) * Gdx.graphics.getWidth() && x <= (830 / 1280f) * Gdx.graphics.getWidth() && y >= (580 / 720f) * Gdx.graphics.getHeight() && y <= (650 / 720f) * Gdx.graphics.getHeight()) ||
+                    (x >= (470 / 1280f) * Gdx.graphics.getWidth() && x <= (800 / 1280f) * Gdx.graphics.getWidth() && y >= (200 / 720f) * Gdx.graphics.getHeight() && y <= (515 / 720f) * Gdx.graphics.getHeight()) ||
                     (x >= (1000 / 1280f) * Gdx.graphics.getWidth() && x <= (1175 / 1280f) * Gdx.graphics.getWidth() && y >= (320 / 720f) * Gdx.graphics.getHeight() && y <= (485 / 720f) * Gdx.graphics.getHeight()) ||
                     (x >= (1050 / 1280f) * Gdx.graphics.getWidth() && x <= (1220 / 1280f) * Gdx.graphics.getWidth() && y >= (535 / 720f) * Gdx.graphics.getHeight() && y <= (690 / 720f) * Gdx.graphics.getHeight())) {
                 x = MathUtils.random(0, Gdx.graphics.getWidth());

@@ -13,6 +13,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyName;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -47,12 +48,11 @@ public class EnemyFactory {
   public static List<Entity> enemiesList = new ArrayList<Entity>();
   /**
    * Creates an enemy - using the default config as defined by the type and behaviour
-   * @param type - enemy type
-   * @param behaviour - Targeting behaviour of enemy
+   * @param name - the name of the enemy
    * @return new enemy entity
    */
-  public static Entity createEnemy(EnemyType type, EnemyBehaviour behaviour) {
-    return createEnemy(configs.GetEnemyConfig(type, behaviour));
+  public static Entity createEnemy(EnemyName name) {
+    return createEnemy(configs.GetEnemyConfig(name));
   }
 
   /**
@@ -63,7 +63,6 @@ public class EnemyFactory {
    * also helps in triggering sound
    */
   public static Entity createEnemy(EnemyConfig config) {
-    System.out.println(config.type);
     AnimationRenderComponent animator;
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -74,7 +73,7 @@ public class EnemyFactory {
     List<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
     for (Entity target : targets) {
       // Adds the specific behaviour to entity
-      EnemyBehaviourSelector(target, config.type, config.behaviour, aiComponent, config.isBoss);
+      enemyBehaviourSelector(target, config.type, config.behaviour, aiComponent, config.isBoss);
     }
 
     TextureAtlas atlas = new TextureAtlas(config.spritePath);
@@ -87,7 +86,6 @@ public class EnemyFactory {
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new DeathComponent())
-            .addComponent(new HitboxComponent())
             .addComponent(new HealthBarComponent(false))
             .addComponent(new TouchAttackComponent((short) (
                     PhysicsLayer.PLAYER |
@@ -106,20 +104,14 @@ public class EnemyFactory {
             .addComponent(new SoundComponent(config.sound))
             .addComponent(new EnemyFlag());
 
-    if (config.type == EnemyType.Ranged || config.type == EnemyType.BossRanged) {
-      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
-    } else {
-      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
-    }
+    // TYPE
+    enemyTypeSelector(enemy, config.type);
 
     enemy.addComponent(aiComponent);
 
     if(!(config.isBoss)){
         enemiesList.add(enemy);
     }
-
-    // TYPE
-    EnemyTypeSelector(enemy, config.type);
 
     // ANIMATIONS
     animator.addAnimation("float", 0.2f, Animation.PlayMode.LOOP);
@@ -149,7 +141,7 @@ public class EnemyFactory {
    * @return The scaling factor for the provided enemy type.
    */
   static float getEnemyscale(EnemyConfig config){
-    float scale = 0.7f;
+    float scale = 1f;
 
     if (config.type == EnemyType.Ranged) {
       if (config.isBoss){
@@ -173,18 +165,12 @@ public class EnemyFactory {
    * @param enemy The enemy to work with
    * @param type The type the enemy needs to be
    */
-  private static void EnemyTypeSelector(Entity enemy, EnemyType type) {
+  private static void enemyTypeSelector(Entity enemy, EnemyType type) {
     enemy.addComponent(new HitboxComponent());
     if (type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     }
     if (type == EnemyType.Melee) {
-      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
-    }
-    if (type == EnemyType.BossRanged) {
-      enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
-    }
-    if (type == EnemyType.BossMelee) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
     }
   }
@@ -197,9 +183,9 @@ public class EnemyFactory {
    * @param aiTaskComponent The enemy's aiComponent
    * @param isBoss Boolean indicating if enemy is a boss type
    */
-  private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
+  private static void enemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
-    boolean isPlayer = PhysicsLayer.contains(layer, (short) (PhysicsLayer.PLAYER | PhysicsLayer.COMPANION));
+    boolean isPlayer = PhysicsLayer.contains(layer, PhysicsLayer.PLAYER);
     boolean isStructure = PhysicsLayer.contains(layer, PhysicsLayer.STRUCTURE);
     boolean matchingBehaviour = isPlayer && behaviour == EnemyBehaviour.PTE || isStructure && behaviour == EnemyBehaviour.DTE;
 
@@ -207,7 +193,10 @@ public class EnemyFactory {
     float viewDistance = 100f;
     float maxChaseDistance = 100f;
 
-    if (type == EnemyType.Melee && !isPlayer && !matchingBehaviour) priority = 5; //Special case for player targeting melee
+    if (isPlayer && behaviour == EnemyBehaviour.DTE) {
+      //Special case for player targeting meleeDTE will add chaseTask of prio 9
+      priority = 9;
+    }
     // Select and add the necessary behaviour
     addBehaviour(type, aiTaskComponent, target, priority, viewDistance, maxChaseDistance, isBoss);
   }
@@ -227,13 +216,10 @@ public class EnemyFactory {
     if (isBoss) {
       if (type == EnemyType.Melee) {
         // Melee Boss
-        aiComponent.addTask(new BossTask(EnemyType.BossMelee, target, priority, viewDistance, maxChaseDistance));
-      } else if (type == EnemyType.Ranged) {
-        // Ranged Boss
-        aiComponent.addTask(new BossTask(EnemyType.BossRanged, target, priority, viewDistance, maxChaseDistance));
+        aiComponent.addTask(new BossTask(EnemyType.Melee, target, priority, viewDistance, maxChaseDistance));
       } else {
-        // Default; Melee Boss
-        aiComponent.addTask(new BossTask(EnemyType.BossMelee, target, priority, viewDistance, maxChaseDistance));
+        // Ranged Boss
+        aiComponent.addTask(new BossTask(EnemyType.Ranged, target, priority, viewDistance, maxChaseDistance));
       }
     } else if (type == EnemyType.Melee) {
       // Melee Enemy

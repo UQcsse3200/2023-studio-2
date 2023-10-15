@@ -45,7 +45,7 @@ public class HealTool extends Tool {
         // For checking whether the clicked entity has a CombatStatsComponent
         CombatStatsComponent combatStats = clickedEntity.getComponent(CombatStatsComponent.class);
         // If the clicked entity does not have a CombatStatsComponent, return false
-        if (combatStats == null) {
+        if (combatStats == null || combatStats.getMaxHealth() == 0) {
             return new ToolResponse(PlacementValidity.INVALID, "Cannot be healed");
         }
 
@@ -90,11 +90,10 @@ public class HealTool extends Tool {
     protected void performInteraction(Entity player, GridPoint2 position) {// Deduct the required resources
         deductResources(requiredResources);
 
-        Entity entity = new Entity();
-
         Entity clickedEntity = determineSelectedEntity(position);
 
-        entity.getEvents().trigger("playSound","wallHeal");
+        // TODO fix heal sound
+        //entity.getEvents().trigger("playSound","wallHeal");
 
         CombatStatsComponent combatStats = clickedEntity.getComponent(CombatStatsComponent.class);
         // For setting the health of the clicked entity to 100

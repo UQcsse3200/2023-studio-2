@@ -247,10 +247,6 @@ public class UpgradeDisplay extends Window {
         float currentX = x - totalWidth / 2 + nodeXSpacing / 2;
 
         for (UpgradeNode child : node.getChildren()) {
-            if (child == null) {
-                System.out.println("Warning: Encountered a null child for node at (" + x + ", " + y + ").");
-                continue;
-            }
             child.setParent(node);
             float childX = currentX;
             float childY = y - nodeYSpacing;

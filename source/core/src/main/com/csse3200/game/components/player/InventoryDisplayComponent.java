@@ -99,19 +99,26 @@ public class InventoryDisplayComponent extends UIComponent {
         }
     }
 
+    /**
+     * Creates and populates a table with buttons representing each weapon.
+     * Each button displays the weapon's image.
+     */
     void makeHotbar() {
         hotbar.align(Align.center);
         hotbar.center().bottom().padBottom(10);
         hotbar.setFillParent(true);
 
+        // Iterate through all unlocked weapons and add them to a table
         for (Object config : player.getComponent(UpgradeTree.class).getUnlockedWeaponsConfigs()) {
             WeaponConfig equippedConfig = inventory.getConfigs().GetWeaponConfig(inventory.getEquippedType());
             String equippedCategory = equippedConfig.slotType;
 
+            // Skip tools
             if (config instanceof ToolConfig) {
                 continue;
             }
 
+            // Extract the weapon config and type
             WeaponConfig weaponConfig = (WeaponConfig) config;
             WeaponType weaponType = weaponConfig.type;
 
@@ -119,12 +126,14 @@ public class InventoryDisplayComponent extends UIComponent {
                 continue;
             }
 
+            // Create button with image
             var button = new Button(skin);
             var image = new Image(new Texture(weaponConfig.imagePath));
             button.add(image).size(30,30);
             updateButtonColor(button, weaponType);
-
             image.setScaling(Scaling.fill);
+
+            // Change weapons on click
             final WeaponType weaponToEquip = weaponType;
             button.addListener(new ClickListener() {
                 @Override

@@ -6,6 +6,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import com.csse3200.game.components.backgrounds.StarBackground;
+import com.csse3200.game.components.mainmenu.MainMenuStarBackground;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -112,6 +113,6 @@ public class MainMenuScreen extends ScreenAdapter {
             .addComponent(new InputDecorator(stage, 10))
             .addComponent(new MainMenuActions(game, stage, skin));
     ServiceLocator.getEntityService().register(ui);
-    stage.addActor(new StarBackground(15));
+    stage.addActor(new MainMenuStarBackground(15));
   }
 }

@@ -129,6 +129,13 @@ Astro_Down
   orig: 32, 32
   offset: 0, 0
   index: -1
+Astro_StandDown
+  rotate: false
+  xy: 576, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 Astro_Down
   rotate: false
   xy: 576, 0

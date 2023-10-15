@@ -126,7 +126,7 @@ public class NPCFactory {
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
     botanist.addComponent(new InteractableComponent(entity -> {
-      String[] storytext= {"Hello I am the Botanist","I am here to guide you through"};
+      String[] storytext= {"Hello I am the Botanist","I am here to accompany you on your journey!"};
       String[] titletext= {"",""};
 
       botanist.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
@@ -226,7 +226,7 @@ public class NPCFactory {
 
     Tutnpc.getComponent(ColliderComponent.class).setDensity(1.5f);
     Tutnpc.scaleHeight(0.7f);
-    String[] storytext = {"I am your Tutorial Guide", "I am here to guide you through"};
+    String[] storytext = {"I am your Tutorial Guide", "I am here to teach you how to play!"};
     String[] titletext = {"", ""};
     Tutnpc.addComponent(new InteractableComponent(entity -> {
 

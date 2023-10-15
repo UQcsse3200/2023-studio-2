@@ -36,7 +36,7 @@ import java.util.Map;
 /**
  * This UI component represents the activation button on the right hand side for powerups
  *
- * ESsentially, the UI component will show individual powerups and a way to toggle between them
+ * Essentially, the UI component will show individual powerups and a way to toggle between them
  *
  * it will only show the powerups which are actually stocked (>0) in the inventory
  *
@@ -66,15 +66,11 @@ public class CompanionPowerupActivationDisplay extends UIComponent  {
     PowerupConfig snap;
     public PowerupConfigs powerupConfigs;
 
-
-
-
     /**
      * Constructor, sets label style
      */
     public CompanionPowerupActivationDisplay() {
         labelStyle = "small";
-
     }
 
     /**
@@ -92,9 +88,13 @@ public class CompanionPowerupActivationDisplay extends UIComponent  {
 
         //load in the powerup sprites
         powerupConfigs = FileLoader.readClass(PowerupConfigs.class, "configs/powerups.json");
+        initalisePowerupConfigs();
 
         //fetch the updated inventory amounts
         fetchLatestPowerupInventory();
+
+        // re-create arrayList of the power ups available
+        updateArrayListOfPowerupInventory();
 
         //add the UI elements to the screen
         addActors();
@@ -111,9 +111,8 @@ public class CompanionPowerupActivationDisplay extends UIComponent  {
         return;
     }
 
-
     /**
-     * TODO: Add button to go left in powerup inventory list
+     * TODO: Add button to go left in power-up inventory list
      */
     public void addLeftButton() {
         //CREATE BUTTON AND LINK IT TO THIS FUNCTION ON PRESS
@@ -121,7 +120,7 @@ public class CompanionPowerupActivationDisplay extends UIComponent  {
     }
 
     /**
-     * TODO: Add button to go right in powerup inventory list
+     * TODO: Add button to go right in power-up inventory list
      */
     public void addRightButton() {
         //CREATE BUTTON AND LINK IT TO THIS FUNCTION ON PRESS
@@ -130,7 +129,7 @@ public class CompanionPowerupActivationDisplay extends UIComponent  {
 
     /**
      * TODO: this function is called when the there are NO MORE POWERUPS IN THE INVENTORY e.g. display blank
-     *
+     * TODO: This function will set the UI element which contains the powerup to A BLANK DEFAULT STATE
      */
     public void setUIEmptyPowerupInventory() {
         return;
@@ -138,17 +137,21 @@ public class CompanionPowerupActivationDisplay extends UIComponent  {
 
     /**
      * TODO: This function is called to get the specific powerupType required to display. It should now set some sort
-     * TODO: UI element to that display type
+     * TODO: UI element to that display type of powerup, and simply bind the ON CLICK event to the pressedSpecificPowerupToBeUsed
      */
     public void setUISpecificPowerup() {
         // given the current index, display a specific type of powerup
         PowerupType displayThisType = localPowerupActivationList.get(powerupActivationlistIndex);
         // you need to fetch the correct button and put it on the screen
 
+        // MAKE SURE BUTTON IS BOUND TO THIS FUNCTION
+        pressedSpecificPowerupToBeUsed();
+
         //PRINT THE NEW TYPE THAT IS SELECTED
         logger.info(localPowerupActivationList.toString());
         logger.info(displayThisType.toString());
     }
+
     /**
      * Just gets the configs of each powerup
      */
@@ -163,10 +166,8 @@ public class CompanionPowerupActivationDisplay extends UIComponent  {
         this.snap = powerupConfigs.GetPowerupConfig(PowerupType.SNAP);
     }
 
-
     /**
      * This function is called whenever the inventory amounts are updated
-     *
      */
     public void updatePowerupInventoryActivation() {
         // fetch the updated inventory
@@ -185,11 +186,9 @@ public class CompanionPowerupActivationDisplay extends UIComponent  {
     }
 
     /**
-     * Function called when "right" button is pressed, to iterate UP the list of powerups available
-     *
+     * Function called when "right" button is pressed, to iterate UP the list of power-ups available
      * if the list is empty, this does nothing
-     *
-     * if list is one, it'll refresh the UI object to the same powerup
+     * if list is one, it'll refresh the UI object to the same power-up
      */
     public void increaseIndexInPowerupActivationList() {
         if (!localPowerupActivationList.isEmpty()) {
@@ -232,10 +231,6 @@ public class CompanionPowerupActivationDisplay extends UIComponent  {
         previousPowerupType = localPowerupActivationList.get(powerupActivationlistIndex);
     }
 
-
-
-
-
     /**
      * Function to be called when any type of powerup on the screen which is not null is pressed
      */
@@ -245,9 +240,6 @@ public class CompanionPowerupActivationDisplay extends UIComponent  {
         // this will go into the inventory, check we have one, and then activate the powerup, then call changePowerupInventory
         ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupInventoryComponent.class).useSpecificPowerup(displayThisType);
     }
-
-
-
 
     /**
      * This function will reset the powerups in the linkedList

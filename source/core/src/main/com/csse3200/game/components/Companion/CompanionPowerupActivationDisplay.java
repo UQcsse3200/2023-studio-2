@@ -78,7 +78,6 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      *
      * It will create the UI component for the powerup activation button,
      * and make sure it is updated whenever the companions powerup inventory is updated
-     *
      * Creates reusable UI styles and adds actors to the stage.
      *
      */

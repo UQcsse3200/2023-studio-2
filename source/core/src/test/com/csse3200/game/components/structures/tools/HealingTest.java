@@ -41,7 +41,7 @@ class HealingTest {
         when(stateObserver.getStateData(any())).thenReturn(0);
 
         var position = new GridPoint2(0, 0);
-        Healing healing = new Healing(new ObjectMap<>());
+        Healing healing = new Healing(new ObjectMap<>(), 0, "texture.png");
         when(structurePlacementService.getStructureAt(position)).thenReturn(placeableEntity);
 
         var player = mock(Entity.class);
@@ -63,7 +63,7 @@ class HealingTest {
         when(stateObserver.getStateData(any())).thenReturn(100);
 
         var position = new GridPoint2(0, 0);
-        Healing healing = new Healing(new ObjectMap<>());
+        Healing healing = new Healing(new ObjectMap<>(), 0, "texture.png");
         when(structurePlacementService.getStructureAt(position)).thenReturn(placeableEntity);
 
         healing.interact(mock(Entity.class), position);

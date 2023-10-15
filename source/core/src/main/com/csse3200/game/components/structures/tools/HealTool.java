@@ -2,23 +2,26 @@ package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.csse3200.game.components.structures.CostComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.components.resources.Resource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * This tool allows the user to heal structures.
  */
-public class Healing extends Tool {
-    private int requiredSolstite;
-    private int requiredDurasteel;
+public class HealTool extends Tool {
+    private HashMap<Resource, Integer> requiredResources;
 
     /**
      * Creates a new healing tool with the given cost.
      * @param cost - the cost of the healing tool.
      */
-    public Healing(ObjectMap<String, Integer> cost) {
+    public HealTool(ObjectMap<String, Integer> cost) {
         super(cost);
     }
 
@@ -32,7 +35,6 @@ public class Healing extends Tool {
      */
     @Override
     protected ToolResponse canInteract(Entity player, GridPoint2 position) {
-
         // For checking whether the player has clicked on an entity
         Entity clickedEntity = determineSelectedEntity(position);
         // If no entity is clicked, return false
@@ -47,15 +49,31 @@ public class Healing extends Tool {
             return new ToolResponse(PlacementValidity.INVALID, "Cannot be healed");
         }
 
-        // Calculate the healing cost based on the current health deficit
-        int currentHealth = combatStats.getHealth();
-        int maxHealth = combatStats.getMaxHealth();
-        double healthDeficit = 1 - ((double) currentHealth / maxHealth);
-        requiredDurasteel = (int) Math.ceil(healthDeficit * 100 * 2); // 2 Durasteel per 1%
-        requiredSolstite = (int) Math.ceil(healthDeficit * 100 * 2); // 2 Solstite per 1%
+        int healAmount = combatStats.getMaxHealth() - combatStats.getHealth();
+
+        float healPercent = (float) healAmount / combatStats.getMaxHealth();
+
+        if (healPercent == 0) {
+            return new ToolResponse(PlacementValidity.INVALID, "Already full health");
+        }
+
+        // Calculate the healing cost based on the current health deficit'
+        requiredResources = new HashMap<>();
+
+        // retrieve cost of component
+        var costComponent = clickedEntity.getComponent(CostComponent.class);
+
+        // if placed with tool, this should never evaluate to true, however better safe than sorry ;)
+        if (costComponent == null) {
+            return new ToolResponse(PlacementValidity.INVALID, "Cannot be healed");
+        }
+
+        for (var costEntry : costComponent.getCost()) {
+            requiredResources.put(Resource.valueOf(costEntry.key), (int)Math.ceil(costEntry.value * healPercent));
+        }
 
         // Check if the player has enough resources for healing
-        if (!playerHasEnoughResources(requiredDurasteel, requiredSolstite)) {
+        if (!playerHasEnoughResources(requiredResources)) {
             return new ToolResponse(PlacementValidity.INVALID, "Not enough resources");
         }
 
@@ -70,7 +88,7 @@ public class Healing extends Tool {
      */
     @Override
     protected void performInteraction(Entity player, GridPoint2 position) {// Deduct the required resources
-        deductResources(requiredDurasteel, requiredSolstite);
+        deductResources(requiredResources);
 
         Entity entity = new Entity();
 
@@ -94,33 +112,35 @@ public class Healing extends Tool {
 
     /**
      * Checks if the player has enough resources to use the tool.
-     * @param requiredDurasteel - how much durasteel they need.
-     * @param requiredSolstite - how much solstite they need.
+     * @param requiredResources - a map containing the required resources and their costs.
      * @return whether the player has sufficient resources.
      */
-    private boolean playerHasEnoughResources(int requiredDurasteel, int requiredSolstite) {
+    private boolean playerHasEnoughResources(Map<Resource, Integer> requiredResources) {
         try {
-            int playerDurasteel = (int)ServiceLocator.getGameStateObserverService()
-                    .getStateData("resource/" + Resource.Durasteel);
-            int playerSolstite = (int)ServiceLocator.getGameStateObserverService()
-                    .getStateData("resource/" + Resource.Solstite);
+            for (var costEntry : requiredResources.entrySet()) {
+                int resources = (int)ServiceLocator.getGameStateObserverService()
+                        .getStateData("resource/" + costEntry.getKey());
 
-            return playerDurasteel >= requiredDurasteel && playerSolstite >= requiredSolstite;
+                if (resources < costEntry.getValue()) {
+                    return false;
+                }
+            }
         } catch (NullPointerException e) {
             return false;
         }
+
+        return true;
     }
 
     /**
      * Removes the given resources from the player.
-     * @param requiredDurasteel - the amount of durasteel to remove.
-     * @param requiredSolstite - the amount of solstite to remove.
+     * @param requiredResources - the amount of each resource required.
      */
-    private void deductResources(int requiredDurasteel, int requiredSolstite) {
-        ServiceLocator.getGameStateObserverService().trigger("resourceAdd",
-                Resource.Durasteel.toString(), -requiredDurasteel);
-        ServiceLocator.getGameStateObserverService().trigger("resourceAdd",
-                Resource.Solstite.toString(), -requiredSolstite);
+    private void deductResources(Map<Resource, Integer> requiredResources) {
+        for (var costEntry : requiredResources.entrySet()) {
+            ServiceLocator.getGameStateObserverService().trigger("resourceAdd",
+                    costEntry.getKey().toString(), -costEntry.getValue());
+        }
     }
 }
 

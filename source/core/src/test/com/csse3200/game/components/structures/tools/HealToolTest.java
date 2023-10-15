@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
-class HealingTest {
+class HealToolTest {
     @Mock
     StructurePlacementService structurePlacementService;
     @Mock
@@ -41,14 +41,14 @@ class HealingTest {
         when(stateObserver.getStateData(any())).thenReturn(0);
 
         var position = new GridPoint2(0, 0);
-        Healing healing = new Healing(new ObjectMap<>());
+        HealTool healTool = new HealTool(new ObjectMap<>());
         when(structurePlacementService.getStructureAt(position)).thenReturn(placeableEntity);
 
         var player = mock(Entity.class);
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
 
-        healing.interact(player, position);
+        healTool.interact(player, position);
         verify(combatStatsComponent, never()).setHealth(100);
     }
 
@@ -63,10 +63,10 @@ class HealingTest {
         when(stateObserver.getStateData(any())).thenReturn(100);
 
         var position = new GridPoint2(0, 0);
-        Healing healing = new Healing(new ObjectMap<>());
+        HealTool healTool = new HealTool(new ObjectMap<>());
         when(structurePlacementService.getStructureAt(position)).thenReturn(placeableEntity);
 
-        healing.interact(mock(Entity.class), position);
+        healTool.interact(mock(Entity.class), position);
         verify(stateObserver, times(1)).trigger("resourceAdd", Resource.Durasteel.toString(), -100);
         verify(stateObserver, times(1)).trigger("resourceAdd", Resource.Solstite.toString(), -100);
         verify(combatStatsComponent, times(1)).setHealth(100);

@@ -1,6 +1,4 @@
 package com.csse3200.game.areas;
-
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -13,10 +11,8 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.StructurePlacementService;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 
 /**
@@ -35,7 +31,7 @@ public abstract class GameArea implements Disposable {
   protected StructurePlacementService structurePlacementService;
   protected ArrayList<Entity> targetables;
 
-  public GameArea() {
+  protected GameArea() {
     areaEntities = new ArrayList<>();
     pathFinderGrids = new HashMap<>();
     this.targetables = new ArrayList<>();
@@ -116,46 +112,38 @@ public abstract class GameArea implements Disposable {
    */
   protected void spawnEntity(Entity entity) {
     areaEntities.add(entity);
-    if (terrain == null) {
-      pathFinderGrids.put(null, entity);
-    } else {
-      if (entity.getComponent(ColliderComponent.class) != null) {
-        if (PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.LABORATORY) ||
-            PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.OBSTACLE) ||
-            PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.SHIP)) {
-          Vector2 position = entity.getPosition();
-          Vector2 scale = entity.getScale();
+    if (terrain != null && entity.getComponent(ColliderComponent.class) != null) {
+      if (PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.LABORATORY) ||
+              PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.OBSTACLE) ||
+              PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.SHIP)) {
+        Vector2 position = entity.getPosition();
+        Vector2 scale = entity.getScale();
 
-// Calculate the four corners of the entity
-          Vector2 topRight = new Vector2(position.x + scale.x, position.y + scale.y);
-          Vector2 bottomLeft = new Vector2(position.x, position.y);
+        // Calculate the four corners of the entity
+        Vector2 topRight = new Vector2(position.x + scale.x, position.y + scale.y);
+        Vector2 bottomLeft = new Vector2(position.x, position.y);
 
-// Convert these to grid coordinates
-          GridPoint2 gridTopRight = terrain.worldPositionToTile(topRight);
-          GridPoint2 gridBottomLeft = terrain.worldPositionToTile(bottomLeft);
+        // Convert these to grid coordinates
+        GridPoint2 gridTopRight = terrain.worldPositionToTile(topRight);
+        GridPoint2 gridBottomLeft = terrain.worldPositionToTile(bottomLeft);
 
-// Iterate through the grid coordinates and add them to the HashMap
-          for (int x = gridBottomLeft.x; x < gridTopRight.x; x++) {
-            for (int y = gridBottomLeft.y; y < gridTopRight.y; y++) {
-              GridPoint2 gridPoint = new GridPoint2(x, y);
-              if (!(pathFinderGrids.containsKey(gridPoint))) {
-                pathFinderGrids.put(gridPoint, entity);
-              }
-            }
+        // Iterate through the grid coordinates and add them to the HashMap
+        for (int x = gridBottomLeft.x; x < gridTopRight.x; x++) {
+          for (int y = gridBottomLeft.y; y < gridTopRight.y; y++) {
+            GridPoint2 gridPoint = new GridPoint2(x, y);
+            pathFinderGrids.computeIfAbsent(gridPoint, key -> entity);
           }
         }
       }
     }
     ServiceLocator.getEntityService().register(entity);
   }
-
-
   /**
    * Spawns the player entity and adds them to the list of targetable entities
    */
-  protected void spawnPlayer(GridPoint2 PLAYER_SPAWN) {
+  protected void spawnPlayer(GridPoint2 playerSpawn) {
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newPlayer,playerSpawn, true, true);
     targetables.add(newPlayer);
     player = newPlayer;
   }

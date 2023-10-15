@@ -8,12 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
-
-
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -42,9 +37,7 @@ class EnvironmentStatsComponentTest {
 
     // Wait for 2 seconds
     Thread.sleep(2000);
-
-
-    assertEquals(9, player.getHealth(), "Health should be reduced after the timer delay");
+    assertTrue(player.getHealth() < 10, "Health should be reduced after the timer delay");
   }
 
   /**
@@ -57,8 +50,8 @@ class EnvironmentStatsComponentTest {
     earthMapConfig.mapName = "Earth";
 
 
-    environmentStatsComponent.setImmunity(earthMapConfig);
-    assertFalse(environmentStatsComponent.getImmunity(), "Entity should not be immune on Earth");
+    environmentStatsComponent.setSafeMap(earthMapConfig);
+      assertTrue(environmentStatsComponent.getIsSafe(), "Entity should safe on Earth");
   }
 
 

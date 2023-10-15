@@ -1,0 +1,32 @@
+{
+  "entityType": "SpawnerConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.SpawnerConfig,
+      "wave1" : [
+        10,
+        0,
+        0
+      ],
+      "wave2" : [
+        10,
+        5,
+        0
+      ],
+      "wave3" : [
+        10,
+        10,
+        0
+      ],
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "sounds": {
+        "soundsMap": {
+          "enemySpawn": "sounds/enemySpawner.wav"
+        }
+      }
+    }
+  ]
+}

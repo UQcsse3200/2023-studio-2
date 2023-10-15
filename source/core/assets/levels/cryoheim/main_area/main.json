@@ -20,6 +20,7 @@
       "images/sling_shot.png",
       "map/portal.png",
       "map/treetoplush.png",
+      "map/Torch.png",
       "particle-effects/explosion/particle.png",
       "images/space_navigation_planet_2.png",
       "images/npc/Hellman.png",
@@ -58,8 +59,8 @@
     ],
     "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
   },
-  "mapName": "Glacial Desolation",
-  "planetImage": "images/navigationmap/planets/glacial_desolation.png",
+  "mapName": "Cryoheim",
+  "planetImage": "images/navigationmap/planets/cryoheim.png",
   "terrainPath": "map/icemap.tmx",
   "winConditions": [
     {

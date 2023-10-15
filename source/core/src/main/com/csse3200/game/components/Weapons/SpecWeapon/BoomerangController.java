@@ -18,8 +18,9 @@ public class BoomerangController extends WeaponControllerComponent {
     }
 
     @Override
-    protected void add_animations(AnimationRenderComponent animator) {
-        animator.addAnimation("UP", 0.07f, Animation.PlayMode.LOOP);
+    protected void set_animations() {
+        animator = entity.getComponent(AnimationRenderComponent.class);
+        animator.addAnimation("ATTACK", 0.07f, Animation.PlayMode.LOOP);
     }
 
     @Override
@@ -37,8 +38,8 @@ public class BoomerangController extends WeaponControllerComponent {
     }
 
     @Override
-    protected void initial_animation(AnimationRenderComponent animator) {
-        animator.startAnimation("UP");
+    protected void initial_animation() {
+        animator.startAnimation("ATTACK");
     }
 
     @Override

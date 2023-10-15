@@ -32,12 +32,10 @@ public class InitialScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(InitialScreenDisplay.class);
     private final GdxGame game;
     private BitmapFont font;
-    private float spaceSpeed = 5;
     private float planetToTextPadding = 150;
     private Image background;
     private Image planet;
-    private Table rootTable;
-    private Label storyLabel;
+    private Table rootTable;    private Label storyLabel;
     private ArrayList<String> InitialScreenImages;
     private Image backgroundImage;
     private ArrayList<String> stories;

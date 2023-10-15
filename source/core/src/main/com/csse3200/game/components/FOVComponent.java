@@ -2,7 +2,6 @@ package com.csse3200.game.components;
 
 import com.csse3200.game.components.structures.TurretTargetableComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.ArrayList;

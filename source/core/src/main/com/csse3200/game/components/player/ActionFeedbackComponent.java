@@ -54,6 +54,6 @@ public class ActionFeedbackComponent extends Component {
         // the predefined duration.
         alertEntity.addComponent(new PopupComponent(DURATION, SPEED));
 
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(alertEntity, position);
+        ServiceLocator.getEntityPlacementService().placeEntityAt(alertEntity, position);
     }
 }

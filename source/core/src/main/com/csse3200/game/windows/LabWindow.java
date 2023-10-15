@@ -1,4 +1,4 @@
-package com.csse3200.game;
+package com.csse3200.game.windows;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -45,8 +45,6 @@ public class LabWindow extends Window {
         this.buttonTable.setFillParent(true);
 
         // Fill the entire LabWindow
-
-
         Texture deathpotionImage = new Texture("images/powerups/death_potion.png");
         Texture speedpotionImage = new Texture("images/powerups/speed_boost.png");
         Texture healthpotionImage = new Texture("images/powerups/health_boost.png");

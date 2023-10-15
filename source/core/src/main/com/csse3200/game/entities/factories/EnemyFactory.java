@@ -63,7 +63,6 @@ public class EnemyFactory {
    * also helps in triggering sound
    */
   public static Entity createEnemy(EnemyConfig config) {
-    System.out.println(config.type);
     AnimationRenderComponent animator;
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -74,7 +73,7 @@ public class EnemyFactory {
     List<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
     for (Entity target : targets) {
       // Adds the specific behaviour to entity
-      EnemyBehaviourSelector(target, config.type, config.behaviour, aiComponent, config.isBoss);
+      enemyBehaviourSelector(target, config.type, config.behaviour, aiComponent, config.isBoss);
     }
 
     TextureAtlas atlas = new TextureAtlas(config.spritePath);
@@ -106,7 +105,7 @@ public class EnemyFactory {
             .addComponent(new EnemyFlag());
 
     // TYPE
-    EnemyTypeSelector(enemy, config.type);
+    enemyTypeSelector(enemy, config.type);
 
     enemy.addComponent(aiComponent);
 
@@ -166,7 +165,7 @@ public class EnemyFactory {
    * @param enemy The enemy to work with
    * @param type The type the enemy needs to be
    */
-  private static void EnemyTypeSelector(Entity enemy, EnemyType type) {
+  private static void enemyTypeSelector(Entity enemy, EnemyType type) {
     enemy.addComponent(new HitboxComponent());
     if (type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
@@ -184,7 +183,7 @@ public class EnemyFactory {
    * @param aiTaskComponent The enemy's aiComponent
    * @param isBoss Boolean indicating if enemy is a boss type
    */
-  private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
+  private static void enemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
     boolean isPlayer = PhysicsLayer.contains(layer, PhysicsLayer.PLAYER);
     boolean isStructure = PhysicsLayer.contains(layer, PhysicsLayer.STRUCTURE);

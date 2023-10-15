@@ -3,11 +3,7 @@ package com.csse3200.game.components.resources;
 import com.badlogic.gdx.Gdx;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.player.IAlpha;
-import com.csse3200.game.rendering.RenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameTime;
-import com.badlogic.gdx.utils.Timer;
-import com.csse3200.game.ui.UIComponent;
 
 public class PopupComponent extends Component {
     GameTime timer;

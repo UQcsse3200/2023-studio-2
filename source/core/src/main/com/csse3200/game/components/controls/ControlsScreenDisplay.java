@@ -46,7 +46,7 @@ public class ControlsScreenDisplay extends UIComponent {
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
-
+        /**
         ArrayList<String> storyImages = new ArrayList<>();
         storyImages.add("images/controls-images/Controls.png");
         int start = 0;
@@ -59,7 +59,6 @@ public class ControlsScreenDisplay extends UIComponent {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Return button clicked");
                 planetTravel.returnToCurrent();
-
             }
         });
 
@@ -71,9 +70,9 @@ public class ControlsScreenDisplay extends UIComponent {
        if(Isgame) {
            stage.addActor(table1);
        }
-
+         **/
         InsertButtons bothButtons = new InsertButtons();
-
+        /**
         TextButton WBtn = new TextButton("W", skin);
         TextButton ABtn = new TextButton("A", skin);
         TextButton SBtn = new TextButton("S", skin);
@@ -134,14 +133,14 @@ public class ControlsScreenDisplay extends UIComponent {
         table.row();
         table.add(FBtn).expandX().top().padBottom(40f).padRight(900f);
 
-
+**/
 
 
         String exitTexture = "images/controls-images/on_exit.png";
         String exitTextureHover = "images/controls-images/on_exit_hover.PNG";
         ImageButton exitBtn;
         exitBtn = bothButtons.draw(exitTexture, exitTextureHover);
-        exitBtn.setPosition(810f, 80f);
+        exitBtn.setPosition(800f, 100f);
         exitBtn.setSize(250, 100);
 
         exitBtn.addListener(new ChangeListener() {
@@ -153,8 +152,7 @@ public class ControlsScreenDisplay extends UIComponent {
         });
 
         stage.addActor(exitBtn);
-
-
+/**
         Table table2 = new Table();
         TextButton SpaceBtn = new TextButton("Space", skin);
         TextButton OneBtn = new TextButton("1", skin);
@@ -217,7 +215,9 @@ public class ControlsScreenDisplay extends UIComponent {
 
 
 
+
         stage.addActor(table2);
+        **/
 
     }
 

@@ -19,12 +19,12 @@ import java.util.ArrayList;
 /**
  * Brick game area for the minigame
  */
-public class BricKBreakerGameArea extends GameArea{
+public class BrickBreakerGameArea extends GameArea{
     private Entity ball;
     private Entity slider;
     private Entity ship;
     private static final GridPoint2 SLIDER_SPAWN = new GridPoint2(5, 8);
-    private static final Logger logger = LoggerFactory.getLogger(BricKBreakerGameArea.class);
+    private static final Logger logger = LoggerFactory.getLogger(BrickBreakerGameArea.class);
     private static final GridPoint2 BALL_SPAWN = new GridPoint2(5, 7);
 
     private static final String[] BrickBreakerTextures = {
@@ -42,13 +42,12 @@ public class BricKBreakerGameArea extends GameArea{
     };
 
     private final TerrainFactory terrainFactory;
-    private final ArrayList<Entity> targetables;
 
     /**
      * Constructor for initializing minigame terrain
      * @param terrainFactory Terrain factory being used in the area
      */
-    public BricKBreakerGameArea(TerrainFactory terrainFactory) {
+    public BrickBreakerGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
         this.targetables = new ArrayList<>();

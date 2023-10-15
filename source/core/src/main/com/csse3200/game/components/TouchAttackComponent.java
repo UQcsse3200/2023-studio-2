@@ -3,14 +3,7 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.components.Weapons.SpecWeapon.HomingMissileSprayProjectileController;
-import com.csse3200.game.components.Weapons.SpecWeapon.HomingProjectileController;
-import com.csse3200.game.components.Weapons.WeaponControllerComponent;
-import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.explosives.ExplosiveComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.WeaponConfig;
-import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
@@ -128,10 +121,6 @@ public class TouchAttackComponent extends Component {
    */
   private void hitOnce(Entity target, Entity source, CombatStatsComponent sourceStats, CombatStatsComponent targetStats){
     if (targetStats != null && sourceStats != null) {
-//      if(dialogue != null) {
-//        dialogue.showdialogue("You hit a Ghost");
-//      }
-      //targetStats.hit(combatStats);
 
       // Valid damage dealt
       if (source.getComponent(HitboxComponent.class).getLayer() == PhysicsLayer.ENEMY_MELEE ||

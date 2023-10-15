@@ -4,18 +4,8 @@ entities: {
 		{
 			class: com.csse3200.game.entities.configs.CompanionConfig
 			position: {
-<<<<<<< HEAD
-				x: 27
-				y: 17
-=======
-<<<<<<< HEAD:source/core/assets/saves/savefile.json
 				x: 22
 				y: 24
-=======
-				x: 13
-				y: 20
->>>>>>> main:saves/savefile.json
->>>>>>> 4043d8b605888a37c4b00bbdb06f83f18dc78db2
 			}
 			health: 100
 			baseAttack: 5
@@ -27,25 +17,14 @@ entities: {
 			class: com.csse3200.game.entities.configs.PlayerConfig
 			spritePath: images/player/player.atlas
 			position: {
-<<<<<<< HEAD
-				x: 27
-				y: 16
-=======
-<<<<<<< HEAD:source/core/assets/saves/savefile.json
 				x: 23
 				y: 25
-=======
-				x: 14
-				y: 20
->>>>>>> main:saves/savefile.json
->>>>>>> 4043d8b605888a37c4b00bbdb06f83f18dc78db2
 			}
 			health: 100
 			baseAttack: 10
 			lives: 3
 			sounds: {
 				soundsMap: {
-<<<<<<< HEAD
 					low_health: sounds/playerLow_health.wav
 					dodge: sounds/dodgingAlertSweep.wav
 					boostPowerup: sounds/playerBoostRecharge.wav
@@ -53,15 +32,7 @@ entities: {
 					footstep: sounds/footStepsInTheForestGround.wav
 					upgradeWeapon: sounds/upgradeWeapon.wav
 					upgradeTree: sounds/upgradeTreeTap.wav
-=======
-					low_health: sounds/playerLow_health.mp3
-					dodge: sounds/dodgingAlertSweep.mp3
-					boostPowerup: sounds/playerBoostRecharge.mp3
-					upgradeTreeTap: sounds/upgradeTreeTap.mp3
-					healthPowerup: sounds/PlayerHealthRecharge.mp3
-					footstep: sounds/footStepsInTheForestGround.mp3
-					upgradeWeapon: sounds/upgradeWeapon.mp3
->>>>>>> 4043d8b605888a37c4b00bbdb06f83f18dc78db2
+					exitbutton: sounds/ExitButton.wav,
 				}
 			}
 		}

@@ -1,7 +1,5 @@
 package com.csse3200.game.entities.buildables;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.entities.configs.TurretConfig;
 import com.csse3200.game.extensions.GameExtension;
@@ -66,15 +64,15 @@ public class TurretTest {
 
     @Test
     public void testCanFire() {
-        Assertions.assertTrue(turret.Canfire());
+        Assertions.assertTrue(turret.canFire());
 
 
         turret.setCurrentAmmo(0);
-        Assertions.assertFalse(turret.Canfire());
+        Assertions.assertFalse(turret.canFire());
 
 
         turret.refillAmmo();
-        Assertions.assertTrue(turret.Canfire());
+        Assertions.assertTrue(turret.canFire());
     }
 
 

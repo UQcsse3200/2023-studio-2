@@ -6,15 +6,12 @@ import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.EnemyFactory;
-import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
-
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Represents a power-up component within the game.
@@ -25,8 +22,8 @@ public class PowerupComponent extends Component {
     private final Entity player = ServiceLocator.getEntityService().getPlayer();
     private final Entity companion = ServiceLocator.getEntityService().getCompanion();
     private long duration;
-
-    private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private final Random random = new Random();
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     /**
      * Assigns a type and targetLayer value to a given Powerup
@@ -40,6 +37,7 @@ public class PowerupComponent extends Component {
      */
     @Override
     public void create() {
+        // creates the powerup component.
     }
 
     /**
@@ -108,7 +106,6 @@ public class PowerupComponent extends Component {
                 if (player.getComponent(PlayerActions.class) == null) {
                     return;
                 } else {
-                    Random random = new Random();
                     List<Entity> enemies = EnemyFactory.getEnemyList();
                     int nextInt = random.nextInt(enemies.size()) - 1;
                     Entity enemy = enemies.get(nextInt);
@@ -132,7 +129,6 @@ public class PowerupComponent extends Component {
                 if (player.getComponent(PlayerActions.class) == null) {
                     return;
                 } else {
-                    Random random = new Random();
                     List<Entity> enemies = EnemyFactory.getEnemyList();
                     int enemyCount = enemies.size() / 2;
                     for (int i = 0; i <= enemyCount; i++) {
@@ -144,6 +140,7 @@ public class PowerupComponent extends Component {
                         }
                         enemy.dispose();
                     }
+                    break;
                 }
 
             default:

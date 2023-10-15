@@ -9,9 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.PlanetTravel;
-import com.csse3200.game.services.ServiceLocator;
 
 import static com.csse3200.game.screens.MainMenuScreen.logger;
 

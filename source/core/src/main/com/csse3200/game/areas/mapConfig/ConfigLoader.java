@@ -1,6 +1,7 @@
 package com.csse3200.game.areas.mapConfig;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.utils.LoadUtils;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.csse3200.game.utils.LoadUtils.*;
 
@@ -25,11 +27,13 @@ public class ConfigLoader {
     public static GameConfig loadGame() throws InvalidConfigException {
         String path = getOptionalSavePath(PATH_OPTIONS, GAME_FILE);
         GameConfig gameConfig = FileLoader.readClass(GameConfig.class, path, FileLoader.Location.LOCAL);
-        if (gameConfig == null) throw new InvalidConfigException(FAIL_MESSAGE + GameConfig.class.getSimpleName());
+        if (gameConfig == null) throw new InvalidConfigException(FAIL_READ_CLASS + GAME_FILE);
         String statePath = getOptionalSavePath(PATH_OPTIONS, GAMESTATE_FILE);
         gameConfig.gameState = FileLoader.readClass(HashMap.class, statePath, FileLoader.Location.LOCAL);
+        if (gameConfig.gameState == null) throw new InvalidConfigException(FAIL_READ_CLASS + GAMESTATE_FILE);
         String assetPath = getOptionalSavePath(PATH_OPTIONS, ASSETS_FILE);
         gameConfig.assets = FileLoader.readClass(AssetsConfig.class, assetPath, FileLoader.Location.LOCAL);
+        if (gameConfig.assets == null) throw new InvalidConfigException(FAIL_READ_CLASS + ASSETS_FILE);
         return gameConfig;
     }
 
@@ -41,7 +45,7 @@ public class ConfigLoader {
      */
     public static LevelConfig loadLevel(String levelName) throws InvalidConfigException {
         levelName = LoadUtils.formatName(levelName);
-        String path = getOptionalSavePath(PATH_OPTIONS, levelName, LEVEL_FILE);
+        String path = getOptionalSavePath(PATH_OPTIONS, List.of(levelName, LEVEL_FILE));
         LevelConfig levelConfig = FileLoader.readClass(LevelConfig.class, path, FileLoader.Location.LOCAL);
         if (levelConfig == null) throw new InvalidConfigException(FAIL_MESSAGE + LevelConfig.class.getSimpleName() + " - " + levelName);
         return levelConfig;
@@ -56,14 +60,14 @@ public class ConfigLoader {
     public static GameAreaConfig loadMapDirectory(String levelName, String gameAreaName)
             throws InvalidConfigException {
         levelName = LoadUtils.formatName(levelName);
-        String mainPath = getOptionalSavePath(PATH_OPTIONS, levelName, gameAreaName, MAIN_FILE);
+        String mainPath = getOptionalSavePath(PATH_OPTIONS, List.of(levelName, gameAreaName, MAIN_FILE));
         GameAreaConfig gameAreaConfig = loadConfigFile(mainPath, GameAreaConfig.class);
 
-        String entitySaveFilePath = joinPath(SAVE_PATH, levelName, gameAreaName, ENTITIES_PATH + JSON_EXT);
+        String entitySaveFilePath = joinPath(List.of(SAVE_PATH, levelName, gameAreaName, ENTITIES_PATH + JSON_EXT));
         if (pathExists(entitySaveFilePath)) {
             gameAreaConfig.areaEntityConfig = loadConfigFile(entitySaveFilePath, AreaEntityConfig.class);
         } else {
-            String entitiesPath = joinPath(ROOT_PATH, levelName, gameAreaName, ENTITIES_PATH);
+            String entitiesPath = joinPath(List.of(ROOT_PATH, levelName, gameAreaName, ENTITIES_PATH));
             gameAreaConfig.areaEntityConfig = loadEntities(entitiesPath);
         }
 
@@ -78,7 +82,7 @@ public class ConfigLoader {
      */
     public static AreaEntityConfig loadEntities(String loadPath) throws InvalidConfigException {
         AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
-        var files = Arrays.stream(Gdx.files.local(loadPath).list()).map(x -> x.path()).toList();
+        var files = Arrays.stream(Gdx.files.local(loadPath).list()).map(FileHandle::path).toList();
         for (String file : files) {
             EntitiesConfigFile entitiesConfigFile =
                     FileLoader.readClass(EntitiesConfigFile.class, file, FileLoader.Location.LOCAL);

@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.screens.PlanetScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class PlanetTravel {
     public void beginInstantTravel() {
         String nextPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
         ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
-        if (!nextPlanet.equals("infernal_challenge")) {
+        if (!nextPlanet.equals("blazes_refuge")) {
             //TODO: MAKE SHOW WIN SCREEN?
             PlanetScreen planet = new PlanetScreen(game, nextPlanet);
             ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", planet.getNextPlanetName());
@@ -53,6 +54,8 @@ public class PlanetTravel {
     public void returnToCurrent() {
         String currentPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
         game.setScreen(new PlanetScreen(game, currentPlanet));
+        ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setHealth(100);
+        ServiceLocator.getEntityService().getCompanion().getComponent(CombatStatsComponent.class).setHealth(50);
     }
 
     /**

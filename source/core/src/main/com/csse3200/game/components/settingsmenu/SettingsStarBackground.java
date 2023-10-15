@@ -55,8 +55,21 @@ public class SettingsStarBackground extends StarBackground {
         for (int i = 0; i < numOfSprites; i++) {
             animations[i] = new Animation<>(0.25f, frames);
             animations[i].setPlayMode(Animation.PlayMode.LOOP_PINGPONG); // Ping pong effect
-            int x = MathUtils.random(0, Gdx.graphics.getWidth()); // Randomize stars' coords
-            int y = MathUtils.random(0, Gdx.graphics.getHeight());
+
+            // No stars in the rightmost quarter of the screen, overlapping with menu buttons
+            int x = MathUtils.random(0, Gdx.graphics.getWidth());
+            int y = MathUtils.random((Gdx.graphics.getHeight() / 3), (int) (0.85 * Gdx.graphics.getHeight()));
+
+            // TODO CHANGE THE AREAS OF SCREEN AFFECTED
+            while ((x >= (140 / 1280f) * Gdx.graphics.getWidth() && x <= (690 / 1280f) * Gdx.graphics.getWidth() && y >= (500 / 720f) * Gdx.graphics.getHeight() && y <= (600 / 720f) * Gdx.graphics.getHeight()) ||
+                    (x >= (400 / 1280f) * Gdx.graphics.getWidth() && x <= (500 / 1280f) * Gdx.graphics.getWidth() && y >= (340 / 720f) * Gdx.graphics.getHeight() && y <= (250 / 720f) * Gdx.graphics.getHeight()) ||
+                    (x >= (950 / 1280f) * Gdx.graphics.getWidth() && x <= (1130 / 1280f) * Gdx.graphics.getWidth() && y >= (150 / 720f) * Gdx.graphics.getHeight() && y <= (550 / 720f) * Gdx.graphics.getHeight())) {
+                x = MathUtils.random(0, Gdx.graphics.getWidth());
+                y = MathUtils.random((Gdx.graphics.getHeight() / 3), (int) (0.85 * Gdx.graphics.getHeight()));
+            }
+
+
+
             spritePositions[i] = new Vector2(x, y);
             stateTimes[i] = MathUtils.random(0f, 1f);  // Offset animation start times
         }

@@ -68,7 +68,7 @@ class InventoryDisplayComponentTest {
     @Test
     void testConstructor() {
         new InventoryDisplayComponent();
-        verify(player).getEvents();
+        verify(player, times(2)).getEvents();
         verify(player).getComponent(InventoryComponent.class);
         assertNotNull(player);
     }

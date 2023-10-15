@@ -158,12 +158,20 @@ public class InventoryDisplayComponent extends UIComponent {
      * @param weapon The weapon associated with the button.
      */
     void updateButtonColor(Button button, WeaponType weapon) {
-        if (!inventory.getEquippedType().equals(weapon)) {
+        WeaponType equippedType = inventory.getEquippedType();
+
+        if (equippedType == null) {
+            button.setColor(0.5f, 0.5f, 0.5f, 0.5f); // grey it out, or any desired default behavior
+            return;
+        }
+
+        if (!equippedType.equals(weapon)) {
             button.setColor(0.5f, 0.5f, 0.5f, 0.5f); // grey it out
         } else {
-            button.setColor(Color.WHITE);
+            button.setColor(Color.WHITE); // un-grey it out
         }
     }
+
 
     /**
      * Handles the event when a weapon is equipped.

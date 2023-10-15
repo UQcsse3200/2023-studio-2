@@ -2,7 +2,7 @@
  * This class represents the interaction controller component for a companion character in the game.
  * It provides methods for interacting with other entities in the game world.
  */
-package com.csse3200.game.components.Companion;
+package com.csse3200.game.components.companion;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.InteractableComponent;

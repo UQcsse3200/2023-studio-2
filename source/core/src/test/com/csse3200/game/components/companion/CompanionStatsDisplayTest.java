@@ -1,4 +1,4 @@
-package com.csse3200.game.components.Companion;
+package com.csse3200.game.components.companion;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

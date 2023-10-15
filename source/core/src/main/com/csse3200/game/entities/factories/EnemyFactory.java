@@ -7,11 +7,13 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.flags.EnemyFlag;
 import com.csse3200.game.components.npc.EnemyAnimationController;
+import com.csse3200.game.components.npc.targetComponent;
 import com.csse3200.game.components.structures.TurretTargetableComponent;
 import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
+import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyName;
 import com.csse3200.game.entities.enemies.EnemyType;
@@ -44,7 +46,8 @@ public class EnemyFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/enemy.json");
   public static DialogueBox dialogueBox;
-
+  // Condition to see if a target is alive or not
+  private static boolean isAlive;
   public static List<Entity> enemiesList = new ArrayList<Entity>();
   /**
    * Creates an enemy - using the default config as defined by the type and behaviour
@@ -68,9 +71,7 @@ public class EnemyFactory {
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
-    // Cycles through all targets
-    //TODO: This should probably be contained in its own AITask -
-    // this doesn't allow for new entities after enemy creation
+    // AI tasks
     List<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
     for (Entity target : targets) {
       // Adds the specific behaviour to entity
@@ -80,13 +81,14 @@ public class EnemyFactory {
     TextureAtlas atlas = new TextureAtlas(config.spritePath);
     animator = new AnimationRenderComponent(atlas);
 
-    // SETUP
+    // BASE SETUP
     Entity enemy =
         new Entity()
             .addComponent(new PhysicsComponent())
-            .addComponent(new PhysicsMovementComponent())
+            .addComponent(new PhysicsMovementComponent(new Vector2(config.speedX, config.speedY)))
             .addComponent(new ColliderComponent())
             .addComponent(new DeathComponent())
+            .addComponent(new targetComponent(config, aiComponent))
             .addComponent(new HealthBarComponent(false))
             .addComponent(new TouchAttackComponent((short) (
                     PhysicsLayer.PLAYER |
@@ -109,6 +111,16 @@ public class EnemyFactory {
     EnemyTypeSelector(enemy, config.type);
 
     enemy.addComponent(aiComponent);
+
+    enemy.addComponent(new SaveableComponent<>(p -> {
+      EnemyConfig enemyConfig = config;
+      enemyConfig.position = p.getGridPosition();
+      enemyConfig.health = p.getComponent(CombatStatsComponent.class).getHealth();
+      enemyConfig.maxHealth = p.getComponent(CombatStatsComponent.class).getMaxHealth();
+      enemyConfig.speedX = p.getComponent(PhysicsMovementComponent.class).getMaxSpeed().x;
+      enemyConfig.speedY = p.getComponent(PhysicsMovementComponent.class).getMaxSpeed().y;
+      return enemyConfig;
+    }, EnemyConfig.class));
 
     if(!(config.isBoss)){
         enemiesList.add(enemy);
@@ -175,11 +187,14 @@ public class EnemyFactory {
    * @param aiTaskComponent The enemy's aiComponent
    * @param isBoss Boolean indicating if enemy is a boss type
    */
-  private static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
+  public static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
+    if (target.getComponent(CombatStatsComponent.class) != null) {
+      isAlive = !(target.getComponent(CombatStatsComponent.class).isDead());
+    }
     boolean isPlayer = PhysicsLayer.contains(layer, PhysicsLayer.PLAYER);
     boolean isStructure = PhysicsLayer.contains(layer, PhysicsLayer.STRUCTURE);
-    boolean matchingBehaviour = isPlayer && behaviour == EnemyBehaviour.PTE || isStructure && behaviour == EnemyBehaviour.DTE;
+    boolean matchingBehaviour = isPlayer && behaviour == EnemyBehaviour.PTE || isStructure && isAlive &&behaviour == EnemyBehaviour.DTE;
 
     int priority = matchingBehaviour ? 10 : 0; //Matching behaviour and target gives priority 10
     float viewDistance = 100f;
@@ -203,8 +218,11 @@ public class EnemyFactory {
    * @param maxChaseDistance max chase distance for enemies
    * @param isBoss boolean for boss check
    */
-  static void addBehaviour(EnemyType type, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance, boolean isBoss) {
+  private static void addBehaviour(EnemyType type, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance, boolean isBoss) {
     // Select behaviour
+    if (priority == 0) {
+      return;
+    }
     if (isBoss) {
       if (type == EnemyType.Melee) {
         // Melee Boss

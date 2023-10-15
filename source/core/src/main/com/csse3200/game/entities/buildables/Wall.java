@@ -65,7 +65,7 @@ public class Wall extends PlaceableEntity {
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
-        addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
+        addComponent(new HitboxComponent().setLayer(PhysicsLayer.WALL));
         addComponent(new CombatStatsComponent(config.health, 0,0,false));
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));

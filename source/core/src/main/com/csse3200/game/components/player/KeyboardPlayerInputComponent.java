@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
@@ -136,14 +137,17 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             }
             case Keys.M -> {
                 triggerInventoryEvent("melee");
+                entity.getComponent(StructureToolPicker.class).hide();
                 return true;
             }
             case Keys.R -> {
                 triggerInventoryEvent("ranged");
+                entity.getComponent(StructureToolPicker.class).hide();
                 return true;
             }
             case Keys.H -> {
                 triggerInventoryEvent("building");
+                entity.getComponent(StructureToolPicker.class).show();
                 return true;
             }
             case Keys.NUM_0, Keys.NUM_1, Keys.NUM_2, Keys.NUM_3, Keys.NUM_4,

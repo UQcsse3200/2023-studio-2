@@ -1,6 +1,6 @@
 package com.csse3200.game.components.Companion;
 
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
+import com.csse3200.game.components.companionweapons.CompanionWeaponType;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.PowerupType;

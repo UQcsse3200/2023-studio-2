@@ -223,16 +223,7 @@ public class EnemyFactory {
     if (priority == 0) {
       return;
     }
-    if (isBoss) {
-      if (type == EnemyType.Melee) {
-        // Melee Boss
-        aiComponent.addTask(new BossTask(EnemyType.Melee, target, priority, viewDistance, maxChaseDistance));
-      } else {
-        // Ranged Boss
-        aiComponent.addTask(new BossTask(EnemyType.Ranged, target, priority, viewDistance, maxChaseDistance));
-      }
-    } else if (type == EnemyType.Melee) {
-      // Melee Enemy
+    if (type == EnemyType.Melee) {
       aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
     } else if (type == EnemyType.Ranged) {
       // Ranged Enemy

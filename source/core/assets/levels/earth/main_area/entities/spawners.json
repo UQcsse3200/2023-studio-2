@@ -4,7 +4,7 @@
     {
       class: com.csse3200.game.entities.configs.SpawnerConfig,
       "wave1" : {
-        "roboMan" : 1,
+        "Knight" : 1,
         "necromancer" : 0,
         "redGhost" : 0
       },

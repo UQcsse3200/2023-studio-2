@@ -94,6 +94,7 @@ public class CompanionFactory {
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new CompanionPowerupInventoryComponent())
                         .addComponent(new FollowComponent(player,1f))
+                        .addComponent(new CompanionPowerupActivationDisplay())
                         .addComponent(new InteractionControllerComponent(false));
                          companion.addComponent(new SaveableComponent<>(c -> {
                                CompanionConfig companionConfig = config;

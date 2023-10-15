@@ -89,9 +89,11 @@ public class UpgradeTree extends Component {
                 unlockedWeaponName = ((ToolConfig) unlockedWeapon).name;
             }
 
-            if (weaponName.equals(unlockedWeaponName)) {
+            if (weaponName != null && weaponName.equals(unlockedWeaponName)) {
                 return true;
             }
+
+
         }
         return false;
     }

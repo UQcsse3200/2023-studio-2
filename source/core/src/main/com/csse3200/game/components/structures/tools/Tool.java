@@ -24,6 +24,8 @@ public abstract class Tool implements Comparable<Tool> {
     /**
      * Creates a new Tool with the given cost.
      * @param cost - the cost of using the tool.
+     * @param ordering - the ordering of this tool.
+     * @param texture - the texture of this tool.
      */
     protected Tool(ObjectMap<String, Integer> cost, int ordering, String texture) {
         this.cost = cost;
@@ -77,6 +79,11 @@ public abstract class Tool implements Comparable<Tool> {
         return cost;
     }
 
+    /**
+     * Returns whether this tool is equal to the given object.
+     * @param obj - the other object to test equality with.
+     * @return whether this tool is equal to the given object.
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -90,12 +97,31 @@ public abstract class Tool implements Comparable<Tool> {
         return this.getCost() == ((Tool) obj).getCost();
     }
 
+    /**
+     * Compares two tools. Used for sorting.
+     * @param o the object to be compared.
+     * @return negative if this tool is less than the other tool,
+     *         0 if equal, and positive if this tool is greater
+     *         than the other tool.
+     */
     @Override
     public int compareTo(Tool o) {
         return this.ordering - o.ordering;
     }
 
+    /**
+     * Gets the tools texture.
+     * @return the tools texture.
+     */
     public String getTexture() {
         return texture;
+    }
+
+    /**
+     * Gets the ordering of the tool.
+     * @return the tools ordering.
+     */
+    public int getOrdering(){
+        return ordering;
     }
 }

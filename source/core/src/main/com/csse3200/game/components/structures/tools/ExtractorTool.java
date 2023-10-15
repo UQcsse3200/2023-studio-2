@@ -16,6 +16,12 @@ import com.csse3200.game.services.ServiceLocator;
  * Tool used to place extractors.
  */
 public class ExtractorTool extends ReplacementTool {
+    /**
+     * Creates a new tool which allows for the placement of Extractors.
+     * @param cost - the cost of the entity being placed.
+     * @param ordering - the ordering of this tool.
+     * @param texture - the texture of this tool.
+     */
     public ExtractorTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
         super(cost, ordering, texture, true);
     }

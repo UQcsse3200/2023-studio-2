@@ -136,6 +136,8 @@ public class StructureToolPicker extends UIComponent {
      *
      * @param key - the name of the class to get
      * @param cost - the cost of the tool
+     * @param ordering - the ordering of the tool.
+     * @param texture - the texture of the tool.
      * @return an instance of the specified tool class if it exists, otherwise null
      */
     private Tool getTool(String key, ObjectMap<String, Integer> cost, int ordering, String texture) {
@@ -252,5 +254,14 @@ public class StructureToolPicker extends UIComponent {
         }
 
         selectedTool.interact(entity, location);
+    }
+
+    /**
+     * Returns the currentlySelectableTools.
+     *
+     * @return selectableTools.
+     */
+    public List<Tool> getSelectableTools() {
+        return selectableTools;
     }
 }

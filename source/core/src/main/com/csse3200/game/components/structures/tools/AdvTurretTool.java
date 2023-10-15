@@ -13,6 +13,8 @@ public class AdvTurretTool extends PlacementTool {
     /**
      * Creates a new turret tool with the given cost.
      * @param cost - the cost of a turret.
+     * @param ordering - the ordering of this tool.
+     * @param texture - the texture of this tool.
      */
     public AdvTurretTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
         super(cost, ordering, texture);

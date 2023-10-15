@@ -21,6 +21,8 @@ public abstract class PlacementTool extends Tool {
     /**
      * Creates a new tool which allows the placing of structures with the given cost.
      * @param cost - the cost of the entity being placed.
+     * @param ordering - the ordering of this tool.
+     * @param texture - the texture of this tool.
      */
     protected PlacementTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
         super(cost, ordering, texture);

@@ -6,6 +6,7 @@ import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.ServiceLocator;
@@ -16,7 +17,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -81,6 +85,34 @@ class InventoryDisplayComponentTest {
         // Ensures the equip trigger is called twice
         verify(inventoryComponent, times(2)).getEquippedWeapons();
     }
+
+    @Test
+    void testSelectIndex() {
+        // Given
+        var component = new InventoryDisplayComponent();
+        WeaponConfig weaponConfig = mock(WeaponConfig.class);
+        weaponConfig.type = WeaponType.RANGED_MISSILES;
+        weaponConfig.slotType = "ranged";
+
+        Map<WeaponConfig, Button> buttons = new LinkedHashMap<>();
+        buttons.put(weaponConfig, new Button());
+
+        try {
+            Field buttonsField = InventoryDisplayComponent.class.getDeclaredField("buttons");
+            buttonsField.setAccessible(true);
+            buttonsField.set(component, buttons);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Failed to set buttons field.", e);
+        }
+
+        // When
+        component.selectIndex(0);
+
+        // Then
+        verify(inventoryComponent).replaceSlotWithWeapon(eq(weaponConfig.slotType), eq(weaponConfig.type));
+        verify(player.getEvents()).trigger(eq("changeWeapon"), eq(weaponConfig.type));
+    }
+
 
     @Test
     void testUpdateButtonTableColor() {

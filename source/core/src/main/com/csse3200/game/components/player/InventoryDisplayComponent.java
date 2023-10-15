@@ -158,23 +158,36 @@ public class InventoryDisplayComponent extends UIComponent {
      * @param weapon The weapon associated with the button.
      */
     void updateButtonColor(Button button, WeaponType weapon) {
-        if (!inventory.getEquippedType().equals(weapon)) {
+        WeaponType equippedType = inventory.getEquippedType();
+
+        if (equippedType == null) {
+            button.setColor(0.5f, 0.5f, 0.5f, 0.5f); // for testing..
+            return;
+        }
+
+        if (!equippedType.equals(weapon)) {
             button.setColor(0.5f, 0.5f, 0.5f, 0.5f); // grey it out
         } else {
-            button.setColor(Color.WHITE);
+            button.setColor(Color.WHITE); // un-grey it out
         }
     }
+
 
     /**
      * Handles the event when a weapon is equipped.
      * Recreates the weapon table and updates button colors.
      */
     void equipEvent() {
+        // clear old tables
         table.clear();
         hotbar.clear();
         buttonWeaponMap.clear();
+
+        // Make new ones
         makeTable();
         makeHotbar();
+
+        // Update the colours of each button - un-greyed out for equipped, else greyed out
         for (Map.Entry<Button, WeaponType> entry : buttonWeaponMap.entrySet()) {
             updateButtonColor(entry.getKey(), entry.getValue());
         }
@@ -196,12 +209,15 @@ public class InventoryDisplayComponent extends UIComponent {
     }
 
     public void selectIndex(int index) {
+        // Ensure the weapons index is in range
         if (index < 0 || index > buttons.size() - 1) {
             return;
         }
 
+        // Extract the WeaponConfig from the unlocked items inside the button map
         WeaponConfig weaponConfig = (WeaponConfig) buttons.keySet().toArray()[index];
 
+        // Switch to the extracted weapon
         inventory.replaceSlotWithWeapon(weaponConfig.slotType, weaponConfig.type);
         player.getEvents().trigger("changeWeapon", weaponConfig.type);
         equipEvent();

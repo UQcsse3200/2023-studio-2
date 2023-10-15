@@ -54,7 +54,7 @@ public class UpgradeTree extends Component {
         if (!isWeaponUnlocked(weapon)) {
             unlockedWeapons.add(weapon);
 
-//            playing Sound while unlocking weapons
+            // Play unlock sounds
             if (entity != null) {
                 entity.getEvents().trigger("playSound", "upgradeWeapon");
             }
@@ -72,26 +72,23 @@ public class UpgradeTree extends Component {
 
         if (weapon instanceof WeaponConfig) {
             WeaponConfig weaponConfig = (WeaponConfig) weapon;
-            weaponName = weaponConfig.name;  // Using getter method
+            weaponName = weaponConfig.name;
         } else if (weapon instanceof ToolConfig) {
             ToolConfig toolConfig = (ToolConfig) weapon;
-            weaponName = toolConfig.name;  // Using getter method
+            weaponName = toolConfig.name;
         } else {
             throw new IllegalArgumentException("Unsupported config type: " + weapon.getClass());
         }
 
-        // Iterating through unlockedWeapons
         for (Object unlockedWeapon : unlockedWeapons) {
             String unlockedWeaponName = null;
 
-            // Dynamically checking type and getting name
             if (unlockedWeapon instanceof WeaponConfig) {
                 unlockedWeaponName = ((WeaponConfig) unlockedWeapon).name;
             } else if (unlockedWeapon instanceof ToolConfig) {
                 unlockedWeaponName = ((ToolConfig) unlockedWeapon).name;
             }
 
-            // Comparing weapon names
             if (weaponName.equals(unlockedWeaponName)) {
                 return true;
             }

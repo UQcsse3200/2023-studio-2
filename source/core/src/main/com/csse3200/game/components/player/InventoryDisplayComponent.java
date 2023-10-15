@@ -34,7 +34,7 @@ public class InventoryDisplayComponent extends UIComponent {
     Table hotbar = new Table();
     InventoryComponent inventory;
     Entity player;
-    private final Map<WeaponConfig, Button> buttons;
+    private final LinkedHashMap<WeaponConfig, Button> buttons;
     StructureToolPicker structureToolPicker;
 
     /**
@@ -42,7 +42,7 @@ public class InventoryDisplayComponent extends UIComponent {
      * Listens for weapon changes and updates currently equipped weapon display.
      **/
     public InventoryDisplayComponent() {
-        buttons = new HashMap<>();
+        buttons = new LinkedHashMap<>();
         player = ServiceLocator.getEntityService().getPlayer();
         inventory = player.getComponent(InventoryComponent.class);
         structureToolPicker = player.getComponent(StructureToolPicker.class);
@@ -80,6 +80,7 @@ public class InventoryDisplayComponent extends UIComponent {
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
+                    buttons.clear();
                     inventory.changeEquipped(currentWeapon);
                     player.getEvents().trigger("changeWeapon", currentWeapon);
 
@@ -186,16 +187,15 @@ public class InventoryDisplayComponent extends UIComponent {
     }
 
     public void selectIndex(int index) {
-        System.out.println("IN");
-        if (index < 0 || index > 9) {
-            logger.warn("Invalid index selected: " + index);
+        if (index < 0 || index > buttons.size() - 1) {
             return;
         }
 
-        List<String> keys = new ArrayList<>(inventory.getEquippedWMap().keySet());
-        keys.get(index);
+        WeaponConfig weaponConfig = (WeaponConfig) buttons.keySet().toArray()[index];
 
-
+        inventory.replaceSlotWithWeapon(weaponConfig.slotType, weaponConfig.type);
+        player.getEvents().trigger("changeWeapon", weaponConfig.type);
+        equipEvent();
     }
 
     /**

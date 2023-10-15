@@ -85,6 +85,7 @@ public class StructureToolPicker extends UIComponent {
     void addActors() {
         table.clear();
         buttons.clear();
+        selectableTools.clear();
 
         table.align(Align.center);
         table.center().bottom().padBottom(10);

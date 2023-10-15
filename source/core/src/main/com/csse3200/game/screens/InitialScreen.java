@@ -65,11 +65,9 @@ public class InitialScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        renderer.dispose();
-        ServiceLocator.getRenderService().dispose();
-        ServiceLocator.getEntityService().dispose();
-
         unloadAssets();
+
+        renderer.dispose();
         ServiceLocator.clear();
     }
 

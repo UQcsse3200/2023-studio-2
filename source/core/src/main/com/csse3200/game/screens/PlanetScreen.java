@@ -5,7 +5,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.mapConfig.*;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -156,6 +155,7 @@ public class PlanetScreen extends ScreenAdapter {
             this.allGameAreas.get(currentAreaName).dispose();
             this.currentAreaName = name;
             this.allGameAreas.get(currentAreaName).create();
+            this.player = allGameAreas.get(currentAreaName).getPlayer();
             ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "gameArea", this.currentAreaName);
             return true;
         }
@@ -290,11 +290,7 @@ public class PlanetScreen extends ScreenAdapter {
      */
     public void clear() {
         logger.debug(String.format("Disposing %s screen", this.name));
-
-        for (GameArea area : allGameAreas.values()) {
-            area.dispose();
-        }
-
+        this.allGameAreas.get(currentAreaName).dispose();
         renderer.dispose();
         unloadAssets();
         ServiceLocator.getGameStateObserverService().trigger("remove", "gameArea");

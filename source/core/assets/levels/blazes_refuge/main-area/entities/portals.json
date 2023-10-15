@@ -3,20 +3,20 @@
   "entities": [
     {
       class: com.csse3200.game.entities.configs.PortalConfig,
-      "teleportX" : 40,
-      "teleportY" : 5,
+      "teleportX" : 37,
+      "teleportY" : 10,
       "position": {
-        "x": 30,
+        "x": 27,
         "y": 40
       }
     },
     {
       class: com.csse3200.game.entities.configs.PortalConfig,
-      "teleportX" : 16,
+      "teleportX" : 14,
       "teleportY" : 20,
       "position": {
-        "x": 78,
-        "y": 10
+        "x": 75,
+        "y": 20
       }
     }
   ]

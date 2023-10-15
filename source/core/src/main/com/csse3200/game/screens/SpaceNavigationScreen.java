@@ -37,7 +37,7 @@ public class SpaceNavigationScreen implements Screen {
     /** Textures for the arrows on the screen */
     private final Texture[] arrowTextures = new Texture[8];
     /** Names of the planets */
-    private final String[] planetNames = {"Earth", "Verdant Oasis", "Glacial Desolation", "Infernal Challenge"};
+    private final String[] planetNames = {"Earth", "Flora Haven", "Cryoheim", "Blaze's Refuge"};
 
     private final String IMAGE_PATH = "images/navigationmap/";
 
@@ -63,7 +63,7 @@ public class SpaceNavigationScreen implements Screen {
         // Planet icons from:
         // https://www.freepik.com/premium-vector/pixel-planets-set-pixel-art-solar-system_36179935.htm
         for(var i = 0; i < planetTextures.length; i++){
-            planetTextures[i] = new Texture(Gdx.files.internal(IMAGE_PATH + "planets/" + planetNames[i].replace(" ", "_").toLowerCase() + ".png"));
+            planetTextures[i] = new Texture(Gdx.files.internal(IMAGE_PATH + "planets/" + planetNames[i].replace(" ", "_").replace("'", "").toLowerCase() + ".png"));
         }
 
         // Load in the arrow textures
@@ -139,7 +139,6 @@ public class SpaceNavigationScreen implements Screen {
 
         String currentPlanetName = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
         String nextPlanetName = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
-
         for (int i = 0; i < planetNames.length; i++) {
 
             // Create planet sprite,
@@ -310,5 +309,7 @@ public class SpaceNavigationScreen implements Screen {
         for(Texture texture : arrowTextures){
             texture.dispose();
         }
+
+        ServiceLocator.clear();
     }
 }

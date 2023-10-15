@@ -72,6 +72,7 @@ public class PlayerDeathScreen extends ScreenAdapter {
 
         renderer.dispose();
         unloadAssets();
+        ServiceLocator.clear();
     }
 
     private void loadAssets() {

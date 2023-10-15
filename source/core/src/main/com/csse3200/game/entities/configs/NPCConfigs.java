@@ -15,6 +15,7 @@ public class NPCConfigs {
   public BotanistConfig botanist = new BotanistConfig();
   public AstroConfig Astro = new AstroConfig();
   public TutnpcConfig Tutnpc = new TutnpcConfig();
+  public HellmanConfig Hellman = new HellmanConfig();
   public AstronautConfig astronautConfig = new AstronautConfig();
 
   public JailConfig Jail = new JailConfig();

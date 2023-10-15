@@ -23,7 +23,9 @@ public class AreaEntityConfig {
      */
     public <T extends BaseEntityConfig> List<T> getEntities(Class<T> entityType) {
         if (entities.get(entityType.getSimpleName()) == null) return new ArrayList<>();
+
         return entities.get(entityType.getSimpleName()).stream().map(o -> (T) o).collect(Collectors.toList());
+
     }
 
     /**
@@ -47,6 +49,7 @@ public class AreaEntityConfig {
      * Returns a list of all config entities in the game area
      */
     public List<BaseEntityConfig> getAllConfigs() {
+
         List<BaseEntityConfig> configs = new ArrayList<>();
         return entities.values().stream()
                 .map(this::castList)

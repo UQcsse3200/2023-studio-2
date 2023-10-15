@@ -71,6 +71,7 @@ public class MiniScreen extends ScreenAdapter {
         renderer.dispose();
 
         unloadAssets();
+        ServiceLocator.clear();
     }
 
     private void loadAssets() {

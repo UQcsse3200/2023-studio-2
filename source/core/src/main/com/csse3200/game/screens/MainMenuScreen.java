@@ -45,6 +45,8 @@ public class MainMenuScreen extends ScreenAdapter {
   }
 
   private void initialiseServices() {
+    ServiceLocator.clear();
+
     ServiceLocator.registerInputService(
             new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
     ServiceLocator.registerResourceService(new ResourceService());
@@ -83,6 +85,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
     renderer.dispose();
     unloadAssets();
+    ServiceLocator.clear();
   }
 
   private void loadAssets() {

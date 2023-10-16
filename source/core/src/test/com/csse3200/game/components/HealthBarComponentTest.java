@@ -27,7 +27,7 @@ class HealthBarComponentTest {
 
         HealthBarComponent component = new HealthBarComponent(true);
         CombatStatsComponent combatStatsComponent =
-                new CombatStatsComponent(100, 0, 1, false);
+                new CombatStatsComponent(100, 100, 0, 1, false);
         Entity entity = new Entity().addComponent(combatStatsComponent);
 
         component.setEntity(entity);

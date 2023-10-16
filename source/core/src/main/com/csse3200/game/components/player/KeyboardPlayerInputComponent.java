@@ -10,7 +10,6 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
-import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;

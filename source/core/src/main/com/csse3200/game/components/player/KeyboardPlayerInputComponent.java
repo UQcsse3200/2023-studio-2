@@ -148,6 +148,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 triggerWalkEvent();
                 return true;
             }
+            case Keys.R -> {
+                if (!playerInventory.getReloading()) {
+                    playerInventory.reloadWeapon();
+                }
+                return true;
+            }
             default -> {
                 return false;
             }
@@ -188,7 +194,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         player = ServiceLocator.getEntityService().getPlayer();
         playerInventory = player.getComponent(InventoryComponent.class);
         int cooldown = playerInventory.getEquippedCooldown();
-        if (cooldown > 0) {
+        if (playerInventory.getReloading() || cooldown > 0) {
             return false;
         }
 

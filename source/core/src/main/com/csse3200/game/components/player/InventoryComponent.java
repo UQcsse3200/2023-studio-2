@@ -1,5 +1,6 @@
 package com.csse3200.game.components.player;
 
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.configs.WeaponConfigs;
@@ -18,6 +19,7 @@ public class InventoryComponent extends Component {
     private String equipped = "melee";
     private final LinkedHashMap<String, InventoryItem> equippedWMap = new LinkedHashMap<>(); // preserves insert order
     private final WeaponConfigs config;
+    private boolean reload;
 
     public InventoryComponent(WeaponConfigs config) {
         create();
@@ -26,8 +28,8 @@ public class InventoryComponent extends Component {
 
     @Override
     public void create() {
-        equippedWMap.put("melee", new InventoryItem(WeaponType.MELEE_WRENCH));
-        equippedWMap.put("ranged", new InventoryItem(WeaponType.RANGED_SLINGSHOT, 30, 30));
+        equippedWMap.put("melee", new InventoryItem(WeaponType.MELEE_WRENCH, 30, 30));
+        equippedWMap.put("ranged", new InventoryItem(WeaponType.RANGED_SLINGSHOT, 10, 10));
         equippedWMap.put("building", new InventoryItem(WeaponType.WOODHAMMER));
     }
     @Override
@@ -146,6 +148,38 @@ public class InventoryComponent extends Component {
     }
 
     /**
+     * Function to reload weapon (after 2second delay)
+     * cant reload if weapon is under cooldown
+     */
+    public void reloadWeapon() {
+        if (getEquippedCooldown() > 0) {
+            return;
+        }
+        reload = true;
+        final Timer placeTimer = new Timer();
+        Timer.Task placeEntity = new Timer.Task() {
+            @Override
+            public void run() {
+                equippedWMap.get(getEquipped()).setMaxAmmo();
+                reload = false;
+                entity.getEvents().trigger("updateAmmo", getCurrentAmmo(),
+                        getCurrentMaxAmmo(), getCurrentAmmoUse());
+            }
+        };
+        entity.getEvents().trigger("updateAmmo", getCurrentAmmo(),
+                getCurrentMaxAmmo(), getCurrentAmmoUse());
+        placeTimer.scheduleTask(placeEntity,2);
+    }
+
+    /**
+     * Return if the weapon is being reloaded
+     * @return True if the current equipped weapon is being reloaded
+     */
+    public boolean getReloading() {
+        return reload;
+    }
+
+    /**
      * Private class to store inventory items
      */
     private class InventoryItem {
@@ -180,6 +214,10 @@ public class InventoryComponent extends Component {
 
         public void changeAmmo(int change) {
             ammoCount = Math.min(maxAmmo, Math.max(0, ammoCount + change));
+        }
+
+        public void setMaxAmmo() {
+            ammoCount = maxAmmo;
         }
 
         public int getMaxAmmo() {

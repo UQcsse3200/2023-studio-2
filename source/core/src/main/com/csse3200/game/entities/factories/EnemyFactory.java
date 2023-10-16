@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.*;
+import com.csse3200.game.components.enemy.GodComponent;
 import com.csse3200.game.components.flags.EnemyFlag;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.npc.targetComponent;
@@ -144,7 +145,7 @@ public class EnemyFactory {
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     enemy.scaleWidth(getEnemyscale(config));
     PhysicsUtils.setScaledCollider(enemy, 0.5f, 0.5f);
-
+    addSpecialAttack(config,enemy);
     return enemy;
   }
 
@@ -236,6 +237,18 @@ public class EnemyFactory {
       aiComponent.addTask(new AimTask(aimDelay, target, range));
       aiComponent.addTask(new RunTask(target, 11, 2f));
       aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
+    }
+  }
+
+
+  /**
+   * Add special attack to enemy
+   * @param config enemy stat
+   * @param enemy enemy entity
+   */
+  private static void addSpecialAttack(EnemyConfig config, Entity enemy){
+    if(config.name == EnemyName.Guardian){
+      enemy.addComponent(new GodComponent(enemy));
     }
   }
 

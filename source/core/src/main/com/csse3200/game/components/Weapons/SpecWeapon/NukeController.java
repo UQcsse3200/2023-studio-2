@@ -1,11 +1,7 @@
 package com.csse3200.game.components.Weapons.SpecWeapon;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.SoundComponent;
-import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.ProjectileController;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.explosives.ExplosiveComponent;
 import com.csse3200.game.components.explosives.ExplosiveConfig;
@@ -39,6 +35,7 @@ public class NukeController extends WeaponControllerComponent {
         explode.create();
     }
 
+    @Override
     public int get_spawn_delay() {
         return 800;
     }

@@ -38,8 +38,8 @@ public class UpgradeTreeTest {
         mock(ServiceLocator.class);
         ServiceLocator.registerGameStateObserverService(gameStateObserver);
         defaultWeapons.add(WeaponType.WOODHAMMER);
-        defaultWeapons.add(WeaponType.RANGED_BOOMERANG);
-        defaultWeapons.add(WeaponType.MELEE_KATANA);
+        defaultWeapons.add(WeaponType.RANGED_SLINGSHOT);
+        defaultWeapons.add(WeaponType.MELEE_WRENCH);
     }
 
     @Test
@@ -52,18 +52,18 @@ public class UpgradeTreeTest {
         // Ensure the defaults are true and nonUnlocks are false
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER.toString()));
         assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STEELHAMMER.toString()));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_WRENCH.toString()));
         assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING.toString()));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_SLINGSHOT.toString()));
     }
 
     @Test
     public void testDefaultWeapons() {
         // ensure the tree contains only the default weapons
         assertEquals(3, upgradeTree.getUnlockedWeapons().size());
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_WRENCH.toString()));
         assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER.toString()));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG.toString()));
+        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_SLINGSHOT.toString()));
     }
 
     /**

@@ -26,8 +26,8 @@ public class InventoryComponent extends Component {
 
     @Override
     public void create() {
-        equippedWMap.put("melee", new InventoryItem(WeaponType.MELEE_KATANA));
-        equippedWMap.put("ranged", new InventoryItem(WeaponType.RANGED_BOOMERANG, 30, 30));
+        equippedWMap.put("melee", new InventoryItem(WeaponType.MELEE_WRENCH));
+        equippedWMap.put("ranged", new InventoryItem(WeaponType.RANGED_SLINGSHOT, 30, 30));
         equippedWMap.put("building", new InventoryItem(WeaponType.WOODHAMMER));
     }
     @Override

@@ -110,7 +110,10 @@ public class UpgradeDisplay extends Window {
         // Initialise node configs
         WeaponConfig meleeWrench = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH);
         WeaponConfig katanaConfig = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA);
+
+        WeaponConfig meleeLaser = weaponConfigs.GetWeaponConfig(WeaponType.MELEE_LASER_SWORD);
         WeaponConfig slingshotConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_SLINGSHOT);
+        WeaponConfig sniperConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_SNIPER);
         WeaponConfig boomerangConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BOOMERANG);
         WeaponConfig woodhammerConfig = weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER);
         WeaponConfig rocketConfig = weaponConfigs.GetWeaponConfig(WeaponType.RANGED_HOMING);
@@ -137,28 +140,34 @@ public class UpgradeDisplay extends Window {
                 .get("com.csse3200.game.components.structures.tools.ExplosiveBarrelTool");
 
         // Melee Tree
-        UpgradeNode swordNode = new UpgradeNode(katanaConfig);
         UpgradeNode wrenchNode = new UpgradeNode(meleeWrench);
+        UpgradeNode swordNode = new UpgradeNode(katanaConfig);
         UpgradeNode beeNode = new UpgradeNode(beeConfig);
-        UpgradeNode nukeNode = new UpgradeNode(nuke);
-        swordNode.addChild(wrenchNode);
+        UpgradeNode bluemerangNode = new UpgradeNode(bluemerang);
+        UpgradeNode laserSwordNode = new UpgradeNode(meleeLaser);
+
+        wrenchNode.addChild(swordNode);
         swordNode.addChild(beeNode);
-        beeNode.addChild(nukeNode);
-        trees.add(swordNode);
+        wrenchNode.addChild(bluemerangNode);
+        bluemerangNode.addChild(laserSwordNode);
+        trees.add(wrenchNode);
 
         // Ranged Tree
         UpgradeNode slingShotNode = new UpgradeNode(slingshotConfig);
+
+        UpgradeNode sniperNode = new UpgradeNode(sniperConfig);
         UpgradeNode rocketNode = new UpgradeNode(rocketConfig);
-        UpgradeNode boomerangNode = new UpgradeNode(boomerangConfig);
+        UpgradeNode nukeNode = new UpgradeNode(nuke);
+//        UpgradeNode boomerangNode = new UpgradeNode(boomerangConfig);
         UpgradeNode grenadeNode = new UpgradeNode(grenadeConfig);
         UpgradeNode multiMissileNode = new UpgradeNode(multiMissile);
-        UpgradeNode bluemerangNode = new UpgradeNode(bluemerang);
-        boomerangNode.addChild(grenadeNode);
-        boomerangNode.addChild(slingShotNode);
-        slingShotNode.addChild(bluemerangNode);
+
+        slingShotNode.addChild(sniperNode);
+        sniperNode.addChild(rocketNode);
+        sniperNode.addChild(nukeNode);
+        slingShotNode.addChild(grenadeNode);
         grenadeNode.addChild(multiMissileNode);
-        grenadeNode.addChild(rocketNode);
-        trees.add(boomerangNode);
+        trees.add(slingShotNode);
 
         // Build Tree
         UpgradeNode buildRoot;

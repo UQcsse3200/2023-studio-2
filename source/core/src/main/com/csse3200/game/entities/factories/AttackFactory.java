@@ -11,6 +11,8 @@ import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.HomingMissileS
 import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.HomingProjectileController;
 import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.KillerBeeController;
 import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.ProjectileController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Swing.LaserSwordSwingController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Swing.MeleeSwingController;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.InventoryComponent;
@@ -77,10 +79,11 @@ public class AttackFactory {
         WeaponControllerComponent wepCon = switch (config.type) {
             case MELEE_WRENCH, MELEE_KATANA ->
                     new MeleeSwingController(config, attackDirection, player);
+            case MELEE_LASER_SWORD -> new LaserSwordSwingController(config, attackDirection, player);
             case MELEE_BEE_STING -> new KillerBeeController(config, attackDirection, player, attackNum);
             case RANGED_BOOMERANG, RANGED_BLUEMERANG -> new BoomerangController(config, attackDirection, player, attackNum);
             case RANGED_GRENADE ->  new GrenadeController(config, attackDirection, player, attackNum);
-            case RANGED_SLINGSHOT -> new ProjectileController(config, attackDirection, player, attackNum);
+            case RANGED_SLINGSHOT, RANGED_SNIPER -> new ProjectileController(config, attackDirection, player, attackNum);
             case RANGED_HOMING -> new HomingProjectileController(config, attackDirection, player, attackNum);
             case RANGED_MISSILES -> new HomingMissileSprayProjectileController(config, attackDirection, player, attackNum);
             case RANGED_NUKE -> new NukeController(config, clickPos, player, attackNum);

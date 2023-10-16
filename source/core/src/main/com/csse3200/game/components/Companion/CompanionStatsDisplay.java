@@ -63,7 +63,7 @@ public class CompanionStatsDisplay extends UIComponent {
      * Default constructor for CompanionStatsDisplay.
      */
     public CompanionStatsDisplay(CompanionConfig config) {
-        labelStyle = "small";
+        labelStyle = "thick";
         maxHealth = config.health;
         healthBarWidth = 320f;
     }

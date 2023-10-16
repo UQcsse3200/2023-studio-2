@@ -210,7 +210,6 @@ public class MapGameArea extends GameArea{
 
     /**
      * Checks if the player should be taking damage from standing on fire or lava
-     * @return whether the tile under the player on any layer has the property "burn"
      */
     public static void isBurning() {
         if(getPlayer() != null){

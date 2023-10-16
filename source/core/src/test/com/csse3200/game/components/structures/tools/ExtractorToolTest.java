@@ -52,7 +52,7 @@ class ExtractorToolTest {
 
             when(stateObserver.getStateData("extractorsMax/" + Resource.Durasteel)).thenReturn(4);
             when(stateObserver.getStateData("extractorsTotal/" + Resource.Durasteel)).thenReturn(0);
-            ExtractorTool extractorTool = new ExtractorTool(new ObjectMap<>());
+            ExtractorTool extractorTool = new ExtractorTool(new ObjectMap<>(), 0, "texture.png");
 
             var fissure = mock(Fissure.class);
             var fissureComponent = mock(FissureComponent.class);

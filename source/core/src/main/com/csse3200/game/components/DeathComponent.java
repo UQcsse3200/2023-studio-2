@@ -2,15 +2,12 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.PowerupFactory;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ai.tasks.TaskRunner;
 
 import java.util.Random;
 
@@ -22,7 +19,7 @@ import java.util.Random;
 public class DeathComponent extends Component {
     private CombatStatsComponent combatStats;
     private Boolean notkilled;
-
+    private Random rand = new Random();
     private boolean isDying = false; // True when the entity is currently in the process of dying and playing death
                                      // animation.
 
@@ -62,7 +59,6 @@ public class DeathComponent extends Component {
                 @Override
                 public void run() {
                     Gdx.app.postRunnable(entity::dispose);
-
                     Random rand = new Random();
                     int powerUpRandomizer = rand.nextInt(9);
 

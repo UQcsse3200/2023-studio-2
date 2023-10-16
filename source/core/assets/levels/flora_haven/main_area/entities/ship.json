@@ -1,0 +1,13 @@
+{
+  "entityType": "ShipConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.ShipConfig,
+      "spritePath": "images/ship/Ship.png",
+      "position": {
+        "x": 53,
+        "y": 67
+      }
+    }
+  ]
+}

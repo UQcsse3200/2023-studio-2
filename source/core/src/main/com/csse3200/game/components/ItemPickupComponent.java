@@ -27,6 +27,7 @@ public class ItemPickupComponent extends Component {
     /**
      * Initializes the ItemPickupComponent and sets up collision event listeners for item pickups.
      */
+    @Override
     public void create() {
         logger = LoggerFactory.getLogger(ItemPickupComponent.class);
         entity.getEvents().addListener("collisionStart", this::pickUp);

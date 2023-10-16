@@ -56,7 +56,7 @@ class TurretToolTest {
         var animation = mock(TextureAtlas.class);
         when(resourceService.getAsset(any(), eq(TextureAtlas.class))).thenReturn(animation);
 
-        TurretTool turretTool = new TurretTool(new ObjectMap<>());
+        TurretTool turretTool = new TurretTool(new ObjectMap<>(), 0, "texture.png");
 
         assertNotNull(turretTool.createStructure(player));
     }

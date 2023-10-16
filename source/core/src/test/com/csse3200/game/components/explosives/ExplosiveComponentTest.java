@@ -1,9 +1,6 @@
 package com.csse3200.game.components.explosives;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -14,7 +11,6 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -23,9 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
@@ -82,7 +76,7 @@ class ExplosiveComponentTest {
 
         entity.getEvents().trigger("explode");
         verify(entityPlacementService, times(1))
-                .PlaceEntityAt(any(), eq(new Vector2(0, 2)));
+                .placeEntityAt(any(), eq(new Vector2(0, 2)));
     }
 
     @Test
@@ -128,7 +122,7 @@ class ExplosiveComponentTest {
 
         entity.getEvents().trigger("explode");
         verify(entityPlacementService, times(1))
-                .PlaceEntityAt(any(), eq(new Vector2(0, 2)));
+                .placeEntityAt(any(), eq(new Vector2(0, 2)));
 
         verify(inRangeEntityHealth, times(1)).addHealth(-10);
         verify(outOfRangeEntityHealth, never()).addHealth(anyInt());
@@ -175,7 +169,7 @@ class ExplosiveComponentTest {
 
         entity.getEvents().trigger("explode");
         verify(entityPlacementService, times(1))
-                .PlaceEntityAt(any(), eq(new Vector2(0, 2)));
+                .placeEntityAt(any(), eq(new Vector2(0, 2)));
 
         verify(inRangeEntityEvents, times(1)).trigger(eq("chainExplode"), anyFloat());
     }

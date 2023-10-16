@@ -11,6 +11,7 @@ import com.csse3200.game.services.ServiceLocator;
 public class TextureRenderComponent extends RenderComponent implements IAlpha {
     private final Texture texture;
     private float rotation = 0.0f;
+    private boolean yFlip = false;
     private float alpha = 1.0f;
 
     /**
@@ -40,6 +41,10 @@ public class TextureRenderComponent extends RenderComponent implements IAlpha {
         rotation = degrees;
     }
 
+    public void setYFlip(boolean flipped) {
+        yFlip = flipped;
+    }
+
     /**
      * Sets the alpha of the spritebatch
      *
@@ -58,6 +63,6 @@ public class TextureRenderComponent extends RenderComponent implements IAlpha {
         Color colour = batch.getColor() == null ? Color.valueOf("FFFFFF") : batch.getColor();
         batch.setColor(colour.r, colour.g, colour.b, this.alpha);
 
-        batch.draw(texture, position.x, position.y, scale.x / 2, scale.y / 2, scale.x, scale.y, 1, 1, rotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
+        batch.draw(texture, position.x, position.y, scale.x / 2, scale.y / 2, scale.x, scale.y, 1, 1, rotation, 0, 0, texture.getWidth(), texture.getHeight(), false, yFlip);
     }
 }

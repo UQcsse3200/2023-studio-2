@@ -2,18 +2,12 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.entities.Entity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class FollowComponent extends Component{
     private final Entity followEntity;
     private float followSpeed;
     private float minimumDistance = 0.8f;
-
-    private static Logger logger; // how to log print
 
     /**
      *
@@ -47,12 +41,10 @@ public class FollowComponent extends Component{
      * If the moving property is false, then suck in.
      *
      */
+    @Override
     public void update() {
-
             // move companion towards following entity
             moveEntityTowardFollowingEntity();
-
-
     }
 
     public void moveEntityTowardFollowingEntity() {

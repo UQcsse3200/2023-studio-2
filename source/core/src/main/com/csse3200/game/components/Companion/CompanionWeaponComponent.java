@@ -56,7 +56,7 @@ public class CompanionWeaponComponent extends Component {
         float distance = 1.25f;
         Entity newAttack = CompanionAttackFactory.createAttack(weaponType, initialRotation,ServiceLocator.getEntityService().getCompanion());
         var newPos = positionInDirection(initialRotation + spawnAngleOffset, distance, newAttack);
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(newAttack, newPos);
+        ServiceLocator.getEntityPlacementService().placeEntityAt(newAttack, newPos);
     }
 
     // change the weapon in use
@@ -70,7 +70,7 @@ public class CompanionWeaponComponent extends Component {
         }
 
 
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(this.CurrentWeapon , placePos);
+        ServiceLocator.getEntityPlacementService().placeEntityAt(this.CurrentWeapon , placePos);
         this.CurrentWeapon.addComponent(new HitboxComponent());
         this.CurrentWeapon.getEvents().trigger("startEffect", "deathPotion");
     }

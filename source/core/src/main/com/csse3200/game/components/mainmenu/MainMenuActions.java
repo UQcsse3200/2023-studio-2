@@ -13,13 +13,8 @@ import com.csse3200.game.ui.Popups.ChoicePopup;
 import com.csse3200.game.ui.Popups.PopupBox;
 import com.csse3200.game.utils.LoadUtils;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.screens.TutorialScreen;
-import com.csse3200.game.services.GameStateObserver;
-import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.MainAlert;
-import com.csse3200.game.ui.Popups.PopupBox;
 import com.csse3200.game.ui.TitleBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,7 +93,7 @@ public class MainMenuActions extends Component {
       loadGameConfig();
 
     logger.info("Loading Story");
-    game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
+    game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN);
   }
 
   /**

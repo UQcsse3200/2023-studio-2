@@ -24,10 +24,9 @@ public class EntityService {
 
   private final Array<Entity> entities = new Array<>(false, INITIAL_CAPACITY);
 
-  private Array<Entity> getEntities() {
+  public Array<Entity> getEntities() {
     return entities;
   }
-
   public void saveCurrentArea(String path) {
     AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
     areaEntityConfig.addEntities(getEntitiesByComponent(SaveableComponent.class));

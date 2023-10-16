@@ -107,7 +107,7 @@
 
   "mapName": "Infernal Challenge",
   "planetImage": "images/planets/space_navigation_planet_3.png",
-  "terrainPath": "map/Firemap02.tmx",
+  "terrainPath": "map/Hellmapp.tmx",
   "winConditions": [
     {
       "resource": "Solstite",

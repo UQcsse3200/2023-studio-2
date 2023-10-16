@@ -25,7 +25,7 @@ public class PlayerActionsTest {
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
 
         when(entity.getComponent(PhysicsComponent.class)).thenReturn(physicsComponent);

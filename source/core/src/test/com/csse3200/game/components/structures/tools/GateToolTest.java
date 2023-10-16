@@ -54,7 +54,7 @@ class GateToolTest {
         when(resourceService.getAsset(any(), eq(TextureAtlas.class))).thenReturn(textureAtlas);
         when(textureAtlas.findRegion(any())).thenReturn(mock(TextureAtlas.AtlasRegion.class));
 
-        GateTool gateTool = new GateTool(new ObjectMap<>());
+        GateTool gateTool = new GateTool(new ObjectMap<>(), 0, "texture.png");
 
         assertNotNull(gateTool.createStructure(player));
     }

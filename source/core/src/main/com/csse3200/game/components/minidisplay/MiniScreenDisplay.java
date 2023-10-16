@@ -1,4 +1,4 @@
-package com.csse3200.game.components.MiniDisplay;
+package com.csse3200.game.components.minidisplay;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

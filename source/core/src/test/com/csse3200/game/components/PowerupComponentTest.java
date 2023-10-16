@@ -36,7 +36,7 @@ public class PowerupComponentTest {
 
     @Test
     void shouldApplyExtraLife() {
-        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 10, 1, false, 1))
+        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 100, 10, 1, false, 1))
                 .addComponent(new PlayerActions());
 
         when(entityService.getPlayer()).thenReturn(playerEntity);
@@ -55,7 +55,7 @@ public class PowerupComponentTest {
      */
     @Test
     public void testExtraLifeMaxReached() {
-        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 10, 1, false, 4))
+        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 100, 10, 1, false, 4))
                 .addComponent(new PlayerActions());
 
         when(entityService.getPlayer()).thenReturn(playerEntity);
@@ -68,10 +68,10 @@ public class PowerupComponentTest {
     }
     @Test
     void shouldApplyHealthBoost() {
-        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 10, 2, false, 3))
+        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 100, 10, 2, false, 3))
                 .addComponent(new PlayerActions());
 
-        Entity companionEntity = new Entity().addComponent(new CombatStatsComponent(50, 5, 1, false))
+        Entity companionEntity = new Entity().addComponent(new CombatStatsComponent(50, 50, 5, 1, false))
                 .addComponent(new CompanionActions());
 
         when(entityService.getPlayer()).thenReturn(playerEntity);
@@ -112,9 +112,9 @@ public class PowerupComponentTest {
     @Test
     void shouldApplyTempImmunity() throws InterruptedException {
         Entity playerEntity = new Entity().addComponent(new PlayerActions())
-                .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
+                .addComponent(new CombatStatsComponent(100, 100, 10, 1, false, 1));
         Entity companionEntity = new Entity().addComponent(new CompanionActions())
-                .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
+                .addComponent(new CombatStatsComponent(100, 100, 10, 1, false, 1));
         when(entityService.getPlayer()).thenReturn(playerEntity);
         when(entityService.getCompanion()).thenReturn(companionEntity);
 
@@ -136,7 +136,7 @@ public class PowerupComponentTest {
     @Test
     void shouldApplyDoubleDamage() throws InterruptedException {
         Entity playerEntity = new Entity().addComponent(new PlayerActions())
-                .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
+                .addComponent(new CombatStatsComponent(100, 100, 10, 1, false, 1));
         when(entityService.getPlayer()).thenReturn(playerEntity);
 
         PowerupComponent powerupComponent = new PowerupComponent(PowerupType.DOUBLE_DAMAGE);

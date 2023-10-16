@@ -58,7 +58,7 @@ class ExplosiveComponentTest {
         setupServices();
 
         var config = new ExplosiveConfig();
-        config.damage = 10;
+        config.baseAttack = 10;
         config.damageRadius = 5;
         config.chainRadius = 5;
         config.chainable = false;
@@ -84,7 +84,7 @@ class ExplosiveComponentTest {
         setupServices();
 
         var config = new ExplosiveConfig();
-        config.damage = 10;
+        config.baseAttack = 10;
         config.damageRadius = 5;
         config.chainRadius = 5;
         config.chainable = false;
@@ -133,7 +133,7 @@ class ExplosiveComponentTest {
         setupServices();
 
         var config = new ExplosiveConfig();
-        config.damage = 10;
+        config.baseAttack = 10;
         config.damageRadius = 5;
         config.chainRadius = 5;
         config.chainable = false;

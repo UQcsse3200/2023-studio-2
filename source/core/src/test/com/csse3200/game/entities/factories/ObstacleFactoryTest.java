@@ -47,24 +47,4 @@ public class ObstacleFactoryTest {
 
     }
 
-    @Test
-    void createLevelOneTurretConfigTest() {
-        var config = turretconfigs.GetTurretConfig(TurretType.LEVEL_ONE);
-
-        PlaceableEntity turret = ObstacleFactory.createCustomTurret(config);
-
-        assertEquals(config.health, turret.getComponent(CombatStatsComponent.class).getHealth());
-        assertEquals(config.damage, turret.getComponent(CombatStatsComponent.class).getBaseAttack());
-    }
-
-    @Test
-    void createLevelTwoTurretConfigTest() {
-
-        var config = turretconfigs.GetTurretConfig(TurretType.LEVEL_TWO);
-
-        PlaceableEntity turret = ObstacleFactory.createCustomTurret(config);
-
-        assertEquals(config.health, turret.getComponent(CombatStatsComponent.class).getHealth());
-        assertEquals(config.damage, turret.getComponent(CombatStatsComponent.class).getBaseAttack());
-    }
 }

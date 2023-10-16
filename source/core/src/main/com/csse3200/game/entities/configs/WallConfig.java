@@ -21,6 +21,7 @@ public class WallConfig extends BaseEntityConfig {
         super(config);
 
         health = config.health;
+        maxHealth = config.maxHealth;
         type = config.type;
         sounds = config.sounds;
     }

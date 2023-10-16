@@ -14,6 +14,7 @@ public class GateConfig extends BaseEntityConfig {
         super(config);
 
         health = config.health;
+        maxHealth = config.maxHealth;
         openTextureAtlas = config.openTextureAtlas;
         closedTextureAtlas = config.closedTextureAtlas;
     }

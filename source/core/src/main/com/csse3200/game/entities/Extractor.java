@@ -30,7 +30,7 @@ public class Extractor extends PlaceableEntity {
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE));
         addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
         addComponent(animator);
-        addComponent(new CombatStatsComponent(config.health, 0, 0, false));
+        addComponent(new CombatStatsComponent(config.health, config.maxHealth, 0, 0, false));
         addComponent(new ProductionComponent(config.resource, config.tickRate, config.tickSize));
         addComponent(new ExtractorAnimationController());
         addComponent(new ParticleComponent(config.effects));

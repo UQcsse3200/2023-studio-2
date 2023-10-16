@@ -37,7 +37,7 @@ public class ExplosivesFactory {
 
         explosiveBarrel.addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL))
-                .addComponent(new CombatStatsComponent(config.health,
+                .addComponent(new CombatStatsComponent(config.health, config.maxHealth,
                         0,0,false))
                 .addComponent(new HealthBarComponent(true))
                 .addComponent(new StructureDestroyComponent())

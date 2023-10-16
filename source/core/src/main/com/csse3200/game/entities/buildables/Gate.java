@@ -37,7 +37,7 @@ public class Gate extends PlaceableEntity {
         addComponent(new ProximityActivationComponent(1.5f, player, this::openGate, this::closeGate));
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
-        addComponent(new CombatStatsComponent(config.health, 0,0,false));
+        addComponent(new CombatStatsComponent(config.health, config.maxHealth, 0,0,false));
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(closedAtlas,JoinLayer.WALLS, shapes));
         addComponent(new StructureDestroyComponent());

@@ -142,6 +142,7 @@ public class StructureFactory {
     public static PlaceableEntity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         ExtractorConfig extractorConfig = new ExtractorConfig();
         extractorConfig.health = health;
+        extractorConfig.maxHealth = health;
         extractorConfig.resource = producedResource;
         extractorConfig.tickRate = tickRate;
         extractorConfig.tickSize = tickSize;

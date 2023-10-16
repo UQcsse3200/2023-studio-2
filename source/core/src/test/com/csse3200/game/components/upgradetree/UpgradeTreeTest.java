@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -30,7 +32,9 @@ public class UpgradeTreeTest {
 
     @BeforeEach
     public void setUp() {
-        tree = new UpgradeTree(mock(PlayerConfig.class));
+        PlayerConfig playerConfig = new PlayerConfig();
+        playerConfig.unlocks = new ArrayList<>();
+        tree = new UpgradeTree(playerConfig);
         gameStateObserver = mock(GameStateObserver.class);
         mock(ServiceLocator.class);
         ServiceLocator.registerGameStateObserverService(gameStateObserver);

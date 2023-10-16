@@ -20,6 +20,7 @@ public class LoadUtils {
     public static final String ENTITIES_PATH = "entities";
     public static final String FAIL_MESSAGE = "Failed to load config of type ";
     public static final String FAIL_ENTITY = "Failed to load entities config";
+    public static final String FAIL_READ_CLASS = "Failed to read file of type ";
     public static final String NO_LEVELS_ERROR = "No levels found in " + GAME_FILE;
     public static final String NO_FILE_FOUND = "No config file found ";
     public static final List<String> PATH_OPTIONS = List.of(SAVE_PATH, ROOT_PATH);
@@ -29,7 +30,7 @@ public class LoadUtils {
      * @param paths List of paths to join together
      * @return String of all the path strings joined by a path seperator
      */
-    public static String joinPath(String... paths) {
+    public static String joinPath(List<String> paths) {
         StringJoiner stringJoiner = new StringJoiner(File.separator);
         for (String part: paths) {
             stringJoiner.add(part);
@@ -37,21 +38,8 @@ public class LoadUtils {
         return stringJoiner.toString();
     }
 
-    /**
-     * Overload of joinPath method with only 1 parameter.
-     * @param path Single path to return
-     * @return path parameter - nothing to join
-     */
-    public static String joinPath(String path) {
-        return path;
-    }
-
     public static boolean pathExists(String path) {
         return Gdx.files.local(path).exists();
-    }
-
-    public static boolean pathExists(String... paths) {
-        return pathExists(joinPath(paths));
     }
 
     /**
@@ -63,7 +51,7 @@ public class LoadUtils {
      */
     public static String getOptionalSavePath(List<String> roots, String path) throws InvalidConfigException {
         for (String root : roots) {
-            String filePath = joinPath(root, path);
+            String filePath = joinPath(List.of(root, path));
             if (pathExists(filePath)) {
                 return filePath;
             }
@@ -79,7 +67,7 @@ public class LoadUtils {
      * @return String file path of first valid file
      * @throws InvalidConfigException If no valid file is found.
      */
-    public static String getOptionalSavePath(List<String> roots, String... paths) throws InvalidConfigException {
+    public static String getOptionalSavePath(List<String> roots, List<String> paths) throws InvalidConfigException {
         return getOptionalSavePath(roots, joinPath(paths));
     }
 

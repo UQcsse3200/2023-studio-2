@@ -99,7 +99,7 @@ private Stage stage;
     }
 
     private void generateGameAreas() {
-        generateGameArea("primary", "levels\\tutorial\\main-area");
+        generateGameArea("primary", "levels\\tutorial\\main_area");
 
     }
     private TutorialGameArea generateGameArea(String name, String configPath) {

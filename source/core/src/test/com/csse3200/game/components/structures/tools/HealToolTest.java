@@ -93,7 +93,7 @@ class HealToolTest {
 
         lenient().when(costComponent.getCost()).thenReturn(new ObjectMap<>(cost));
 
-        HealTool healTool = new HealTool(new ObjectMap<>());
+        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
         var player = mock(Entity.class);
 
         var validity = healTool.canInteract(player, position);
@@ -156,7 +156,7 @@ class HealToolTest {
 
         lenient().when(placeableEntity.getComponent(CostComponent.class)).thenReturn(costComponent);
 
-        HealTool healTool = new HealTool(new ObjectMap<>());
+        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
         var player = mock(Entity.class);
         var position = new GridPoint2(0, 0);
 
@@ -178,7 +178,7 @@ class HealToolTest {
         lenient().when(combatStatsComponent.getHealth()).thenReturn(50);
         lenient().when(combatStatsComponent.getMaxHealth()).thenReturn(100);
 
-        HealTool healTool = new HealTool(new ObjectMap<>());
+        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
         var player = mock(Entity.class);
         var position = new GridPoint2(0, 0);
 
@@ -259,7 +259,7 @@ class HealToolTest {
 
         lenient().when(costComponent.getCost()).thenReturn(new ObjectMap<>(cost));
 
-        HealTool healTool = new HealTool(new ObjectMap<>());
+        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
         var player = mock(Entity.class);
 
         // required to calculate requiredResources

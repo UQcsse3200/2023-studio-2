@@ -17,6 +17,8 @@ import com.csse3200.game.utils.LoadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 /**
  * The UI component responsible for rendering and managing the main menu interface.
  * It provides options for starting, loading, configuring settings, and exiting the game.
@@ -54,7 +56,7 @@ public class MainMenuDisplay extends UIComponent {
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);
 
-        boolean validLoad = LoadUtils.pathExists(LoadUtils.SAVE_PATH, LoadUtils.GAMESTATE_FILE);
+        boolean validLoad = LoadUtils.pathExists(LoadUtils.joinPath(List.of(LoadUtils.SAVE_PATH, LoadUtils.GAMESTATE_FILE)));
 
         // Create buttons for various menu options
         TextButton startBtn = new TextButton("Start", skin);

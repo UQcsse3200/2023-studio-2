@@ -199,7 +199,7 @@ public class CompanionInventoryDisplay extends Window {
     }
 
     private ImageButton createPowerupButton(PowerupConfig powerupConfig, float x, float y) {
-       TextureRegionDrawable buttonDrawable = createTextureRegionDrawable(powerupConfig.imagePath, CompanionInventoryDisplay.SIZE);
+       TextureRegionDrawable buttonDrawable = createTextureRegionDrawable(powerupConfig.spritePath, CompanionInventoryDisplay.SIZE);
         ImageButton powerupButton = new ImageButton(buttonDrawable);
         //potionButton.setPosition(posX, posY);
         powerupButton.setPosition(x, y);

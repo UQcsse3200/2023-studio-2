@@ -35,34 +35,6 @@ public class CompanionAnimationController extends Component {
     }
 
     /**
-     * Start the animation for moving the infant companion to the left.
-     */
-    /*void infanimateLeft() {
-        infanimator.startAnimation("LEFT_1");
-    }
-
-    *//**
-     * Start the animation for moving the infant companion to the right.
-     *//*
-    void infanimateRight() {
-        infanimator.startAnimation("RIGHT_1");
-    }
-
-    *//**
-     * Start the animation for moving the infant companion up.
-     *//*
-    void infanimateUp() {
-        infanimator.startAnimation("UP_1");
-    }
-
-    *//**
-     * Start the animation for moving the infant companion down.
-     *//*
-    void infanimateDown() {
-        infanimator.startAnimation("DOWN_1");
-    }*/
-
-    /**
      * Start the animation for moving the companion to the left.
      */
     void animateLeft() {

@@ -22,11 +22,12 @@ public class CompanionWeaponConfig extends BaseEntityConfig {
     public int health = 30;
     public int projectiles = 1;
 
-    public String slotType = "range" ;
+    public String slotType = "ranged" ;
 
     public float range = 10.0f; // Set a fixed maximum range of 200 units for the projectile
     public int attackNum =0;
     public ParticleEffectsConfig effects = new ParticleEffectsConfig();
+
 
 
 
@@ -71,7 +72,4 @@ public class CompanionWeaponConfig extends BaseEntityConfig {
         return imagePath;
     }
 
-    public float getImageScale() {
-        return imageScale;
-    }
 }

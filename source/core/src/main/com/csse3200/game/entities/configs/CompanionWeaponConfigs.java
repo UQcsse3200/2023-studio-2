@@ -37,7 +37,6 @@ public class CompanionWeaponConfigs {
         explosiveConfig.effectsMap.put("deathPotion", "particle-effects/deathpotion/Death.effect");
 
         Death_Potion.effects = explosiveConfig;
-
         //initialise the shield here
         SHIELD = new CompanionWeaponConfig(
                 "SHIELD",            // Name
@@ -58,6 +57,8 @@ public class CompanionWeaponConfigs {
                 "new slot type"   ,
                 0
         );
+        explosiveConfig.effectsMap.put("deathPotion", "particle-effects/deathpotion/Death.effect");
+        SHIELD.effects =explosiveConfig;
 
         SHIELD_2= new CompanionWeaponConfig(
                 " SHIELD_2",            // Name

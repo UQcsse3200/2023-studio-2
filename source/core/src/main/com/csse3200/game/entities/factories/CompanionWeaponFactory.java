@@ -6,9 +6,13 @@ import com.csse3200.game.components.CompanionWeapons.CompanionWeaponTargetCompon
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.ParticleComponent;
+import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionWeaponConfig;
 import com.csse3200.game.entities.configs.CompanionWeaponConfigs;
+import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
+import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
 /**
@@ -47,6 +51,7 @@ public class CompanionWeaponFactory {
             );
         }
         if (weaponType == CompanionWeaponType. SHIELD_2) {
+
             weaponController = new CompanionWeaponController(
                     CompanionWeaponType. SHIELD_2,
                     config.weaponDuration, config.currentRotation,
@@ -62,7 +67,6 @@ public class CompanionWeaponFactory {
         Entity attack = new Entity().addComponent(weaponController);
         attack.setEntityType("CompanionStaticWeapon");
         attack.addComponent(new ParticleComponent(config.effects));
-
         Texture texture = new Texture(config.imagePath);
         attack.addComponent(new TextureRenderComponent(texture));
 

@@ -108,12 +108,12 @@ public class PlayerFactory {
 
         player.addComponent(new SaveableComponent<>(p -> {
                 PlayerConfig playerConfig = config;
-                //TODO: FIX LOADING POSITION
                 playerConfig.position = p.getGridPosition();
                 playerConfig.health = p.getComponent(CombatStatsComponent.class).getHealth();
                 playerConfig.maxHealth = p.getComponent(CombatStatsComponent.class).getMaxHealth();
                 return playerConfig;
             }, PlayerConfig.class));
+        if (config.health <= 0) config.health = config.maxHealth;
         player.getComponent(CombatStatsComponent.class).setHealth(config.health);
         PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
         player.getComponent(ColliderComponent.class).setDensity(1.5f);

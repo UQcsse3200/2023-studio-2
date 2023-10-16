@@ -2,13 +2,10 @@ package com.csse3200.game.components.player;
 
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.configs.WeaponConfigs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -17,7 +14,6 @@ import java.util.stream.Collectors;
  * Can also be used as a more generic component for other entities.
  */
 public class InventoryComponent extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(InventoryComponent.class);
     private String equipped = "melee";
     private final LinkedHashMap<String, InventoryItem> equippedWMap = new LinkedHashMap<>(); // preserves insert order
     private final WeaponConfigs config;
@@ -72,10 +68,18 @@ public class InventoryComponent extends Component {
     }
 
     /**
-     * Returns the current equipped weapons represented in a hash map
+     * Returns the current equipped weapons represented in an array
      **/
     public ArrayList<WeaponType> getEquippedWeapons() {
         return equippedWMap.values().stream().map(InventoryItem::getItem).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    /**
+     * Returns a mapping of item and its respective slot
+     * @return LinkedHashMap - a hash map containing the slot and item
+     */
+    public Map<String, InventoryItem> getEquippedWMap() {
+        return equippedWMap;
     }
 
     /**
@@ -151,7 +155,7 @@ public class InventoryComponent extends Component {
     /**
      * Private class to store inventory items
      */
-    private class InventoryItem {
+    public class InventoryItem {
         private WeaponType weaponType;
         private int ammoCount;
         private int maxAmmo;

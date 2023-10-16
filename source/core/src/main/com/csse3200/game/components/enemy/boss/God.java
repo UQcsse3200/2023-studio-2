@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class God extends DefaultTask implements PriorityTask {
     private boolean switchMode = false;
-    private boolean Mode = false;
+    private boolean Mode = true;
     private final Entity target;
     private MovementTask movementTask;
     private Vector2[] locations;
@@ -57,9 +57,17 @@ public class God extends DefaultTask implements PriorityTask {
     /**
      * Toggle the firing mode. If true fires and false otherwise
      */
-    private void toggleMode() {
+    public void toggleMode() {
         // Toggle the speed field
         switchMode = true;
+    }
+
+    /**
+     * Get the mode of the entity
+     * @return boolean value for that mode
+     */
+    public boolean getMode(){
+        return Mode;
     }
 
 

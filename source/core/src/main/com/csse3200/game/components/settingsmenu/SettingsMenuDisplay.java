@@ -49,7 +49,7 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   private void addActors() {
-    Label title = new Label("Settings", skin, "title");
+    Label title = new Label("", skin, "title");
     Table settingsTable = makeSettingsTable();
     Table menuBtns = makeMenuBtns();
 
@@ -163,7 +163,7 @@ public class SettingsMenuDisplay extends UIComponent {
                 entity.getEvents().trigger("ok");
               }
             });
-    table.add(okButton).expandX().center();
+    // table.add(okButton).expandX().center();
 
     // Events on inputs
     uiScaleSlider.addListener(
@@ -271,7 +271,7 @@ public class SettingsMenuDisplay extends UIComponent {
 
   private void onOK() {
     logger.info("Start game");
-    game.setScreen(ScreenType.CONTROL_SCREEN);
+    //game.setScreen(ScreenType.CONTROL_SCREEN);
   }
 
   private Integer parseOrNull(String num) {
@@ -283,8 +283,8 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   @Override
-  protected void draw(SpriteBatch batch)
-  {
+  protected void draw(SpriteBatch batch) {
+    // function is set to draw display.
   }
 
   @Override

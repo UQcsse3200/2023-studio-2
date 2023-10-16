@@ -3,6 +3,10 @@ package com.csse3200.game.components.upgradetree;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
+import com.csse3200.game.components.structures.ToolConfig;
+import com.csse3200.game.entities.configs.WeaponConfig;
+import com.csse3200.game.entities.configs.WeaponConfigs;
+import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -24,9 +28,10 @@ public class UpgradeTree extends Component {
         unlockedWeapons = new ArrayList<>();
 
         // Base weapons
-        unlockedWeapons.add(WeaponType.MELEE_KATANA.toString());
-        unlockedWeapons.add(WeaponType.RANGED_BOOMERANG.toString());
-        unlockedWeapons.add(WeaponType.WOODHAMMER.toString());
+        WeaponConfigs weaponConfigs = FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
+        unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA));
+        unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BOOMERANG));
+        unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER));
     }
 
     /**
@@ -34,7 +39,7 @@ public class UpgradeTree extends Component {
      *
      * @return The list of unlocked weapons.
      */
-    public List<Object> getUnlockedWeapons() {
+    public List<Object> getUnlockedWeaponsConfigs() {
         return unlockedWeapons;
     }
 
@@ -49,7 +54,7 @@ public class UpgradeTree extends Component {
         if (!isWeaponUnlocked(weapon)) {
             unlockedWeapons.add(weapon);
 
-//            playing Sound while unlocking weapons
+            // Play unlock sounds
             if (entity != null) {
                 entity.getEvents().trigger("playSound", "upgradeWeapon");
             }
@@ -58,13 +63,53 @@ public class UpgradeTree extends Component {
     }
 
     /**
+     * triggerSound function will be called while exiting the upgradeTree's exit button
+     * function is called in UpgradeDisplay class
+     */
+    public void triggerSound() {
+        if (entity != null) {
+            entity.getEvents().trigger("playSound","exitButton");
+        }
+
+    }
+
+    /**
      * Checks if a given weapon type is already unlocked.
      * @param weapon The type of weapon to check.
      * @return True if the weapon is unlocked, false otherwise.
      */
     public boolean isWeaponUnlocked(Object weapon) {
-        return unlockedWeapons.contains(weapon);
+        String weaponName = null;
+
+        if (weapon instanceof WeaponConfig) {
+            WeaponConfig weaponConfig = (WeaponConfig) weapon;
+            weaponName = weaponConfig.name;
+        } else if (weapon instanceof ToolConfig) {
+            ToolConfig toolConfig = (ToolConfig) weapon;
+            weaponName = toolConfig.name;
+        } else {
+            throw new IllegalArgumentException("Unsupported config type: " + weapon.getClass());
+        }
+
+        for (Object unlockedWeapon : unlockedWeapons) {
+            String unlockedWeaponName = null;
+
+            if (unlockedWeapon instanceof WeaponConfig) {
+                unlockedWeaponName = ((WeaponConfig) unlockedWeapon).name;
+            } else if (unlockedWeapon instanceof ToolConfig) {
+                unlockedWeaponName = ((ToolConfig) unlockedWeapon).name;
+            }
+
+            if (weaponName != null && weaponName.equals(unlockedWeaponName)) {
+                return true;
+            }
+
+
+        }
+        return false;
     }
+
+
 
     /**
      * Retrieves the current number of materials available to the player.

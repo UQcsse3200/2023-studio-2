@@ -10,21 +10,15 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
  * It loads the required assets, updates the animation, and controls its speed and direction.
  */
 public class AstroAnimationController extends Component {
-    private final AssetManager assetManager;
     private AnimationRenderComponent animator;
-    private TextureAtlas atlas;
 
     float animationTimer = 0f;
     float animationDuration = 10f; // Adjust this to control animation speed.
 
     /**
-     * Creates a new AstroAnimationController with an AssetManager for managing assets.
-     *
-     * @param assetManager The AssetManager used to load and manage game assets.
+     * Creates a new AstroAnimationController.
      */
-    public AstroAnimationController(AssetManager assetManager) {
-        this.assetManager = assetManager;
-    }
+    public AstroAnimationController() {}
 
     @Override
     public void create() {
@@ -32,9 +26,6 @@ public class AstroAnimationController extends Component {
 
         // Initialize your animator and load the atlas.
         animator = entity.getComponent(AnimationRenderComponent.class);
-        assetManager.load("images/npc/Astro_NPC.atlas", TextureAtlas.class);
-        assetManager.finishLoading();
-        atlas = assetManager.get("images/npc/Astro_NPC.atlas");
 
         // Start with the default animation.
         animator.startAnimation("Astro_Down");

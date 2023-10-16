@@ -1,12 +1,10 @@
 package com.csse3200.game.entities.factories;
-
+import com.csse3200.game.windows.LabWindow;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.LabWindow;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.LaboratoryConfig;
-import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;

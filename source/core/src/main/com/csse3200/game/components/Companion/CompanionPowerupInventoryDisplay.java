@@ -289,7 +289,7 @@ public class CompanionPowerupInventoryDisplay extends Window {
      */
     private ImageButton createPowerupButton(PowerupConfig powerupConfig, float x, float y) {
         //create a drawable object, given the size of the texture and the textures image
-        TextureRegionDrawable buttonDrawable = createTextureRegionDrawable(powerupConfig.imagePath, CompanionPowerupInventoryDisplay.SIZE);
+        TextureRegionDrawable buttonDrawable = createTextureRegionDrawable(powerupConfig.spritePath, CompanionPowerupInventoryDisplay.SIZE);
         // new image button for the powerup
         ImageButton powerupButton = new ImageButton(buttonDrawable);
         // set the position of this powerup button to be at the given positions

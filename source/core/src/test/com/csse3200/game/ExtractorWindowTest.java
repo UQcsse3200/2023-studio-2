@@ -31,7 +31,7 @@ public class ExtractorWindowTest {
     @Test
     void testExtractorMinigameWindowCreation() {
         Gdx.app.postRunnable(() -> {
-            ExtractorMinigameWindow minigameWindow = ExtractorMinigameWindow.MakeNewMinigame(extractor);
+            ExtractorMinigameWindow minigameWindow = ExtractorMinigameWindow.makeNewMinigame(extractor);
 
             // Verify that the window is not null
             assertNotNull(minigameWindow);

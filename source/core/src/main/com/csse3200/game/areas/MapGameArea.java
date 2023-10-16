@@ -292,8 +292,8 @@ public class MapGameArea extends GameArea{
         if (mapConfig.areaEntityConfig == null) return;
 
         for (ExtractorConfig extractorConfig : mapConfig.areaEntityConfig.getEntities(ExtractorConfig.class)) {
-            Entity extractor = StructureFactory.createExtractor(extractorConfig);
-            spawnEntityAt(extractor, extractorConfig.position, true, false);
+            PlaceableEntity extractor = StructureFactory.createExtractor(extractorConfig);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(extractor, extractorConfig.position, true, false);
         }
 
         for (FissureConfig fissureConfig : mapConfig.areaEntityConfig.getEntities(FissureConfig.class)) {

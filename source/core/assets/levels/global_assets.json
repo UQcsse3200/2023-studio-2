@@ -44,7 +44,11 @@
     "images/explosives/explosive-barrel.png",
     "images/explosives/grenade.png",
     "images/explosives/landmine.png",
-    "images/structure-icons/adv_turret.png"
+    "images/structure-icons/adv_turret.png",
+    "particle-effects/extractor/rubble.png",
+    "particle-effects/extractor/rubble_2.png",
+    "particle-effects/extractor/rubble_3.png",
+    "particle-effects/extractor/dust.png"
   ],
   "textureAtlasPaths": [
     "images/structures/stone_wall.atlas",
@@ -72,6 +76,10 @@
     "sounds/turret_shoot.mp3",
     "sounds/ExitButton.wav"
   ],
-  "particleEffectPaths": null,
+  "particleEffectPaths": [
+    "particle-effects/extractor/extractor_rubble_solstite.effect",
+    "particle-effects/extractor/extractor_rubble_nebulite.effect",
+    "particle-effects/extractor/extractor_rubble_durasteel.effect"
+  ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
 }

@@ -55,7 +55,7 @@ class ExplosiveBarrelToolTest {
     // only method overridden in class
     @Test
     void testCreateStructure() {
-        var tool = new ExplosiveBarrelTool(new ObjectMap<>());
+        var tool = new ExplosiveBarrelTool(new ObjectMap<>(), 0, "texture.png");
 
         assertNotNull(tool.createStructure(player));
     }
@@ -66,7 +66,7 @@ class ExplosiveBarrelToolTest {
         cost.put("Durasteel", 10);
         cost.put("Solstite", 5);
 
-        var tool = new ExplosiveBarrelTool(cost);
+        var tool = new ExplosiveBarrelTool(cost, 0, "texture.png");
 
         assertNotNull(tool.createStructure(player));
     }

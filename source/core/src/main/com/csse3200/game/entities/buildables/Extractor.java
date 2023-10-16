@@ -50,6 +50,8 @@ public class Extractor extends PlaceableEntity {
         }, 5f));
         setScale(1.8f, 2f);
         PhysicsUtils.setScaledCollider(this, 1f, 0.6f);
+
+        addComponent(new SaveableComponent<>(entity -> save(this, config), ExtractorConfig.class));
     }
 
     @Override
@@ -59,5 +61,22 @@ public class Extractor extends PlaceableEntity {
         if (!getComponent(CombatStatsComponent.class).isDead()) {
             getEvents().trigger("startEffect", "rubble");
         }
+    }
+
+    /**
+     * A function to save the Extractor's properties into its config.
+     * @param entity - the extractor to save.
+     * @param config - the existing config for the extractor.
+     * @return the updated config for the extractor.
+     */
+    private static ExtractorConfig save(PlaceableEntity entity, ExtractorConfig config) {
+        if (!(entity instanceof Extractor)) {
+            return new ExtractorConfig();
+        }
+
+        config.position = entity.getGridPosition();
+        config.health = entity.getComponent(CombatStatsComponent.class).getHealth();
+
+        return config;
     }
 }

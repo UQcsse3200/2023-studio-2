@@ -11,4 +11,16 @@ public class WallConfig extends BaseEntityConfig {
     public int health = 0;
     public WallType type;
     public SoundsConfig sounds;
+
+    public WallConfig() {
+
+    }
+
+    public WallConfig(WallConfig config) {
+        super(config);
+
+        health = config.health;
+        type = config.type;
+        sounds = config.sounds;
+    }
 }

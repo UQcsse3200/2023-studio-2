@@ -1,4 +1,4 @@
-package com.csse3200.game.entities.buildables;
+package com.csse3200.game.entities;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.structures.ExtractorAnimationController;
-import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.ExtractorConfig;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;

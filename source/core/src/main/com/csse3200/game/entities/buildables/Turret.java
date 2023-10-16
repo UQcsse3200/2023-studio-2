@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.FOVComponent;
 import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.components.structures.TurretAnimationController;
 import com.csse3200.game.entities.Entity;
@@ -29,7 +30,6 @@ import java.util.Objects;
  *  This class is used to create a turret entity.
  */
 public class Turret extends PlaceableEntity{
-
     private long start = System.currentTimeMillis(); // start time
 
     TurretType type; // turret type
@@ -39,21 +39,10 @@ public class Turret extends PlaceableEntity{
     int damage; // damage
 
     /**
-     * Create a new turret placeable entity to match the provided type
-     * @param type Type of turret to create
-     *             (used to get config file)
-     * @param player Player entity to create turret for
-     *               (used to get position and rotation)
-     */
-    public Turret(TurretType type, Entity player) {
-        this(FileLoader.readClass(TurretConfigs.class, "configs/turrets.json").GetTurretConfig(type)); // create turret with config file
-    }
-
-    /**
      * Create a new turret placeable entity to match the provided config file
      * @param turretConfig Configuration file to match turret to
      */
-    public Turret(TurretConfig turretConfig) {
+    public Turret(TurretConfig turretConfig, Entity player) {
         super(2, 2);
         setScale(1.8f,1.8f);
 
@@ -76,6 +65,7 @@ public class Turret extends PlaceableEntity{
         addComponent(new StructureDestroyComponent());// add structure destroy component
         addComponent(animator); // add animation render component
         addComponent(new TurretAnimationController());
+        addComponent(new SaveableComponent<>(gate -> save(gate, turretConfig), TurretConfig.class));
     }
 
     /**
@@ -234,5 +224,22 @@ public class Turret extends PlaceableEntity{
 
     public void setCurrentAmmo(int currentAmmo) {
         this.currentAmmo = currentAmmo;
+    }
+
+    /**
+     * A function to save the Turret's properties into its config.
+     * @param entity - the turret to save.
+     * @param config - the existing config for the turret.
+     * @return the updated config for the turret.
+     */
+    private static TurretConfig save(Entity entity, TurretConfig config) {
+        if (!(entity instanceof Turret)) {
+            return new TurretConfig();
+        }
+
+        config.position = entity.getGridPosition();
+        config.health = entity.getComponent(CombatStatsComponent.class).getHealth();
+
+        return config;
     }
 }

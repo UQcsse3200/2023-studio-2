@@ -7,6 +7,22 @@ public class HealthEntityConfig extends BaseEntityConfig {
     public int attackMultiplier = 1;
     public boolean isImmune = false;
 
+
+
+    public HealthEntityConfig() {
+
+    }
+
+    public HealthEntityConfig(HealthEntityConfig config) {
+        super(config);
+
+        health = config.health;
+        maxHealth = config.maxHealth;
+        baseAttack = config.baseAttack;
+        attackMultiplier = config.attackMultiplier;
+        isImmune = config.isImmune;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

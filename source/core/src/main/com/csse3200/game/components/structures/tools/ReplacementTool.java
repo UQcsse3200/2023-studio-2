@@ -53,11 +53,9 @@ public abstract class ReplacementTool extends PlacementTool {
         if (existingStructure != null) {
             var placePosition = structurePlacementService.getStructurePosition(existingStructure);
 
-            ServiceLocator.getStructurePlacementService().replaceStructureAt(newStructure, placePosition,
-                    false, false);
+            ServiceLocator.getStructurePlacementService().replaceStructureAt(newStructure, placePosition);
         } else if (!mustReplace) {
-            ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position,
-                    false, false);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position);
         }
     }
 

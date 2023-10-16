@@ -319,12 +319,13 @@ public class NPCFactory {
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsMovementComponent());
     Jail.addComponent(new InteractableComponent(entity -> {
+      animator.startAnimation("jail_open");
         String[] storytext= {"{COLOR=BLACK}NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!"
                 ,"{COLOR=BLACK}\n{SLOW}NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected."
                 ,"{COLOR=BLACK}{SLOW}Emily: We can handle it. \nLead the way!"};
         String[] titletext= {"","",""};
         Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
-        animator.startAnimation("jail_open");
+
       },1f));
 
     Jail.scaleHeight(1.7f);

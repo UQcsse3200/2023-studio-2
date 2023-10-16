@@ -334,7 +334,7 @@ public class UpgradeDisplay extends Window {
             shapeRenderer.rectLine(parentPos, childPos, 9);
 
             // Change line colour based on mutual unlocked / locked status between node and child
-            if (stats.isWeaponUnlocked(node.getName()) && stats.isWeaponUnlocked(child.getName())) {
+            if (stats.isWeaponUnlocked(node.getConfig()) && stats.isWeaponUnlocked(child.getConfig())) {
                 shapeRenderer.setColor(new Color(41f/255, 222f/255, 15f/255, 0.5f)); // light green
             } else {
                 shapeRenderer.setColor(new Color(150f / 255, 18f / 255, 23f / 255, 0.5f)); // dark red
@@ -574,7 +574,7 @@ public class UpgradeDisplay extends Window {
 
         UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
         // Dont draw cost buttons for unlocked nodes
-        if (stats.isWeaponUnlocked(node.getName())) {
+        if (stats.isWeaponUnlocked(node.getConfig())) {
             return null;
         }
 
@@ -598,7 +598,10 @@ public class UpgradeDisplay extends Window {
      * @return the lock image
      */
     private Image lockItem(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton) {
-        if (stats.isWeaponUnlocked(node.getName())) return null;
+        if (stats.isWeaponUnlocked(node.getConfig())) {
+            System.out.println("nuill");
+            return null;
+        }
 
         Image lock = new Image(new Texture("images/upgradetree/lock.png"));
         lock.setSize(UpgradeDisplay.SIZE, UpgradeDisplay.SIZE);
@@ -619,7 +622,7 @@ public class UpgradeDisplay extends Window {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 UpgradeTree stats = upgradeBench.getComponent(UpgradeTree.class);
-                if (stats.isWeaponUnlocked(node.getName())) {
+                if (stats.isWeaponUnlocked(node.getConfig())) {
                     InventoryComponent playerInventory = player.getComponent(InventoryComponent.class);
                     WeaponConfig config = playerInventory.getConfigs().GetWeaponConfig(node.getWeaponType());
                     playerInventory.replaceSlotWithWeapon(config.slotType, node.getWeaponType());
@@ -657,16 +660,17 @@ public class UpgradeDisplay extends Window {
     private void handleWeaponUnlocking(UpgradeNode node, UpgradeTree stats, ImageButton weaponButton, Image lockImage, TextButton costButton) {
 
         // Ensure locked, sufficient materials, and parent is unlocked
-        if (stats.isWeaponUnlocked(node.getName())
+        if (stats.isWeaponUnlocked(node.getConfig())
                 || stats.getMaterials() < node.getNodeCost()
-                || !stats.isWeaponUnlocked(node.getParent().getName())) {
+                || !stats.isWeaponUnlocked(node.getParent().getConfig())) {
             return;
         }
 
         // Set the node to unlocked
         weaponButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
         stats.subtractMaterials(node.getNodeCost());
-        stats.unlockWeapon(node.getName());
+        stats.unlockWeapon(node.getConfig());
+        player.getEvents().trigger("updateHotbar");
 
         // Add it to the StructurePicker menu if buildable
         if (node.getWeaponType() == null) {

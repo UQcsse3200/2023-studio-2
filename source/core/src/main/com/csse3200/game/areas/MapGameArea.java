@@ -52,7 +52,7 @@ public class MapGameArea extends GameArea{
     public MapGameArea(String levelName, String gamearea, TerrainFactory terrainFactory, GdxGame game) {
         try {
             mapConfig = ConfigLoader.loadMapDirectory(levelName, gamearea);
-            logger.info("Successfully loaded map {}", joinPath(levelName, gamearea));
+            logger.info("Successfully loaded map {}", joinPath(List.of(levelName, gamearea)));
         } catch (InvalidConfigException exception) {
             logger.error("FAILED TO LOAD GAME IN CONSTRUCTOR - {}", exception.getMessage());
             validLoad = false;
@@ -84,6 +84,7 @@ public class MapGameArea extends GameArea{
         companion = spawnCompanion();
         spawnPowerups();
         spawnLaboratory();
+        spawnPowerups();
         spawnPortal(player);
         spawnTreeTop();
         spawnAstro();
@@ -291,8 +292,8 @@ public class MapGameArea extends GameArea{
         if (mapConfig.areaEntityConfig == null) return;
 
         for (ExtractorConfig extractorConfig : mapConfig.areaEntityConfig.getEntities(ExtractorConfig.class)) {
-            Entity extractor = StructureFactory.createExtractor(extractorConfig);
-            spawnEntityAt(extractor, extractorConfig.position, true, false);
+            PlaceableEntity extractor = StructureFactory.createExtractor(extractorConfig);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(extractor, extractorConfig.position, true, false);
         }
 
         for (FissureConfig fissureConfig : mapConfig.areaEntityConfig.getEntities(FissureConfig.class)) {

@@ -36,6 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.csse3200.game.utils.LoadUtils.*;
@@ -282,7 +283,7 @@ public class PlanetScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().saveCurrentArea(path);
 
         Map<String, Object> gameStateEntries = new HashMap<>(ServiceLocator.getGameStateObserverService().getFullStateData());
-        FileLoader.writeClass(gameStateEntries, joinPath(SAVE_PATH, GAMESTATE_FILE), FileLoader.Location.LOCAL);
+        FileLoader.writeClass(gameStateEntries, joinPath(List.of(SAVE_PATH, GAMESTATE_FILE)), FileLoader.Location.LOCAL);
     }
 
     /**

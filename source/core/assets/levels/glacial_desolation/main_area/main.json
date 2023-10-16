@@ -22,7 +22,7 @@
       "map/treetoplush.png",
       "particle-effects/explosion/particle.png",
       "images/npc/astronaut_npc.png",
-      "images/space_navigation_planet_2.png"
+      "images/space_navigation_planet_2.png","images/upgradetree/sword.png"
     ],
     "textureAtlasPaths": [
       "images/troll_enemy.atlas",

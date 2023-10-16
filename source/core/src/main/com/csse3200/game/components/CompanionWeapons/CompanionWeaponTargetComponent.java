@@ -45,6 +45,8 @@ public class CompanionWeaponTargetComponent extends Component {
                 return rotate_shield_around_entity();
             case Death_Potion:
                 return handleDeathPotion();
+            case SWORD:
+                return handleSword();
             default:
                 return new Vector2(0, 0);
         }
@@ -86,7 +88,7 @@ public class CompanionWeaponTargetComponent extends Component {
 
             var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
 
-            if (distance <= .1f) {
+            if (distance <= 2.1f) {
                 otherEntity.getEvents().trigger("chainExplode", distance/2.1f * 0.4f);
             }
         }
@@ -100,7 +102,7 @@ public class CompanionWeaponTargetComponent extends Component {
 
             var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
             if (distance <= 2.1f) {
-                otherEntity.getEvents().trigger(" SHIELD_2", distance/2.1f * 0.4f);
+                otherEntity.getEvents().trigger("POTION", distance/2.1f * 0.4f);
             }
         }
         for (var otherEntity :  EnemyFactory.getEnemyList()) {
@@ -188,7 +190,7 @@ public class CompanionWeaponTargetComponent extends Component {
 
             var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
             if (distance <= 1.1f) {
-                otherEntity.getEvents().trigger(" SHIELD_2", distance/1.1f * 0.4f);
+                otherEntity.getEvents().trigger("SHIELD_2", distance/1.1f * 0.4f);
             }
         }
         for (var otherEntity :  EnemyFactory.getEnemyList()) {
@@ -221,6 +223,36 @@ public class CompanionWeaponTargetComponent extends Component {
 
         this.entity.getEvents().addListener(" SHIELD_2", this::updateSHIELD);
         this.entity.getEvents().addListener("chainExplode", this::chainExplode);
+        this.entity.getEvents().addListener("POTION", this::handleDeathPotion);
     }
 
+    private Vector2 handleSword(){
+        List<Entity> enemies = EnemyFactory.getEnemyList();
+        if (!inCombat) {
+            if (!enemies.isEmpty()) {
+                Entity enemy = getNextLiveEnemy(enemies);
+                if (enemy != null) {
+                    inCombat = true;
+                    Vector2 pos = enemy.getPosition();
+                    Timer.schedule(new Timer.Task() {
+
+                        public void run() {
+                            if (enemies.contains(enemy)) {var distance = companion.getCenterPosition().dst(enemy.getCenterPosition());
+                                if (distance <= 2.5f) {  enemy.getComponent(CombatStatsComponent.class).addHealth((int)-40.0f);
+
+                                if(enemy.getComponent(CombatStatsComponent.class).getHealth() == 0)
+                                {  enemies.remove(enemy);}
+                                else if(enemy.getComponent(CombatStatsComponent.class).getHealth() != 0) { enemy.getComponent(CombatStatsComponent.class).getHealth();
+                                }
+                                }
+                                else
+                                { inCombat = false;} }
+                        }
+                    }, 1f);
+                    trackPrev = pos;
+                    return pos;
+                }
+            }
+        }
+        return inCombat ? enemies.get(currentTargetIndex).getPosition() : trackPrev;}
 }

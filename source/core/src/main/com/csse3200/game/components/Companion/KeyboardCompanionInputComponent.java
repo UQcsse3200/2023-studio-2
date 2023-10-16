@@ -207,6 +207,10 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                 return true;
             }
 
+            case Keys.P-> {
+               triggerInventoryEvent("melee");
+                return true;
+            }
             case Keys.I -> {
                 flagW = 1;
                 if (getMovFlagSum() == 1) {

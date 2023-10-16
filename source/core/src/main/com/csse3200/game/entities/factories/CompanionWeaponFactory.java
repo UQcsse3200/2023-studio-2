@@ -62,6 +62,18 @@ public class CompanionWeaponFactory {
 ,config.textureAtlas
             );
         }
+        if (weaponType == CompanionWeaponType.SWORD) {
+
+            weaponController = new CompanionWeaponController(
+                    CompanionWeaponType.SWORD,
+                    config.weaponDuration, config.currentRotation,
+                    config.weaponSpeed,
+                    config.rotationSpeed,
+                    config.animationType,
+                    config.initialRotationOffset
+                    ,config.textureAtlas
+            );
+        }
 
 
         Entity attack = new Entity().addComponent(weaponController);

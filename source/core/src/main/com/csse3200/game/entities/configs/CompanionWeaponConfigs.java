@@ -10,6 +10,7 @@ public class CompanionWeaponConfigs {
 
     public CompanionWeaponConfig Death_Potion;
     public CompanionWeaponConfig SHIELD;
+    public CompanionWeaponConfig SWORD;
 
     public CompanionWeaponConfigs() {
         // Initialize the Death_Potion configuration here
@@ -22,7 +23,7 @@ public class CompanionWeaponConfigs {
                 18,                        // Rotation Speed
                 0,                          // Initial Rotation Offset
                 2,                          // Attack Cooldown
-                1,                          // Ammo Use
+                0,                          // Ammo Use
                 4,                          // Animation Type
                 0,                          // Image Rotation Offset
                 1f,                       // Image Scale
@@ -42,12 +43,12 @@ public class CompanionWeaponConfigs {
                 "SHIELD",            // Name
                 "Shield for the companion",        // Description
                 50.0f,                      // Damage
-                5.0f,                       // Weapon Speed
+                25.0f,                       // Weapon Speed
                 10,                        // Weapon Duration
-                18,                        // Rotation Speed
+                28,                        // Rotation Speed
                 0,                          // Initial Rotation Offset
                 2,                          // Attack Cooldown
-                1,                          // Ammo Use
+                0,                          // Ammo Use
                 0,                          // Animation Type
                 0,                          // Image Rotation Offset
                 3f,                       // Image Scale
@@ -65,29 +66,57 @@ public class CompanionWeaponConfigs {
                 "CIRCULAR DAMAGE",        // Description
                 50.0f,                      // Damage
                 5.0f,                       // Weapon Speed
-                10,                        // Weapon Duration
-                18,                        // Rotation Speed
+                25,                        // Weapon Duration
+                28,                        // Rotation Speed
                 0,                          // Initial Rotation Offset
                 2,                          // Attack Cooldown
-                1,                          // Ammo Use
-                1,                          // Animation Type
+                0,                          // Ammo Use
+                4,                          // Animation Type
                 0,                          // Image Rotation Offset
-                1f,                       // Image Scale
+                3f,                       // Image Scale
                 "images/companion/Companionshield.atlas",
                 "images/companion/CompanionShield.png",
                 CompanionWeaponType. SHIELD_2, // Companion Weapon Type
                 "Fire"     ,4        // Slot Type
         );
 
+        SWORD= new CompanionWeaponConfig(
+                " SWORD",            // Name
+                "SHORT DISTANCE",        // Description
+                25.0f,                      // Damage
+                5.0f,                       // Weapon Speed
+                25,                        // Weapon Duration
+                1,                        // Rotation Speed
+                0,                          // Initial Rotation Offset
+                2,                          // Attack Cooldown
+                0,                          // Ammo Use
+                4,                          // Animation Type
+                0,                          // Image Rotation Offset
+                1f,                       // Image Scale
+                "images/weapons/sword.atlas",
+                "images/upgradetree/sword.png",
+                CompanionWeaponType.SWORD,
+                "melee"     ,
+                4
+        );
+        explosiveConfig.effectsMap.put("deathPotion", "particle-effects/deathpotion/Death.effect");
+        SWORD.effects =explosiveConfig;
+
+
+
 
 
 
     }
+
+
+
     public CompanionWeaponConfig GetWeaponConfig(CompanionWeaponType type) {
         return switch (type) {
             case Death_Potion -> Death_Potion;
             case SHIELD -> SHIELD;
             case  SHIELD_2 ->  SHIELD_2;
+            case SWORD -> SWORD;
             default -> SHIELD_2;
         };
     }

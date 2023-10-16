@@ -73,6 +73,30 @@ class StructureToolPickerTest {
         assertEquals(tool, structurePicker.getSelectedTool());
     }
 
+
+
+    @Test
+    void testSelectedIndex() {
+        when(resourceService.getAsset(any(), eq(Texture.class))).thenReturn(mock(Texture.class));
+        when(renderService.getStage()).thenReturn(mock(Stage.class));
+
+        var structurePicker = new StructureToolPicker();
+
+        structurePicker.create();
+
+        structurePicker.selectIndex(0);
+
+        // ensure the first tool in the list is selected
+        assertEquals(structurePicker.getSelectableTools().get(0), structurePicker.getSelectedTool());
+
+        var outOfRange = structurePicker.getSelectableTools().size();
+
+        // test if out of range is handled correctly.
+        structurePicker.selectIndex(-1);
+        structurePicker.selectIndex(outOfRange);
+        assertEquals(structurePicker.getSelectableTools().get(0), structurePicker.getSelectedTool());
+    }
+
     @Test
     void interact() {
         var structurePicker = new StructureToolPicker();

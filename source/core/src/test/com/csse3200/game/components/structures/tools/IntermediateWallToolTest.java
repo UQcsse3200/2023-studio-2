@@ -64,7 +64,7 @@ class IntermediateWallToolTest {
         setupPhysicsMock();
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new IntermediateWallTool(cost);
+        var tool = new IntermediateWallTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -72,15 +72,14 @@ class IntermediateWallToolTest {
 
         verify(stateObserver, never()).getStateData(any());
 
-        verify(structurePlacementService).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService).placeStructureAt(any(), eq(position));
     }
 
     @Test
     void testInteractExistingStructureNotWall() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new IntermediateWallTool(cost);
+        var tool = new IntermediateWallTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -90,8 +89,7 @@ class IntermediateWallToolTest {
 
         tool.interact(player, position);
 
-        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position));
     }
 
     @Test
@@ -99,7 +97,7 @@ class IntermediateWallToolTest {
         setupPhysicsMock();
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new IntermediateWallTool(cost);
+        var tool = new IntermediateWallTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -109,8 +107,7 @@ class IntermediateWallToolTest {
         tool.interact(player, position);
 
         verify(structurePlacementService, atLeastOnce()).getStructureAt(position);
-        verify(structurePlacementService).replaceStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService).replaceStructureAt(any(), eq(position));
     }
 
     @Test
@@ -123,7 +120,7 @@ class IntermediateWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(100);
 
-        var tool = new IntermediateWallTool(cost);
+        var tool = new IntermediateWallTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -135,8 +132,7 @@ class IntermediateWallToolTest {
         verify(stateObserver).getStateData("resource/resource1");
         verify(stateObserver).getStateData("resource/resource2");
         verify(structurePlacementService, atLeastOnce()).getStructureAt(position);
-        verify(structurePlacementService).replaceStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService).replaceStructureAt(any(), eq(position));
     }
 
     @Test
@@ -149,7 +145,7 @@ class IntermediateWallToolTest {
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
-        var tool = new IntermediateWallTool(cost);
+        var tool = new IntermediateWallTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -160,8 +156,7 @@ class IntermediateWallToolTest {
         verify(stateObserver).getStateData("resource/resource1");
         verify(stateObserver).getStateData("resource/resource2");
         verify(structurePlacementService, atLeastOnce()).getStructureAt(position);
-        verify(structurePlacementService, never()).replaceStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService, never()).replaceStructureAt(any(), eq(position));
     }
 
     @Test
@@ -173,7 +168,7 @@ class IntermediateWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(100);
 
-        var tool = new IntermediateWallTool(cost);
+        var tool = new IntermediateWallTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -181,8 +176,7 @@ class IntermediateWallToolTest {
 
         verify(stateObserver).getStateData("resource/resource1");
         verify(stateObserver).getStateData("resource/resource2");
-        verify(structurePlacementService).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService).placeStructureAt(any(), eq(position));
     }
 
     @Test
@@ -195,7 +189,7 @@ class IntermediateWallToolTest {
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
-        var tool = new IntermediateWallTool(cost);
+        var tool = new IntermediateWallTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -204,7 +198,6 @@ class IntermediateWallToolTest {
         // don't care which order they get checked in. Don't care if loops breaks early.
         verify(stateObserver, atMost(1)).getStateData("resource/resource1");
         verify(stateObserver, atMost(1)).getStateData("resource/resource2");
-        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position));
     }
 }

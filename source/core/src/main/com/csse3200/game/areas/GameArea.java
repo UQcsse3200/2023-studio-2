@@ -75,7 +75,7 @@ public abstract class GameArea implements Disposable {
     );
     handler.addListener("placeStructureAt",
             (StructurePlacementService.placeStructureAtArgs args) ->
-                    spawnEntityAt(args.getEntity(), args.getTilePos(), args.isCenterX(), args.isCenterY())
+                    spawnEntityAt(args.getEntity(), args.getTilePos(), false, false)
     );
   }
 

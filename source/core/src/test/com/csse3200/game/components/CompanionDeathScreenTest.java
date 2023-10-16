@@ -23,7 +23,7 @@ class CompanionDeathScreenTest {
         GdxGame game = mock(GdxGame.class);
         Entity companion = new Entity();
         companion.setEntityType("companion");
-        companion.addComponent(new CombatStatsComponent(10, 10, 10, false));
+        companion.addComponent(new CombatStatsComponent(10, 10, 10, 10, false));
         companion.getComponent(CombatStatsComponent.class).setHealth(0);
         final Timer timer = new Timer();
         java.util.TimerTask testScreen = new java.util.TimerTask() {

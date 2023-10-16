@@ -6,6 +6,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.WeaponConfig;
+import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameStateObserver;
@@ -13,11 +15,13 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,117 +29,84 @@ import static org.mockito.Mockito.when;
 @ExtendWith(GameExtension.class)
 public class UpgradeTreeTest {
 
-    private UpgradeTree upgradeTree;
-    GameStateObserver gameStateObserver;
-    String resourceKey = "resource/" + Resource.Nebulite;
+    private UpgradeTree tree;
+    private GameStateObserver gameStateObserver;
+    private String resourceKey = "resource/" + Resource.Nebulite;
     private static final int MATERIALS = 1000;
-    ArrayList<WeaponType> defaultWeapons = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
-        upgradeTree = new UpgradeTree();
+        tree = new UpgradeTree();
         gameStateObserver = mock(GameStateObserver.class);
         mock(ServiceLocator.class);
         ServiceLocator.registerGameStateObserverService(gameStateObserver);
-        defaultWeapons.add(WeaponType.WOODHAMMER);
-        defaultWeapons.add(WeaponType.RANGED_BOOMERANG);
-        defaultWeapons.add(WeaponType.MELEE_KATANA);
     }
 
     @Test
-    public void testGetUnlockedWeaponsSize() {
-        assertEquals(3, upgradeTree.getUnlockedWeapons().size());
+    public void testDefaults() {
+        assertEquals(3, tree.getUnlockedWeaponsConfigs().size());
+    }
+
+    @Test
+    public void testUnlock() {
+        WeaponConfig weaponConfig = new WeaponConfig();
+
+        tree.unlockWeapon(weaponConfig);
+
+        assertTrue(tree.isWeaponUnlocked(weaponConfig));
     }
 
     @Test
     public void testIsUnlocked() {
-        // Ensure the defaults are true and nonUnlocks are false
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER.toString()));
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STEELHAMMER.toString()));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA.toString()));
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING.toString()));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG.toString()));
+        WeaponConfig notUnlocked = mock(WeaponConfig.class);
+
+        assertFalse(tree.isWeaponUnlocked(notUnlocked));
     }
 
     @Test
-    public void testDefaultWeapons() {
-        // ensure the tree contains only the default weapons
-        assertEquals(3, upgradeTree.getUnlockedWeapons().size());
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.MELEE_KATANA.toString()));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.WOODHAMMER.toString()));
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_BOOMERANG.toString()));
-    }
+    public void testUnlockTrigger() {
+        Application app = mock(Application.class);
+        Gdx.app = app;
 
-    /**
-     * the below Test has been implemented to
-     * test the Ui of unlocking weapon and
-     * also to test the sound of it
-     */
-    @Test
-    public void testUnlockWeapon() {
-
-        Gdx.app = mock(Application.class);
-        // Check a weapon is locked, unlock it, then check its unlocked
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER.toString()));
-        upgradeTree.unlockWeapon(WeaponType.STONEHAMMER.toString());
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER.toString()));
-
-//        instance for UpgradeTree
-        UpgradeTree sound = new UpgradeTree();
-
-//        Setting the 'unlockWeaponSound' as the entity for sound events.
+        WeaponConfig dummy = mock(WeaponConfig.class);
         Entity unlockWeaponEvent = mock(Entity.class);
-
-//        Setting the 'unlockWeaponSound' as the entity for sound events.
-        sound.setEntity(unlockWeaponEvent);
-
-//        Mocking the event handling for the 'unlockWeaponSound' entity.
         when(unlockWeaponEvent.getEvents()).thenReturn(mock(EventHandler.class));
+        tree.setEntity(unlockWeaponEvent);
 
-        Object weapon = new Object();
-//        Testing the whole trigger unlockWeaponEvent to test Player's dodge Sound
-        sound.unlockWeapon(weapon);
-    }
-
-    @Test void testUnlockMultipleWeapons() {
-        // Check stonehammer unlocks correctly
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER));
-        upgradeTree.unlockWeapon(WeaponType.STONEHAMMER);
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STONEHAMMER));
-
-        // Check steelhammer unlocks correctly
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.STEELHAMMER));
-        upgradeTree.unlockWeapon(WeaponType.STEELHAMMER);
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.STEELHAMMER));
-
-        // Check ranged wrench unlocks correctly
-        assertFalse(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING));
-        upgradeTree.unlockWeapon(WeaponType.RANGED_HOMING);
-        assertTrue(upgradeTree.isWeaponUnlocked(WeaponType.RANGED_HOMING));
-
-        // Ensure there are now 6 weapons in total unlocked, including default weapons
-        assertEquals(6, upgradeTree.getUnlockedWeapons().size());
+        tree.unlockWeapon(dummy);
     }
 
     @Test
-    public void testGetStartingMaterials() {
-        // Ensure it returns the starting materials based on game state observer
+    public void testUnlockMultiple() {
+        WeaponConfig weapon1 = mock(WeaponConfig.class);
+        WeaponConfig weapon2 = mock(WeaponConfig.class);
+        WeaponConfig weapon3 = mock(WeaponConfig.class);
+
+        int initialCount = tree.getUnlockedWeaponsConfigs().size();
+
+        tree.unlockWeapon(weapon1);
+        tree.unlockWeapon(weapon2);
+        tree.unlockWeapon(weapon3);
+
+        assertEquals(initialCount + 3, tree.getUnlockedWeaponsConfigs().size());
+    }
+
+    @Test
+    public void testGetMaterials() {
         when(gameStateObserver.getStateData(resourceKey)).thenReturn(MATERIALS);
-        assertEquals(MATERIALS, (int) gameStateObserver.getStateData(resourceKey));
+
+        assertEquals(MATERIALS, tree.getMaterials());
     }
 
     @Test
     public void testSubtractMaterials() {
         int subtractionAmount = 50;
-
-        // Setup mock
         when(gameStateObserver.getStateData(resourceKey)).thenReturn(MATERIALS);
 
-        upgradeTree.subtractMaterials(subtractionAmount);
+        tree.subtractMaterials(subtractionAmount);
 
-        // Update mock
         when(gameStateObserver.getStateData(resourceKey)).thenReturn(MATERIALS - subtractionAmount);
 
-        assertEquals(upgradeTree.getMaterials(), MATERIALS - subtractionAmount);
+        assertEquals(MATERIALS - subtractionAmount, tree.getMaterials());
     }
 }

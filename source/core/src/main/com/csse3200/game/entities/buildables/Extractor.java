@@ -56,6 +56,8 @@ public class Extractor extends PlaceableEntity {
     public void placed() {
         super.placed();
 
-        getEvents().trigger("startEffect", "rubble");
+        if (!getComponent(CombatStatsComponent.class).isDead()) {
+            getEvents().trigger("startEffect", "rubble");
+        }
     }
 }

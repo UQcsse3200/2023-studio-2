@@ -125,8 +125,6 @@ public class ParticleComponent extends RenderComponent {
      * @param effectName - the name of the effect to stop as specified in the config file.
      */
     public void stopEffect(String effectName) {
-        logger.debug("Entity {} stopping effect {}", entity, effectName);
-
         var effect = effects.get(effectName);
 
         if (effect == null) {
@@ -134,6 +132,6 @@ public class ParticleComponent extends RenderComponent {
             return;
         }
 
-        effect.reset();
+        effect.allowCompletion();
     }
 }

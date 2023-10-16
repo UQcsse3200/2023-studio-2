@@ -67,10 +67,14 @@ public class SpaceGameArea extends GameArea {
         displayUI();
         playMusic();
         spawnTerrain();
+        //Who removed spawn ship and spawn goal on creation?!@!!!!!
+        //spawn Goal has to be called first before spawn ship, to not crash calc distance
+        //Should modify later
+        spawnGoal();
+        spawnShip();
         spawnAsteroids();
         createBoundary();
         spawnEnemy();
-
     }
     /**
      * Method for the background music of the game

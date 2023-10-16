@@ -97,7 +97,7 @@ public class AttackFactory {
                 .addComponent(new TouchAttackComponent((short)
                         (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE)))
                 .addComponent(new AnimationRenderComponent(new TextureAtlas(config.textureAtlas)))
-                .addComponent(new CombatStatsComponent(config.health, (int) config.damage, 1, false))
+                .addComponent(new CombatStatsComponent(config.health, config.health, (int) config.damage, 1, false))
                 .addComponent(new SoundComponent(config.sound))
                 .addComponent(wepCon);
 

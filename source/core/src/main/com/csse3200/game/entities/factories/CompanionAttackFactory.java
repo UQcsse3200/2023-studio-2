@@ -76,7 +76,7 @@ public class CompanionAttackFactory {
         }
 
         attack.addComponent(animator)
-                .addComponent(new CombatStatsComponent(30, 10, 1, false));
+                .addComponent(new CombatStatsComponent(30, 30, 10, 1, false));
 
         if (weaponType == CompanionWeaponType.DEATH_POTION) {
             int dir = (int) Math.floor(initRot / 60);

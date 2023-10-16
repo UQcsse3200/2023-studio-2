@@ -14,6 +14,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.EnvironmentStatsComponent;
 import com.csse3200.game.components.PowerupType;
+import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.player.InventoryDisplayComponent;
 import com.csse3200.game.components.resources.Resource;
@@ -86,6 +87,10 @@ public class MapGameArea extends GameArea{
         spawnLaboratory();
         spawnPowerups();
         spawnPortal(player);
+        spawnTurrets(player);
+        spawnWalls(player);
+        spawnGates(player);
+        spawnExplosives(player);
         spawnTreeTop();
         spawnAstro();
         spawnTutnpc();
@@ -293,14 +298,65 @@ public class MapGameArea extends GameArea{
 
         for (ExtractorConfig extractorConfig : mapConfig.areaEntityConfig.getEntities(ExtractorConfig.class)) {
             PlaceableEntity extractor = StructureFactory.createExtractor(extractorConfig);
-            ServiceLocator.getStructurePlacementService().placeStructureAt(extractor, extractorConfig.position, true, false);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(extractor, extractorConfig.position);
         }
 
         for (FissureConfig fissureConfig : mapConfig.areaEntityConfig.getEntities(FissureConfig.class)) {
             PlaceableEntity fissure = new Fissure(fissureConfig);
-            ServiceLocator.getStructurePlacementService().placeStructureAt(fissure, fissureConfig.position, true, true);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(fissure, fissureConfig.position);
         }
     }
+
+    /**
+     * Spawns the saved gates into the map.
+     * @param player - the player.
+     */
+    private void spawnGates(Entity player) {
+        for (GateConfig gateConfig : mapConfig.areaEntityConfig.getEntities(GateConfig.class)) {
+            var gate = BuildablesFactory.createGate(player, gateConfig);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(gate, gateConfig.position);
+
+        }
+    }
+
+    /**
+     * Spawns the saved turrets into the map.
+     * @param player - the player.
+     */
+    private void spawnTurrets(Entity player) {
+        for (TurretConfig config : mapConfig.areaEntityConfig.getEntities(TurretConfig.class)) {
+            var turret = BuildablesFactory.createCustomTurret(config, player);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(turret, config.position);
+        }
+    }
+
+    /**
+     * Spawns the saved walls into the map.
+     * @param player - the player.
+     */
+    private void spawnWalls(Entity player) {
+        for (WallConfig config : mapConfig.areaEntityConfig.getEntities(WallConfig.class)) {
+            var turret = BuildablesFactory.createWall(config, player);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(turret, config.position);
+        }
+    }
+
+    /**
+     * Spawns the saved explosives into the map.
+     * @param player - the player.
+     */
+    private void spawnExplosives(Entity player) {
+        for (LandmineConfig config : mapConfig.areaEntityConfig.getEntities(LandmineConfig.class)) {
+            var landmine = ExplosivesFactory.createLandmine(config);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(landmine, config.position);
+        }
+
+        for (ExplosiveBarrelConfig config : mapConfig.areaEntityConfig.getEntities(ExplosiveBarrelConfig.class)) {
+            var landmine = ExplosivesFactory.createExplosiveBarrel(config);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(landmine, config.position);
+        }
+    }
+
 
     /**
      * Spawns the ship at the position given by the config file

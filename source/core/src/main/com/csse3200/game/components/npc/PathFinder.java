@@ -52,13 +52,7 @@ public class PathFinder {
         }
 
         Node startNode = nodeMap[start.x][start.y];
-
-        // Game crashes when player at the top of the map (quick fix)
-        Node targetNode = nodeMap[target.x][target.y - 1];
-
-        if (target.y < 90) {
-            targetNode = nodeMap[target.x][target.y];
-        }
+        Node targetNode = nodeMap[target.x][target.y];
 
         open.add(startNode);
 

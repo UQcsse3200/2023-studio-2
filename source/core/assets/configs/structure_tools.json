@@ -42,7 +42,7 @@
       "description": "Even powerful turret. Be aware enemies!",
       "cost": {
         "Durasteel": 75,
-        "Solstite": 50
+        "Solstite": 75
       },
       "texture": "images/structure-icons/adv_turret.png",
       "ordering": 5
@@ -51,6 +51,8 @@
       "name": "Heal",
       "description": "Bandaid tool",
       "cost": {
+        "Durasteel": 200,
+        "Solstite": 200
       },
       "texture": "images/structures/heal_icon.png",
       "ordering": 8
@@ -67,8 +69,8 @@
       "name": "Explosive Barrel",
       "description": "Makes big boom!",
       "cost": {
-        "Durasteel": 50,
-        "Solstite": 100
+        "Durasteel": 150,
+        "Solstite": 150
       },
       "texture": "images/explosives/explosive-barrel.png",
       "ordering": 7
@@ -77,8 +79,8 @@
       "name": "Landmine",
       "description": "Watch your step!",
       "cost": {
-        "Durasteel": 25,
-        "Solstite": 50
+        "Durasteel": 100,
+        "Solstite": 100
       },
       "texture": "images/explosives/landmine.png",
       "ordering": 6

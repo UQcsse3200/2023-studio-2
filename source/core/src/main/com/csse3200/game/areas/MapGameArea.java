@@ -14,6 +14,7 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.EnvironmentStatsComponent;
 import com.csse3200.game.components.PowerupType;
+import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.player.InventoryDisplayComponent;
 import com.csse3200.game.components.resources.Resource;
@@ -89,6 +90,7 @@ public class MapGameArea extends GameArea{
         spawnTurrets(player);
         spawnWalls(player);
         spawnGates(player);
+        spawnExplosives(player);
         spawnTreeTop();
         spawnAstro();
         spawnTutnpc();
@@ -336,6 +338,22 @@ public class MapGameArea extends GameArea{
         for (WallConfig config : mapConfig.areaEntityConfig.getEntities(WallConfig.class)) {
             var turret = BuildablesFactory.createWall(config, player);
             ServiceLocator.getStructurePlacementService().placeStructureAt(turret, config.position);
+        }
+    }
+
+    /**
+     * Spawns the saved explosives into the map.
+     * @param player - the player.
+     */
+    private void spawnExplosives(Entity player) {
+        for (LandmineConfig config : mapConfig.areaEntityConfig.getEntities(LandmineConfig.class)) {
+            var landmine = ExplosivesFactory.createLandmine(config);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(landmine, config.position);
+        }
+
+        for (ExplosiveBarrelConfig config : mapConfig.areaEntityConfig.getEntities(ExplosiveBarrelConfig.class)) {
+            var landmine = ExplosivesFactory.createExplosiveBarrel(config);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(landmine, config.position);
         }
     }
 

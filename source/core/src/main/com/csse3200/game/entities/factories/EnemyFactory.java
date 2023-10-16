@@ -250,7 +250,6 @@ public class EnemyFactory {
   private static void addSpecialAttack(EnemyConfig config, Entity enemy){
     if(config.name == EnemyName.Guardian){
       enemy.addComponent(new GodComponent(enemy));
-      enemy.addComponent(new InvisibilityComponent(enemy));
     }
     if(config.name == EnemyName.chain){
       enemy.addComponent(new InvisibilityComponent(enemy));

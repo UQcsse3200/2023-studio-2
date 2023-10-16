@@ -28,9 +28,9 @@ public class GodComponent extends Component {
 
     public GodComponent(Entity enemy){
         this.entity = enemy;
-        this.movementComponent = entity.getComponent(PhysicsMovementComponent.class);
+        this.movementComponent = enemy.getComponent(PhysicsMovementComponent.class);
         ScheduledExecutorService scheduler2 = Executors.newScheduledThreadPool(1);
-        scheduler2.scheduleAtFixedRate(this::toggleMode, 0, 2, TimeUnit.SECONDS);
+        scheduler2.scheduleAtFixedRate(this::toggleMode, 0, 5, TimeUnit.SECONDS);
 
     }
     /**
@@ -56,6 +56,7 @@ public class GodComponent extends Component {
 
     @Override
     public void update() {
+        movementComponent.changeMaxSpeed(new Vector2(2f,2f));
         if(Mode){
             locations = generateAngle(entity.getCenterPosition());
             final int[] index = {0}; // Initialize an array to keep track of the current index
@@ -64,6 +65,7 @@ public class GodComponent extends Component {
             Timer.Task spawnBulletTask = new Timer.Task() {
                 @Override
                 public void run() {
+                    movementComponent.changeMaxSpeed(new Vector2(0f,0f));
                     if (index[0] < locations.length) {
                         Vector2 location = locations[index[0]];
                         Entity bullet1 = ProjectileFactory.createEnemyBullet(location, entity);
@@ -73,10 +75,8 @@ public class GodComponent extends Component {
                     }
                 }
             };
-
             float delayBetweenIterations = 0.1f; // Delay between each iteration in seconds
             float initialDelay = 0.0f; // Initial delay before the first iteration in seconds
-
             Timer.schedule(spawnBulletTask, initialDelay, delayBetweenIterations);
             Mode = false;
         }

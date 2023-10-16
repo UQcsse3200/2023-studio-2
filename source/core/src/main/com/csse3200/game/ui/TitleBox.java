@@ -11,7 +11,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.entities.Entity;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
-import static java.awt.SystemColor.text;
 
 public class TitleBox extends Dialog {
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.enemy.GodComponent;
+import com.csse3200.game.components.enemy.InvisibilityComponent;
 import com.csse3200.game.components.flags.EnemyFlag;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.npc.targetComponent;
@@ -157,7 +158,7 @@ public class EnemyFactory {
   static float getEnemyscale(EnemyConfig config) {
     float scale = 1f;
     switch (config.name) {
-      case chain -> scale = 1.5f;
+      case chain -> scale = 2.5f;
       case necromancer -> scale = 2.5f;
       case Knight -> scale = 3f;
       case Guardian -> scale = 3f;
@@ -249,6 +250,9 @@ public class EnemyFactory {
   private static void addSpecialAttack(EnemyConfig config, Entity enemy){
     if(config.name == EnemyName.Guardian){
       enemy.addComponent(new GodComponent(enemy));
+    }
+    if(config.name == EnemyName.chain){
+      enemy.addComponent(new InvisibilityComponent(enemy));
     }
   }
 

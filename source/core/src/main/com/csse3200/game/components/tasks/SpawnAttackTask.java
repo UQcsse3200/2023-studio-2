@@ -75,7 +75,7 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
     waitTask = new WaitTask(waitTime);
     waitTask.create(owner);
 
-    spawnTask = new SpawnTask(target);
+    spawnTask = new SpawnTask();
     spawnTask.create(owner);
 
     waitTask.start();
@@ -118,62 +118,36 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
    * to spawn new enemies appropriately.
    */
   private void startSpawning() {
-    System.out.println(entities.size());
-    ListIterator<Entity> iterator = entities.listIterator();
+    updateEnemyList();
 
-    while (iterator.hasNext()) {
-      Entity element = iterator.next();
-      if (element.getComponent(CombatStatsComponent.class).getHealth() == 0) {
-        iterator.remove();
-      }
-    }
+    ArrayList<Entity> entitiesToSpawn = new ArrayList<>();
 
     if (entities.isEmpty()) {
       Entity enemyOne = EnemyFactory.createEnemy(redGhost);
       Entity enemyTwo = EnemyFactory.createEnemy(redGhost);
 
-      System.out.println("adding enemies");
       entities.add(enemyOne);
       entities.add(enemyTwo);
 
-      logger.debug("Starting spawning");
-      this.owner.getEntity().getEvents().trigger("standing");
-      lastSpawnTime = timer.getTime();
-      numSpawns += 1;
+      entitiesToSpawn.add(enemyOne);
+      entitiesToSpawn.add(enemyTwo);
 
-      if (currentTask != null) {
-        currentTask.stop();
-      }
-      currentTask = spawnTask;
-      spawnTask.start(entities.get(0), entities.get(1));
     } else if (entities.size() == 1) {
-      System.out.println("respawning");
       Entity enemyOne = EnemyFactory.createEnemy(redGhost);
 
       entities.add(enemyOne);
 
-      logger.debug("Starting spawning");
-      this.owner.getEntity().getEvents().trigger("standing");
-      lastSpawnTime = timer.getTime();
-      numSpawns += 1;
-
-      if (currentTask != null) {
-        currentTask.stop();
-      }
-      currentTask = spawnTask;
-      spawnTask.start(entities.get(1));
-    } else {
-      logger.debug("Starting spawning");
-      this.owner.getEntity().getEvents().trigger("standing");
-      lastSpawnTime = timer.getTime();
-      numSpawns += 1;
-
-      if (currentTask != null) {
-        currentTask.stop();
-      }
-      currentTask = spawnTask;
-      spawnTask.start();
     }
+    logger.debug("Starting spawning");
+    this.owner.getEntity().getEvents().trigger("standing");
+    lastSpawnTime = timer.getTime();
+    numSpawns += 1;
+
+    if (currentTask != null) {
+      currentTask.stop();
+    }
+    currentTask = spawnTask;
+    spawnTask.start(entitiesToSpawn);
   }
 
   /**
@@ -187,6 +161,17 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
     }
     currentTask = newTask;
     currentTask.start();
+  }
+
+  private void updateEnemyList() {
+    ListIterator<Entity> iterator = entities.listIterator();
+
+    while (iterator.hasNext()) {
+      Entity element = iterator.next();
+      if (element.getComponent(CombatStatsComponent.class).getHealth() == 0) {
+        iterator.remove();
+      }
+    }
   }
 }
 

@@ -15,85 +15,49 @@ import java.util.ArrayList;
 public class SpawnTask extends DefaultTask {
     private static final Logger logger = LoggerFactory.getLogger(SpawnTask.class);
     private boolean hasSpawned;
-    Entity target;
+
 
 
     /**
      * Creates a new spawn task.
-     *
-     * @param target The target Entity which the spawned entities will target.
      */
-    public SpawnTask(Entity target) {
-        this.target = target;
-    }
-
-    @Override
-    public void start() {
-        super.start();
-        hasSpawned = false;
-        spawnEnemy();
-        hasSpawned = true;
-    }
+    public SpawnTask() {}
 
     /**
      * Starts the spawn task given entities to spawn.
      *
-     * @param enemyOne The entity to spawn.
+     * @param entities The entities to spawn..
      */
-    public void start(Entity enemyOne) {
+    public void start(ArrayList<Entity> entities) {
         super.start();
         hasSpawned = false;
-        spawnEnemy(enemyOne);
+        spawnEnemy(entities);
         hasSpawned = true;
     }
 
     /**
-     * Starts the spawn task given entities to spawn.
+     * Spawns entities from a given list with appropriate positioning with respect to owner entity.
      *
-     * @param enemyOne The first entity to spawn.
-     * @param enemyTwo The second entity to spawn.
+     * @param entities The list of entities to be spawned.
      */
-    public void start(Entity enemyOne, Entity enemyTwo) {
-        super.start();
-        hasSpawned = false;
-        spawnEnemy(enemyOne, enemyTwo);
-        hasSpawned = true;
-    }
+    public void spawnEnemy(ArrayList<Entity> entities) {
+        if (entities.isEmpty()) {
+            // do nothing
+        } else if (entities.size() == 1) {
+            Vector2 currentPos = owner.getEntity().getPosition();
 
-    /**
-     * Does not do anything as no entities need to be spawned.
-     */
-    public void spawnEnemy() {
-        // Do nothing
-    }
+            Vector2 posOne = new Vector2(currentPos.x + 1, currentPos.y);
 
-    /**
-     * Spawns one entity 1 unit to the right of the owner entity.
-     *
-     * @param enemyOne The entity to be spawned.
-     */
-    public void spawnEnemy(Entity enemyOne) {
-        Vector2 currentPos = owner.getEntity().getPosition();
+            ServiceLocator.getStructurePlacementService().spawnEntityAtVector(entities.get(0), posOne);
+        } else if (entities.size() == 2) {
+            Vector2 currentPos = owner.getEntity().getPosition();
 
-        Vector2 posOne = new Vector2(currentPos.x + 1, currentPos.y);
+            Vector2 posOne = new Vector2(currentPos.x + 1, currentPos.y);
+            Vector2 posTwo = new Vector2(currentPos.x - 1, currentPos.y);
 
-        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemyOne, posOne);
-    }
-
-    /**
-     * Spawns two entities. 1 unit to the right and left of the owner entity.
-     *
-     * @param enemyOne The first entity to be spawned.
-     * @param enemyTwo The second entity to be spawned.
-     */
-    public void spawnEnemy(Entity enemyOne, Entity enemyTwo) {
-        Vector2 currentPos = owner.getEntity().getPosition();
-
-        Vector2 posOne = new Vector2(currentPos.x + 1, currentPos.y);
-        Vector2 posTwo = new Vector2(currentPos.x - 1, currentPos.y);
-
-        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemyOne, posOne);
-        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemyTwo, posTwo);
+            ServiceLocator.getStructurePlacementService().spawnEntityAtVector(entities.get(0), posOne);
+            ServiceLocator.getStructurePlacementService().spawnEntityAtVector(entities.get(1), posTwo);
+        }
     }
 
     @Override

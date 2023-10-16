@@ -2,6 +2,8 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -81,6 +83,7 @@ public class MapGameArea extends GameArea{
         spawnExtractors();
         spawnShip();
         player = spawnPlayer();
+        freezing = false;
         companion = spawnCompanion();
         spawnPowerups();
         spawnLaboratory();
@@ -203,6 +206,28 @@ public class MapGameArea extends GameArea{
 
     public static void toggleFreezing(Entity player) {
         freezing = !freezing;
+    }
+
+    /**
+     * Checks if the player should be taking damage from standing on fire or lava
+     * @return whether the tile under the player on any layer has the property "burn"
+     */
+    public static void isBurning() {
+        if(getPlayer() != null){
+            Vector2 playerPos = getPlayer().getPosition();
+            MapLayers layers = terrain.getMap().getLayers();
+            for (MapLayer layer : layers) {
+                TiledMapTileLayer.Cell cell = ((TiledMapTileLayer) layer).getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+                if (cell != null) {
+                    Object onFire = cell.getTile().getProperties().get("burn");
+                    if (onFire != null && (boolean) onFire) {
+                        player.getComponent(EnvironmentStatsComponent.class).setBurning(true);
+                        return;
+                    }
+                }
+            }
+            player.getComponent(EnvironmentStatsComponent.class).setBurning(false);
+        }
     }
 
     /**

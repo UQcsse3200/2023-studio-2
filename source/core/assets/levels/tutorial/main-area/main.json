@@ -23,6 +23,7 @@
     "images/upgradetree/hammer2.png",
     "images/upgradetree/stick.png",
     "images/upgradetree/exit.png",
+    "images/companion/earth_Companion_spritesheet.png",
     "images/companion/Companion_spritesheet.png",
     "images/companion/laboratory.png",
     "images/powerups/double_damage.png",
@@ -73,7 +74,7 @@
     "images/weapons/wrench.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
-    "images/companion/Companion_spritesheet.atlas",
+    "images/companion/earth_Companion_spritesheet.atlas",
     "images/minigame/fire.atlas",
     "images/structures/ExtractorAnimation.atlas",
     "images/npc/Tutnpc.atlas"

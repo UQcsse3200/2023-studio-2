@@ -35,11 +35,11 @@ public class ShipActionsTest {
     @BeforeEach
     void setUp() {
         ServiceLocator.registerEntityService(entityService);
-
         // Set up a ship entity with ShipActions component
         ship = new Entity();
         ship.addComponent(physicsComponent);
-        ship.addComponent(new ShipActions(100, 100, 1));
+        //Someone changed the ShipActions class... only parameter left is acceleration
+        ship.addComponent(new ShipActions(1));
         //ship = ship.getComponent(ShipActions.class);
     }
 

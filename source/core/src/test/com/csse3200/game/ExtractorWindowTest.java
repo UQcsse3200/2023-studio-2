@@ -3,6 +3,7 @@ package com.csse3200.game;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.csse3200.game.windows.ExtractorMinigameWindow;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.ResourceService;

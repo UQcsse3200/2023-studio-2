@@ -7,6 +7,7 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.utils.Timer;
+import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,18 +25,27 @@ public class EnvironmentStatsComponent extends Component {
     private boolean isSafeMap = false;
 
     private int frozenLevel;
+    private boolean burning;
 
     public EnvironmentStatsComponent() {
         this.frozenLevel = 0;
+        this.burning = false;
     }
 
     public int getFrozenLevel() {
         return this.frozenLevel;
     }
 
-
     public void setFrozenLevel(int newFrozenLevel) {
         this.frozenLevel = newFrozenLevel;
+    }
+
+    public boolean getBurning() {
+        return this.burning;
+    }
+
+    public void setBurning(boolean newBurnState) {
+        this.burning = newBurnState;
     }
 
     public Boolean getIsSafe() {
@@ -76,6 +86,13 @@ public class EnvironmentStatsComponent extends Component {
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
+                MapGameArea.isBurning();
+                if (burning) {
+                    player.addHealth(-1);
+                    if (player.getHealth() <= 0) {
+                        timer.stop();
+                    }
+                }
                 if (getImmunity()) {
                     return;
                 }

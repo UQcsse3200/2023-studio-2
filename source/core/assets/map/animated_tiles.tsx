@@ -131,6 +131,9 @@
   </animation>
  </tile>
  <tile id="80">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="80" duration="100"/>
    <frame tileid="82" duration="100"/>
@@ -139,6 +142,9 @@
   </animation>
  </tile>
  <tile id="81">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="81" duration="100"/>
    <frame tileid="83" duration="100"/>
@@ -147,6 +153,9 @@
   </animation>
  </tile>
  <tile id="90">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="90" duration="100"/>
    <frame tileid="92" duration="100"/>
@@ -155,6 +164,9 @@
   </animation>
  </tile>
  <tile id="91">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="91" duration="100"/>
    <frame tileid="93" duration="100"/>
@@ -163,6 +175,9 @@
   </animation>
  </tile>
  <tile id="100">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="100" duration="100"/>
    <frame tileid="102" duration="100"/>
@@ -171,6 +186,9 @@
   </animation>
  </tile>
  <tile id="101">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="101" duration="100"/>
    <frame tileid="103" duration="100"/>
@@ -179,6 +197,9 @@
   </animation>
  </tile>
  <tile id="110">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="110" duration="100"/>
    <frame tileid="112" duration="100"/>
@@ -187,6 +208,9 @@
   </animation>
  </tile>
  <tile id="111">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="111" duration="100"/>
    <frame tileid="113" duration="100"/>
@@ -195,6 +219,9 @@
   </animation>
  </tile>
  <tile id="120">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="120" duration="100"/>
    <frame tileid="122" duration="100"/>
@@ -203,6 +230,9 @@
   </animation>
  </tile>
  <tile id="121">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="121" duration="100"/>
    <frame tileid="123" duration="100"/>
@@ -211,6 +241,9 @@
   </animation>
  </tile>
  <tile id="130">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="130" duration="100"/>
    <frame tileid="132" duration="100"/>
@@ -219,6 +252,9 @@
   </animation>
  </tile>
  <tile id="131">
+  <properties>
+   <property name="burn" type="bool" value="true"/>
+  </properties>
   <animation>
    <frame tileid="131" duration="100"/>
    <frame tileid="133" duration="100"/>

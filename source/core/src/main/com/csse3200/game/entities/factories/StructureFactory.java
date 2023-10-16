@@ -45,17 +45,6 @@ public class StructureFactory {
     private StructureFactory() {
         throw new IllegalStateException("Factory class");
     }
-    
-    /**
- * Creates an extractor entity with the specified configuration.
- *
- * @param health          The maximum and initial health of the extractor.
- * @param producedResource The resource type produced by the extractor.
- * @param tickRate        The frequency at which the extractor ticks (produces resources).
- * @param tickSize        The amount of the resource produced at each tick.
- * @return A new extractor Entity.
- */
-
 
     //Default configs
     public static final ShipConfig defaultShip =

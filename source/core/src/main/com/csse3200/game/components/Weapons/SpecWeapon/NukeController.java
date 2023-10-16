@@ -57,7 +57,6 @@ public class NukeController extends WeaponControllerComponent {
      */
     @Override
     protected void initial_rotation() {
-        return;
     }
 
     /**
@@ -75,7 +74,6 @@ public class NukeController extends WeaponControllerComponent {
 
     @Override
     protected void rotate() {
-        return;
     }
 
     @Override
@@ -83,7 +81,6 @@ public class NukeController extends WeaponControllerComponent {
      var pos = entity.getCenterPosition();
      entity.setScale(entity.getScale().sub(0.000f, 0.000f).scl(0.996f));
      entity.setPosition(pos.mulAdd(entity.getScale(), -0.5f));
-        return;
     }
 
     @Override

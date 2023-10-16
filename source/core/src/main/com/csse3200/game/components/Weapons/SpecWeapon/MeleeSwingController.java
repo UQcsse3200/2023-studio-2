@@ -8,14 +8,14 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class MeleeSwingController extends WeaponControllerComponent {
-    private Vector2 player_last_pos;
+    private Vector2 playerlastpos;
     private int attackSide;
 
     public MeleeSwingController(WeaponConfig config,
                                 float attackDirection,
                                 Entity player) {
         super(config, attackDirection, player);
-        this.player_last_pos = player.getPosition();
+        this.playerlastpos = player.getPosition();
         attackSide = (currentRotation > 90 && currentRotation < 270) ? 1 : -1;
     }
 
@@ -34,7 +34,6 @@ public class MeleeSwingController extends WeaponControllerComponent {
 
     @Override
     protected void initial_rotation() {
-        return;
     }
 
     @Override
@@ -58,13 +57,12 @@ public class MeleeSwingController extends WeaponControllerComponent {
 
     @Override
     protected void rotate() {
-        return;
     }
 
     @Override
     protected void move() {
-        Vector2 player_delta = player.getPosition().sub(player_last_pos);
-        this.player_last_pos = player.getPosition();
+        Vector2 player_delta = player.getPosition().sub(playerlastpos);
+        this.playerlastpos = player.getPosition();
 
         entity.setPosition(entity.getPosition()
                 .add(player_delta.cpy())
@@ -75,6 +73,5 @@ public class MeleeSwingController extends WeaponControllerComponent {
 
     @Override
     protected void reanimate() {
-        return;
     }
 }

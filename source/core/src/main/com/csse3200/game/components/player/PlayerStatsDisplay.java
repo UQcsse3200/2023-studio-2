@@ -341,10 +341,10 @@ public class PlayerStatsDisplay extends UIComponent {
   public void updateAmmo(int currentAmmo, int maxAmmo, int ammoUse) {
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
 
-    if (ammoUse == 0) {
-      ammoText = "    -";
-    } else if (inventory.getReloading()) {
+    if (inventory.getReloading()) {
       ammoText = " RLD ";
+    } else if (ammoUse == 0) {
+      ammoText = "    -";
     }
     ammoLabel.setText(ammoText);
   }

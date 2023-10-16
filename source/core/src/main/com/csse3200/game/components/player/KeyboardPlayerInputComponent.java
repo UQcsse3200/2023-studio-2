@@ -166,7 +166,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 triggerWalkEvent();
                 return true;
             }
-            case Keys.R -> {
+            case Keys.Q -> {
                 if (!playerInventory.getReloading()) {
                     playerInventory.reloadWeapon();
                 }

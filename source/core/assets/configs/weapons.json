@@ -198,7 +198,7 @@
     "rotationSpeed": 0,
     "attackCooldown": 10,
     "textureAtlas": "images/weapons/melee/bee.atlas",
-    "imageScale" : 0.6,
+    "imageScale" : 0.4,
     "staticImageScale" : 0.4,
     "imagePath" : "images/weapons/melee/beeStatic.png",
     "type" : "MELEE_BEE_STING",

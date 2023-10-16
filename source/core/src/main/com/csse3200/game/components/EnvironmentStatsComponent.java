@@ -48,7 +48,7 @@ public class EnvironmentStatsComponent extends Component {
 
 
     public void setSafeMap(GameAreaConfig mapConfig) {
-        this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Verdant Oasis"));
+        this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Flora Haven"));
     }
 
     /**

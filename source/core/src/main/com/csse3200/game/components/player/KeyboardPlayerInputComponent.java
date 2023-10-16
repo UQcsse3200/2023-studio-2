@@ -8,6 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -132,16 +135,31 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 }
                 return true;
             }
-            case Keys.NUM_1 -> {
+            case Keys.M -> {
                 triggerInventoryEvent("melee");
+                entity.getComponent(StructureToolPicker.class).hide();
                 return true;
             }
-            case Keys.NUM_2 -> {
+            case Keys.R -> {
                 triggerInventoryEvent("ranged");
+                entity.getComponent(StructureToolPicker.class).hide();
                 return true;
             }
-            case Keys.NUM_3 -> {
-                triggerInventoryEvent(BUILDING);
+            case Keys.H -> {
+                triggerInventoryEvent("building");
+                entity.getComponent(StructureToolPicker.class).show();
+                return true;
+            }
+            case Keys.U -> {
+                UpgradeDisplay display = UpgradeDisplay.createUpgradeDisplay();
+                ServiceLocator.getRenderService().getStage().addActor(display);
+                return true;
+            }
+            case Keys.NUM_0, Keys.NUM_1, Keys.NUM_2, Keys.NUM_3, Keys.NUM_4,
+                    Keys.NUM_5, Keys.NUM_6, Keys.NUM_7, Keys.NUM_8, Keys.NUM_9 -> {
+                int index = keycode - (Keys.NUM_0 + 1) % 10;
+                entity.getEvents().trigger("selectToolIndex", index);
+                entity.getEvents().trigger("selectWeaponIndex", index);
                 return true;
             }
             case Keys.W, Keys.S, Keys.A, Keys.D -> {

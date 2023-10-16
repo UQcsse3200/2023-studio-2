@@ -37,7 +37,7 @@ public class InteractLabel extends Table {
         this.pack();
 
         Stage stage = ServiceLocator.getRenderService().getStage();
-        this.setPosition((stage.getWidth() - this.getWidth()) / 2, 10);
+        this.setPosition((stage.getWidth() - this.getWidth()) / 2, 80);
         this.setVisible(false);
 
         this.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.fadeOut(0.5f), Actions.fadeIn(0.5f)))); //this makes the interaction prompt blink for better ui

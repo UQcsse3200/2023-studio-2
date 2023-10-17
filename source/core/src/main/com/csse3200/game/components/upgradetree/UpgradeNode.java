@@ -6,6 +6,7 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.ToLongBiFunction;
 
 /**
  * Represents a node within the upgrade tree.
@@ -167,9 +168,23 @@ public class UpgradeNode {
      * @return int: the nodes cost
      */
     public int getNodeCost() {
-        if (getWeaponType() == WeaponType.RANGED_NUKE) {
+        // Tools - total build price is a function of cost
+        if (getConfig() instanceof ToolConfig) {
+            int total = 0;
+            for (var cost : ((ToolConfig) getConfig()).cost.entries()) {
+                total += cost.value;
+            }
+            return BASE_COST * (this.getDepth() + 1) + total;
+        }
+
+        // Weapons - damage is a function of cost
+        if (getWeaponType() == WeaponType.RANGED_NUKE) { // special case...
             return 1000;
         }
-        return BASE_COST * (this.getDepth() + 1);
+        if (getWeaponType() == WeaponType.RANGED_GRENADE) { // special case; it does no damage on impact
+            return 450;
+        }
+        WeaponConfig weaponConfig = (WeaponConfig) getConfig();
+        return (int) (BASE_COST * (this.getDepth() + 1) + weaponConfig.damage * 3);
     }
 }

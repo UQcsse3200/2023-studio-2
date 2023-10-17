@@ -17,7 +17,7 @@ ATTACK
   orig: 25, 65
   offset: 0, 0
   index: 1
-ATTACK1
+ATTACK
   rotate: false
   xy: 50, 0
   size: 25, 65

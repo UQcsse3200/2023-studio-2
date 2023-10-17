@@ -91,7 +91,13 @@ public class CompanionPowerupInventoryComponent extends Component {
                 //use that powerup type
                 //create the powerup component
                 PowerupComponent thisPowerup = new PowerupComponent(type);
-                thisPowerup.applyEffect();
+                //check for unique case of death potion
+                if (type == PowerupType.DEATH_POTION) {
+                    //THIS HARDCODE LINE CREATES A NEW DEATH POTION FROM TRIGGER TO WEAPON CLASS
+                    ServiceLocator.getEntityService().getCompanion().getEvents().trigger("changeWeapon", CompanionWeaponType.Death_Potion);
+                } else {
+                    thisPowerup.applyEffect();
+                }
 
                 logger.info("SUCCESSFULLY CREATED AND USED POWERUPTYPE " + type.toString());
 
@@ -130,35 +136,6 @@ public class CompanionPowerupInventoryComponent extends Component {
 
         //there has been a powerup inventory change
         sendUIPowerupInventoryChange();
-    }
-
-    /**
-     * This is going to be called by companion key input
-     *
-     * If you press n, at any point in time, itll check if you have any space left for a death potion
-     *
-     * if you do, it'll create one.
-     *
-     * if not, it wont
-     */
-    public void tryCreateDeathPowerupFromPowerupInventory() {
-        //if the result is not null, then that type is inside the inventory
-        if (getPowerupInventoryCount(PowerupType.DEATH_POTION) != null) {
-            //now CHECK if there is at least 1 death potion in the inventory
-            Integer currentPowerupTypeCount = getPowerupInventoryCount(PowerupType.DEATH_POTION);
-            //if there are more than 0
-            if (currentPowerupTypeCount > 0) {
-                //remove one quantity of death potion from the inventory
-                powerupsInventoryAmount.put(PowerupType.DEATH_POTION, currentPowerupTypeCount - 1);
-
-                //spawn a death potion weapon
-                //THIS HARDCODE LINE CREATES A NEW DEATH POTION FROM TRIGGER TO WEAPON CLASS
-                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("changeWeapon", CompanionWeaponType.Death_Potion);
-
-                //there has been a powerup inventory change
-                sendUIPowerupInventoryChange();
-            }
-        }
     }
 
     /**

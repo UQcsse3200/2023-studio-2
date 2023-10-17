@@ -190,7 +190,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                     //ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class).useNextPowerup();
 
                     // Use new inventory to spawn a brand new death potion weapon
-                    ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupInventoryComponent.class).tryCreateDeathPowerupFromPowerupInventory();
+                    //ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupInventoryComponent.class).tryCreateDeathPowerupFromPowerupInventory();
                     //ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupActivationDisplay.class).decreaseIndexInPowerupActivationList();
                     lastNKeyPressTime = currentTime;
                 }else {logger.debug("powerup cooldown");}

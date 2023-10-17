@@ -128,7 +128,7 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
         powerupActivationButton = new Button(skin);
         // configure size and placement of the button
         powerupActivationButton.setColor(0.5f, 0.5f, 0.5f, 0.5f);
-        powerupActivationButton.setPosition(1405f,270f);
+        powerupActivationButton.setPosition(1675f,270f);
         powerupActivationButton.setSize(187f, 95f);
 
         //create the potion IMAGE element and make sure its showing the latest, correct image
@@ -163,7 +163,7 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
     public void addLeftButton() {
         leftButton = new TextButton("prev", skin);
         leftButton.setColor(0.5f, 0.5f, 0.5f, 0.5f);
-        leftButton.setPosition(1350f,300f);
+        leftButton.setPosition(1620f,300f);
         leftButton.setSize(50f, 45f);
         // bind on click button event to a change in the list
         leftButton.addListener(new ChangeListener() {
@@ -181,7 +181,7 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
     public void addRightButton() {
         rightButton = new TextButton("next", skin);
         rightButton.setColor(0.5f, 0.5f, 0.5f, 0.5f);
-        rightButton.setPosition(1595f, 300f);
+        rightButton.setPosition(1870f, 300f);
         rightButton.setSize(50f, 45f);
         rightButton.addListener(new ChangeListener() {
             @Override

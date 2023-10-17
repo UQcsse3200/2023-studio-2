@@ -1,4 +1,4 @@
-package com.csse3200.game.areas.mapConfig;
+package com.csse3200.game.areas.map_config;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.entities.configs.CompanionConfig;
@@ -146,6 +146,8 @@ class ConfigLoaderTest {
         companionFile = new EntitiesConfigFile();
         companionFile.entityType = CompanionConfig.class.getSimpleName();
         companionFile.entities = List.of(companionConfig);
+
+        ConfigLoader.determine_prefix();
     }
 
     @AfterEach
@@ -208,7 +210,7 @@ class ConfigLoaderTest {
 
     @Test
     void loadSavedGameFileWhenExists() throws InvalidConfigException {
-        String save_game_file_path = joinPath(List.of(SAVE_PATH, GAME_FILE));
+        String save_game_file_path = joinPath(List.of(getSavePath(), GAME_FILE));
         utilsMock.when(() -> LoadUtils.pathExists(contains(SAVE_PATH))).thenReturn(false);
         utilsMock.when(() -> LoadUtils.pathExists(eq(save_game_file_path))).thenReturn(true);
         fileLoaderMock.when(() -> FileLoader.readClass(eq(GameConfig.class), any(), eq(FileLoader.Location.LOCAL))).thenReturn(null);
@@ -228,7 +230,7 @@ class ConfigLoaderTest {
 
     @Test
     void loadSavedGameStateWhenExists() throws InvalidConfigException {
-        String save_game_state_path = joinPath(List.of(SAVE_PATH, GAMESTATE_FILE));
+        String save_game_state_path = joinPath(List.of(getSavePath(), GAMESTATE_FILE));
         utilsMock.when(() -> LoadUtils.pathExists(contains(SAVE_PATH))).thenReturn(false);
         utilsMock.when(() -> LoadUtils.pathExists(eq(save_game_state_path))).thenReturn(true);
         fileLoaderMock.when(() -> FileLoader.readClass(eq(GameConfig.class), any(), eq(FileLoader.Location.LOCAL))).thenReturn(null);
@@ -248,7 +250,7 @@ class ConfigLoaderTest {
 
     @Test
     void loadSavedAssetsWhenExists() throws InvalidConfigException {
-        String save_assets_path = joinPath(List.of(SAVE_PATH, ASSETS_FILE));
+        String save_assets_path = joinPath(List.of(getSavePath(), ASSETS_FILE));
         utilsMock.when(() -> LoadUtils.pathExists(contains(SAVE_PATH))).thenReturn(false);
         utilsMock.when(() -> LoadUtils.pathExists(eq(save_assets_path))).thenReturn(true);
         fileLoaderMock.when(() -> FileLoader.readClass(eq(GameConfig.class), any(), eq(FileLoader.Location.LOCAL))).thenReturn(null);
@@ -268,7 +270,7 @@ class ConfigLoaderTest {
 
     @Test
     void loadNewLevel() throws InvalidConfigException {
-        String path = joinPath(List.of(ROOT_PATH, "level", LEVEL_FILE));
+        String path = joinPath(List.of(getRootPath(), "level", LEVEL_FILE));
         utilsMock.when(() -> LoadUtils.pathExists(contains(SAVE_PATH))).thenReturn(false);
         utilsMock.when(() -> LoadUtils.pathExists(eq(path))).thenReturn(true);
         fileLoaderMock.when(() -> FileLoader.readClass(any(), contains(SAVE_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(null);
@@ -279,7 +281,7 @@ class ConfigLoaderTest {
 
     @Test
     void loadSavedLevel() throws InvalidConfigException {
-        String path = joinPath(List.of(SAVE_PATH, "saved_level", LEVEL_FILE));
+        String path = joinPath(List.of(getSavePath(), "saved_level", LEVEL_FILE));
         utilsMock.when(() -> LoadUtils.pathExists(contains(ROOT_PATH))).thenReturn(false);
         utilsMock.when(() -> LoadUtils.pathExists(eq(path))).thenReturn(true);
         fileLoaderMock.when(() -> FileLoader.readClass(any(), contains(ROOT_PATH), eq(FileLoader.Location.LOCAL))).thenReturn(null);
@@ -290,7 +292,7 @@ class ConfigLoaderTest {
 
     @Test
     void loadInvalidLevel() {
-        String path = joinPath(List.of(ROOT_PATH, "level", LEVEL_FILE));
+        String path = joinPath(List.of(getRootPath(), "level", LEVEL_FILE));
         utilsMock.when(() -> LoadUtils.pathExists(eq(path))).thenReturn(true);
         fileLoaderMock.when(() -> FileLoader.readClass(eq(LevelConfig.class), eq(path), eq(FileLoader.Location.LOCAL))).thenReturn(null);
         assertThrows(InvalidConfigException.class, () -> ConfigLoader.loadLevel("level"));
@@ -298,7 +300,7 @@ class ConfigLoaderTest {
 
     @Test
     void loadInvalidSaveLevel() {
-        String path = joinPath(List.of(SAVE_PATH, "saved_level", LEVEL_FILE));
+        String path = joinPath(List.of(getSavePath(), "saved_level", LEVEL_FILE));
         utilsMock.when(() -> LoadUtils.pathExists(eq(path))).thenReturn(true);
         fileLoaderMock.when(() -> FileLoader.readClass(eq(LevelConfig.class), eq(path), eq(FileLoader.Location.LOCAL))).thenReturn(null);
         assertThrows(InvalidConfigException.class, () -> ConfigLoader.loadLevel("saved_level"));
@@ -327,7 +329,7 @@ class ConfigLoaderTest {
 
     @Test
     void LoadValidSaveMapDirectory() throws InvalidConfigException {
-        String areaPath = joinPath(List.of(SAVE_PATH, "level", "main_area"));
+        String areaPath = joinPath(List.of(getSavePath(), "level", "main_area"));
         String filePath = joinPath(List.of(areaPath, MAIN_FILE));
         String entitiesPath = joinPath(List.of(areaPath, ENTITIES_PATH + JSON_EXT));
         utilsMock.when(() -> LoadUtils.pathExists(contains(ROOT_PATH))).thenReturn(false);
@@ -342,7 +344,7 @@ class ConfigLoaderTest {
 
     @Test
     void LoadSaveMapDirectoryInvalidFile() {
-        String areaPath = joinPath(List.of(SAVE_PATH, "level", "main_area"));
+        String areaPath = joinPath(List.of(getSavePath(), "level", "main_area"));
         String filePath = joinPath(List.of(areaPath, MAIN_FILE));
         String entitiesPath = joinPath(List.of(areaPath, ENTITIES_PATH + JSON_EXT));
         utilsMock.when(() -> LoadUtils.pathExists(contains(ROOT_PATH))).thenReturn(false);
@@ -356,7 +358,7 @@ class ConfigLoaderTest {
 
     @Test
     void LoadSaveMapDirectoryInvalidEntities() {
-        String areaPath = joinPath(List.of(SAVE_PATH, "level", "main_area"));
+        String areaPath = joinPath(List.of(getSavePath(), "level", "main_area"));
         String filePath = joinPath(List.of(areaPath, MAIN_FILE));
         String entitiesPath = joinPath(List.of(areaPath, ENTITIES_PATH + JSON_EXT));
         utilsMock.when(() -> LoadUtils.pathExists(contains(ROOT_PATH))).thenReturn(false);

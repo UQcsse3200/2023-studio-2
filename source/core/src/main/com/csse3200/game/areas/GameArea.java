@@ -17,10 +17,13 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Represents an area in the game, such as a level, indoor area, etc. An area has a terrain and
+ * Represents an area in the game, such as a level, indoor area, etc. An area
+ * has a terrain and
  * other entities to spawn on that terrain.
  *
- * <p>Support for enabling/disabling game areas could be added by making this a Component instead.
+ * <p>
+ * Support for enabling/disabling game areas could be added by making this a
+ * Component instead.
  */
 public abstract class GameArea implements Disposable {
   protected static TerrainComponent terrain;
@@ -70,13 +73,11 @@ public abstract class GameArea implements Disposable {
     handler.addListener("spawnExtractor", this::spawnExtractor);
     handler.addListener("placeStructure", this::spawnEntity);
     handler.addListener("fireBullet",
-            (StructurePlacementService.spawnEntityAtVectorArgs args) ->
-                    spawnEntityAtVector(args.getEntity(), args.getWorldPos())
-    );
+        (StructurePlacementService.spawnEntityAtVectorArgs args) -> spawnEntityAtVector(args.getEntity(),
+            args.getWorldPos()));
     handler.addListener("placeStructureAt",
-            (StructurePlacementService.placeStructureAtArgs args) ->
-                    spawnEntityAt(args.getEntity(), args.getTilePos(), false, false)
-    );
+        (StructurePlacementService.placeStructureAtArgs args) -> spawnEntityAt(args.getEntity(), args.getTilePos(),
+            false, false));
   }
 
   /**
@@ -86,12 +87,12 @@ public abstract class GameArea implements Disposable {
    * @param entity Entity (not yet registered) representing the extractor
    */
   protected void spawnExtractor(Entity entity) {
-    // TODO: Right now this just passes to spawnEntity but in future will have additional functionality
     this.spawnEntity(entity);
   }
 
   /**
-   * Function to register entity placement service using teh approripate listeners.
+   * Function to register entity placement service using teh approripate
+   * listeners.
    * This allows entities to be placed after initilisation.
    */
   protected void registerEntityPlacementService() {
@@ -121,52 +122,54 @@ public abstract class GameArea implements Disposable {
    */
   protected void spawnEntity(Entity entity) {
     areaEntities.add(entity);
-    if (terrain != null && entity.getComponent(ColliderComponent.class) != null) {
-      if (PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.LABORATORY) ||
-              PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.OBSTACLE) ||
-              PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.SHIP)) {
-        Vector2 position = entity.getPosition();
-        Vector2 scale = entity.getScale();
+    if ((terrain != null && entity.getComponent(ColliderComponent.class) != null)
+        && (PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.LABORATORY) ||
+            PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.OBSTACLE) ||
+            PhysicsLayer.contains(entity.getComponent(ColliderComponent.class).getLayer(), PhysicsLayer.SHIP))) {
+      Vector2 position = entity.getPosition();
+      Vector2 scale = entity.getScale();
 
-        // Calculate the four corners of the entity
-        Vector2 topRight = new Vector2(position.x + scale.x, position.y + scale.y);
-        Vector2 bottomLeft = new Vector2(position.x, position.y);
+      // Calculate the four corners of the entity
+      Vector2 topRight = new Vector2(position.x + scale.x, position.y + scale.y);
+      Vector2 bottomLeft = new Vector2(position.x, position.y);
 
-        // Convert these to grid coordinates
-        GridPoint2 gridTopRight = terrain.worldPositionToTile(topRight);
-        GridPoint2 gridBottomLeft = terrain.worldPositionToTile(bottomLeft);
+      // Convert these to grid coordinates
+      GridPoint2 gridTopRight = terrain.worldPositionToTile(topRight);
+      GridPoint2 gridBottomLeft = terrain.worldPositionToTile(bottomLeft);
 
-        // Iterate through the grid coordinates and add them to the HashMap
-        for (int x = gridBottomLeft.x; x < gridTopRight.x; x++) {
-          for (int y = gridBottomLeft.y; y < gridTopRight.y; y++) {
-            GridPoint2 gridPoint = new GridPoint2(x, y);
-            if (!pathFinderGrids.containsKey(gridPoint)) {
-              pathFinderGrids.put(gridPoint, entity);
-            }
+      // Iterate through the grid coordinates and add them to the HashMap
+      for (int x = gridBottomLeft.x; x < gridTopRight.x; x++) {
+        for (int y = gridBottomLeft.y; y < gridTopRight.y; y++) {
+          GridPoint2 gridPoint = new GridPoint2(x, y);
+          if (!pathFinderGrids.containsKey(gridPoint)) {
+            pathFinderGrids.put(gridPoint, entity);
           }
         }
       }
     }
     ServiceLocator.getEntityService().register(entity);
+
   }
+
   /**
    * Spawns the player entity and adds them to the list of targetable entities
    */
   protected void spawnPlayer(GridPoint2 playerSpawn) {
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer,playerSpawn, true, true);
+    spawnEntityAt(newPlayer, playerSpawn, true, true);
     targetables.add(newPlayer);
     player = newPlayer;
   }
 
-
   /**
    * Spawn entity on a given tile. Requires the terrain to be set first.
    *
-   * @param entity Entity (not yet registered)
+   * @param entity  Entity (not yet registered)
    * @param tilePos tile position to spawn at
-   * @param centerX true to center entity X on the tile, false to align the bottom left corner
-   * @param centerY true to center entity Y on the tile, false to align the bottom left corner
+   * @param centerX true to center entity X on the tile, false to align the bottom
+   *                left corner
+   * @param centerY true to center entity Y on the tile, false to align the bottom
+   *                left corner
    */
   protected void spawnEntityAt(
       Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
@@ -188,7 +191,10 @@ public abstract class GameArea implements Disposable {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }
- public Entity getCompanion(){return companion;}
+
+  public Entity getCompanion() {
+    return companion;
+  }
 
   public static Entity getPlayer() {
     return player;

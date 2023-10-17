@@ -1,5 +1,5 @@
 player.png
-size: 2048, 32
+size: 1440, 64
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -348,56 +348,56 @@ Character_RollUp
   index: -1
 Character_RollUp
   rotate: false
-  xy: 1440, 0
+  xy: 0, 32
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Character_RollUp
   rotate: false
-  xy: 1472, 0
+  xy: 32, 32
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Character_RollUp
   rotate: false
-  xy: 1504, 0
+  xy: 64, 32
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Character_Death
   rotate: false
-  xy: 992, 233
+  xy: 896, 32
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Character_Death
   rotate: false
-  xy: 960, 330
+  xy: 1056, 32
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Character_Death
   rotate: false
-  xy: 992, 330
+  xy: 1088, 32
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Character_Death
   rotate: false
-  xy: 1024, 330
+  xy: 1120, 32
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Character_Death
   rotate: false
-  xy: 1056, 330
+  xy: 1152, 32
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

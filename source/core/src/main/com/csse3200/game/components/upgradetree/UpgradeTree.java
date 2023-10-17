@@ -1,11 +1,11 @@
 package com.csse3200.game.components.upgradetree;
 
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.structures.ToolConfig;
-import com.csse3200.game.entities.configs.WeaponConfig;
-import com.csse3200.game.entities.configs.WeaponConfigs;
+import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
@@ -24,14 +24,17 @@ public class UpgradeTree extends Component {
     /**
      * Constructs a new UpgradeTree with default weapons unlocked.
      */
-    public UpgradeTree() {
-        unlockedWeapons = new ArrayList<>();
+    public UpgradeTree(PlayerConfig config) {
+        this.unlockedWeapons = config.unlocks;
 
         // Base weapons
         WeaponConfigs weaponConfigs = FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
-        unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.MELEE_KATANA));
-        unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BOOMERANG));
-        unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER));
+
+        if (unlockedWeapons.isEmpty()) {
+            unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH));
+            unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BOOMERANG));
+            unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER));
+        }
     }
 
     /**

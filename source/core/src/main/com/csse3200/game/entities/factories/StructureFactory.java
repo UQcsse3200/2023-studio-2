@@ -121,7 +121,7 @@ public class StructureFactory {
     }
 
     public static Entity createExtractorBang() {
-        Entity extractorBang = new Entity().addComponent(new TextureRenderComponent("images/bang.png"));
+        Entity extractorBang = new Entity().addComponent(new TextureRenderComponent("images/minigame/bang.png"));
         extractorBang.setScale(2.2f, 2.4f);
         return extractorBang;
     }

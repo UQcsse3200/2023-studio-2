@@ -37,15 +37,9 @@ public class PlanetTravel {
     public void beginInstantTravel() {
         String nextPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
         ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
-        if (!nextPlanet.equals("blazes_refuge")) {
-            PlanetScreen planet = new PlanetScreen(game, nextPlanet);
-            ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", planet.getNextPlanetName());
-            game.setScreen(planet);
-        } else {
-            //TODO: MAKE SHOW WIN SCREEN?
-            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-            logger.info("FINISHED GAME! - Returning to main menu");
-        }
+        PlanetScreen planet = new PlanetScreen(game, nextPlanet);
+        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", planet.getNextPlanetName());
+        game.setScreen(planet);
     }
 
     /**

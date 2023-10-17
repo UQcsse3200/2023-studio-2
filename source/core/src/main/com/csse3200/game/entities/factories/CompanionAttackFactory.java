@@ -1,22 +1,18 @@
 package com.csse3200.game.entities.factories;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.Companion.CompanionInventoryComponent;
-import com.csse3200.game.components.CompanionWeapons.PowerUpController;
+import com.csse3200.game.components.companion.CompanionInventoryComponent;
+import com.csse3200.game.components.companionweapons.PowerUpController;
 import com.csse3200.game.components.ParticleComponent;
 import com.csse3200.game.components.TouchAttackComponent;
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponController;
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponTargetComponent;
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
+import com.csse3200.game.components.companionweapons.CompanionWeaponController;
+import com.csse3200.game.components.companionweapons.CompanionWeaponTargetComponent;
+import com.csse3200.game.components.companionweapons.CompanionWeaponType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionWeaponConfig;
 import com.csse3200.game.entities.configs.CompanionWeaponConfigs;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 public class CompanionAttackFactory {
@@ -57,7 +53,7 @@ public class CompanionAttackFactory {
         attack.addComponent(new ParticleComponent(config.effects));
 
 
-                attack.addComponent(new CombatStatsComponent(30, 10, 1, false));
+                attack.addComponent(new CombatStatsComponent(30,40,10,1,false));
 
 
         attack.scaleWidth(config.imageScale);

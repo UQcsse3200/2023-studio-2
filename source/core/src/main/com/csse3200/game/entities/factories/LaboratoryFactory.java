@@ -35,7 +35,7 @@ public class LaboratoryFactory {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.LABORATORY))
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.LABORATORY))
-                .addComponent(new CombatStatsComponent(4, 0, 0, false));
+                .addComponent(new CombatStatsComponent(4, 4, 0, 0, false));
 
         logger.debug("creating laboratory");
         // Set the laboratory's body type and scale

@@ -36,7 +36,7 @@ class ResourceProductionTest{
     void beforeEach() {
         ServiceLocator.registerGameStateObserverService(new GameStateObserver(new GameStateInteraction()));
         productionComponent = new ProductionComponent(Resource.Solstite, tickRate, tickSize);
-        combatStatsComponent = new CombatStatsComponent(maxHealth, 0, 1, false);
+        combatStatsComponent = new CombatStatsComponent(maxHealth, maxHealth, 0, 1, false);
         when(gameTime.getTime()).thenReturn(0L);
         when(gameTime.getTime()).thenCallRealMethod();
         productionComponent.setTimer(gameTime);

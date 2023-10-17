@@ -89,7 +89,8 @@ public class PlayerFactory {
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                         .addComponent(new PlayerActions())
-                        .addComponent(new CombatStatsComponent(config.maxHealth, config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
+                        .addComponent(new CombatStatsComponent(config.maxHealth, config.maxHealth,
+                                config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
                         .addComponent(new EnvironmentStatsComponent())
                         .addComponent(new InventoryComponent(weaponConfigs))
                         .addComponent(inputComponent)
@@ -104,13 +105,14 @@ public class PlayerFactory {
                         .addComponent(new ProximityControllerComponent())
                         .addComponent(new ActionFeedbackComponent())
                         .addComponent(new SoundComponent(config.sounds))
-                        .addComponent(new UpgradeTree());
+                        .addComponent(new UpgradeTree(config));
 
         player.addComponent(new SaveableComponent<>(p -> {
                 PlayerConfig playerConfig = config;
                 playerConfig.position = p.getGridPosition();
                 playerConfig.health = p.getComponent(CombatStatsComponent.class).getHealth();
                 playerConfig.maxHealth = p.getComponent(CombatStatsComponent.class).getMaxHealth();
+                playerConfig.unlocks = p.getComponent(UpgradeTree.class).getUnlockedWeaponsConfigs();
                 return playerConfig;
             }, PlayerConfig.class));
         if (config.health <= 0) config.health = config.maxHealth;

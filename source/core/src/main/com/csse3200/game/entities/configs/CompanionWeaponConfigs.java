@@ -1,6 +1,6 @@
 package com.csse3200.game.entities.configs;
 
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
+import com.csse3200.game.components.companionweapons.CompanionWeaponType;
 
 public class CompanionWeaponConfigs {
 
@@ -79,13 +79,16 @@ public class CompanionWeaponConfigs {
                 CompanionWeaponType. SHIELD_2, // Companion Weapon Type
                 "Fire"     ,4        // Slot Type
         );
+        explosiveConfig.effectsMap.put("shield", "particle-effects/shield/shield.effect");
+        SHIELD_2.effects =explosiveConfig;
+
 
         SWORD= new CompanionWeaponConfig(
                 " SWORD",            // Name
                 "SHORT DISTANCE",        // Description
                 25.0f,                      // Damage
-                5.0f,                       // Weapon Speed
-                25,                        // Weapon Duration
+                2.5f,                       // Weapon Speed
+                150,                        // Weapon Duration
                 1,                        // Rotation Speed
                 0,                          // Initial Rotation Offset
                 2,                          // Attack Cooldown
@@ -99,9 +102,8 @@ public class CompanionWeaponConfigs {
                 "melee"     ,
                 4
         );
-        explosiveConfig.effectsMap.put("deathPotion", "particle-effects/deathpotion/Death.effect");
+        explosiveConfig.effectsMap.put("shield", "particle-effects/shield/shield.effect");
         SWORD.effects =explosiveConfig;
-
 
 
 

@@ -41,6 +41,7 @@ public class GameStateObserver extends EventHandler {
      * Associates the chosen event name to listen for with corresponding state interaction method.
      */
     private void generateStateListeners() {
+        logger.debug("Registering GameStateObserver Listeners");
         this.addListener("resourceAdd", stateInteraction::updateResource);
         this.addListener("updatePlanet", stateInteraction::put);
         this.addListener("extractorsAdd", stateInteraction::updateExtractors);
@@ -70,7 +71,7 @@ public class GameStateObserver extends EventHandler {
     }
 
     public void loadGameStateMap(Map<String, Object> gameStateMap) {
-        logger.info("Loading in GameState file");
+        logger.info("Loading in GameState save file");
         GameState gameState = new GameState();
         for (Map.Entry<String, Object> entry : gameStateMap.entrySet()) {
             gameState.put(entry.getKey(), entry.getValue());

@@ -64,6 +64,7 @@ public class ParticleComponent extends RenderComponent {
             try {
                 // attempt to duplicate, although this will fail if mocked
                 effect = new ParticleEffect(effect);
+                effect.allowCompletion();
             } catch (NullPointerException e) {
                 // pass
             }

@@ -1,7 +1,6 @@
 package com.csse3200.game.components.Weapons.SpecWeapon.Projectile;
 
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.ProjectileController;
 import com.csse3200.game.components.explosives.ExplosiveComponent;
 import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
@@ -20,7 +19,7 @@ public class HomingProjectileController extends ProjectileController {
         super.create();
         var explosiveConfig = new ExplosiveConfig();
         explosiveConfig.chainable = false;
-        explosiveConfig.damage = 20;
+        explosiveConfig.baseAttack = 20;
         explosiveConfig.damageRadius = 2.5f;
         explosiveConfig.chainRadius = 3.0f;
         explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
@@ -39,10 +38,10 @@ public class HomingProjectileController extends ProjectileController {
         if (kbPIComp == null) {
             return;
         }
-        Vector2 target_pos = kbPIComp.getLastMousePos().sub(entity.getScale().scl(0.5f));
-        Vector2 weapon_pos = entity.getPosition();
+        Vector2 targetpos = kbPIComp.getLastMousePos().sub(entity.getScale().scl(0.5f));
+        Vector2 weaponpos = entity.getPosition();
 
-        float targetAngle = (float) Math.toDegrees(Math.atan2(target_pos.y - weapon_pos.y, target_pos.x - weapon_pos.x));
+        float targetAngle = (float) Math.toDegrees(Math.atan2(targetpos.y - weaponpos.y, targetpos.x - weaponpos.x));
         targetAngle = (targetAngle + 360) % 360;
 
         float dir = targetAngle - currentRotation;

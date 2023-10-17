@@ -7,6 +7,7 @@
       "images/minigame/extractor.png",
       "images/minigame/meteor.png",
       "images/RightShip.png",
+      "images/companion/earth_Companion_spritesheet.png",
       "images/companion/Companion_spritesheet.png",
       "images/enemy/base_enemy.png",
       "images/enemy/Troll.png",
@@ -49,15 +50,17 @@
       "sounds/turret_shoot.mp3",
       "sounds/alert.wav",
       "sounds/explosion/grenade.mp3",
-      "sounds/explosion/landmine.mp3"
+      "sounds/explosion/landmine.mp3",
+      "sounds/ExitButton.wav",
+      "sounds/structurePlace.wav"
     ],
     "particleEffectPaths": [
       "particle-effects/explosion/explosion.effect"
     ],
     "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
   },
-  "mapName": "Glacial Desolation",
-  "planetImage": "images/navigationmap/planets/glacial_desolation.png",
+  "mapName": "Cryoheim",
+  "planetImage": "images/navigationmap/planets/cryoheim.png",
   "terrainPath": "map/icemap.tmx",
   "winConditions": [
     {

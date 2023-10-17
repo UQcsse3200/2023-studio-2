@@ -130,7 +130,7 @@ public class NPCFactory {
     Astro.getComponent(ColliderComponent.class).setDensity(1.5f);
     Astro.addComponent(new InteractableComponent(entity -> {
       Astro.getComponent(FollowComponent.class).setEntity(Astro);
-      Astro.getComponent(FollowComponent.class).setFollowSpeed(1f);
+      Astro.getComponent(FollowComponent.class).setFollowSpeed(2f);
     },3f));
     animator.startAnimation("Astro_StandDown");
     return Astro;

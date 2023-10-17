@@ -227,6 +227,10 @@
     "default": {
       "background": "treebox",
       "titleFont": "thick_white"
+    },
+    "dialogue": {
+      "background": "dialogue",
+      "titleFont": "thick_white"
     }
   }
 }

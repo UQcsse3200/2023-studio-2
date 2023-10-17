@@ -40,7 +40,8 @@ public class EntityService {
    * @return Entity - the player entity, or null - no player found in EntityService
    */
   public Entity getPlayer() {
-    for (Entity entity : entities) {
+    for (int i = 0; i < entities.size; i++) {
+      Entity entity = entities.get(i);
       if (entity.getEntityType().equals("player")) {
         return entity;
       }

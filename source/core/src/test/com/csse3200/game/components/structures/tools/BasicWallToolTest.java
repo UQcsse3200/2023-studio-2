@@ -39,6 +39,8 @@ class BasicWallToolTest {
     ResourceService resourceService;
     @Mock
     PhysicsService physicsService;
+    @Mock
+    EventHandler playerEventHandler;
 
     @BeforeEach
     void beforeEach() {
@@ -51,6 +53,8 @@ class BasicWallToolTest {
         var physicsEngine = mock(PhysicsEngine.class);
         when(physicsService.getPhysics()).thenReturn(physicsEngine);
         when(physicsEngine.createBody(any())).thenReturn(mock(Body.class));
+
+        when(player.getEvents()).thenReturn(playerEventHandler);
 
         var textureAtlas = mock(TextureAtlas.class);
         when(resourceService.getAsset(any(), eq(TextureAtlas.class))).thenReturn(textureAtlas);

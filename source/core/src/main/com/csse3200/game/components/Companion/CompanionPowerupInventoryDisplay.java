@@ -329,7 +329,7 @@ public class CompanionPowerupInventoryDisplay extends Window {
 
         Stage stage = ServiceLocator.getRenderService().getStage();
         //setup size
-        setWidth((float) (stage.getWidth() * WINDOW_WIDTH_SCALE / 2.5 - 40f));
+        setWidth((float) (stage.getWidth() * WINDOW_WIDTH_SCALE / 2.5 + 10f));
         setHeight(stage.getHeight() * WINDOW_HEIGHT_SCALE / 2 + 10f);
         //setup position
         setPosition(

@@ -40,7 +40,7 @@ public abstract class PlacementTool extends Tool {
         PlaceableEntity newStructure = createStructure(player);
         newStructure.addComponent(new CostComponent(cost));
 
-        ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position, false, false);
+        ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position);
     }
 
     /**

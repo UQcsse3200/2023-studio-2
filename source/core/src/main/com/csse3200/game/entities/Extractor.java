@@ -1,4 +1,4 @@
-package com.csse3200.game.entities.buildables;
+package com.csse3200.game.entities;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.structures.ExtractorAnimationController;
-import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.ExtractorConfig;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -31,7 +30,7 @@ public class Extractor extends PlaceableEntity {
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE));
         addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
         addComponent(animator);
-        addComponent(new CombatStatsComponent(config.health, 0, 0, false));
+        addComponent(new CombatStatsComponent(config.health, config.maxHealth, 0, 0, false));
         addComponent(new ProductionComponent(config.resource, config.tickRate, config.tickSize));
         addComponent(new ExtractorAnimationController());
         addComponent(new ParticleComponent(config.effects));
@@ -50,6 +49,8 @@ public class Extractor extends PlaceableEntity {
         }, 5f));
         setScale(1.8f, 2f);
         PhysicsUtils.setScaledCollider(this, 1f, 0.6f);
+
+        addComponent(new SaveableComponent<>(entity -> save(this, config), ExtractorConfig.class));
     }
 
     @Override
@@ -59,5 +60,22 @@ public class Extractor extends PlaceableEntity {
         if (!getComponent(CombatStatsComponent.class).isDead()) {
             getEvents().trigger("startEffect", "rubble");
         }
+    }
+
+    /**
+     * A function to save the Extractor's properties into its config.
+     * @param entity - the extractor to save.
+     * @param config - the existing config for the extractor.
+     * @return the updated config for the extractor.
+     */
+    private static ExtractorConfig save(PlaceableEntity entity, ExtractorConfig config) {
+        if (!(entity instanceof Extractor)) {
+            return new ExtractorConfig();
+        }
+
+        config.position = entity.getGridPosition();
+        config.health = entity.getComponent(CombatStatsComponent.class).getHealth();
+
+        return config;
     }
 }

@@ -1,7 +1,6 @@
 package com.csse3200.game.components.Weapons.SpecWeapon.Projectile;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.ProjectileController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
@@ -58,10 +57,10 @@ public class KillerBeeController extends ProjectileController {
     protected void initial_animation() {
         if (currentRotation < 90 || currentRotation > 270) {
             animator.startAnimation("ATTACK1");
-            animator.setRotation(currentRotation);
+            animator.setRotation(currentRotation - 45);
         } else {
             animator.startAnimation("ATTACK2");
-            animator.setRotation(currentRotation + 180);
+            animator.setRotation(currentRotation + 180 + 45);
         }
     }
 

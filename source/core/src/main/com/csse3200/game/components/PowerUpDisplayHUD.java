@@ -88,8 +88,6 @@ public class PowerUpDisplayHUD extends UIComponent {
         table.top().left();
         table.setFillParent(true);
         table.padTop(115f).padLeft(5f);
-
-//        String PowerUp = entity.getComponent(PowerupComponent.class).getPowerupType();
         float powerUpLength = 40f;
         String powerUp = " ";
         CharSequence powerUpText = String.format("Current PowerUp : %s",powerUp);
@@ -100,7 +98,6 @@ public class PowerUpDisplayHUD extends UIComponent {
             table.add(healthupimage).size(powerUpLength).pad(5);
         }
         else if (selectPowerUp() == speedupimage) {
-            // timer task on applyEffect
             table.add(speedupimage).size(powerUpLength).pad(5);
         }
         else if (selectPowerUp() == extralifeimage) {

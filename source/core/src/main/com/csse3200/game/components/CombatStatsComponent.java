@@ -103,7 +103,8 @@ public class CombatStatsComponent extends Component {
       entity.getEvents().trigger("updateHealth", this.health);
     }
     if (entity != null) {
-      if (isDead() && entity.getEntityType().equals("player") && !dead) {
+      if (isDead() && entity.getEntityType().equals("player") && dead == false) {
+
         dead = true;
         entity.getComponent(KeyboardPlayerInputComponent.class).clearWalking(); // Stop player from walking
         entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn
@@ -137,10 +138,9 @@ public class CombatStatsComponent extends Component {
 
   /**
    * sets the entity's health to maximum if H-Key is pressed on the keyboard.
-   * @param newHealth the new value of the users health
    * @param isHKeyPressed whether the H key is pressed
    */
-  public void setHealth(int newHealth, boolean isHKeyPressed) {
+  public void setHealth( boolean isHKeyPressed) {
     if (isHKeyPressed) {
       this.health = 100;
     }
@@ -288,7 +288,8 @@ public class CombatStatsComponent extends Component {
    * @param attacker The entity causing the damage.
    */
   public void hit(CombatStatsComponent attacker) {
-    if (getImmunity()) {
+    if (getImmunity() == true) {
+
       return;
     }
     int newHealth;

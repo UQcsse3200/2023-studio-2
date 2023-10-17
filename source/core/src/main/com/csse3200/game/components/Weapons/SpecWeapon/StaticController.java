@@ -22,17 +22,14 @@ public class StaticController extends WeaponControllerComponent {
 
     @Override
     protected void set_animations() {
-        return;
     }
 
     @Override
     protected void set_sound() {
-        return;
     }
 
     @Override
     protected void initial_rotation() {
-        return;
     }
 
     @Override
@@ -45,12 +42,10 @@ public class StaticController extends WeaponControllerComponent {
 
     @Override
     protected void initial_animation() {
-        return;
     }
 
     @Override
     protected void rotate() {
-        return;
     }
 
     @Override
@@ -62,7 +57,6 @@ public class StaticController extends WeaponControllerComponent {
 
     @Override
     protected void reanimate() {
-        return;
     }
 
     @Override

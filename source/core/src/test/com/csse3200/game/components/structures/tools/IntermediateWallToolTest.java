@@ -40,6 +40,8 @@ class IntermediateWallToolTest {
     ResourceService resourceService;
     @Mock
     PhysicsService physicsService;
+    @Mock
+    EventHandler eventHandler;
 
     @BeforeEach
     void beforeEach() {
@@ -48,8 +50,9 @@ class IntermediateWallToolTest {
         ServiceLocator.registerGameStateObserverService(stateObserver);
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerPhysicsService(physicsService);
-        
+
         when(player.getCenterPosition()).thenReturn(new Vector2(0, 0));
+        when(player.getEvents()).thenReturn(eventHandler);
     }
 
     void setupPhysicsMock() {

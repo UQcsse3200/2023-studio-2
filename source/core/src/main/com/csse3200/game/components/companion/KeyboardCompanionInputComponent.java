@@ -201,11 +201,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
                 entity.getEvents().trigger("CompanionSwitchMode");
                 return true;
             }
-
-            case Keys.P-> {
-               triggerInventoryEvent("melee");
-                return true;
-            }
             case Keys.I -> {
                 flagW = 1;
                 if (getMovFlagSum() == 1) {

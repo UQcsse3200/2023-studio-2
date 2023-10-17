@@ -43,7 +43,6 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
     private ArrayList<PowerupType> localPowerupActivationList = new ArrayList<>();
     private Integer powerupActivationlistIndex = 0;
     private PowerupType previousPowerupType = null;
-    private static final Logger logger = LoggerFactory.getLogger(CompanionDeathScreenActions.class);
 
     PowerupConfig deathPotion;
     PowerupConfig healthPotion;

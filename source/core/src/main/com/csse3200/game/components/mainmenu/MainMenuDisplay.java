@@ -65,7 +65,6 @@ public class MainMenuDisplay extends UIComponent {
         TextButton exitBtn = new TextButton("Exit", skin);
         TextButton miniBtn = new TextButton("Space Minigame", skin);
         TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
-        TextButton upgradeShip = new TextButton("Upgrade Ship", skin);
         TextButton tutorialBtn = new TextButton("Tutorial", skin);
         TextButton brickBreakerBtn = new TextButton("brick breaker minigame", skin);
 
@@ -119,14 +118,6 @@ public class MainMenuDisplay extends UIComponent {
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Exit button clicked");
                         entity.getEvents().trigger("exit");
-                    }
-                });
-        upgradeShip.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Upgrade Ship button clicked");
-                        entity.getEvents().trigger("upgrade shop");
                     }
                 });
 

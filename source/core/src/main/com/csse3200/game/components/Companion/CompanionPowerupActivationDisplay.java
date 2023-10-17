@@ -164,8 +164,8 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
         powerupActivationButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //nothing
-                refreshPowerupActivationButtonUI();
+                // attempt to use a powerup, if there is one currently selected
+                attemptedPowerupActivationButtonPress();
             }
         });
         stage.addActor(powerupActivationButton);
@@ -357,14 +357,15 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      */
     public void attemptedPowerupActivationButtonPress() {
         // get current powerup type. if null, do nothing,
+        //check if there is a powerup currently
+        PowerupType displayThisType = getSelectedPowerupType();
 
-        //if there is a powerup, attempt to use it in inventory, and if it gets updated, it'll happen naturally
-
-
-        // given the current index, display a specific type of powerup
-        PowerupType displayThisType = localPowerupActivationList.get(powerupActivationlistIndex);
-        // this will go into the inventory, check we have one, and then activate the powerup, then call changePowerupInventory
-        ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupInventoryComponent.class).useSpecificPowerup(displayThisType);
+        if (displayThisType == null) {
+            return;
+        } else {
+            // this will go into the inventory, check we have one, and then activate the powerup, then call changePowerupInventory
+            ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupInventoryComponent.class).useSpecificPowerup(displayThisType);
+        }
     }
 
     /**

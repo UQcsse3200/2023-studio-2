@@ -90,17 +90,24 @@ public class CompanionPowerupInventoryComponent extends Component {
      */
     public void useSpecificPowerup(PowerupType type) {
         //check we have that type
+        if (powerupsInventoryAmount.containsKey(type)) {
+            //check we have >0 of a type
+            Integer count = getPowerupInventoryCount(type);
+            if (count > 0) {
+                //use that powerup type
+                //create the powerup component
+                PowerupComponent thisPowerup = new PowerupComponent(type);
+                thisPowerup.applyEffect();
 
-        //check we have >0
+                logger.info("SUCCESSFULLY CREATED AND USED POWERUPTYPE " + type.toString());
 
-        //use that powerup type
+                //remove one of those powerups from the powerup inventory
+                powerupsInventoryAmount.put(type,count - 1);
 
-        //remove one of those powerups from the powerup inventory
-
-        //update the UI
-
-
-        return;
+                //trigger an update of the UI
+                sendUIPowerupInventoryChange();
+            }
+        }
     }
 
     /**

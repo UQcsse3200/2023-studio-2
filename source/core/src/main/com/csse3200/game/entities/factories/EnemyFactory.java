@@ -7,6 +7,8 @@ import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.enemy.GodComponent;
 import com.csse3200.game.components.enemy.InvisibilityComponent;
+import com.csse3200.game.components.enemy.RingBurstComponent;
+import com.csse3200.game.components.enemy.SprayComponent;
 import com.csse3200.game.components.flags.EnemyFlag;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.npc.targetComponent;
@@ -146,7 +148,7 @@ public class EnemyFactory {
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     enemy.scaleWidth(getEnemyscale(config));
     PhysicsUtils.setScaledCollider(enemy, 0.5f, 0.5f);
-    addSpecialAttack(config,enemy);
+    addSpecialAttack(config, enemy, targets);
     return enemy;
   }
 
@@ -247,13 +249,31 @@ public class EnemyFactory {
    * @param config enemy stat
    * @param enemy enemy entity
    */
-  private static void addSpecialAttack(EnemyConfig config, Entity enemy){
+  private static void addSpecialAttack(EnemyConfig config, Entity enemy, List<Entity> targets){
     if(config.name == EnemyName.Guardian){
       enemy.addComponent(new GodComponent(enemy));
-    }
-    if(config.name == EnemyName.chain){
+    } else if(config.name == EnemyName.chain){
       enemy.addComponent(new InvisibilityComponent(enemy));
+    } else if (config.name == EnemyName.Mage) {
+      enemy.addComponent(new SprayComponent(findPlayer(targets), enemy));
+    } else if (config.name == EnemyName.Knight) {
+      enemy.addComponent(new RingBurstComponent(enemy));
     }
+  }
+
+  /**
+   * Helper method to find the Player
+   * @param targets List of all target-able entities
+   * @return The Player's entity
+   */
+  private static Entity findPlayer(List<Entity> targets) {
+      for (Entity target : targets) {
+          short layer = target.getComponent(HitboxComponent.class).getLayer();
+          if (PhysicsLayer.contains(layer, PhysicsLayer.PLAYER)) {
+              return target;
+          }
+      }
+    return null;
   }
 
   /**

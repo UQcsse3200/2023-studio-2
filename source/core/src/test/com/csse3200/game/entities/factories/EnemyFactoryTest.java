@@ -198,7 +198,7 @@ public class EnemyFactoryTest {
 
     @Test
     void createBossEnemyRangedPTEConfigTest() {
-        EnemyConfig config = configs.GetEnemyConfig(rangeBossPTE);
+        EnemyConfig config = configs.GetEnemyConfig(Mage);
         Entity enemy = createEnemy(config);
 
         // Check Health & BaseAttack was set appropriately based on type and behaviour

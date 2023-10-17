@@ -79,6 +79,9 @@ public class CompanionWeaponConfigs {
                 CompanionWeaponType. SHIELD_2, // Companion Weapon Type
                 "Fire"     ,4        // Slot Type
         );
+        explosiveConfig.effectsMap.put("shield", "particle-effects/shield/shield.effect");
+        SHIELD_2.effects =explosiveConfig;
+
 
         SWORD= new CompanionWeaponConfig(
                 " SWORD",            // Name
@@ -99,9 +102,8 @@ public class CompanionWeaponConfigs {
                 "melee"     ,
                 4
         );
-        explosiveConfig.effectsMap.put("deathPotion", "particle-effects/deathpotion/Death.effect");
+        explosiveConfig.effectsMap.put("shield", "particle-effects/shield/shield.effect");
         SWORD.effects =explosiveConfig;
-
 
 
 

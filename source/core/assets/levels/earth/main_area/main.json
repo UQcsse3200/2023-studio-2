@@ -109,7 +109,8 @@
       "particle-effects/extractor/nebulite.effect",
       "particle-effects/extractor/solstite.effect",
       "particle-effects/deathpotion/Death.effect",
-      "particle-effects/explosion/bigBallCombustion.effect"
+      "particle-effects/explosion/bigBallCombustion.effect",
+      "particle-effects/shield/shield.effect"
     ],
     "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
   },

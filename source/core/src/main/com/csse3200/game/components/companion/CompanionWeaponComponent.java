@@ -73,8 +73,11 @@ public class CompanionWeaponComponent extends Component {
 
         ServiceLocator.getEntityPlacementService().placeEntityAt(this.CurrentWeapon , placePos);
         this.CurrentWeapon.addComponent(new HitboxComponent());
-        if (weapon == CompanionWeaponType.Death_Potion){
+        if (weapon == CompanionWeaponType.Death_Potion  ){
         this.CurrentWeapon.getEvents().trigger("startEffect", "deathPotion");
+        }
+        if (weapon == CompanionWeaponType.SHIELD || weapon == CompanionWeaponType.SWORD ){
+            this.CurrentWeapon.getEvents().trigger("startEffect", "shield");
         }
     }
 

@@ -8,6 +8,8 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.structures.tools.PlacementValidity;
+import com.csse3200.game.components.structures.tools.ToolResponse;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -174,7 +176,17 @@ public class PlayerActions extends Component {
         Entity structure = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
 
         if (structure != null) {
-            ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
+            var distance = this.getEntity().getCenterPosition().scl(2).dst(new Vector2(gridPosition.x, gridPosition.y));
+            float removalRange = 5.0f;
+            if (distance < removalRange) {
+                ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
+            } else {
+                ToolResponse response = new ToolResponse(PlacementValidity.OUT_OF_RANGE, "Out of range.");
+                logger.error(response.getMessage());
+                this.getEntity().getEvents().trigger("displayWarningAtPosition", response.getMessage(),
+                        new Vector2((float) gridPosition.x / 2, (float) gridPosition.y / 2));
+                this.getEntity().getEvents().trigger("playSound", "alert");
+            }
         }
     }
 

@@ -21,17 +21,22 @@ public class InvisibilityComponent extends Component {
         this.movementComponent = entity.getComponent(PhysicsMovementComponent.class);
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::toggleInvis, 0, 2, TimeUnit.SECONDS);
-        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-        invisDuration = (long)animator.getAnimationDuration("invisible");
-
     }
 
     /**
      * Switches the speed variable
      */
-    private void toggleInvis() {
+    public void toggleInvis() {
         // Toggle the speed field
         isInvis = !isInvis;
+    }
+
+    /**
+     * Get the invis status of the entity
+     * @return boolean value for that mode
+     */
+    public boolean getInvisMode(){
+        return isInvis;
     }
     /**
      * Reduce movement speed and update movement task

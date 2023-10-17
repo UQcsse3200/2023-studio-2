@@ -178,7 +178,7 @@ public class PlayerActions extends Component {
         if (structure != null) {
             var distance = this.getEntity().getCenterPosition().scl(2).dst(new Vector2(gridPosition.x, gridPosition.y));
             float removalRange = 5.0f;
-            if (distance < removalRange) {
+            if (distance <= removalRange) {
                 ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
             } else {
                 ToolResponse response = new ToolResponse(PlacementValidity.OUT_OF_RANGE, "Out of range.");

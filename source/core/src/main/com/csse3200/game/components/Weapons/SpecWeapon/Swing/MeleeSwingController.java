@@ -1,4 +1,4 @@
-package com.csse3200.game.components.Weapons.SpecWeapon;
+package com.csse3200.game.components.Weapons.SpecWeapon.Swing;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
@@ -8,8 +8,11 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class MeleeSwingController extends WeaponControllerComponent {
+
     private Vector2 playerlastpos;
     private int attackSide;
+
+    protected Vector2 player_last_pos;
 
     public MeleeSwingController(WeaponConfig config,
                                 float attackDirection,
@@ -27,8 +30,8 @@ public class MeleeSwingController extends WeaponControllerComponent {
     @Override
     protected void set_animations() {
         animator = entity.getComponent(AnimationRenderComponent.class);
-        animator.addAnimation("ATTACK1", 0.07f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("ATTACK2", 0.07f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("ATTACK1", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("ATTACK2", 0.1f, Animation.PlayMode.NORMAL);
     }
 
 

@@ -57,10 +57,10 @@ public class KillerBeeController extends ProjectileController {
     protected void initial_animation() {
         if (currentRotation < 90 || currentRotation > 270) {
             animator.startAnimation("ATTACK1");
-            animator.setRotation(currentRotation);
+            animator.setRotation(currentRotation - 45);
         } else {
             animator.startAnimation("ATTACK2");
-            animator.setRotation(currentRotation + 180);
+            animator.setRotation(currentRotation + 180 + 45);
         }
     }
 

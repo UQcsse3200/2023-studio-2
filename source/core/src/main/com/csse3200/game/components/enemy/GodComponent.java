@@ -40,7 +40,7 @@ public class GodComponent extends Component {
         scheduler2.scheduleAtFixedRate(this::toggleMode, 0, 6, TimeUnit.SECONDS);
          touchAttackComponent = entity.getComponent(TouchAttackComponent.class);
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(this::toggleInvis, 0, 1, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::toggleInvis, 0, 3, TimeUnit.SECONDS);
         colliderComponent = entity.getComponent(ColliderComponent.class);
 
 
@@ -79,12 +79,12 @@ public class GodComponent extends Component {
         movementComponent.update();
 
         if(isInvis){
-
-//            touchAttackComponent.setEnabled(false);
+            entity.getEvents().trigger("goInvisible");
+            touchAttackComponent.setEnabled(false);
         }
         else {
-//            touchAttackComponent.setEnabled(true);
-//            touchAttackComponent.update();
+            entity.getEvents().trigger("float");
+            touchAttackComponent.setEnabled(true);
         }
 
 

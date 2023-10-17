@@ -39,7 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SpaceMapScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SpaceMapScreen.class);
-
     private static Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
     private Entity ship;
     private Entity goal;

@@ -35,7 +35,7 @@ public class CompanionWeaponComponent extends Component {
 //    }
 
 
-    private void playerAttacking(CompanionWeaponType weaponType, Vector2 clickPosition) {
+    public void playerAttacking(CompanionWeaponType weaponType, Vector2 clickPosition) {
         float initialRotation = calcRotationAngleInDegrees(ServiceLocator.getEntityService().getCompanion().getPosition(), clickPosition);
 
 
@@ -60,7 +60,7 @@ public class CompanionWeaponComponent extends Component {
     }
 
     // change the weapon in use
-    private void makeNewHolding(CompanionWeaponType weapon) {
+    public void makeNewHolding(CompanionWeaponType weapon) {
         if (this.CurrentWeapon  != null) {this.CurrentWeapon .dispose();}
         this.CurrentWeapon  = CompanionWeaponFactory.createCompanionWeapon(weapon, ServiceLocator.getEntityService().getCompanion());
 
@@ -81,7 +81,7 @@ public class CompanionWeaponComponent extends Component {
         }
     }
 
-    private Vector2 positionInDirection(double direction, float distance, Entity attack) {
+    public Vector2 positionInDirection(double direction, float distance, Entity attack) {
         double radians = Math.toRadians(direction);
         float xOffset = (float) Math.cos(radians) * distance;
         float yOffset = (float) Math.sin(radians) * distance;
@@ -94,7 +94,7 @@ public class CompanionWeaponComponent extends Component {
     }
 
 
-    private float calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt) {
+    public float calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt) {
         double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
         if (angle < 0) {angle += 360;        }
         return (float) angle;

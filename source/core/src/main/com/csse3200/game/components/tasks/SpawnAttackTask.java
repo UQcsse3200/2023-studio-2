@@ -69,7 +69,6 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
 
   @Override
   public void start() {
-    System.out.println("starting");
     super.start();
 
     waitTask = new WaitTask(waitTime);
@@ -87,14 +86,7 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
   @Override
   public void update() {
     if (currentTask.getStatus() != Status.ACTIVE) {
-      ListIterator<Entity> iterator = entities.listIterator();
-
-      while (iterator.hasNext()) {
-        Entity element = iterator.next();
-        if (element.getComponent(CombatStatsComponent.class).getHealth() == 0) {
-          iterator.remove();
-        }
-      }
+      updateEnemyList();
       if (entities.size() != 2) {
         startSpawning();
       } else {
@@ -137,6 +129,7 @@ public class SpawnAttackTask extends DefaultTask implements PriorityTask {
 
       entities.add(enemyOne);
 
+      entitiesToSpawn.add(enemyOne);
     }
     logger.debug("Starting spawning");
     this.owner.getEntity().getEvents().trigger("standing");

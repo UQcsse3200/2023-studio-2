@@ -30,6 +30,7 @@ public class SpawnTask extends DefaultTask {
      */
     public void start(ArrayList<Entity> entities) {
         super.start();
+        System.out.println("about to spawn");
         hasSpawned = false;
         spawnEnemy(entities);
         hasSpawned = true;

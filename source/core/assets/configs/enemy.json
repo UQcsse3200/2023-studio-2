@@ -103,15 +103,15 @@
     }
   },
 
-  "rangeBossPTE": {
-    "name": "rangeBossPTE",
+  "Mage": {
+    "name": "Mage",
     "health": 100,
     "baseAttack": 25,
     "speedX": 1,
     "speedY": 1,
     "behaviour": "PTE",
     "type": "Ranged",
-    "spritePath": "images/enemy/Knight/Knight.atlas",
+    "spritePath": "images/enemy/Mage/mage.atlas",
     "isBoss": true,
     "sound": {
       "soundsMap": {

@@ -54,7 +54,9 @@ public class PowerupComponent extends Component {
         switch (type) {
             case HEALTH_BOOST:
                 player.getComponent(CombatStatsComponent.class).setHealth(100);
-                companion.getComponent(CombatStatsComponent.class).setHealth(50);
+                if (!companion.getComponent(CombatStatsComponent.class).isDead()) {
+                    companion.getComponent(CombatStatsComponent.class).setHealth(50);
+                }
                 player.getEvents().trigger("playSound", "healthPowerup"); // plays sound when health powerup selected
 
                 break;
@@ -64,8 +66,11 @@ public class PowerupComponent extends Component {
                     return;
                 } else {
                     player.getComponent(PlayerActions.class).setSpeed(6, 6);
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead())
+                    {
                     companion.getComponent(CompanionActions.class).setSpeed(7, 7);
                     companion.getComponent(FollowComponent.class).setFollowSpeed(5);
+                    }
 
                     // Set the duration for speed effect
                     setDuration(8000);

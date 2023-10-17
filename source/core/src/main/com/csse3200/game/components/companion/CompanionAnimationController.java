@@ -1,4 +1,4 @@
-package com.csse3200.game.components.Companion;
+package com.csse3200.game.components.companion;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;

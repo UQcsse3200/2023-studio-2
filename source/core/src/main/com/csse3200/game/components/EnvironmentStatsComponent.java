@@ -1,7 +1,8 @@
-/*
-  Component used to store information related to combat such as health, attack, etc. Any entities
-  which engage in combat should have an instance of this class registered. This class can be
-  extended for more specific combat needs.
+
+/**
+ * Component used to store information related to combat such as health, attack, etc. Any entities
+ * which engage in combat should have an instance of this class registered. This class can be
+ * extended for more specific combat needs.
  */
 package com.csse3200.game.components;
 
@@ -35,6 +36,7 @@ public class EnvironmentStatsComponent extends Component {
         return frozenLevel;
     }
 
+
     public void setFrozenLevel(int newFrozenLevel) {
         frozenLevel = newFrozenLevel;
     }
@@ -57,9 +59,9 @@ public class EnvironmentStatsComponent extends Component {
 
 
     public void setSafeMap(GameAreaConfig mapConfig) {
-        isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Flora Haven"));
+       logger.info(mapConfig.mapName);
+        this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Verdant Oasis"));
     }
-
 
     /**
      * Sets the entity's immunity status.
@@ -93,7 +95,7 @@ public class EnvironmentStatsComponent extends Component {
                         timer.stop();
                     }
                 }
-                if (getImmunity()) {
+                if (getImmunity() == true) {
                     return;
                 }
                 player.addHealth(-1);

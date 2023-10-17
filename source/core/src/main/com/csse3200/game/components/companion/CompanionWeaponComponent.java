@@ -1,8 +1,8 @@
-package com.csse3200.game.components.Companion;
+package com.csse3200.game.components.companion;
 
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
+import com.csse3200.game.components.companionweapons.CompanionWeaponType;
 import com.csse3200.game.entities.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.factories.CompanionAttackFactory;

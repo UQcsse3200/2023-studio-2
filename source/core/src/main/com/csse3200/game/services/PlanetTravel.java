@@ -20,7 +20,7 @@ public class PlanetTravel {
      */
     public PlanetTravel(GdxGame game) {
         this.game = game;
-        ServiceLocator.registerGameStateObserverService(new GameStateObserver()); // TODO: Can be removed once map button is removed from main menu
+        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
     }
 
     /**
@@ -37,15 +37,9 @@ public class PlanetTravel {
     public void beginInstantTravel() {
         String nextPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
         ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
-        if (!nextPlanet.equals("none")) {
-            //TODO: MAKE SHOW WIN SCREEN?
-            PlanetScreen planet = new PlanetScreen(game, nextPlanet);
-            ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", planet.getNextPlanetName());
-            game.setScreen(planet);
-        } else {
-            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-            logger.info("FINISHED GAME! - Returning to main menu");
-        }
+        PlanetScreen planet = new PlanetScreen(game, nextPlanet);
+        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", planet.getNextPlanetName());
+        game.setScreen(planet);
     }
 
     /**

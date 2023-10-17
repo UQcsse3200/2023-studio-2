@@ -1,4 +1,4 @@
-package com.csse3200.game.components.CompanionWeapons;
+package com.csse3200.game.components.companionweapons;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;

@@ -168,8 +168,6 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(exitBtn).padTop(15f).padLeft(1200f);
         table.row();
-        table.add(upgradeShip).padTop(15f).padLeft(1200f);
-        table.row();
         table.add(brickBreakerBtn).padTop(15f).padLeft(1200f);
         table.row();
         stage.addActor(titleImage);

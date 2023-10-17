@@ -7,7 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
+import com.csse3200.game.GdxGame;
 import org.slf4j.LoggerFactory;
+
+import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 /**
  * Displays a button to exit the current game screen to the current Planet screen.
@@ -31,6 +34,7 @@ public class ReturnToPlanetDisplay extends UIComponent {
     table = new Table();
     table.top().right();
     table.setFillParent(true);
+    TextButton refill = new TextButton("Refill", skin);
     TextButton mainMenuBtn = new TextButton("Return", skin);
     TextButton restartBtn = new TextButton("Restart", skin);
     // Triggers an event when the button is pressed.
@@ -52,8 +56,18 @@ public class ReturnToPlanetDisplay extends UIComponent {
               }
             }
     );
+    refill.addListener(
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("Refill button clicked");
+                game.setScreen(GdxGame.ScreenType.UPGRADE_SHOP);
+              }
+            }
+    );
     table.add(mainMenuBtn).padTop(10f).padRight(10f);
     table.add(restartBtn).padTop(10f).padRight(10f);
+    table.add(refill).padTop(10f).padRight(10f);
     //Return button on top left, Restart button right of return button
     stage.addActor(table);
   }

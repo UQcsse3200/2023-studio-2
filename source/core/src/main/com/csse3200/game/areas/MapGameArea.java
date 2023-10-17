@@ -6,10 +6,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.mapConfig.AssetsConfig;
-import com.csse3200.game.areas.mapConfig.GameAreaConfig;
-import com.csse3200.game.areas.mapConfig.InvalidConfigException;
-import com.csse3200.game.areas.mapConfig.ConfigLoader;
+import com.csse3200.game.areas.map_config.AssetsConfig;
+import com.csse3200.game.areas.map_config.GameAreaConfig;
+import com.csse3200.game.areas.map_config.InvalidConfigException;
+import com.csse3200.game.areas.map_config.ConfigLoader;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.EnvironmentStatsComponent;
@@ -34,15 +34,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import static com.csse3200.game.utils.LoadUtils.joinPath;
-
 /**
  * A Base Game Area for any level.
  * Details of map can be defined in a config file to be passed to the constructor
  */
 public class MapGameArea extends GameArea{
 
-    public GameAreaConfig mapConfig = null;
+    protected GameAreaConfig mapConfig = null;
     private static final Logger logger = LoggerFactory.getLogger(MapGameArea.class);
     private final TerrainFactory terrainFactory;
     private final GdxGame game;
@@ -52,7 +50,7 @@ public class MapGameArea extends GameArea{
     public MapGameArea(String levelName, String gamearea, TerrainFactory terrainFactory, GdxGame game) {
         try {
             mapConfig = ConfigLoader.loadMapDirectory(levelName, gamearea);
-            logger.info("Successfully loaded map {}", joinPath(List.of(levelName, gamearea)));
+            logger.info("Successfully loaded map {}/{}", levelName, gamearea);
         } catch (InvalidConfigException exception) {
             logger.error("FAILED TO LOAD GAME IN CONSTRUCTOR - {}", exception.getMessage());
             validLoad = false;
@@ -88,7 +86,7 @@ public class MapGameArea extends GameArea{
         spawnTurrets(player);
         spawnWalls(player);
         spawnGates(player);
-        spawnExplosives(player);
+        spawnExplosives();
         spawnTreeTop();
         spawnAstro();
         spawnTutnpc();
@@ -129,7 +127,8 @@ public class MapGameArea extends GameArea{
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
         }
-        logger.debug(String.format("Load took %d ms to load.", System.currentTimeMillis() - start));
+        long taken = System.currentTimeMillis() - start;
+        logger.debug(String.format("Load took %d ms to load.", taken));
     }
 
     /**
@@ -139,7 +138,7 @@ public class MapGameArea extends GameArea{
         Entity ui = new Entity();
         //Ensure non-null
         mapConfig.mapName = mapConfig.mapName == null ? "" : mapConfig.mapName;
-        //ui.addComponent(new GameAreaDisplay(mapConfig.mapName));
+        //ui.addComponent(new GameAreaDisplay(map_config.mapName));
         ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage))
                 .addComponent(new InventoryDisplayComponent());
         spawnEntity(ui);
@@ -279,10 +278,11 @@ public class MapGameArea extends GameArea{
         int steps = 64;
         int maxResource = 1000;
 
+        final String EXTRACTORS_TOTAL = "extractorsTotal";
         // Sets extractor count
-        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Nebulite.toString(),  0);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Durasteel.toString(),  0);
-        ServiceLocator.getGameStateObserverService().trigger("extractorsTotal", Resource.Solstite.toString(),  0);
+        ServiceLocator.getGameStateObserverService().trigger(EXTRACTORS_TOTAL, Resource.Nebulite.toString(),  0);
+        ServiceLocator.getGameStateObserverService().trigger(EXTRACTORS_TOTAL, Resource.Durasteel.toString(),  0);
+        ServiceLocator.getGameStateObserverService().trigger(EXTRACTORS_TOTAL, Resource.Solstite.toString(),  0);
 
         ResourceDisplay resourceDisplayComponent = new ResourceDisplay(scale, steps, maxResource)
                 .withResource(Resource.Durasteel)
@@ -341,9 +341,8 @@ public class MapGameArea extends GameArea{
 
     /**
      * Spawns the saved explosives into the map.
-     * @param player - the player.
      */
-    private void spawnExplosives(Entity player) {
+    private void spawnExplosives() {
         for (LandmineConfig config : mapConfig.areaEntityConfig.getEntities(LandmineConfig.class)) {
             var landmine = ExplosivesFactory.createLandmine(config);
             ServiceLocator.getStructurePlacementService().placeStructureAt(landmine, config.position);
@@ -487,7 +486,6 @@ public class MapGameArea extends GameArea{
             Entity botanist = NPCFactory.createBotanist(botanistConfig);
             spawnEntityAt(botanist, botanistConfig.position, false, false);
         }
-        //TODO: Implement this?
         //ship.addComponent(new DialogComponent(dialogueBox)); Adding dialogue component after entity creation is not supported
     }
 
@@ -591,20 +589,25 @@ public class MapGameArea extends GameArea{
     private boolean initiateDeathScreen() {
         int lives = getPlayer().getComponent(CombatStatsComponent.class).getLives();
         switch (lives) {
-            case 0:
+            case 0 -> {
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_0));
                 return true;
-            case 1:
+            }
+            case 1 -> {
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_1));
                 return true;
-            case 2:
+            }
+            case 2 -> {
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_2));
                 return true;
-            case 3:
+            }
+            case 3 -> {
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_3));
                 return true;
-            default:
+            }
+            default -> {
                 return false;
+            }
         }
     }
 }

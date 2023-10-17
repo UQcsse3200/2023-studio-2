@@ -1,11 +1,8 @@
 package com.csse3200.game.components.structures.tools;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.csse3200.game.components.ParticleComponent;
 import com.csse3200.game.components.resources.FissureComponent;
-import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
@@ -18,12 +15,14 @@ import com.csse3200.game.services.ServiceLocator;
 public class ExtractorTool extends ReplacementTool {
     /**
      * Creates a new tool which allows for the placement of Extractors.
-     * @param cost - the cost of the entity being placed.
+     *
+     * @param cost     - the cost of the entity being placed.
+     * @param range
+     * @param texture  - the texture of this tool.
      * @param ordering - the ordering of this tool.
-     * @param texture - the texture of this tool.
      */
-    public ExtractorTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
-        super(cost, ordering, texture, true);
+    public ExtractorTool(ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
+        super(cost, range, texture, ordering, true);
     }
 
     Resource produces = Resource.Durasteel;

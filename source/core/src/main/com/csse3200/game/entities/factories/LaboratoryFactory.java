@@ -1,7 +1,6 @@
 package com.csse3200.game.entities.factories;
-
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.windows.LabWindow;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.entities.Entity;
@@ -42,7 +41,7 @@ public class LaboratoryFactory {
         // Set the laboratory's body type and scale
         laboratory.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         laboratory.getComponent(TextureRenderComponent.class).scaleEntity();
-        laboratory.setScale(3f, 3.0f);
+        laboratory.setScale(4f, 4f);
         PhysicsUtils.setScaledCollider(laboratory, 1f, 0.8f);
 
         // Set the laboratory's initial health
@@ -54,7 +53,7 @@ public class LaboratoryFactory {
 
             // Check if the laboratory is dead
             if (healthStats.isDead()) {
-                LabWindow labWindow = LabWindow.makeNewLaboratory();
+                LabWindow labWindow = LabWindow.MakeNewLaboratory();
                 ServiceLocator.getRenderService().getStage().addActor(labWindow);
             }
         }, 5f));

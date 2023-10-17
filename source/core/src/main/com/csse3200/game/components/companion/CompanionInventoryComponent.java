@@ -27,6 +27,20 @@ public class CompanionInventoryComponent extends Component {
     int maxAmmo;
     private int attackCooldown;
 
+    private static final Logger logger = LoggerFactory.getLogger(CompanionInventoryComponent.class);
+    private static final int INVENTORY_SIZE = 7;
+
+    // A single queue for all power-ups
+    private final Deque<Entity> powerupQueue = new ArrayDeque<>(INVENTORY_SIZE);
+
+
+    // Add a HashMap to store counts for each power-up type. DOESN'T DO ANYTHING
+    private final HashMap<PowerupType, Integer> powerupCounts = new HashMap<>();
+
+    private  String equipped = "ranged";
+    private final LinkedHashMap<String, CompanionInventoryComponent> equippedWMap = new LinkedHashMap<>(); // preserves insert order
+    private CompanionWeaponConfigs config;
+
     public CompanionInventoryComponent(CompanionWeaponType weaponType, int ammo, int maxAmmo) {
         this.weaponType = weaponType;
         this.ammoCount = ammo;
@@ -67,17 +81,7 @@ public class CompanionInventoryComponent extends Component {
             return;
         attackCooldown--;
     }
-    private static final Logger logger = LoggerFactory.getLogger(CompanionInventoryComponent.class);
-    private static final int INVENTORY_SIZE = 7;
 
-    // A single queue for all power-ups
-    private final Deque<Entity> powerupQueue = new ArrayDeque<>(INVENTORY_SIZE);
-
-    private final int[] itemQuantity = new int[INVENTORY_SIZE];
-
-
-    // Add a HashMap to store counts for each power-up type
-    private final HashMap<PowerupType, Integer> powerupCounts = new HashMap<>();
 
     public CompanionInventoryComponent() {
         // Initialize power-up counts
@@ -113,8 +117,6 @@ public class CompanionInventoryComponent extends Component {
     public void addPowerup(Entity item) {
         if (powerupQueue.size() < INVENTORY_SIZE) {
             powerupQueue.add(item);
-            ++itemQuantity[powerupQueue.size() - 1];
-
             // Identify the power-up type and update the count
             PowerupType powerupType = identifyPowerupType(item);
             if (powerupType != null) {
@@ -129,6 +131,7 @@ public class CompanionInventoryComponent extends Component {
         }
     }
 
+
     /**
      * Retrieves and uses the next power-up from the companion's inventory, regardless of its type.
      *
@@ -137,21 +140,20 @@ public class CompanionInventoryComponent extends Component {
     public boolean useNextPowerup() {
         if (!powerupQueue.isEmpty()) {
             Entity powerup = powerupQueue.poll();
+            if (powerup == null) {
+                logger.info("YOURE CALLING A DEAD POWERUP");
+            }
             powerup.getComponent(PowerupComponent.class).applyEffect();
-            --itemQuantity[0];
             return true;
         }
         return false;
     }
 
-    private  String equipped = "ranged";
-    private final LinkedHashMap<String, CompanionInventoryComponent> equippedWMap = new LinkedHashMap<>(); // preserves insert order
-    private CompanionWeaponConfigs config;
-
-
     public void create() {
 
-        equippedWMap.put("ranged", new CompanionInventoryComponent(CompanionWeaponType.DEATH_POTION, 30, 30));
+        equippedWMap.put("ranged", new CompanionInventoryComponent(CompanionWeaponType.Death_Potion, 30, 30));
+        equippedWMap.put("Fire", new CompanionInventoryComponent(CompanionWeaponType.SHIELD_2, 30, 30));
+        equippedWMap.put("melee", new CompanionInventoryComponent(CompanionWeaponType.SWORD, 30, 30));
 
     }
 

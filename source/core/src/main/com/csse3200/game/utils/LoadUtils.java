@@ -8,8 +8,12 @@ import java.util.List;
 import java.util.StringJoiner;
 
 public class LoadUtils {
+    private static String prefix = "";
+    public static void setPrefix(String s) {prefix = s;}
     public static final String ROOT_PATH = "levels";
+    public static String getRootPath() { return prefix + ROOT_PATH; }
     public static final String SAVE_PATH = "save";
+    public static String getSavePath() { return prefix + SAVE_PATH; }
     public static final String DEFAULT_AREA = "main_area";
     public static final String JSON_EXT = ".json";
     public static final String GAMESTATE_FILE = "gamestate.json";
@@ -23,7 +27,9 @@ public class LoadUtils {
     public static final String FAIL_READ_CLASS = "Failed to read file of type ";
     public static final String NO_LEVELS_ERROR = "No levels found in " + GAME_FILE;
     public static final String NO_FILE_FOUND = "No config file found ";
-    public static final List<String> PATH_OPTIONS = List.of(SAVE_PATH, ROOT_PATH);
+    public static List<String> getPathOptions() {
+        return List.of(getSavePath(), getRootPath());
+    }
 
     /**
      * Joins an arbitrary list of paths using the system's path separator

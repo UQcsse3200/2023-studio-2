@@ -56,7 +56,7 @@ public class MainMenuDisplay extends UIComponent {
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);
 
-        boolean validLoad = LoadUtils.pathExists(LoadUtils.joinPath(List.of(LoadUtils.SAVE_PATH, LoadUtils.GAMESTATE_FILE)));
+        boolean validLoad = LoadUtils.pathExists(LoadUtils.joinPath(List.of(LoadUtils.getSavePath(), LoadUtils.GAMESTATE_FILE)));
 
         // Create buttons for various menu options
         TextButton startBtn = new TextButton("Start", skin);

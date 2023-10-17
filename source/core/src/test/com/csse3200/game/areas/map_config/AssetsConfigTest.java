@@ -1,4 +1,4 @@
-package com.csse3200.game.areas.mapConfig;
+package com.csse3200.game.areas.map_config;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -6,8 +6,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.csse3200.game.areas.map_config.AssetsConfig;
-import com.csse3200.game.areas.map_config.ConfigLoader;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.ResourceService;
 import org.junit.jupiter.api.AfterEach;

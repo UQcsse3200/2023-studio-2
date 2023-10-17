@@ -282,11 +282,11 @@ public class PlanetScreen extends ScreenAdapter {
 
     private void saveGame() {
         logger.debug(String.format("Saved %s PlanetScreen", name));
-        String path = String.format("%s/%s/%s/entities.json", SAVE_PATH, this.name, this.currentAreaName);
+        String path = String.format("%s/%s/%s/entities.json", getSavePath(), this.name, this.currentAreaName);
         ServiceLocator.getEntityService().saveCurrentArea(path);
 
         Map<String, Object> gameStateEntries = new HashMap<>(ServiceLocator.getGameStateObserverService().getFullStateData());
-        FileLoader.writeClass(gameStateEntries, joinPath(List.of(SAVE_PATH, GAMESTATE_FILE)), FileLoader.Location.LOCAL);
+        FileLoader.writeClass(gameStateEntries, joinPath(List.of(getSavePath(), GAMESTATE_FILE)), FileLoader.Location.LOCAL);
     }
 
     /**

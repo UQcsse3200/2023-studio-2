@@ -3,6 +3,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.*;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.configs.PortalConfig;
 import com.csse3200.game.entities.configs.PowerupConfig;
 import com.csse3200.game.entities.configs.PowerupConfigs;
 import com.csse3200.game.files.FileLoader;
@@ -35,8 +36,11 @@ public class PowerupFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
                 .addComponent(new ItemPickupComponent(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
-                .addComponent(new PowerUpDisplayHUD(config.type));
-
+                .addComponent(new PowerUpDisplayHUD(config.type))
+                .addComponent(new SaveableComponent<>(s -> {
+                    config.position = s.getGridPosition();
+                    return config;
+                }, PowerupConfig.class));
         powerup.addComponent(new InteractableComponent(entity -> powerup.getComponent(PowerupComponent.class).applyEffect(), 1f));
         powerup.setScale(0.6f, 0.6f);
 

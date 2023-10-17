@@ -7,6 +7,12 @@ entities: {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+				x: 23
+				y: 38
+=======
+>>>>>>> main
+<<<<<<< HEAD
 				x: 27
 				y: 17
 =======
@@ -18,6 +24,7 @@ entities: {
 				y: 20
 >>>>>>> main:saves/savefile.json
 >>>>>>> 4043d8b605888a37c4b00bbdb06f83f18dc78db2
+<<<<<<< HEAD
 =======
 				x: 23
 				y: 38
@@ -26,6 +33,9 @@ entities: {
 				x: 22
 				y: 24
 >>>>>>> c22cfc38f00d7da43f5945dd02b5942dfeacef39
+=======
+>>>>>>> 323ddc2fe06a8f51547ade7c6636e48b4792caff
+>>>>>>> main
 			}
 			health: 93
 			baseAttack: 5
@@ -40,6 +50,12 @@ entities: {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+				x: 22
+				y: 38
+=======
+>>>>>>> main
+<<<<<<< HEAD
 				x: 27
 				y: 16
 =======
@@ -51,6 +67,7 @@ entities: {
 				y: 20
 >>>>>>> main:saves/savefile.json
 >>>>>>> 4043d8b605888a37c4b00bbdb06f83f18dc78db2
+<<<<<<< HEAD
 =======
 				x: 22
 				y: 38
@@ -59,6 +76,9 @@ entities: {
 				x: 23
 				y: 25
 >>>>>>> c22cfc38f00d7da43f5945dd02b5942dfeacef39
+=======
+>>>>>>> 323ddc2fe06a8f51547ade7c6636e48b4792caff
+>>>>>>> main
 			}
 			health: 26
 			baseAttack: 10
@@ -68,16 +88,28 @@ entities: {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> c22cfc38f00d7da43f5945dd02b5942dfeacef39
 					low_health: sounds/playerLow_health.wav
 					dodge: sounds/dodgingAlertSweep.wav
 					boostPowerup: sounds/playerBoostRecharge.wav
 =======
+=======
+>>>>>>> main
 					low_health: sounds/playerLow_health.wav
 					dodge: sounds/dodgingAlertSweep.wav
 					boostPowerup: sounds/playerBoostRecharge.wav
 					alert: sounds/alert.wav
+<<<<<<< HEAD
+>>>>>>> main
+=======
+=======
+<<<<<<< HEAD
+					low_health: sounds/playerLow_health.wav
+					dodge: sounds/dodgingAlertSweep.wav
+					boostPowerup: sounds/playerBoostRecharge.wav
+>>>>>>> 323ddc2fe06a8f51547ade7c6636e48b4792caff
 >>>>>>> main
 					healthPowerup: sounds/PlayerHealthRecharge.wav
 					footstep: sounds/footStepsInTheForestGround.wav
@@ -85,6 +117,10 @@ entities: {
 					upgradeTree: sounds/upgradeTreeTap.wav
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> main
 =======
 					low_health: sounds/playerLow_health.mp3
 					dodge: sounds/dodgingAlertSweep.mp3
@@ -94,11 +130,15 @@ entities: {
 					footstep: sounds/footStepsInTheForestGround.mp3
 					upgradeWeapon: sounds/upgradeWeapon.mp3
 >>>>>>> 4043d8b605888a37c4b00bbdb06f83f18dc78db2
+<<<<<<< HEAD
 =======
 >>>>>>> main
 =======
 					exitbutton: sounds/ExitButton.wav,
 >>>>>>> c22cfc38f00d7da43f5945dd02b5942dfeacef39
+=======
+>>>>>>> 323ddc2fe06a8f51547ade7c6636e48b4792caff
+>>>>>>> main
 				}
 			}
 		}

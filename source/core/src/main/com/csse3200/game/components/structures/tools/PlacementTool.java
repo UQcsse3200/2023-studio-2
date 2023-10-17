@@ -20,12 +20,14 @@ public abstract class PlacementTool extends Tool {
 
     /**
      * Creates a new tool which allows the placing of structures with the given cost.
-     * @param cost - the cost of the entity being placed.
+     *
+     * @param cost     - the cost of the entity being placed.
+     * @param range
+     * @param texture  - the texture of this tool.
      * @param ordering - the ordering of this tool.
-     * @param texture - the texture of this tool.
      */
-    protected PlacementTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
-        super(cost, ordering, texture);
+    protected PlacementTool(ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
+        super(cost, range, texture, ordering);
         structurePlacementService = ServiceLocator.getStructurePlacementService();
     }
 
@@ -53,6 +55,12 @@ public abstract class PlacementTool extends Tool {
      */
     @Override
     protected ToolResponse canInteract(Entity player, GridPoint2 position) {
+        var validity = super.canInteract(player, position);
+
+        if (!validity.isValid()) {
+            return validity;
+        }
+
         var positionValidity = isPositionValid(position);
         if (!positionValidity.isValid()) {
             return positionValidity;

@@ -67,7 +67,8 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
     PowerupConfig doubleCross;
     PowerupConfig doubleDamage;
     PowerupConfig snap;
-    TextButton activationButton;
+    Button powerupActivationButton;
+    Label potionLabel;
     TextButton leftButton;
     TextButton rightButton;
 
@@ -115,65 +116,56 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      *
      */
     public void addActors() {
+        //add the powerup activation button (Main button)
+        addPowerupActivationButton();
+        // add navigation buttons
+        addLeftButton();
+        addRightButton();
 
-        stage.clear();
+        //stage UI elements
+        stage.addActor(powerupActivationButton);
+        stage.addActor(rightButton);
+        stage.addActor(leftButton);
 
-        Button button = new Button(skin);
+    }
 
-        Table buttonTable = new Table();
+    /**
+     * This funciton creates the powerup activation button in the centre
+     */
+    public void addPowerupActivationButton() {
+        //create the button
+        powerupActivationButton = new Button(skin);
+        // configure size and placement of the button
+        powerupActivationButton.setColor(0.5f, 0.5f, 0.5f, 0.5f);
+        powerupActivationButton.setPosition(1405f,280f);
+        powerupActivationButton.setSize(187f, 95f);
 
-        button.setColor(0.5f, 0.5f, 0.5f, 0.5f);
-        button.setPosition(1405f,280f);
-        button.setSize(187f, 95f);
+        //create the potion label element
+        potionLabel = new Label("Potion", skin,labelStyle);
+        potionLabel.setColor(Color.BLACK);
+        potionLabel.setFontScale(0.2f, 0.2f);
 
+        //create the potion IMAGE element and make sure its bound to the arrayList
+        //Image image = new Image(new Texture(deathPotion.spritePath));
 
-        Label nameLabel = new Label("Potion", skin,"thick");
-        nameLabel.setColor(Color.BLACK);
-        nameLabel.setFontScale(0.2f, 0.2f);
-        Image image = new Image(new Texture(deathPotion.spritePath));
+        //UI table element to combine potion label and image
+        Table powerupActivationButtonTable = new Table();
+        // add label
+        powerupActivationButtonTable.add(potionLabel);
 
-        buttonTable.add(image).size(64, 64).row();
-        buttonTable.add(nameLabel);//.padBottom(500);
-        button.add(buttonTable).width(150).height(150);
+        //add image
+        //powerupActivationButtonTable.add(image).size(64, 64).row();
 
+        // add the UI elements to the button
+        powerupActivationButton.add(powerupActivationButtonTable).width(150).height(150);
 
-        TextButton button2 = new TextButton("next", skin);
-        button2.setColor(0.5f, 0.5f, 0.5f, 0.5f);
-        button2.setPosition(1595f, 310f);
-        button2.setSize(50f, 45f);
-
-        TextButton button3 = new TextButton("prev", skin);
-        button3.setColor(0.5f, 0.5f, 0.5f, 0.5f);
-        button3.setPosition(1350f,310f);
-        button3.setSize(50f, 45f);
-
-        button.addListener(new ChangeListener() {
+        //BIND key presses on the button to a potential activation of powerup
+        powerupActivationButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                pressedSpecificPowerupToBeUsed();
-                updatePowerupInventoryActivation();
+                //nothing
             }
         });
-        button2.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                addRightButton();
-                updatePowerupInventoryActivation();
-            }
-        });
-
-        button3.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                addLeftButton();
-                updatePowerupInventoryActivation();
-            }
-        });
-
-        stage.addActor(button);
-        stage.addActor(button2);
-        stage.addActor(button3);
-
     }
 
 
@@ -181,16 +173,35 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      * TODO: Add button to go left in power-up inventory list
      */
     public void addLeftButton() {
-        //CREATE BUTTON AND LINK IT TO THIS FUNCTION ON PRESS
-        decreaseIndexInPowerupActivationList();
+        leftButton = new TextButton("prev", skin);
+        leftButton.setColor(0.5f, 0.5f, 0.5f, 0.5f);
+        leftButton.setPosition(1350f,310f);
+        leftButton.setSize(50f, 45f);
+        // bind on click button event to a change in the list
+        leftButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // go left on the powerup activation index
+                decreaseIndexInPowerupActivationList();
+            }
+        });
     }
 
     /**
      * TODO: Add button to go right in power-up inventory list
      */
     public void addRightButton() {
-        //CREATE BUTTON AND LINK IT TO THIS FUNCTION ON PRESS
-        increaseIndexInPowerupActivationList();
+        rightButton = new TextButton("next", skin);
+        rightButton.setColor(0.5f, 0.5f, 0.5f, 0.5f);
+        rightButton.setPosition(1595f, 310f);
+        rightButton.setSize(50f, 45f);
+        rightButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // CALL GO RIGHT BUTTON PRESS
+                increaseIndexInPowerupActivationList();
+            }
+        });
     }
 
 
@@ -209,15 +220,15 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
     public void setUISpecificPowerup() {
 
         // given the current index, display a specific type of powerup
-        PowerupType displayThisType = localPowerupActivationList.get(powerupActivationlistIndex);
+        //PowerupType displayThisType = localPowerupActivationList.get(powerupActivationlistIndex);
         // you need to fetch the correct button and put it on the screen
 
         // MAKE SURE BUTTON IS BOUND TO THIS FUNCTION
-        pressedSpecificPowerupToBeUsed();
+        //pressedSpecificPowerupToBeUsed();
 
         //PRINT THE NEW TYPE THAT IS SELECTED
         logger.info(localPowerupActivationList.toString());
-        logger.info(displayThisType.toString());
+        //logger.info(displayThisType.toString());
     }
 
     /**

@@ -23,26 +23,38 @@ public class ReturnToPlanetDisplay extends UIComponent {
     addActors();
   }
 
+  /**
+   * Add Table containing the Return and Restart buttons
+   * that will be displayed on top left of the screen
+   */
   private void addActors() {
     table = new Table();
     table.top().right();
     table.setFillParent(true);
-
     TextButton mainMenuBtn = new TextButton("Return", skin);
-
+    TextButton restartBtn = new TextButton("Restart", skin);
     // Triggers an event when the button is pressed.
     mainMenuBtn.addListener(
-      new ChangeListener() {
-        @Override
-        public void changed(ChangeEvent changeEvent, Actor actor) {
-          logger.debug("Return button clicked");
-          //Add once it is clear which planet it intends to return to
-          entity.getEvents().trigger("exit");
-        }
-      });
-
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("Return button clicked");
+                //Add once it is clear which planet it intends to return to
+                entity.getEvents().trigger("exit");
+              }
+            });
+    restartBtn.addListener(
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("Restart button clicked");
+                entity.getEvents().trigger("restart");
+              }
+            }
+    );
     table.add(mainMenuBtn).padTop(10f).padRight(10f);
-
+    table.add(restartBtn).padTop(10f).padRight(10f);
+    //Return button on top left, Restart button right of return button
     stage.addActor(table);
   }
 

@@ -34,6 +34,7 @@ public class ObstacleMiniGameActions extends MainGameActions {
     @Override
     public void create() {
         entity.getEvents().addListener("exit", this::exit);
+        entity.getEvents().addListener("restart", this::restartGame);
     }
 
     /**
@@ -42,5 +43,13 @@ public class ObstacleMiniGameActions extends MainGameActions {
     private void exit() {
         logger.info("Exiting main game screen");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+    }
+
+    /**
+     * Restarts the space obstacle minigame. Currently capable of only generating a new space minigame
+     */
+    private void restartGame() {
+        logger.info("Restart space minigame");
+        game.setScreen(GdxGame.ScreenType.SPACE_MAP);
     }
 }

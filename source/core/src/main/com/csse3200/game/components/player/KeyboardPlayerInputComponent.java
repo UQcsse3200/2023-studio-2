@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -16,6 +17,8 @@ import com.csse3200.game.windows.PauseWindow;
 
 import java.util.HashMap;
 import java.util.Timer;
+
+import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 
 /**
@@ -377,8 +380,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
     private void openPauseWindow() {
         if (!isWindowOpen()) {
-            PauseWindow pauseWindow = PauseWindow.makeNewPauseWindow(entity);
-            ServiceLocator.getRenderService().getStage().addActor(pauseWindow);
+            MainGameActions mainGameActions = new MainGameActions(entity,game);
+            entity.getEvents().trigger("pause");
         }
     }
 

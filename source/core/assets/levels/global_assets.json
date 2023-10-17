@@ -81,7 +81,8 @@
     "particle-effects/extractor/extractor_rubble_solstite.effect",
     "particle-effects/extractor/extractor_rubble_nebulite.effect",
     "particle-effects/extractor/extractor_rubble_durasteel.effect",
-    "particle-effects/deathpotion/Death.effect"
+    "particle-effects/deathpotion/Death.effect",
+    "particle-effects/shield/shield.effect"
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
 }

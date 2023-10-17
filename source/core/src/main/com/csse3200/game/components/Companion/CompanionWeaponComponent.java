@@ -67,12 +67,15 @@ public class CompanionWeaponComponent extends Component {
         Vector2 placePos = positionInDirection(10, 0.3f, this.CurrentWeapon );
         if (weapon == CompanionWeaponType.SHIELD) {
             placePos = positionInDirection(90, -0.7f, this.CurrentWeapon );
+            this.CurrentWeapon.getEvents().trigger("startEffect", "shield");
         }
 
 
         ServiceLocator.getEntityPlacementService().placeEntityAt(this.CurrentWeapon , placePos);
         this.CurrentWeapon.addComponent(new HitboxComponent());
+        if (weapon == CompanionWeaponType.Death_Potion){
         this.CurrentWeapon.getEvents().trigger("startEffect", "deathPotion");
+        }
     }
 
     private Vector2 positionInDirection(double direction, float distance, Entity attack) {

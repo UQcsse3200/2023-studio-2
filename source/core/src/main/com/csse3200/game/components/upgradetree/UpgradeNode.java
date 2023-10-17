@@ -178,10 +178,13 @@ public class UpgradeNode {
         }
 
         // Weapons - damage is a function of cost
-        if (getWeaponType() == WeaponType.RANGED_NUKE) {
-                return 1000;
+        if (getWeaponType() == WeaponType.RANGED_NUKE) { // special case...
+            return 1000;
+        }
+        if (getWeaponType() == WeaponType.RANGED_GRENADE) { // special case; it does no damage on impact
+            return 450;
         }
         WeaponConfig weaponConfig = (WeaponConfig) getConfig();
-        return (int) (BASE_COST * (this.getDepth() + 1) + weaponConfig.damage);
+        return (int) (BASE_COST * (this.getDepth() + 1) + weaponConfig.damage * 3);
     }
 }

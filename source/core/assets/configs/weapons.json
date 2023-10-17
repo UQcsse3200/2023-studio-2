@@ -69,7 +69,7 @@
     "staticImageScale" : 0,
     "imagePath" : "images/weapons/ranged/bluemerangStatic.png",
     "type" : "RANGED_BLUEMERANG",
-    "slotType" : "melee",
+    "slotType" : "ranged",
     "projectiles" : 1,
 
     "sound": {"soundsMap": {}}
@@ -128,7 +128,7 @@
     "attackCooldown": 400,
     "imagePath" : "images/weapons/ranged/nukeStatic.png",
     "type" : "RANGED_NUKE",
-    "slotType" : "ranged",
+    "slotType" : "melee",
     "ammoUse" : 5,
     "sound": {"soundsMap": {}}
   },

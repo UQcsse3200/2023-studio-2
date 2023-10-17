@@ -31,7 +31,6 @@ public class GodComponent extends Component {
     private TouchAttackComponent touchAttackComponent;
     private boolean isInvis = true;
     private ColliderComponent colliderComponent;
-    private boolean fired = false;
 
     public GodComponent(Entity enemy){
         this.entity = enemy;
@@ -53,7 +52,7 @@ public class GodComponent extends Component {
     /**
      * Switches the speed variable
      */
-    private void toggleInvis() {
+    public void toggleInvis() {
         // Toggle the speed field
         isInvis = !isInvis;
     }
@@ -64,6 +63,13 @@ public class GodComponent extends Component {
      */
     public boolean getMode(){
         return Mode;
+    }
+    /**
+     * Get the invis status of the entity
+     * @return boolean value for that mode
+     */
+    public boolean getInvisMode(){
+        return isInvis;
     }
 
     /**
@@ -104,7 +110,6 @@ public class GodComponent extends Component {
                 @Override
                 public void run() {
                     if (index[0] < locations.length) {
-
                         Vector2 location = locations[index[0]];
                         Entity bullet1 = ProjectileFactory.createEnemyBullet(location, entity);
                         ServiceLocator.getStructurePlacementService()
@@ -161,6 +166,16 @@ public class GodComponent extends Component {
 
         return positions;
     }
+
+    /**
+     * This method returns the bullets vectors
+     * @param owner the enemy position
+     * @return array of bullets vectors
+     */
+    public Vector2[] publicMethod(Vector2 owner) {
+        return generateAngle(owner);
+    }
+
 
 
 }

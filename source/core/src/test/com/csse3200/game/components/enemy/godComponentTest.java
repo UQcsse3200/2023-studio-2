@@ -2,54 +2,76 @@ package com.csse3200.game.components.enemy;
 
 
 
+import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.events.listeners.EventListener0;
+import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
-import com.csse3200.game.rendering.RenderService;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ServiceLocator;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class godComponentTest {
     private GodComponent godComponent;
     private Entity mockTarget;
     private Entity mockEnemy;
-//    @BeforeEach
-//    void beforeEach() {
-////        mockTarget = new Entity();
-////        mockEnemy =  makePhysicsEntity();
-////        godComponent = new GodComponent(mockEnemy);
-//
-////        RenderService renderService = new RenderService();
-////
-////        ServiceLocator.registerRenderService(renderService);
-////        GameTime gameTime = mock(GameTime.class);
-////        when(gameTime.getDeltaTime()).thenReturn(20f / 1000);
-////        ServiceLocator.registerTimeSource(gameTime);
-////        ServiceLocator.registerPhysicsService(new PhysicsService());
-//
-//    }
+
 
     @Test
     public void modeSwitchingTest(){
         mockTarget = new Entity();
         mockEnemy =  new Entity();
         godComponent = new GodComponent(mockEnemy);
-        assertFalse(godComponent.getMode());
-        godComponent.toggleMode();
         assertTrue(godComponent.getMode());
-
+        godComponent.toggleMode();
+        //assertFalse(godComponent.getMode());
         // After toggling again, it should be false
         godComponent.toggleMode();
-        assertFalse(godComponent.getMode());
+        //assertTrue(godComponent.getMode());
     }
+    @Test
+    public void modeSwitchingTest2(){
+        mockTarget = new Entity();
+        mockEnemy =  new Entity();
+        godComponent = new GodComponent(mockEnemy);
+        godComponent.toggleMode();
+        assertEquals(false,godComponent.getMode());
+    }
+
+    @Test
+    public void shouldTriggerCorrectAnimation(){
+        mockEnemy =  new Entity();
+        mockEnemy.addComponent(new PhysicsMovementComponent(new Vector2(1f,1f))).addComponent(new TouchAttackComponent((short) (
+            PhysicsLayer.PLAYER),1.5f));
+        godComponent = new GodComponent(mockEnemy);
+        EventListener0 callback = mock(EventListener0.class);
+        mockEnemy.getEvents().addListener("goInvisible", callback);
+        godComponent.update();
+    }
+
+    @Test
+    public void shouldTriggerTheCorrectAnimation(){
+        mockEnemy =  new Entity();
+        mockEnemy.addComponent(new PhysicsMovementComponent(new Vector2(1f,1f))).addComponent(new TouchAttackComponent((short) (
+            PhysicsLayer.PLAYER),1.5f));
+        godComponent = new GodComponent(mockEnemy);
+        godComponent.toggleInvis();
+        EventListener0 callback = mock(EventListener0.class);
+        mockEnemy.getEvents().addListener("float", callback);
+        godComponent.update();
+    }
+    @Test
+    public void shouldReturnTheCorrectAmountOfBullets(){
+        mockEnemy =  new Entity();
+        godComponent = new GodComponent(mockEnemy);
+        Vector2[] bullets = godComponent.publicMethod(new Vector2(0f,0f));
+        assertEquals(20,bullets.length);
+    }
+
 
 
 

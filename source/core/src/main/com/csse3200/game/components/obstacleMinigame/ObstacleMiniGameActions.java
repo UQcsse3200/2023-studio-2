@@ -40,7 +40,7 @@ public class ObstacleMiniGameActions extends MainGameActions {
     /**
      * Swaps to the Main Menu screen.
      */
-    private void exit() {
+    public void exit() {
         logger.info("Exiting main game screen");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }

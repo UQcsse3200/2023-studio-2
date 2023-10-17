@@ -76,16 +76,27 @@ public class RingBurstComponent extends Component {
         };
     }
 
+    /**
+     * Helper Function to check if the attack
+     * @return boolean, true if the attack has already been shot
+     */
+    public boolean hasShot() {
+        // Check if enemy is at 50%
+        float currentHealth = this.enemy.getComponent(CombatStatsComponent.class).getHealth();
+        float maxHealth = this.enemy.getComponent(CombatStatsComponent.class).getMaxHealth();
+        // Check if health is below threshold
+        return ((currentHealth / maxHealth) * 100 <= 50.0f);
+    }
+
     @Override
     public void update() {
         // Check if enemy is at 50%
-        float currentHealth = enemy.getComponent(CombatStatsComponent.class).getHealth();
-        float maxHealth = enemy.getComponent(CombatStatsComponent.class).getMaxHealth();
+        float currentHealth = this.enemy.getComponent(CombatStatsComponent.class).getHealth();
+        float maxHealth = this.enemy.getComponent(CombatStatsComponent.class).getMaxHealth();
         // Check if health is below threshold
         if ((currentHealth / maxHealth) * 100 <= 50.0f && !hasShot) {
             ringBurstAttack();
             hasShot = true;
         }
     }
-
 }

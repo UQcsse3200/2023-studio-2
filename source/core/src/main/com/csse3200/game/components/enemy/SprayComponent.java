@@ -54,12 +54,33 @@ public class SprayComponent extends Component {
 
     @Override
     public void update() {
-        float deltaTime = Gdx.graphics.getDeltaTime(); // Get the time since the last frame
-        totalTime += deltaTime; // Keep track of total time
-        if (totalTime > 5.0f) {
+        if (getTimePassed() > 5.0f) {
             totalTime = 0.0f;
             sprayAttack();
         }
+    }
+
+    @Override
+    public void earlyUpdate() {
+        getTimePassed();
+    }
+
+    /**
+     * Helper Function to return total time since last time reset
+     * @return float of total time passed
+     */
+    public float getTimePassed() {
+        float deltaTime = Gdx.graphics.getDeltaTime(); // Get the time since the last frame
+        totalTime += deltaTime; // Keep track of total time
+        return totalTime;
+    }
+
+    /**
+     * Helper Function to return if enemy is ready to use spray attack
+     * @return Boolean, true if cooldown is over
+     */
+    public boolean isReadyToShoot() {
+        return totalTime > 5.0f;
     }
 
     /**

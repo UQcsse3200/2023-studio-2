@@ -103,12 +103,13 @@ public class EntityService {
    * Dispose all entities.
    */
   public void dispose() {
-    for (Entity entity : entities) {
-      entity.dispose();
+    for (int i = 0; i < entities.size; i++) {
+      entities.get(i).dispose();
     }
   }
   public Entity getCompanion() {
-    for (Entity entity : entities) {
+    for (int i = 0; i < entities.size; i++) {
+      Entity entity = entities.get(i);
       if (entity.getEntityType().equals("companion")) {
         return entity;
       }

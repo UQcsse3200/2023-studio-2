@@ -140,7 +140,7 @@ public class ControlsScreenDisplay extends UIComponent {
         String exitTextureHover = "images/controls-images/on_exit_hover.PNG";
         ImageButton exitBtn;
         exitBtn = bothButtons.draw(exitTexture, exitTextureHover);
-        exitBtn.setPosition(800f, 100f);
+        exitBtn.setPosition(1600f, 200f);
         exitBtn.setSize(250, 100);
 
         exitBtn.addListener(new ChangeListener() {

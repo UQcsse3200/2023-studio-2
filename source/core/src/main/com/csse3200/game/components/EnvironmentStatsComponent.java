@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory;
  * extended for more specific combat needs.
  */
 public class EnvironmentStatsComponent extends Component {
-
-    private static final Logger logger = LoggerFactory.getLogger(EnvironmentStatsComponent.class);
     private Boolean isImmune = false;
 
     private boolean isSafeMap = false;
@@ -48,7 +46,7 @@ public class EnvironmentStatsComponent extends Component {
 
 
     public void setSafeMap(GameAreaConfig mapConfig) {
-        System.out.println(mapConfig.mapName);
+       logger.info(mapConfig.mapName);
         this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Verdant Oasis"));
     }
 
@@ -77,7 +75,7 @@ public class EnvironmentStatsComponent extends Component {
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                if (getImmunity()) {
+                if (getImmunity() == true) {
                     return;
                 }
                 player.addHealth(-1);

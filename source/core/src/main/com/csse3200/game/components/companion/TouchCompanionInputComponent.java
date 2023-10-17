@@ -2,7 +2,7 @@
  * This class represents the input component for controlling a companion character using touch input (mouse).
  * It implements the InputProcessor interface to handle touch input events.
  */
-package com.csse3200.game.components.Companion;
+package com.csse3200.game.components.companion;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;

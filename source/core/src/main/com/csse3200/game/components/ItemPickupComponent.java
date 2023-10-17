@@ -2,7 +2,7 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.csse3200.game.components.Companion.CompanionInventoryComponent;
+import com.csse3200.game.components.companion.CompanionInventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;

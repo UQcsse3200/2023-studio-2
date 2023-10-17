@@ -1,4 +1,4 @@
-package com.csse3200.game.components.InitialSequence;
+package com.csse3200.game.components.initialsequence;
 /**
  * The package containing the user interface components for the initial story sequence.
  */
@@ -18,7 +18,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.InsertButtons;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

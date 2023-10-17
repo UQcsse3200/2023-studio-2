@@ -1,4 +1,4 @@
-package com.csse3200.game.components.Companion;
+package com.csse3200.game.components.companion;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;

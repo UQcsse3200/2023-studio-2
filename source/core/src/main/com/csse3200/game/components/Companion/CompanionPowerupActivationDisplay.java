@@ -71,9 +71,10 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
     Label potionLabel;
     TextButton leftButton;
     TextButton rightButton;
+    Image displayedPowerupImage;
+    Table powerupActivationButtonTable;
 
     public PowerupConfigs powerupConfigs;
-    Table hotbar = new Table();
 
     /**
      * Constructor, sets label style
@@ -146,15 +147,15 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
         potionLabel.setFontScale(0.2f, 0.2f);
 
         //create the potion IMAGE element and make sure its bound to the arrayList
-        //Image image = new Image(new Texture(deathPotion.spritePath));
+        displayedPowerupImage = new Image();
 
         //UI table element to combine potion label and image
-        Table powerupActivationButtonTable = new Table();
-        // add label
-        powerupActivationButtonTable.add(potionLabel);
+        powerupActivationButtonTable = new Table();
 
         //add image
-        //powerupActivationButtonTable.add(image).size(64, 64).row();
+        powerupActivationButtonTable.add(displayedPowerupImage).size(64, 64).row();
+        // add label
+        powerupActivationButtonTable.add(potionLabel);
 
         // add the UI elements to the button
         powerupActivationButton.add(powerupActivationButtonTable).width(150).height(150);
@@ -210,7 +211,8 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      * TODO: This function will set the UI element which contains the powerup to A BLANK DEFAULT STATE
      */
     public void setUIEmptyPowerupInventory() {
-        return;
+        displayedPowerupImage = new Image();
+        refreshPowerupActivationButtonUI();
     }
 
     /**
@@ -223,12 +225,33 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
         //PowerupType displayThisType = localPowerupActivationList.get(powerupActivationlistIndex);
         // you need to fetch the correct button and put it on the screen
 
+        //powerupImage = new Image(new Texture(deathPotion.spritePath));
+        //displayedPowerupImage.getImageHeight == 0 when its initialised to nothing.
+
         // MAKE SURE BUTTON IS BOUND TO THIS FUNCTION
         //pressedSpecificPowerupToBeUsed();
 
         //PRINT THE NEW TYPE THAT IS SELECTED
         logger.info(localPowerupActivationList.toString());
         //logger.info(displayThisType.toString());
+    }
+
+    /**
+     * This function is called whenever the powerup activation UI needs to be refreshed
+     */
+    public void refreshPowerupActivationButtonUI() {
+        ///POTENTIALLY CLEAR THE BUTTON
+
+
+        //UI table element to combine potion label and image
+        powerupActivationButtonTable = new Table();
+        // add label
+        powerupActivationButtonTable.add(potionLabel);
+        // add image
+        powerupActivationButtonTable.add(displayedPowerupImage).size(64,64).row();
+
+        // add the UI elements to the button
+        powerupActivationButton.add(powerupActivationButtonTable).width(150).height(150);
     }
 
     /**

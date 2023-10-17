@@ -63,8 +63,8 @@ public class Wall extends PlaceableEntity {
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));
         addComponent(new ProximityActivationComponent(1.5f, player, this::onPlayerEnter, this::onPlayerExit));
-        addComponent(new StructureDestroyComponent())
-                .addComponent(new SoundComponent(config.sounds));
+        addComponent(new StructureDestroyComponent());
+        addComponent(new SoundComponent(config.sounds));
         addComponent(new SaveableComponent<>(wall -> save(wall, config), WallConfig.class));
 
         getComponent(JoinableComponent.class).scaleEntity();

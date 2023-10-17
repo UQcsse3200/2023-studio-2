@@ -48,7 +48,7 @@ class PlacementToolTest {
     void testInteractNoExistingStructureNoCost() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new MockPlacementTool(cost, 0, "texture.png");
+        var tool = new MockPlacementTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -65,7 +65,7 @@ class PlacementToolTest {
     void testInteractExistingStructure() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new MockPlacementTool(cost, 0, "texture.png");
+        var tool = new MockPlacementTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -86,7 +86,7 @@ class PlacementToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(100);
 
-        var tool = new MockPlacementTool(cost, 0, "texture.png");
+        var tool = new MockPlacementTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -109,7 +109,7 @@ class PlacementToolTest {
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
-        var tool = new MockPlacementTool(cost, 0, "texture.png");
+        var tool = new MockPlacementTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -126,8 +126,8 @@ class PlacementToolTest {
 
 class MockPlacementTool extends PlacementTool {
 
-    public MockPlacementTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
-        super(cost, ordering, texture);
+    public MockPlacementTool(ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
+        super(cost, range, texture, ordering);
     }
 
     @Override

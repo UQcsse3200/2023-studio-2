@@ -6,8 +6,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.entities.buildables.Wall;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsEngine;
@@ -61,7 +59,7 @@ class BasicWallToolTest {
     void testInteractNoExistingStructureNoCost() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new BasicWallTool(cost, 0, "texture.png");
+        var tool = new BasicWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -78,7 +76,7 @@ class BasicWallToolTest {
     void testInteractExistingStructure() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new BasicWallTool(cost, 0, "texture.png");
+        var tool = new BasicWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -99,7 +97,7 @@ class BasicWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(100);
 
-        var tool = new BasicWallTool(cost, 0, "texture.png");
+        var tool = new BasicWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -120,7 +118,7 @@ class BasicWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(15);
 
-        var tool = new BasicWallTool(cost, 0, "texture.png");
+        var tool = new BasicWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 

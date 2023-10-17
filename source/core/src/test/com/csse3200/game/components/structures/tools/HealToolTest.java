@@ -7,20 +7,16 @@ import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.structures.CostComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.internal.stubbing.StrictnessSelector;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,7 +89,7 @@ class HealToolTest {
 
         lenient().when(costComponent.getCost()).thenReturn(new ObjectMap<>(cost));
 
-        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
+        HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
         var player = mock(Entity.class);
 
         var validity = healTool.canInteract(player, position);
@@ -156,7 +152,7 @@ class HealToolTest {
 
         lenient().when(placeableEntity.getComponent(CostComponent.class)).thenReturn(costComponent);
 
-        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
+        HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
         var player = mock(Entity.class);
         var position = new GridPoint2(0, 0);
 
@@ -178,7 +174,7 @@ class HealToolTest {
         lenient().when(combatStatsComponent.getHealth()).thenReturn(50);
         lenient().when(combatStatsComponent.getMaxHealth()).thenReturn(100);
 
-        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
+        HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
         var player = mock(Entity.class);
         var position = new GridPoint2(0, 0);
 
@@ -259,7 +255,7 @@ class HealToolTest {
 
         lenient().when(costComponent.getCost()).thenReturn(new ObjectMap<>(cost));
 
-        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
+        HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
         var player = mock(Entity.class);
 
         // required to calculate requiredResources

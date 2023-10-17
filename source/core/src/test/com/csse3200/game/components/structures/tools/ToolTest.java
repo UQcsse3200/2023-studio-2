@@ -20,7 +20,7 @@ class ToolTest {
         cost.put("resource1", 10);
         cost.put("resource2", 20);
 
-        var tool = new MockTool(cost, 0, "image.png");
+        var tool = new MockTool(cost, 5f, "image.png", 0);
 
         assertEquals(tool.getCost(), cost);
         assertEquals(tool.getTexture(), "image.png");
@@ -30,11 +30,11 @@ class ToolTest {
     void testOrdering() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
         List<Tool> tools = new ArrayList<>();
-        tools.add(new MockTool(cost, 0, "image.png"));
-        tools.add(new MockTool(cost, 5, "image.png"));
-        tools.add(new MockTool(cost, 2, "image.png"));
-        tools.add(new MockTool(cost, 12, "image.png"));
-        tools.add(new MockTool(cost, 3, "image.png"));
+        tools.add(new MockTool(cost, 5f, "image.png", 0));
+        tools.add(new MockTool(cost, 5f, "image.png", 5));
+        tools.add(new MockTool(cost, 5f, "image.png", 2));
+        tools.add(new MockTool(cost, 5f, "image.png", 12));
+        tools.add(new MockTool(cost, 5f, "image.png", 3));
 
         Collections.sort(tools);
 
@@ -50,8 +50,8 @@ class ToolTest {
 }
 
 class MockTool extends Tool {
-    public MockTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
-        super(cost, ordering, texture);
+    public MockTool(ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
+        super(cost, range, texture, ordering);
     }
 
     @Override

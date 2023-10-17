@@ -64,7 +64,7 @@ class IntermediateWallToolTest {
         setupPhysicsMock();
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -79,7 +79,7 @@ class IntermediateWallToolTest {
     void testInteractExistingStructureNotWall() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -97,7 +97,7 @@ class IntermediateWallToolTest {
         setupPhysicsMock();
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -120,7 +120,7 @@ class IntermediateWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(100);
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -145,7 +145,7 @@ class IntermediateWallToolTest {
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -168,7 +168,7 @@ class IntermediateWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(100);
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -189,7 +189,7 @@ class IntermediateWallToolTest {
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 

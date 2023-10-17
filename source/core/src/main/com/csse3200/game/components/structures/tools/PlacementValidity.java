@@ -8,5 +8,5 @@ public enum PlacementValidity {
     INVALID,
     INSUFFICIENT_RESOURCES,
     INVALID_POSITION,
-    ERROR
+    OUT_OF_RANGE, ERROR
 }

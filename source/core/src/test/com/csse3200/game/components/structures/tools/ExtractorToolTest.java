@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.resources.FissureComponent;
 import com.csse3200.game.components.resources.Resource;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.Fissure;
 import com.csse3200.game.entities.PlaceableEntity;
@@ -52,7 +51,7 @@ class ExtractorToolTest {
 
             when(stateObserver.getStateData("extractorsMax/" + Resource.Durasteel)).thenReturn(4);
             when(stateObserver.getStateData("extractorsTotal/" + Resource.Durasteel)).thenReturn(0);
-            ExtractorTool extractorTool = new ExtractorTool(new ObjectMap<>(), 0, "texture.png");
+            ExtractorTool extractorTool = new ExtractorTool(new ObjectMap<>(), 5f, "texture.png", 0);
 
             var fissure = mock(Fissure.class);
             var fissureComponent = mock(FissureComponent.class);

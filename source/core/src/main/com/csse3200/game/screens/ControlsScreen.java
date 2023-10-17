@@ -259,7 +259,6 @@ public class ControlsScreen extends ScreenAdapter {
         ui.addComponent(new ControlsScreenDisplay(game, Isgame));
         System.out.println(game);
         ui.addComponent(new InputDecorator(stage, 10))
-                .addComponent(new ControlsScreenActions(game, (int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
                 .addComponent(new MainGamePauseDisplay(this.game.getScreenType()))

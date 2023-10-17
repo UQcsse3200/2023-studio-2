@@ -1,4 +1,4 @@
-package com.csse3200.game.areas.mapConfig;
+package com.csse3200.game.areas.map_config;
 
 import com.csse3200.game.entities.configs.BaseEntityConfig;
 import com.csse3200.game.entities.configs.CompanionConfig;

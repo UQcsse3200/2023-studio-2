@@ -1,4 +1,4 @@
-package com.csse3200.game.areas.mapConfig;
+package com.csse3200.game.areas.map_config;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -87,6 +87,7 @@ public class ConfigLoader {
             EntitiesConfigFile entitiesConfigFile =
                     FileLoader.readClass(EntitiesConfigFile.class, file, FileLoader.Location.LOCAL);
             if (entitiesConfigFile == null) continue;
+            logger.info("Successfully loaded entity file " + file);
             areaEntityConfig.addEntry(entitiesConfigFile.getMapEntry());
         }
         return areaEntityConfig;

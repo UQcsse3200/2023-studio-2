@@ -1,7 +1,7 @@
 package com.csse3200.game.utils;
 
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.areas.mapConfig.InvalidConfigException;
+import com.csse3200.game.areas.map_config.InvalidConfigException;
 
 import java.io.File;
 import java.util.List;

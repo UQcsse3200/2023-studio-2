@@ -1,5 +1,7 @@
 package com.csse3200.game.areas.mapConfig;
 
+import com.csse3200.game.areas.map_config.AreaEntityConfig;
+import com.csse3200.game.areas.map_config.GameAreaConfig;
 import com.csse3200.game.entities.configs.BaseEntityConfig;
 import com.csse3200.game.extensions.GameExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,10 +24,6 @@ class GameAreaConfigTest {
     static BaseEntityConfig entity2 = mock(BaseEntityConfig.class);
     static BaseEntityConfig entity3 = mock(BaseEntityConfig.class);
     static BaseEntityConfig entity4 = mock(BaseEntityConfig.class);
-
-    private static final List<BaseEntityConfig> entities1 = List.of(entity1, entity2, entity3, entity4);
-    private static final List<BaseEntityConfig> entities2 = List.of(entity1, entity2);
-    private static final List<BaseEntityConfig> entities3 = List.of(entity3, entity4);
 
     private static final List<String> textures1 = List.of("Texture1.png", "Texture4.png");
     private static final List<String> textures2 = List.of("Texture2.png", "Texture2.png");

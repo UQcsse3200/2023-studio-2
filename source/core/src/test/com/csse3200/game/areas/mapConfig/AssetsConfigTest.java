@@ -6,6 +6,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.areas.map_config.AssetsConfig;
+import com.csse3200.game.areas.map_config.ConfigLoader;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.ResourceService;
 import org.junit.jupiter.api.AfterEach;

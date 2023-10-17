@@ -6,7 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.MapGameArea;
-import com.csse3200.game.areas.mapConfig.*;
+import com.csse3200.game.areas.map_config.AssetsConfig;
+import com.csse3200.game.areas.map_config.ConfigLoader;
+import com.csse3200.game.areas.map_config.InvalidConfigException;
+import com.csse3200.game.areas.map_config.LevelConfig;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
@@ -69,16 +72,7 @@ public class PlanetScreen extends ScreenAdapter {
     private PhysicsEngine physicsEngine;
 
     /** file paths of textures for screen to load. */
-    private AssetsConfig assets = null;
-
-    /**
-     * Construct the PlanetScreen instance for the first planet (Earth).
-     *
-     * @param game  The current game instance to display screen on.
-     */
-    public PlanetScreen(GdxGame game, String name, String areaName) {
-        this(game, name);
-    }
+    private AssetsConfig assets;
 
     /**
      * Construct the PlanetScreen instance for the planet of given name.

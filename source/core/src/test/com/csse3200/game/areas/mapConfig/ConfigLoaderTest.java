@@ -1,6 +1,7 @@
 package com.csse3200.game.areas.mapConfig;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.csse3200.game.areas.map_config.*;
 import com.csse3200.game.entities.configs.CompanionConfig;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.extensions.GameExtension;

@@ -1,15 +1,7 @@
-
-/**
- * Component used to store information related to combat such as health, attack, etc. Any entities
- * which engage in combat should have an instance of this class registered. This class can be
- * extended for more specific combat needs.
- */
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.utils.Timer;
-import com.csse3200.game.areas.mapConfig.GameAreaConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.csse3200.game.areas.map_config.GameAreaConfig;
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
@@ -75,7 +67,7 @@ public class EnvironmentStatsComponent extends Component {
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                if (getImmunity() == true) {
+                if (getImmunity()) {
                     return;
                 }
                 player.addHealth(-1);

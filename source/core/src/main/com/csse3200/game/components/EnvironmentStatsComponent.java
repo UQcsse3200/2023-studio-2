@@ -2,7 +2,7 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.areas.MapGameArea;
-import com.csse3200.game.areas.mapConfig.GameAreaConfig;
+import com.csse3200.game.areas.map_config.GameAreaConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +55,7 @@ public class EnvironmentStatsComponent extends Component {
 
     public void setSafeMap(GameAreaConfig mapConfig) {
        logger.info(mapConfig.mapName);
-        this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Verdant Oasis"));
+        this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Flora Haven"));
     }
 
     /**

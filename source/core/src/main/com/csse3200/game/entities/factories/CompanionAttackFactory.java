@@ -53,7 +53,7 @@ public class CompanionAttackFactory {
         attack.addComponent(new ParticleComponent(config.effects));
 
 
-                attack.addComponent(new CombatStatsComponent(30, 10, 1, false));
+                attack.addComponent(new CombatStatsComponent(30,40,10,1,false));
 
 
         attack.scaleWidth(config.imageScale);

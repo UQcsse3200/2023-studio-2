@@ -88,7 +88,7 @@ public class ExplosiveComponent extends Component {
 
             if (distance <= explosiveConfig.damageRadius) {
                 combatStatsComponent.addHealth((int) ((explosiveConfig.damageRadius - distance)
-                        / explosiveConfig.damageRadius * -explosiveConfig.damage));
+                        / explosiveConfig.damageRadius * -explosiveConfig.baseAttack));
             }
         }
 

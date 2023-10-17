@@ -36,8 +36,8 @@ public class CombatStatsComponent extends Component {
    * @param attackMultiplier The attack multiplier of the entity.
    * @param isImmune         A flag indicating whether the entity is immune to attacks.
    */
-  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune) {
-    this.maxHealth = health;
+  public CombatStatsComponent(int health, int maxHealth, int baseAttack, int attackMultiplier, boolean isImmune) {
+    this.maxHealth = maxHealth;
     this.setHealth(health);
     this.setBaseAttack(baseAttack);
     this.setAttackMultiplier(attackMultiplier);
@@ -53,7 +53,7 @@ public class CombatStatsComponent extends Component {
    * @param isImmune         A flag indicating whether the entity is immune to attacks.
    * @param lives            Number of lives the player has remaining.
    */
-  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune, int lives) {
+  public CombatStatsComponent(int health, int maxHealth, int baseAttack, int attackMultiplier, boolean isImmune, int lives) {
     this.maxHealth = health;
     this.setHealth(health);
     this.setBaseAttack(baseAttack);
@@ -103,7 +103,8 @@ public class CombatStatsComponent extends Component {
       entity.getEvents().trigger("updateHealth", this.health);
     }
     if (entity != null) {
-      if (isDead() && entity.getEntityType().equals("player") && !dead) {
+      if (isDead() && entity.getEntityType().equals("player") && dead == false) {
+
         dead = true;
         entity.getComponent(KeyboardPlayerInputComponent.class).clearWalking(); // Stop player from walking
         entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn
@@ -139,10 +140,9 @@ public class CombatStatsComponent extends Component {
 
   /**
    * sets the entity's health to maximum if H-Key is pressed on the keyboard.
-   * @param newHealth the new value of the users health
    * @param isHKeyPressed whether the H key is pressed
    */
-  public void setHealth(int newHealth, boolean isHKeyPressed) {
+  public void setHealth( boolean isHKeyPressed) {
     if (isHKeyPressed) {
       this.health = 100;
     }
@@ -290,7 +290,8 @@ public class CombatStatsComponent extends Component {
    * @param attacker The entity causing the damage.
    */
   public void hit(CombatStatsComponent attacker) {
-    if (getImmunity()) {
+    if (getImmunity() == true) {
+
       return;
     }
     int newHealth;

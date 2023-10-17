@@ -1,4 +1,4 @@
-package com.csse3200.game.components.InitialSequence;
+package com.csse3200.game.components.initialsequence;
 
 import aurelienribon.tweenengine.TweenAccessor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;

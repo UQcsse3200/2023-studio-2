@@ -8,6 +8,7 @@
     "upgradeTree": "sounds/upgradeTreeTap.wav",
     "upgradeWeapon": "sounds/upgradeWeapon.wav",
     "exitButton" : "sounds/ExitButton.wav",
-    "alert": "sounds/alert.wav"
+    "alert": "sounds/alert.wav",
+    "structurePlace" : "sounds/structurePlace.wav"
   }
 }

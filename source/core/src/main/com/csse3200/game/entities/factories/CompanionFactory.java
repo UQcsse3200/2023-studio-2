@@ -71,7 +71,8 @@ public class CompanionFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
                         .addComponent(new ColliderComponent())
                         .addComponent(new CompanionActions())
-                        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
+                        .addComponent(new CombatStatsComponent(config.health, config.maxHealth,
+                                config.baseAttack, config.attackMultiplier, config.isImmune))
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
                         .addComponent(animator)

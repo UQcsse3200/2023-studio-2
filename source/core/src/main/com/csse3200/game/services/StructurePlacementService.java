@@ -30,7 +30,7 @@ public class StructurePlacementService {
         return position.get(searchEntity);
     }
 
-    public void placeStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+    public void placeStructureAt(PlaceableEntity entity, GridPoint2 tilePos) {
         if (!canPlaceStructureAt(entity, tilePos)) {
             return;
         }
@@ -45,7 +45,7 @@ public class StructurePlacementService {
             }
         }
 
-        handler.trigger("placeStructureAt", new placeStructureAtArgs(entity, tilePos, centerX, centerY));
+        handler.trigger("placeStructureAt", new placeStructureAtArgs(entity, tilePos));
         entity.placed();
     }
 
@@ -61,10 +61,10 @@ public class StructurePlacementService {
         return true;
     }
 
-    public void replaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+    public void replaceStructureAt(PlaceableEntity entity, GridPoint2 tilePos) {
         removeStructureAt(tilePos, true);
 
-        placeStructureAt(entity, tilePos, centerX, centerY);
+        placeStructureAt(entity, tilePos);
     }
 
     public void spawnEntityAtVector(Entity entity, Vector2 worldPos) {
@@ -114,14 +114,10 @@ public class StructurePlacementService {
     public static class placeStructureAtArgs {
         private Entity entity;
         private GridPoint2 tilePos;
-        private boolean centerX;
-        private boolean centerY;
 
-        public placeStructureAtArgs(Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+        public placeStructureAtArgs(Entity entity, GridPoint2 tilePos) {
             this.setEntity(entity);
             this.setTilePos(tilePos);
-            this.setCenterX(centerX);
-            this.setCenterY(centerY);
         }
 
         public Entity getEntity() {
@@ -138,22 +134,6 @@ public class StructurePlacementService {
 
         public void setTilePos(GridPoint2 tilePos) {
             this.tilePos = tilePos;
-        }
-
-        public boolean isCenterX() {
-            return centerX;
-        }
-
-        public void setCenterX(boolean centerX) {
-            this.centerX = centerX;
-        }
-
-        public boolean isCenterY() {
-            return centerY;
-        }
-
-        public void setCenterY(boolean centerY) {
-            this.centerY = centerY;
         }
     }
 

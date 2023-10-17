@@ -39,6 +39,8 @@ class BasicWallToolTest {
     ResourceService resourceService;
     @Mock
     PhysicsService physicsService;
+    @Mock
+    EventHandler playerEventHandler;
 
     @BeforeEach
     void beforeEach() {
@@ -51,6 +53,8 @@ class BasicWallToolTest {
         var physicsEngine = mock(PhysicsEngine.class);
         when(physicsService.getPhysics()).thenReturn(physicsEngine);
         when(physicsEngine.createBody(any())).thenReturn(mock(Body.class));
+
+        when(player.getEvents()).thenReturn(playerEventHandler);
 
         var textureAtlas = mock(TextureAtlas.class);
         when(resourceService.getAsset(any(), eq(TextureAtlas.class))).thenReturn(textureAtlas);
@@ -71,8 +75,7 @@ class BasicWallToolTest {
 
         verify(stateObserver, never()).getStateData(any());
 
-        verify(structurePlacementService).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService).placeStructureAt(any(), eq(position));
     }
 
     @Test
@@ -89,8 +92,7 @@ class BasicWallToolTest {
 
         tool.interact(player, position);
 
-        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position));
     }
 
     @Test
@@ -111,8 +113,7 @@ class BasicWallToolTest {
 
         verify(stateObserver).getStateData("resource/resource1");
         verify(stateObserver).getStateData("resource/resource2");
-        verify(structurePlacementService).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService).placeStructureAt(any(), eq(position));
     }
 
     @Test
@@ -136,7 +137,6 @@ class BasicWallToolTest {
         // don't care which order they get checked in. Don't care if loops breaks early.
         verify(stateObserver, atMost(1)).getStateData("resource/resource1");
         verify(stateObserver, atMost(1)).getStateData("resource/resource2");
-        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position));
     }
 }

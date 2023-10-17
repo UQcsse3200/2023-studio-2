@@ -22,7 +22,7 @@ public class ShipAnimationController extends Component {
 
         animator = this.getEntity().getComponent(AnimationRenderComponent.class);
         //Bugged, TBD
-        //entity.getEvents().addListener("boostRight", this::animateLeft);
+
     }
 
     /**

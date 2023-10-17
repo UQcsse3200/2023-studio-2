@@ -92,7 +92,7 @@ public class PlayerFactory {
                         .addComponent(new CombatStatsComponent(config.maxHealth, config.maxHealth,
                                 config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
                         .addComponent(new EnvironmentStatsComponent())
-                        .addComponent(new InventoryComponent(weaponConfigs))
+                        .addComponent(new InventoryComponent(weaponConfigs, config))
                         .addComponent(inputComponent)
                         .addComponent(new PlayerStatsDisplay(config))
                         .addComponent(animator)
@@ -113,7 +113,10 @@ public class PlayerFactory {
                 playerConfig.health = p.getComponent(CombatStatsComponent.class).getHealth();
                 playerConfig.maxHealth = p.getComponent(CombatStatsComponent.class).getMaxHealth();
                 playerConfig.unlocks = p.getComponent(UpgradeTree.class).getUnlockedWeaponsConfigs();
-                return playerConfig;
+                playerConfig.slotTypeMap = p.getComponent(InventoryComponent.class).getSlotTypeMap();
+                playerConfig.equipped = p.getComponent(InventoryComponent.class).getEquipped();
+
+            return playerConfig;
             }, PlayerConfig.class));
         if (config.health <= 0) config.health = config.maxHealth;
         player.getComponent(CombatStatsComponent.class).setHealth(config.health);

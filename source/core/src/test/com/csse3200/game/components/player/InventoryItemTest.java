@@ -1,21 +1,26 @@
 package com.csse3200.game.components.player;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
 
 public class InventoryItemTest {
     private WeaponConfigs weaponConfigs;
+    private PlayerConfig playerConfig;
     private InventoryComponent.InventoryItem inventoryItem;
 
     @Before
     public void setUp() {
-        weaponConfigs = FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
-        inventoryItem = new InventoryComponent(weaponConfigs).new InventoryItem(WeaponType.MELEE_WRENCH, 30, 40);
+        weaponConfigs = FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");        
+        playerConfig = mock(PlayerConfig.class);
+        inventoryItem = new InventoryComponent(weaponConfigs,playerConfig).new InventoryItem(WeaponType.MELEE_WRENCH, 30, 40);
     }
 
     @Test

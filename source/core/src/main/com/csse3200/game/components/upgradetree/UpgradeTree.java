@@ -32,7 +32,7 @@ public class UpgradeTree extends Component {
 
         if (unlockedWeapons.isEmpty()) {
             unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.MELEE_WRENCH));
-            unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.RANGED_SLINGSHOT));
+            unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.RANGED_BOOMERANG));
             unlockedWeapons.add(weaponConfigs.GetWeaponConfig(WeaponType.WOODHAMMER));
         }
     }

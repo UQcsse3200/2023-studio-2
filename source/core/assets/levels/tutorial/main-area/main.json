@@ -95,7 +95,8 @@
     "sounds/alert.wav",
     "sounds/explosion/grenade.mp3",
     "sounds/explosion/landmine.mp3",
-    "sounds/ExitButton.wav"
+    "sounds/ExitButton.wav",
+    "sounds/structurePlace.wav"
   ],
   "particleEffectPaths": [
     "particle-effects/explosion/explosion.effect",

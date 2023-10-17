@@ -38,6 +38,9 @@ public abstract class Tool implements Comparable<Tool> {
      *
      * @param player - the player interacting with the tool.
      * @param position - the position being interacted with.
+     *
+     * it triggers the alert sound on invalid position
+     * and also triggers the structure placing sound on valid position
      */
     public void interact(Entity player, GridPoint2 position) {
         var validity = canInteract(player, position);
@@ -52,7 +55,7 @@ public abstract class Tool implements Comparable<Tool> {
             player.getEvents().trigger("playSound", "alert");
             return;
         }
-
+        player.getEvents().trigger("playSound", "structurePlace");
         performInteraction(player, position);
     }
 

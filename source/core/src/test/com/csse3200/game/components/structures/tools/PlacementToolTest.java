@@ -12,6 +12,7 @@ import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
+import jdk.jfr.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +36,8 @@ class PlacementToolTest {
     ResourceService resourceService;
     @Mock
     PhysicsService physicsService;
+    @Mock
+    EventHandler eventHandler;
 
     @BeforeEach
     void beforeEach() {
@@ -43,6 +46,7 @@ class PlacementToolTest {
         ServiceLocator.registerGameStateObserverService(stateObserver);
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerPhysicsService(physicsService);
+        when(player.getEvents()).thenReturn(eventHandler);
     }
     @Test
     void testInteractNoExistingStructureNoCost() {

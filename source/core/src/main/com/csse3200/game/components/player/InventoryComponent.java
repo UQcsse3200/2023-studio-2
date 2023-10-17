@@ -3,6 +3,7 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
 
 import java.util.*;
@@ -15,20 +16,20 @@ import java.util.stream.Collectors;
  */
 public class InventoryComponent extends Component {
     private String equipped = "melee";
-    private final LinkedHashMap<String, InventoryItem> equippedWMap = new LinkedHashMap<>(); // preserves insert order
+    private LinkedHashMap<String, WeaponType> slotTypeMap = new LinkedHashMap<>();
+    private LinkedHashMap<String, InventoryItem> equippedWMap = new LinkedHashMap<>(); // preserves insert order
     private final WeaponConfigs config;
     private boolean reload;
 
-    public InventoryComponent(WeaponConfigs config) {
-        create();
+    public InventoryComponent(WeaponConfigs config, PlayerConfig playerConfig) {
+        create(playerConfig);
         this.config = config;
     }
 
-    @Override
-    public void create() {
-        equippedWMap.put("melee", new InventoryItem(WeaponType.MELEE_WRENCH, 30, 30));
-        equippedWMap.put("ranged", new InventoryItem(WeaponType.RANGED_SLINGSHOT, 10, 10));
-        equippedWMap.put("building", new InventoryItem(WeaponType.WOODHAMMER));
+    public void create(PlayerConfig playerConfig) {
+        this.slotTypeMap = playerConfig.slotTypeMap;
+        this.equipped = playerConfig.equipped;
+        equippedWMap = convertSave(slotTypeMap);
     }
 
     @Override
@@ -36,12 +37,47 @@ public class InventoryComponent extends Component {
         this.equippedWMap.get(getEquipped()).decCoolDown();
     }
 
+    /**
+    * Converts the saved map into a map containing the item's slot, and assigned ammo.
+     *
+     * This was done as SavableComponent cannot take the non-static `InventoryItem` class
+    */
+    public LinkedHashMap<String, InventoryItem> convertSave(LinkedHashMap<String, WeaponType> input) {
+        LinkedHashMap<String, InventoryItem> temp = new LinkedHashMap<>();
+        if (input == null) {
+            return temp;
+        }
+        for (var entry : input.entrySet()) {
+            if (entry.getKey().equals("melee")) {
+                temp.put(entry.getKey(), new InventoryItem(entry.getValue(), 30, 30));
+            } else if (entry.getKey().equals("ranged")) {
+                temp.put(entry.getKey(), new InventoryItem(entry.getValue(), 10, 10));
+            } else {
+                temp.put(entry.getKey(), new InventoryItem(entry.getValue()));
+            }
+        }
+        return temp;
+    }
+
+    /**
+     * Returns a map containing the weapon's slot, and its type
+     * @return LinkedHashMap containing a slot's String and its WeaponType
+     */
+    public LinkedHashMap<String, WeaponType> getSlotTypeMap() {
+        return slotTypeMap;
+    }
+
+    /**
+     * Gets the weapon configs
+     * @return WeaponConfigs - all weapon configs
+     */
     public WeaponConfigs getConfigs() {
         return config;
     }
 
     /**
-     * @return int - the equipped weapon
+     * Gets the equipped weapon's assigned slot
+     * @return String - the equipped weapon's slot: melee, ranged, or building
      */
     public String getEquipped() {
         return equipped;
@@ -64,6 +100,7 @@ public class InventoryComponent extends Component {
      */
     public void replaceSlotWithWeapon(String slot, WeaponType weaponType) {
         equippedWMap.get(slot).changeItem(weaponType);
+        slotTypeMap.put(slot, weaponType);
         if (Objects.equals(slot, equipped)) {
             entity.getEvents().trigger("changeWeapon", weaponType);
         }
@@ -82,7 +119,7 @@ public class InventoryComponent extends Component {
      * 
      * @return LinkedHashMap - a hash map containing the slot and item
      */
-    public Map<String, InventoryItem> getEquippedWMap() {
+    public LinkedHashMap<String, InventoryItem> getEquippedWMap() {
         return equippedWMap;
     }
 

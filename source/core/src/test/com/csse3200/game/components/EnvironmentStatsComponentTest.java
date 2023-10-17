@@ -1,6 +1,6 @@
 package com.csse3200.game.components;
 
-import com.csse3200.game.areas.mapConfig.GameAreaConfig;
+import com.csse3200.game.areas.map_config.GameAreaConfig;
 import com.csse3200.game.extensions.GameExtension;
 
 

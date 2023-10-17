@@ -6,7 +6,7 @@
       "wave1" : {
         "Knight" : 1,
         "necromancer" : 1,
-        "redGhost" : 1
+        "redGhost" : 10
       },
       "wave2" : {
         "redGhost" : 1,

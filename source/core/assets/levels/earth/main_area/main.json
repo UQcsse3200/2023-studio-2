@@ -35,6 +35,7 @@
       "images/powerups/health_potion.png",
       "images/powerups/invincibility_potion.png",
       "images/powerups/speed_boost.png",
+      "images/powerups/speed_potion.png",
       "images/powerups/health_boost.png",
       "images/powerups/health_potion.png",
       "images/powerups/temp_immunity.png",
@@ -58,7 +59,9 @@
       "images/action-feedback/warning.png",
       "map/treetop.png",
       "particle-effects/explosion/particle.png",
-      "images/resources/Cracked_Ground.png"
+      "particle-effects/deathpotion/particle.png",
+      "images/resources/Cracked_Ground.png",
+      "images/enemy/botanist.png"
     ],
     "textureAtlasPaths": [
       "images/npc/Astro_NPC.atlas",
@@ -90,7 +93,6 @@
       "sounds/upgradeTreeTap.wav",
       "sounds/upgradeWeapon.wav",
       "sounds/enemyDeath.wav",
-      "sounds/companionwalksound.wav",
       "sounds/enemySpawner.wav",
       "sounds/turret_shoot.mp3",
       "sounds/alert.wav",
@@ -105,7 +107,9 @@
       "particle-effects/extractor/durasteel.effect",
       "particle-effects/extractor/nebulite.effect",
       "particle-effects/extractor/solstite.effect",
-      "particle-effects/explosion/bigBallCombustion.effect"
+      "particle-effects/deathpotion/Death.effect",
+      "particle-effects/explosion/bigBallCombustion.effect",
+      "particle-effects/shield/shield.effect"
     ],
     "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
   },

@@ -7,7 +7,7 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.components.InteractableComponent;
-import com.csse3200.game.areas.mapConfig.ResourceCondition;
+import com.csse3200.game.areas.map_config.ResourceCondition;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.Resource;
@@ -157,7 +157,7 @@ public class StructureFactory {
  */
 
     public static Entity createExtractorBang() {
-        Entity extractorBang = new Entity().addComponent(new TextureRenderComponent("images/bang.png"));
+        Entity extractorBang = new Entity().addComponent(new TextureRenderComponent("images/minigame/bang.png"));
         extractorBang.setScale(2.2f, 2.4f);
         return extractorBang;
     }

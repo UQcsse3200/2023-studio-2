@@ -1,11 +1,11 @@
 {
   "healthPowerup": {
-    "spritePath": "images/powerups/health_potion.png",
+    "spritePath": "images/powerups/health_boost.png",
     "type": "HEALTH_BOOST"
   },
 
   "speedPowerup": {
-    "spritePath": "images/powerups/speed_potion.png",
+    "spritePath": "images/powerups/speed_boost.png",
     "type": "SPEED_BOOST"
   },
 

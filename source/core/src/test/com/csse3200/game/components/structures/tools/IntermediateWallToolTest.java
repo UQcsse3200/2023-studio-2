@@ -2,6 +2,7 @@ package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
@@ -16,7 +17,6 @@ import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
-import jdk.jfr.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,6 +50,8 @@ class IntermediateWallToolTest {
         ServiceLocator.registerGameStateObserverService(stateObserver);
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerPhysicsService(physicsService);
+
+        when(player.getCenterPosition()).thenReturn(new Vector2(0, 0));
         when(player.getEvents()).thenReturn(eventHandler);
     }
 
@@ -68,7 +70,7 @@ class IntermediateWallToolTest {
         setupPhysicsMock();
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -83,7 +85,7 @@ class IntermediateWallToolTest {
     void testInteractExistingStructureNotWall() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -101,7 +103,7 @@ class IntermediateWallToolTest {
         setupPhysicsMock();
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -124,7 +126,7 @@ class IntermediateWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(100);
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -149,7 +151,7 @@ class IntermediateWallToolTest {
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -172,7 +174,7 @@ class IntermediateWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(100);
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 
@@ -193,7 +195,7 @@ class IntermediateWallToolTest {
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
-        var tool = new IntermediateWallTool(cost, 0, "texture.png");
+        var tool = new IntermediateWallTool(cost, 5f, "texture.png", 0);
 
         var position = new GridPoint2(0, 0);
 

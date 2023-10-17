@@ -1,9 +1,3 @@
-
-/**
- * Component used to store information related to combat such as health, attack, etc. Any entities
- * which engage in combat should have an instance of this class registered. This class can be
- * extended for more specific combat needs.
- */
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.utils.Timer;
@@ -11,6 +5,7 @@ import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.mapConfig.GameAreaConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
@@ -33,7 +28,7 @@ public class EnvironmentStatsComponent extends Component {
     }
 
     public int getFrozenLevel() {
-        return frozenLevel;
+        return this.frozenLevel;
     }
 
 
@@ -50,7 +45,7 @@ public class EnvironmentStatsComponent extends Component {
     }
 
     public Boolean getIsSafe() {
-        return isSafeMap;
+        return this.isSafeMap;
     }
 
     public Boolean getImmunity() {
@@ -89,14 +84,14 @@ public class EnvironmentStatsComponent extends Component {
             @Override
             public void run() {
                 MapGameArea.isBurning();
+                if (getImmunity() == true) {
+                    return;
+                }
                 if (burning) {
                     player.addHealth(-1);
                     if (player.getHealth() <= 0) {
                         timer.stop();
                     }
-                }
-                if (getImmunity() == true) {
-                    return;
                 }
                 player.addHealth(-1);
                 if (player.getHealth() <= 0) {

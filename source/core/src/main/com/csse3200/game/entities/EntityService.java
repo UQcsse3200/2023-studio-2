@@ -1,7 +1,7 @@
 package com.csse3200.game.entities;
 
 import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
+import com.csse3200.game.areas.map_config.AreaEntityConfig;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.files.FileLoader;

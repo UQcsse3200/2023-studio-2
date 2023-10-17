@@ -6,7 +6,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.entities.Entity;
 
 import static com.badlogic.gdx.math.MathUtils.floor;
 import static com.csse3200.game.ui.UIComponent.skin;
@@ -46,6 +48,7 @@ public class HoleInputComponent extends InputComponent {
                 }
             } else if (area.mouseState == ExtractorMiniGameArea.MouseState.EXTINGUISHER) {
                 area.spawnExtractorBang(floor(entity.getPosition().x), floor(entity.getPosition().y));
+                createFailLabel();
             }
             return true;
         }
@@ -66,5 +69,11 @@ public class HoleInputComponent extends InputComponent {
         label.setColor(Color.BLACK);
         ServiceLocator.getRenderService().getStage().addActor(label);
     }
-
+    private void createFailLabel() {
+        Label label = new Label("Fail!", skin);
+        label.setPosition(940, 990);
+        label.setSize(200, 50);
+        label.setColor(Color.BLACK);
+        ServiceLocator.getRenderService().getStage().addActor(label);
+    }
 }

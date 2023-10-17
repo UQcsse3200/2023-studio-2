@@ -10,6 +10,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.services.ServiceLocator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -76,7 +77,7 @@ public class PowerupComponent extends Component {
                 break;
             case SNAP:
                 applySnap();
-                    break;
+                break;
             case DEATH_POTION:
                 applyDeath();
 
@@ -142,8 +143,20 @@ public class PowerupComponent extends Component {
         }
     }
 
+    /**
+     * extra life powerup
+     *
+     * if the companion is down, bring the companion back to life with full health
+     *
+     * if the companion is not down, give the player an extra life
+     */
     private void applyExtraLife() {
-        player.getComponent(CombatStatsComponent.class).addLife();
+
+        if (companion != null && Objects.equals(companion.getComponent(CompanionActions.class).getCompanionMode(), "COMPANION_MODE_DOWN")) {
+            companion.getComponent(CompanionActions.class).handleCompanionRevive();
+        } else {
+            player.getComponent(CombatStatsComponent.class).addLife();
+        }
     }
 
     private void applyTempImmunity() {

@@ -11,6 +11,7 @@ import com.csse3200.game.components.companionweapons.CompanionWeaponType;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -88,11 +89,13 @@ public class CompanionActions extends Component {
         if (Objects.equals(mode, COMPANION_MODE_NORMAL)) {
             COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
             entity.getEvents().trigger("companionModeChange","Normal");
+            entity.getComponent(CombatStatsComponent.class).setImmunity(false);
             entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
         } else if (Objects.equals(mode, COMPANION_MODE_DEFENCE)) {
             COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
             //entity.getComponent(CombatStatsComponent.class).addHealth(40);
             entity.getEvents().trigger("companionModeChange","Defence");
+            entity.getComponent(CombatStatsComponent.class).setImmunity(false);
             triggerMakeCompanionShield();
         } else if (Objects.equals(mode, COMPANION_MODE_ATTACK)) {
             COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
@@ -105,25 +108,42 @@ public class CompanionActions extends Component {
      * This function will handle everything when the companion goes down
      */
     public void handleCompanionDownMode() {
+        // Set animation of companion to be facing down
+        entity.getComponent(CompanionAnimationController.class).animateDown();
         // Set the mode to be in down mode
         setCompanionMode(COMPANION_MODE_DOWN);
+
         // Send updated mode to the UI
         entity.getEvents().trigger("companionModeChange","Down");
-        // ** SIDE NOTE ** add check_mode checks in the companion keyboard input to see if you're in down mode or not
-
-
 
         // set follow speed to zero
         entity.getComponent(FollowComponent.class).setFollowSpeed(0f);
 
-        //trigger death animation
+        //OPTIONAL _ MUST IMPLEMENT: trigger death animation
         entity.getEvents().trigger("companionDeath");
 
-        // ** SIDE NOTE ** Add cannot change modes to keyboard input if you're in down mode
+        // ** SIDE NOTE ** Add cannot use certain power-up types given the mode we are in
 
-        // ** SIDE NOTE ** Add cannot use certain powerup types given the mode we are in
 
         // ** SIDE NOTE ** Configure the revival of the companion
+    }
+
+    /**
+     * Function is called whenever the companion was DOWN, but is being revived
+     */
+    public void handleCompanionRevive() {
+        //change the mode back to normal
+        setCompanionMode(COMPANION_MODE_NORMAL);
+        //reset the follow speed to 2.5
+        entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
+        //update mode UI
+        entity.getEvents().trigger("companionModeChange","Normal");
+
+
+        //restore health back to full (50)
+        entity.getComponent(CombatStatsComponent.class).setHealth(50);
+
+
     }
 
 

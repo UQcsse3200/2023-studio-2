@@ -5,13 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.CompanionWeapons.CompanionWeaponController;
 import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -21,13 +25,11 @@ import java.util.Objects;
 public class CompanionActions extends Component {
 
     private static Vector2 COMPANION_SPEED = new Vector2(4f, 4f); // Metres per second
-
+    Entity player = ServiceLocator.getEntityService().getPlayer();
 
     private static final float ROTATION_SPEED = 10.0f;
     private static final String CHANGEWEAPON = "changeWeapon";
     private float currentRotation = 5.0f;
-    private Entity player = ServiceLocator.getEntityService().getPlayer();
-
     private PhysicsComponent physicsComponent;
     public Vector2 walkDirection = Vector2.Zero.cpy();
     public boolean moving = false;
@@ -40,7 +42,10 @@ public class CompanionActions extends Component {
 
     public final static Vector2 COMPANION_ATTACK_MODE_SPEED = new Vector2(6f, 6f);
     public final static Vector2 COMPANION_NORMAL_MODE_SPEED = new Vector2(4f, 4f);
-
+    Vector2 trackPrev;
+    int currentTargetIndex = 0;
+    boolean inCombat = false;
+    private CompanionWeaponController companionWeaponController;
 
 
     /**
@@ -90,8 +95,8 @@ public class CompanionActions extends Component {
             triggerMakeCompanionShield();
         } else if (Objects.equals(mode, COMPANION_MODE_ATTACK)) {
             COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
+            entity.getComponent(CombatStatsComponent.class).setImmunity(true);
             entity.getEvents().trigger("companionModeChange","Attack");
-
         }
     }
 
@@ -116,18 +121,6 @@ public class CompanionActions extends Component {
         }
     }
 
-    public boolean isCompanionBeingMoved() {
-        return this.moving;
-    }
-
-    /**
-     * Set the bullet texture path.
-     *
-     * @param path - Path????
-     */
-    public void setBulletTexturePath(String path) {
-    }
-
     /**
      * Update.
      * This is called once per frame, and will update the companion state.
@@ -136,28 +129,8 @@ public class CompanionActions extends Component {
     @Override
     public void update() {
         updateSpeed();
+        handleAttackMode();
     }
-
-//    void updateInventory(int i) {
-//        switch (i) {
-//            case 1:
-//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(1);
-//                break;
-//            case 2:
-//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(2);
-//                break;
-//            case 3:
-//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(3);
-//                break;
-//            case 4:
-//                entity.getComponent(CompanionInventoryComponent.class).setEquipped(4);
-//                break;
-//            default:
-//                entity.getComponent(CompanionInventoryComponent.class).cycleEquipped();
-//                break;
-//        }
-//    }
-
 
     private boolean isMovementKeyPressed() {
         // Check if any of the movement keys are pressed (I, J, K, L)
@@ -188,6 +161,26 @@ public class CompanionActions extends Component {
         this.walkDirection = direction;
         moving = true;
     }
+    private void handleAttackMode(){
+        if (companionMode.equals(COMPANION_MODE_ATTACK)) {
+            Vector2 targetPosition = handleAttack();
+            if (targetPosition != null) {
+                // Calculate the direction vector towards the target
+                Vector2 direction = targetPosition.cpy().sub(entity.getPosition());
+                // Check the distance to the target
+                float distanceToTarget = direction.len();
+                if (distanceToTarget <= 1f) {
+                    // When the companion is within the desired distance, trigger the melee attack
+                    triggerInventoryEvent("melee");
+                } else {
+                    // Update the position based on the direction and speed
+                    direction.nor();
+                    Vector2 movement = direction.scl(COMPANION_SPEED.x * Gdx.graphics.getDeltaTime(), COMPANION_SPEED.y * Gdx.graphics.getDeltaTime());
+                    entity.setPosition(new Vector2(entity.getPosition().x + movement.x, entity.getPosition().y + movement.y));
+                }
+            }
+        }
+    }
 
     /**
      * Stops the player from walking.
@@ -201,11 +194,7 @@ public class CompanionActions extends Component {
     /**
      * Makes the companion attack.
      */
-    void attack() {
-//        Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-//        attackSound.play();
-
-    }
+    void attack() {}
 
     /**
      * Set the speed to a set number.
@@ -236,6 +225,71 @@ public class CompanionActions extends Component {
         CompanionInventoryComponent invComp = ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class);
         invComp.setEquipped(slot);
         ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
+    }
+    private Vector2 handleAttack() {
+        List<Entity> enemies = EnemyFactory.getEnemyList();
+        if (enemies.isEmpty()) {
+            return entity.getPosition();
+        }
+
+        if (!inCombat) {
+            Vector2 playerPosition = player.getComponent(PhysicsComponent.class).getBody().getPosition();
+            Entity targetEnemy = null;
+            float minDistance = Float.MAX_VALUE;
+
+            for (Entity enemy : enemies) {
+                Vector2 enemyPosition = enemy.getComponent(PhysicsComponent.class).getBody().getPosition();
+                float distanceToPlayer = playerPosition.dst(enemyPosition);
+
+                // Adjust the distance threshold as needed (e.g., 5.0f)
+                if (distanceToPlayer <= 5.0f && distanceToPlayer < minDistance) {
+                    targetEnemy = enemy;
+                    minDistance = distanceToPlayer;
+                }
+            }
+
+            if (targetEnemy != null) {
+                inCombat = true;
+                Vector2 enemyPosition = targetEnemy.getComponent(PhysicsComponent.class).getBody().getPosition();
+                trackPrev = enemyPosition;
+
+                // Calculate the distance from the enemy
+                float distanceToEnemy = entity.getPosition().dst(enemyPosition);
+
+                // Trigger the inventory event when the companion reaches a certain distance from the enemy
+                if (distanceToEnemy <= 2.0f) {  // Adjust the distance threshold as needed
+                    triggerInventoryEvent("melee");
+                }
+
+                return enemyPosition;
+            }
+        }
+        return inCombat ? enemies.get(currentTargetIndex).getPosition() : trackPrev;
+    }
+
+
+    /**
+     * Get the first live enemy available. Then, once that one is dead, it finds a new target.
+     *
+     * @param enemies - list of enemies on the map
+     * @return - the enemy that it is currently targeting
+     */
+    private Entity getNextLiveEnemy(List<Entity> enemies) {
+        int numEnemies = enemies.size();
+        int originalTargetIndex = currentTargetIndex;
+
+        while (true) {
+            Entity enemy = enemies.get(currentTargetIndex);
+            if (enemy != null && enemy.getComponent(CombatStatsComponent.class).getHealth() > 0) {
+                return enemy;
+            }
+            currentTargetIndex = (currentTargetIndex + 1) % numEnemies;
+
+            if (currentTargetIndex == originalTargetIndex) {
+                break;
+            }
+        }
+        return null;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.resources.Resource;
@@ -91,6 +92,7 @@ class HealToolTest {
 
         HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
         var player = mock(Entity.class);
+        when(player.getCenterPosition()).thenReturn(new Vector2(position.x, position.y).scl(0.5f));
 
         var validity = healTool.canInteract(player, position);
 
@@ -155,6 +157,7 @@ class HealToolTest {
         HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
         var player = mock(Entity.class);
         var position = new GridPoint2(0, 0);
+        when(player.getCenterPosition()).thenReturn(new Vector2(position.x, position.y).scl(0.5f));
 
         var validity = healTool.canInteract(player, position);
 
@@ -177,6 +180,7 @@ class HealToolTest {
         HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
         var player = mock(Entity.class);
         var position = new GridPoint2(0, 0);
+        when(player.getCenterPosition()).thenReturn(new Vector2(position.x, position.y).scl(0.5f));
 
         var validity = healTool.canInteract(player, position);
 
@@ -257,6 +261,7 @@ class HealToolTest {
 
         HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
         var player = mock(Entity.class);
+        when(player.getCenterPosition()).thenReturn(new Vector2(position.x, position.y).scl(0.5f));
 
         // required to calculate requiredResources
         healTool.canInteract(player, position);

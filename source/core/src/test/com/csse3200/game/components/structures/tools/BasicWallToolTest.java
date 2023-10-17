@@ -2,6 +2,7 @@ package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
@@ -53,6 +54,8 @@ class BasicWallToolTest {
         var textureAtlas = mock(TextureAtlas.class);
         when(resourceService.getAsset(any(), eq(TextureAtlas.class))).thenReturn(textureAtlas);
         when(textureAtlas.findRegion(any())).thenReturn(mock(TextureAtlas.AtlasRegion.class));
+
+        when(player.getCenterPosition()).thenReturn(new Vector2(0, 0));
     }
 
     @Test

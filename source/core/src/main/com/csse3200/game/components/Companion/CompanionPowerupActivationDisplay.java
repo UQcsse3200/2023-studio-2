@@ -68,7 +68,7 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
     PowerupConfig doubleDamage;
     PowerupConfig snap;
     Button powerupActivationButton;
-    Label potionLabel;
+    Label powerupLabel;
     TextButton leftButton;
     TextButton rightButton;
     Image displayedPowerupImage;
@@ -118,13 +118,18 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      */
     public void addActors() {
         //add the powerup activation button (Main button)
+        //create the potion label element
+        powerupLabel = new Label("Powerups", skin,labelStyle);
+        powerupLabel.setColor(Color.BLACK);
+        powerupLabel.setFontScale(0.1f, 0.1f);
+
         addPowerupActivationButton();
         // add navigation buttons
         addLeftButton();
         addRightButton();
 
         //stage UI elements
-        stage.addActor(powerupActivationButton);
+        //stage.addActor(powerupActivationButton);
         stage.addActor(rightButton);
         stage.addActor(leftButton);
 
@@ -134,20 +139,15 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      * This funciton creates the powerup activation button in the centre
      */
     public void addPowerupActivationButton() {
-        //create the button
+        //create the new button
         powerupActivationButton = new Button(skin);
         // configure size and placement of the button
         powerupActivationButton.setColor(0.5f, 0.5f, 0.5f, 0.5f);
         powerupActivationButton.setPosition(1405f,280f);
         powerupActivationButton.setSize(187f, 95f);
 
-        //create the potion label element
-        potionLabel = new Label("Potion", skin,labelStyle);
-        potionLabel.setColor(Color.BLACK);
-        potionLabel.setFontScale(0.2f, 0.2f);
-
-        //create the potion IMAGE element and make sure its bound to the arrayList
-        displayedPowerupImage = new Image();
+        //create the potion IMAGE element and make sure its showing the latest, correct image
+        updatePowerupImageToLatest();
 
         //UI table element to combine potion label and image
         powerupActivationButtonTable = new Table();
@@ -155,7 +155,7 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
         //add image
         powerupActivationButtonTable.add(displayedPowerupImage).size(64, 64).row();
         // add label
-        powerupActivationButtonTable.add(potionLabel);
+        powerupActivationButtonTable.add(powerupLabel);
 
         // add the UI elements to the button
         powerupActivationButton.add(powerupActivationButtonTable).width(150).height(150);
@@ -165,8 +165,10 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //nothing
+                refreshPowerupActivationButtonUI();
             }
         });
+        stage.addActor(powerupActivationButton);
     }
 
 
@@ -205,53 +207,72 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
         });
     }
 
-
     /**
-     * TODO: this function is called when the there are NO MORE POWERUPS IN THE INVENTORY e.g. display blank
-     * TODO: This function will set the UI element which contains the powerup to A BLANK DEFAULT STATE
+     * This function is called by addPowerupActivationButton
+     * It returns the image which will represent the powerup which is currently selected
+     *
+     * It will have to check if there is a powerup at the current index, if not return an empty image
+     * If there is a powerup, fetch the correct image and return it
+     * @return - an image to be displayed on the UI button
      */
-    public void setUIEmptyPowerupInventory() {
-        displayedPowerupImage = new Image();
-        refreshPowerupActivationButtonUI();
-    }
+    public void updatePowerupImageToLatest() {
+        //check if there is a powerup currently
+        PowerupType displayThisType = getSelectedPowerupType();
 
-    /**
-     * TODO: This function is called to get the specific powerupType required to display. It should now set some sort
-     * TODO: UI element to that display type of powerup, and simply bind the ON CLICK event to the pressedSpecificPowerupToBeUsed
-     */
-    public void setUISpecificPowerup() {
 
-        // given the current index, display a specific type of powerup
-        //PowerupType displayThisType = localPowerupActivationList.get(powerupActivationlistIndex);
-        // you need to fetch the correct button and put it on the screen
-
-        //powerupImage = new Image(new Texture(deathPotion.spritePath));
-        //displayedPowerupImage.getImageHeight == 0 when its initialised to nothing.
-
-        // MAKE SURE BUTTON IS BOUND TO THIS FUNCTION
-        //pressedSpecificPowerupToBeUsed();
-
-        //PRINT THE NEW TYPE THAT IS SELECTED
-        logger.info(localPowerupActivationList.toString());
-        //logger.info(displayThisType.toString());
+        if (displayThisType == null) {
+            //create image
+            displayedPowerupImage = new Image();
+            //update the label text
+            powerupLabel = new Label("Powerups", skin,labelStyle);
+        } else {
+            logger.info("attempting to display" + displayThisType.toString());
+            //now big IF ELSE statement mapping a powerup type to the correct config file
+            if (displayThisType == PowerupType.DEATH_POTION) {
+                displayedPowerupImage = new Image(new Texture(deathPotion.spritePath));
+                //update the label text
+                powerupLabel = new Label("Death", skin,labelStyle);
+            } else if (displayThisType == PowerupType.HEALTH_BOOST) {
+                displayedPowerupImage = new Image(new Texture(healthPotion.spritePath));
+                //update the label text
+                powerupLabel = new Label("Health", skin,labelStyle);
+            } else if (displayThisType == PowerupType.SNAP) {
+                displayedPowerupImage = new Image(new Texture(snap.spritePath));
+                //update the label text
+                powerupLabel = new Label("Snap", skin,labelStyle);
+            } else if (displayThisType == PowerupType.DOUBLE_CROSS) {
+                displayedPowerupImage = new Image(new Texture(doubleCross.spritePath));
+                //update the label text
+                powerupLabel = new Label("Double Cross", skin,labelStyle);
+            } else if (displayThisType == PowerupType.EXTRA_LIFE) {
+                displayedPowerupImage = new Image(new Texture(extraLife.spritePath));
+                //update the label text
+                powerupLabel = new Label("Extra Life", skin,labelStyle);
+            } else if (displayThisType == PowerupType.DOUBLE_DAMAGE) {
+                displayedPowerupImage = new Image(new Texture(doubleDamage.spritePath));
+                //update the label text
+                powerupLabel = new Label("Double Damage", skin,labelStyle);
+            } else if (displayThisType == PowerupType.SPEED_BOOST) {
+                displayedPowerupImage = new Image(new Texture(speedPotion.spritePath));
+                //update the label text
+                powerupLabel = new Label("Speed Boost", skin,labelStyle);
+            } else if (displayThisType == PowerupType.TEMP_IMMUNITY) {
+                displayedPowerupImage = new Image(new Texture(invincibilityPotion.spritePath));
+                //update the label text
+                powerupLabel = new Label("Temp Immunity", skin,labelStyle);
+            }
+        }
     }
 
     /**
      * This function is called whenever the powerup activation UI needs to be refreshed
      */
     public void refreshPowerupActivationButtonUI() {
-        ///POTENTIALLY CLEAR THE BUTTON
+        /// CLEAR THE BUTTON
+        powerupActivationButton.remove();
 
-
-        //UI table element to combine potion label and image
-        powerupActivationButtonTable = new Table();
-        // add label
-        powerupActivationButtonTable.add(potionLabel);
-        // add image
-        powerupActivationButtonTable.add(displayedPowerupImage).size(64,64).row();
-
-        // add the UI elements to the button
-        powerupActivationButton.add(powerupActivationButtonTable).width(150).height(150);
+        //re-add the button
+        addPowerupActivationButton();
     }
 
     /**
@@ -278,13 +299,10 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
         // re-create arrayList of the powerups available
         updateArrayListOfPowerupInventory();
 
-        //make sure there is a powerup to be activated, otherwise display nothing
-        if (localPowerupActivationList.isEmpty()) {
-            setUIEmptyPowerupInventory();
-        } else {
-            //there is an element in the list, display the power up at the current index
-            setUISpecificPowerup();
-        }
+
+
+        //refresh UI component
+        refreshPowerupActivationButtonUI();
     }
 
     /**
@@ -298,13 +316,13 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
             //increase by 1
             powerupActivationlistIndex++;
             //if you've gone outside the bounds
-            if (powerupActivationlistIndex > localPowerupActivationList.size()) {
+            if (powerupActivationlistIndex >= localPowerupActivationList.size()) {
                 powerupActivationlistIndex = 0;
             }
             //update the saved power type
             updateSavedPowerupType();
-            // update the UI
-            setUISpecificPowerup();
+            //update UI
+            refreshPowerupActivationButtonUI();
         }
     }
 
@@ -323,8 +341,8 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
             }
             //save the new type
             updateSavedPowerupType();
-            // update the UI
-            setUISpecificPowerup();
+            //update UI
+            refreshPowerupActivationButtonUI();
         }
     }
 
@@ -336,9 +354,9 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
     }
 
     /**
-     * Function to be called when any type of powerup on the screen which is not null is pressed
+     * Function to be called when the powerup activation button is pressed
      */
-    public void pressedSpecificPowerupToBeUsed() {
+    public void attemptedPowerupActivationButtonPress() {
         // given the current index, display a specific type of powerup
         PowerupType displayThisType = localPowerupActivationList.get(powerupActivationlistIndex);
         // this will go into the inventory, check we have one, and then activate the powerup, then call changePowerupInventory
@@ -405,6 +423,19 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
             } else {
                 // if there is an empty list, do nothing and keep it null
             }
+        }
+    }
+
+    /**
+     * Function is called to get the currently selected powerup type
+     * @return - null if no powerups available, poweruptype if one is available.
+     */
+    public PowerupType getSelectedPowerupType() {
+        // check there is something in list
+        if (localPowerupActivationList.isEmpty()) {
+            return null;
+        } else {
+            return localPowerupActivationList.get(powerupActivationlistIndex);
         }
     }
 

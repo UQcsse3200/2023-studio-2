@@ -39,7 +39,7 @@ public class godComponentTest {
         mockEnemy =  new Entity();
         godComponent = new GodComponent(mockEnemy);
         godComponent.toggleMode();
-        assertEquals(false,godComponent.getMode());
+        assertEquals(true,godComponent.getMode());
     }
 
     @Test

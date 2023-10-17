@@ -524,6 +524,7 @@ public class UpgradeDisplay extends Window {
             }
             createTooltipLabel(table, "Cooldown", String.valueOf(config.attackCooldown));
             createTooltipLabel(table, "Cost", String.valueOf(node.getNodeCost()));
+            createTooltipLabel(table, "Ammo", String.valueOf(config.ammoUse));
         }
     }
 

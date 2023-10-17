@@ -131,7 +131,7 @@ public class PowerupComponent extends Component {
                 } else {
                     List<Entity> enemies = EnemyFactory.getEnemyList();
                     int enemyCount = enemies.size() / 2;
-                    for (int i = 0; i <= enemyCount; i++) {
+                    for (int i = 1; i <= enemyCount; i++) {
                         int nextInt = random.nextInt(enemies.size()) - 1;
                         Entity enemy = enemies.get(nextInt);
                         while (enemy == null) {

@@ -52,7 +52,7 @@ public abstract class Tool implements Comparable<Tool> {
             player.getEvents().trigger("playSound", "alert");
             return;
         }
-
+        player.getEvents().trigger("playSound", "structurePlace");
         performInteraction(player, position);
     }
 

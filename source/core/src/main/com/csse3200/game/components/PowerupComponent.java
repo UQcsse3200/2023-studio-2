@@ -220,6 +220,7 @@ public class PowerupComponent extends Component {
         return;
     } else {
         companion.getComponent(CompanionActions.class).triggerInventoryEvent("ranged");
+
         return;
         }
     }

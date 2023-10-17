@@ -11,7 +11,6 @@ import com.csse3200.game.components.companionweapons.CompanionWeaponType;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -27,8 +26,6 @@ public class CompanionActions extends Component {
 
     private static Vector2 COMPANION_SPEED = new Vector2(4f, 4f); // Metres per second
     Entity player = ServiceLocator.getEntityService().getPlayer();
-
-    private static final float ROTATION_SPEED = 10.0f;
     private static final String CHANGEWEAPON = "changeWeapon";
     private float currentRotation = 5.0f;
     private PhysicsComponent physicsComponent;
@@ -47,8 +44,6 @@ public class CompanionActions extends Component {
     Vector2 trackPrev;
     int currentTargetIndex = 0;
     boolean inCombat = false;
-    private CompanionWeaponController companionWeaponController;
-
 
     /**
      * Initialise the companion to be facing the player.
@@ -93,7 +88,6 @@ public class CompanionActions extends Component {
             entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
         } else if (Objects.equals(mode, COMPANION_MODE_DEFENCE)) {
             COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
-            //entity.getComponent(CombatStatsComponent.class).addHealth(40);
             entity.getEvents().trigger("companionModeChange","Defence");
             entity.getComponent(CombatStatsComponent.class).setImmunity(false);
             triggerMakeCompanionShield();
@@ -121,11 +115,6 @@ public class CompanionActions extends Component {
 
         //OPTIONAL _ MUST IMPLEMENT: trigger death animation
         entity.getEvents().trigger("companionDeath");
-
-        // ** SIDE NOTE ** Add cannot use certain power-up types given the mode we are in
-
-
-        // ** SIDE NOTE ** Configure the revival of the companion
     }
 
     /**
@@ -178,12 +167,6 @@ public class CompanionActions extends Component {
         handleAttackMode();
     }
 
-    private boolean isMovementKeyPressed() {
-        // Check if any of the movement keys are pressed (I, J, K, L)
-        return Gdx.input.isKeyPressed(Input.Keys.I) || Gdx.input.isKeyPressed(Input.Keys.J) ||
-                Gdx.input.isKeyPressed(Input.Keys.K) || Gdx.input.isKeyPressed(Input.Keys.L);
-    }
-
     public String getCompanionMode() {
         return companionMode;
     }
@@ -192,7 +175,6 @@ public class CompanionActions extends Component {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
         Vector2 desiredVelocity = walkDirection.cpy().scl(COMPANION_SPEED);
-        // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
     }

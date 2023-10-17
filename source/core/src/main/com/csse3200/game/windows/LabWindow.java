@@ -197,21 +197,7 @@ public class LabWindow extends Window {
         potionButton.setColor(0.5f, 0.5f, 0.5f, 0.5f);
         return lock;
     }
-/*    private void handleUnlocking(TextButton potionButton, Image lockImage) {
 
-        // Set the node to unlocked
-        potionButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
-        lockImage.remove();
-    }
-
-    private ChangeListener unlockButton(TextButton potionButton, Image lockImage) {
-        return new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                handleUnlocking(potionButton, lockImage);
-            }
-        };
-    }*/
     private boolean canUnlockPowerup(PowerupType powerupType) {
         // Implement your logic to check if the powerup can be unlocked
         if (powerupType == PowerupType.EXTRA_LIFE) {

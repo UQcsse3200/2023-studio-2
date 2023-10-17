@@ -56,10 +56,6 @@ public class CompanionInventoryComponent extends Component {
         return this.ammoCount;
     }
 
-    public void changeItem(CompanionWeaponType weaponType) {
-        this.weaponType = weaponType;
-    }
-
     public void changeAmmo(int change) {
         ammoCount = Math.min(maxAmmo, Math.max(0, ammoCount + change));
     }
@@ -108,47 +104,6 @@ public class CompanionInventoryComponent extends Component {
         return powerupCounts.getOrDefault(type, 0);
     }
 
-
-    /**
-     * Adds a power-up item to the companion's inventory if there is space remaining.
-     *
-     * @param item An entity representing the power-up to be added.
-     */
-    public void addPowerup(Entity item) {
-        if (powerupQueue.size() < INVENTORY_SIZE) {
-            powerupQueue.add(item);
-            // Identify the power-up type and update the count
-            PowerupType powerupType = identifyPowerupType(item);
-            if (powerupType != null) {
-                int currentCount = powerupCounts.get(powerupType);
-                powerupCounts.put(powerupType, currentCount + 1);
-                //System.out.println("Collecting powerup: " + powerupType + ", Count: " + powerupCounts.get(powerupType));
-            }
-            //System.out.println("Current powerupCounts: " + powerupCounts);
-            //System.out.println("Collecting powerup: " + powerupType );
-
-            logger.debug("item added");
-        }
-    }
-
-
-    /**
-     * Retrieves and uses the next power-up from the companion's inventory, regardless of its type.
-     *
-     * @return True if a power-up was successfully used, false if the inventory is empty.
-     */
-    public boolean useNextPowerup() {
-        if (!powerupQueue.isEmpty()) {
-            Entity powerup = powerupQueue.poll();
-            if (powerup == null) {
-                logger.info("YOURE CALLING A DEAD POWERUP");
-            }
-            powerup.getComponent(PowerupComponent.class).applyEffect();
-            return true;
-        }
-        return false;
-    }
-
     public void create() {
 
         equippedWMap.put("ranged", new CompanionInventoryComponent(CompanionWeaponType.Death_Potion, 30, 30));
@@ -188,34 +143,6 @@ public class CompanionInventoryComponent extends Component {
     }
 
     /**
-     * Replaces the specified slot with a given weapon.
-     *
-     * @param slot       the slot to be updated
-     * @param weaponType the weapon type to be placed in the slot
-     */
-//    public void replaceSlotWithWeapon(String slot, CompanionWeaponType weaponType) {
-//        equippedWMap.get(slot).changeItem(weaponType);
-//    }
-
-    /** Returns the current equipped weapons represented in a hash map **/
-    public ArrayList<CompanionWeaponType> getEquippedWeapons() {
-        return equippedWMap.values().stream().map(CompanionInventoryComponent::getItem).collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    // not needed anymore?
-//    public void placeInSlot(CompanionWeaponType weaponType) {
-//        replaceSlotWithWeapon(config.GetWeaponConfig(weaponType).slotType, weaponType);
-//    }
-
-    /**
-     * Updates weapon of the active inventory slot
-     *
-     */
-    public void changeEquipped(CompanionWeaponType type) {
-        this.equipped = config.GetWeaponConfig(type).slotType;
-    }
-
-    /**
      * Returns the equipped weapon type
      *
      * @return WeaponType - Type of cureently equiped weapon
@@ -228,15 +155,7 @@ public class CompanionInventoryComponent extends Component {
         return this.equippedWMap.get(getEquipped()).getAmmo();
     }
 
-    public  int GetCurrentMaxAmmo() {
-        return this.equippedWMap.get(getEquipped()).getMaxAmmo();
-    }
-
     public void changeEquippedAmmo(int ammoChange) {this.equippedWMap.get(getEquipped()).changeAmmo(ammoChange);}
-
-    public int getEquippedCooldown() {
-        return this.equippedWMap.get(getEquipped()).getAttackCooldown();
-    }
 
     public void setEquippedCooldown(int coolDown) {
         this.equippedWMap.get(getEquipped()).setAttackCooldown(coolDown);

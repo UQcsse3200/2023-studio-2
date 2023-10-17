@@ -15,7 +15,6 @@ import com.csse3200.game.services.ServiceLocator;
  */
 public class CompanionWeaponComponent extends Component {
 
-    //only one weapon equipped
     private Entity CurrentWeapon;
 
 
@@ -25,15 +24,8 @@ public class CompanionWeaponComponent extends Component {
     public void create() {
         ServiceLocator.getEntityService().getCompanion().getEvents().addListener("weaponAttack", this::playerAttacking);
         ServiceLocator.getEntityService().getCompanion().getEvents().addListener("changeWeapon", this::makeNewHolding);
-//        ServiceLocator.getEntityService().getCompanion().getEvents().addListener("updateAmmo", this::tempPrintAmmo);
         this.CurrentWeapon = null;
-        /*makeNewHolding(CompanionWeaponType.Death_Potion);*/
     }
-
-//    private void tempPrintAmmo(int ammo, int maxAmmo) {
-//        System.out.println("Currently: " + ammo + " / " + maxAmmo);
-//    }
-
 
     public void playerAttacking(CompanionWeaponType weaponType, Vector2 clickPosition) {
         float initialRotation = calcRotationAngleInDegrees(ServiceLocator.getEntityService().getCompanion().getPosition(), clickPosition);
@@ -65,12 +57,6 @@ public class CompanionWeaponComponent extends Component {
         this.CurrentWeapon  = CompanionWeaponFactory.createCompanionWeapon(weapon, ServiceLocator.getEntityService().getCompanion());
 
         Vector2 placePos = positionInDirection(10, 0.3f, this.CurrentWeapon );
-        if (weapon == CompanionWeaponType.SHIELD) {
-            placePos = positionInDirection(90, -0.7f, this.CurrentWeapon );
-            this.CurrentWeapon.getEvents().trigger("startEffect", "shield");
-        }
-
-
         ServiceLocator.getEntityPlacementService().placeEntityAt(this.CurrentWeapon , placePos);
         this.CurrentWeapon.addComponent(new HitboxComponent());
         if (weapon == CompanionWeaponType.Death_Potion  ){

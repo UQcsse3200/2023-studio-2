@@ -25,7 +25,6 @@ public class CompanionWeaponController extends Component {
     /* Determined by # of directions in sprite sheet */
     int animationType;
     private static final float POTION_DISPOSE_DELAY = 6f;
-    private static final float time= 6f;
 
     public String textureAtlas;
     private static final CompanionWeaponConfig configs = new CompanionWeaponConfig(
@@ -145,15 +144,7 @@ Entity companion = ServiceLocator.getEntityService().getCompanion();
                     despawn();
                 }
             }, POTION_DISPOSE_DELAY);
-        } /*else if ( this.weaponType==CompanionWeaponType.SWORD) {
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    despawn();
-                }
-            },time);
-
-        }*/
+        }
     }
 
     /**

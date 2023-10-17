@@ -32,7 +32,6 @@ public class CompanionStatsDisplay extends UIComponent {
     private float healthBarWidth;
 
     private long duration;
-    private CompanionInventoryComponent inventory;
 
     //save the inventory display variable
     CompanionPowerupInventoryDisplay powerupInventoryDisplay;
@@ -57,11 +56,6 @@ public class CompanionStatsDisplay extends UIComponent {
     public Label companionUIHeaderLabel; // label for the header of the UI component.
     public Label companionModeLabel; // label for the companions mode
 
-    private boolean isInvincible = true;
-
-    private boolean isInfiniteHealth = true;
-    private CompanionInventoryComponent Inventory;
-
     /**
      * Default constructor for CompanionStatsDisplay.
      */
@@ -83,18 +77,7 @@ public class CompanionStatsDisplay extends UIComponent {
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
         entity.getEvents().addListener("companionModeChange", this::updateCompanionModeUI);
         entity.getEvents().addListener("invertPowerupInventoryDisplayStatus", this::invertPowerupInventoryDisplayStatus);
-//        entity.getEvents().addListener("changeWeapon", this::updateWeapon);
     }
-
-
-
-//    public void updateWeapon(CompanionWeaponType weapon) {
-//        CompanionWeaponConfig config = CompanionInventoryComponent.getConfigs().GetWeaponConfig(weapon);
-//        Image weaponImage = new Image( new Texture(config.imagePath));
-//        weaponImageTable.clear();
-//        weaponImageTable.add(weaponImage).size(30f);
-//        updateAmmo(Inventory.GetCurrentAmmo(), Inventory.GetCurrentMaxAmmo());
-//    }
 
     /**
      * simple getter to get the status of the inventory display
@@ -251,73 +234,11 @@ public class CompanionStatsDisplay extends UIComponent {
                     invertPowerupInventoryDisplayStatus();
                 }
 
-                //OLD COMPANION INVENTORY DISPLAY CODE
-                //CompanionInventoryComponent inventoryComponent = new CompanionInventoryComponent();
-                //CompanionInventoryDisplay display = CompanionInventoryDisplay.createUpgradeDisplay(inventoryComponent);
-                //ServiceLocator.getRenderService().getStage().addActor(display);
-
             }
         });
 
         statsTable.add(button);
     }
-
-    /**
-     * Set the companion's image to an invincible state.
-     */
-    /*public void setInvincibleImage() {
-        AnimationRenderComponent infanimator = ServiceLocator.getGameArea().getCompanion().getComponent(AnimationRenderComponent.class);
-        infanimator.startAnimation("LEFT_1");
-    }*/
-
-    /**
-     * Toggle invincibility for the companion.
-     */
-    public void toggleInvincibility() {
-        if (isInvincible) {
-            /*setInvincibleImage();*/
-            isInvincible = false;
-
-            // Schedule a task to reset the image after a delay (e.g., 10 seconds)
-            Timer.schedule(new Task() {
-                @Override
-                public void run() {
-                    resetImage();
-                }
-            }, 10.0f);
-        }
-    }
-
-    /**
-     * Reset the companion's image.
-     */
-    public void resetImage() {
-        AnimationRenderComponent animator = ServiceLocator.getEntityService().getCompanion().getComponent(AnimationRenderComponent.class);
-        animator.startAnimation("RIGHT");
-    }
-
-    /**
-     * Toggle infinite health for the companion.
-     */
-    public void toggleInfiniteHealth() {
-        if (isInfiniteHealth) {
-            companion.getComponent(CombatStatsComponent.class).setImmunity(true);
-            player.getComponent(CombatStatsComponent.class).setImmunity(true);
-            isInfiniteHealth = false;
-            this.setDuration(6000);
-            // Schedule a task to reset health to a normal value after a delay (e.g., 10 seconds)
-            java.util.TimerTask health = new java.util.TimerTask()  {
-                @Override
-                public void run() {
-                    companion.getComponent(CombatStatsComponent.class).setImmunity(false);
-                    player.getComponent(CombatStatsComponent.class).setImmunity(false);
-
-                }
-            };
-            new java.util.Timer().schedule(health, getDuration());
-        }
-    }
-
 
     /**
      * Draw

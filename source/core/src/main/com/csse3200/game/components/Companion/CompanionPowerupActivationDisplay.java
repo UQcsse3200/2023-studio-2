@@ -118,7 +118,7 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      */
     public void addActors() {
         //add the powerup activation button (Main button)
-        //create the potion label element
+        //create the powerup label element
         powerupLabel = new Label("Powerups", skin,labelStyle);
         powerupLabel.setColor(Color.BLACK);
         powerupLabel.setFontScale(0.1f, 0.1f);
@@ -213,7 +213,6 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      *
      * It will have to check if there is a powerup at the current index, if not return an empty image
      * If there is a powerup, fetch the correct image and return it
-     * @return - an image to be displayed on the UI button
      */
     public void updatePowerupImageToLatest() {
         //check if there is a powerup currently
@@ -224,42 +223,42 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
             //create image
             displayedPowerupImage = new Image();
             //update the label text
-            powerupLabel = new Label("Powerups", skin,labelStyle);
+            powerupLabel.setText("Powerups");
         } else {
             logger.info("attempting to display" + displayThisType.toString());
             //now big IF ELSE statement mapping a powerup type to the correct config file
             if (displayThisType == PowerupType.DEATH_POTION) {
                 displayedPowerupImage = new Image(new Texture(deathPotion.spritePath));
                 //update the label text
-                powerupLabel = new Label("Death", skin,labelStyle);
+                powerupLabel.setText("Death");
             } else if (displayThisType == PowerupType.HEALTH_BOOST) {
                 displayedPowerupImage = new Image(new Texture(healthPotion.spritePath));
                 //update the label text
-                powerupLabel = new Label("Health", skin,labelStyle);
+                powerupLabel.setText("Health");
             } else if (displayThisType == PowerupType.SNAP) {
                 displayedPowerupImage = new Image(new Texture(snap.spritePath));
                 //update the label text
-                powerupLabel = new Label("Snap", skin,labelStyle);
+                powerupLabel.setText("Snap");
             } else if (displayThisType == PowerupType.DOUBLE_CROSS) {
                 displayedPowerupImage = new Image(new Texture(doubleCross.spritePath));
                 //update the label text
-                powerupLabel = new Label("Double Cross", skin,labelStyle);
+                powerupLabel.setText("Double Cross");
             } else if (displayThisType == PowerupType.EXTRA_LIFE) {
                 displayedPowerupImage = new Image(new Texture(extraLife.spritePath));
                 //update the label text
-                powerupLabel = new Label("Extra Life", skin,labelStyle);
+                powerupLabel.setText("Extra Life");
             } else if (displayThisType == PowerupType.DOUBLE_DAMAGE) {
                 displayedPowerupImage = new Image(new Texture(doubleDamage.spritePath));
                 //update the label text
-                powerupLabel = new Label("Double Damage", skin,labelStyle);
+                powerupLabel.setText("Double Damage");
             } else if (displayThisType == PowerupType.SPEED_BOOST) {
                 displayedPowerupImage = new Image(new Texture(speedPotion.spritePath));
                 //update the label text
-                powerupLabel = new Label("Speed Boost", skin,labelStyle);
+                powerupLabel.setText("Speed Boost");
             } else if (displayThisType == PowerupType.TEMP_IMMUNITY) {
                 displayedPowerupImage = new Image(new Texture(invincibilityPotion.spritePath));
                 //update the label text
-                powerupLabel = new Label("Temp Immunity", skin,labelStyle);
+                powerupLabel.setText("Temporary Immunity");
             }
         }
     }
@@ -357,6 +356,11 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      * Function to be called when the powerup activation button is pressed
      */
     public void attemptedPowerupActivationButtonPress() {
+        // get current powerup type. if null, do nothing,
+
+        //if there is a powerup, attempt to use it in inventory, and if it gets updated, it'll happen naturally
+
+
         // given the current index, display a specific type of powerup
         PowerupType displayThisType = localPowerupActivationList.get(powerupActivationlistIndex);
         // this will go into the inventory, check we have one, and then activate the powerup, then call changePowerupInventory

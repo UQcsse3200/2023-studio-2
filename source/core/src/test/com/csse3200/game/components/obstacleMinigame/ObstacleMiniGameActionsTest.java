@@ -35,7 +35,7 @@ public class ObstacleMiniGameActionsTest {
     }
 
     @Test
-    void testConstructor() {
+    public void testConstructor() {
         GdxGame game = null;
         Stage stage = null;
         SpaceMapScreen screen = null;

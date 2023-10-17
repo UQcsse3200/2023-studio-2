@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class UpgradeDisplay extends Window {
     private static final float WINDOW_WIDTH_SCALE = 0.85f;
-    private static final float WINDOW_HEIGHT_SCALE = 0.95f;
+    private static final float WINDOW_HEIGHT_SCALE = 0.8f;
     private static final float SIZE = 64f;
     private static final String MATERIALS_FORMAT = "%d / 1000";
     private final InputOverrideComponent inputOverrideComponent;
@@ -84,7 +84,7 @@ public class UpgradeDisplay extends Window {
         structurePicker = player.getComponent(StructureToolPicker.class);
         this.upgradeBench = player;
 
-        upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-500); // todo: remove for final release
+        // upgradeBench.getComponent(UpgradeTree.class).subtractMaterials(-500); test line
 
         setupWindowDimensions();
 

@@ -29,9 +29,6 @@ public class CompanionPowerupInventoryComponent extends Component {
     // Add a HashMap to store counts for each power-up type. DOESN'T DO ANYTHING
     private final HashMap<PowerupType, Integer> powerupsInventoryAmount = new HashMap<>();
 
-    //setup logger
-    private static final Logger logger = LoggerFactory.getLogger(CompanionDeathScreenActions.class);
-
     //grab the companion for triggers
 
     public Entity companion = null;

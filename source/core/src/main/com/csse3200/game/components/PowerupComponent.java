@@ -53,112 +53,32 @@ public class PowerupComponent extends Component {
     public void applyEffect() {
         switch (type) {
             case HEALTH_BOOST:
-                player.getComponent(CombatStatsComponent.class).setHealth(100);
-                if (!companion.getComponent(CombatStatsComponent.class).isDead()) {
-                    companion.getComponent(CombatStatsComponent.class).setHealth(50);
-                }
-                player.getEvents().trigger("playSound", "healthPowerup"); // plays sound when health powerup selected
-
+                applyHealthBoost();
                 break;
 
             case SPEED_BOOST:
-                if (player.getComponent(PlayerActions.class) == null) {
-                    return;
-                } else {
-                    player.getComponent(PlayerActions.class).setSpeed(6, 6);
-                    if (!companion.getComponent(CombatStatsComponent.class).isDead())
-                    {
-                    companion.getComponent(CompanionActions.class).setSpeed(7, 7);
-                    companion.getComponent(FollowComponent.class).setFollowSpeed(5);
-                    }
-
-                    // Set the duration for speed effect
-                    setDuration(8000);
-
-                    // Schedule a task to reset the speed values after the specified duration
-                    executorService.schedule(() -> {
-                        player.getComponent(PlayerActions.class).setSpeed(3, 3);
-                        companion.getComponent(CompanionActions.class).setSpeed(4, 4);
-                    }, getDuration(), TimeUnit.MILLISECONDS);
-                }
+                applySpeedBoost();
                 break;
 
             case EXTRA_LIFE:
-                player.getComponent(CombatStatsComponent.class).addLife();
+                applyExtraLife();
                 break;
 
             case TEMP_IMMUNITY:
-                if (player.getComponent(PlayerActions.class) == null) {
-                    return;
-                } else {
-                    companion.getComponent(CombatStatsComponent.class).setImmunity(true);
-                    player.getComponent(CombatStatsComponent.class).setImmunity(true);
-                    setDuration(6000);
-                    executorService.schedule(() -> {
-                        companion.getComponent(CombatStatsComponent.class).setImmunity(false);
-                        player.getComponent(CombatStatsComponent.class).setImmunity(false);
-                    }, getDuration(), TimeUnit.MILLISECONDS);
-                }
+                applyTempImmunity();
                 break;
 
             case DOUBLE_DAMAGE:
-                if (player.getComponent(PlayerActions.class) == null) {
-                    return;
-                } else {
-                    player.getComponent(CombatStatsComponent.class).setAttackMultiplier(2);
-                    setDuration(12000);
-                    executorService.schedule(() -> {
-                        player.getComponent(CombatStatsComponent.class).setAttackMultiplier(1);
-                    }, getDuration(), TimeUnit.MILLISECONDS);
-                }
+                applyDoubleDamage();
                 break;
             case DOUBLE_CROSS:
-                if (player.getComponent(PlayerActions.class) == null) {
-                    return;
-                } else {
-                    List<Entity> enemies = EnemyFactory.getEnemyList();
-                    int nextInt = random.nextInt(enemies.size()) - 1;
-                    Entity enemy = enemies.get(nextInt);
-                    while (enemy == null) {
-                        nextInt = random.nextInt(enemies.size()) - 1;
-                        enemy = enemies.get(nextInt);
-                    }
-                    enemies.remove(nextInt);
-                    for (Entity enemyTarget : enemies) {
-                        if (enemy != enemyTarget) {
-                            EnemyFactory.targetSet(
-                                    enemyTarget,
-                                    enemy.getComponent(AITaskComponent.class));
-                        }
-                    }
-                    setDuration(12000);
-                    enemy.dispose();
-                }
+                applyDoubleCross();
                 break;
             case SNAP:
-                if (player.getComponent(PlayerActions.class) == null) {
-                    return;
-                } else {
-                    List<Entity> enemies = EnemyFactory.getEnemyList();
-                    int enemyCount = enemies.size() / 2;
-                    for (int i = 0; i <= enemyCount; i++) {
-                        int nextInt = random.nextInt(enemies.size()) - 1;
-                        Entity enemy = enemies.get(nextInt);
-                        while (enemy == null) {
-                            nextInt = random.nextInt(enemies.size()) - 1;
-                            enemy = enemies.get(nextInt);
-                        }
-                        enemy.dispose();
-                    }
+                applySnap();
                     break;
-                }
             case DEATH_POTION:
-                if (player.getComponent(PlayerActions.class) == null) {
-                    return;
-                } else {
-                    companion.getComponent(CompanionActions.class).triggerInventoryEvent("ranged");
-                    return;
-                }
+                applyDeath();
 
             default:
                 throw new IllegalArgumentException("You must specify a valid PowerupType");
@@ -192,23 +112,102 @@ public class PowerupComponent extends Component {
         }
     }
 
-    /**
-     * LEGACY INVENTORY WHICH INVOLVES WEAPONS
-     *
-     *
-     * This adds this powerup to the inventory component
-     */
-    public void updateInventory(){
-        CompanionInventoryComponent companionInventory = companionEntity.getComponent(CompanionInventoryComponent.class);
-        Entity entityOfComponent = getEntity();
-        if (companionInventory != null) {
-            companionInventory.addPowerup(entityOfComponent);
+    private void applyHealthBoost() {
+        player.getComponent(CombatStatsComponent.class).setHealth(100);
+        if (!companion.getComponent(CombatStatsComponent.class).isDead()) {
+            companion.getComponent(CombatStatsComponent.class).setHealth(50);
         }
-        logger.info("powerup HAS picked up");
+        player.getEvents().trigger("playSound", "healthPowerup"); // plays sound when health powerup selected
+    }
 
-        //REMOVE THE ENTITY FROM THE GRAPHICS SYSTEM?
-        if (entity != null) {
-            Gdx.app.postRunnable(entity::dispose);
+    private void applySpeedBoost() {
+        if (player.getComponent(PlayerActions.class) == null) {
+            return;
+        } else {
+            player.getComponent(PlayerActions.class).setSpeed(6, 6);
+            if (!companion.getComponent(CombatStatsComponent.class).isDead())
+            {
+                companion.getComponent(CompanionActions.class).setSpeed(7, 7);
+                companion.getComponent(FollowComponent.class).setFollowSpeed(5);
+            }
+
+            // Set the duration for speed effect
+            setDuration(8000);
+
+            // Schedule a task to reset the speed values after the specified duration
+            executorService.schedule(() -> {
+                player.getComponent(PlayerActions.class).setSpeed(3, 3);
+                companion.getComponent(CompanionActions.class).setSpeed(4, 4);
+            }, getDuration(), TimeUnit.MILLISECONDS);
+        }
+    }
+
+    private void applyExtraLife() {
+        player.getComponent(CombatStatsComponent.class).addLife();
+    }
+
+    private void applyTempImmunity() {
+        if (player.getComponent(PlayerActions.class) != null) {
+            companion.getComponent(CombatStatsComponent.class).setImmunity(true);
+            player.getComponent(CombatStatsComponent.class).setImmunity(true);
+            setDuration(6000);
+            executorService.schedule(() -> {
+                companion.getComponent(CombatStatsComponent.class).setImmunity(false);
+                player.getComponent(CombatStatsComponent.class).setImmunity(false);
+            }, getDuration(), TimeUnit.MILLISECONDS);
+        }
+    }
+
+    private void applyDoubleDamage() {
+        if (player.getComponent(PlayerActions.class) != null) {
+            player.getComponent(CombatStatsComponent.class).setAttackMultiplier(2);
+            setDuration(12000);
+            executorService.schedule(() -> {
+                player.getComponent(CombatStatsComponent.class).setAttackMultiplier(1);
+            }, getDuration(), TimeUnit.MILLISECONDS);
+        }
+    }
+
+    private void applyDoubleCross() {
+        if (player.getComponent(PlayerActions.class) != null) {
+            List<Entity> enemies = EnemyFactory.getEnemyList();
+            int nextInt = random.nextInt(enemies.size()) - 1;
+            Entity enemy = enemies.get(nextInt);
+            while (enemy == null) {
+                nextInt = random.nextInt(enemies.size()) - 1;
+                enemy = enemies.get(nextInt);
+            }
+            enemies.remove(nextInt);
+            for (Entity enemyTarget : enemies) {
+                if (enemy != enemyTarget) {
+                    EnemyFactory.targetSet(enemyTarget, enemy.getComponent(AITaskComponent.class));
+                }
+            }
+            setDuration(12000);
+            enemy.dispose();
+        }
+    }
+
+    private void applySnap() {
+        if (player.getComponent(PlayerActions.class) != null) {
+            List<Entity> enemies = EnemyFactory.getEnemyList();
+            int enemyCount = enemies.size() / 2;
+            for (int i = 0; i <= enemyCount; i++) {
+                int nextInt = random.nextInt(enemies.size()) - 1;
+                Entity enemy = enemies.get(nextInt);
+                while (enemy == null) {
+                    nextInt = random.nextInt(enemies.size()) - 1;
+                    enemy = enemies.get(nextInt);
+                }
+                enemy.dispose();
+            }
+        }
+    }
+    private void applyDeath(){if (player.getComponent(PlayerActions.class) == null) {
+        return;
+    } else {
+        companion.getComponent(CompanionActions.class).triggerInventoryEvent("ranged");
+        return;
         }
     }
 

@@ -91,21 +91,35 @@ public class CompanionPowerupInventoryComponent extends Component {
                 //use that powerup type
                 //create the powerup component
                 PowerupComponent thisPowerup = new PowerupComponent(type);
-                //check for unique case of death potion
-                if (type == PowerupType.DEATH_POTION) {
-                    //THIS HARDCODE LINE CREATES A NEW DEATH POTION FROM TRIGGER TO WEAPON CLASS
-                    ServiceLocator.getEntityService().getCompanion().getEvents().trigger("changeWeapon", CompanionWeaponType.Death_Potion);
+
+                //CHECK IF YOU ARE IN DOWNED MODE, CAN ONLY USE CERTAIN POTIONS
+                if (Objects.equals(entity.getComponent(CompanionActions.class).getCompanionMode(), "COMPANION_MODE_DOWN")) {
+                    if (type == PowerupType.HEALTH || type == PowerupType.SPEED_BOOST || type == PowerupType.EXTRA_LIFE) {
+                        thisPowerup.applyEffect();
+                        //remove one of those powerups from the powerup inventory
+                        powerupsInventoryAmount.put(type,count - 1);
+
+                        //trigger an update of the UI
+                        sendUIPowerupInventoryChange();
+                    }
                 } else {
-                    thisPowerup.applyEffect();
+                    // Not in down mode, do as normal
+                    //check for unique case of death potion
+                    if (type == PowerupType.DEATH_POTION) {
+                        //THIS HARDCODE LINE CREATES A NEW DEATH POTION FROM TRIGGER TO WEAPON CLASS
+                        ServiceLocator.getEntityService().getCompanion().getEvents().trigger("changeWeapon", CompanionWeaponType.Death_Potion);
+                    } else {
+                        thisPowerup.applyEffect();
+                    }
+
+                    logger.info("SUCCESSFULLY CREATED AND USED POWERUPTYPE " + type.toString());
+
+                    //remove one of those powerups from the powerup inventory
+                    powerupsInventoryAmount.put(type,count - 1);
+
+                    //trigger an update of the UI
+                    sendUIPowerupInventoryChange();
                 }
-
-                logger.info("SUCCESSFULLY CREATED AND USED POWERUPTYPE " + type.toString());
-
-                //remove one of those powerups from the powerup inventory
-                powerupsInventoryAmount.put(type,count - 1);
-
-                //trigger an update of the UI
-                sendUIPowerupInventoryChange();
             }
         }
     }

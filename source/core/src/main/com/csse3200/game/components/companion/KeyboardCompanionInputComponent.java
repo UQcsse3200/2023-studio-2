@@ -15,6 +15,7 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * The KeyboardCompanionInputComponent class handles keyboard input for controlling a companion character.
@@ -179,79 +180,84 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
 
     @Override
     public boolean keyDown(int keycode) {
-        switch (keycode) {
-            case Keys.N -> {
-                //ATTACK IS A SOUND THING - AND IT ISN'T  ACTIVATED
-                ServiceLocator.getEntityService().getCompanion().getEvents().trigger("attack");
-                long currentTime = TimeUtils.millis();
-                if (currentTime - lastNKeyPressTime >= COOLDOWN_TIME) {
-                    //TRY TO USE THE DEATH POTION
-                    //OLD INVENTORY SPAWNER
-                    //ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class).useNextPowerup();
+        // check if the companion is in down mode
+        if (!Objects.equals(entity.getComponent(CompanionActions.class).getCompanionMode(), "COMPANION_MODE_DOWN")) {
+            switch (keycode) {
+                case Keys.N -> {
+                    //ATTACK IS A SOUND THING - AND IT ISN'T  ACTIVATED
+                    ServiceLocator.getEntityService().getCompanion().getEvents().trigger("attack");
+                    long currentTime = TimeUtils.millis();
+                    if (currentTime - lastNKeyPressTime >= COOLDOWN_TIME) {
+                        //TRY TO USE THE DEATH POTION
+                        //OLD INVENTORY SPAWNER
+                        //ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class).useNextPowerup();
 
-                    // Use new inventory to spawn a brand new death potion weapon
-                    //ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupInventoryComponent.class).tryCreateDeathPowerupFromPowerupInventory();
-                    //ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupActivationDisplay.class).decreaseIndexInPowerupActivationList();
-                    lastNKeyPressTime = currentTime;
-                }else {logger.debug("powerup cooldown");}
-                return true;
-            }
+                        // Use new inventory to spawn a brand new death potion weapon
+                        //ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupInventoryComponent.class).tryCreateDeathPowerupFromPowerupInventory();
+                        //ServiceLocator.getEntityService().getCompanion().getComponent(CompanionPowerupActivationDisplay.class).decreaseIndexInPowerupActivationList();
+                        lastNKeyPressTime = currentTime;
+                    }else {logger.debug("powerup cooldown");}
+                    return true;
+                }
 
-            case Keys.B -> {
-                entity.getEvents().trigger("CompanionSwitchMode");
-                return true;
-            }
-            case Keys.I -> {
-                flagW = 1;
-                if (getMovFlagSum() == 1) {
-                    walkDirection.scl(0);
-                    walkDirection.add(Vector2Utils.UP);
-                } else {
-                    walkDirection.add(Vector2Utils.UP);
-                    diagonal();
+                case Keys.B -> {
+                    entity.getEvents().trigger("CompanionSwitchMode");
+                    return true;
                 }
-                triggerWalkEvent();
-                return true;
-            }
-            case Keys.J -> {
-                flagA = 1;
-                if (getMovFlagSum() == 1) {
-                    walkDirection.scl(0);
-                    walkDirection.add(Vector2Utils.LEFT);
-                } else {
-                    walkDirection.add(Vector2Utils.LEFT);
-                    diagonal();
+                case Keys.I -> {
+                    flagW = 1;
+                    if (getMovFlagSum() == 1) {
+                        walkDirection.scl(0);
+                        walkDirection.add(Vector2Utils.UP);
+                    } else {
+                        walkDirection.add(Vector2Utils.UP);
+                        diagonal();
+                    }
+                    triggerWalkEvent();
+                    return true;
                 }
-                triggerWalkEvent();
-                return true;
-            }
-            case Keys.K -> {
-                flagS = 1;
-                if (getMovFlagSum() == 1) {
-                    walkDirection.scl(0);
-                    walkDirection.add(Vector2Utils.DOWN);
-                } else {
-                    walkDirection.add(Vector2Utils.DOWN);
-                    diagonal();
+                case Keys.J -> {
+                    flagA = 1;
+                    if (getMovFlagSum() == 1) {
+                        walkDirection.scl(0);
+                        walkDirection.add(Vector2Utils.LEFT);
+                    } else {
+                        walkDirection.add(Vector2Utils.LEFT);
+                        diagonal();
+                    }
+                    triggerWalkEvent();
+                    return true;
                 }
-                triggerWalkEvent();
-                return true;
-            }
-            case Keys.L -> {
-                flagD = 1;
-                if (getMovFlagSum() == 1) {
-                    walkDirection.scl(0);
-                    walkDirection.add(Vector2Utils.RIGHT);
-                } else {
-                    walkDirection.add(Vector2Utils.RIGHT);
-                    diagonal();
+                case Keys.K -> {
+                    flagS = 1;
+                    if (getMovFlagSum() == 1) {
+                        walkDirection.scl(0);
+                        walkDirection.add(Vector2Utils.DOWN);
+                    } else {
+                        walkDirection.add(Vector2Utils.DOWN);
+                        diagonal();
+                    }
+                    triggerWalkEvent();
+                    return true;
                 }
-                triggerWalkEvent();
-                return true;
+                case Keys.L -> {
+                    flagD = 1;
+                    if (getMovFlagSum() == 1) {
+                        walkDirection.scl(0);
+                        walkDirection.add(Vector2Utils.RIGHT);
+                    } else {
+                        walkDirection.add(Vector2Utils.RIGHT);
+                        diagonal();
+                    }
+                    triggerWalkEvent();
+                    return true;
+                }
+                default -> {
+                    return false;
+                }
             }
-            default -> {
-                return false;
-            }
+        } else {
+            return false;
         }
     }
 

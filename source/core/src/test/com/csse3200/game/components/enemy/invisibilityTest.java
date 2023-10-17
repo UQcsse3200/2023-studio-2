@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class invisibilityTest {
-    private InvisibilityComponent invisibilityComponent;
+
     private Entity mockTarget;
     private Entity mockEnemy;
 
@@ -21,7 +21,7 @@ public class invisibilityTest {
         mockEnemy =  new Entity();
         mockEnemy.addComponent(new PhysicsMovementComponent(new Vector2(1f,1f))).addComponent(new TouchAttackComponent((short) (
             PhysicsLayer.PLAYER),1.5f));
-        invisibilityComponent = new InvisibilityComponent(mockEnemy);
+        InvisibilityComponent invisibilityComponent = new InvisibilityComponent(mockEnemy);
         assertTrue(invisibilityComponent.getInvisMode());
     }
 
@@ -30,7 +30,7 @@ public class invisibilityTest {
         mockEnemy =  new Entity();
         mockEnemy.addComponent(new PhysicsMovementComponent(new Vector2(1f,1f))).addComponent(new TouchAttackComponent((short) (
             PhysicsLayer.PLAYER),1.5f));
-        invisibilityComponent = new InvisibilityComponent(mockEnemy);
+        InvisibilityComponent invisibilityComponent = new InvisibilityComponent(mockEnemy);
         EventListener0 callback = mock(EventListener0.class);
         mockEnemy.getEvents().addListener("goInvisible", callback);
         invisibilityComponent.update();
@@ -41,7 +41,7 @@ public class invisibilityTest {
         mockEnemy =  new Entity();
         mockEnemy.addComponent(new PhysicsMovementComponent(new Vector2(1f,1f))).addComponent(new TouchAttackComponent((short) (
             PhysicsLayer.PLAYER),1.5f));
-        invisibilityComponent = new InvisibilityComponent(mockEnemy);
+        InvisibilityComponent invisibilityComponent = new InvisibilityComponent(mockEnemy);
         invisibilityComponent.toggleInvis();
         EventListener0 callback = mock(EventListener0.class);
         mockEnemy.getEvents().addListener("goInvisible", callback);

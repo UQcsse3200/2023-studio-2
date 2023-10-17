@@ -3,13 +3,16 @@ package com.csse3200.game.components.enemy;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.tasks.MovementTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.ProjectileFactory;
+import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.sql.Time;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,12 +28,21 @@ public class GodComponent extends Component {
     private Vector2[] locations;
     private PhysicsMovementComponent movementComponent;
     private Entity entity;
+    private TouchAttackComponent touchAttackComponent;
+    private boolean isInvis = true;
+    private ColliderComponent colliderComponent;
+    private boolean fired = false;
 
     public GodComponent(Entity enemy){
         this.entity = enemy;
         this.movementComponent = enemy.getComponent(PhysicsMovementComponent.class);
         ScheduledExecutorService scheduler2 = Executors.newScheduledThreadPool(1);
-        scheduler2.scheduleAtFixedRate(this::toggleMode, 0, 5, TimeUnit.SECONDS);
+        scheduler2.scheduleAtFixedRate(this::toggleMode, 0, 6, TimeUnit.SECONDS);
+         touchAttackComponent = entity.getComponent(TouchAttackComponent.class);
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(this::toggleInvis, 0, 1, TimeUnit.SECONDS);
+        colliderComponent = entity.getComponent(ColliderComponent.class);
+
 
     }
     /**
@@ -39,6 +51,14 @@ public class GodComponent extends Component {
     public void toggleMode() {
         // Toggle the speed field
         Mode = !Mode;
+        fired = false;
+    }
+    /**
+     * Switches the speed variable
+     */
+    private void toggleInvis() {
+        // Toggle the speed field
+        isInvis = !isInvis;
     }
 
     /**
@@ -56,30 +76,54 @@ public class GodComponent extends Component {
 
     @Override
     public void update() {
-        movementComponent.changeMaxSpeed(new Vector2(2f,2f));
+        movementComponent.update();
+
+        if(isInvis){
+
+//            touchAttackComponent.setEnabled(false);
+        }
+        else {
+//            touchAttackComponent.setEnabled(true);
+//            touchAttackComponent.update();
+        }
+
+
         if(Mode){
+            colliderComponent.setEnabled(false);
+            colliderComponent.setSensor(true);
+            //colliderComponent.update();
             locations = generateAngle(entity.getCenterPosition());
             final int[] index = {0}; // Initialize an array to keep track of the current index
+            Timer.Task switchColliderOn = new Timer.Task(){
+                @Override
+                public void run() {
+                    colliderComponent.setEnabled(true);
+                    colliderComponent.setSensor(false);
+                }
+            };
+            Timer.schedule(switchColliderOn,2);
 
             // Define a task that will run after a delay
             Timer.Task spawnBulletTask = new Timer.Task() {
                 @Override
                 public void run() {
-                    movementComponent.changeMaxSpeed(new Vector2(0f,0f));
                     if (index[0] < locations.length) {
+
                         Vector2 location = locations[index[0]];
                         Entity bullet1 = ProjectileFactory.createEnemyBullet(location, entity);
                         ServiceLocator.getStructurePlacementService()
                             .spawnEntityAtVector(bullet1, entity.getPosition());
                         index[0]++;
                     }
+
                 }
             };
-            float delayBetweenIterations = 0.1f; // Delay between each iteration in seconds
+            float delayBetweenIterations = 0.05f; // Delay between each iteration in seconds
             float initialDelay = 0.0f; // Initial delay before the first iteration in seconds
             Timer.schedule(spawnBulletTask, initialDelay, delayBetweenIterations);
             Mode = false;
         }
+
     }
 
     /**

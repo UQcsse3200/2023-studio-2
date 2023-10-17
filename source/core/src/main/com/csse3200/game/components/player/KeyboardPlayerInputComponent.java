@@ -12,6 +12,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.windows.PauseWindow;
 
 import java.util.HashMap;
 import java.util.Timer;
@@ -103,6 +104,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             return false;
         }
         switch (keycode) {
+            case Keys.ESCAPE -> {
+                // Open the pause window when the Escape key is pressed
+                openPauseWindow();
+                return true;
+            }
             case Keys.SPACE -> {
                 if (!dodgeAvailable ||
                         walkDirection.epsilonEquals(Vector2.Zero)) {
@@ -368,6 +374,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         entity.getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
         entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(),
                 invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
+    }
+    private void openPauseWindow() {
+        if (!isWindowOpen()) {
+            PauseWindow pauseWindow = PauseWindow.makeNewPauseWindow(entity);
+            ServiceLocator.getRenderService().getStage().addActor(pauseWindow);
+        }
     }
 
     /**

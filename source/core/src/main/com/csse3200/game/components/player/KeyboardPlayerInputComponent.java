@@ -8,14 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
-import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
-
 import java.util.HashMap;
 import java.util.Timer;
 
@@ -39,7 +38,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     private Entity player;
     private InventoryComponent playerInventory;
     private int testing = 0;
-
     static HashMap<Integer, Integer> keyFlags = new HashMap<>();
     Vector2 lastMousePos = new Vector2(0, 0);
 
@@ -113,6 +111,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 }
                 triggerDodgeEvent();
                 dodge();
+                return true;
+            }
+            case Keys.ESCAPE -> {
+                for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)){
+                    mainGame.getEvents().trigger("pause");
+                };
                 return true;
             }
             case Keys.F -> {
@@ -486,5 +490,4 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         DOWNLEFT,
         DOWNRIGHT
     }
-
 }

@@ -47,13 +47,7 @@ public class MainGameActions extends Component {
   private void onPauseButton() {
     logger.info("Opening Pause Menu");
     PauseWindow pauseWindow = PauseWindow.makeNewPauseWindow(entity);
-    entityList = ServiceLocator.getEntityService().getEntities();
-    for (Entity entity : entityList) {
-      if (entity.getId() != getEntity().getId()) {
-        entity.setEnabled(false);
-      }
-    }
-    ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(true);
+    paused();
     ServiceLocator.getRenderService().getStage().addActor(pauseWindow);
 }
 
@@ -89,9 +83,23 @@ public class MainGameActions extends Component {
    */
   protected void onReturnButton() {
     logger.info("Returning to current game");
+    resumed();
+  }
+
+  protected void paused() {
+    entityList = ServiceLocator.getEntityService().getEntities();
+    for (Entity entity : entityList) {
+      if (entity.getId() != getEntity().getId()) {
+        entity.setEnabled(false);
+      }
+    }
+    ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(true);
+  }
+  protected void resumed() {
     for (Entity entity : entityList) {
       entity.setEnabled(true);
     }
     ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
+
   }
 }

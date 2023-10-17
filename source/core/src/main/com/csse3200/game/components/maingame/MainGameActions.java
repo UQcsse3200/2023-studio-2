@@ -1,5 +1,7 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -45,10 +47,12 @@ public class MainGameActions extends Component {
    * Opens pause window.
    */
   private void onPauseButton() {
-    logger.info("Opening Pause Menu");
-    PauseWindow pauseWindow = PauseWindow.makeNewPauseWindow(entity);
-    paused();
-    ServiceLocator.getRenderService().getStage().addActor(pauseWindow);
+    if (!isWindowOpen()) {
+      logger.info("Opening Pause Menu");
+      PauseWindow pauseWindow = PauseWindow.makeNewPauseWindow(entity);
+      paused();
+      ServiceLocator.getRenderService().getStage().addActor(pauseWindow);
+    }
 }
 
   /**
@@ -100,6 +104,13 @@ public class MainGameActions extends Component {
       entity.setEnabled(true);
     }
     ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
-
+  }
+  public boolean isWindowOpen() {
+    for (Actor actor : ServiceLocator.getRenderService().getStage().getActors()) {
+      if (actor instanceof Window && actor.isVisible()) {
+        return true;
+      }
+    }
+    return false;
   }
 }

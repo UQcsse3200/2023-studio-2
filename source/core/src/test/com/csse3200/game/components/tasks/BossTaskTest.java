@@ -69,7 +69,7 @@ class BossTaskTest {
     Entity entity = new Entity().addComponent(aiTaskComponent)
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new PhysicsComponent())
-            .addComponent(new CombatStatsComponent(100, 10, 1,false));
+            .addComponent(new CombatStatsComponent(100, 100, 10, 1,false));
     entity.create();
 
     int halfHp = entity.getComponent(CombatStatsComponent.class).getMaxHealth() / 2;

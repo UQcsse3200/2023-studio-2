@@ -2,6 +2,7 @@ package com.csse3200.game.entities;
 
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.ParticleComponent;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.resources.FissureComponent;
 import com.csse3200.game.entities.configs.FissureConfig;
 import com.csse3200.game.entities.configs.ParticleEffectsConfig;
@@ -30,6 +31,8 @@ public class Fissure extends PlaceableEntity {
         addComponent(new FissureComponent(config.resource));
 
         this.irremovable = true;
+
+        addComponent(new SaveableComponent<>(fissure -> config, FissureConfig.class));
     }
 
     @Override

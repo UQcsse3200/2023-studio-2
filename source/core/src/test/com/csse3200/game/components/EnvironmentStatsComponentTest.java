@@ -29,7 +29,7 @@ class EnvironmentStatsComponentTest {
   @Test
   void damage() throws InterruptedException {
 
-    CombatStatsComponent player = new CombatStatsComponent(10, 10, 1, false);
+    CombatStatsComponent player = new CombatStatsComponent(10, 10, 10, 1, false);
     EnvironmentStatsComponent environmentStatsComponent = new EnvironmentStatsComponent();
 
 

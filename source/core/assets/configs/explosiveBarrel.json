@@ -1,12 +1,11 @@
 {
+  "effectPath": "particle-effects/explosion/explosion.effect",
+  "soundPath": "sounds/explosion/landmine.mp3",
+  "spritePath": "images/explosives/explosive-barrel.png",
+  "baseAttack": 150,
+  "damageRadius": 3.5,
+  "chainRadius": 4,
+  "chainable": true,
   "health": 100,
-  "texture": "images/explosives/explosive-barrel.png",
-  "explosive": {
-    "effectPath": "particle-effects/explosion/explosion.effect",
-    "soundPath": "sounds/explosion/landmine.mp3",
-    "damage": 150,
-    "damageRadius": 3.5,
-    "chainRadius": 4,
-    "chainable": true
-  }
+  "maxHealth": 100
 }

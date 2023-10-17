@@ -1,6 +1,7 @@
 package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.TurretConfig;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsEngine;
@@ -48,7 +49,7 @@ public class TurretTest {
         renderService = mock(RenderService.class);
         ServiceLocator.registerRenderService(renderService);
 
-        turret = new Turret(turretConfig);
+        turret = new Turret(turretConfig, new Entity());
     }
 
     @Test

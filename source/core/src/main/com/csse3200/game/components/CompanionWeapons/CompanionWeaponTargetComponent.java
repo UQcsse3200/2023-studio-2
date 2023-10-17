@@ -81,42 +81,6 @@ public class CompanionWeaponTargetComponent extends Component {
      * @return
      */
     private Vector2 handleDeathPotion() {
-        for (var otherEntity :  EnemyFactory.getEnemyList()) {
-            if (otherEntity == entity) {
-                continue;
-            }
-
-            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
-
-            if (distance <= 2.1f) {
-                otherEntity.getEvents().trigger("chainExplode", distance/2.1f * 0.4f);
-            }
-        }
-
-
-
-        for (Entity otherEntity : EnemyFactory.getEnemyList()) {
-            if (otherEntity == entity ) {
-                continue;
-            }
-
-            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
-            if (distance <= 2.1f) {
-                otherEntity.getEvents().trigger("POTION", distance/2.1f * 0.4f);
-            }
-        }
-        for (var otherEntity :  EnemyFactory.getEnemyList()) {
-            var combatStatsComponent = otherEntity.getComponent(CombatStatsComponent.class);
-
-
-
-            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
-
-            if (distance <= 2.1f) {
-                combatStatsComponent.addHealth((int) (( 2.1f - distance)
-                        / 2.1f * - 25 ));
-            }
-        }
         List<Entity> enemies = EnemyFactory.getEnemyList();
         if (!inCombat) {
             if (!enemies.isEmpty()) {

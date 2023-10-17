@@ -34,7 +34,7 @@ public class CompanionWeaponController extends Component {
             " SWORD",
             "SHORT DISTANCE",
             50.0f,
-            5.0f,
+            2.0f,
             25,
             1,
             0,
@@ -131,7 +131,7 @@ Entity companion = ServiceLocator.getEntityService().getCompanion();
             //get some different input numbers
             case SHIELD -> update_static();
             case  SHIELD_2 -> update_SHIELD();
-            case SWORD -> update_swing();
+            case SWORD -> update_sword();
 
             default -> null;
         };
@@ -147,7 +147,7 @@ Entity companion = ServiceLocator.getEntityService().getCompanion();
                     despawn();
                 }
             }, POTION_DISPOSE_DELAY);
-        } else if ( this.weaponType==CompanionWeaponType.SWORD) {
+        } /*else if ( this.weaponType==CompanionWeaponType.SWORD) {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -155,7 +155,7 @@ Entity companion = ServiceLocator.getEntityService().getCompanion();
                 }
             },time);
 
-        }
+        }*/
     }
 
     /**
@@ -177,6 +177,28 @@ Entity companion = ServiceLocator.getEntityService().getCompanion();
         Vector2 movement = direction.scl(this.speed * Gdx.graphics.getDeltaTime());
 
         return movement;
+    }
+    private Vector2 update_sword() {
+        CompanionWeaponTargetComponent weaponTargetComponent = entity.getComponent(CompanionWeaponTargetComponent.class);
+        Vector2 targetPosition = weaponTargetComponent.get_pos_of_target();
+
+        Vector2 currentPosition = entity.getPosition();
+
+        // Calculate the distance between the sword and the target
+        float distanceToTarget = currentPosition.dst(targetPosition);
+
+        if (distanceToTarget <= 3.0f) {
+            // Calculate the direction vector towards the target
+            Vector2 direction = targetPosition.cpy().sub(currentPosition).nor();
+
+            // Update the position based on the direction and speed
+            Vector2 movement = direction.scl(this.speed * Gdx.graphics.getDeltaTime());
+
+            return movement;
+        } else {
+            // If the distance is greater than 2, return no movement
+            return Vector2.Zero;
+        }
     }
 
     /**

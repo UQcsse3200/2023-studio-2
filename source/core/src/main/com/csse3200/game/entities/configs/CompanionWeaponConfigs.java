@@ -84,8 +84,8 @@ public class CompanionWeaponConfigs {
                 " SWORD",            // Name
                 "SHORT DISTANCE",        // Description
                 25.0f,                      // Damage
-                5.0f,                       // Weapon Speed
-                25,                        // Weapon Duration
+                2.5f,                       // Weapon Speed
+                150,                        // Weapon Duration
                 1,                        // Rotation Speed
                 0,                          // Initial Rotation Offset
                 2,                          // Attack Cooldown

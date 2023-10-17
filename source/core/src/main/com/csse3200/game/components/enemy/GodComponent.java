@@ -38,12 +38,10 @@ public class GodComponent extends Component {
         this.movementComponent = enemy.getComponent(PhysicsMovementComponent.class);
         ScheduledExecutorService scheduler2 = Executors.newScheduledThreadPool(1);
         scheduler2.scheduleAtFixedRate(this::toggleMode, 0, 6, TimeUnit.SECONDS);
-         touchAttackComponent = entity.getComponent(TouchAttackComponent.class);
+        touchAttackComponent = entity.getComponent(TouchAttackComponent.class);
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::toggleInvis, 0, 3, TimeUnit.SECONDS);
         colliderComponent = entity.getComponent(ColliderComponent.class);
-
-
     }
     /**
      * Toggle the firing mode. If true fires and false otherwise
@@ -51,7 +49,6 @@ public class GodComponent extends Component {
     public void toggleMode() {
         // Toggle the speed field
         Mode = !Mode;
-        fired = false;
     }
     /**
      * Switches the speed variable
@@ -86,7 +83,6 @@ public class GodComponent extends Component {
             entity.getEvents().trigger("float");
             touchAttackComponent.setEnabled(true);
         }
-
 
         if(Mode){
             colliderComponent.setEnabled(false);

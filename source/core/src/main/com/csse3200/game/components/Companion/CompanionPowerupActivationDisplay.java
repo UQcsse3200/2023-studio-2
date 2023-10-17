@@ -1,10 +1,13 @@
 package com.csse3200.game.components.Companion;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -64,7 +67,12 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
     PowerupConfig doubleCross;
     PowerupConfig doubleDamage;
     PowerupConfig snap;
+    TextButton activationButton;
+    TextButton leftButton;
+    TextButton rightButton;
+
     public PowerupConfigs powerupConfigs;
+    Table hotbar = new Table();
 
     /**
      * Constructor, sets label style
@@ -107,8 +115,67 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
      *
      */
     public void addActors() {
-        return;
+
+        stage.clear();
+
+        Button button = new Button(skin);
+
+        Table buttonTable = new Table();
+
+        button.setColor(0.5f, 0.5f, 0.5f, 0.5f);
+        button.setPosition(1405f,280f);
+        button.setSize(187f, 95f);
+
+
+        Label nameLabel = new Label("Potion", skin,"thick");
+        nameLabel.setColor(Color.BLACK);
+        nameLabel.setFontScale(0.2f, 0.2f);
+        Image image = new Image(new Texture(deathPotion.spritePath));
+
+        buttonTable.add(image).size(64, 64).row();
+        buttonTable.add(nameLabel);//.padBottom(500);
+        button.add(buttonTable).width(150).height(150);
+
+
+        TextButton button2 = new TextButton("next", skin);
+        button2.setColor(0.5f, 0.5f, 0.5f, 0.5f);
+        button2.setPosition(1595f, 310f);
+        button2.setSize(50f, 45f);
+
+        TextButton button3 = new TextButton("prev", skin);
+        button3.setColor(0.5f, 0.5f, 0.5f, 0.5f);
+        button3.setPosition(1350f,310f);
+        button3.setSize(50f, 45f);
+
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                pressedSpecificPowerupToBeUsed();
+                updatePowerupInventoryActivation();
+            }
+        });
+        button2.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                addRightButton();
+                updatePowerupInventoryActivation();
+            }
+        });
+
+        button3.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                addLeftButton();
+                updatePowerupInventoryActivation();
+            }
+        });
+
+        stage.addActor(button);
+        stage.addActor(button2);
+        stage.addActor(button3);
+
     }
+
 
     /**
      * TODO: Add button to go left in power-up inventory list
@@ -125,6 +192,7 @@ public class CompanionPowerupActivationDisplay extends UIComponent {
         //CREATE BUTTON AND LINK IT TO THIS FUNCTION ON PRESS
         increaseIndexInPowerupActivationList();
     }
+
 
     /**
      * TODO: this function is called when the there are NO MORE POWERUPS IN THE INVENTORY e.g. display blank

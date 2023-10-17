@@ -233,35 +233,24 @@ public class CompanionActions extends Component {
         }
 
         if (!inCombat) {
-            Vector2 playerPosition = player.getComponent(PhysicsComponent.class).getBody().getPosition();
-            Entity targetEnemy = null;
-            float minDistance = Float.MAX_VALUE;
-
-            for (Entity enemy : enemies) {
+            Entity enemy = getNextLiveEnemy(enemies);
+            if (enemy != null) {
+                Vector2 playerPosition = player.getComponent(PhysicsComponent.class).getBody().getPosition();
                 Vector2 enemyPosition = enemy.getComponent(PhysicsComponent.class).getBody().getPosition();
                 float distanceToPlayer = playerPosition.dst(enemyPosition);
 
-                // Adjust the distance threshold as needed (e.g., 5.0f)
-                if (distanceToPlayer <= 5.0f && distanceToPlayer < minDistance) {
-                    targetEnemy = enemy;
-                    minDistance = distanceToPlayer;
+                if (distanceToPlayer <= 5.0f) {
+                    inCombat = true;
+                    trackPrev = enemyPosition;
+
+                    float distanceToEnemy = entity.getPosition().dst(enemyPosition);
+
+                    if (distanceToEnemy <= 3.0f) {
+                        triggerInventoryEvent("melee");
+                    }
+
+                    return enemyPosition;
                 }
-            }
-
-            if (targetEnemy != null) {
-                inCombat = true;
-                Vector2 enemyPosition = targetEnemy.getComponent(PhysicsComponent.class).getBody().getPosition();
-                trackPrev = enemyPosition;
-
-                // Calculate the distance from the enemy
-                float distanceToEnemy = entity.getPosition().dst(enemyPosition);
-
-                // Trigger the inventory event when the companion reaches a certain distance from the enemy
-                if (distanceToEnemy <= 2.0f) {  // Adjust the distance threshold as needed
-                    triggerInventoryEvent("melee");
-                }
-
-                return enemyPosition;
             }
         }
         return inCombat ? enemies.get(currentTargetIndex).getPosition() : trackPrev;
@@ -290,6 +279,4 @@ public class CompanionActions extends Component {
             }
         }
         return null;
-    }
-
-}
+    }}

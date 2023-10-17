@@ -4,8 +4,8 @@
     {
       class: com.csse3200.game.entities.configs.SpawnerConfig,
       "wave1" : {
-        "Knight" : 1,
-        "necromancer" : 0,
+        "Knight" : 0,
+        "necromancer" : 1,
         "redGhost" : 0
       },
       "wave2" : {

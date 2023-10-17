@@ -80,6 +80,10 @@ public class EnemyFactory {
     for (Entity target : targets) {
       // Adds the specific behaviour to entity
       EnemyBehaviourSelector(target, config.type, config.behaviour, aiComponent, config.isBoss);
+      // temporary code to add necromancer function
+      if (config.name == EnemyName.necromancer && PhysicsLayer.contains(target.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.PLAYER)) {
+        aiComponent.addTask(new SpawnAttackTask(2f, target, 15));
+      }
     }
 
     TextureAtlas atlas = new TextureAtlas(config.spritePath);

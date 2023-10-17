@@ -14,6 +14,7 @@
     "slotType" : "ranged",
     "ammoUse" : 0,
     "staticImageScale" : 0.3,
+    "attackCooldown": 30,
 
     "sound": {"soundsMap": {}}
   },
@@ -22,7 +23,7 @@
     "name" : "Sniper",
     "health" : 1,
     "description": "Pinpoint Accuracy",
-    "damage" : 50,
+    "damage" : 100,
     "weaponSpeed": 35,
     "weaponDuration": 300,
     "rotationSpeed": 0,
@@ -31,7 +32,7 @@
     "imagePath" : "images/weapons/ranged/sniperStatic.png",
     "type" : "RANGED_SNIPER",
     "slotType" : "ranged",
-    "ammoUse" : 1,
+    "ammoUse" : 2,
     "staticImageScale" : 1,
     "attackCooldown": 100,
 
@@ -44,7 +45,7 @@
     "description": "Capable of hitting multiple enemies at once, a versatile choice.",
     "damage" : 25,
     "weaponSpeed": 4,
-    "weaponDuration": 210,
+    "weaponDuration": 280,
     "rotationSpeed": 2,
     "textureAtlas": "images/weapons/ranged/boomerang.atlas",
     "imageScale" : 0.5,
@@ -52,6 +53,7 @@
     "imagePath" : "images/weapons/ranged/boomerangStatic.png",
     "type" : "RANGED_BOOMERANG",
     "slotType" : "ranged",
+    "attackCooldown": 40,
 
     "sound": {"soundsMap": {}}
   },
@@ -62,7 +64,7 @@
     "description": "its blue!",
     "damage" : 25,
     "weaponSpeed": 6,
-    "weaponDuration": 280,
+    "weaponDuration": 140,
     "rotationSpeed": 2,
     "textureAtlas": "images/weapons/ranged/bluemerang.atlas",
     "imageScale" : 0.5,
@@ -70,7 +72,9 @@
     "imagePath" : "images/weapons/ranged/bluemerangStatic.png",
     "type" : "RANGED_BLUEMERANG",
     "slotType" : "ranged",
-    "projectiles" : 1,
+    "projectiles" : 2,
+    "ammoUse" : 2,
+    "attackCooldown": 45,
 
     "sound": {"soundsMap": {}}
   },
@@ -79,7 +83,7 @@
     "name" : "Missile Swarm",
     "health" : 1,
     "description": "Spray a rocket array and watch your enemies pray",
-    "damage" : 40,
+    "damage" : 0,
     "weaponSpeed": 5,
     "weaponDuration": 105,
     "rotationSpeed": 0,
@@ -89,8 +93,8 @@
     "imagePath" : "images/weapons/ranged/swarmRocketStatic.png",
     "type" : "RANGED_MISSILES",
     "slotType" : "ranged",
-    "projectiles" : 10,
-    "ammoUse" : 2,
+    "projectiles" : 6,
+    "ammoUse" : 3,
     "attackCooldown": 150,
 
     "sound": {"soundsMap": {}}
@@ -110,8 +114,9 @@
     "imagePath" : "images/weapons/ranged/grenadeStatic.png",
     "type" : "RANGED_GRENADE",
     "slotType" : "ranged",
-    "attackCooldown": 30,
-    "sound": {"soundsMap": {}}
+    "attackCooldown": 45,
+    "sound": {"soundsMap": {}},
+    "ammoUse" : 2
   },
 
   "RANGED_NUKE": {
@@ -129,7 +134,7 @@
     "imagePath" : "images/weapons/ranged/nukeStatic.png",
     "type" : "RANGED_NUKE",
     "slotType" : "melee",
-    "ammoUse" : 5,
+    "ammoUse" : 30,
     "sound": {"soundsMap": {}}
   },
 
@@ -148,6 +153,7 @@
     "type" : "RANGED_HOMING",
     "slotType" : "ranged",
     "attackCooldown": 80,
+    "ammoUse" : 2,
 
     "sound": {"soundsMap": {}}
   },
@@ -196,14 +202,14 @@
     "weaponSpeed": 8,
     "weaponDuration": 45,
     "rotationSpeed": 0,
-    "attackCooldown": 10,
+    "attackCooldown": 30,
     "textureAtlas": "images/weapons/melee/bee.atlas",
     "imageScale" : 0.4,
     "staticImageScale" : 0.4,
     "imagePath" : "images/weapons/melee/beeStatic.png",
     "type" : "MELEE_BEE_STING",
     "slotType" : "melee",
-    "ammoUse" : 4,
+    "ammoUse" : 5,
     "projectiles" : 8,
 
     "sound": {"soundsMap": {}}
@@ -212,18 +218,18 @@
   "MELEE_LASER_SWORD": {
     "name" : "Laser and sword",
     "description": "glows",
-    "damage" : 70,
+    "damage" : 100,
     "weaponSpeed": 12,
     "weaponDuration": 95,
     "rotationSpeed": 1,
-    "attackCooldown": 30,
+    "attackCooldown": 100,
     "textureAtlas": "images/weapons/melee/laserSword.atlas",
     "imageScale" : 1.2,
     "staticImageScale" : 0,
     "imagePath" : "images/weapons/melee/laserSwordStatic.png",
     "type" : "MELEE_LASER_SWORD",
     "slotType" : "melee",
-    "ammoUse" : 2,
+    "ammoUse" : 3,
 
     "sound": {"soundsMap": {}}
   },
@@ -261,6 +267,7 @@
     "type" : "WOODHAMMER",
     "slotType" : "building",
     "ammoUse" : 0,
+    "staticImageScale" : 0.5,
 
     "sound": {"soundsMap": {}}
   },
@@ -272,6 +279,7 @@
     "type" : "STONEHAMMER",
     "slotType" : "building",
     "ammoUse" : 0,
+    "staticImageScale" : 0.5,
     "sound": {"soundsMap": {}}
   },
 
@@ -282,6 +290,7 @@
     "type" : "STEELHAMMER",
     "slotType" : "building",
     "ammoUse" : 0,
+    "staticImageScale" : 0.5,
     "sound": {"soundsMap": {}}
   }
 }

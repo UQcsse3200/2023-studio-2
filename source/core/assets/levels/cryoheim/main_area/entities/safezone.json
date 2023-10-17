@@ -1,0 +1,12 @@
+{
+  "entityType": "SafeZoneConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.SafeZoneConfig,
+      "position": {
+        "x": 10,
+        "y": 50
+      }
+    }
+  ]
+}

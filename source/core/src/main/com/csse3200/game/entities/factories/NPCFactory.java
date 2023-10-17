@@ -17,10 +17,7 @@ import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
 import com.csse3200.game.components.tasks.WanderTask;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.AstronautConfig;
-import com.csse3200.game.entities.configs.BotanistConfig;
-import com.csse3200.game.entities.configs.AstroConfig;
-import com.csse3200.game.entities.configs.NPCConfigs;
+import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -52,18 +49,6 @@ public class NPCFactory {
   /** Configuration class for NPC properties. */
   private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
-  /** Asset manager to load and manage assets. */
-  public AssetManager assetManager;
-
-  /**
-   * Creates an instance of NPCFactory.
-   *
-   * @param assetManager The asset manager to use for asset loading.
-   */
-  public NPCFactory(AssetManager assetManager) {
-    this.assetManager = assetManager;
-  }
-
 //  public static Entity createGhost(Entity target) {
 //
 //    Entity ghost = createBaseNPC(target);
@@ -93,7 +78,6 @@ public class NPCFactory {
     return createBotanist(configs.botanist);
   }
 
-
   /**
    * Creates a Botanist NPC to match the config file
    * @return The created Botanist NPC entity.
@@ -105,7 +89,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/botanist.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class));
     animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-1-column-4", 0.01f, Animation.PlayMode.LOOP);
@@ -126,7 +110,7 @@ public class NPCFactory {
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
     botanist.addComponent(new InteractableComponent(entity -> {
-      String[] storytext= {"Hello I am the Botanist","I am here to guide you through"};
+      String[] storytext= {"Hello I am the Botanist","I am here to accompany you on your journey!"};
       String[] titletext= {"",""};
 
       botanist.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
@@ -137,10 +121,10 @@ public class NPCFactory {
   }
 
   /**
-   * Creates a Astro NPC to match the config file
+   * Creates an Astro NPC to match the config file
    * @return The created Astro NPC entity.
    */
-  public static Entity createAstro() {
+  public static Entity createAstro(AstroConfig astroConfig) {
 
 //    AITaskComponent aiComponent = new AITaskComponent();
 //    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
@@ -148,19 +132,20 @@ public class NPCFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/npc/Astro_NPC.atlas", TextureAtlas.class));
-    animator.addAnimation("Astro_Up", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_UpLeft", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_Left", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_DownLeft", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_Down", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_DownRight", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_Right", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("Astro_UpRight", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_Up", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_UpLeft", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_Left", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_DownLeft", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_Down", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_DownRight", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_Right", 0.2f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("Astro_UpRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_StandDown", 0.2f);
 
     Entity Astro =
             new Entity()
                     .addComponent(animator)
-                    .addComponent(new AstroAnimationController(new AssetManager()))
+                    .addComponent(new AstroAnimationController())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
@@ -174,18 +159,18 @@ public class NPCFactory {
       Astro.getComponent(FollowComponent.class).setEntity(Astro);
       Astro.getComponent(FollowComponent.class).setFollowSpeed(1f);
     },3f));
-    animator.startAnimation("Astro_Down");
+    animator.startAnimation("Astro_StandDown");
     return Astro;
   }
 
-  public static Entity createTutnpc() {
+  public static Entity createTutnpc(TutnpcConfig tutnpcConfig) {
 
 //    AITaskComponent aiComponent = new AITaskComponent();
 //    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/npc/Tutnpc.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset(tutnpcConfig.spritePath, TextureAtlas.class));
     animator.addAnimation("row-2-column-1", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-3-column-1", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-4-column-1", 0.2f, Animation.PlayMode.LOOP);
@@ -215,7 +200,7 @@ public class NPCFactory {
     Entity Tutnpc =
             new Entity()
                     .addComponent(animator)
-                    .addComponent(new TutnpcAnimationController(new AssetManager()))
+                    .addComponent(new TutnpcAnimationController())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
@@ -225,7 +210,7 @@ public class NPCFactory {
 
     Tutnpc.getComponent(ColliderComponent.class).setDensity(1.5f);
     Tutnpc.scaleHeight(0.7f);
-    String[] storytext = {"I am your Tutorial Guide", "I am here to guide you through"};
+    String[] storytext = {"I am your Tutorial Guide", "I am here to teach you how to play!"};
     String[] titletext = {"", ""};
     Tutnpc.addComponent(new InteractableComponent(entity -> {
 
@@ -235,6 +220,46 @@ public class NPCFactory {
     return Tutnpc;
   }
 
+  public static Entity createHellman() {
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/npc/Hellman.atlas", TextureAtlas.class));
+    animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-4", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-5", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-6", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-7", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-8", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-9", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-10", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-11", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-12", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-13", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-1-column-14", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("idle", 0.01f, Animation.PlayMode.NORMAL);
+
+    Entity Hellman =
+            new Entity()
+                    .addComponent(animator)
+                    .addComponent(new HellmanAnimationController())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
+                    .addComponent(new DialogComponent(dialogueBox))
+                    .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                    .addComponent(new InteractionControllerComponent(true))
+                    .addComponent(new PhysicsMovementComponent());
+
+    Hellman.getComponent(ColliderComponent.class).setDensity(1.5f);
+    Hellman.scaleHeight(2.0f);
+    String[] storytext = {"If you defeat this boss,\n I will help you find a suitable planet", "You will find the boss on the \nother side of the portal."};
+    String[] titletext = {"", ""};
+    Hellman.addComponent(new InteractableComponent(entity -> {
+      Hellman.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+    }, 3f));
+    return Hellman;
+  }
   public static Entity createAstronaut(AstronautConfig astronautConfig) {
 
     AITaskComponent aiComponent = new AITaskComponent();
@@ -242,7 +267,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/npc/astronaut_npc.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset(astronautConfig.spritePath, TextureAtlas.class));
     animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
@@ -269,10 +294,9 @@ public class NPCFactory {
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
-                    .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
     astronaut.addComponent(new InteractableComponent(entity -> {
-      String[] storytext= {"Hello I am Astronaut","I am here to guide you through"};
+      String[] storytext= {"Hello, I've been stuck here for weeks","Can I please come with you?"};
       String[] titletext= {"",""};
       astronaut.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
     },10f));
@@ -280,29 +304,32 @@ public class NPCFactory {
     astronaut.scaleHeight(1f);
     return astronaut;
   }
-  public static Entity createJail() {
+  public static Entity createJail(JailConfig jailConfig) {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/Jail/jail.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset(jailConfig.spritePath, TextureAtlas.class));
     animator.addAnimation("jail_close", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("jail_open", 0.2f, Animation.PlayMode.LOOP);
 
     Entity Jail =
             new Entity()
                     .addComponent(animator)
-                    .addComponent(new JailAnimationController(new AssetManager()))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsMovementComponent());
-    Jail.addComponent(new InteractableComponent(entity -> {Jail.dispose();
-      String[] storytext= {"NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!"
-              ,"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected."
-              ,"Emily: We can handle it. \nLead the way!"};
-      String[] titletext= {"","",""};
-      Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);},1f));
+    Jail.addComponent(new InteractableComponent(entity -> {
+        String[] storytext= {"NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!"
+                ,"NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected."
+                ,"Emily: We can handle it. \nLead the way!"};
+        String[] titletext= {"","",""};
+        Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+        animator.startAnimation("jail_open");
+      },1f));
+
     Jail.scaleHeight(1.7f);
     animator.startAnimation("jail_close");
+
     return Jail;
   }
   public static Entity createFire() {
@@ -319,7 +346,7 @@ public class NPCFactory {
     Entity fire =
             new Entity()
                     .addComponent(animator)
-                    .addComponent(new FireAnimationController(new AssetManager()));
+                    .addComponent(new FireAnimationController());
 
     return fire;
   }

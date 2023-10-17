@@ -3,21 +3,21 @@
   "entities": [
     {
       class: com.csse3200.game.entities.configs.SpawnerConfig,
-      "wave1" : [
-        2,
-        2,
-        0
-      ],
-      "wave2" : [
-        10,
-        0,
-        0
-      ],
-      "wave3" : [
-        10,
-        0,
-        0
-      ],
+      "wave1" : {
+        "Knight" : 1,
+        "necromancer" : 1,
+        "redGhost" : 1
+      },
+      "wave2" : {
+        "redGhost" : 1,
+        "chain" : 1,
+        "necromancer" : 1
+      },
+      "wave3" : {
+        "redGhost" : 1,
+        "chain" : 1,
+        "necromancer" : 1
+      },
       "position": {
         "x": 10,
         "y": 45
@@ -30,3 +30,5 @@
     }
   ]
 }
+
+

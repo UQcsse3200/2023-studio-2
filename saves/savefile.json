@@ -6,6 +6,7 @@ entities: {
 			position: {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				x: 27
 				y: 17
 =======
@@ -21,6 +22,10 @@ entities: {
 				x: 23
 				y: 38
 >>>>>>> main
+=======
+				x: 22
+				y: 24
+>>>>>>> c22cfc38f00d7da43f5945dd02b5942dfeacef39
 			}
 			health: 93
 			baseAttack: 5
@@ -32,6 +37,7 @@ entities: {
 			class: com.csse3200.game.entities.configs.PlayerConfig
 			spritePath: images/player/player.atlas
 			position: {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 				x: 27
@@ -49,6 +55,10 @@ entities: {
 				x: 22
 				y: 38
 >>>>>>> main
+=======
+				x: 23
+				y: 25
+>>>>>>> c22cfc38f00d7da43f5945dd02b5942dfeacef39
 			}
 			health: 26
 			baseAttack: 10
@@ -57,6 +67,9 @@ entities: {
 				soundsMap: {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c22cfc38f00d7da43f5945dd02b5942dfeacef39
 					low_health: sounds/playerLow_health.wav
 					dodge: sounds/dodgingAlertSweep.wav
 					boostPowerup: sounds/playerBoostRecharge.wav
@@ -71,6 +84,7 @@ entities: {
 					upgradeWeapon: sounds/upgradeWeapon.wav
 					upgradeTree: sounds/upgradeTreeTap.wav
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 					low_health: sounds/playerLow_health.mp3
 					dodge: sounds/dodgingAlertSweep.mp3
@@ -82,6 +96,9 @@ entities: {
 >>>>>>> 4043d8b605888a37c4b00bbdb06f83f18dc78db2
 =======
 >>>>>>> main
+=======
+					exitbutton: sounds/ExitButton.wav,
+>>>>>>> c22cfc38f00d7da43f5945dd02b5942dfeacef39
 				}
 			}
 		}

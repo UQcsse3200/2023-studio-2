@@ -140,11 +140,5 @@ public class KeyboardShipInputComponent extends InputComponent {
     private void triggerBrakeOffEvent() {
         entity.getEvents().trigger("brakeOff");
     }
-
-    /* Rotation attempt 1 was a Failure
-    private void triggerLeftEvent() {
-        entity.getEvents().trigger("turnLeft");
-    }
-     */
 }
 

@@ -13,7 +13,7 @@ public class PathMovementTask extends MovementTask {
     private List<GridPoint2> path;
     private int pathIndex = 0;
     public PathMovementTask(List<GridPoint2> path) {
-        super(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)), 0.2f);
+        super(ServiceLocator.getGameArea().getTerrain().tileToWorldPosition(path.get(0)), 0.5f);
         this.path = path;
     }
 

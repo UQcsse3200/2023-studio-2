@@ -8,7 +8,6 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Companion.CompanionWeaponComponent;
 import com.csse3200.game.components.Companion.*;
@@ -16,10 +15,8 @@ import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
-import com.csse3200.game.components.player.PlayerAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionConfig;
-import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -27,12 +24,7 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
-import com.csse3200.game.services.ServiceLocator;
-
-
-import java.util.Objects;
+import com.csse3200.game.rendering.AnimationRenderComponent;import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Factory to create a companion entity.
@@ -76,7 +68,8 @@ public class CompanionFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
                         .addComponent(new ColliderComponent())
                         .addComponent(new CompanionActions())
-                        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
+                        .addComponent(new CombatStatsComponent(config.health, config.maxHealth,
+                                config.baseAttack, config.attackMultiplier, config.isImmune))
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
                         .addComponent(animator)

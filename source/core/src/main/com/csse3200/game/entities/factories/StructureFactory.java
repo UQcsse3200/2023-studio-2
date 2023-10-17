@@ -1,20 +1,16 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.csse3200.game.ExtractorMinigameWindow;
+import com.csse3200.game.entities.Extractor;
+import com.csse3200.game.entities.configs.ParticleEffectsConfig;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.areas.mapConfig.ResourceCondition;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.SpawnerComponent;
-import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
-import com.csse3200.game.components.structures.ExtractorAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.SpawnerConfig;
 import com.csse3200.game.input.ExtinguisherInputComponent;
@@ -32,7 +28,6 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
@@ -68,38 +63,7 @@ public class StructureFactory {
      * @return a new extractor Entity
      */
     public static PlaceableEntity createExtractor(ExtractorConfig config) {
-        AnimationRenderComponent animator =
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class));
-        animator.addAnimation("animateBroken", 0.2f,Animation.PlayMode.LOOP);
-        animator.addAnimation("animateExtracting", 0.2f, Animation.PlayMode.LOOP);
-
-        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity(3, 3)
-                .irremovable()
-                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(animator)
-                .addComponent(new CombatStatsComponent(config.health, 0, 0, false))
-                .addComponent(new ProductionComponent(config.resource, config.tickRate, config.tickSize))
-                .addComponent(new ExtractorAnimationController());
-
-        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
-        extractor.addComponent(new DistanceCheckComponent(5f, interactLabel));
-        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
-
-        extractor.addComponent(new InteractableComponent(entity -> {
-            CombatStatsComponent healthStats = extractor.getComponent(CombatStatsComponent.class);
-
-            if (healthStats.isDead()) {
-                ExtractorMinigameWindow minigame = ExtractorMinigameWindow.MakeNewMinigame(extractor);
-                ServiceLocator.getRenderService().getStage().addActor(minigame);
-            }
-        }, 5f));
-        extractor.setScale(1.8f, 2f);
-        PhysicsUtils.setScaledCollider(extractor, 1f, 0.6f);
-
-        return extractor;
+        return new Extractor(config);
     }
 
     //HEAD
@@ -178,10 +142,25 @@ public class StructureFactory {
     public static PlaceableEntity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         ExtractorConfig extractorConfig = new ExtractorConfig();
         extractorConfig.health = health;
+        extractorConfig.maxHealth = health;
         extractorConfig.resource = producedResource;
         extractorConfig.tickRate = tickRate;
         extractorConfig.tickSize = tickSize;
+        extractorConfig.effects = new ParticleEffectsConfig();
+
+        String effectPath = getEffectPath(producedResource);
+
+        extractorConfig.effects.effectsMap.put("rubble", effectPath);
+
         return createExtractor(extractorConfig);
+    }
+
+    private static String getEffectPath(Resource producedResource) {
+        return switch(producedResource) {
+            case Nebulite -> "particle-effects/extractor/extractor_rubble_nebulite.effect";
+            case Solstite -> "particle-effects/extractor/extractor_rubble_solstite.effect";
+            case Durasteel -> "particle-effects/extractor/extractor_rubble_durasteel.effect";
+        };
     }
 
 

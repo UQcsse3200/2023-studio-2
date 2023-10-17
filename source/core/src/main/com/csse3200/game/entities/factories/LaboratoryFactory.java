@@ -1,12 +1,11 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.LabWindow;
+import com.csse3200.game.windows.LabWindow;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.LaboratoryConfig;
-import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -37,7 +36,7 @@ public class LaboratoryFactory {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.LABORATORY))
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.LABORATORY))
-                .addComponent(new CombatStatsComponent(4, 0, 0, false));
+                .addComponent(new CombatStatsComponent(4, 4, 0, 0, false));
 
         logger.debug("creating laboratory");
         // Set the laboratory's body type and scale
@@ -55,7 +54,7 @@ public class LaboratoryFactory {
 
             // Check if the laboratory is dead
             if (healthStats.isDead()) {
-                LabWindow labWindow = LabWindow.MakeNewLaboratory();
+                LabWindow labWindow = LabWindow.makeNewLaboratory();
                 ServiceLocator.getRenderService().getStage().addActor(labWindow);
             }
         }, 5f));

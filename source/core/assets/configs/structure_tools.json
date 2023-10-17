@@ -6,7 +6,8 @@
       "cost": {
         "Durasteel": 25
       },
-      "texture": "images/structure-icons/wall.png"
+      "texture": "images/structure-icons/wall.png",
+      "ordering": 1
     },
     "com.csse3200.game.components.structures.tools.IntermediateWallTool": {
       "name": "Stone Wall",
@@ -14,7 +15,8 @@
       "cost": {
         "Durasteel": 50
       },
-      "texture": "images/structure-icons/stone_wall.png"
+      "texture": "images/structure-icons/stone_wall.png",
+      "ordering": 2
     },
     "com.csse3200.game.components.structures.tools.GateTool": {
       "name": "Gate",
@@ -22,7 +24,8 @@
       "cost": {
         "Durasteel": 40
       },
-      "texture": "images/structure-icons/gate.png"
+      "texture": "images/structure-icons/gate.png",
+      "ordering": 3
     },
     "com.csse3200.game.components.structures.tools.TurretTool": {
       "name": "Basic Turret",
@@ -31,7 +34,8 @@
         "Durasteel": 50,
         "Solstite": 50
       },
-      "texture": "images/structure-icons/turret.png"
+      "texture": "images/structure-icons/turret.png",
+      "ordering": 4
     },
     "com.csse3200.game.components.structures.tools.AdvTurretTool": {
       "name": "Advanced Turret",
@@ -40,21 +44,24 @@
         "Durasteel": 75,
         "Solstite": 50
       },
-      "texture": "images/structure-icons/adv_turret.png"
+      "texture": "images/structure-icons/adv_turret.png",
+      "ordering": 5
     },
-    "com.csse3200.game.components.structures.tools.Healing": {
+    "com.csse3200.game.components.structures.tools.HealTool": {
       "name": "Heal",
       "description": "Bandaid tool",
       "cost": {
       },
-      "texture": "images/structures/heal_icon.png"
+      "texture": "images/structures/heal_icon.png",
+      "ordering": 8
     },
     "com.csse3200.game.components.structures.tools.ExtractorTool": {
       "name": "Extractor",
       "description": "Mining - its ethical.",
       "cost": {
       },
-      "texture": "images/structures/refinedExtractor.png"
+      "texture": "images/structures/refinedExtractor.png",
+      "ordering": 0
     },
     "com.csse3200.game.components.structures.tools.ExplosiveBarrelTool": {
       "name": "Explosive Barrel",
@@ -63,7 +70,8 @@
         "Durasteel": 50,
         "Solstite": 100
       },
-      "texture": "images/explosives/explosive-barrel.png"
+      "texture": "images/explosives/explosive-barrel.png",
+      "ordering": 7
     },
     "com.csse3200.game.components.structures.tools.LandmineTool": {
       "name": "Landmine",
@@ -72,7 +80,8 @@
         "Durasteel": 25,
         "Solstite": 50
       },
-      "texture": "images/explosives/landmine.png"
+      "texture": "images/explosives/landmine.png",
+      "ordering": 6
     }
   }
 }

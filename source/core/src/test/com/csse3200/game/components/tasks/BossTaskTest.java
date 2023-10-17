@@ -42,7 +42,7 @@ class BossTaskTest {
   void shouldTriggerEvent() {
     Entity target = new Entity();
     target.create();
-    BossTask bossTask = new BossTask(EnemyType.BossMelee, target, 7, 100f, 1000f);
+    BossTask bossTask = new BossTask(EnemyType.Melee, target, 7, 100f, 1000f);
 
     PhysicsMovementComponent movement = new PhysicsMovementComponent();
     AITaskComponent aiTaskComponent = new AITaskComponent().addTask(bossTask);
@@ -64,12 +64,12 @@ class BossTaskTest {
   void shouldSpecialAttack() {
     Entity target = new Entity();
     target.create();
-    BossTask bossTask = new BossTask(EnemyType.BossMelee, target, 7, 100f, 1000f);
+    BossTask bossTask = new BossTask(EnemyType.Melee, target, 7, 100f, 1000f);
     AITaskComponent aiTaskComponent = new AITaskComponent().addTask(bossTask);
     Entity entity = new Entity().addComponent(aiTaskComponent)
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new PhysicsComponent())
-            .addComponent(new CombatStatsComponent(100, 10, 1,false));
+            .addComponent(new CombatStatsComponent(100, 100, 10, 1,false));
     entity.create();
 
     int halfHp = entity.getComponent(CombatStatsComponent.class).getMaxHealth() / 2;

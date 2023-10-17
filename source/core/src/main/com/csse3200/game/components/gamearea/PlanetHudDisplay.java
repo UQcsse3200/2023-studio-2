@@ -7,8 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
-import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.entities.configs.SoundsConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -55,7 +53,6 @@ public class PlanetHudDisplay extends UIComponent {
         planetStack.add(overlayTable);
         planetTable.add(planetStack).size(180f, 225f);
         planetTable.row();
-        //createUpgradeTreeButton(planetTable);
 
         stage.addActor(planetTable);
     }

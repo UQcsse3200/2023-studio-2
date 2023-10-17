@@ -5,32 +5,38 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
+/**
+ * Animation controller for the tutorial NPC
+ */
 public class TutnpcAnimationController extends Component {
-    private final AssetManager assetManager;
     private AnimationRenderComponent animator;
     private TextureAtlas atlas;
 
     private float animationTimer = 0f;
     private float animationDuration = 10f; // Adjust this to control animation speed.
 
-    public TutnpcAnimationController(AssetManager assetManager) {
-        this.assetManager = assetManager;
-    }
+    /**
+     * Initialise the animation controller
+     */
+    public TutnpcAnimationController() {}
 
+    /**
+     * Create the animation controller and start animations
+     */
     @Override
     public void create() {
         super.create();
 
         // Initialize your animator and load the atlas.
         animator = entity.getComponent(AnimationRenderComponent.class);
-        assetManager.load("images/npc/Tutnpc.atlas", TextureAtlas.class);
-        assetManager.finishLoading();
-        atlas = assetManager.get("images/npc/Tutnpc.atlas");
 
         // Start with the default animation.
         animator.startAnimation("row-2-column-1");
     }
 
+    /**
+     * Updates the animation
+     */
     @Override
     public void update() {
         super.update();

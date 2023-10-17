@@ -37,7 +37,7 @@ class DamageTextureComponentTest {
 
     @BeforeEach
     void setup() {
-        entity = new Entity().addComponent(new CombatStatsComponent(maxHealth, 0, 1, false));
+        entity = new Entity().addComponent(new CombatStatsComponent(maxHealth, maxHealth, 0, 1, false));
         entity.setPosition(x, y);
         entity.setScale(width, height);
         ServiceLocator.registerResourceService(resourceService);

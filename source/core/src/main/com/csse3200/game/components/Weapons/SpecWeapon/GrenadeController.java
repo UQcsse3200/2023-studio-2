@@ -10,18 +10,13 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class GrenadeController extends WeaponControllerComponent {
-    private Vector2 player_last_pos;
-    private float rotation;
-
-    private float attackDirection;
+    private int attackSide;
 
     public GrenadeController(WeaponConfig config,
                              float attackDirection,
                              Entity player, int attackNum) {
         super(config, attackDirection, player, attackNum);
-        this.player_last_pos = player.getPosition();
-        this.attackDirection = attackDirection;
-        this.rotation = config.rotationSpeed * (attackDirection < 90 || attackDirection > 270 ? 1 : -1);
+        attackSide = (currentRotation > 90 && currentRotation < 270) ? -1 : 1;
     }
 
     @Override
@@ -29,7 +24,7 @@ public class GrenadeController extends WeaponControllerComponent {
         super.create();
         var explosiveConfig = new ExplosiveConfig();
         explosiveConfig.chainable = false;
-        explosiveConfig.damage = 20;
+        explosiveConfig.baseAttack = 20;
         explosiveConfig.damageRadius = 2.5f;
         explosiveConfig.chainRadius = 3.0f;
         explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";
@@ -41,14 +36,16 @@ public class GrenadeController extends WeaponControllerComponent {
     }
 
     @Override
-    protected void add_animations(AnimationRenderComponent animator) {
-        animator.addAnimation("UP", 0.07f, Animation.PlayMode.LOOP);
+    protected void set_animations() {
+        animator = entity.getComponent(AnimationRenderComponent.class);
+        animator.addAnimation("ATTACK", 0.07f, (attackSide == 1 ? Animation.PlayMode.LOOP : Animation.PlayMode.LOOP_REVERSED));
+
+
     }
 
     @Override
     protected void initial_rotation() {
-        System.out.println(attackNum);
-        currentRotation += 45 * (attackNum % 2 == 0 ? 1 : -1) * (attackDirection < 90 || attackDirection > 270 ? 1 : -1);
+        currentRotation += 45 * attackSide;
     }
 
     @Override
@@ -61,21 +58,18 @@ public class GrenadeController extends WeaponControllerComponent {
     }
 
     @Override
-    protected void initial_animation(AnimationRenderComponent animator) {
-        animator.startAnimation("UP");
+    protected void initial_animation() {
+        animator.startAnimation("ATTACK");
     }
 
     @Override
     protected void rotate() {
-        this.currentRotation -= this.rotation * (attackNum % 2 == 0 ? 1 : -1);
+        this.currentRotation -= config.rotationSpeed * attackSide;
     }
 
 
     @Override
     protected void move() {
-        Vector2 player_delta = player.getPosition().sub(player_last_pos);
-        this.player_last_pos = player.getPosition();
-
         entity.setPosition(entity.getPosition()
                 .add(positionInDirection(currentRotation,0.01f * config.weaponSpeed))
         );
@@ -86,13 +80,8 @@ public class GrenadeController extends WeaponControllerComponent {
 
     @Override
     protected void despawn() {
-        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-
-        if (animator != null) {
-            //entity.getEvents().trigger("playSound", "stop");
-            animator.stopAnimation();
-        }
-
+        //entity.getEvents().trigger("playSound", "stop");
+        animator.stopAnimation();
         entity.getEvents().trigger("explode");
     }
 }

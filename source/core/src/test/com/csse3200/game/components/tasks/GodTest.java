@@ -15,14 +15,19 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class GodTest {
+    private God god;
+    private Entity mockTarget;
     @BeforeEach
     void beforeEach() {
+        mockTarget = new Entity();
+        god = new God(mockTarget, 10, 100.0f, 20.0f);
         // Mock rendering, physics, game time, game area
         RenderService renderService = new RenderService();
 
@@ -31,6 +36,11 @@ public class GodTest {
         when(gameTime.getDeltaTime()).thenReturn(20f / 1000);
         ServiceLocator.registerTimeSource(gameTime);
         ServiceLocator.registerPhysicsService(new PhysicsService());
+    }
+    @Test
+    public void testToggleSpeed() {
+        god.toggleMode();
+        Assertions.assertTrue(god.getMode());
     }
     @Test
     void shouldMove(){

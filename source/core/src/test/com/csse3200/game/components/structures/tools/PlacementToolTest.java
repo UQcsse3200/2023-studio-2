@@ -12,6 +12,7 @@ import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
+import jdk.jfr.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +36,8 @@ class PlacementToolTest {
     ResourceService resourceService;
     @Mock
     PhysicsService physicsService;
+    @Mock
+    EventHandler eventHandler;
 
     @BeforeEach
     void beforeEach() {
@@ -43,12 +46,13 @@ class PlacementToolTest {
         ServiceLocator.registerGameStateObserverService(stateObserver);
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerPhysicsService(physicsService);
+        when(player.getEvents()).thenReturn(eventHandler);
     }
     @Test
     void testInteractNoExistingStructureNoCost() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new MockPlacementTool(cost);
+        var tool = new MockPlacementTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -58,15 +62,14 @@ class PlacementToolTest {
 
         verify(stateObserver, never()).getStateData(any());
 
-        verify(structurePlacementService).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService).placeStructureAt(any(), eq(position));
     }
 
     @Test
     void testInteractExistingStructure() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new MockPlacementTool(cost);
+        var tool = new MockPlacementTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -76,8 +79,7 @@ class PlacementToolTest {
 
         tool.interact(player, position);
 
-        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position));
     }
 
     @Test
@@ -88,7 +90,7 @@ class PlacementToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(100);
 
-        var tool = new MockPlacementTool(cost);
+        var tool = new MockPlacementTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -98,8 +100,7 @@ class PlacementToolTest {
 
         verify(stateObserver).getStateData("resource/resource1");
         verify(stateObserver).getStateData("resource/resource2");
-        verify(structurePlacementService).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService).placeStructureAt(any(), eq(position));
     }
 
     @Test
@@ -112,7 +113,7 @@ class PlacementToolTest {
 
         when(player.getEvents()).thenReturn(mock(EventHandler.class));
 
-        var tool = new MockPlacementTool(cost);
+        var tool = new MockPlacementTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -123,15 +124,14 @@ class PlacementToolTest {
         // don't care which order they get checked in. Don't care if loops breaks early.
         verify(stateObserver, atMost(1)).getStateData("resource/resource1");
         verify(stateObserver, atMost(1)).getStateData("resource/resource2");
-        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position),
-                eq(false), eq(false));
+        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position));
     }
 }
 
 class MockPlacementTool extends PlacementTool {
 
-    public MockPlacementTool(ObjectMap<String, Integer> cost) {
-        super(cost);
+    public MockPlacementTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
+        super(cost, ordering, texture);
     }
 
     @Override

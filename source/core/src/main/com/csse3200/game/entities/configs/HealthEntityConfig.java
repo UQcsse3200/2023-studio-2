@@ -1,11 +1,27 @@
 package com.csse3200.game.entities.configs;
 
 public class HealthEntityConfig extends BaseEntityConfig {
-    public int health;
-    public int maxHealth;
-    public int baseAttack;
+    public int health = 0;
+    public int maxHealth = 0;
+    public int baseAttack = 0;
     public int attackMultiplier = 1;
     public boolean isImmune = false;
+
+
+
+    public HealthEntityConfig() {
+
+    }
+
+    public HealthEntityConfig(HealthEntityConfig config) {
+        super(config);
+
+        health = config.health;
+        maxHealth = config.maxHealth;
+        baseAttack = config.baseAttack;
+        attackMultiplier = config.attackMultiplier;
+        isImmune = config.isImmune;
+    }
 
     @Override
     public boolean equals(Object o) {

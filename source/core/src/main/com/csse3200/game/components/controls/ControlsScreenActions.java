@@ -2,6 +2,8 @@ package com.csse3200.game.components.controls;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.services.PlanetTravel;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,14 +13,16 @@ import org.slf4j.LoggerFactory;
 public class ControlsScreenActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreenActions.class);
     private final GdxGame game;
+    private int lives;
 
     /**
      * Creates a new instance of ControlsScreenActions.
      *
      * @param game The main game instance.
      */
-    public ControlsScreenActions(GdxGame game) {
+    public ControlsScreenActions(GdxGame game, int lives) {
         this.game = game;
+        this.lives = lives;
     }
 
     /**
@@ -89,8 +93,9 @@ public class ControlsScreenActions extends Component {
      * Action to handle the 'exit' event, returning the game to the main menu.
      */
      void onExit() {
-        logger.info("Game returned to the main menu");
-        game.setScreen(GdxGame.ScreenType.SETTINGS);
+         logger.info("Relaunching main game screen");
+         ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", lives);
+         new PlanetTravel(game).returnToCurrent();
     }
 
     public void getLogger() {

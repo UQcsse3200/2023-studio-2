@@ -25,4 +25,6 @@ public class ToolConfig {
      * The texture to use for the StructureToolPickers' icon.
      */
     public String texture;
+
+    public int ordering;
 }

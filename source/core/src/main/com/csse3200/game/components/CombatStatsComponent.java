@@ -36,8 +36,8 @@ public class CombatStatsComponent extends Component {
    * @param attackMultiplier The attack multiplier of the entity.
    * @param isImmune         A flag indicating whether the entity is immune to attacks.
    */
-  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune) {
-    this.maxHealth = health;
+  public CombatStatsComponent(int health, int maxHealth, int baseAttack, int attackMultiplier, boolean isImmune) {
+    this.maxHealth = maxHealth;
     this.setHealth(health);
     this.setBaseAttack(baseAttack);
     this.setAttackMultiplier(attackMultiplier);
@@ -53,7 +53,7 @@ public class CombatStatsComponent extends Component {
    * @param isImmune         A flag indicating whether the entity is immune to attacks.
    * @param lives            Number of lives the player has remaining.
    */
-  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune, int lives) {
+  public CombatStatsComponent(int health, int maxHealth, int baseAttack, int attackMultiplier, boolean isImmune, int lives) {
     this.maxHealth = health;
     this.setHealth(health);
     this.setBaseAttack(baseAttack);

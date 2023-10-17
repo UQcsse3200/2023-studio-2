@@ -22,23 +22,13 @@ import java.util.Objects;
  */
 public class KeyboardCompanionInputComponent extends InputComponent implements InputProcessor {
 
-    AnimationRenderComponent animator;
-    private static final String CHANGEWEAPON = "changeWeapon";
     private final Vector2 walkDirection = Vector2.Zero.cpy();
     private int flagW = 0;
     private int flagA = 0;
     private int flagS = 0;
     private int flagD = 0;
-    private Entity Companion;
-    private CompanionInventoryComponent CompanionInventory;
     private int testing = 0;
 
-    static HashMap<Integer, Integer> keyFlags = new HashMap<>();
-    Vector2 lastMousePos = new Vector2(0, 0);
-
-    public Vector2 getLastMousePos() {
-        return this.lastMousePos.cpy();
-    }
 
     /**
      * Returns the value for testing.
@@ -77,9 +67,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         if (movFlagSum >= 3) {
             walkDirection.set(Vector2.Zero);
         }
-        int flagMul = 0;
         if (movFlagSum == 2) {
-            flagMul = 1;
             walkDirection.scl(new Vector2(0.707f, 0.707f));
         } else if (movFlagSum == 1) {
             if (flagW == 1) {
@@ -118,17 +106,7 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         // check if the companion is in down mode
         if (!Objects.equals(entity.getComponent(CompanionActions.class).getCompanionMode(), "COMPANION_MODE_DOWN")) {
             switch (keycode) {
-                case Keys.N -> {
-                    ServiceLocator.getEntityService().getCompanion().getEvents().trigger("attack");
-                    long currentTime = TimeUtils.millis();
-                    if (currentTime - lastNKeyPressTime >= COOLDOWN_TIME) {
-                        lastNKeyPressTime = currentTime;
-                    }else {logger.debug("powerup cooldown");}
-                    return true;
-                }
-
-
-                case Keys.B -> {
+                case Keys.C -> {
                     entity.getEvents().trigger("CompanionSwitchMode");
                     return true;
                 }

@@ -10,7 +10,6 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
-import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -19,9 +18,7 @@ import com.csse3200.game.utils.math.Vector2Utils;
 import java.util.HashMap;
 import java.util.Timer;
 
-
 /**
- * d
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
  */
@@ -363,10 +360,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             entity.getEvents().trigger("walk", walkDirection);
             entity.getEvents().trigger("dodged");
 
-            //  play the sound when player starts dodging
+            // play the sound when player starts dodging
             entity.getEvents().trigger("playSound", "dodge");
         }
-
 
         java.util.TimerTask stopDodge = new java.util.TimerTask() {
             @Override
@@ -380,7 +376,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         timer.schedule(stopDodge, DODGE_DURATION);
         return DODGE_DURATION;
     }
-
 
     /**
      * Triggers inventory events
@@ -427,7 +422,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     /**
      * Function to convert a mouse position to a game location
      *
-     * @param screenX x of mouse  location
+     * @param screenX x of mouse location
      * @param screenY y of mouse location
      * @return game position of mouse location
      */
@@ -438,7 +433,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
 
     /**
-     * returns a scaled vector the direction should be moving based on current key presses
+     * returns a scaled vector the direction should be moving based on current key
+     * presses
      *
      * @return direction play should move
      */

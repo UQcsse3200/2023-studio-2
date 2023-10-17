@@ -3,7 +3,6 @@ package com.csse3200.game.components.player;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.configs.WeaponConfigs;
 
 import java.util.*;
@@ -31,6 +30,7 @@ public class InventoryComponent extends Component {
         equippedWMap.put("ranged", new InventoryItem(WeaponType.RANGED_SLINGSHOT, 10, 10));
         equippedWMap.put("building", new InventoryItem(WeaponType.WOODHAMMER));
     }
+
     @Override
     public void update() {
         this.equippedWMap.get(getEquipped()).decCoolDown();
@@ -73,11 +73,13 @@ public class InventoryComponent extends Component {
      * Returns the current equipped weapons represented in an array
      **/
     public ArrayList<WeaponType> getEquippedWeapons() {
-        return equippedWMap.values().stream().map(InventoryItem::getItem).collect(Collectors.toCollection(ArrayList::new));
+        return equippedWMap.values().stream().map(InventoryItem::getItem)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
      * Returns a mapping of item and its respective slot
+     * 
      * @return LinkedHashMap - a hash map containing the slot and item
      */
     public Map<String, InventoryItem> getEquippedWMap() {
@@ -110,7 +112,8 @@ public class InventoryComponent extends Component {
     }
 
     /**
-     * Changes the amount of ammo in current weapon slot by change (decrease for negative values of ammoChange)
+     * Changes the amount of ammo in current weapon slot by change (decrease for
+     * negative values of ammoChange)
      *
      * @param ammoChange - amount to change ammo by
      */
@@ -175,11 +178,12 @@ public class InventoryComponent extends Component {
         };
         entity.getEvents().trigger("updateAmmo", getCurrentAmmo(),
                 getCurrentMaxAmmo(), getCurrentAmmoUse());
-        placeTimer.scheduleTask(placeEntity,2);
+        placeTimer.scheduleTask(placeEntity, 2);
     }
 
     /**
      * Return if the weapon is being reloaded
+     * 
      * @return True if the current equipped weapon is being reloaded
      */
     public boolean getReloading() {

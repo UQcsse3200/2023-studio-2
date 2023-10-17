@@ -39,6 +39,7 @@ public class CompanionActions extends Component {
     public final static String COMPANION_MODE_ATTACK = "COMPANION_MODE_ATTACK";
     public final static String COMPANION_MODE_NORMAL = "COMPANION_MODE_NORMAL";
     public final static String COMPANION_MODE_DEFENCE = "COMPANION_MODE_DEFENCE";
+    public final static String COMPANION_MODE_DOWN = "COMPANION_MODE_DOWN";
 
     public final static Vector2 COMPANION_ATTACK_MODE_SPEED = new Vector2(6f, 6f);
     public final static Vector2 COMPANION_NORMAL_MODE_SPEED = new Vector2(4f, 4f);
@@ -98,6 +99,31 @@ public class CompanionActions extends Component {
             entity.getComponent(CombatStatsComponent.class).setImmunity(true);
             entity.getEvents().trigger("companionModeChange","Attack");
         }
+    }
+
+    /**
+     * This function will handle everything when the companion goes down
+     */
+    public void handleCompanionDownMode() {
+        // Set the mode to be in down mode
+        setCompanionMode(COMPANION_MODE_DOWN);
+        // Send updated mode to the UI
+        entity.getEvents().trigger("companionModeChange","Down");
+        // ** SIDE NOTE ** add check_mode checks in the companion keyboard input to see if you're in down mode or not
+
+
+
+        // set follow speed to zero
+        entity.getComponent(FollowComponent.class).setFollowSpeed(0f);
+
+        //trigger death animation
+        entity.getEvents().trigger("companionDeath");
+
+        // ** SIDE NOTE ** Add cannot change modes to keyboard input if you're in down mode
+
+        // ** SIDE NOTE ** Add cannot use certain powerup types given the mode we are in
+
+        // ** SIDE NOTE ** Configure the revival of the companion
     }
 
 
@@ -161,6 +187,13 @@ public class CompanionActions extends Component {
         this.walkDirection = direction;
         moving = true;
     }
+
+    /**
+     * Called every single frame,
+     *
+     * Basically, if you are in attack mode, it finds the closest enemy, and if there is one, it'll move you towards them
+     * It will also create a meelee weapon event if you get very close
+     */
     private void handleAttackMode(){
         if (companionMode.equals(COMPANION_MODE_ATTACK)) {
             Vector2 targetPosition = handleAttack();
@@ -226,6 +259,11 @@ public class CompanionActions extends Component {
         invComp.setEquipped(slot);
         ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
     }
+
+    /**
+     * handleAttack returns the closest enemy position in Vector2 form
+     * @return - Vector2 of the closest enemies position
+     */
     private Vector2 handleAttack() {
         List<Entity> enemies = EnemyFactory.getEnemyList();
         if (enemies.isEmpty()) {

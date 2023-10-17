@@ -463,7 +463,7 @@ public class MapGameArea extends GameArea{
 
         HellmanConfig hellmanConfig = mapConfig.areaEntityConfig.getEntity(HellmanConfig.class);
         if (hellmanConfig != null) {
-            Entity hellman = NPCFactory.createHellman();
+            Entity hellman = NPCFactory.createHellman(hellmanConfig);
             spawnEntityAt(hellman, hellmanConfig.position, false, false);
         }
 

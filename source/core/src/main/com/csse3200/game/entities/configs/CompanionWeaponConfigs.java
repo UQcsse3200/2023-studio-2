@@ -1,6 +1,6 @@
 package com.csse3200.game.entities.configs;
 
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
+import com.csse3200.game.components.companionweapons.CompanionWeaponType;
 
 public class CompanionWeaponConfigs {
 

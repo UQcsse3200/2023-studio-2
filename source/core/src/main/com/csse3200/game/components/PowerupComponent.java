@@ -2,9 +2,9 @@ package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.components.Companion.CompanionActions;
-import com.csse3200.game.components.Companion.CompanionInventoryComponent;
-import com.csse3200.game.components.Companion.CompanionPowerupInventoryComponent;
+import com.csse3200.game.components.companion.CompanionActions;
+import com.csse3200.game.components.companion.CompanionInventoryComponent;
+import com.csse3200.game.components.companion.CompanionPowerupInventoryComponent;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.EnemyFactory;

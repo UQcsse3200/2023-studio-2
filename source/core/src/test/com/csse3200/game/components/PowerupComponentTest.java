@@ -1,21 +1,15 @@
 package com.csse3200.game.components;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Companion.CompanionActions;
+import com.csse3200.game.components.companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
-import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;

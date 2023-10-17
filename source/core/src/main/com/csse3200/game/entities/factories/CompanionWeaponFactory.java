@@ -1,18 +1,13 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponController;
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponTargetComponent;
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
-import com.csse3200.game.components.Component;
+import com.csse3200.game.components.companionweapons.CompanionWeaponController;
+import com.csse3200.game.components.companionweapons.CompanionWeaponTargetComponent;
+import com.csse3200.game.components.companionweapons.CompanionWeaponType;
 import com.csse3200.game.components.ParticleComponent;
-import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionWeaponConfig;
 import com.csse3200.game.entities.configs.CompanionWeaponConfigs;
-import com.csse3200.game.physics.components.ColliderComponent;
-import com.csse3200.game.physics.components.HitboxComponent;
-import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
 /**

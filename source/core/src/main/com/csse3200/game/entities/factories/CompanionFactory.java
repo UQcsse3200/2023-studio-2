@@ -76,8 +76,6 @@ public class CompanionFactory {
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
                         .addComponent(animator)
-
-                        .addComponent(new HealthBarComponent(true))
                         .addComponent(new CompanionWeaponComponent())
                         /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay(config))

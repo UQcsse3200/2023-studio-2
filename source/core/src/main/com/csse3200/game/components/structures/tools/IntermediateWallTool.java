@@ -37,7 +37,7 @@ public class IntermediateWallTool extends ReplacementTool {
      */
     @Override
     public PlaceableEntity createStructure(Entity player) {
-        return BuildablesFactory.createWall(WallType.INTERMEDIATE, player);
+        return BuildablesFactory.createWall(WallType.INTERMEDIATE);
     }
 
     /**

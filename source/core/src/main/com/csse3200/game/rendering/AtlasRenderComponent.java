@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.services.ServiceLocator;
 
 public class AtlasRenderComponent extends RenderComponent {
-    private TextureAtlas atlas;
+    protected TextureAtlas atlas;
     private TextureAtlas.AtlasRegion currentRegion;
 
     public AtlasRenderComponent(String atlasPath, String region) {
@@ -28,6 +28,7 @@ public class AtlasRenderComponent extends RenderComponent {
     public void updateTextureAtlas(TextureAtlas atlas, String region) {
         this.atlas = atlas;
 
+
         currentRegion = atlas.findRegion(region);
     }
 
@@ -43,7 +44,13 @@ public class AtlasRenderComponent extends RenderComponent {
      * @param scaleEntity - whether the scale should be updated.
      */
     public void setRegion(String region, boolean scaleEntity) {
-        this.currentRegion = atlas.findRegion(region);
+        var newRegion = atlas.findRegion(region);
+
+        if (newRegion == null) {
+            return;
+        }
+
+        this.currentRegion = newRegion;
 
         if (scaleEntity) {
             scaleEntity();

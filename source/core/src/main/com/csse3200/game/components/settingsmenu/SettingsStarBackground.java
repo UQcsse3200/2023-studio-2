@@ -27,7 +27,7 @@ public class SettingsStarBackground extends StarBackground {
     /**
      * The number of star sprites in the background.
      */
-    private final int numOfSprites = 30;
+    private final int numOfSprites = 45;
 
     /**
      * Array to store the time passed for each sprite's animation.

@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ControlGameArea;
 import com.csse3200.game.areas.GameArea;
-
+import static com.badlogic.gdx.Gdx.app;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.controls.ControlsScreenActions;
@@ -80,6 +80,7 @@ public class ControlsScreen extends ScreenAdapter {
             "images/structures/stone_wall.png",
             "images/structures/TurretOne.png",
             "images/structures/TurretTwo.png",
+            "images/explosives/landmine.png",
             "images/structures/heal_icon.png"
     };
 
@@ -128,8 +129,13 @@ public class ControlsScreen extends ScreenAdapter {
                 entity.getEvents().trigger("exit");
             }
         });
+        entity.getEvents().addListener("exit", this::onExit);
         stage.addActor(exitBtn);
 
+    }
+
+    public void onExit() {
+        game.setScreen(GdxGame.ScreenType.SETTINGS);
     }
 //    private void showTutorialDialogueBox() {
 //        // Create and display the TitleBox
@@ -259,7 +265,6 @@ public class ControlsScreen extends ScreenAdapter {
         ui.addComponent(new ControlsScreenDisplay(game, Isgame));
         System.out.println(game);
         ui.addComponent(new InputDecorator(stage, 10))
-                .addComponent(new ControlsScreenActions(game, (int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
                 .addComponent(new MainGamePauseDisplay(this.game.getScreenType()))

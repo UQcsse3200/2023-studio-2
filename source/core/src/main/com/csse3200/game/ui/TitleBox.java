@@ -35,8 +35,8 @@ public class TitleBox extends Dialog {
      * @param skin             The skin to use for styling the UI elements.
      * @param windowStyleName  The name of the window style to use.
      */
-    public TitleBox(GdxGame game, String[] title, String[] description, Skin skin, String windowStyleName) {
-        super("", skin, windowStyleName);
+    public TitleBox(GdxGame game, String[] title, String[] description, Skin skin, String[] windowStyleName) {
+        super("", skin, windowStyleName[0]);
         this.game = game;
         setMovable(false);
         setResizable(true);
@@ -70,10 +70,12 @@ public class TitleBox extends Dialog {
                         String[] nextMessages = description;
                         String[] nextTitles = title;
 
+
                         nextIndex++;
                         if (nextIndex < nextTitles.length) {
                             getTitleLabel().setText(nextTitles[nextIndex]);
                             descriptionLabel.setText(nextMessages[nextIndex]);
+                            setStyle(skin.get(windowStyleName[nextIndex], Window.WindowStyle.class));
                         } else {
                             remove();
                         }

@@ -48,12 +48,8 @@ public class SpaceGameArea extends GameArea {
     private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
 
      */
-
-
     private final TerrainFactory terrainFactory;
-
     private final ArrayList<Entity> TargeTables;
-
 
 
     /**
@@ -74,7 +70,6 @@ public class SpaceGameArea extends GameArea {
     public void create() {
         //loadAssets();
         displayUI();
-
         spawnTerrain();
         //Who removed spawn ship and spawn goal on creation?!@!!!!!
         //spawn Goal has to be called first before spawn ship, to not crash calc distance
@@ -93,14 +88,12 @@ public class SpaceGameArea extends GameArea {
         UserSettings.Settings settings = UserSettings.get();
         //Legacy
         //Music music = ServiceLocator.getResourceService().getAsset(BackgroundMusic, Music.class);
-
         //This music asset is loaded in SpaceMapScreen
         Music music = ServiceLocator.getResourceService().getAsset("sounds/BGM_03_mp3.wav", Music.class);
         music.setLooping(true);
         music.setVolume(settings.musicVolume);
         music.play();
     }
-
 
     /**
      * Method for creating boundaries along the x-axis

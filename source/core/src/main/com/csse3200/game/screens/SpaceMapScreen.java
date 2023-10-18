@@ -50,6 +50,14 @@ public class SpaceMapScreen extends ScreenAdapter {
     private Label distanceLabel;
     private DistanceDisplay distanceDisplay;
     private MiniGameAssetsConfig assets;
+    private float distance;
+
+    //Camera variables
+    private float maxX;
+    private float maxY;
+    private float cameraX;
+    private float cameraY;
+
 
     /**
      * Method for creating the space map screen for the obstacle minigame
@@ -87,7 +95,7 @@ public class SpaceMapScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().update();
         followShip();
         // Calculate the distance between the ship and the goal
-        float distance = SpaceGameArea.calculateDistance(ship, goal);
+        distance = SpaceGameArea.calculateDistance(ship, goal);
         distanceDisplay.updateDistanceUI(distance);
         exitonc(distance);
         renderer.render();
@@ -202,10 +210,10 @@ public class SpaceMapScreen extends ScreenAdapter {
      * sure that the camera doesn't go beyond the boundaries of the map
      */
     private void followShip() {
-        float maxX = 59 * 1f - renderer.getCamera().getCamera().viewportWidth * 0.5f;
-        float maxY = 29 * 1f - renderer.getCamera().getCamera().viewportHeight * 0.5f;
-        float cameraX = Math.min(maxX, Math.max(renderer.getCamera().getCamera().viewportWidth * 0.5f, ship.getPosition().x));
-        float cameraY = Math.min(maxY, Math.max(renderer.getCamera().getCamera().viewportHeight * 0.5f, ship.getPosition().y));
+        maxX = 59 * 1f - renderer.getCamera().getCamera().viewportWidth * 0.5f;
+        maxY = 29 * 1f - renderer.getCamera().getCamera().viewportHeight * 0.5f;
+        cameraX = Math.min(maxX, Math.max(renderer.getCamera().getCamera().viewportWidth * 0.5f, ship.getPosition().x));
+        cameraY = Math.min(maxY, Math.max(renderer.getCamera().getCamera().viewportHeight * 0.5f, ship.getPosition().y));
         renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
     }
 }

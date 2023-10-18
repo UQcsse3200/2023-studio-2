@@ -31,8 +31,9 @@ public class PerformanceDisplay extends UIComponent {
       profileLabel.setText(getStats());
 
       int screenHeight = stage.getViewport().getScreenHeight();
-      float offsetX = 5f;
-      float offsetY = 180f;
+      //Ui blocking the debugger, hence the numbers here
+      float offsetX = 200f;
+      float offsetY = 500f;
       profileLabel.setPosition(offsetX, screenHeight - offsetY);
     } else {
       profileLabel.setVisible(false);

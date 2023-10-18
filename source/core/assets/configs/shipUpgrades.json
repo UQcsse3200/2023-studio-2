@@ -1,10 +1,10 @@
 {
   "healthUpgrade": {
-    "spritePath": "images/powerups/health_potion.png",
+    "spritePath": "images/powerups/health_boost.png",
     "type": "HEALTH_UPGRADE"
   },
   "fuelUpgrade": {
-    "spritePath": "images/powerups/speed_potion.png",
+    "spritePath": "images/powerups/speed_boost.png",
     "type": "FUEL_UPGRADE"
   }
 }

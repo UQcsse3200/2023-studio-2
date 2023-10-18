@@ -8,15 +8,15 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class PlatformFactory {
     public static Entity createPlatform(){
-        Entity Platform = new Entity()
+        Entity platform = new Entity()
                 .addComponent(new TextureRenderComponent("images/platform.png"))
                 .addComponent(new PhysicsComponent());
-        Body platformBody = Platform.getComponent(PhysicsComponent.class).getBody();
+        Body platformBody = platform.getComponent(PhysicsComponent.class).getBody();
         platformBody.setType(BodyDef.BodyType.StaticBody); // Make the platform static
         platformBody.setFixedRotation(true); // Prevent platform from rotating
-        platformBody.setUserData(Platform);
-        Platform.getComponent(TextureRenderComponent.class).scaleEntity();
-        Platform.setScale(2f,0.6f);
-        return Platform;
+        platformBody.setUserData(platform);
+        platform.getComponent(TextureRenderComponent.class).scaleEntity();
+        platform.setScale(2f,0.6f);
+        return platform;
     }
 }

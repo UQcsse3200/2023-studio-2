@@ -228,8 +228,28 @@
       "background": "treebox",
       "titleFont": "thick_white"
     },
-    "dialogue": {
-      "background": "dialogue",
+    "dialogue_1": {
+      "background": "dialogue_1",
+      "titleFont": "thick_white"
+    },
+    "dialogue_2": {
+      "background": "dialogue_2",
+      "titleFont": "thick_white"
+    },
+    "dialogue_3": {
+      "background": "dialogue_3",
+      "titleFont": "thick_white"
+    },
+    "dialogue_4": {
+      "background": "dialogue_4",
+      "titleFont": "thick_white"
+    },
+    "dialogue_5": {
+      "background": "dialogue_5",
+      "titleFont": "thick_white"
+    },
+    "dialogue_6": {
+      "background": "dialogue_6",
       "titleFont": "thick_white"
     }
   }

@@ -217,13 +217,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (playerInventory.getReloading() || cooldown > 0) {
             return false;
         }
+        InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+        WeaponType weapon = invComp.getEquippedType();
 
         switch (playerInventory.getEquipped()) {
             // melee/ranged
             case "melee", "ranged":
                 if (button == Input.Buttons.LEFT) {
-                    InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
-                    WeaponType weapon = invComp.getEquippedType();
                     entity.getEvents().trigger("weaponAttack", weapon, clickPos);
                 }
                 break;
@@ -234,6 +234,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 } else if (button == Input.Buttons.RIGHT) {
                     entity.getEvents().trigger("remove", screenX, screenY);
                 }
+                entity.getEvents().trigger("weaponPlace", weapon, clickPos);
                 break;
 
             default:

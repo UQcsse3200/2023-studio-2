@@ -9,6 +9,7 @@ import com.csse3200.game.components.*;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
@@ -114,7 +115,7 @@ public class NPCFactory {
     animator.addAnimation("Astro_UpRight", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("Astro_StandDown", 0.2f);
 
-    Entity Astro =
+    Entity astro =
             new Entity()
                     .addComponent(animator)
                     .addComponent(new AstroAnimationController())
@@ -124,56 +125,37 @@ public class NPCFactory {
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new FollowComponent(ServiceLocator.getEntityService().getPlayer(),0f));
-//                    .addComponent(aiComponent);
-    Astro.addComponent(new SaveableComponent<>(p -> {
+    astro.addComponent(new SaveableComponent<>(p -> {
       astroConfig.position = p.getGridPosition();
       return astroConfig;
     }, AstroConfig.class));
 
-    Astro.getComponent(ColliderComponent.class).setDensity(1.5f);
-    Astro.addComponent(new InteractableComponent(entity -> {
-      Astro.getComponent(FollowComponent.class).setEntity(Astro);
-      Astro.getComponent(FollowComponent.class).setFollowSpeed(2f);
+    astro.getComponent(ColliderComponent.class).setDensity(1.5f);
+    astro.addComponent(new InteractableComponent(entity -> {
+      astro.getComponent(FollowComponent.class).setEntity(astro);
+      astro.getComponent(FollowComponent.class).setFollowSpeed(2f);
     },3f));
     animator.startAnimation("Astro_StandDown");
-    return Astro;
+    return astro;
   }
 
   public static Entity createTutnpc(TutnpcConfig tutnpcConfig) {
 
-//    AITaskComponent aiComponent = new AITaskComponent();
-//    aiComponent.addTask(new WanderTask(new Vector2(1.5f, 1.5f), 1f));
-
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset(tutnpcConfig.spritePath, TextureAtlas.class));
-    animator.addAnimation("row-2-column-1", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-1", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-1", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-2", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-2", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-2", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-3", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-3", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-3", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-4", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-4", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-4", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-5", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-5", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-5", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-6", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-6", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-6", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-7", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-7", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-7", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-8", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-8", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-8", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_Up", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_UpLeft", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_Left", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_DownLeft", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_Down", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_DownRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_Right", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_UpRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_StandDown", 0.2f);
 
 
-    Entity Tutnpc =
+    Entity tutnpc =
             new Entity()
                     .addComponent(animator)
                     .addComponent(new TutnpcAnimationController())
@@ -182,18 +164,16 @@ public class NPCFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new PhysicsMovementComponent());
-//                    .addComponent(aiComponent);
 
-    Tutnpc.getComponent(ColliderComponent.class).setDensity(1.5f);
-    Tutnpc.scaleHeight(0.7f);
+    tutnpc.getComponent(ColliderComponent.class).setDensity(1.5f);
+    tutnpc.scaleHeight(0.7f);
     String[] storytext = {"I am your Tutorial Guide", "I am here to teach you how to play!"};
     String[] titletext = {"", ""};
-    Tutnpc.addComponent(new InteractableComponent(entity -> {
-
-      Tutnpc.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+    tutnpc.addComponent(new InteractableComponent(entity -> {
+      tutnpc.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
     }, 3f));
-    animator.startAnimation("row-2-column-1");
-    return Tutnpc;
+    animator.startAnimation("Tut_StandDown");
+    return tutnpc;
   }
 
   public static Entity createHellman(HellmanConfig hellmanConfig) {
@@ -284,7 +264,12 @@ public class NPCFactory {
       String[] storytext= {"Hello, I've been stuck here for weeks","Can I please come with you?"};
       String[] titletext= {"",""};
       astronaut.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
-    },10f));
+      // Since Dialogue Box does not show up on screen, cannot 'exit' dialogue box therefore
+      // the 'resumeGame' function is never called. This code is to ensure gameplay can continue
+      for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+        mainGame.getEvents().trigger("resumeGame");
+      }
+    },1f));
 
     astronaut.scaleHeight(1f);
     return astronaut;
@@ -297,31 +282,31 @@ public class NPCFactory {
     animator.addAnimation("jail_close", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("jail_open", 0.2f, Animation.PlayMode.LOOP);
 
-    Entity Jail =
+    Entity jail =
             new Entity()
                     .addComponent(animator)
                     .addComponent(new PhysicsComponent())
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsMovementComponent());
-    Jail.addComponent(new SaveableComponent<>(p -> {
+    jail.addComponent(new SaveableComponent<>(p -> {
       jailConfig.position = p.getGridPosition();
       return jailConfig;
     }, JailConfig.class));
 
-    Jail.addComponent(new InteractableComponent(entity -> {
+    jail.addComponent(new InteractableComponent(entity -> {
       animator.startAnimation("jail_open");
         String[] storytext= {"{COLOR=BLACK}NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!"
                 ,"{COLOR=BLACK}\n{SLOW}NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected."
                 ,"{COLOR=BLACK}{SLOW}Emily: We can handle it. \nLead the way!"};
         String[] titletext= {"","",""};
-        Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+        jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
 
       },1f));
 
-    Jail.scaleHeight(1.7f);
+    jail.scaleHeight(1.7f);
     animator.startAnimation("jail_close");
 
-    return Jail;
+    return jail;
   }
 
   /**
@@ -355,6 +340,4 @@ public class NPCFactory {
   public NPCFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
-
-
 }

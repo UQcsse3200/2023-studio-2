@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.structures.ToolConfig;
@@ -66,6 +67,9 @@ public class UpgradeDisplay extends Window {
         Texture background =
                 ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("pauseGame");
+        }
         return new UpgradeDisplay(background);
     }
 
@@ -179,12 +183,12 @@ public class UpgradeDisplay extends Window {
 
         buildRoot = new UpgradeNode(woodhammerConfig);
         buildRoot.addChild(dirtNode);
-        buildRoot.addChild(landmineNode);
+        buildRoot.addChild(turretNode);
         dirtNode.addChild(gateNode);
         gateNode.addChild(stoneNode);
         turretNode.addChild(advancedTurretNode);
+        turretNode.addChild(landmineNode);
         landmineNode.addChild(barrelNode);
-        landmineNode.addChild(turretNode);
         trees.add(buildRoot);
     }
 
@@ -524,6 +528,7 @@ public class UpgradeDisplay extends Window {
             }
             createTooltipLabel(table, "Cooldown", String.valueOf(config.attackCooldown));
             createTooltipLabel(table, "Cost", String.valueOf(node.getNodeCost()));
+            createTooltipLabel(table, "Ammo", String.valueOf(config.ammoUse));
         }
     }
 
@@ -717,6 +722,9 @@ public class UpgradeDisplay extends Window {
     public boolean remove() {
         //Stop overriding input when exiting
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("resumeGame");
+        }
         return super.remove();
     }
 

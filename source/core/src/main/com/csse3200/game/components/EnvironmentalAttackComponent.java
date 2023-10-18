@@ -64,8 +64,6 @@ public class EnvironmentalAttackComponent extends Component {
         if (targetState.getFrozenLevel() < 100) {
             targetState.setFrozenLevel(targetState.getFrozenLevel() + 1);
         }
-        // else {
-        //}
     }
 
     /**

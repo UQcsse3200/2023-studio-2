@@ -57,7 +57,7 @@ public class ControlsScreenDisplayTest {
     }
 
     private ControlsScreenDisplay createControlsScreenDisplay() {
-        return new ControlsScreenDisplay(game, true);
+        return new ControlsScreenDisplay(game, game.getScreenType());
     }
 
     private void verifyAssetLoaded(String assetPath) {

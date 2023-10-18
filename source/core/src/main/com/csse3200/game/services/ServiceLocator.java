@@ -28,7 +28,9 @@ public class ServiceLocator {
   private static EntityPlacementService entityPlacementService;
   private static GameStateObserver gameStateObserverService;
   private static GameArea gameArea;
-  public static GameArea getGameArea(){return gameArea;}
+  public static GameArea getGameArea() {
+    return gameArea;
+  }
 
   public static void registerGameArea(GameArea area){
     gameArea =area;

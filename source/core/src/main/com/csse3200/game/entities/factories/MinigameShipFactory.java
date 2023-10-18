@@ -68,7 +68,6 @@ public class MinigameShipFactory {
         PhysicsUtils.setScaledCollider(ship, 0.6f, 0.3f);
         ship.getComponent(ColliderComponent.class).setDensity(1.5f);
         ship.getComponent(ShipStatDisplay.class).setShipActions(ship.getComponent(ShipActions.class));
-        //ship.getComponent(TextureRenderComponent.class).scaleEntity();
 
         //Edited by Foref, changes physics to reflect space environment
         //With fixed rotation off, ship will spin without additional customization of shipactions

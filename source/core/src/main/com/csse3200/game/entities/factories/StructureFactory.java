@@ -64,7 +64,6 @@ public class StructureFactory {
         return new Extractor(config);
     }
 
-    //HEAD
     public static Entity createExtractorRepair() {
         Entity extractorRepair = new Entity()
                 //.addComponent(new TextureRenderComponent("images/elixir_collector.png")); //This image removed
@@ -162,7 +161,6 @@ public class StructureFactory {
         return extractorBang;
     }
 
-    //TODO: REMOVE - LEGACY
     /**
      * Creates an extractor entity
      *
@@ -228,7 +226,6 @@ public class StructureFactory {
     }
 
 
-    //TODO: REMOVE - LEGACY
     /**
      * Creates a ship entity that uses the default package
      */
@@ -245,8 +242,8 @@ public class StructureFactory {
                 new Entity()
                         .addComponent(new TextureRenderComponent(config.spritePath))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
                         .addComponent(new InteractableComponent(entity -> {
                             if (checkWinCondition(requirements)) {
                                 game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);

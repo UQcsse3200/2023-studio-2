@@ -122,11 +122,7 @@ public class CompanionInventoryComponent extends Component {
             if (powerupType != null) {
                 int currentCount = powerupCounts.get(powerupType);
                 powerupCounts.put(powerupType, currentCount + 1);
-                //System.out.println("Collecting powerup: " + powerupType + ", Count: " + powerupCounts.get(powerupType));
             }
-            //System.out.println("Current powerupCounts: " + powerupCounts);
-            //System.out.println("Collecting powerup: " + powerupType );
-
             logger.debug("item added");
         }
     }

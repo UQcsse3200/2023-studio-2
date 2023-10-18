@@ -217,4 +217,70 @@ public class CompanionWeaponTargetComponent extends Component {
             }
         }
         return inCombat ? enemies.get(currentTargetIndex).getPosition() : trackPrev;}
+
+
+
+
+    private Vector2 UpgradedDeathPotion(){
+        for (var otherEntity :  EnemyFactory.getEnemyList()) {
+            if (otherEntity == entity) {
+                continue;
+            }
+
+            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
+
+            if (distance <= 1.5f) {
+                otherEntity.getEvents().trigger("chainExplode", distance/1.5f * 0.4f);
+            }
+        }
+
+
+
+        for (Entity otherEntity : EnemyFactory.getEnemyList()) {
+            if (otherEntity == entity ) {
+                continue;
+            }
+
+            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
+            if (distance <= 1.5f) {
+                otherEntity.getEvents().trigger("POTION", distance/1.5f * 0.4f);
+            }
+        }
+        for (var otherEntity :  EnemyFactory.getEnemyList()) {
+            var combatStatsComponent = otherEntity.getComponent(CombatStatsComponent.class);
+
+
+
+            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
+
+            if (distance <= 1.5f) {
+                combatStatsComponent.addHealth((int) (( 1.5f - distance)
+                        / 1.5f * - 25.0f ));
+            }
+        }
+
+        List<Entity> enemies = EnemyFactory.getEnemyList();
+        if (!inCombat) {
+            if (!enemies.isEmpty()) {
+                Entity enemy = getNextLiveEnemy(enemies);
+                if (enemy != null) {
+                    inCombat = true;
+                    Vector2 pos = enemy.getPosition();
+                    Timer.schedule(new Timer.Task() {
+
+                        public void run() {
+                            if (enemies.contains(enemy)) {
+                                enemy.getComponent(CombatStatsComponent.class).setHealth(0);
+                                inCombat = false;
+                                enemies.remove(enemy);
+                            }
+                        }
+                    }, 2f);
+                    trackPrev = pos;
+                    return pos;
+                }
+            }
+        }
+        return inCombat ? enemies.get(currentTargetIndex).getPosition() : trackPrev;
+    }
 }

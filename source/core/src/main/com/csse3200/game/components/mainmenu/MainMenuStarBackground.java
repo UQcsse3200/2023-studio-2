@@ -26,7 +26,7 @@ public class MainMenuStarBackground extends StarBackground {
     /**
      * The number of star sprites in the background.
      */
-    private final int numOfSprites = 15;
+    private final int numOfSprites = 30;
 
     /**
      * Array to store the time passed for each sprite's animation.
@@ -62,7 +62,7 @@ public class MainMenuStarBackground extends StarBackground {
             int y = MathUtils.random((Gdx.graphics.getHeight() / 3), (int) (0.85 * Gdx.graphics.getHeight()));
 
             while ((x >= (140 / 1280f) * Gdx.graphics.getWidth() && x <= (690 / 1280f) * Gdx.graphics.getWidth() && y >= (500 / 720f) * Gdx.graphics.getHeight() && y <= (600 / 720f) * Gdx.graphics.getHeight()) ||
-                    (x >= (400 / 1280f) * Gdx.graphics.getWidth() && x <= (500 / 1280f) * Gdx.graphics.getWidth() && y >= (340 / 720f) * Gdx.graphics.getHeight() && y <= (250 / 720f) * Gdx.graphics.getHeight()) ||
+                    (x >= (400 / 1280f) * Gdx.graphics.getWidth() && x <= (500 / 1280f) * Gdx.graphics.getWidth() && y >= (250 / 720f) * Gdx.graphics.getHeight() && y <= (350 / 720f) * Gdx.graphics.getHeight()) ||
                     (x >= (950 / 1280f) * Gdx.graphics.getWidth() && x <= (1130 / 1280f) * Gdx.graphics.getWidth() && y >= (150 / 720f) * Gdx.graphics.getHeight() && y <= (550 / 720f) * Gdx.graphics.getHeight())) {
                 x = MathUtils.random(0, Gdx.graphics.getWidth());
                 y = MathUtils.random((Gdx.graphics.getHeight() / 3), (int) (0.85 * Gdx.graphics.getHeight()));
@@ -101,5 +101,9 @@ public class MainMenuStarBackground extends StarBackground {
             TextureRegion currentFrame = animations[i].getKeyFrame(stateTimes[i]);
             batch.draw(currentFrame, spritePositions[i].x, spritePositions[i].y);
         }
+    }
+
+    public int getNumSprites() {
+        return this.numOfSprites;
     }
 }

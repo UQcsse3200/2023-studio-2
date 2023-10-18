@@ -286,13 +286,20 @@ public class KeyboardPlayerInputComponent extends InputComponent {
      * and also trigger the walking sound
      */
     void triggerWalkEvent() {
+
         Entity companion = ServiceLocator.getEntityService().getCompanion();
         Vector2 lastDir = this.walkDirection.cpy();
         this.walkDirection = keysToVector().scl(WALK_SPEED);
         if (this.getTesting() == 0) {
             Directions dir = keysToDirection();
             if (dir == Directions.NONE) {
+
                 entity.getEvents().trigger(WALKSTOP);
+                if (companion != null) {
+                    companion.getEvents().trigger(WALKSTOP);
+                    companion.getEvents().trigger("walkStopAnimation", lastDir);
+                }
+
                 entity.getEvents().trigger("walkStopAnimation", lastDir);
 
                 entity.getEvents().trigger("stopSound", "footstep");
@@ -340,7 +347,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                     if (!companion.getComponent(CombatStatsComponent.class).isDead()){
                         companion.getEvents().trigger("walkDownRight");}
                 }
-                default -> entity.getEvents().trigger(WALKSTOP);
+                default -> {
+                    entity.getEvents().trigger(WALKSTOP);
+                    if (companion != null) {
+                        companion.getEvents().trigger(WALKSTOP);
+                    }
+                }
+
             }
             if (entity != null) {
                 entity.getEvents().trigger("walk", walkDirection);

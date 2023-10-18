@@ -103,7 +103,9 @@ public class MainMenuActions extends Component {
 
   private void onTutorial(){
     logger.info("Loading Tutorial");
-    TitleBox titleBox = new TitleBox(game, "Tutorial","Hey! This is the tutorial of the game.",skin,"default");
+    String[] title = {"Tutorial"};
+    String[] description = {"Hey! This is the tutorial of the game."};
+    TitleBox titleBox = new TitleBox(game, title,description,skin,"default");
     titleBox.showDialog(stage);
     game.setScreen(GdxGame.ScreenType.TUTORIAL_SCREEN);
   }

@@ -21,6 +21,9 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 public class TitleBox extends Dialog {
 
     private GdxGame game;
+    private int nextIndex = 0;
+    private TypingLabel descriptionLabel;
+
 
 
     /**
@@ -32,8 +35,8 @@ public class TitleBox extends Dialog {
      * @param skin             The skin to use for styling the UI elements.
      * @param windowStyleName  The name of the window style to use.
      */
-    public TitleBox(GdxGame game, String title, String description, Skin skin, String windowStyleName) {
-        super(title, skin, windowStyleName);
+    public TitleBox(GdxGame game, String[] title, String[] description, Skin skin, String windowStyleName) {
+        super("", skin, windowStyleName);
         this.game = game;
         setMovable(false);
         setResizable(true);
@@ -42,16 +45,16 @@ public class TitleBox extends Dialog {
 
 
         Label titleLabel = getTitleLabel();
-        titleLabel.setText(title);
+        titleLabel.setText(title[0]);
         titleLabel.setAlignment(Align.center);
         titleLabel.setFontScale(0.2f);
         titleLabel.setColor(Color.BLACK);
 
-        TypingLabel descriptionLabel = new TypingLabel("", skin);
+        descriptionLabel = new TypingLabel("", skin);
 
 
         // Initialize TypingLabel with your description
-        descriptionLabel = new TypingLabel(description, skin);
+        descriptionLabel = new TypingLabel(description[0], skin);
         descriptionLabel.setAlignment(Align.center);
         descriptionLabel.setWrap(true);
         descriptionLabel.setColor(Color.BLACK);
@@ -60,14 +63,25 @@ public class TitleBox extends Dialog {
         button(okButton, true);
 
         Entity entity = new Entity();
-        entity.getEvents().addListener("ok", this::onOK);
         okButton.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
+                        String[] nextMessages = description;
+                        String[] nextTitles = title;
+
+                        nextIndex++;
+                        if (nextIndex < nextTitles.length) {
+                            getTitleLabel().setText(nextTitles[nextIndex]);
+                            descriptionLabel.setText(nextMessages[nextIndex]);
+                        } else {
+                            remove();
+                        }
+
                         entity.getEvents().trigger("ok");
                     }
                 }
+
         );
 
         Table buttonTable = new Table();

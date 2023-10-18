@@ -2,6 +2,7 @@
   "redGhost": {
     "name": "redGhost",
     "health": 50,
+    "maxHealth": 50,
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
@@ -18,6 +19,7 @@
   "chain": {
     "name": "chain",
     "health": 50,
+    "maxHealth": 50,
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
@@ -34,6 +36,7 @@
   "roboMan": {
     "name": "roboMan",
     "health": 50,
+    "maxHealth": 50,
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "DTE",
@@ -50,6 +53,7 @@
   "necromancer": {
     "name": "necromancer",
     "health": 50,
+    "maxHealth": 50,
     "baseAttack": 10,
     "speed": 5,
     "behaviour": "PTE",
@@ -66,6 +70,7 @@
   "Knight": {
     "name": "Knight",
     "health": 100,
+    "maxHealth": 100,
     "baseAttack": 25,
     "speed": 8,
     "behaviour": "PTE",
@@ -84,6 +89,7 @@
   "rangeBossPTE": {
     "name": "rangeBossPTE",
     "health": 100,
+    "maxHealth": 100,
     "baseAttack": 25,
     "speed": 8,
     "behaviour": "PTE",

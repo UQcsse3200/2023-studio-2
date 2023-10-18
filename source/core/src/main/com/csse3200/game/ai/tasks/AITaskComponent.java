@@ -36,8 +36,9 @@ public class AITaskComponent extends Component implements TaskRunner {
   }
 
   /**
-   * On update, run the current highest priority task. If it's a different one, stop the old one and
-   * start the new one. If the highest priority task has negative priority, no task will be run.
+   * Evaluates and runs the highest priority task each frame. If a new task with a higher priority
+   * becomes available, the current task will be stopped, and the new task will begin.
+   * Tasks with negative priorities are not executed.
    */
   @Override
   public void update() {
@@ -52,6 +53,10 @@ public class AITaskComponent extends Component implements TaskRunner {
     currentTask.update();
   }
 
+  /**
+   * Cleanup method which ensures that the current task (if any) is properly terminated when the
+   * component is disposed of.
+   */
   @Override
   public void dispose() {
     if (currentTask != null) {
@@ -59,6 +64,11 @@ public class AITaskComponent extends Component implements TaskRunner {
     }
   }
 
+  /**
+   * Retrieves the task with the highest priority from the list of tasks.
+   *
+   * @return The highest priority task, or null if there are no tasks or all have negative priorities.
+   */
   private PriorityTask getHighestPriorityTask() {
     try {
       return Collections.max(priorityTasks, Comparator.comparingInt(PriorityTask::getPriority));
@@ -67,6 +77,11 @@ public class AITaskComponent extends Component implements TaskRunner {
     }
   }
 
+  /**
+   * Stops the current task and starts the specified new task as the current task.
+   *
+   * @param desiredTask The task to be started as the new current task.
+   */
   private void changeTask(PriorityTask desiredTask) {
     logger.debug("{} Changing to task {}", this, desiredTask);
     if (currentTask != null) {

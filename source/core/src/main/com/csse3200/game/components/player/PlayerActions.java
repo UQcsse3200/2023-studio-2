@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.EnvironmentStatsComponent;
 import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.structures.tools.PlacementValidity;
 import com.csse3200.game.components.structures.tools.ToolResponse;
@@ -47,19 +48,23 @@ public class PlayerActions extends Component {
     @Override
     public void update() {
         // Set the condition to always true for now
-        if (MapGameArea.isFreezing()) {
-            if(freezeFactor > 0.25f) {
-                freezeFactor -= 0.001f;
-            } else {
-                freezeFactor = 0.25f;
-            }
-        } else {
-            if(freezeFactor < 1.0f) {
-                freezeFactor += 0.02f;
-            } else {
-                freezeFactor = 1.0f;
-            }
+//        if (MapGameArea.isFreezing()) {
+//            if(freezeFactor > 0.5f) {
+//                freezeFactor -= 0.001f;
+//            } else {
+//                freezeFactor = 0.5f;
+//            }
+//        } else {
+//            if(freezeFactor < 1.0f) {
+//                freezeFactor += 0.02f;
+//            } else {
+//                freezeFactor = 1.0f;
+//            }
+//        }
+        if (entity.getComponent(EnvironmentStatsComponent.class) != null) {
+            freezeFactor = 1.0f - (float) entity.getComponent(EnvironmentStatsComponent.class).getFrozenLevel() / 100;
         }
+
         if (moving) {
             updateSpeed();
         }

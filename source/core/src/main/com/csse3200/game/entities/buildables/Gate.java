@@ -16,6 +16,7 @@ import com.csse3200.game.entities.configs.GateConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -37,6 +38,7 @@ public class Gate extends PlaceableEntity {
         addComponent(new ProximityActivationComponent(1.5f, player, this::openGate, this::closeGate));
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
+        addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
         addComponent(new CombatStatsComponent(config.health, config.maxHealth, 0,0,false));
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(closedAtlas,JoinLayer.WALLS, shapes));

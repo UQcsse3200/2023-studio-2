@@ -26,12 +26,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
 class ExplosiveComponentTest {
-    @Mock
-    ResourceService resourceService;
-    @Mock
-    EntityPlacementService entityPlacementService;
-    @Mock
-    EntityService entityService;
 
     @Test
     void create() {
@@ -48,15 +42,16 @@ class ExplosiveComponentTest {
         verify(events, times(1)).addListener(eq("chainExplode"), any(EventListener1.class));
     }
 
-    void setupServices() {
+    @Test
+    void testExploded() {
+        var resourceService = mock(ResourceService.class);
+        var entityPlacementService = mock(EntityPlacementService.class);
+        var entityService = mock(EntityService.class);
+
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerEntityPlacementService(entityPlacementService);
         ServiceLocator.registerEntityService(entityService);
-    }
 
-    @Test
-    void testExploded() {
-        setupServices();
 
         var config = new ExplosiveConfig();
         config.baseAttack = 10;
@@ -82,7 +77,13 @@ class ExplosiveComponentTest {
 
     @Test
     void testDamageNeighbours() {
-        setupServices();
+        var resourceService = mock(ResourceService.class);
+        var entityPlacementService = mock(EntityPlacementService.class);
+        var entityService = mock(EntityService.class);
+
+        ServiceLocator.registerResourceService(resourceService);
+        ServiceLocator.registerEntityPlacementService(entityPlacementService);
+        ServiceLocator.registerEntityService(entityService);
 
         var config = new ExplosiveConfig();
         config.baseAttack = 10;
@@ -131,7 +132,13 @@ class ExplosiveComponentTest {
 
     @Test
     void testExplodeNeighbours() {
-        setupServices();
+        var resourceService = mock(ResourceService.class);
+        var entityPlacementService = mock(EntityPlacementService.class);
+        var entityService = mock(EntityService.class);
+
+        ServiceLocator.registerResourceService(resourceService);
+        ServiceLocator.registerEntityPlacementService(entityPlacementService);
+        ServiceLocator.registerEntityService(entityService);
 
         var config = new ExplosiveConfig();
         config.baseAttack = 10;

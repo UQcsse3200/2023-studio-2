@@ -11,6 +11,7 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -22,8 +23,8 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
+@ExtendWith(GameExtension.class)
 class ExplosiveComponentTest {
     @Mock
     ResourceService resourceService;
@@ -54,7 +55,7 @@ class ExplosiveComponentTest {
     }
 
     @Test
-    void testExplode() {
+    void testExploded() {
         setupServices();
 
         var config = new ExplosiveConfig();
@@ -172,5 +173,10 @@ class ExplosiveComponentTest {
                 .placeEntityAt(any(), eq(new Vector2(0, 2)));
 
         verify(inRangeEntityEvents, times(1)).trigger(eq("chainExplode"), anyFloat());
+    }
+
+    @AfterEach
+    void after() {
+        ServiceLocator.clear();
     }
 }

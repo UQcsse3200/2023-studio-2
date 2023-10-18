@@ -9,7 +9,6 @@ import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

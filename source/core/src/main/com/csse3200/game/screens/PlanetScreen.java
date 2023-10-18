@@ -129,6 +129,30 @@ public class PlanetScreen extends ScreenAdapter {
             if ("earth".equals(name)) {
                 // Create and display the TitleBox
                 String[] title = {"", ""};
+                String[] description = {"NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", "Player: Don't worry, we'll get you out!"};
+                String[] window = {"dialogue_1", "dialogue_3",};
+
+                titleBox = new TitleBox(game, title, description, skin, window);
+            }
+            else if ("blazes_refuge".equals(name)) {
+                // Create and display the TitleBox
+                String[] title = {"", ""};
+                String[] description = {"NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", ""};
+                String[] window = {"dialogue_1", "dialogue_2"};
+
+                titleBox = new TitleBox(game, title, description, skin, window);
+            }
+            else if ("flora_haven".equals(name)) {
+                // Create and display the TitleBox
+                String[] title = {"", ""};
+                String[] description = {"NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", ""};
+                String[] window = {"dialogue_1", "dialogue_2"};
+
+                titleBox = new TitleBox(game, title, description, skin, window);
+            }
+            else if ("cryoheim".equals(name)) {
+                // Create and display the TitleBox
+                String[] title = {"", ""};
                 String[] description = {"NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", ""};
                 String[] window = {"dialogue_1", "dialogue_2"};
 

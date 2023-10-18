@@ -1,8 +1,6 @@
 package com.csse3200.game.components.structures.tools;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.entities.Entity;
@@ -10,7 +8,6 @@ import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsEngine;
 import com.csse3200.game.physics.PhysicsService;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
@@ -56,7 +53,7 @@ class TurretToolTest {
         var animation = mock(TextureAtlas.class);
         when(resourceService.getAsset(any(), eq(TextureAtlas.class))).thenReturn(animation);
 
-        TurretTool turretTool = new TurretTool(new ObjectMap<>(), 0, "texture.png");
+        TurretTool turretTool = new TurretTool(new ObjectMap<>(), 5f, "texture.png", 0);
 
         assertNotNull(turretTool.createStructure(player));
     }

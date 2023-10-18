@@ -2,154 +2,220 @@ package com.csse3200.game.components.companionweapons;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.explosives.PostrunnableTask;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.EnemyFactory;
+import com.csse3200.game.services.ServiceLocator;
 
 import java.util.List;
-import java.util.Random;
 
 public class CompanionWeaponTargetComponent extends Component {
     Entity entity;
     CompanionWeaponType weaponType;
     Vector2 trackPrev;
-    private Random random = new Random();
+    int currentTargetIndex = 0;
+    boolean inCombat = false;
 
-    //For the shield rotations
-    /**
-     * offsets are a value between
-     * -100 and 100
-     * It gets divided down by 20, so that the final offsets are between
-     * -5 and 5
-     *
-     * The rotation_directions are an integer, -1 or 1
-     * 0 represents growing negative, 1 represents growing positive
-     */
+    // For the shield rotations
     float x_rotate_offset;
     int x_rotation_direction;
     float y_rotate_offset;
     int y_rotation_direction;
 
-    /**
-     * Class to store variables of a spawned weapon
-     */
     public CompanionWeaponTargetComponent(CompanionWeaponType weaponType, Entity entity) {
         this.weaponType = weaponType;
         this.entity = entity;
         this.trackPrev = entity.getPosition();
-
-        //if it is a shield, adjust the rotation offsets
-        //start shield in the far right corner
         if (this.weaponType == CompanionWeaponType.SHIELD) {
             x_rotate_offset = 100;
             x_rotation_direction = 1;
             y_rotate_offset = 0;
             y_rotation_direction = 1;
         }
-
     }
 
-    /**
-     * Finds the position of where the entity should be
-     * For shield, that is circling the companion
-     * for Death_potion, that is finding the nearest enemy
-     * @return - Vector2 position
-     */
-    public Vector2 getPosOfTarget() {
+    public Vector2 get_pos_of_target() {
         Vector2 pos;
 
         switch (this.weaponType) {
             case SHIELD:
-                return rotateShieldAroundEntity();
-            case DEATH_POTION:
-                List<Entity> enemies = EnemyFactory.getEnemyList();
-                if (!enemies.isEmpty()) {
-                    int randomIndex = random.nextInt(enemies.size());
-                    Entity enemy = enemies.get(randomIndex);
-                    if (enemy != null) {
-                        // Get the position of the selected enemy
-                        pos = enemy.getPosition();
-
-                        // Schedule a task to dispose of the enemy after 5 seconds
-                        Timer.schedule(new Timer.Task() {
-                            @Override
-                            public void run() {
-                                if (enemies.contains(enemy)) {
-                                    enemies.remove(enemy);
-                                    enemy.dispose();
-
-                                }
-                            }
-                        }, 7f);
-
-                        // Update the companion's position for tracking
-                        this.trackPrev = entity.getPosition();
-                    } else {
-                        // No valid enemy found, use previous position
-                        pos = this.trackPrev;
-                    }
-                } else {
-                    // No enemies available, use previous position
-                    pos = this.trackPrev;
-                }
-                break;
-
+                return rotate_shield_around_entity();
+            case Death_Potion:
+                return handleDeathPotion();
+            case SWORD:
+                return handleSword();
             default:
-                pos = new Vector2(0, 0);
-                break;
+                return new Vector2(0, 0);
         }
-
-        return pos;
     }
 
-    /**
-     * This function will rotate the shield around this entity
-     *
-     *
-     * @return - vector
-     */
-    public Vector2 rotateShieldAroundEntity() {
-        //companion position
-        var companion = entity.getPosition().sub(this.trackPrev);
-
-        //The bigger this number, the slower the shield rotates around
-        float scalaingFactor = 7000;
-
-        // Grab the current offsets, and scale down the offset down to between
-        // -5 and 5
-        float x_offset = x_rotate_offset / scalaingFactor;
-        float y_offset = y_rotate_offset / scalaingFactor;
-
-        // create the offset vector
+    public Vector2 rotate_shield_around_entity() {
+        var companion = entity.getPosition().sub(trackPrev);
+        float scalingFactor = 7000;
+        float x_offset = x_rotate_offset / scalingFactor;
+        float y_offset = y_rotate_offset / scalingFactor;
         var offsetVector = new Vector2(x_offset, y_offset);
-
-        //offset the  companion position
         companion.add(offsetVector);
-
-        //update the offset values
-        updateShieldRotationOffsets();
-
-        //update the latest trackPrev to the new entity position
-        this.trackPrev = entity.getPosition();
+        update_shield_rotation_offsets();
+        updateSHIELD();
+        trackPrev = entity.getPosition();
         return companion;
     }
 
-    /**
-     * This function cycles x and y values from -100 to 100
-     * Using an incrementor.
-     */
-    public void updateShieldRotationOffsets() {
-        // if the offset has reached 100 yet, flip the direction
+    public void update_shield_rotation_offsets() {
         if (Math.abs(x_rotate_offset) == 100) {
-            x_rotation_direction  = x_rotation_direction*-1;
+            x_rotation_direction *= -1;
         }
         x_rotate_offset += x_rotation_direction;
 
-        //y
-        // if the offset has reached 100 yet, flip the direction
         if (Math.abs(y_rotate_offset) == 100) {
-            y_rotation_direction  = y_rotation_direction*-1;
+            y_rotation_direction *= -1;
         }
         y_rotate_offset += y_rotation_direction;
     }
+
+    /**
+     * @return
+     */
+    private Vector2 handleDeathPotion() {
+        List<Entity> enemies = EnemyFactory.getEnemyList();
+        if (!inCombat) {
+            if (!enemies.isEmpty()) {
+                Entity enemy = getNextLiveEnemy(enemies);
+                if (enemy != null) {
+                    inCombat = true;
+                    Vector2 pos = enemy.getPosition();
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            if (enemies.contains(enemy)) {
+                                enemy.getComponent(CombatStatsComponent.class).setHealth(0);
+                                inCombat = false;
+                                enemies.remove(enemy);
+                            }
+                        }
+                    }, 2f);
+                    trackPrev = pos;
+                    return pos;
+                }
+            }
+        }
+        return inCombat ? enemies.get(currentTargetIndex).getPosition() : trackPrev;
+    }
+
+    /**
+     * Get the first live enemy available. Then, once that one is dead, it finds a new target.
+     *
+     * @param enemies - list of enemies on the map
+     * @return - the enemy that it is currently targeting
+     */
+    private Entity getNextLiveEnemy(List<Entity> enemies) {
+        int numEnemies = enemies.size();
+        int originalTargetIndex = currentTargetIndex;
+
+        while (true) {
+            Entity enemy = enemies.get(currentTargetIndex);
+            if (enemy != null && enemy.getComponent(CombatStatsComponent.class).getHealth() > 0) {
+                return enemy;
+            }
+            currentTargetIndex = (currentTargetIndex + 1) % numEnemies;
+
+            if (currentTargetIndex == originalTargetIndex) {
+                break;
+            }
+        }
+        return null;
+    }
+    Entity companion = ServiceLocator.getEntityService().getCompanion();
+
+    public void updateSHIELD() {
+
+        for (var otherEntity :  EnemyFactory.getEnemyList()) {
+            if (otherEntity == entity) {
+                continue;
+            }
+
+            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
+
+            if (distance <= 1.1f) {
+                otherEntity.getEvents().trigger("chainExplode", distance/1.1f * 0.4f);
+            }
+        }
+
+
+
+        for (Entity otherEntity : EnemyFactory.getEnemyList()) {
+            if (otherEntity == entity ) {
+                continue;
+            }
+
+            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
+            if (distance <= 1.1f) {
+                otherEntity.getEvents().trigger("SHIELD_2", distance/1.1f * 0.4f);
+            }
+        }
+        for (var otherEntity :  EnemyFactory.getEnemyList()) {
+            var combatStatsComponent = otherEntity.getComponent(CombatStatsComponent.class);
+
+
+
+            var distance = companion.getCenterPosition().dst(otherEntity.getCenterPosition());
+
+            if (distance <= 1.1f) {
+                combatStatsComponent.addHealth((int) (( 1.1f - distance)
+                        / 1.1f * - 25 ));
+            }
+        }
+
+    }
+    private boolean isChained = false;
+    protected void chainExplode(float delay) {
+        if (isChained) {
+            return;
+        }
+
+//        isChained = true;
+
+        if (5==5) {
+            Timer.schedule(new PostrunnableTask(this::updateSHIELD), delay);
+        }
+    }
+    public void create() {
+
+        this.entity.getEvents().addListener(" SHIELD_2", this::updateSHIELD);
+        this.entity.getEvents().addListener("chainExplode", this::chainExplode);
+        this.entity.getEvents().addListener("POTION", this::handleDeathPotion);
+    }
+
+    private Vector2 handleSword(){
+        List<Entity> enemies = EnemyFactory.getEnemyList();
+        if (!inCombat) {
+            if (!enemies.isEmpty()) {
+                Entity enemy = getNextLiveEnemy(enemies);
+                if (enemy != null) {
+                    inCombat = true;
+                    Vector2 pos = enemy.getPosition();
+                    Timer.schedule(new Timer.Task() {
+
+                        public void run() {
+                            if (enemies.contains(enemy)) {var distance = companion.getCenterPosition().dst(enemy.getCenterPosition());
+                                if (distance <= 2.5f) {  enemy.getComponent(CombatStatsComponent.class).addHealth((int)-40.0f);
+
+                                if(enemy.getComponent(CombatStatsComponent.class).getHealth() == 0)
+                                {  enemies.remove(enemy);}
+                                else if(enemy.getComponent(CombatStatsComponent.class).getHealth() != 0) { enemy.getComponent(CombatStatsComponent.class).getHealth();
+                                }
+                                }
+                                else
+                                { inCombat = false;} }
+                        }
+                    }, 1f);
+                    trackPrev = pos;
+                    return pos;
+                }
+            }
+        }
+        return inCombat ? enemies.get(currentTargetIndex).getPosition() : trackPrev;}
 }

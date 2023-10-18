@@ -26,5 +26,13 @@ public class ToolConfig {
      */
     public String texture;
 
+    /**
+     * The order this tool should appear in the hotbar.
+     */
     public int ordering;
+
+    /**
+     * How far away this tool can be used.
+     */
+    public int range;
 }

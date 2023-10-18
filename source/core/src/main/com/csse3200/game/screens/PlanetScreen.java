@@ -6,7 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.MapGameArea;
-import com.csse3200.game.areas.mapConfig.*;
+import com.csse3200.game.areas.map_config.AssetsConfig;
+import com.csse3200.game.areas.map_config.ConfigLoader;
+import com.csse3200.game.areas.map_config.InvalidConfigException;
+import com.csse3200.game.areas.map_config.LevelConfig;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
@@ -67,18 +70,10 @@ public class PlanetScreen extends ScreenAdapter {
     /** Service Instances */
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
+    public static boolean titleBoxDisplayed = false;
 
     /** file paths of textures for screen to load. */
-    private AssetsConfig assets = null;
-
-    /**
-     * Construct the PlanetScreen instance for the first planet (Earth).
-     *
-     * @param game  The current game instance to display screen on.
-     */
-    public PlanetScreen(GdxGame game, String name, String areaName) {
-        this(game, name);
-    }
+    private AssetsConfig assets;
 
     /**
      * Construct the PlanetScreen instance for the planet of given name.
@@ -129,13 +124,16 @@ public class PlanetScreen extends ScreenAdapter {
     }
 
     private void showTitleBox() {
-        // Create and display the TitleBox
-        TitleBox titleBox = new TitleBox(game, "", "NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", skin);
-        // Adjust title and skin as needed
-        titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+        if (!titleBoxDisplayed) {
+            // Create and display the TitleBox
+            TitleBox titleBox = new TitleBox(game, "", "NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", skin, "dialogue");
+            // Adjust title and skin as needed
+            titleBox.showDialog(ServiceLocator.getRenderService().getStage());
 
-        // Pause the game while the TitleBox is displayed
-        Gdx.graphics.setContinuousRendering(false);
+            // Pause the game while the TitleBox is displayed
+            Gdx.graphics.setContinuousRendering(false);
+            titleBoxDisplayed = true;
+        }
     }
 
     /**
@@ -296,11 +294,11 @@ public class PlanetScreen extends ScreenAdapter {
 
     private void saveGame() {
         logger.debug(String.format("Saved %s PlanetScreen", name));
-        String path = String.format("%s/%s/%s/entities.json", SAVE_PATH, this.name, this.currentAreaName);
+        String path = String.format("%s/%s/%s/entities.json", getSavePath(), this.name, this.currentAreaName);
         ServiceLocator.getEntityService().saveCurrentArea(path);
 
         Map<String, Object> gameStateEntries = new HashMap<>(ServiceLocator.getGameStateObserverService().getFullStateData());
-        FileLoader.writeClass(gameStateEntries, joinPath(List.of(SAVE_PATH, GAMESTATE_FILE)), FileLoader.Location.LOCAL);
+        FileLoader.writeClass(gameStateEntries, joinPath(List.of(getSavePath(), GAMESTATE_FILE)), FileLoader.Location.LOCAL);
     }
 
     /**

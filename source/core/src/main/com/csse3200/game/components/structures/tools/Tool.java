@@ -19,16 +19,20 @@ public abstract class Tool implements Comparable<Tool> {
      */
     protected final ObjectMap<String, Integer> cost;
     private final int ordering;
+    private final float range;
     private String texture;
 
     /**
      * Creates a new Tool with the given cost.
-     * @param cost - the cost of using the tool.
+     *
+     * @param cost     - the cost of using the tool.
+     * @param range    - how far away the tool can be used.
+     * @param texture  - the texture of this tool.
      * @param ordering - the ordering of this tool.
-     * @param texture - the texture of this tool.
      */
-    protected Tool(ObjectMap<String, Integer> cost, int ordering, String texture) {
+    protected Tool(ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
         this.cost = cost;
+        this.range = range;
         this.ordering = ordering;
         this.texture = texture;
     }
@@ -72,7 +76,15 @@ public abstract class Tool implements Comparable<Tool> {
      * @param position - the position to interact.
      * @return whether the player can interact at the position.
      */
-    protected abstract ToolResponse canInteract(Entity player, GridPoint2 position);
+    protected ToolResponse canInteract(Entity player, GridPoint2 position) {
+        var distance = player.getCenterPosition().scl(2).dst(new Vector2(position.x, position.y));
+
+        if (distance <= range) {
+            return ToolResponse.valid();
+        }
+
+        return new ToolResponse(PlacementValidity.OUT_OF_RANGE, "Out of range.");
+    }
 
     /**
      * Gets the cost associated with the tool.

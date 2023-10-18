@@ -12,12 +12,14 @@ import com.csse3200.game.entities.factories.BuildablesFactory;
 public class BasicWallTool extends PlacementTool {
     /**
      * Creates a new basic wall tool with the given cost.
-     * @param cost - the cost of a basic wall.
+     *
+     * @param cost     - the cost of a basic wall.
+     * @param range
+     * @param texture  - the texture of this tool.
      * @param ordering - the ordering of this tool.
-     * @param texture - the texture of this tool.
      */
-    public BasicWallTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
-        super(cost, ordering, texture);
+    public BasicWallTool(ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
+        super(cost, range, texture, ordering);
         snapX = 2;
         snapY = 2;
     }
@@ -29,7 +31,7 @@ public class BasicWallTool extends PlacementTool {
      */
     @Override
     public PlaceableEntity createStructure(Entity player) {
-        return BuildablesFactory.createWall(WallType.BASIC, player);
+        return BuildablesFactory.createWall(WallType.BASIC);
     }
 
 }

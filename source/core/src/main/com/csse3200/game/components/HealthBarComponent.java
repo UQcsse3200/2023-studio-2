@@ -115,6 +115,12 @@ public class HealthBarComponent extends UIComponent {
      */
     public void updateHealth(int health) {
         this.healthBar.setValue(health);
+
+        if (health != entity.getComponent(CombatStatsComponent.class).getMaxHealth()) {
+            show();
+        } else {
+            hide();
+        }
     }
 
     @Override
@@ -123,12 +129,12 @@ public class HealthBarComponent extends UIComponent {
         this.healthBar.remove();
     }
 
-    public void show() {
+    private void show() {
         setEnabled(true);
 
     }
 
-    public void hide() {
+    private void hide() {
         setEnabled(false);
     }
 

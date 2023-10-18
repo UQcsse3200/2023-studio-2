@@ -204,7 +204,6 @@ public class AnimationRenderComponent extends RenderComponent {
 CompanionInventoryComponent,TouchCompanionInputComponent,CombatStatsComponent,LaboratoryInventoryComponent,PotionComponent,PotionType,LaboratoryFactory,PotionFactory,LabWindow.*/
   @Override
   public void dispose() {
-    atlas.dispose();
     super.dispose();
   }
 }

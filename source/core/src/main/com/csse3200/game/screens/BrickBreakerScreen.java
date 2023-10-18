@@ -10,11 +10,18 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGamePauseDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
+import com.csse3200.game.input.InputFactory;
+import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsEngine;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
+import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
@@ -22,13 +29,14 @@ import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * The game screen containing the main game.
  * Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class BrickBreakerScreen extends ScreenAdapter {
     private final GdxGame game;
-    private final PhysicsEngine physicsEngine;
+    private PhysicsEngine physicsEngine;
     private static final String[] background = {"images/deathscreens/deathscreen_0.jpg"};
     public static final Logger logger = LoggerFactory.getLogger(BrickBreakerScreen.class);
     private final Renderer renderer;
@@ -40,7 +48,8 @@ public class BrickBreakerScreen extends ScreenAdapter {
      */
     public BrickBreakerScreen(GdxGame game){
         this.game = game;
-        physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
+        this.loadServices();
+
 
 
         //Vector2 shipPos = ServiceLocator.getEntityService().getEntitiesByComponent(ShipActions.class).get(0).getPosition();
@@ -72,6 +81,20 @@ public class BrickBreakerScreen extends ScreenAdapter {
     public void resize(int width, int height) {
         renderer.resize(width, height);
         logger.trace("Resized renderer: ({} x {})", width, height);
+    }
+    public void loadServices() {
+        //someone forgot to add the services
+        ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerInputService(new InputService());
+        ServiceLocator.registerInputService(new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
+
+        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
+
     }
 
 

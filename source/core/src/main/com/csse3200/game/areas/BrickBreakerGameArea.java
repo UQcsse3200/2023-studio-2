@@ -57,6 +57,7 @@ public class BrickBreakerGameArea extends GameArea {
         displayUI();
         spawnTerrain();
         spawnBrickLayout();
+        spawnSlider();
     }
 
     /**

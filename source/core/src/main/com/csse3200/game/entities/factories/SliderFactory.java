@@ -29,6 +29,7 @@ public class SliderFactory {
                         .addComponent(new TextureRenderComponent("images/brick-game/Slider.png"))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SLIDER))
+                        .addComponent(new ColliderComponent())
                         .addComponent(inputComponent);
 
 

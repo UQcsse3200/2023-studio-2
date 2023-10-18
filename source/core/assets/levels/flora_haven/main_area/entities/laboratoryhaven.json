@@ -3,8 +3,8 @@
   "entities": [
     {
       class: com.csse3200.game.entities.configs.LaboratoryConfig,
-      "spritePath": "images/companion/Laboratorycryoheim.png",
-      "position": {"x":24,
+      "spritePath": "images/companion/Laboratoryhaven.png",
+      "position": {"x":34,
         "y": 49
       }
     }

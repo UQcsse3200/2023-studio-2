@@ -9,7 +9,6 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class LaserSwordSwingController extends MeleeSwingController {
     private boolean charged = false;
-    protected int attackSide;
 
     public LaserSwordSwingController(WeaponConfig config,
                                      float attackDirection,
@@ -48,8 +47,8 @@ public class LaserSwordSwingController extends MeleeSwingController {
 
     @Override
     protected void move() {
-        Vector2 player_delta = player.getPosition().sub(player_last_pos);
-        this.player_last_pos = player.getPosition();
+        Vector2 player_delta = player.getPosition().sub(playerlastpos);
+        this.playerlastpos = player.getPosition();
 
         entity.setPosition(entity.getPosition()
                 .add(player_delta.cpy())

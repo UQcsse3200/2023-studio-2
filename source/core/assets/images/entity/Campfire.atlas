@@ -1,33 +1,33 @@
 Campfire.png
-size: 256, 64
+size: 768, 192
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-Flicker1
+Flicker
   rotate: false
   xy: 0, 0
-  size: 64, 64
-  orig: 64, 64
+  size: 192, 192
+  orig: 192, 192
   offset: 0, 0
   index: -1
-Flicker2
-  rotate: false
-  xy: 64, 0
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Flicker3
-  rotate: false
-  xy: 128, 0
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Flicker4
+Flicker
   rotate: false
   xy: 192, 0
-  size: 64, 64
-  orig: 64, 64
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+Flicker
+  rotate: false
+  xy: 384, 0
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+Flicker
+  rotate: false
+  xy: 576, 0
+  size: 192, 192
+  orig: 192, 192
   offset: 0, 0
   index: -1

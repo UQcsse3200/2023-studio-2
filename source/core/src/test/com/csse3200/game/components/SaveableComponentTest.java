@@ -27,7 +27,7 @@ class SaveableComponentTest {
     @Test
     void saveReflectsChanges() {
         saveableEntity = new Entity()
-                .addComponent(new CombatStatsComponent(100, 10, 1, false));
+                .addComponent(new CombatStatsComponent(100, 100, 10, 1, false));
         saveableEntity.addComponent(new SaveableComponent<>(e -> {
             HealthEntityConfig entityConfig = new HealthEntityConfig();
             entityConfig.health = e.getComponent(CombatStatsComponent.class).getHealth();

@@ -1,0 +1,47 @@
+katanaSwing.png
+size: 105, 64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ATTACK2
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+ATTACK2
+  rotate: false
+  xy: 32, 0
+  size: 41, 32
+  orig: 41, 32
+  offset: 0, 0
+  index: 1
+ATTACK2
+  rotate: false
+  xy: 74, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+ATTACK1
+  rotate: false
+  xy: 0, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+ATTACK1
+  rotate: false
+  xy: 32, 32
+  size: 41, 32
+  orig: 41, 32
+  offset: 0, 0
+  index: 1
+ATTACK1
+  rotate: false
+  xy: 74, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0

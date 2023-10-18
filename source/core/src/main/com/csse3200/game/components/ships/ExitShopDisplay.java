@@ -94,7 +94,6 @@ public class ExitShopDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Back to minigame button clicked");
-                        entity.getEvents().trigger("exit");
                         game.setScreen(GdxGame.ScreenType.SPACE_MAP);
                     }
                 }

@@ -15,6 +15,17 @@ public class BaseEntityConfig {
     public List<String> requiredTextures = null;
     public Vector2 scale = new Vector2(1,1);
 
+    public BaseEntityConfig() {
+
+    }
+
+    public BaseEntityConfig(BaseEntityConfig config) {
+        this.spritePath = config.spritePath;
+        this.position = config.position;
+        this.requiredTextures = config.requiredTextures;
+        this.scale = config.scale;
+    }
+
     public List<String> getTextures() {
         List<String> textures = new ArrayList<>();
         if (requiredTextures != null) {

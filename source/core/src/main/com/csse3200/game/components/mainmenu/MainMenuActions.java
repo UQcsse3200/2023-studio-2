@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.mapConfig.ConfigLoader;
-import com.csse3200.game.areas.mapConfig.GameConfig;
-import com.csse3200.game.areas.mapConfig.InvalidConfigException;
+import com.csse3200.game.areas.map_config.ConfigLoader;
+import com.csse3200.game.areas.map_config.GameConfig;
+import com.csse3200.game.areas.map_config.InvalidConfigException;
 import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.ui.Popups.ChoicePopup;
@@ -54,7 +54,7 @@ public class MainMenuActions extends Component {
   private void loadGameConfig() {
       logger.info("Loading in GameConfig");
 
-      GameConfig gameConfig = null;
+      GameConfig gameConfig;
       try {
           gameConfig = ConfigLoader.loadGame();
           if (gameConfig.levelNames.isEmpty()) throw new InvalidConfigException(LoadUtils.NO_LEVELS_ERROR);

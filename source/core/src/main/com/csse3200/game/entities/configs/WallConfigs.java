@@ -13,7 +13,7 @@ public class WallConfigs {
     public WallConfig gate = new WallConfig();
     public SoundsConfig sounds;
 
-    public WallConfig GetWallConfig(WallType type) {
+    public WallConfig getWallConfig(WallType type) {
         return switch (type) {
             case BASIC -> basic;
             case INTERMEDIATE -> intermediate;

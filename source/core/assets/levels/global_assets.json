@@ -44,7 +44,12 @@
     "images/explosives/explosive-barrel.png",
     "images/explosives/grenade.png",
     "images/explosives/landmine.png",
-    "images/structure-icons/adv_turret.png"
+    "images/structure-icons/adv_turret.png",
+    "particle-effects/extractor/rubble.png",
+    "particle-effects/extractor/rubble_2.png",
+    "particle-effects/extractor/rubble_3.png",
+    "particle-effects/extractor/dust.png",
+    " images/powerups/speed_potion.png"
   ],
   "textureAtlasPaths": [
     "images/structures/stone_wall.atlas",
@@ -70,8 +75,15 @@
     "sounds/explosion/grenade.mp3",
     "sounds/explosion/landmine.mp3",
     "sounds/turret_shoot.mp3",
-    "sounds/ExitButton.wav"
+    "sounds/ExitButton.wav",
+    "sounds/structurePlace.wav"
   ],
-  "particleEffectPaths": null,
+  "particleEffectPaths": [
+    "particle-effects/extractor/extractor_rubble_solstite.effect",
+    "particle-effects/extractor/extractor_rubble_nebulite.effect",
+    "particle-effects/extractor/extractor_rubble_durasteel.effect",
+    "particle-effects/deathpotion/Death.effect",
+    "particle-effects/shield/shield.effect"
+  ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
 }

@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ControlGameArea;
 import com.csse3200.game.areas.GameArea;
-
+import static com.badlogic.gdx.Gdx.app;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.controls.ControlsScreenActions;
@@ -128,8 +128,13 @@ public class ControlsScreen extends ScreenAdapter {
                 entity.getEvents().trigger("exit");
             }
         });
+        entity.getEvents().addListener("exit", this::onExit);
         stage.addActor(exitBtn);
 
+    }
+
+    public void onExit() {
+        game.setScreen(GdxGame.ScreenType.SETTINGS);
     }
 //    private void showTutorialDialogueBox() {
 //        // Create and display the TitleBox

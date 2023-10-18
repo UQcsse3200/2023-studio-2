@@ -23,7 +23,6 @@ import java.util.ArrayList;
 public class BricKBreakerGameArea extends GameArea{
     private Entity ball;
     private Entity slider;
-    private Entity ship;
     private static final GridPoint2 SLIDER_SPAWN = new GridPoint2(5, 8);
     private static final Logger logger = LoggerFactory.getLogger(BricKBreakerGameArea.class);
     private static final GridPoint2 BALL_SPAWN = new GridPoint2(5, 7);

@@ -754,3 +754,30 @@ treebox
   orig: 1616, 1030
   offset: 0, 0
   index: -1
+
+dialogue.png
+size: 1600, 1200
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dialogue
+  rotate: false
+  xy: 0, 0
+  size: 1296, 398
+  orig: 1296, 398
+  offset: 0, 0
+  index: -1
+
+rightShipButton.png
+size: 47, 32
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+rightShipButton
+  rotate: false
+  xy: 0, 0
+  size: 47, 32
+  orig: 50, 32
+  offset: 1, 0
+  index: -1
+

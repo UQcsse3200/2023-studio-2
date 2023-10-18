@@ -5,6 +5,7 @@
  */
 package com.csse3200.game.components;
 
+import com.csse3200.game.components.companion.CompanionActions;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,7 +104,8 @@ public class CombatStatsComponent extends Component {
       entity.getEvents().trigger("updateHealth", this.health);
     }
     if (entity != null) {
-      if (isDead() && entity.getEntityType().equals("player") && !dead) {
+      if (isDead() && entity.getEntityType().equals("player") && dead == false) {
+
         dead = true;
         entity.getComponent(KeyboardPlayerInputComponent.class).clearWalking(); // Stop player from walking
         entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn
@@ -119,15 +121,19 @@ public class CombatStatsComponent extends Component {
         };
         timer.schedule(killPlayer, 1); // Animation lasts for 1 second before death screen is triggered
       } else if (isDead() && entity.getEntityType().equals("companion")) {
-        final Timer timer1 = new Timer();
+        // all companion death stuff
+        entity.getComponent(CompanionActions.class).handleCompanionDownMode();
+
+
+        /*final Timer timer1 = new Timer();
         Timer.Task killCompanion = new Timer.Task() {
           @Override
           public void run() {
             entity.getEvents().trigger("death");
             timer1.clear();
           }
-        };
-        timer1.schedule(killCompanion,1);
+        };*/
+        //timer1.schedule(killCompanion,1);
 
       } else if (isDead() && entity.getEntityType().equals("playerWeapon")) {
         entity.getEvents().trigger("death", 0);
@@ -137,10 +143,9 @@ public class CombatStatsComponent extends Component {
 
   /**
    * sets the entity's health to maximum if H-Key is pressed on the keyboard.
-   * @param newHealth the new value of the users health
    * @param isHKeyPressed whether the H key is pressed
    */
-  public void setHealth(int newHealth, boolean isHKeyPressed) {
+  public void setHealth( boolean isHKeyPressed) {
     if (isHKeyPressed) {
       this.health = 100;
     }
@@ -288,7 +293,8 @@ public class CombatStatsComponent extends Component {
    * @param attacker The entity causing the damage.
    */
   public void hit(CombatStatsComponent attacker) {
-    if (getImmunity()) {
+    if (getImmunity() == true) {
+
       return;
     }
     int newHealth;

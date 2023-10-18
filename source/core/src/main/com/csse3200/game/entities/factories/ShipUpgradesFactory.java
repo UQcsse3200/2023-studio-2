@@ -7,7 +7,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.AllShipUpgradesConfig;
 import com.csse3200.game.entities.configs.ShipUpgradesConfig;
 import com.csse3200.game.files.FileLoader;
-import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 
@@ -25,7 +24,7 @@ public class ShipUpgradesFactory {
         // Initialise and resize a new Powerup
         Entity shipUpgrade = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new ShipUpgradesComponent(config.type, PhysicsLayer.SHIP))
+                .addComponent(new ShipUpgradesComponent(config.type))
                 .addComponent(new TextureRenderComponent(config.spritePath));
         shipUpgrade.addComponent(
                 new InteractableComponent(

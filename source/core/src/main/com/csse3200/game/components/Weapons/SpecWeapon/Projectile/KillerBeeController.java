@@ -1,7 +1,6 @@
 package com.csse3200.game.components.Weapons.SpecWeapon.Projectile;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.ProjectileController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;

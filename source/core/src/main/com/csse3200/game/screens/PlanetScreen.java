@@ -6,7 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.MapGameArea;
-import com.csse3200.game.areas.mapConfig.*;
+import com.csse3200.game.areas.map_config.AssetsConfig;
+import com.csse3200.game.areas.map_config.ConfigLoader;
+import com.csse3200.game.areas.map_config.InvalidConfigException;
+import com.csse3200.game.areas.map_config.LevelConfig;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
@@ -26,6 +29,7 @@ import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
 import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.TitleBox;
@@ -66,18 +70,10 @@ public class PlanetScreen extends ScreenAdapter {
     /** Service Instances */
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
+    public static boolean titleBoxDisplayed = false;
 
     /** file paths of textures for screen to load. */
-    private AssetsConfig assets = null;
-
-    /**
-     * Construct the PlanetScreen instance for the first planet (Earth).
-     *
-     * @param game  The current game instance to display screen on.
-     */
-    public PlanetScreen(GdxGame game, String name, String areaName) {
-        this(game, name);
-    }
+    private AssetsConfig assets;
 
     /**
      * Construct the PlanetScreen instance for the planet of given name.
@@ -86,6 +82,7 @@ public class PlanetScreen extends ScreenAdapter {
      * @param name  The name of the planet to create a screen for.
      */
     public PlanetScreen(GdxGame game, String name) {
+        logger.info(String.format("Creating %s PlanetScreen", name));
         this.game = game;
         this.name = name;
         this.assets = FileLoader.readClass(AssetsConfig.class, "levels/global_assets.json");
@@ -104,6 +101,7 @@ public class PlanetScreen extends ScreenAdapter {
      */
     @Override
     public void show() {
+        logger.info(String.format("Displaying %s PlanetScreen", name));
         registerServices();
 
         populateGameState();
@@ -116,9 +114,8 @@ public class PlanetScreen extends ScreenAdapter {
         } else {
             ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "gameArea", currentAreaName);
         }
-        this.allGameAreas.get(currentAreaName).create();
 
-        logger.debug((String.format("Initialising %s screen entities", this.name)));
+        this.allGameAreas.get(currentAreaName).create();
         this.player = allGameAreas.get(currentAreaName).getPlayer();
         if ("earth".equals(name)) {
             showTitleBox();
@@ -127,13 +124,16 @@ public class PlanetScreen extends ScreenAdapter {
     }
 
     private void showTitleBox() {
-        // Create and display the TitleBox
-        TitleBox titleBox = new TitleBox(game, "", "NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", skin);
-        // Adjust title and skin as needed
-        titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+        if (!titleBoxDisplayed) {
+            // Create and display the TitleBox
+            TitleBox titleBox = new TitleBox(game, "", "NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", skin, "dialogue");
+            // Adjust title and skin as needed
+            titleBox.showDialog(ServiceLocator.getRenderService().getStage());
 
-        // Pause the game while the TitleBox is displayed
-        Gdx.graphics.setContinuousRendering(false);
+            // Pause the game while the TitleBox is displayed
+            Gdx.graphics.setContinuousRendering(false);
+            titleBoxDisplayed = true;
+        }
     }
 
     /**
@@ -152,6 +152,7 @@ public class PlanetScreen extends ScreenAdapter {
      * @return      Whether the new game area was set correctly.
      */
     public boolean setCurrentArea(String name) {
+        logger.debug("Changing displayed area to " + name);
         if (this.allGameAreas.containsKey(name)) {
             this.allGameAreas.get(currentAreaName).dispose();
             this.currentAreaName = name;
@@ -195,6 +196,7 @@ public class PlanetScreen extends ScreenAdapter {
      * Generates all the appropriate game areas for the current planet based on its name.
      */
     private void generateGameAreas() {
+        logger.debug((String.format("Creating %s PlanetScreen areas", this.name)));
         String levelName = formatName(name);
 
         if (this.levelConfig != null) {
@@ -224,10 +226,10 @@ public class PlanetScreen extends ScreenAdapter {
     private void registerServices() {
         logger.debug(String.format("Initialising %s screen services", this.name));
 
-        ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerInputService(new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
         ServiceLocator.registerResourceService(new ResourceService());
 
+        ServiceLocator.registerTimeSource(new GameTime());
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerPhysicsService(new PhysicsService());
@@ -274,27 +276,21 @@ public class PlanetScreen extends ScreenAdapter {
      */
     @Override
     public void dispose() {
+        logger.debug(String.format("Disposing %s PlanetScreen", this.name));
         saveGame();
-        this.clear();
-    }
-
-    private void saveGame() {
-        String path = String.format("%s/%s/%s/entities.json", SAVE_PATH, this.name, this.currentAreaName);
-        ServiceLocator.getEntityService().saveCurrentArea(path);
-
-        Map<String, Object> gameStateEntries = new HashMap<>(ServiceLocator.getGameStateObserverService().getFullStateData());
-        FileLoader.writeClass(gameStateEntries, joinPath(List.of(SAVE_PATH, GAMESTATE_FILE)), FileLoader.Location.LOCAL);
-    }
-
-    /**
-     * Dispose of the entire game screen.
-     */
-    public void clear() {
-        logger.debug(String.format("Disposing %s screen", this.name));
         this.allGameAreas.get(currentAreaName).dispose();
         renderer.dispose();
         unloadAssets();
         ServiceLocator.getGameStateObserverService().trigger("remove", "gameArea");
+    }
+
+    private void saveGame() {
+        logger.debug(String.format("Saved %s PlanetScreen", name));
+        String path = String.format("%s/%s/%s/entities.json", getSavePath(), this.name, this.currentAreaName);
+        ServiceLocator.getEntityService().saveCurrentArea(path);
+
+        Map<String, Object> gameStateEntries = new HashMap<>(ServiceLocator.getGameStateObserverService().getFullStateData());
+        FileLoader.writeClass(gameStateEntries, joinPath(List.of(getSavePath(), GAMESTATE_FILE)), FileLoader.Location.LOCAL);
     }
 
     /**

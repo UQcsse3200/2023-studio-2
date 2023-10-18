@@ -1,14 +1,13 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.mapConfig.*;
-import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.areas.map_config.AssetsConfig;
+import com.csse3200.game.areas.map_config.ConfigLoader;
+import com.csse3200.game.areas.map_config.GameAreaConfig;
+import com.csse3200.game.areas.map_config.InvalidConfigException;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.extensions.GameExtension;

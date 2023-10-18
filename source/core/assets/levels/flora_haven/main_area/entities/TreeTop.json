@@ -7,8 +7,8 @@
         "x": 0,
         "y": 0
       },
-      "spritePath": "map/icemaptreetop.png",
-      "scaleH": 45,
+      "spritePath": "map/treetoplush.png",
+      "scaleH": 50,
       "scaleX": 0.5,
       "scaleY": 0.2
     }

@@ -2,6 +2,8 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -79,6 +81,7 @@ public class MapGameArea extends GameArea{
         spawnExtractors();
         spawnShip();
         player = spawnPlayer();
+        freezing = false;
         companion = spawnCompanion();
         spawnLaboratory();
         spawnPowerups();
@@ -97,8 +100,8 @@ public class MapGameArea extends GameArea{
         spawnAstronaut();
 
         //spawnEnvironmentDamage();
-        spawnFreezingArea();
-        spawnEnvironmentDamage();
+//        spawnFreezingArea();
+//        spawnEnvironmentDamage();
         spawnSafeZone(player);
 
         displayUI();
@@ -163,23 +166,23 @@ public class MapGameArea extends GameArea{
 
         if (safeZoneConfig == null) return;
 
-        Entity safeZone = SafeZoneFactory.createSafeZone(playerEntity);
+        Entity safeZone = SafeZoneFactory.createSafeZone(playerEntity, safeZoneConfig);
         spawnEntityAt(safeZone, safeZoneConfig.position, false, false);
     }
 
-    private void spawnEnvironmentDamage() {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        Entity envDamage = EnvironmentalDamageFactory.createDamage();
-        spawnEntityAt(envDamage, new GridPoint2(45, 45), false, false);
-    }
-
-    private void spawnFreezingArea() {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        Entity freezeArea = FreezingAreaFactory.createFreezingArea();
-        spawnEntityAt(freezeArea, new GridPoint2(40, 60), false, false);
-    }
+//    private void spawnEnvironmentDamage() {
+//        if (mapConfig.areaEntityConfig == null) return;
+//
+//        Entity envDamage = EnvironmentalDamageFactory.createDamage();
+//        spawnEntityAt(envDamage, new GridPoint2(45, 45), false, false);
+//    }
+//
+//    private void spawnFreezingArea() {
+//        if (mapConfig.areaEntityConfig == null) return;
+//
+//        Entity freezeArea = FreezingAreaFactory.createFreezingArea();
+//        spawnEntityAt(freezeArea, new GridPoint2(40, 60), false, false);
+//    }
 
     public static float getSpeedMult() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
@@ -199,12 +202,33 @@ public class MapGameArea extends GameArea{
         return onIce != null && (boolean) onIce;
     }
 
-    public static boolean isFreezing() {
-        return freezing;
-    }
+//    public static boolean isFreezing() {
+//        return freezing;
+//    }
+//
+//    public static void toggleFreezing(Entity player) {
+//        freezing = !freezing;
+//    }
 
-    public static void toggleFreezing(Entity player) {
-        freezing = !freezing;
+    /**
+     * Checks if the player should be taking damage from standing on fire or lava
+     */
+    public static void isBurning() {
+        if(getPlayer() != null){
+            Vector2 playerPos = getPlayer().getPosition();
+            MapLayers layers = terrain.getMap().getLayers();
+            for (MapLayer layer : layers) {
+                TiledMapTileLayer.Cell cell = ((TiledMapTileLayer) layer).getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+                if (cell != null) {
+                    Object onFire = cell.getTile().getProperties().get("burn");
+                    if (onFire != null && (boolean) onFire) {
+                        player.getComponent(EnvironmentStatsComponent.class).setBurning(true);
+                        return;
+                    }
+                }
+            }
+            player.getComponent(EnvironmentStatsComponent.class).setBurning(false);
+        }
     }
 
     /**

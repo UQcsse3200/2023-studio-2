@@ -70,7 +70,6 @@ public class ExplosivesFactory {
         newLandmine.addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new ExplosiveComponent(landmineConfig))
                 .addComponent(new TextureRenderComponent(texture))
-                .addComponent(new HealthBarComponent(true))
                 .addComponent(new ProximityTriggerComponent(EnemyFlag.class, 1f,
                         () -> newLandmine.getEvents().trigger("explode")))
                 .addComponent(new SaveableComponent<>(landmine -> {

@@ -13,6 +13,7 @@ import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.List;
@@ -44,6 +45,7 @@ public class CompanionActions extends Component {
     Vector2 trackPrev;
     int currentTargetIndex = 0;
     boolean inCombat = false;
+
 
     /**
      * Initialise the companion to be facing the player.
@@ -115,6 +117,7 @@ public class CompanionActions extends Component {
 
         //OPTIONAL _ MUST IMPLEMENT: trigger death animation
         entity.getEvents().trigger("companionDeath");
+        entity.getEvents().trigger("standUp");
     }
 
     /**

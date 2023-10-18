@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.explosives.ExplosiveComponent;
-import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.components.flags.EnemyFlag;
-import com.csse3200.game.components.structures.JoinLayer;
-import com.csse3200.game.components.structures.JoinableComponent;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.ExplosiveBarrelConfig;
@@ -75,7 +72,7 @@ public class ExplosivesFactory {
                 .addComponent(new SaveableComponent<>(landmine -> {
                     config.position = landmine.getGridPosition();
                     return config;
-                }, LandmineConfig.class));;
+                }, LandmineConfig.class));
 
         newLandmine.setScale(0.5f,(float) texture.getHeight() / texture.getWidth() * 0.5f);
 

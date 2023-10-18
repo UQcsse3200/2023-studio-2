@@ -27,12 +27,12 @@ import com.csse3200.game.entities.TileEntity;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.ui.QuestBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +53,7 @@ public class MapGameArea extends GameArea{
     private final GdxGame game;
     protected boolean validLoad = true;
     private static boolean freezing;
+    private final InputOverrideComponent inputOverrideComponent;
 
     public MapGameArea(String levelName, String gamearea, TerrainFactory terrainFactory, GdxGame game) {
         try {
@@ -62,6 +63,7 @@ public class MapGameArea extends GameArea{
             logger.error("FAILED TO LOAD GAME IN CONSTRUCTOR - {}", exception.getMessage());
             validLoad = false;
         }
+        inputOverrideComponent = new InputOverrideComponent();
         this.game = game;
         this.terrainFactory = terrainFactory;
     }
@@ -143,7 +145,6 @@ public class MapGameArea extends GameArea{
         Entity ui = new Entity();
         //Ensure non-null
         mapConfig.mapName = mapConfig.mapName == null ? "" : mapConfig.mapName;
-        //ui.addComponent(new GameAreaDisplay(map_config.mapName));
         ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage))
                 .addComponent(new InventoryDisplayComponent());
         QuestBox questBox=new QuestBox("Rescue Astro",skin,stage);
@@ -227,22 +228,22 @@ public class MapGameArea extends GameArea{
 
         // Left
         spawnEntityAt(
-                ObstacleFactory.createWall(ObstacleFactory.WALL_SIZE, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+                ObstacleFactory.createWall(ObstacleFactory.wallSize, worldBounds.y), GridPoint2Utils.ZERO, false, false);
         // Right
         spawnEntityAt(
-                ObstacleFactory.createWall(ObstacleFactory.WALL_SIZE, worldBounds.y),
+                ObstacleFactory.createWall(ObstacleFactory.wallSize, worldBounds.y),
                 new GridPoint2(tileBounds.x, 0),
                 false,
                 false);
         // Top
         spawnEntityAt(
-                ObstacleFactory.createWall(worldBounds.x, ObstacleFactory.WALL_SIZE),
+                ObstacleFactory.createWall(worldBounds.x, ObstacleFactory.wallSize),
                 new GridPoint2(0, tileBounds.y),
                 false,
                 false);
         // Bottom
         spawnEntityAt(
-                ObstacleFactory.createWall(worldBounds.x, ObstacleFactory.WALL_SIZE), GridPoint2Utils.ZERO, false, false);
+                ObstacleFactory.createWall(worldBounds.x, ObstacleFactory.wallSize), GridPoint2Utils.ZERO, false, false);
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
     }
 
@@ -591,6 +592,7 @@ public class MapGameArea extends GameArea{
      */
     private boolean initiateDeathScreen() {
         int lives = getPlayer().getComponent(CombatStatsComponent.class).getLives();
+        ServiceLocator.getInputService().unregister(inputOverrideComponent);
         switch (lives) {
             case 0 -> {
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_0));

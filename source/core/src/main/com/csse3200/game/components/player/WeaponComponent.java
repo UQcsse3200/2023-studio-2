@@ -1,11 +1,9 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.factories.AttackFactory;
 import com.csse3200.game.entities.factories.PlayerWeaponFactory;
 import com.csse3200.game.services.ServiceLocator;
@@ -28,6 +26,7 @@ public class WeaponComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("weaponAttack", this::playerAttacking);
+        entity.getEvents().addListener("weaponPlace", this::playerPlacing);
         entity.getEvents().addListener("changeWeapon", this::updateHolding);
         this.holdingWeapon = null;
         this.updateHolding(WeaponType.MELEE_KATANA);
@@ -58,13 +57,20 @@ public class WeaponComponent extends Component {
                 invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
     }
 
-    private void updateHolding(WeaponType weaponType) {
-        InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
-        WeaponConfig config = invComp.getConfigs().GetWeaponConfig(weaponType);
+    /**
+     * Core function to respond to weapon attacks takes a position and a rotation and spawn an entity
+     * in that direction and begin the animation of the weapon
+     *
+     * @param weaponType    - click position
+     * @param clickPosition - click location of mouse
+     */
+    private void playerPlacing(WeaponType weaponType, Vector2 clickPosition) {
+        float attackDirection = calcRotationAngleInDegrees(entity.getCenterPosition(), clickPosition);
+        makeNewHolding(weaponType, attackDirection);
+    }
 
-        if (config.slotType.equals("building")) {
-            makeNewHolding(weaponType, 0);
-        } else if (this.holdingWeapon != null && !this.holdingWeapon.getDisposed()) {
+    private void updateHolding(WeaponType weaponType) {
+        if (this.holdingWeapon != null && !this.holdingWeapon.getDisposed()) {
             this.holdingWeapon.dispose();
         }
     }

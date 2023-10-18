@@ -66,6 +66,8 @@
     "sounds/playerLow_health.wav",
     "sounds/dodgingAlertSweep.wav",
     "sounds/footStepsInTheForestGround.wav",
+    "sounds/weapons/boomerang.wav",
+    "sounds/weapons/slingshot.wav",
     "sounds/PlayerHealthRecharge.wav",
     "sounds/playerBoostRecharge.wav",
     "sounds/playerDead.wav",
@@ -77,7 +79,11 @@
     "sounds/explosion/landmine.mp3",
     "sounds/turret_shoot.mp3",
     "sounds/ExitButton.wav",
-    "sounds/structurePlace.wav"
+    "sounds/structurePlace.wav",
+    "sounds/weapons/Katana.wav",
+    "sounds/weapons/boomerang.wav",
+    "sounds/weapons/slingshot.wav",
+    "sounds/weapons/beeStringKatana.wav"
   ],
   "particleEffectPaths": [
     "particle-effects/extractor/extractor_rubble_solstite.effect",

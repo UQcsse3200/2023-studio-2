@@ -16,7 +16,7 @@ public class StaticController extends WeaponControllerComponent {
                             float attackDirection,
                             Entity player) {
         super(config, attackDirection, player);
-        this.remainingDuration = config.slotType.equals("building") ? Integer.MAX_VALUE : 20;
+        this.remainingDuration = 25;
         this.player_last_pos = player.getPosition();
     }
 

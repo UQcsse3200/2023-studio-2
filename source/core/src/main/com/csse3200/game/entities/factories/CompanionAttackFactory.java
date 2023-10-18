@@ -18,11 +18,11 @@ import com.csse3200.game.services.ServiceLocator;
 public class CompanionAttackFactory {
     private static final CompanionWeaponConfigs configs = new CompanionWeaponConfigs();
 
-    public static Entity createAttack(CompanionWeaponType weaponType, float initRot, Entity Companion) {
+    public static Entity createAttack(CompanionWeaponType weaponType, float initRot, Entity companion) {
         CompanionWeaponConfig config = configs.GetWeaponConfig(weaponType);
-        CompanionInventoryComponent CompanionInventory = ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class);
-        CompanionInventory.setEquippedCooldown(config.attackCooldown);
-        CompanionInventory.changeEquippedAmmo(-config.ammoUse);
+        CompanionInventoryComponent companionInventory = ServiceLocator.getEntityService().getCompanion().getComponent(CompanionInventoryComponent.class);
+        companionInventory.setEquippedCooldown(config.attackCooldown);
+        companionInventory.changeEquippedAmmo(-config.ammoUse);
 
         int direction = 1;
         switch (weaponType) {
@@ -62,7 +62,7 @@ public class CompanionAttackFactory {
 
             // Set up the PowerUpController
             attack.addComponent(powerUpController);
-            attack.addComponent(new CompanionWeaponTargetComponent(weaponType, Companion));
+            attack.addComponent(new CompanionWeaponTargetComponent(weaponType, companion));
             return attack;
         }
 

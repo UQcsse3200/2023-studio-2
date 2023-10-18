@@ -2,7 +2,6 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;

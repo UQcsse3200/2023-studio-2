@@ -28,7 +28,6 @@ public class PlayerWeaponFactory {
         WeaponConfig config = configs.GetWeaponConfig(weaponType);
         WeaponControllerComponent wepCon = new StaticController(config, attackDirection, player);
 
-
         TextureRenderComponent txrRenComp= new TextureRenderComponent(new Texture(config.imagePath));
         txrRenComp.setRotation(attackDirection);
         if (attackDirection > 90 && attackDirection < 270) {

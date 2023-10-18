@@ -10,6 +10,10 @@ import com.csse3200.game.entities.factories.PlayerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Game area designed for controlling the game flow,
+ * including the introduction of controls, entities and other features.
+ */
 public class ControlGameArea extends MapGameArea {
 
     private static final Logger logger = LoggerFactory.getLogger(ControlGameArea.class);
@@ -17,7 +21,12 @@ public class ControlGameArea extends MapGameArea {
     //private KeyboardInputTutorialStep[] tutorialSteps;
     // private TutorialDialogue tutorialDialogue;
 
-
+    /**
+     * Constructor for ControlGameArea.
+     *
+     * @param terrainFactory Factory to generate terrain for the game area.
+     * @param game Reference to the main game instance.
+     */
     public ControlGameArea(TerrainFactory terrainFactory, GdxGame game) {
         super("controls", "main_area", terrainFactory, game);
     }
@@ -33,6 +42,14 @@ public class ControlGameArea extends MapGameArea {
 //        createKeyboardInputTutorialSteps();
 //        showNextTutorialStep();
     }
+
+    /**
+     * Spawns a player entity into the game area.
+     * The player's configuration is determined by the area's entity configuration.
+     * If no configuration is found, a generic player is spawned.
+     *
+     * @return The created player entity.
+     */
     public Entity spawnPlayer() {
         Entity newPlayer;
         PlayerConfig playerConfig = null;

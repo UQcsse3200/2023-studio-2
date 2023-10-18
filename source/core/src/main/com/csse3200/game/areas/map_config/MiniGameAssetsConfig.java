@@ -1,10 +1,13 @@
 package com.csse3200.game.areas.map_config;
 
 import com.csse3200.game.services.ResourceService;
-
 import java.util.Arrays;
 import java.util.Objects;
 
+
+/**
+ * Used to store all Obstacle Minigame assets
+ */
 public class MiniGameAssetsConfig {
     public String[] texturePaths = null;
     public String[] textureAtlasPaths = null;

@@ -13,6 +13,9 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
 
+import javax.sound.midi.SysexMessage;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+
 /**
  * This is a window which opens when the pause button is pressed. The user is given the choice
  * to either return to the game or exit to the main menu.
@@ -20,7 +23,6 @@ import com.csse3200.game.services.ServiceLocator;
 public class PauseWindow extends Window {
     private final InputOverrideComponent inputOverrideComponent;
     private Entity entity;
-
     public static PauseWindow makeNewPauseWindow(Entity entity) {
         Texture background = new Texture("images/structures/panel.png");
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);

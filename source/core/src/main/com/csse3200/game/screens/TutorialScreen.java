@@ -13,11 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.TutorialGameArea;
 import com.csse3200.game.areas.GameArea;
-import static com.badlogic.gdx.Gdx.app;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
-import com.csse3200.game.components.controls.ControlsScreenActions;
-import com.csse3200.game.components.controls.ControlsScreenDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGamePauseDisplay;
@@ -45,8 +42,6 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.badlogic.gdx.Gdx.app;
-
 public class TutorialScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
     private final GdxGame game;
@@ -63,7 +58,7 @@ public class TutorialScreen extends ScreenAdapter {
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
 
-    TutorialGameArea controlGameArea;
+    TutorialGameArea tutorialGameArea;
 
     /**
      * file paths of textures for screen to load.
@@ -144,13 +139,13 @@ public class TutorialScreen extends ScreenAdapter {
 
     private void generateGameArea() {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-        controlGameArea = new TutorialGameArea(terrainFactory, game);
-        this.allGameAreas.put("primary", controlGameArea);
+        tutorialGameArea = new TutorialGameArea(terrainFactory, game);
+        this.allGameAreas.put("primary", tutorialGameArea);
     }
 
     private void registerServices() {
         logger.debug(String.format("Initialising %s screen services", this.name));
-
+        ServiceLocator.registerGameArea(tutorialGameArea);
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerInputService(new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
         ServiceLocator.registerResourceService(new ResourceService());

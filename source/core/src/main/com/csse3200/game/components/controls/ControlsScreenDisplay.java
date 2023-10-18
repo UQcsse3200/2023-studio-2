@@ -1,23 +1,16 @@
 package com.csse3200.game.components.controls;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.InsertButtons;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-
-import static com.csse3200.game.GdxGame.ScreenType.EXTRACTOR_GAME;
 
 /**
  * A UI component responsible for displaying the controls screen's user interface.
@@ -34,7 +27,6 @@ public class ControlsScreenDisplay extends UIComponent {
         planetTravel = new PlanetTravel(game);
         this.screenType=screenType;
     }
-
 
     @Override
     public void create() {
@@ -62,6 +54,8 @@ public class ControlsScreenDisplay extends UIComponent {
                 logger.debug("Exit button clicked");
                 if (screenType.equals(GdxGame.ScreenType.SETTINGS)) {
                     game.setScreen(GdxGame.ScreenType.SETTINGS);
+                } else if (screenType.equals(GdxGame.ScreenType.TUTORIAL_SCREEN)) {
+                        game.setScreen(GdxGame.ScreenType.TUTORIAL_SCREEN);
                 } else {
                     entity.getEvents().trigger("exitToGame");
                 }

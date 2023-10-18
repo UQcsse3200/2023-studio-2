@@ -2,6 +2,9 @@ package com.csse3200.game.components.controls;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -20,9 +23,8 @@ public class ControlsScreenActions extends Component {
      *
      * @param game The main game instance.
      */
-    public ControlsScreenActions(GdxGame game, int lives) {
+    public ControlsScreenActions(GdxGame game) {
         this.game = game;
-        this.lives = lives;
     }
 
     /**
@@ -90,15 +92,12 @@ public class ControlsScreenActions extends Component {
 
     }
 
-
-
-
     /**
-     * Action to handle the 'exit' event, returning the game to the main menu.
+     * Action to handle the 'exit' event, returning to the current game.
      */
      void onExit() {
          logger.info("Relaunching main game screen");
-         ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", lives);
+         ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", (int) ServiceLocator.getGameStateObserverService().getStateData("player/lives"));
          new PlanetTravel(game).returnToCurrent();
     }
 

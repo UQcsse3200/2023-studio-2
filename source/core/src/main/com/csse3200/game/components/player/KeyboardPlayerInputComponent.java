@@ -15,9 +15,10 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
+
+import java.awt.desktop.SystemSleepEvent;
 import java.util.HashMap;
 import java.util.Timer;
-import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -37,8 +38,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     private Entity player;
     private InventoryComponent playerInventory;
     private int testing = 0;
-    static HashMap<Integer, Integer> keyFlags = new HashMap<>();
-    Vector2 lastMousePos = new Vector2(0, 0);
+    private static HashMap<Integer, Integer> keyFlags = new HashMap<>();
+    private Vector2 lastMousePos = new Vector2(0, 0);
 
     public KeyboardPlayerInputComponent() {
         super(5);
@@ -52,6 +53,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     public boolean isWindowOpen() {
         for (Actor actor : ServiceLocator.getRenderService().getStage().getActors()) {
             if (actor instanceof Window && actor.isVisible()) {
+                System.out.println("already open");
                 return true;
             }
         }
@@ -114,7 +116,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             }
             case Keys.ESCAPE -> {
                 for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
-                    mainGame.getEvents().trigger("pause");
+                        mainGame.getEvents().trigger("pause");
                 }
                 return true;
             }

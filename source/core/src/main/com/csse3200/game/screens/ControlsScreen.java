@@ -22,7 +22,6 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGamePauseDisplay;
 import com.csse3200.game.components.mainmenu.InsertButtons;
-import com.csse3200.game.components.player.DeathScreenActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -46,8 +45,6 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.badlogic.gdx.Gdx.app;
-
 public class ControlsScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
     private final GdxGame game;
@@ -62,7 +59,7 @@ public class ControlsScreen extends ScreenAdapter {
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
 
-    ControlGameArea controlGameArea;
+    private ControlGameArea controlGameArea;
 
     /**
      * file paths of textures for screen to load.
@@ -153,7 +150,7 @@ public class ControlsScreen extends ScreenAdapter {
 
     private void registerServices() {
         logger.debug(String.format("Initialising %s screen services", this.name));
-
+        ServiceLocator.registerGameArea(controlGameArea);
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerInputService(new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
         ServiceLocator.registerResourceService(new ResourceService());
@@ -262,12 +259,9 @@ public class ControlsScreen extends ScreenAdapter {
                 .addComponent(new MainGamePauseDisplay(this.game.getScreenType()))
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
-                .addComponent(new ControlsScreenActions(game, (int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")))
+                .addComponent(new ControlsScreenActions(game))
                 .addComponent(new TerminalDisplay());
-
         ServiceLocator.getEntityService().register(ui);
-
-
     }
 
     /**

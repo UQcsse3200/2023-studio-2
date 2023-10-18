@@ -4,22 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.mapConfig.ConfigLoader;
-import com.csse3200.game.areas.mapConfig.GameConfig;
-import com.csse3200.game.areas.mapConfig.InvalidConfigException;
+import com.csse3200.game.areas.map_config.ConfigLoader;
+import com.csse3200.game.areas.map_config.GameConfig;
+import com.csse3200.game.areas.map_config.InvalidConfigException;
 import com.csse3200.game.screens.PlanetScreen;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.ui.Popups.ChoicePopup;
 import com.csse3200.game.ui.Popups.PopupBox;
 import com.csse3200.game.utils.LoadUtils;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.screens.TutorialScreen;
-import com.csse3200.game.services.GameStateObserver;
-import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.MainAlert;
-import com.csse3200.game.ui.Popups.PopupBox;
 import com.csse3200.game.ui.TitleBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +54,7 @@ public class MainMenuActions extends Component {
   private void loadGameConfig() {
       logger.info("Loading in GameConfig");
 
-      GameConfig gameConfig = null;
+      GameConfig gameConfig;
       try {
           gameConfig = ConfigLoader.loadGame();
           if (gameConfig.levelNames.isEmpty()) throw new InvalidConfigException(LoadUtils.NO_LEVELS_ERROR);
@@ -98,7 +93,7 @@ public class MainMenuActions extends Component {
       loadGameConfig();
 
     logger.info("Loading Story");
-    game.setScreen(GdxGame.ScreenType.INITIALL_SCREEN);
+    game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN);
   }
 
   /**

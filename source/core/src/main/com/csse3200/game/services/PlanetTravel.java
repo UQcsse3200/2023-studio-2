@@ -1,5 +1,6 @@
 package com.csse3200.game.services;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.screens.PlanetScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ public class PlanetTravel {
      */
     public PlanetTravel(GdxGame game) {
         this.game = game;
-        ServiceLocator.registerGameStateObserverService(new GameStateObserver()); // TODO: Can be removed once map button is removed from main menu
+        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
     }
 
     /**
@@ -36,15 +37,9 @@ public class PlanetTravel {
     public void beginInstantTravel() {
         String nextPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
         ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", nextPlanet);
-        if (!nextPlanet.equals("blazes_refuge")) {
-            //TODO: MAKE SHOW WIN SCREEN?
-            PlanetScreen planet = new PlanetScreen(game, nextPlanet);
-            ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", planet.getNextPlanetName());
-            game.setScreen(planet);
-        } else {
-            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-            logger.info("FINISHED GAME! - Returning to main menu");
-        }
+        PlanetScreen planet = new PlanetScreen(game, nextPlanet);
+        ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", planet.getNextPlanetName());
+        game.setScreen(planet);
     }
 
     /**
@@ -53,6 +48,8 @@ public class PlanetTravel {
     public void returnToCurrent() {
         String currentPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
         game.setScreen(new PlanetScreen(game, currentPlanet));
+        ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setHealth(100);
+        ServiceLocator.getEntityService().getCompanion().getComponent(CombatStatsComponent.class).setHealth(50);
     }
 
     /**

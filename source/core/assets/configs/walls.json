@@ -1,6 +1,7 @@
 {
   "basic": {
     "health": 200,
+    "maxHealth": 200,
     "spritePath": "images/structures/dirt_wall.atlas",
     "sounds": {
       "soundsMap": {
@@ -10,6 +11,7 @@
   },
   "intermediate": {
     "health": 400,
+    "maxHealth": 400,
     "spritePath": "images/structures/stone_wall.atlas",
     "sounds": {
       "soundsMap": {
@@ -18,8 +20,9 @@
     }
   },
     "gate": {
-        "health": 200,
-        "spritePath": "images/structures/gate.atlas",
+      "health": 200,
+      "maxHealth": 200,
+      "spritePath": "images/structures/gate.atlas",
       "sounds": {
         "soundsMap": {
           "wallHeal": "sounds/Healing/HealingWalls.mp3"

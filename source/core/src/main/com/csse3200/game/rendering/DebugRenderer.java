@@ -15,7 +15,6 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /** Provides functionality to draw lines/shapes to the screen for debug purposes. */
@@ -140,7 +139,7 @@ public class DebugRenderer {
    * @param tileSize Size of each cell in the grid
    * @param fillColor Color to fill the cells with
    */
-  public void drawFillSpecificGrids(HashMap<GridPoint2, Entity> gameAreaGrids, float tileSize, Color fillColor) {
+  public void drawFillSpecificGrids(Map<GridPoint2, Entity> gameAreaGrids, float tileSize, Color fillColor) {
     ensureCapacity();
 
     // Create a new color based on fillColor but with reduced opacity (e.g., 50% opacity)
@@ -184,7 +183,7 @@ public class DebugRenderer {
     if (ServiceLocator.getGameArea() != null) {
       GridPoint2 mapBounds = ServiceLocator.getGameArea().getTerrain().getMapBounds(0);
       float tileSize = ServiceLocator.getGameArea().getTerrain().getTileSize();
-      HashMap<GridPoint2, Entity> fillerGrids = ServiceLocator.getGameArea().getAreaEntities();
+      Map<GridPoint2, Entity> fillerGrids = ServiceLocator.getGameArea().getAreaEntities();
       drawGrid(0, 0, mapBounds.x, mapBounds.y, tileSize, Color.WHITE);
       drawFillSpecificGrids(fillerGrids, tileSize, Color.RED);
     }
@@ -193,15 +192,9 @@ public class DebugRenderer {
     shapeRenderer.begin(ShapeType.Line);
     for (int i = 0; i < requestCount; i++) {
       switch (drawRequests[i].drawRequestType) {
-        case LINE:
-          renderLine(drawRequests[i]);
-          break;
-        case RECT:
-          renderRect(drawRequests[i]);
-          break;
-        default:
-          logger.error("Attempting to draw unsupported shape!");
-          break;
+        case LINE -> renderLine(drawRequests[i]);
+        case RECT -> renderRect(drawRequests[i]);
+        default -> logger.error("Attempting to draw unsupported shape!");
       }
     }
     shapeRenderer.end();
@@ -245,7 +238,6 @@ public class DebugRenderer {
     public Vector2 pos;
     public Color color;
     public float lineWidth;
-
     public Vector2 end;
   }
 

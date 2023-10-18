@@ -8,11 +8,7 @@ import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.ui.DialogComponent;
-import com.badlogic.gdx.utils.Timer;
-import com.csse3200.game.components.ships.ShipActions;
 import com.csse3200.game.components.Component;
-//reference com.csse3200.game.components.TouchAttackComponent;
 
 /**
  * SpaceCollideDamageComponent is responsible for dealing damage to entities in the space obstacle
@@ -28,7 +24,6 @@ public class SpaceCollideDamageComponent extends Component {
     private short targetLayer;
     private float knockbackForce = 1f;
     private HitboxComponent hitboxComponent;
-    private boolean leftContact;
 
     /**
      * Creates a SpaceCollideDamageComponent that deals damage on target entity (Ship) on collision,
@@ -44,6 +39,7 @@ public class SpaceCollideDamageComponent extends Component {
     /**
      * Creates listener that checks if current entity and a target entity come into contact.
      */
+    @Override
     public void create() {
         // Listen for collision events
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
@@ -52,7 +48,6 @@ public class SpaceCollideDamageComponent extends Component {
         // Retrieve necessary components
         hitboxComponent = entity.getComponent(HitboxComponent.class);
 
-        leftContact = true;
     }
 
     /**
@@ -77,23 +72,20 @@ public class SpaceCollideDamageComponent extends Component {
         Entity source = ((BodyUserData) me.getBody().getUserData()).entity;
 
         ShipActions targetStats = target.getComponent(ShipActions.class);
-        //CombatStatsComponent sourceStats = source.getComponent(CombatStatsComponent.class);
-        leftContact = false;
         // If No Hitbox
         if (target.getComponent(HitboxComponent.class) == null) {
             return;
         }
         //Will probably need to check for entities of enemy and other layer types
-        hitOnce(target, source, targetStats);
+        hitOnce(target, targetStats);
     }
 
     /**
      * Helper Method that deals damage and knockback to Target
      * @param target The Targeted Entity, usually the Ship Entity
-     * @param source The current Entity
      * @param targetStats The targeted Entity's stats contained in ShipActions, must be Ship entity
      */
-    private void hitOnce(Entity target, Entity source, ShipActions targetStats) {
+    private void hitOnce(Entity target, ShipActions targetStats) {
         if (targetStats != null) {
 
             //deals damage to target
@@ -117,6 +109,5 @@ public class SpaceCollideDamageComponent extends Component {
      */
     private void onCollisionEnd(Fixture me, Fixture other) {
         // Stop dealing tick damage
-        leftContact = true;
     }
 }

@@ -12,7 +12,6 @@ import com.csse3200.game.utils.math.Vector2Utils;
  * and when triggered should call methods within this class.
  */
 public class ShipActions extends Component {
-    private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
     private int maxHealth;
     private int maxFuel;
     private final int currentAcceleration;
@@ -23,24 +22,15 @@ public class ShipActions extends Component {
     private boolean moving = false;
     private AnimationRenderComponent animator;
 
-    //These are used for determining ship orientation by ship velocity direction
-    private final double up = 90;
-    private final double down = -90;
-    private final double left = 180;
-    private final double right = 0;
-    private final double left2 = -180;
-
     /**
      * Initialize the health, fuel and acceleration of the ship
-     * @param health
-     * @param fuel
      * @param acceleration Magnitude of force applied to the ship
      */
-    public ShipActions(int health, int fuel, int acceleration) {
+    public ShipActions(int acceleration) {
         //temporary value of health to 1 for testing
-        this.maxHealth = health - health + 1;
+        this.maxHealth =  1;
         //temporary value of fuel to 20 for testing
-        this.maxFuel = fuel - fuel + 20;
+        this.maxFuel = 20;
         this.currentAcceleration = acceleration;
     }
 
@@ -59,8 +49,6 @@ public class ShipActions extends Component {
 
         body = physicsComponent.getBody();
         body.setLinearDamping(0); //prevents the ship from stopping for no physical reason
-        //body.setFixedRotation(false);
-
     }
 
     /**
@@ -81,22 +69,10 @@ public class ShipActions extends Component {
      */
     private void updateSpeed() {
 
-        //TBD for all these comments, testing movement.
-        //Body body = physicsComponent.getBody();
-        //this.currentVelocity = this.body.getLinearVelocity().sub(flyDirection.cpy().scl(1));
-        //Vector2 desiredVelocity = flyDirection.cpy().scl(MAX_SPEED);
-        //impulse = (desiredVel - currentVel) * mass
-        //uses impulse to apply velocity instantly
         if (this.maxFuel > 0) {
             boost();
-        } else {
-            // do nothing
         }
-
         this.playAnimation(body.getLinearVelocity());
-
-
-
     }
 
     /**
@@ -105,7 +81,6 @@ public class ShipActions extends Component {
     void boost() {
         Vector2 currentVelocity = this.flyDirection.cpy();
         body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration), true);
-        //scl (or scalar) multiply the Vector2 velocity of body by a scalar. Belongs to Vector2.
     }
 
     /**
@@ -164,6 +139,12 @@ public class ShipActions extends Component {
 
         double currentOrientation = Vector2Utils.angleTo(direction);
 
+        //These are used for determining ship orientation by ship velocity direction
+        double up = 90;
+        double left = 180;
+        double down = -90;
+        double right = 0;
+        double left2 = -180;
         if (currentOrientation == up) {
             //
             animator.startAnimation("Ship_UpStill");

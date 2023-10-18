@@ -11,7 +11,6 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
  */
 public class AstroAnimationController extends Component {
     private AnimationRenderComponent animator;
-    private TextureAtlas atlas;
 
     float animationTimer = 0f;
     float animationDuration = 10f; // Adjust this to control animation speed.

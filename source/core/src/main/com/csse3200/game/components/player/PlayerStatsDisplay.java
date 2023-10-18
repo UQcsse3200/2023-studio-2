@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
@@ -25,8 +26,6 @@ import java.util.TimerTask;
  */
 public class PlayerStatsDisplay extends UIComponent {
   private final String labelStyle;
-  private Table container;
-  private Table statsTable;
   private final int maxHealth;
   private float healthBarWidth;
   private float dodgeBarWidth;
@@ -34,6 +33,9 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label dodgeLabel;
   private Image healthBarFill;
   private Image dodgeBarFill;
+  private TextureRegionDrawable highHealth;
+  private TextureRegionDrawable medHealth;
+  private TextureRegionDrawable lowHealth;
   private Label maxLivesLabel;
   private TextureRegion hearts;
   private Image livesBarFill;
@@ -78,13 +80,13 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   private void addActors() {
     // Create parent table to hold all elements
-    container = new Table();
+    Table container = new Table();
     container.top().left();
     container.setFillParent(true);
     container.padTop(20f).padLeft(190f);
 
     // Create table to hold the health bar and dodge bar
-    statsTable = new Table();
+    Table statsTable = new Table();
     statsTable.top().left();
     container.setFillParent(true);
 
@@ -149,6 +151,9 @@ public class PlayerStatsDisplay extends UIComponent {
     Image healthBarFrame;
     healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/statbar.png", Texture.class));
     healthBarFill = new Image(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
+    highHealth = new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset("images/player/bar-fill.png", Texture.class));
+    medHealth = new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset("images/player/bar-fill4.png", Texture.class));
+    lowHealth = new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset("images/player/bar-fill5.png", Texture.class));
 
     // Creates table to hold and set width of health bar
     Table healthBarTable = new Table();
@@ -269,6 +274,15 @@ public class PlayerStatsDisplay extends UIComponent {
     // Update the health bar width
     healthBarWidth = 280f * health / maxHealth;
     healthBarFill.setSize(healthBarWidth, 30f);
+
+    float healthPercent = (float) health/maxHealth;
+    if (healthPercent > 0.4) {
+      healthBarFill.setDrawable(highHealth);
+    } else if (healthPercent > 0.2) {
+      healthBarFill.setDrawable(medHealth);
+    } else {
+      healthBarFill.setDrawable(lowHealth);
+    }
   }
 
   /**
@@ -281,6 +295,10 @@ public class PlayerStatsDisplay extends UIComponent {
 
     // Update the dodge bar width
     dodgeBarFill.setSize(0, 30f);
+
+    // Update dodge bar colour
+    dodgeBarFill.setDrawable(new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset("images/player/bar-fill3.png", Texture.class)));
+
     // Create refill animation
     dodgeBarFill.addAction(
             Actions.sequence(
@@ -298,6 +316,10 @@ public class PlayerStatsDisplay extends UIComponent {
     // Update dodge label
     CharSequence dodgeText = "Ready!";
     dodgeLabel.setText(dodgeText);
+
+    // Update dodge bar colour
+    dodgeBarFill.setDrawable(new TextureRegionDrawable(ServiceLocator.getResourceService().getAsset("images/player/bar-fill2.png", Texture.class)));
+
     // Update dodge bar width
     dodgeBarFill.setSize(dodgeBarWidth - 40f, 30f);
   }
@@ -317,9 +339,13 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param maxAmmo the max ammo of the weapon equipped
    */
   public void updateAmmo(int currentAmmo, int maxAmmo, int ammoUse) {
-    // Updates the numerical ammunition values
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-    if (ammoUse == 0) {
+
+    if (currentAmmo == 0) {
+      ammoText = "PRESS Q";
+    } else if (inventory.getReloading()) {
+      ammoText = " RLD ";
+    } else if (ammoUse == 0) {
       ammoText = "    -";
     }
     ammoLabel.setText(ammoText);

@@ -52,7 +52,7 @@ class LandmineToolTest {
     // only method overridden in class
     @Test
     void testCreateStructure() {
-        var tool = new LandmineTool(new ObjectMap<>());
+        var tool = new LandmineTool(new ObjectMap<>(), 5f, "texture.png", 0);
 
         assertNotNull(tool.createStructure(player));
     }
@@ -63,7 +63,7 @@ class LandmineToolTest {
         cost.put("Durasteel", 10);
         cost.put("Solstite", 5);
 
-        var tool = new LandmineTool(cost);
+        var tool = new LandmineTool(cost, 5f, "texture.png", 0);
 
         assertNotNull(tool.createStructure(player));
     }

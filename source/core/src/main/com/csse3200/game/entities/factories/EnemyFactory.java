@@ -69,7 +69,6 @@ public class EnemyFactory {
    * also helps in triggering sound
    */
   public static Entity createEnemy(EnemyConfig config) {
-    System.out.println(config.type);
     AnimationRenderComponent animator;
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
@@ -86,7 +85,6 @@ public class EnemyFactory {
 
     TextureAtlas atlas = new TextureAtlas(config.spritePath);
     animator = new AnimationRenderComponent(atlas);
-
 
     // BASE SETUP
     Entity enemy =
@@ -106,6 +104,7 @@ public class EnemyFactory {
                     1.5f))
             .addComponent(new CombatStatsComponent(
                     config.health,
+                    config.maxHealth,
                     config.baseAttack,
                     config.attackMultiplier,
                     config.isImmune))
@@ -117,7 +116,7 @@ public class EnemyFactory {
     enemy.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.4f,0.4f), PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM);
 
     // TYPE
-    EnemyTypeSelector(enemy, config.type);
+    enemyTypeSelector(enemy, config.type);
 
     enemy.addComponent(aiComponent);
 
@@ -179,17 +178,15 @@ public class EnemyFactory {
    * @param enemy The enemy to work with
    * @param type The type the enemy needs to be
    */
-  private static void EnemyTypeSelector(Entity enemy, EnemyType type) {
+  private static void enemyTypeSelector(Entity enemy, EnemyType type) {
     HitboxComponent hitboxComponent = new HitboxComponent();
     enemy.addComponent(hitboxComponent);
     if (type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     }
-
     if (type == EnemyType.Melee) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
     }
-
   }
 
   /**

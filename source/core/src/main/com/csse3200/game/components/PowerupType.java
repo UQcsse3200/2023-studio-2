@@ -8,5 +8,8 @@ public enum PowerupType {
     TEMP_IMMUNITY,
     DOUBLE_DAMAGE,
     SNAP,
-    DEATH_POTION
+    DEATH_POTION,
+    HEALTH,
+    MANA;
+
 }

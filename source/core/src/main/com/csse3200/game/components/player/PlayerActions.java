@@ -7,12 +7,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.structures.tools.PlacementValidity;
+import com.csse3200.game.components.structures.tools.ToolResponse;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.services.GameStateInteraction;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -21,9 +20,8 @@ import com.csse3200.game.services.ServiceLocator;
  * and when triggered should call methods within this class.
  */
 public class PlayerActions extends Component {
-    private static Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
+    private Vector2 maxspeed = new Vector2(3f, 3f); // Metres per second
 
-    private final EntityService entityService = new EntityService();
     private PhysicsComponent physicsComponent;
     Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean moving = false;
@@ -37,10 +35,10 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("walkStop", this::stopWalking);
         entity.getEvents().addListener("attack", this::attack);
         entity.getEvents().addListener("place", this::place);
+        entity.getEvents().addListener("selectToolIndex", this::selectToolIndex);
         entity.getEvents().addListener("remove", this::remove);
         entity.getEvents().addListener("dodged", this::dodged);
         entity.getEvents().addListener("change_structure", this::changeStructure);
-        GameStateInteraction gameStateInteraction = new GameStateInteraction();
     }
 
     @Override
@@ -71,7 +69,7 @@ public class PlayerActions extends Component {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
         float speedMult = MapGameArea.getSpeedMult();
-        Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(MAX_SPEED.x * speedMult, MAX_SPEED.y * speedMult));
+        Vector2 desiredVelocity = walkDirection.cpy().scl(new Vector2(maxspeed.x * speedMult, maxspeed.y * speedMult));
         desiredVelocity.scl(freezeFactor); // Reduce speed when the condition is true (always true for now)
 
         if(sliding) {
@@ -128,7 +126,7 @@ public class PlayerActions extends Component {
      * @param y The vertical speed
      */
     public void setSpeed(float x, float y) {
-        MAX_SPEED = new Vector2(x, y);
+        maxspeed = new Vector2(x, y);
     }
 
     /**
@@ -137,7 +135,7 @@ public class PlayerActions extends Component {
      * @return The maximum speed in Vector2 format.
      */
     public Vector2 getSpeed() {
-        return MAX_SPEED;
+        return maxspeed;
     }
 
     /**
@@ -149,11 +147,21 @@ public class PlayerActions extends Component {
      */
     void place(int screenX, int screenY) {
         // gets the gridPosition of the wall from the screen click
-        var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
+        var location = ServiceLocator.getTerrainService().screenCoordsToGameCoords(screenX, screenY);
         GridPoint2 gridPosition = new GridPoint2((int)location.x, (int)location.y);
 
         var structurePicker = getEntity().getComponent(StructureToolPicker.class);
         structurePicker.interact(gridPosition);
+    }
+
+    /**
+     * Selects the tool at the given index in the structure picker.
+     *
+     * @param index - the index of the tool to select.
+     */
+    void selectToolIndex(int index) {
+        var structurePicker = getEntity().getComponent(StructureToolPicker.class);
+        structurePicker.selectIndex(index);
     }
 
     /**
@@ -163,12 +171,22 @@ public class PlayerActions extends Component {
      * @param screenY - the y coord of teh screen
      */
     void remove(int screenX, int screenY) {
-        var location = ServiceLocator.getTerrainService().ScreenCoordsToGameCoords(screenX, screenY);
+        var location = ServiceLocator.getTerrainService().screenCoordsToGameCoords(screenX, screenY);
         GridPoint2 gridPosition = new GridPoint2((int)location.x, (int)location.y);
         Entity structure = ServiceLocator.getStructurePlacementService().getStructureAt(gridPosition);
 
         if (structure != null) {
-            ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
+            var distance = this.getEntity().getCenterPosition().scl(2).dst(new Vector2(gridPosition.x, gridPosition.y));
+            float removalRange = 5.0f;
+            if (distance <= removalRange) {
+                ServiceLocator.getStructurePlacementService().removeStructureAt(gridPosition);
+            } else {
+                ToolResponse response = new ToolResponse(PlacementValidity.OUT_OF_RANGE, "Out of range.");
+                logger.error(response.getMessage());
+                this.getEntity().getEvents().trigger("displayWarningAtPosition", response.getMessage(),
+                        new Vector2((float) gridPosition.x / 2, (float) gridPosition.y / 2));
+                this.getEntity().getEvents().trigger("playSound", "alert");
+            }
         }
     }
 

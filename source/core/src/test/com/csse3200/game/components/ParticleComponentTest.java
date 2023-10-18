@@ -112,17 +112,17 @@ class ParticleComponentTest {
 
         component.stopEffect("effect_1");
 
-        verify(effect1, times(1)).reset();
+        verify(effect1, times(1)).allowCompletion();
 
 
         component.stopEffect("effect_2");
 
-        verify(effect2, times(1)).reset();
+        verify(effect2, times(1)).allowCompletion();
 
 
         component.stopEffect("effect_3");
 
-        verify(effect3, times(1)).reset();
+        verify(effect3, times(1)).allowCompletion();
     }
 
     @Test

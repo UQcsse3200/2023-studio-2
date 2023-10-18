@@ -8,8 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.backgrounds.StarBackground;
+import com.csse3200.game.components.mainmenu.MainMenuStarBackground;
 import com.csse3200.game.components.settingsmenu.SettingsMenuDisplay;
+import com.csse3200.game.components.settingsmenu.SettingsStarBackground;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -22,7 +23,6 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 /**
  * The game screen containing the settings.
@@ -100,6 +100,9 @@ public class SettingsScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         renderer.dispose();
+        ServiceLocator.getRenderService().dispose();
+        ServiceLocator.getEntityService().dispose();
+
         ServiceLocator.clear();
     }
 
@@ -112,7 +115,8 @@ public class SettingsScreen extends ScreenAdapter {
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
         ui.addComponent(new SettingsMenuDisplay(game)).addComponent(new InputDecorator(stage, 10));
+        stage.addActor(new SettingsStarBackground(15));
         ServiceLocator.getEntityService().register(ui);
-        stage.addActor(new StarBackground(20));
+
     }
 }

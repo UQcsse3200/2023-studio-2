@@ -21,6 +21,12 @@ import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.input.InputService;
+import com.csse3200.game.input.InputFactory;
+import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
@@ -33,15 +39,14 @@ import org.slf4j.LoggerFactory;
  */
 public class SpaceMapScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(SpaceMapScreen.class);
-
-    private static final Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
-    private final Entity ship;
-    private final Entity goal;
+    private static Vector2 CAMERA_POSITION = new Vector2(15f, 10f);
+    private Entity ship;
+    private Entity goal;
     private final GdxGame game;
-    private final Renderer renderer;
-    private final PhysicsEngine physicsEngine;
+    private Renderer renderer;
+    private PhysicsEngine physicsEngine;
     private Label distanceLabel;
-    private final DistanceDisplay distanceDisplay;
+    private DistanceDisplay distanceDisplay;
 
     /**
      * Method for creating the space map screen for the obstacle minigame
@@ -49,24 +54,19 @@ public class SpaceMapScreen extends ScreenAdapter {
      */
     public SpaceMapScreen(GdxGame game) {
         this.game = game;
-        physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
-
-        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
-
+        this.loadServices();
         //Vector2 shipPos = ServiceLocator.getEntityService().getEntitiesByComponent(ShipActions.class).get(0).getPosition();
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
-
         loadAssets();
         createUI();
-
         logger.debug("Initialising space minigame screen entities");
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         SpaceGameArea spaceGameArea= new SpaceGameArea(terrainFactory);
         spaceGameArea.create();
-        ship = ((SpaceGameArea) spaceGameArea).getShip();
-        goal = ((SpaceGameArea) spaceGameArea).getGoal();
+        this.ship = ((SpaceGameArea) spaceGameArea).getShip();
+        this.goal = ((SpaceGameArea) spaceGameArea).getGoal();
         distanceDisplay = new DistanceDisplay();
         distanceDisplay.create();
         distanceDisplay.updateDistanceUI(0);
@@ -85,17 +85,33 @@ public class SpaceMapScreen extends ScreenAdapter {
         // Calculate the distance between the ship and the goal
         float distance = SpaceGameArea.calculateDistance(ship, goal);
         distanceDisplay.updateDistanceUI(distance);
-        Exitonc(distance);
+        exitonc(distance);
         renderer.render();
-
     }
 
+    /**
+     * Register and load all required services
+     */
+    public void loadServices() {
+        //someone forgot to add the services
+        ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerInputService(new InputService());
+        ServiceLocator.registerInputService(new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
+
+        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
+
+    }
     /**
      * Method for exiting from the obstacle minigame
      * to the main screen of the game
      * @param d Distance of the spaceship from the exit goal
      */
-    public void Exitonc(float d)
+    public void exitonc(float d)
     {
         if(d < 1.0) {
             this.dispose();

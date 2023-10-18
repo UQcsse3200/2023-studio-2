@@ -29,8 +29,10 @@ import com.csse3200.game.services.ServiceLocator;
             CombatStatsComponent healthStats = entity.getComponent(CombatStatsComponent.class);
             if (healthStats.isDead()) {
                 animator.startAnimation("animateBroken");
+                entity.getEvents().trigger("stopEffect", "rubble");
             } else {
                 animator.startAnimation("animateExtracting");
+                entity.getEvents().trigger("startEffect", "rubble");
             }
         }
     }

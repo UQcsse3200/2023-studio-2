@@ -1,7 +1,12 @@
 package com.csse3200.game.components.maingame;
 
+import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.EnvironmentStatsComponent;
+import com.csse3200.game.windows.PauseWindow;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.PlanetTravel;
@@ -16,20 +21,44 @@ import org.slf4j.LoggerFactory;
 public class MainGameActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
   private GdxGame game;
+  private Array<Entity> entityList;
   private static final PlayerConfig config =
           FileLoader.readClass(PlayerConfig.class, "configs/player.json");
 
+  /**
+   * Initiates MainGameActions using game parameter.
+   * @param game current game initialised.
+   */
   public MainGameActions(GdxGame game) {
     this.game = game;
   }
 
   @Override
   public void create() {
-    entity.getEvents().addListener("exit", this::onExit);
+    entity.getEvents().addListener("pause", this::onPauseButton);
     entity.getEvents().addListener("returnPlanet", this::onReturnPlanet);
+    entity.getEvents().addListener("exitPressed", this::onExit);
+    entity.getEvents().addListener("returnPressed", this::onReturnButton);
+    entity.getEvents().addListener("controlsPressed", this::onControlsButton);
   }
   /**
-   * Swaps to the Main Menu screen.
+   * Opens pause window.
+   */
+  private void onPauseButton() {
+    logger.info("Opening Pause Menu");
+    PauseWindow pauseWindow = PauseWindow.makeNewPauseWindow(entity);
+    entityList = ServiceLocator.getEntityService().getEntities();
+    for (Entity entity : entityList) {
+      if (entity.getId() != getEntity().getId()) {
+        entity.setEnabled(false);
+      }
+    }
+    ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(true);
+    ServiceLocator.getRenderService().getStage().addActor(pauseWindow);
+}
+
+  /**
+   * Exits to Main Menu screen. Closes pause window.
    */
   private void onExit() {
     logger.info("Exiting main game screen");
@@ -37,9 +66,32 @@ public class MainGameActions extends Component {
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 
+  /**
+   * Exits to Controls screen. Closes pause window.
+   */
+  private void onControlsButton() {
+    logger.debug("Control Screen button clicked");
+    game.setScreen(GdxGame.ScreenType.CONTROL_SCREEN);
+  }
+
+  /**
+   * Returns to current planet screen.
+   */
   protected void onReturnPlanet() {
     logger.info("Exiting to current planet screen");
     ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", config.lives);
     new PlanetTravel(game).returnToCurrent();
+    ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
+  }
+
+  /**
+   * Returns to current game. Closes pause window.
+   */
+  protected void onReturnButton() {
+    logger.info("Returning to current game");
+    for (Entity entity : entityList) {
+      entity.setEnabled(true);
+    }
+    ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
   }
 }

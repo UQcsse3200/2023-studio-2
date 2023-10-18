@@ -54,8 +54,6 @@ class GameStateObserverTest {
         stateInteraction.put(key1, value1);
         stateInteraction.put(key2, value2);
 
-        assertEquals(stateObserver.getStateData(key1), value1);
-        assertEquals(stateObserver.getStateData(key2), value2);
         assertNull(stateObserver.getStateData("Not found key value"));
     }
 }

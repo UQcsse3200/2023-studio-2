@@ -229,7 +229,7 @@ public class SpaceNavigationScreen implements Screen {
                     if (planetType == 1) {
                         planetTravel.returnToCurrent();
                     } else {
-                        planetTravel.beginInstantTravel();
+                        game.setScreen(GdxGame.ScreenType.SPACEMINI_SCREEN);
                     }
                 }
 

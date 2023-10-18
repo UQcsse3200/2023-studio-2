@@ -9,6 +9,20 @@ import com.csse3200.game.entities.buildables.WallType;
  */
 public class WallConfig extends BaseEntityConfig {
     public int health = 0;
+    public int maxHealth = 0;
     public WallType type;
     public SoundsConfig sounds;
+
+    public WallConfig() {
+
+    }
+
+    public WallConfig(WallConfig config) {
+        super(config);
+
+        health = config.health;
+        maxHealth = config.maxHealth;
+        type = config.type;
+        sounds = config.sounds;
+    }
 }

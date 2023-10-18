@@ -262,6 +262,10 @@ public class Entity {
     ServiceLocator.getEntityService().unregister(this);
   }
 
+  /**
+   * Getter method to check if an entity can be disposed
+   * @return true if the entity has already been disposed otherwise false
+   */
   public boolean getDisposed() {
     return disposed;
   }

@@ -9,14 +9,15 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.Companion.CompanionWeaponComponent;
-import com.csse3200.game.components.Companion.*;
+import com.csse3200.game.components.companion.CompanionWeaponComponent;
+import com.csse3200.game.components.companion.*;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionConfig;
+import com.csse3200.game.entities.configs.CompanionWeaponConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -24,7 +25,8 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Factory to create a companion entity.
@@ -32,7 +34,8 @@ import com.csse3200.game.rendering.AnimationRenderComponent;import com.csse3200.
 public class CompanionFactory {
     private static final CompanionConfig config =
             FileLoader.readClass(CompanionConfig.class, "configs/companion.json");
-
+    private static final CompanionWeaponConfigs weaponConfigs =
+            new CompanionWeaponConfigs();
     public static Entity createCompanion(){
        return createCompanion(config);
     }
@@ -68,17 +71,22 @@ public class CompanionFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.COMPANION))
                         .addComponent(new ColliderComponent())
                         .addComponent(new CompanionActions())
-                        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune))
+                        .addComponent(new CombatStatsComponent(config.health, config.maxHealth,
+                                config.baseAttack, config.attackMultiplier, config.isImmune))
                         .addComponent(new CompanionInventoryComponent())
                         .addComponent(inputComponent)
                         .addComponent(animator)
+
                         .addComponent(new HealthBarComponent(true))
                         .addComponent(new CompanionWeaponComponent())
                         /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay(config))
+                        .addComponent(new CompanionInventoryComponent(weaponConfigs))
                         .addComponent(new CompanionInGameAlerts())
                         .addComponent(new CompanionAnimationController())
+                        .addComponent(new CompanionPowerupInventoryComponent())
                         .addComponent(new FollowComponent(player,1f))
+                        .addComponent(new CompanionPowerupActivationDisplay())
                         .addComponent(new InteractionControllerComponent(false));
                          companion.addComponent(new SaveableComponent<>(c -> {
                                CompanionConfig companionConfig = config;

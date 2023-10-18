@@ -4,22 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.entities.TileEntity;
 import com.csse3200.game.entities.configs.BaseEntityConfig;
-import com.csse3200.game.entities.factories.EnvironmentFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
-import com.csse3200.game.entities.factories.ObstacleFactoryTest;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.files.FileLoader;
@@ -37,16 +29,11 @@ import com.csse3200.game.services.StructurePlacementService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -92,7 +79,7 @@ public class PathFinderTest {
         PathFinder.findPath(start, target);
 
         boolean isSameGrid = false;
-        HashMap<GridPoint2, Entity> redGrids = ServiceLocator.getGameArea().getAreaEntities();
+        Map<GridPoint2, Entity> redGrids = ServiceLocator.getGameArea().getAreaEntities();
         Set<PathFinder.Node> closedSet = PathFinder.getClosedSet();
 
         assertEquals(redGrids.size(), closedSet.size() - 2);

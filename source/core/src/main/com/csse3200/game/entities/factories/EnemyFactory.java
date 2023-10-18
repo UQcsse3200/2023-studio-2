@@ -96,6 +96,7 @@ public class EnemyFactory {
                     1.5f))
             .addComponent(new CombatStatsComponent(
                     config.health,
+                    config.maxHealth,
                     config.baseAttack,
                     config.attackMultiplier,
                     config.isImmune))

@@ -6,7 +6,6 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.Map;
 
 /**
  * Used to charge the player resources when a structure is placed and refund

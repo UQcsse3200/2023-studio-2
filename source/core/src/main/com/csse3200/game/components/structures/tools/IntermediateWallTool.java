@@ -16,10 +16,14 @@ public class IntermediateWallTool extends ReplacementTool {
 
     /**
      * Creates a new intermediate wall tool with the given cost.
-     * @param cost - the cost of an intermediate wall.
+     *
+     * @param cost     - the cost of an intermediate wall.
+     * @param range
+     * @param texture  - the texture of this tool.
+     * @param ordering - the ordering of this tool.
      */
-    public IntermediateWallTool(ObjectMap<String, Integer> cost) {
-        super(cost);
+    public IntermediateWallTool(ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
+        super(cost, range, texture, ordering);
 
         snapX = 2;
         snapY = 2;

@@ -20,7 +20,7 @@ public class HomingMissileSprayProjectileController extends ProjectileController
         super.create();
         var explosiveConfig = new ExplosiveConfig();
         explosiveConfig.chainable = false;
-        explosiveConfig.damage = 20;
+        explosiveConfig.baseAttack = 20;
         explosiveConfig.damageRadius = 2.5f;
         explosiveConfig.chainRadius = 3.0f;
         explosiveConfig.effectPath = "particle-effects/explosion/explosion.effect";

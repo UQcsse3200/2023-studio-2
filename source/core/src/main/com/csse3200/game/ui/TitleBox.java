@@ -12,10 +12,24 @@ import com.csse3200.game.entities.Entity;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
 
+/**
+ * A custom dialog box with a title, description, and an OK button.
+ * This dialog is typically used to display information to the player.
+ */
 public class TitleBox extends Dialog {
 
     private GdxGame game;
 
+
+    /**
+     * Creates a new TitleBox with the specified title, description, skin, and window style name.
+     *
+     * @param game             The main game instance.
+     * @param title            The title text displayed at the top of the dialog.
+     * @param description      The description text displayed in the dialog.
+     * @param skin             The skin to use for styling the UI elements.
+     * @param windowStyleName  The name of the window style to use.
+     */
     public TitleBox(GdxGame game, String title, String description, Skin skin, String windowStyleName) {
         super(title, skin, windowStyleName);
         this.game = game;
@@ -65,6 +79,11 @@ public class TitleBox extends Dialog {
         setPosition(0, 0);
     }
 
+    /**
+     * Shows the dialog on the specified stage.
+     *
+     * @param stage The stage to which the dialog will be added.
+     */
     public void showDialog(Stage stage) {
         stage.addActor(this);
     }

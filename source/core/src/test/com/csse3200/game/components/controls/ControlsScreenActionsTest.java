@@ -29,10 +29,7 @@ class ControlsScreenActionsTest {
      */
     @Test
     void onExit() {
-        // Invoke the onExit method
+         //Invoke the onExit method
         // controlsScreenActions.onExit();
-
-        // Verify that the game's screen type is set to SETTINGS
-        // verify(game).setScreen(GdxGame.ScreenType.SETTINGS);
     }
 }

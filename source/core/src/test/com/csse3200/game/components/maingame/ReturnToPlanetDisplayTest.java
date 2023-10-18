@@ -3,7 +3,6 @@ package com.csse3200.game.components.maingame;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.services.ServiceLocator;
@@ -32,7 +31,7 @@ public class ReturnToPlanetDisplayTest {
         Gdx.app = mock(Application.class);
         when(Gdx.app.getType()).thenReturn(Application.ApplicationType.HeadlessDesktop);
 
-        // Initialize the LibGDX headless application
+        // Initialize the LibGDX headless
         game = new GdxGame();
         new HeadlessApplication(game);
 
@@ -53,14 +52,12 @@ public class ReturnToPlanetDisplayTest {
             returnToPlanetDisplay.dispose();
 
             // Verify that specific assets related to the skin have been loaded and unloaded
-            verifyAssetLoaded("your_skin_atlas_path_here"); // Modify with the actual atlas path used in the skin
-            verifyAssetUnloaded("your_skin_atlas_path_here"); // Modify with the actual atlas path used in the skin
+            verifyAssetLoaded("your_skin_atlas_path_here");
+            verifyAssetUnloaded("your_skin_atlas_path_here");
         });
     }
 
     private ReturnToPlanetDisplay createReturnToPlanetDisplay() {
-        // To access the skin, you might need to modify the ReturnToPlanetDisplay class
-        // to provide a method to retrieve the skin or use reflection to access it.
         return new ReturnToPlanetDisplay();
     }
 

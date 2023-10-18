@@ -1,15 +1,11 @@
-
-/**
- * Component used to store information related to combat such as health, attack, etc. Any entities
- * which engage in combat should have an instance of this class registered. This class can be
- * extended for more specific combat needs.
- */
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.utils.Timer;
-import com.csse3200.game.areas.mapConfig.GameAreaConfig;
+import com.csse3200.game.areas.MapGameArea;
+import com.csse3200.game.areas.map_config.GameAreaConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
@@ -17,14 +13,19 @@ import org.slf4j.LoggerFactory;
  * extended for more specific combat needs.
  */
 public class EnvironmentStatsComponent extends Component {
+
+    private static final Logger logger = LoggerFactory.getLogger(EnvironmentStatsComponent.class);
     private Boolean isImmune = false;
 
     private boolean isSafeMap = false;
+    private boolean freezeMap = false;
 
     private int frozenLevel;
+    private boolean burning;
 
     public EnvironmentStatsComponent() {
         this.frozenLevel = 0;
+        this.burning = false;
     }
 
     public int getFrozenLevel() {
@@ -36,6 +37,14 @@ public class EnvironmentStatsComponent extends Component {
         this.frozenLevel = newFrozenLevel;
     }
 
+    public boolean getBurning() {
+        return this.burning;
+    }
+
+    public void setBurning(boolean newBurnState) {
+        this.burning = newBurnState;
+    }
+
     public Boolean getIsSafe() {
         return this.isSafeMap;
     }
@@ -44,10 +53,15 @@ public class EnvironmentStatsComponent extends Component {
         return isImmune;
     }
 
+    public Boolean getIsFreeze() {
+        return this.freezeMap;
+    }
+
 
     public void setSafeMap(GameAreaConfig mapConfig) {
-       logger.info(mapConfig.mapName);
-        this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Verdant Oasis"));
+        logger.info(mapConfig.mapName);
+        this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Flora Haven"));
+        this.freezeMap = mapConfig.mapName.equals("Cryoheim");
     }
 
     /**
@@ -75,8 +89,29 @@ public class EnvironmentStatsComponent extends Component {
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                if (getImmunity() == true) {
+                MapGameArea.isBurning();
+                if (getImmunity()) {
+                    if (getIsFreeze()) {
+                        if (getFrozenLevel() > 4) {
+                            setFrozenLevel(getFrozenLevel() - 4);
+                        } else {
+                            setFrozenLevel(0);
+                        }
+                    }
                     return;
+                }
+                if (burning) {
+                    player.addHealth(-1);
+                    if (player.getHealth() <= 0) {
+                        timer.stop();
+                    }
+                }
+                if (getIsFreeze()) {
+                    if (getFrozenLevel() < 50) {
+                        setFrozenLevel(getFrozenLevel() + 2);
+                    } else {
+                        setFrozenLevel(50);
+                    }
                 }
                 player.addHealth(-1);
                 if (player.getHealth() <= 0) {

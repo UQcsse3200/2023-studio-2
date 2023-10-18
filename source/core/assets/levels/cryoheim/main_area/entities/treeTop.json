@@ -5,10 +5,10 @@
       class: com.csse3200.game.entities.configs.TreeTopConfig,
       "position": {
         "x": 0,
-        "y": 30
+        "y": 0
       },
-      "spritePath": "map/treetop.png",
-      "scaleH": 30,
+      "spritePath": "map/icemaptreetop.png",
+      "scaleH": 45,
       "scaleX": 0.5,
       "scaleY": 0.2
     }

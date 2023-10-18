@@ -1,6 +1,7 @@
 package com.csse3200.game.components.structures.tools;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.resources.Resource;
@@ -12,6 +13,7 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -98,7 +100,8 @@ class HealToolTest {
 
         lenient().when(costComponent.getCost()).thenReturn(new ObjectMap<>(cost));
 
-        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
+        HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
+        when(player.getCenterPosition()).thenReturn(new Vector2(position.x, position.y).scl(0.5f));
 
         var validity = healTool.canInteract(player, position);
 
@@ -160,8 +163,9 @@ class HealToolTest {
 
         lenient().when(placeableEntity.getComponent(CostComponent.class)).thenReturn(costComponent);
 
-        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
+        HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
         var position = new GridPoint2(0, 0);
+        when(player.getCenterPosition()).thenReturn(new Vector2(position.x, position.y).scl(0.5f));
 
         var validity = healTool.canInteract(player, position);
 
@@ -181,8 +185,9 @@ class HealToolTest {
         lenient().when(combatStatsComponent.getHealth()).thenReturn(50);
         lenient().when(combatStatsComponent.getMaxHealth()).thenReturn(100);
 
-        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
+        HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
         var position = new GridPoint2(0, 0);
+        when(player.getCenterPosition()).thenReturn(new Vector2(position.x, position.y).scl(0.5f));
 
         var validity = healTool.canInteract(player, position);
 
@@ -261,7 +266,8 @@ class HealToolTest {
 
         lenient().when(costComponent.getCost()).thenReturn(new ObjectMap<>(cost));
 
-        HealTool healTool = new HealTool(new ObjectMap<>(), 0, "texture.png");
+        HealTool healTool = new HealTool(new ObjectMap<>(), 5f, "texture.png", 0);
+        when(player.getCenterPosition()).thenReturn(new Vector2(position.x, position.y).scl(0.5f));
 
         // required to calculate requiredResources
         healTool.canInteract(player, position);

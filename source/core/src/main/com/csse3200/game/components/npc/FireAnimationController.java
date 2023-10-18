@@ -14,7 +14,7 @@ public class FireAnimationController extends Component {
     private TextureAtlas atlas;
 
     private float animationTimer = 0f;
-    private float animationDuration = 10f; // Adjust this to control animation speed.
+    float animationDuration = 10f; // Adjust this to control animation speed.
 
     /**
      * Creates a new FireAnimationController.

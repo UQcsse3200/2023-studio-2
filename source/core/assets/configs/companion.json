@@ -1,8 +1,8 @@
 
 {
-  "health": 100,
-  "baseAttack": 5,
   "attackMultiplier": 1,
+  "baseAttack": 5,
+  "health": 100,
   "isImmune": false,
-  "spritePath": "images/companion/Companion_spritesheet.atlas"
+  "spritePath": "images/companion/earth_Companion_spritesheet.atlas"
 }

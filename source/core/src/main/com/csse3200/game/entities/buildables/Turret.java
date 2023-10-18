@@ -40,7 +40,7 @@ public class Turret extends PlaceableEntity{
      * Create a new turret placeable entity to match the provided config file
      * @param turretConfig Configuration file to match turret to
      */
-    public Turret(TurretConfig turretConfig, Entity player) {
+    public Turret(TurretConfig turretConfig) {
         super(2, 2);
         setScale(1.8f,1.8f);
 
@@ -75,27 +75,14 @@ public class Turret extends PlaceableEntity{
 
         var focusCombatStatsComponent = focus.getComponent(CombatStatsComponent.class);
 
-        var healthBarComponent = getComponent(HealthBarComponent.class);
-
-        if (combatStatsComponent == null || healthBarComponent == null || focusCombatStatsComponent == null) {
+        if (combatStatsComponent == null|| focusCombatStatsComponent == null) {
             return;
-        }
-
-        if(combatStatsComponent.getHealth() < combatStatsComponent.getMaxHealth()) {
-            healthBarComponent.setEnabled(true);
-        }
-        else if (combatStatsComponent.getHealth() == combatStatsComponent.getMaxHealth()) {
-            healthBarComponent.setEnabled(false);
-        }
-        else {
-            healthBarComponent.setEnabled(false);
         }
 
         if (focusCombatStatsComponent.getHealth() <= 0 || !canFire()) {
             return;
         }
         // give damage until health is 0
-        focus.getComponent(HealthBarComponent.class).setEnabled(true);
         if (System.currentTimeMillis() - this.start > 1000) {
             giveDamage(focus);
             Sound shootingSound = ServiceLocator.getResourceService().getAsset("sounds/turret_shoot.mp3", Sound.class);
@@ -112,9 +99,6 @@ public class Turret extends PlaceableEntity{
     public void stopDamage(Entity focus) {
 
         this.getComponent(AnimationRenderComponent.class).startAnimation("normal"); // set animation
-        if (focus.getComponent(CombatStatsComponent.class) != null && focus.getComponent(CombatStatsComponent.class).getHealth() > 0) {
-            focus.getComponent(HealthBarComponent.class).setEnabled(false);
-        }
     }
 
     /**

@@ -67,4 +67,5 @@ public class StructurePlacementServiceTest {
         // Verify that you cannot place the first entity at the same position now
         assertFalse(structurePlacementService.canPlaceStructureAt(entity, position));
     }
+
 }

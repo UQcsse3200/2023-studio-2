@@ -5,7 +5,9 @@
  */
 package com.csse3200.game.components;
 
+import com.csse3200.game.components.companion.CompanionActions;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,8 +105,10 @@ public class CombatStatsComponent extends Component {
       entity.getEvents().trigger("updateHealth", this.health);
     }
     if (entity != null) {
+      if (isDead() && entity.getEntityType().equals("extractor") && !dead) {
+        ServiceLocator.getGameArea().getEvent().trigger("reTarget");
+      }
       if (isDead() && entity.getEntityType().equals("player") && dead == false) {
-
         dead = true;
         entity.getComponent(KeyboardPlayerInputComponent.class).clearWalking(); // Stop player from walking
         entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn
@@ -120,15 +124,19 @@ public class CombatStatsComponent extends Component {
         };
         timer.schedule(killPlayer, 1); // Animation lasts for 1 second before death screen is triggered
       } else if (isDead() && entity.getEntityType().equals("companion")) {
-        final Timer timer1 = new Timer();
+        // all companion death stuff
+        entity.getComponent(CompanionActions.class).handleCompanionDownMode();
+
+
+        /*final Timer timer1 = new Timer();
         Timer.Task killCompanion = new Timer.Task() {
           @Override
           public void run() {
             entity.getEvents().trigger("death");
             timer1.clear();
           }
-        };
-        timer1.schedule(killCompanion,1);
+        };*/
+        //timer1.schedule(killCompanion,1);
 
       } else if (isDead() && entity.getEntityType().equals("playerWeapon")) {
         entity.getEvents().trigger("death", 0);

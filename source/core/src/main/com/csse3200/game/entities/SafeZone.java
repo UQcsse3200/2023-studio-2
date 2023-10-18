@@ -1,12 +1,11 @@
 package com.csse3200.game.entities;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.EnvironmentStatsComponent;
 import com.csse3200.game.components.ProximityActivationComponent;
-import com.csse3200.game.services.ServiceLocator;
 
 /**
- * Portal class which extends Entity. Creates a Portal that if the player is within a certain amount
- * distance it will teleport the player to the set position on the map.
+ * Safe zone class which extends Entity. Creates an entity which projects a safe zone in a radius
+ * in which a player will stop taking constant environmental damage. Will also reduce the cold / heat
+ * counter in the EnnvironmentStatsComponent
  */
 public class SafeZone extends Entity {
 
@@ -17,7 +16,7 @@ public class SafeZone extends Entity {
     private float y;
 
     /**
-     * Creates a portal, that will teleport the player entity.
+     * Creates a safe zone entity
      *
      * @param player The player entity
      */
@@ -27,14 +26,19 @@ public class SafeZone extends Entity {
     }
 
     /**
-     * Teleports the player to a fixed destination
+     * Gives the player environmental damage immunity
      *
-     * @param player - the player entering the portal
+     * @param player - the player in the safe zone
      */
     public void setSafe(Entity player) {
         player.getComponent(EnvironmentStatsComponent.class).setIsImmune();
     }
 
+    /**
+     * Removes the player's environmental damage immunity
+     *
+     * @param player - the player in the safe zone
+     */
     public void setUnsafe(Entity player) {
         player.getComponent(EnvironmentStatsComponent.class).setNotImmune();
     }

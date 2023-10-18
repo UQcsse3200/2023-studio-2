@@ -21,7 +21,9 @@ public class NPCConfigs {
   public EnemyConfig chain = new EnemyConfig();
   public EnemyConfig necromancer = new EnemyConfig();
   public EnemyConfig Knight = new EnemyConfig();
-  public EnemyConfig rangeBossPTE = new EnemyConfig();
+  public EnemyConfig Mage = new EnemyConfig();
+  public EnemyConfig Guardian = new EnemyConfig();
+
 
   public EnemyConfig GetEnemyConfig(EnemyName name) {
       EnemyConfig config = null;
@@ -41,9 +43,11 @@ public class NPCConfigs {
           case Knight:
               config = Knight;
               break;
-          case rangeBossPTE:
-              config = rangeBossPTE;
+          case Mage:
+              config = Mage;
               break;
+          case Guardian:
+              config = Guardian;
       }
       return config;
   }

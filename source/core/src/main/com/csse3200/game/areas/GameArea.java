@@ -5,16 +5,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.PlayerFactory;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.StructurePlacementService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents an area in the game, such as a level, indoor area, etc. An area
@@ -34,8 +35,10 @@ public abstract class GameArea implements Disposable {
   protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;
   protected ArrayList<Entity> targetables;
+  protected EventHandler handler;
 
   protected GameArea() {
+    handler = new EventHandler();
     areaEntities = new ArrayList<>();
     pathFinderGrids = new HashMap<>();
     this.targetables = new ArrayList<>();
@@ -62,8 +65,12 @@ public abstract class GameArea implements Disposable {
     return terrain;
   }
 
-  public HashMap<GridPoint2, Entity> getAreaEntities() {
+  public Map<GridPoint2, Entity> getAreaEntities() {
     return pathFinderGrids;
+  }
+
+  public EventHandler getEvent(){
+    return handler;
   }
 
   protected void registerStructurePlacementService() {
@@ -141,24 +148,17 @@ public abstract class GameArea implements Disposable {
       for (int x = gridBottomLeft.x; x < gridTopRight.x; x++) {
         for (int y = gridBottomLeft.y; y < gridTopRight.y; y++) {
           GridPoint2 gridPoint = new GridPoint2(x, y);
-          if (!pathFinderGrids.containsKey(gridPoint)) {
-            pathFinderGrids.put(gridPoint, entity);
-          }
+          pathFinderGrids.putIfAbsent(gridPoint, entity);
         }
       }
     }
     ServiceLocator.getEntityService().register(entity);
 
-  }
-
-  /**
-   * Spawns the player entity and adds them to the list of targetable entities
-   */
-  protected void spawnPlayer(GridPoint2 playerSpawn) {
-    Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, playerSpawn, true, true);
-    targetables.add(newPlayer);
-    player = newPlayer;
+    if (entity.getComponent(HitboxComponent.class) != null) {
+      if (PhysicsLayer.contains(entity.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.STRUCTURE)) {
+        handler.trigger("reTarget");
+      }
+    }
   }
 
   /**

@@ -89,18 +89,23 @@ public class PowerupComponentTest {
         when(entityService.getPlayer()).thenReturn(playerEntity);
         when(entityService.getCompanion()).thenReturn(companionEntity);
 
+        // Mock the isDead method of companion's CombatStatsComponent to return false
+        CombatStatsComponent companionCombatStats = mock(CombatStatsComponent.class);
+        when(companionCombatStats.isDead()).thenReturn(false);
+
+        // Set the mocked component on the companionEntity directly
+        companionEntity.addComponent(companionCombatStats);
+
         PowerupComponent powerupComponent = new PowerupComponent(PowerupType.SPEED_BOOST);
         powerupComponent.applyEffect();
 
         Vector2 playerSpeed = new Vector2(6f, 6f);
         Vector2 companionSpeed = new Vector2(7f, 7f);
+
         // Assert
         assertEquals(playerSpeed, playerEntity.getComponent(PlayerActions.class).getSpeed());
-        assertEquals(playerSpeed, playerEntity.getComponent(PlayerActions.class).getSpeed());
-        assertEquals(companionSpeed, companionEntity.getComponent(CompanionActions.class).getSpeed());
         assertEquals(companionSpeed, companionEntity.getComponent(CompanionActions.class).getSpeed());
         assertEquals(5, companionEntity.getComponent(FollowComponent.class).getFollowSpeed());
-        // Additional assertions based on your actual implementation
     }
 
     @Test
@@ -217,24 +222,4 @@ public class PowerupComponentTest {
         assertEquals(newDuration, healthpowerup.getDuration());
     }
 
-    // @Test
-    // void shouldApplySnap() throws InterruptedException {
-
-    //     Entity playerEntity = new Entity().addComponent(new PlayerActions())
-    //             .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
-    //     when(entityService.getPlayer()).thenReturn(playerEntity);
-
-    //     EnemyFactory.getEnemyList().add(new Entity());
-    //     EnemyFactory.getEnemyList().add(new Entity());
-    //     EnemyFactory.getEnemyList().add(new Entity());
-    //     EnemyFactory.getEnemyList().add(new Entity());
-
-    //     // int enemies = EnemyFactory.getEnemyList().size();
-
-    //     PowerupComponent powerupComponent = new PowerupComponent(PowerupType.SNAP);
-    //     powerupComponent.applyEffect();
-
-    //     assertEquals(2, EnemyFactory.getEnemyList().size());
-    // }
-// }
 }

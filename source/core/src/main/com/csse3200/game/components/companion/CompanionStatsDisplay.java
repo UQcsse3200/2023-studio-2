@@ -25,7 +25,6 @@ public class CompanionStatsDisplay extends UIComponent {
     private final String labelStyle;
     private Image healthBarFill;
 
-
     Table companionStatisticsUI;
     Table container;
 
@@ -34,6 +33,11 @@ public class CompanionStatsDisplay extends UIComponent {
 
     private long duration;
     private CompanionInventoryComponent inventory;
+
+    //save the inventory display variable
+    CompanionPowerupInventoryDisplay powerupInventoryDisplay;
+    Boolean powerupInventoryDisplayStatus = false;
+
 
 
 
@@ -56,14 +60,13 @@ public class CompanionStatsDisplay extends UIComponent {
     private boolean isInvincible = true;
 
     private boolean isInfiniteHealth = true;
-    private Label ammoLabel;
     private CompanionInventoryComponent Inventory;
 
     /**
      * Default constructor for CompanionStatsDisplay.
      */
     public CompanionStatsDisplay(CompanionConfig config) {
-        labelStyle = "small";
+        labelStyle = "thick";
         maxHealth = config.health;
         healthBarWidth = 320f;
     }
@@ -79,7 +82,7 @@ public class CompanionStatsDisplay extends UIComponent {
         // Listen for events related to health updates
         entity.getEvents().addListener("updateHealth", this::updateCompanionHealthUI);
         entity.getEvents().addListener("companionModeChange", this::updateCompanionModeUI);
-        entity.getEvents().addListener("updateAmmo", this::updateAmmo);
+        entity.getEvents().addListener("invertPowerupInventoryDisplayStatus", this::invertPowerupInventoryDisplayStatus);
 //        entity.getEvents().addListener("changeWeapon", this::updateWeapon);
     }
 
@@ -92,6 +95,21 @@ public class CompanionStatsDisplay extends UIComponent {
 //        weaponImageTable.add(weaponImage).size(30f);
 //        updateAmmo(Inventory.GetCurrentAmmo(), Inventory.GetCurrentMaxAmmo());
 //    }
+
+    /**
+     * simple getter to get the status of the inventory display
+     * @return
+     */
+    public Boolean getIsPowerupInventoryDisplayStatus() {
+        return powerupInventoryDisplayStatus;
+    }
+
+    /**
+     * inverts the powerup inventory display status boolean variable
+     */
+    public void invertPowerupInventoryDisplayStatus() {
+        powerupInventoryDisplayStatus = !powerupInventoryDisplayStatus;
+    }
 
 
 
@@ -218,27 +236,30 @@ public class CompanionStatsDisplay extends UIComponent {
                 KeyboardPlayerInputComponent keys =
                         ServiceLocator.getEntityService().getPlayer().getComponent(KeyboardPlayerInputComponent.class);
                 /*keys.clearWalking();*/
-                CompanionInventoryComponent inventoryComponent = new CompanionInventoryComponent();
-                CompanionInventoryDisplay display = CompanionInventoryDisplay.createUpgradeDisplay(inventoryComponent);
-                ServiceLocator.getRenderService().getStage().addActor(display);
+                // NEW COMPANION INVENTORY DISPLAY CODE
+                //get the comapnion entity
+                Entity companionEntity = getEntity();
+                //get the companion powerup inventory component
+                CompanionPowerupInventoryComponent powerupInventoryComponent = entity.getComponent(CompanionPowerupInventoryComponent.class);
+                // if status if false, then we CAN now add the inventory display
+                if (!getIsPowerupInventoryDisplayStatus()) {
+                    //add inventory display
+                    powerupInventoryDisplay = CompanionPowerupInventoryDisplay.createPowerupInventoryDisplay(companionEntity, powerupInventoryComponent);
+                    //display it
+                    ServiceLocator.getRenderService().getStage().addActor(powerupInventoryDisplay);
+                    //change status to true
+                    invertPowerupInventoryDisplayStatus();
+                }
+
+                //OLD COMPANION INVENTORY DISPLAY CODE
+                //CompanionInventoryComponent inventoryComponent = new CompanionInventoryComponent();
+                //CompanionInventoryDisplay display = CompanionInventoryDisplay.createUpgradeDisplay(inventoryComponent);
+                //ServiceLocator.getRenderService().getStage().addActor(display);
+
             }
         });
 
         statsTable.add(button);
-    }
-
-    /**
-     * For weapons with a set number of ammo/pieces
-     * Function which updates the amount of ammo seen on screen, for weapons with limited number of uses
-     * @param currentAmmo - amount of ammo in the weapon left
-     * @param maxAmmo - amount of total ammo storage in that weapon
-     */
-    public void updateAmmo(int currentAmmo, int maxAmmo) {
-        CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-        if (maxAmmo == 100) {  // todo: make non-ammo things not have ammo
-            ammoText = "    -";
-        }
-        ammoLabel.setText(ammoText);
     }
 
     /**

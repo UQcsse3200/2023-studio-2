@@ -1,8 +1,8 @@
 package com.csse3200.game.services;
 
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.mapConfig.ConfigLoader;
-import com.csse3200.game.areas.mapConfig.InvalidConfigException;
+import com.csse3200.game.areas.map_config.ConfigLoader;
+import com.csse3200.game.areas.map_config.InvalidConfigException;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;

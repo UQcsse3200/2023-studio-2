@@ -2,9 +2,9 @@ package com.csse3200.game.screens;
 
 
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.mapConfig.ConfigLoader;
-import com.csse3200.game.areas.mapConfig.InvalidConfigException;
-import com.csse3200.game.areas.mapConfig.LevelConfig;
+import com.csse3200.game.areas.map_config.ConfigLoader;
+import com.csse3200.game.areas.map_config.InvalidConfigException;
+import com.csse3200.game.areas.map_config.LevelConfig;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.utils.LoadUtils;
 import org.junit.jupiter.api.BeforeEach;

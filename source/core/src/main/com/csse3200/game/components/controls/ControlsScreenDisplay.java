@@ -11,10 +11,6 @@ import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-
-import static com.csse3200.game.GdxGame.ScreenType.EXTRACTOR_GAME;
-
 /**
  * A UI component responsible for displaying the controls screen's user interface.
  */

@@ -2,81 +2,80 @@ package com.csse3200.game.components.tasks;
 
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.DefaultTask;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
-import com.csse3200.game.entities.factories.EnemyFactory;
-import com.csse3200.game.entities.factories.ProjectileFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 /**
  * Spawns enemies into map which will chase target.
  */
 public class SpawnTask extends DefaultTask {
     private static final Logger logger = LoggerFactory.getLogger(SpawnTask.class);
+    private Vector2 posOne;
+    private Vector2 posTwo;
+    private Entity target;
     private boolean hasSpawned;
-    Entity target;
-    private ArrayList<Entity> entities;
-
 
     /**
      * Creates a new spawn task.
-     *
-     * @param target The target Entity which the spawned entities will target.
      */
     public SpawnTask(Entity target) {
         this.target = target;
     }
 
-    @Override
-    public void start() {
-        entities = new ArrayList<>();
+    /**
+     * Starts the spawn task given entities to spawn.
+     *
+     * @param entities The entities to spawn..
+     */
+    public void start(ArrayList<Entity> entities) {
         super.start();
         hasSpawned = false;
-        spawnEnemy();
+        spawnEnemy(entities);
         hasSpawned = true;
     }
 
     /**
-     * Spawn enemies.
+     * Spawns entities from a given list with appropriate positioning with respect to owner entity.
+     *
+     * @param entities The list of entities to be spawned.
      */
-    public void spawnEnemy() {
+    public void spawnEnemy(ArrayList<Entity> entities) {
         Vector2 currentPos = owner.getEntity().getPosition();
+        Vector2 targetPos = target.getPosition();
 
-        ListIterator<Entity> iterator = entities.listIterator();
-
-        while (iterator.hasNext()) {
-            Entity element = iterator.next();
-            if (element.getComponent(CombatStatsComponent.class).getHealth() == 0) {
-                iterator.remove();
-            }
+        if (Math.abs(targetPos.x - currentPos.x) > Math.abs(targetPos.y - currentPos.y)) {
+            posOne = new Vector2(currentPos.x, currentPos.y + 1);
+            posTwo = new Vector2(currentPos.x, currentPos.y - 1);
+        } else {
+            posOne = new Vector2(currentPos.x + 1, currentPos.y);
+            posTwo = new Vector2(currentPos.x - 1, currentPos.y);
         }
-        if (entities.size() == 0) {
-            Entity enemyOne = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
-            Entity enemyTwo = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
 
-            entities.add(enemyOne);
-            entities.add(enemyTwo);
+        if (posOne.x < 0 || posOne.x > 90 || posOne.y < 0 || posOne.y > 90) {
+            posOne = posTwo.cpy();
+        }
 
-            Vector2 posOne = new Vector2(currentPos.x + 1, currentPos.y);
-            Vector2 posTwo = new Vector2(currentPos.x - 1, currentPos.y);
+        if (posTwo.x < 0 || posTwo.x > 90 || posTwo.y < 0 || posTwo.y > 90) {
+            posTwo = posOne.cpy();
+        }
 
-            ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemyOne, posOne);
-            ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemyTwo, posTwo);
-        } else if (entities.size() == 1) {
-            Entity enemyOne = EnemyFactory.createEnemy(EnemyType.Melee, EnemyBehaviour.PTE);
+        char attackDirection = getDirection(target.getPosition());
+        if(attackDirection == '<'){
+            owner.getEntity().getEvents().trigger("attackLeft");
+        }
+        if(attackDirection == '>'||attackDirection == '='){
+            owner.getEntity().getEvents().trigger("enemyAttack");
+        }
 
-            entities.add(enemyOne);
-
-            Vector2 posOne = new Vector2(currentPos.x + 1, currentPos.y);
-
-            ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemyOne, posOne);
+        if (entities.size() == 1) {
+            ServiceLocator.getStructurePlacementService().spawnEntityAtVector(entities.get(0), posOne);
+        } else if (entities.size() == 2) {
+            ServiceLocator.getStructurePlacementService().spawnEntityAtVector(entities.get(0), posOne);
+            ServiceLocator.getStructurePlacementService().spawnEntityAtVector(entities.get(1), posTwo);
         }
     }
 
@@ -92,5 +91,15 @@ public class SpawnTask extends DefaultTask {
     public void stop() {
         super.stop();
         logger.debug("Stopping spawn");
+    }
+
+    public char getDirection(Vector2 destination) {
+        if (owner.getEntity().getPosition().x - destination.x < 0) {
+            return '>';
+        }
+        if (owner.getEntity().getPosition().x - destination.x > 0) {
+            return '<';
+        }
+        return '=';
     }
 }

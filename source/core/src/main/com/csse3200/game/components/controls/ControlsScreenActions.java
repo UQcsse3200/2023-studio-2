@@ -2,6 +2,8 @@ package com.csse3200.game.components.controls;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
+import com.csse3200.game.services.PlanetTravel;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +28,8 @@ public class ControlsScreenActions extends Component {
      */
     @Override
     public void create() {
-        entity.getEvents().addListener("exit", this::onExit);
+        entity.getEvents().addListener("exitToSettings", this::onExitToSettings);
+        entity.getEvents().addListener("exitToGame", this::onExit);
         entity.getEvents().addListener("w", this::onW);
         entity.getEvents().addListener("a", this::onA);
         entity.getEvents().addListener("s", this::onS);
@@ -37,9 +40,11 @@ public class ControlsScreenActions extends Component {
         entity.getEvents().addListener("2", this::on2);
         entity.getEvents().addListener("3", this::on3);
         entity.getEvents().addListener("4", this::on4);
-
     }
 
+    public void onExitToSettings() {
+        game.setScreen(GdxGame.ScreenType.SETTINGS);
+    }
 
     private void onW() {
         logger.info("W clicked");
@@ -82,17 +87,12 @@ public class ControlsScreenActions extends Component {
 
     }
 
-
-
-
     /**
-     * Action to handle the 'exit' event, returning the game to the main menu.
+     * Action to handle the 'exit' event, returning to the current game.
      */
      void onExit() {
-        logger.info("Game returned to the main menu");
-        game.setScreen(GdxGame.ScreenType.SETTINGS);
-    }
-
-    public void getLogger() {
+         logger.info("Relaunching main game screen");
+         ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", (int) ServiceLocator.getGameStateObserverService().getStateData("player/lives"));
+         new PlanetTravel(game).returnToCurrent();
     }
 }

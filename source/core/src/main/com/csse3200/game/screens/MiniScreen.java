@@ -3,7 +3,7 @@ package com.csse3200.game.screens;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.MiniDisplay.MiniScreenDisplay;
+import com.csse3200.game.components.minidisplay.MiniScreenDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * It initializes game services, loads assets, and creates the user interface for the mini-screen.
  */
 public class MiniScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(SpaceMapScreen.class);
+    private static final Logger logger = LoggerFactory.getLogger(MiniScreen.class);
 
     /**
      * An array of paths to image textures needed for this screen.
@@ -71,6 +71,7 @@ public class MiniScreen extends ScreenAdapter {
         renderer.dispose();
 
         unloadAssets();
+        ServiceLocator.clear();
     }
 
     private void loadAssets() {

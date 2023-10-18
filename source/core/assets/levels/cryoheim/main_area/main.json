@@ -1,0 +1,83 @@
+{
+  "assets": {
+    "texturePaths": [
+      "images/interface/f_button.png",
+      "images/structures/refinedExtractor.png",
+      "images/minigame/SpaceMiniGameBackground.png",
+      "images/minigame/extractor.png",
+      "images/minigame/meteor.png",
+      "images/RightShip.png",
+      "images/companion/earth_Companion_spritesheet.png",
+      "images/companion/Companion_spritesheet.png",
+      "images/enemy/base_enemy.png",
+      "images/enemy/Troll.png",
+      "images/enemy/rangeEnemy.png",
+      "images/powerups/speed_boost.png",
+      "images/powerups/health_boost.png",
+      "images/ship/Ship.png",
+      "images/oldman_down_1.png",
+      "images/wrench.png",
+      "images/uparrow.png",
+      "images/sling_shot.png",
+      "map/portal.png",
+      "map/treetoplush.png",
+      "map/Torch.png",
+      "map/Fire.png",
+      "map/heatzone.png",
+      "particle-effects/explosion/particle.png",
+      "images/npc/astronaut_npc.png",
+      "images/space_navigation_planet_2.png","images/upgradetree/sword.png"
+    ],
+    "textureAtlasPaths": [
+      "images/troll_enemy.atlas",
+      "images/rangeEnemy.atlas",
+      "images/botanist.atlas",
+      "images/boss_enemy.atlas",
+      "images/botanist.atlas",
+      "images/weapons/wrench.atlas",
+      "images/npc/astronaut_npc.atlas",
+      "images/botanist.atlas"
+    ],
+    "soundPaths": [
+      "sounds/Impact4.wav",
+      "sounds/playerLow_health.wav",
+      "sounds/dodgingAlertSweep.wav",
+      "sounds/footStepsInTheForestGround.wav",
+      "sounds/weapons/boomerang.wav",
+      "sounds/weapons/slingshot.wav",
+      "sounds/PlayerHealthRecharge.wav",
+      "sounds/playerBoostRecharge.wav",
+      "sounds/upgradeTreeTap.wav",
+      "sounds/upgradeWeapon.wav",
+      "sounds/enemyDeath.wav",
+      "sounds/enemySpawner.wav",
+      "sounds/turret_shoot.mp3",
+      "sounds/alert.wav",
+      "sounds/explosion/grenade.mp3",
+      "sounds/explosion/landmine.mp3",
+      "sounds/ExitButton.wav",
+      "sounds/structurePlace.wav",
+      "sounds/weapons/Katana.wav",
+      "sounds/weapons/boomerang.wav",
+      "sounds/weapons/slingshot.wav",
+      "sounds/weapons/beeStringKatana.wav",
+      "sounds/weapons/nuke.wav",
+      "sounds/weapons/missile.wav",
+      "sounds/weapons/laserSword.wav"
+    ],
+    "particleEffectPaths": [
+      "particle-effects/explosion/explosion.effect",
+      "particle-effects/shield/shield.effect"
+    ],
+    "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
+  },
+  "mapName": "Cryoheim",
+  "planetImage": "images/navigationmap/planets/cryoheim.png",
+  "terrainPath": "map/icemap.tmx",
+  "winConditions": [
+    {
+      "resource": "Solstite",
+      "threshold": 100
+    }
+  ]
+}

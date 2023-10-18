@@ -1,7 +1,11 @@
 package com.csse3200.game.entities.configs;
 
+import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.files.FileLoader;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -11,10 +15,21 @@ public class PlayerConfig extends HealthEntityConfig  {
   public int speed;
   public int lives;
   public SoundsConfig sounds;
+  public List<Object> unlocks;
+  public LinkedHashMap<String, WeaponType> slotTypeMap;
+  public String equipped;
 
   public PlayerConfig() {
     this.spritePath = "images/player.atlas";
     this.sounds = FileLoader.readClass(SoundsConfig.class, "configs/player_sounds.json");
+    unlocks = new ArrayList<>();
+
+    // Default unlocks
+    slotTypeMap = new LinkedHashMap<>();
+    slotTypeMap.put("melee", WeaponType.MELEE_WRENCH);
+    slotTypeMap.put("ranged", WeaponType.RANGED_BOOMERANG);
+    slotTypeMap.put("building", WeaponType.WOODHAMMER);
+    equipped = "melee";
   }
 
   @Override

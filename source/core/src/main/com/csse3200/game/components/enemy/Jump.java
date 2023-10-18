@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/** Chases a target entity until they get too far away or line of sight is lost */
+/** This task chases enemy but in a jumping motion*/
 public class Jump extends DefaultTask implements PriorityTask {
     private final Entity target;
     private final int priority;
@@ -96,6 +96,9 @@ public class Jump extends DefaultTask implements PriorityTask {
         }
     }
 
+    /**
+     * Set movement speed to 0 when not jumping and activate jump by speeding up movement
+     */
     @Override
     public void update() {
         char direction2 = getDirection(target.getPosition());
@@ -114,12 +117,20 @@ public class Jump extends DefaultTask implements PriorityTask {
         }
     }
 
+    /**
+     * Pause task
+     */
     @Override
     public void stop() {
         super.stop();
         movementTask.stop();
     }
 
+
+    /**
+     * return priority
+     * @return integer representing priority
+     */
     @Override
     public int getPriority() {
         if (status == Status.ACTIVE) {
@@ -128,10 +139,18 @@ public class Jump extends DefaultTask implements PriorityTask {
         return getInactivePriority();
     }
 
+    /**
+     * Calculate distance
+     * @return distance to target
+     */
     private float getDistanceToTarget() {
         return owner.getEntity().getPosition().dst(target.getPosition());
     }
 
+    /**
+     * Get currently active priority
+     * @return int priority
+     */
     private int getActivePriority() {
         float dst = getDistanceToTarget();
         if (dst > maxChaseDistance || dst < shootDistance || !isTargetVisible()) {
@@ -140,6 +159,10 @@ public class Jump extends DefaultTask implements PriorityTask {
         return priority;
     }
 
+    /**
+     * Get currently inactive priority
+     * @return int priority
+     */
     private int getInactivePriority() {
         float dst = getDistanceToTarget();
         if (dst < viewDistance && dst > shootDistance && isTargetVisible()) {
@@ -148,6 +171,10 @@ public class Jump extends DefaultTask implements PriorityTask {
         return -1;
     }
 
+    /**
+     * Calculate and returns a boolean if the target is in range
+     * @return true if in range vice versa
+     */
     private boolean isTargetVisible() {
         Vector2 from = owner.getEntity().getCenterPosition();
         Vector2 to = target.getCenterPosition();

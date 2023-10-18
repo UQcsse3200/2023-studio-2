@@ -2,15 +2,12 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.*;
-import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.player.*;
 import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
@@ -40,8 +37,6 @@ public class PlayerFactory {
             FileLoader.readClass(PlayerConfig.class, "configs/player.json");
     private static final WeaponConfigs weaponConfigs =
             FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
-
-    //TODO: REMOVE - LEGACY
 
     /**
      * Create a player entity.
@@ -92,9 +87,10 @@ public class PlayerFactory {
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                         .addComponent(new PlayerActions())
-                        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
+                        .addComponent(new CombatStatsComponent(config.maxHealth, config.maxHealth,
+                                config.baseAttack, config.attackMultiplier, config.isImmune, config.lives))
                         .addComponent(new EnvironmentStatsComponent())
-                        .addComponent(new InventoryComponent(weaponConfigs))
+                        .addComponent(new InventoryComponent(weaponConfigs, config))
                         .addComponent(inputComponent)
                         .addComponent(new PlayerStatsDisplay(config))
                         .addComponent(animator)
@@ -102,20 +98,25 @@ public class PlayerFactory {
                         .addComponent(new WeaponComponent())
                         .addComponent(new DialogComponent(dialogueBox))
                         .addComponent(new InteractionControllerComponent(false))
-                        .addComponent(new HealthBarComponent(true))
                         .addComponent(new StructureToolPicker())
                         .addComponent(new ProximityControllerComponent())
                         .addComponent(new ActionFeedbackComponent())
                         .addComponent(new SoundComponent(config.sounds))
-                        .addComponent(new UpgradeTree());
+                        .addComponent(new UpgradeTree(config));
 
         player.addComponent(new SaveableComponent<>(p -> {
                 PlayerConfig playerConfig = config;
-                playerConfig.position = new GridPoint2((int) player.getPosition().x, (int)player.getPosition().y);
-                playerConfig.health = player.getComponent(CombatStatsComponent.class).getHealth();
-                return playerConfig;
-            }, PlayerConfig.class));
+                playerConfig.position = p.getGridPosition();
+                playerConfig.health = p.getComponent(CombatStatsComponent.class).getHealth();
+                playerConfig.maxHealth = p.getComponent(CombatStatsComponent.class).getMaxHealth();
+                playerConfig.unlocks = p.getComponent(UpgradeTree.class).getUnlockedWeaponsConfigs();
+                playerConfig.slotTypeMap = p.getComponent(InventoryComponent.class).getSlotTypeMap();
+                playerConfig.equipped = p.getComponent(InventoryComponent.class).getEquipped();
 
+            return playerConfig;
+            }, PlayerConfig.class));
+        if (config.health <= 0) config.health = config.maxHealth;
+        player.getComponent(CombatStatsComponent.class).setHealth(config.health);
         PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
         player.getComponent(ColliderComponent.class).setDensity(1.5f);
         animator.startAnimation("Character_StandDown");

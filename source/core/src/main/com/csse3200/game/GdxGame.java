@@ -19,7 +19,6 @@ import static com.badlogic.gdx.Gdx.app;
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   private ScreenType screenType;
-  private int playerLives = 3; // As found in player config files.
 
   @Override
   public void create() {
@@ -65,24 +64,6 @@ public class GdxGame extends Game {
     return this.screenType;
   }
 
-  /**
-   * Sets the number of lives player currently has. This is used to store number of
-   * lives between screen changes (eg. respawn, exit etc).
-   * @param lives Number of remaining lives player has.
-   */
-  public void setPlayerLives(int lives) {
-    this.playerLives = lives;
-  }
-
-  /**
-   * Returns the number of lives player currently has. This is accessed when
-   * respawning player between screen changes (eg. respawn/exit etc).
-   * @return Number of remaining lives player has.
-   */
-  public int getPlayerLives() {
-    return this.playerLives;
-  }
-
   @Override
   public void dispose() {
     logger.debug("Disposing of current screen");
@@ -98,8 +79,6 @@ public class GdxGame extends Game {
     switch (screenType) {
       case MAIN_MENU:
         return new MainMenuScreen(this);
-      case GAME_STORY:
-        return new StoryScreen(this);
       case SETTINGS:
         return new SettingsScreen(this);
       case SPACE_MAP:
@@ -116,9 +95,7 @@ public class GdxGame extends Game {
         return new PlayerDeathScreen(this, 2);
       case PLAYER_DEATH_3:
         return new PlayerDeathScreen(this, 3);
-      case COMPANION_DEATH:
-        return new CompanionDeathScreen(this);
-      case INITIAL_SCREEN:
+      case MINI_SCREEN:
         return new MiniScreen(this);
       case SPACEMINI_SCREEN:
         return new MiniScreen(this);
@@ -127,8 +104,8 @@ public class GdxGame extends Game {
       case UPGRADE_SHOP:
         return new UpgradeShopScreen(this);
       case CONTROL_SCREEN:
-        return new ControlsScreen(this);
-      case INITIALL_SCREEN:
+        return new ControlsScreen(this,"Controls");
+      case INITIAL_SCREEN:
         return new InitialScreen(this);
       case BRICK_BREAKER_SCREEN:
         return new BrickBreakerScreen(this);
@@ -140,7 +117,7 @@ public class GdxGame extends Game {
   public enum ScreenType {
 
     MAIN_MENU, SETTINGS, TITLE_SCREEN, SPACE_MAP, CONTROL_SCREEN, EXTRACTOR_GAME, TUTORIAL_SCREEN,
-    GAME_STORY, PLAYER_DEATH,COMPANION_DEATH, NAVIGATION_SCREEN ,INITIAL_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIALL_SCREEN, BRICK_BREAKER_SCREEN,
+    PLAYER_DEATH, NAVIGATION_SCREEN ,MINI_SCREEN, SPACEMINI_SCREEN, UPGRADE_SHOP, INITIAL_SCREEN, BRICK_BREAKER_SCREEN,
     PLAYER_DEATH_0, PLAYER_DEATH_1, PLAYER_DEATH_2, PLAYER_DEATH_3
   }
   /**

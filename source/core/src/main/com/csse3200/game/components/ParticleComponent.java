@@ -1,7 +1,6 @@
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
@@ -9,21 +8,17 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.csse3200.game.entities.configs.ParticleEffectsConfig;
-import com.csse3200.game.entities.configs.SoundsConfig;
-import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class ParticleComponent extends RenderComponent {
     private static final float SCALE_REDUCTION = 100;
-    private static final Logger logger = LoggerFactory.getLogger(SoundComponent.class);
+    private static final Logger logger = LoggerFactory.getLogger(ParticleComponent.class);
     private final ParticleEffectsConfig effectsConfig;
     private final Map<String, ParticleEffect> effects;
 
@@ -57,13 +52,21 @@ public class ParticleComponent extends RenderComponent {
 
         // loads the sounds and stores them in a map for later access
         for (var entry : effectsConfig.effectsMap.entries()) {
-            logger.debug("Entity {} loading in sound {} with id {}", entity.toString(), entry.value, entry.key);
+            logger.debug("Entity {} loading in sound {} with id {}", entity, entry.value, entry.key);
 
-            ParticleEffect effect = new ParticleEffect(ServiceLocator.getResourceService().getAsset(entry.value, ParticleEffect.class));
+            var effect = ServiceLocator.getResourceService().getAsset(entry.value, ParticleEffect.class);
 
             if (effect == null) {
                 // debug log will occur in the ResourceService class
                 continue;
+            }
+
+            try {
+                // attempt to duplicate, although this will fail if mocked
+                effect = new ParticleEffect(effect);
+                effect.allowCompletion();
+            } catch (NullPointerException e) {
+                // pass
             }
 
             effects.put(entry.key, effect);
@@ -105,12 +108,12 @@ public class ParticleComponent extends RenderComponent {
      * @param effectName - the name of the effect to play as specified in the config file.
      */
     public void startEffect(String effectName) {
-        logger.debug("Entity {} playing effect {}", entity.toString(), effectName);
+        logger.debug("Entity {} playing effect {}", entity, effectName);
 
         var effect = effects.get(effectName);
 
         if (effect == null) {
-            logger.warn("Sound {} does not exist for entity {}", effect, entity.toString());
+            logger.warn("Sound {} does not exist for entity {}", effectName, entity);
             return;
         }
 
@@ -123,15 +126,13 @@ public class ParticleComponent extends RenderComponent {
      * @param effectName - the name of the effect to stop as specified in the config file.
      */
     public void stopEffect(String effectName) {
-        logger.debug("Entity {} stopping effect {}", entity.toString(), effectName);
-
         var effect = effects.get(effectName);
 
         if (effect == null) {
-            logger.warn("Sound {} does not exist for entity {}", effect, entity.toString());
+            logger.warn("Sound {} does not exist for entity {}", effectName, entity);
             return;
         }
 
-        effect.reset();
+        effect.allowCompletion();
     }
 }

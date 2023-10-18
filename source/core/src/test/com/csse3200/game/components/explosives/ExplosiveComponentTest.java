@@ -1,9 +1,6 @@
 package com.csse3200.game.components.explosives;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -14,7 +11,7 @@ import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
-import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -23,20 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-@ExtendWith(MockitoExtension.class)
 class ExplosiveComponentTest {
-    @Mock
-    ResourceService resourceService;
-    @Mock
-    EntityPlacementService entityPlacementService;
-    @Mock
-    EntityService entityService;
 
     @Test
     void create() {
@@ -53,18 +40,19 @@ class ExplosiveComponentTest {
         verify(events, times(1)).addListener(eq("chainExplode"), any(EventListener1.class));
     }
 
-    void setupServices() {
+    @Test
+    void testExploded() {
+        var resourceService = mock(ResourceService.class);
+        var entityPlacementService = mock(EntityPlacementService.class);
+        var entityService = mock(EntityService.class);
+
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerEntityPlacementService(entityPlacementService);
         ServiceLocator.registerEntityService(entityService);
-    }
 
-    @Test
-    void testExplode() {
-        setupServices();
 
         var config = new ExplosiveConfig();
-        config.damage = 10;
+        config.baseAttack = 10;
         config.damageRadius = 5;
         config.chainRadius = 5;
         config.chainable = false;
@@ -82,15 +70,21 @@ class ExplosiveComponentTest {
 
         entity.getEvents().trigger("explode");
         verify(entityPlacementService, times(1))
-                .PlaceEntityAt(any(), eq(new Vector2(0, 2)));
+                .placeEntityAt(any(), eq(new Vector2(0, 2)));
     }
 
     @Test
     void testDamageNeighbours() {
-        setupServices();
+        var resourceService = mock(ResourceService.class);
+        var entityPlacementService = mock(EntityPlacementService.class);
+        var entityService = mock(EntityService.class);
+
+        ServiceLocator.registerResourceService(resourceService);
+        ServiceLocator.registerEntityPlacementService(entityPlacementService);
+        ServiceLocator.registerEntityService(entityService);
 
         var config = new ExplosiveConfig();
-        config.damage = 10;
+        config.baseAttack = 10;
         config.damageRadius = 5;
         config.chainRadius = 5;
         config.chainable = false;
@@ -128,7 +122,7 @@ class ExplosiveComponentTest {
 
         entity.getEvents().trigger("explode");
         verify(entityPlacementService, times(1))
-                .PlaceEntityAt(any(), eq(new Vector2(0, 2)));
+                .placeEntityAt(any(), eq(new Vector2(0, 2)));
 
         verify(inRangeEntityHealth, times(1)).addHealth(-10);
         verify(outOfRangeEntityHealth, never()).addHealth(anyInt());
@@ -136,10 +130,16 @@ class ExplosiveComponentTest {
 
     @Test
     void testExplodeNeighbours() {
-        setupServices();
+        var resourceService = mock(ResourceService.class);
+        var entityPlacementService = mock(EntityPlacementService.class);
+        var entityService = mock(EntityService.class);
+
+        ServiceLocator.registerResourceService(resourceService);
+        ServiceLocator.registerEntityPlacementService(entityPlacementService);
+        ServiceLocator.registerEntityService(entityService);
 
         var config = new ExplosiveConfig();
-        config.damage = 10;
+        config.baseAttack = 10;
         config.damageRadius = 5;
         config.chainRadius = 5;
         config.chainable = false;
@@ -175,8 +175,13 @@ class ExplosiveComponentTest {
 
         entity.getEvents().trigger("explode");
         verify(entityPlacementService, times(1))
-                .PlaceEntityAt(any(), eq(new Vector2(0, 2)));
+                .placeEntityAt(any(), eq(new Vector2(0, 2)));
 
         verify(inRangeEntityEvents, times(1)).trigger(eq("chainExplode"), anyFloat());
+    }
+
+    @AfterEach
+    void after() {
+        ServiceLocator.clear();
     }
 }

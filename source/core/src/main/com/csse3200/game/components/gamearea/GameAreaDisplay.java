@@ -11,7 +11,6 @@ import com.csse3200.game.ui.UIComponent;
 public class GameAreaDisplay extends UIComponent {
   private String gameAreaName = "";
   private Label title;
-  //private Label alert;
 
   public GameAreaDisplay(String gameAreaName) {
     this.gameAreaName = gameAreaName;
@@ -36,7 +35,6 @@ public class GameAreaDisplay extends UIComponent {
     float offsetY = 30f;
 
     title.setPosition(offsetX, screenHeight - offsetY);
-   // alert.setPosition(offsetA, screenHeight - offsetB);
   }
 
 

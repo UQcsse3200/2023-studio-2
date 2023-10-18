@@ -12,10 +12,14 @@ import com.csse3200.game.entities.factories.BuildablesFactory;
 public class TurretTool extends PlacementTool {
     /**
      * Creates a new turret tool with the given cost.
-     * @param cost - the cost of a turret.
+     *
+     * @param cost     - the cost of a turret.
+     * @param range
+     * @param texture  - the texture of this tool.
+     * @param ordering - the ordering of this tool.
      */
-    public TurretTool(ObjectMap<String, Integer> cost) {
-        super(cost);
+    public TurretTool(ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
+        super(cost, range, texture, ordering);
         snapX = 2;
         snapY = 2;
     }
@@ -27,7 +31,7 @@ public class TurretTool extends PlacementTool {
      */
     @Override
     public PlaceableEntity createStructure(Entity player) {
-        return BuildablesFactory.createCustomTurret(TurretType.LEVEL_ONE, player);
+        return BuildablesFactory.createCustomTurret(TurretType.LEVEL_ONE);
     }
 
 }

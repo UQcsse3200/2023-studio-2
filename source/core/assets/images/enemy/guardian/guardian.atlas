@@ -787,6 +787,20 @@ death
   orig:  64,64
   offset: 0, 0
   index: 0
+invisible
+  rotate: false
+  xy: 896, 0
+  size: 64,64
+  orig:  64,64
+  offset: 0, 0
+  index: 0
+invisible
+  rotate: false
+  xy: 896, 0
+  size: 64,64
+  orig:  64,64
+  offset: 0, 0
+  index: 0
 
 
 

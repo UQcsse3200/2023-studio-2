@@ -1,20 +1,16 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.csse3200.game.ExtractorMinigameWindow;
+import com.csse3200.game.entities.Extractor;
+import com.csse3200.game.entities.configs.ParticleEffectsConfig;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
-import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.InteractableComponent;
-import com.csse3200.game.areas.mapConfig.ResourceCondition;
+import com.csse3200.game.areas.map_config.ResourceCondition;
 import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.SpawnerComponent;
-import com.csse3200.game.components.resources.ProductionComponent;
 import com.csse3200.game.components.resources.Resource;
-import com.csse3200.game.components.structures.ExtractorAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.SpawnerConfig;
 import com.csse3200.game.input.ExtinguisherInputComponent;
@@ -32,7 +28,6 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
@@ -45,14 +40,11 @@ import java.util.List;
  *
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
+
 public class StructureFactory {
     private StructureFactory() {
         throw new IllegalStateException("Factory class");
     }
-    // * @param health the max and initial health of the extractor
-    // * @param producedResource the resource type produced by the extractor
-    // * @param tickRate the frequency at which the extractor ticks (produces resources)
-    // * @param tickSize the amount of the resource produced at each tick
 
     //Default configs
     public static final ShipConfig defaultShip =
@@ -67,42 +59,11 @@ public class StructureFactory {
      * @param config Configuration file to match extractor to
      * @return a new extractor Entity
      */
+    
     public static PlaceableEntity createExtractor(ExtractorConfig config) {
-        AnimationRenderComponent animator =
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class));
-        animator.addAnimation("animateBroken", 0.2f,Animation.PlayMode.LOOP);
-        animator.addAnimation("animateExtracting", 0.2f, Animation.PlayMode.LOOP);
-
-        PlaceableEntity extractor = (PlaceableEntity) new PlaceableEntity(3, 3)
-                .irremovable()
-                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
-                .addComponent(animator)
-                .addComponent(new CombatStatsComponent(config.health, 0, 0, false))
-                .addComponent(new ProductionComponent(config.resource, config.tickRate, config.tickSize))
-                .addComponent(new ExtractorAnimationController());
-
-        InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
-        extractor.addComponent(new DistanceCheckComponent(5f, interactLabel));
-        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
-
-        extractor.addComponent(new InteractableComponent(entity -> {
-            CombatStatsComponent healthStats = extractor.getComponent(CombatStatsComponent.class);
-
-            if (healthStats.isDead()) {
-                ExtractorMinigameWindow minigame = ExtractorMinigameWindow.MakeNewMinigame(extractor);
-                ServiceLocator.getRenderService().getStage().addActor(minigame);
-            }
-        }, 5f));
-        extractor.setScale(1.8f, 2f);
-        PhysicsUtils.setScaledCollider(extractor, 1f, 0.6f);
-
-        return extractor;
+        return new Extractor(config);
     }
 
-    //HEAD
     public static Entity createExtractorRepair() {
         Entity extractorRepair = new Entity()
                 //.addComponent(new TextureRenderComponent("images/elixir_collector.png")); //This image removed
@@ -110,6 +71,14 @@ public class StructureFactory {
         extractorRepair.setScale(2.2f, 2.6f);
         return extractorRepair;
     }
+
+    /**
+ * Creates an entity representing an extinguisher in the mini-game area.
+ *
+ * @param terrain The terrain component.
+ * @param area    The mini-game area associated with the extractor.
+ * @return A new extinguisher Entity.
+ */
 
     public static Entity createExtinguisher(TerrainComponent terrain, ExtractorMiniGameArea area) {
         Entity extinguisher = new Entity()
@@ -121,6 +90,14 @@ public class StructureFactory {
         return extinguisher;
     }
 
+    /**
+ * Creates an entity representing a spanner in the mini-game area.
+ *
+ * @param terrain The terrain component.
+ * @param area    The mini-game area associated with the extractor.
+ * @return A new spanner Entity.
+ */
+
     public static Entity createSpanner(TerrainComponent terrain, ExtractorMiniGameArea area) {
         Entity spanner = new Entity()
                 .addComponent(new TextureRenderComponent("images/minigame/spanner.png"));
@@ -131,6 +108,14 @@ public class StructureFactory {
         return spanner;
     }
 
+    /**
+ * Creates an entity representing a fire part in the mini-game area associated with the extractor.
+ *
+ * @param terrain The terrain component.
+ * @param area    The mini-game area associated with the extractor.
+ * @return A new fire part Entity.
+ */
+    
     public static Entity createExtractorFirePart(TerrainComponent terrain, ExtractorMiniGameArea area) {
         Entity extractorFirePart = new Entity()
                 .addComponent(new TextureRenderComponent("images/minigame/fire.png"));
@@ -144,6 +129,14 @@ public class StructureFactory {
         return extractorFirePart;
     }
 
+    /**
+ * Creates an entity representing a hole part in the mini-game area associated with the extractor.
+ *
+ * @param terrain The terrain component.
+ * @param area    The mini-game area associated with the extractor.
+ * @return A new hole part Entity.
+ */
+    
     public static Entity createExtractorHolePart(TerrainComponent terrain, ExtractorMiniGameArea area) {
         Entity extractorHolePart = new Entity()
                 .addComponent(new TextureRenderComponent("images/minigame/Hole.png"));
@@ -156,13 +149,18 @@ public class StructureFactory {
         return extractorHolePart;
     }
 
+    /**
+ * Creates an entity representing a bang effect.
+ *
+ * @return A new bang Entity.
+ */
+
     public static Entity createExtractorBang() {
-        Entity extractorBang = new Entity().addComponent(new TextureRenderComponent("images/bang.png"));
+        Entity extractorBang = new Entity().addComponent(new TextureRenderComponent("images/minigame/bang.png"));
         extractorBang.setScale(2.2f, 2.4f);
         return extractorBang;
     }
 
-    //TODO: REMOVE - LEGACY
     /**
      * Creates an extractor entity
      *
@@ -178,10 +176,25 @@ public class StructureFactory {
     public static PlaceableEntity createExtractor(int health, Resource producedResource, long tickRate, int tickSize) {
         ExtractorConfig extractorConfig = new ExtractorConfig();
         extractorConfig.health = health;
+        extractorConfig.maxHealth = health;
         extractorConfig.resource = producedResource;
         extractorConfig.tickRate = tickRate;
         extractorConfig.tickSize = tickSize;
+        extractorConfig.effects = new ParticleEffectsConfig();
+
+        String effectPath = getEffectPath(producedResource);
+
+        extractorConfig.effects.effectsMap.put("rubble", effectPath);
+
         return createExtractor(extractorConfig);
+    }
+
+    private static String getEffectPath(Resource producedResource) {
+        return switch(producedResource) {
+            case Nebulite -> "particle-effects/extractor/extractor_rubble_nebulite.effect";
+            case Solstite -> "particle-effects/extractor/extractor_rubble_solstite.effect";
+            case Durasteel -> "particle-effects/extractor/extractor_rubble_durasteel.effect";
+        };
     }
 
 
@@ -213,7 +226,6 @@ public class StructureFactory {
     }
 
 
-    //TODO: REMOVE - LEGACY
     /**
      * Creates a ship entity that uses the default package
      */
@@ -221,18 +233,17 @@ public class StructureFactory {
         return createShip(game, requirements, defaultShip);
     }
 
-    //CONFLICT HERE
-
     /**
      * Creates a ship entity that matches the config file
      */
+    
     public static Entity createShip(GdxGame game, List<ResourceCondition> requirements, ShipConfig config) {
         Entity ship =
                 new Entity()
                         .addComponent(new TextureRenderComponent(config.spritePath))
                         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.STRUCTURE))
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE))
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
                         .addComponent(new InteractableComponent(entity -> {
                             if (checkWinCondition(requirements)) {
                                 game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
@@ -241,6 +252,12 @@ public class StructureFactory {
                                 ServiceLocator.getRenderService().getStage().addActor(shipPopup);
                             }
                         }, 5));
+
+        ship.addComponent(new SaveableComponent<ShipConfig>(s -> {
+            ShipConfig shipConfig = config;
+            shipConfig.position = s.getGridPosition();
+            return shipConfig;
+        }, ShipConfig.class));
 
         ship.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         ship.getComponent(TextureRenderComponent.class).scaleEntity();
@@ -262,6 +279,7 @@ public class StructureFactory {
      * @param config the config file to read and select the waves for the spawner to activate
      * @return
      */
+    
     public static Entity createSpawner(SpawnerConfig config) {
         Entity spawner =
                 new Entity()
@@ -271,4 +289,3 @@ public class StructureFactory {
         return spawner;
     }
 }
-

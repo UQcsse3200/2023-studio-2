@@ -1,6 +1,9 @@
 package com.csse3200.game.components.Weapons.SpecWeapon;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
@@ -10,34 +13,39 @@ public class StaticController extends WeaponControllerComponent {
     private Vector2 player_last_pos;
 
     public StaticController(WeaponConfig config,
+                            float attackDirection,
                             Entity player) {
-        super(config, 0, player);
-        this.remainingDuration = config.slotType.equals("building") ? Integer.MAX_VALUE : 20;
+        super(config, attackDirection, player);
+        this.remainingDuration = 25;
         this.player_last_pos = player.getPosition();
     }
 
     @Override
+    protected void set_animations() {
+    }
+
+    @Override
+    protected void set_sound() {
+    }
+
+    @Override
     protected void initial_rotation() {
-        return;
     }
 
     @Override
     protected void initial_position() {
-        entity.setPosition(player.getPosition()
-                .add(player.getScale().scl(0.5f))
-                .sub(entity.getScale().scl(0f))
-                .add(new Vector2(0.15f, -0.2f))
+        entity.setPosition(player.getCenterPosition()
+                .mulAdd(entity.getScale(), -0.5f)
+                .add(positionInDirection(currentRotation, 0.5f))
         );
     }
 
     @Override
-    protected void initial_animation(AnimationRenderComponent animator) {
-        return;
+    protected void initial_animation() {
     }
 
     @Override
     protected void rotate() {
-        return;
     }
 
     @Override
@@ -49,6 +57,10 @@ public class StaticController extends WeaponControllerComponent {
 
     @Override
     protected void reanimate() {
-        return;
+    }
+
+    @Override
+    protected void despawn () {
+        Gdx.app.postRunnable(entity::dispose);
     }
 }

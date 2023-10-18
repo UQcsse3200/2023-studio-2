@@ -1,11 +1,14 @@
 {
-  "meleeEnemyPTE": {
+  "redGhost": {
+    "name": "redGhost",
     "health": 50,
-    "baseAttack": 10,
-    "speed": 5,
+    "baseAttack": 5,
+    "speedX": 1,
+    "speedY": 1,
+    "maxHealth": 50,
     "behaviour": "PTE",
     "type": "Melee",
-    "spritePath": "images/enemy/base_enemy.atlas",
+    "spritePath": "images/enemy/redGhost/redGhost.atlas",
     "sound": {
       "soundsMap": {
         "enemyDeath": "sounds/enemyDeath.wav",
@@ -14,13 +17,34 @@
     }
   },
 
-  "meleeEnemyDTE": {
+  "chain": {
+    "name": "chain",
     "health": 50,
-    "baseAttack": 10,
-    "speed": 5,
+    "baseAttack": 5,
+    "speedX": 1,
+    "speedY": 1,
+    "maxHealth": 50,
+    "behaviour": "PTE",
+    "type": "Melee",
+    "spritePath": "images/enemy/Chain/chain.atlas",
+    "sound": {
+      "soundsMap": {
+        "enemyDeath": "sounds/enemyDeath.wav",
+        "enemySpawn": "sounds/enemySpawner.wav"
+      }
+    }
+  },
+
+  "roboMan": {
+    "name": "roboMan",
+    "health": 50,
+    "baseAttack": 5,
+    "speedX": 1,
+    "speedY": 1,
+    "maxHealth": 50,
     "behaviour": "DTE",
     "type": "Melee",
-    "spritePath": "images/enemy/RoboMan.atlas",
+    "spritePath": "images/enemy/RoboMan/RoboMan.atlas",
     "sound": {
       "soundsMap": {
         "enemyDeath": "sounds/enemyDeath.wav",
@@ -29,13 +53,16 @@
     }
   },
 
-  "rangeEnemyPTE": {
+  "necromancer": {
+    "name": "necromancer",
     "health": 50,
-    "baseAttack": 10,
-    "speed": 5,
+    "baseAttack": 5,
+    "speedX": 1,
+    "speedY": 1,
+    "maxHealth": 50,
     "behaviour": "PTE",
     "type": "Ranged",
-    "spritePath": "images/enemy/necromancer.atlas",
+    "spritePath": "images/enemy/Necromancer/necromancer.atlas",
     "sound": {
       "soundsMap": {
         "enemyDeath": "sounds/enemyDeath.wav",
@@ -44,31 +71,17 @@
     }
   },
 
-  "rangeEnemyDTE": {
-    "health": 50,
-    "baseAttack": 10,
-    "speed": 5,
-    "behaviour": "DTE",
-    "type": "Ranged",
-    "spritePath": "images/enemy/necromancer.atlas",
-    "sound": {
-      "soundsMap": {
-        "enemyDeath": "sounds/enemyDeath.wav",
-        "enemySpawn": "sounds/enemySpawner.wav"
-      }
-    }
-  },
-
-  "meleeBossPTE": {
+  "Knight": {
+    "name": "Knight",
     "health": 100,
-    "baseAttack": 25,
-    "speed": 8,
-    "specialAttack": 50,
+    "baseAttack": 10,
+    "speedX": 1,
+    "speedY": 1,
+    "maxHealth": 100,
     "behaviour": "PTE",
     "type": "Melee",
-    "spritePath": "images/enemy/Night.atlas",
+    "spritePath": "images/enemy/Knight/Knight.atlas",
     "isBoss": true,
-
     "sound": {
       "soundsMap": {
         "enemyDeath": "sounds/enemyDeath.wav",
@@ -77,14 +90,35 @@
     }
   },
 
-  "rangeBossPTE": {
+  "Guardian": {
+    "name": "Guardian",
     "health": 100,
-    "baseAttack": 25,
-    "speed": 8,
-    "specialAttack": 50,
+    "baseAttack": 10,
+    "speedX": 1,
+    "speedY": 1,
+    "maxHealth": 100,
+    "behaviour": "PTE",
+    "type": "Melee",
+    "spritePath": "images/enemy/guardian/guardian.atlas",
+    "isBoss": true,
+    "sound": {
+      "soundsMap": {
+        "enemyDeath": "sounds/enemyDeath.wav",
+        "enemySpawn": "sounds/enemySpawner.wav"
+      }
+    }
+  },
+
+  "Mage": {
+    "name": "Mage",
+    "health": 100,
+    "baseAttack": 10,
+    "speedX": 1,
+    "speedY": 1,
+    "maxHealth": 100,
     "behaviour": "PTE",
     "type": "Ranged",
-    "spritePath": "images/enemy/Night.atlas",
+    "spritePath": "images/enemy/Mage/mage.atlas",
     "isBoss": true,
     "sound": {
       "soundsMap": {

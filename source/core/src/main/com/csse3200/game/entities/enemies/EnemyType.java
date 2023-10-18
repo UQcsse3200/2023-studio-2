@@ -6,10 +6,9 @@ package com.csse3200.game.entities.enemies;
  * Ranged (small ranged enemy)
  * BossMelee (Boss melee enemy)
  * BossRanged (Boss ranged enemy)
+ * necromancer
  */
 public enum EnemyType {
     Melee,
     Ranged,
-    BossMelee,
-    BossRanged
 }

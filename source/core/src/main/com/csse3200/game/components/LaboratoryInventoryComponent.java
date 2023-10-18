@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * specifically the number of potions it contains.
  */
 public class LaboratoryInventoryComponent extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(InteractableComponent.class);
+    private static final Logger logger = LoggerFactory.getLogger(LaboratoryInventoryComponent.class);
     private int potion;
 
     /**

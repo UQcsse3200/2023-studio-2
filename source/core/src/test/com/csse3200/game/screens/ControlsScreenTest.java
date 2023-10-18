@@ -5,8 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.ResourceService;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,7 +45,7 @@ public class ControlsScreenTest {
     @Test
     void testControlsScreenAssetLoading() {
         Gdx.app.postRunnable(() -> {
-            ControlsScreen controlsScreen = new ControlsScreen(game);
+            ControlsScreen controlsScreen = createControlsScreen();
 
             // Simulate rendering and resizing
             controlsScreen.render(0.1f);
@@ -57,6 +57,10 @@ public class ControlsScreenTest {
             // Dispose of the screen
             controlsScreen.dispose();
         });
+    }
+
+    private ControlsScreen createControlsScreen() {
+        return new ControlsScreen(game, "ControlsScreenName");
     }
 
     private void verifyAssetLoaded(String assetPath) {

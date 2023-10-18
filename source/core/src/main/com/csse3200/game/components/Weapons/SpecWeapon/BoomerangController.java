@@ -8,23 +8,24 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class BoomerangController extends WeaponControllerComponent {
-    private Vector2 player_last_pos;
+    private Vector2 playerlastpos;
 
     public BoomerangController(WeaponConfig config,
                                float attackDirection,
                                Entity player, int attackNum) {
         super(config, attackDirection, player, attackNum);
-        this.player_last_pos = player.getPosition();
+        this.playerlastpos = player.getPosition();
     }
 
     @Override
-    protected void add_animations(AnimationRenderComponent animator) {
-        animator.addAnimation("UP", 0.07f, Animation.PlayMode.LOOP);
+    protected void set_animations() {
+        animator = entity.getComponent(AnimationRenderComponent.class);
+        animator.addAnimation("ATTACK", 0.07f, Animation.PlayMode.LOOP);
     }
 
     @Override
     protected void initial_rotation() {
-        currentRotation += 45 * (attackNum % 2 == 0 ? 1 : -1);;
+        currentRotation += 75 * (attackNum % 2 == 0 ? 1 : -1);;
     }
 
     @Override
@@ -37,8 +38,8 @@ public class BoomerangController extends WeaponControllerComponent {
     }
 
     @Override
-    protected void initial_animation(AnimationRenderComponent animator) {
-        animator.startAnimation("UP");
+    protected void initial_animation() {
+        animator.startAnimation("ATTACK");
     }
 
     @Override
@@ -49,8 +50,8 @@ public class BoomerangController extends WeaponControllerComponent {
 
     @Override
     protected void move() {
-        Vector2 player_delta = player.getPosition().sub(player_last_pos);
-        this.player_last_pos = player.getPosition();
+        Vector2 player_delta = player.getPosition().sub(playerlastpos);
+        this.playerlastpos = player.getPosition();
 
         entity.setPosition(entity.getPosition()
                 .add(player_delta.cpy())
@@ -59,5 +60,6 @@ public class BoomerangController extends WeaponControllerComponent {
     }
 
     @Override
-    protected void reanimate() {return;}
+    protected void reanimate() {
+    }
 }

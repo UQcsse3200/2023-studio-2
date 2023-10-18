@@ -1,6 +1,8 @@
 package com.csse3200.game.entities.configs;
 
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
+import com.csse3200.game.entities.enemies.EnemyName;
 import com.csse3200.game.entities.enemies.EnemyType;
 
 /**
@@ -8,19 +10,11 @@ import com.csse3200.game.entities.enemies.EnemyType;
  */
 public class EnemyConfig extends HealthEntityConfig {
   // Load enemy information here
-  public int speed = 1;
+  public EnemyName name;
+  public float speedX;
+  public float speedY;
   public EnemyBehaviour behaviour;
   public EnemyType type;
   public boolean isBoss = false;
-  public int specialAttack;
-
   public SoundsConfig sound;
-
-  public EnemyConfig() {
-
-  }
-
-  public EnemyConfig(boolean isBoss) {
-    this.isBoss = isBoss;
-  }
 }

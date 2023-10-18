@@ -17,29 +17,35 @@ public abstract class ReplacementTool extends PlacementTool {
 
     /**
      * Creates a new tool which allows the placing of structures with the given cost.
-     * @param cost - the cost of the entity being placed.
+     *
+     * @param cost  - the cost of the entity being placed.
+     * @param range
      */
-    protected ReplacementTool(ObjectMap<String, Integer> cost) {
-        this(cost, false);
+    protected ReplacementTool(ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
+        this(cost, range, texture, ordering, false);
     }
 
     /**
      * Creates a new tool which allows the placing of structures with the given cost.
-     * @param cost - the cost of the entity being placed.
+     *
+     * @param cost      - the cost of the entity being placed.
+     * @param range
+     * @param texture   - the texture of this tool.
+     * @param ordering  - the ordering of this tool.
+     * @param mustPlace - whether the new structure must replace another structure.
      */
-    protected ReplacementTool(ObjectMap<String, Integer> cost, boolean mustPlace) {
-
-        super(cost);
+    protected ReplacementTool(ObjectMap<String, Integer> cost, float range, String texture, int ordering, boolean mustPlace) {
+        super(cost, range, texture, ordering);
         this.mustReplace = mustPlace;
     }
 
     /**
-     * Attempts to place a structure at the specified position.
-     * If the position is already occupied or the player has insufficient resources, does nothing.
+     * If a structure exists at the given position, replaces it, otherwise if the tool
+     * is configured to allow structures to be placed without replacement,
+     * places the new structure at the given position.
      *
      * @param player - the player interacting with the tool.
      * @param position - the position to place the structure.
-     * @return whether the structure was successfully placed.
      */
     @Override
     public void performInteraction(Entity player, GridPoint2 position) {
@@ -52,11 +58,9 @@ public abstract class ReplacementTool extends PlacementTool {
         if (existingStructure != null) {
             var placePosition = structurePlacementService.getStructurePosition(existingStructure);
 
-            ServiceLocator.getStructurePlacementService().replaceStructureAt(newStructure, placePosition,
-                    false, false);
+            ServiceLocator.getStructurePlacementService().replaceStructureAt(newStructure, placePosition);
         } else if (!mustReplace) {
-            ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position,
-                    false, false);
+            ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position);
         }
     }
 
@@ -70,7 +74,8 @@ public abstract class ReplacementTool extends PlacementTool {
 
     /**
      * Checks whether the structure can be placed at the given position.
-     * By default, checks if the grid position is empty.
+     * This only returns an invalid ToolResponse if the tool is configured to
+     * require a structure to replace.
      *
      * @param position - the position the structure is trying to be placed at.
      * @return whether the structure can be placed at the given position.

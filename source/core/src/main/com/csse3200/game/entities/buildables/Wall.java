@@ -1,16 +1,14 @@
 package com.csse3200.game.entities.buildables;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.ProximityActivationComponent;
-import com.csse3200.game.components.SoundComponent;
+import com.csse3200.game.components.*;
 import com.csse3200.game.components.structures.JoinLayer;
 import com.csse3200.game.components.structures.JoinableComponent;
 import com.csse3200.game.components.structures.JoinableComponentShapes;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
+import com.csse3200.game.entities.configs.TurretConfig;
 import com.csse3200.game.entities.configs.WallConfig;
 import com.csse3200.game.entities.configs.WallConfigs;
 import com.csse3200.game.files.FileLoader;
@@ -38,9 +36,6 @@ public class Wall extends PlaceableEntity {
     private static final JoinableComponentShapes shapes =
             FileLoader.readClass(JoinableComponentShapes.class, "vertices/walls.json");
 
-    private static final WallConfigs configs =
-            FileLoader.readClass(WallConfigs.class, "configs/walls.json");
-
     WallType type;
 
     /**
@@ -53,35 +48,24 @@ public class Wall extends PlaceableEntity {
      *
      * This adding multiple components for interaction
      * and also added Sound Component to trigger sound effects
-     * @param type - define the type of wall
-     * @param player - link with player to implement walls
+     * @param config - the config for the wall
      */
-    public Wall(WallType type, Entity player) {
+    public Wall(WallConfig config) {
         super(2, 2);
-        this.type = type;
 
-        WallConfig config = configs.GetWallConfig(type);
         var textures = ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class);
 
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody));
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL));
-        addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE));
-        addComponent(new CombatStatsComponent(config.health, 0,0,false));
+        addComponent(new HitboxComponent().setLayer(PhysicsLayer.WALL));
+        addComponent(new CombatStatsComponent(config.health, config.maxHealth, 0,0,false));
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));
-        addComponent(new ProximityActivationComponent(1.5f, player, this::onPlayerEnter, this::onPlayerExit));
-        addComponent(new StructureDestroyComponent())
-                .addComponent(new SoundComponent(config.sounds));
+        addComponent(new StructureDestroyComponent());
+        addComponent(new SoundComponent(config.sounds));
+        addComponent(new SaveableComponent<>(wall -> save(wall, config), WallConfig.class));
 
         getComponent(JoinableComponent.class).scaleEntity();
-    }
-
-    private void onPlayerEnter(Entity player) {
-        getComponent(HealthBarComponent.class).show();
-    }
-
-    private void onPlayerExit(Entity player) {
-        getComponent(HealthBarComponent.class).hide();
     }
 
     @Override
@@ -96,5 +80,22 @@ public class Wall extends PlaceableEntity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), type);
+    }
+
+    /**
+     * A function to save the wall's properties into its config.
+     * @param entity - the wall to save.
+     * @param config - the existing config for the wall.
+     * @return the updated config for the wall.
+     */
+    private static WallConfig save(Entity entity, WallConfig config) {
+        if (!(entity instanceof Wall)) {
+            return new WallConfig();
+        }
+
+        config.position = entity.getGridPosition();
+        config.health = entity.getComponent(CombatStatsComponent.class).getHealth();
+
+        return config;
     }
 }

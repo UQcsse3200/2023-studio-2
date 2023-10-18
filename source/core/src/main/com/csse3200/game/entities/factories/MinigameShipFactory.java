@@ -1,5 +1,4 @@
 package com.csse3200.game.entities.factories;
-
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.components.player.InteractionControllerComponent;
@@ -54,7 +53,7 @@ public class MinigameShipFactory {
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SHIP))
-                        .addComponent(new ShipActions(stats.health, stats.fuel, stats.acceleration))
+                        .addComponent(new ShipActions(stats.acceleration))
                         .addComponent(new ShipStatDisplay())
                         .addComponent(inputComponent)
                         .addComponent(new InteractionControllerComponent(false));
@@ -69,7 +68,6 @@ public class MinigameShipFactory {
         PhysicsUtils.setScaledCollider(ship, 0.6f, 0.3f);
         ship.getComponent(ColliderComponent.class).setDensity(1.5f);
         ship.getComponent(ShipStatDisplay.class).setShipActions(ship.getComponent(ShipActions.class));
-        //ship.getComponent(TextureRenderComponent.class).scaleEntity();
 
         //Edited by Foref, changes physics to reflect space environment
         //With fixed rotation off, ship will spin without additional customization of shipactions

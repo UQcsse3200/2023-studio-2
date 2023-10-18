@@ -6,7 +6,6 @@ import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.MainMenuActions;
 import com.csse3200.game.components.mainmenu.MainMenuDisplay;
 import com.csse3200.game.components.mainmenu.MainMenuStarBackground;
-import com.csse3200.game.components.spacenavigation.NavigationBackground;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -16,10 +15,7 @@ import com.csse3200.game.input.InputService;
 import com.csse3200.game.physics.PhysicsService;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
-import com.csse3200.game.services.GameStateObserver;
-import com.csse3200.game.services.GameTime;
-import com.csse3200.game.services.ResourceService;
-import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +28,7 @@ public class MainMenuScreen extends ScreenAdapter {
   public static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  private static final String[] mainMenuTextures = {"images/menu/Background_Test1.png"};
+  private static final String[] mainMenuTextures = {"images/menu/main-menu.png"};
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -47,6 +43,8 @@ public class MainMenuScreen extends ScreenAdapter {
   }
 
   private void initialiseServices() {
+    ServiceLocator.clear();
+
     ServiceLocator.registerInputService(
             new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
     ServiceLocator.registerResourceService(new ResourceService());
@@ -54,7 +52,7 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerTimeSource(new GameTime());
     ServiceLocator.registerPhysicsService(new PhysicsService());
-    ServiceLocator.registerGameStateObserverService(new GameStateObserver());
+    ServiceLocator.registerGameStateObserverService(new GameStateObserver(new GameStateInteraction()));
   }
 
   @Override
@@ -85,6 +83,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
     renderer.dispose();
     unloadAssets();
+    ServiceLocator.clear();
   }
 
   private void loadAssets() {
@@ -113,6 +112,6 @@ public class MainMenuScreen extends ScreenAdapter {
             .addComponent(new InputDecorator(stage, 10))
             .addComponent(new MainMenuActions(game, stage, skin));
     ServiceLocator.getEntityService().register(ui);
-    stage.addActor(new MainMenuStarBackground());
+    stage.addActor(new MainMenuStarBackground(15));
   }
 }

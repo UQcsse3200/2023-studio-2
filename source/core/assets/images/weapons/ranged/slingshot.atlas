@@ -1,0 +1,12 @@
+slingshot.png
+size: 60, 30
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ATTACK
+  rotate: false
+  xy: 0, 0
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: 0

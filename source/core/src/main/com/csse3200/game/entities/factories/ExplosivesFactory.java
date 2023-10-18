@@ -2,18 +2,13 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.ProximityActivationComponent;
-import com.csse3200.game.components.ProximityTriggerComponent;
+import com.csse3200.game.components.*;
 import com.csse3200.game.components.explosives.ExplosiveComponent;
-import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.components.flags.EnemyFlag;
-import com.csse3200.game.components.structures.JoinLayer;
-import com.csse3200.game.components.structures.JoinableComponent;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.ExplosiveBarrelConfig;
+import com.csse3200.game.entities.configs.LandmineConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.PhysicsUtils;
@@ -29,18 +24,28 @@ public class ExplosivesFactory {
             "configs/landmine.json");
 
     public static PlaceableEntity createExplosiveBarrel() {
+        return createExplosiveBarrel(new ExplosiveBarrelConfig(explosiveBarrelConfig));
+    }
+
+    public static PlaceableEntity createExplosiveBarrel(ExplosiveBarrelConfig config) {
         var explosiveBarrel = new PlaceableEntity(2, 2);
 
-        Texture texture = ServiceLocator.getResourceService().getAsset(explosiveBarrelConfig.texture, Texture.class);
+        Texture texture = ServiceLocator.getResourceService().getAsset(config.spritePath, Texture.class);
 
         explosiveBarrel.addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.WALL))
-                .addComponent(new CombatStatsComponent(explosiveBarrelConfig.health,
+                .addComponent(new CombatStatsComponent(config.health, config.maxHealth,
                         0,0,false))
                 .addComponent(new HealthBarComponent(true))
                 .addComponent(new StructureDestroyComponent())
-                .addComponent(new ExplosiveComponent(explosiveBarrelConfig.explosive))
-                .addComponent(new TextureRenderComponent(texture));
+                .addComponent(new ExplosiveComponent(config))
+                .addComponent(new HealthBarComponent(true))
+                .addComponent(new TextureRenderComponent(texture))
+                .addComponent(new SaveableComponent<>(barrel -> {
+                    config.position = barrel.getGridPosition();
+                    config.health = barrel.getComponent(CombatStatsComponent.class).getHealth();
+                    return config;
+                }, ExplosiveBarrelConfig.class));
 
         explosiveBarrel.setScale(0.5f,(float) texture.getHeight() / texture.getWidth() * 0.5f);
 
@@ -49,19 +54,28 @@ public class ExplosivesFactory {
         return explosiveBarrel;
     }
 
+
     public static PlaceableEntity createLandmine() {
-        var explosiveBarrel = new PlaceableEntity(2, 2);
+        return createLandmine(new LandmineConfig(landmineConfig));
+    }
 
-        Texture texture = ServiceLocator.getResourceService().getAsset(landmineConfig.texture, Texture.class);
+    public static PlaceableEntity createLandmine(LandmineConfig config) {
+        var newLandmine = new PlaceableEntity(2, 2);
 
-        explosiveBarrel.addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new ExplosiveComponent(landmineConfig.explosive))
+        Texture texture = ServiceLocator.getResourceService().getAsset(landmineConfig.spritePath, Texture.class);
+
+        newLandmine.addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
+                .addComponent(new ExplosiveComponent(landmineConfig))
                 .addComponent(new TextureRenderComponent(texture))
                 .addComponent(new ProximityTriggerComponent(EnemyFlag.class, 1f,
-                        () -> explosiveBarrel.getEvents().trigger("explode")));
+                        () -> newLandmine.getEvents().trigger("explode")))
+                .addComponent(new SaveableComponent<>(landmine -> {
+                    config.position = landmine.getGridPosition();
+                    return config;
+                }, LandmineConfig.class));
 
-        explosiveBarrel.setScale(0.5f,(float) texture.getHeight() / texture.getWidth() * 0.5f);
+        newLandmine.setScale(0.5f,(float) texture.getHeight() / texture.getWidth() * 0.5f);
 
-        return explosiveBarrel;
+        return newLandmine;
     }
 }

@@ -5,7 +5,9 @@
  */
 package com.csse3200.game.components;
 
+import com.csse3200.game.components.companion.CompanionActions;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,8 +38,8 @@ public class CombatStatsComponent extends Component {
    * @param attackMultiplier The attack multiplier of the entity.
    * @param isImmune         A flag indicating whether the entity is immune to attacks.
    */
-  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune) {
-    this.maxHealth = health;
+  public CombatStatsComponent(int health, int maxHealth, int baseAttack, int attackMultiplier, boolean isImmune) {
+    this.maxHealth = maxHealth;
     this.setHealth(health);
     this.setBaseAttack(baseAttack);
     this.setAttackMultiplier(attackMultiplier);
@@ -53,7 +55,7 @@ public class CombatStatsComponent extends Component {
    * @param isImmune         A flag indicating whether the entity is immune to attacks.
    * @param lives            Number of lives the player has remaining.
    */
-  public CombatStatsComponent(int health, int baseAttack, int attackMultiplier, boolean isImmune, int lives) {
+  public CombatStatsComponent(int health, int maxHealth, int baseAttack, int attackMultiplier, boolean isImmune, int lives) {
     this.maxHealth = health;
     this.setHealth(health);
     this.setBaseAttack(baseAttack);
@@ -103,6 +105,9 @@ public class CombatStatsComponent extends Component {
       entity.getEvents().trigger("updateHealth", this.health);
     }
     if (entity != null) {
+      if (isDead() && entity.getEntityType().equals("extractor") && !dead) {
+        ServiceLocator.getGameArea().getEvent().trigger("reTarget");
+      }
       if (isDead() && entity.getEntityType().equals("player") && !dead) {
         dead = true;
         entity.getComponent(KeyboardPlayerInputComponent.class).clearWalking(); // Stop player from walking
@@ -119,15 +124,19 @@ public class CombatStatsComponent extends Component {
         };
         timer.schedule(killPlayer, 1); // Animation lasts for 1 second before death screen is triggered
       } else if (isDead() && entity.getEntityType().equals("companion")) {
-        final Timer timer1 = new Timer();
+        // all companion death stuff
+        entity.getComponent(CompanionActions.class).handleCompanionDownMode();
+
+
+        /*final Timer timer1 = new Timer();
         Timer.Task killCompanion = new Timer.Task() {
           @Override
           public void run() {
             entity.getEvents().trigger("death");
             timer1.clear();
           }
-        };
-        timer1.schedule(killCompanion,1);
+        };*/
+        //timer1.schedule(killCompanion,1);
 
       } else if (isDead() && entity.getEntityType().equals("playerWeapon")) {
         entity.getEvents().trigger("death", 0);
@@ -137,10 +146,9 @@ public class CombatStatsComponent extends Component {
 
   /**
    * sets the entity's health to maximum if H-Key is pressed on the keyboard.
-   * @param newHealth the new value of the users health
    * @param isHKeyPressed whether the H key is pressed
    */
-  public void setHealth(int newHealth, boolean isHKeyPressed) {
+  public void setHealth( boolean isHKeyPressed) {
     if (isHKeyPressed) {
       this.health = 100;
     }
@@ -288,12 +296,11 @@ public class CombatStatsComponent extends Component {
    * @param attacker The entity causing the damage.
    */
   public void hit(CombatStatsComponent attacker) {
-    if (getImmunity()) {
-      return;
+    if (!getImmunity()) {
+      int newHealth;
+      newHealth = getHealth() - attacker.getAttack();
+      setHealth(newHealth);
     }
-    int newHealth;
-    newHealth = getHealth() - attacker.getAttack();
-    setHealth(newHealth);
   }
 
 

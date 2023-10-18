@@ -1,15 +1,14 @@
 package com.csse3200.game.entities.configs;
 
-import com.csse3200.game.components.CompanionWeapons.CompanionWeaponType;
+import com.csse3200.game.components.companionweapons.CompanionWeaponType;
 
 public class CompanionWeaponConfig extends BaseEntityConfig {
-    private final CompanionWeaponType weaponType;
     public String name = "";
     public String description = "";
     public float damage = 0;
     public float weaponSpeed = 0;
     public int weaponDuration = 0;
-    public int rotationSpeed = 0;
+    public int rotationSpeed = 1;
     public int initialRotationOffset = 0;
     public int attackCooldown = 5;
     public float currentRotation = 45;
@@ -19,8 +18,18 @@ public class CompanionWeaponConfig extends BaseEntityConfig {
     public float imageScale = 1;
     public String textureAtlas;
     public String imagePath;
-    public CompanionWeaponType type;
-    public String slotType = "new slot type";
+    public CompanionWeaponType weaponType;
+    public int health = 30;
+    public int projectiles = 1;
+
+    public String slotType = "ranged" ;
+
+    public float range = 10.0f; // Set a fixed maximum range of 200 units for the projectile
+    public int attackNum =0;
+    public ParticleEffectsConfig effects = new ParticleEffectsConfig();
+
+
+
 
     public CompanionWeaponConfig(
             String name,
@@ -38,7 +47,7 @@ public class CompanionWeaponConfig extends BaseEntityConfig {
             String textureAtlas,
             String imagePath,
             CompanionWeaponType weaponType,
-            String slotType
+            String slotType, int projectiles
     ) {
         this.name = name;
         this.description = description;
@@ -56,13 +65,11 @@ public class CompanionWeaponConfig extends BaseEntityConfig {
         this.imagePath = imagePath;
         this.weaponType = weaponType;
         this.slotType = slotType;
+        this.projectiles=projectiles;
     }
 
     public String getImagePath() {
         return imagePath;
     }
 
-    public float getImageScale() {
-        return imageScale;
-    }
 }

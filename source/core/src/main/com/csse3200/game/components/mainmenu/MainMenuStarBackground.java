@@ -8,39 +8,37 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.csse3200.game.components.backgrounds.StarBackground;
+//import com.csse3200.game.components.spacenavigation.StarBackground;
 
-// This is heavily inspired by the Space Team's Space Minigame screen
-public class MainMenuStarBackground extends Actor {
-    /**
-     * The texture for the space background of the navigation screen.
-     */
-    private Texture spaceBackground;
+public class MainMenuStarBackground extends StarBackground {
 
     /**
      * Array of animations for individual star sprites.
      */
-    private Animation<TextureRegion>[] animations;
+    private final Animation<TextureRegion>[] animations;
 
     /**
      * Array of positions for individual star sprites.
      */
-    private Vector2[] spritePositions;
+    private final Vector2[] spritePositions;
 
     /**
      * The number of star sprites in the background.
      */
-    private int numOfSprites = 15;
+    private final int numOfSprites = 30;
 
     /**
      * Array to store the time passed for each sprite's animation.
      */
-    private float[] stateTimes;  // Time passed for each sprite's animation
+    private final float[] stateTimes;  // Time passed for each sprite's animation
 
     /**
      * Constructs a new NavigationBackground instance.
      * Loads necessary textures and initializes the star animations and positions.
      */
-    public MainMenuStarBackground() {
+    public MainMenuStarBackground(int stars) {
+        super(30);
 
         int numOfFrames = 8;
         TextureRegion[] frames = new TextureRegion[numOfFrames];
@@ -59,16 +57,16 @@ public class MainMenuStarBackground extends Actor {
             animations[i] = new Animation<>(0.1f, frames);
             animations[i].setPlayMode(Animation.PlayMode.LOOP_PINGPONG); // Ping pong effect
 
-            // No stars in the rightmost quarter of screen, overlapping with menu buttons
+            // No stars in the rightmost quarter of the screen, overlapping with menu buttons
             int x = MathUtils.random(0, Gdx.graphics.getWidth());
-            // TODO CHANGE THE AREAS OF SCREEN AFFECTED
-            while (x > 3 * (Gdx.graphics.getWidth() / 4) && x < 0.9 * (Gdx.graphics.getWidth())) {
-                x = MathUtils.random(0, Gdx.graphics.getWidth());
-            }
+            int y = MathUtils.random((Gdx.graphics.getHeight() / 3), (int) (0.85 * Gdx.graphics.getHeight()));
 
-            // No stars in the top 15% or bottom third of screen
-            int y = MathUtils.random((Gdx.graphics.getHeight() / 3),
-                    (int) (0.85 * Gdx.graphics.getHeight()));
+            while ((x >= (140 / 1280f) * Gdx.graphics.getWidth() && x <= (690 / 1280f) * Gdx.graphics.getWidth() && y >= (500 / 720f) * Gdx.graphics.getHeight() && y <= (600 / 720f) * Gdx.graphics.getHeight()) ||
+                    (x >= (400 / 1280f) * Gdx.graphics.getWidth() && x <= (500 / 1280f) * Gdx.graphics.getWidth() && y >= (250 / 720f) * Gdx.graphics.getHeight() && y <= (350 / 720f) * Gdx.graphics.getHeight()) ||
+                    (x >= (950 / 1280f) * Gdx.graphics.getWidth() && x <= (1130 / 1280f) * Gdx.graphics.getWidth() && y >= (150 / 720f) * Gdx.graphics.getHeight() && y <= (550 / 720f) * Gdx.graphics.getHeight())) {
+                x = MathUtils.random(0, Gdx.graphics.getWidth());
+                y = MathUtils.random((Gdx.graphics.getHeight() / 3), (int) (0.85 * Gdx.graphics.getHeight()));
+            }
 
             spritePositions[i] = new Vector2(x, y);
             stateTimes[i] = MathUtils.random(0f, 1f);  // Offset animation start times
@@ -103,5 +101,9 @@ public class MainMenuStarBackground extends Actor {
             TextureRegion currentFrame = animations[i].getKeyFrame(stateTimes[i]);
             batch.draw(currentFrame, spritePositions[i].x, spritePositions[i].y);
         }
+    }
+
+    public int getNumSprites() {
+        return this.numOfSprites;
     }
 }

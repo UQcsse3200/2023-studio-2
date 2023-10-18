@@ -1,17 +1,14 @@
 package com.csse3200.game.areas;
-
 import com.badlogic.gdx.audio.Music;
 import com.csse3200.game.files.UserSettings;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.areas.terrain.TerrainFactory.TerrainType;
 import com.csse3200.game.components.gamearea.GameAreaDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.factories.MinigameShipFactory;
 import com.csse3200.game.entities.factories.MinigameObjectFactory;
-import com.csse3200.game.entities.factories.ObstacleFactory;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.RandomUtils;
@@ -31,11 +28,9 @@ public class SpaceGameArea extends GameArea {
     private static final float STATIC_ASTEROID_SIZE =0.9f;
     private static final float WORMHOLE_SIZE = 0.9f;
     private static final int NUM_ENEMIES = 10;
-    private float distance;
     private Entity ship;
     private Entity goal;
     private static final int NUM_ASTEROIDS = 100;
-    private Label distanceLabel;
     private static final String[] spaceMiniGameTextures = {
             "images/minigame/SpaceMiniGameBackground.png",
             "images/minigame/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
@@ -47,7 +42,8 @@ public class SpaceGameArea extends GameArea {
     private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
     private static final String[] spaceMusic = {backgroundMusic};
     private final TerrainFactory terrainFactory;
-    private final ArrayList<Entity> targetables;
+
+    private final ArrayList<Entity> targetTables;
 
     private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
 
@@ -58,7 +54,7 @@ public class SpaceGameArea extends GameArea {
     public SpaceGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
-        this.targetables = new ArrayList<>();
+        this.targetTables = new ArrayList<>();
     }
 
     /**
@@ -71,14 +67,15 @@ public class SpaceGameArea extends GameArea {
         displayUI();
         playMusic();
         spawnTerrain();
-        Entity newShip = spawnShip();
+        //Who removed spawn ship and spawn goal on creation?!@!!!!!
+        //spawn Goal has to be called first before spawn ship, to not crash calc distance
+        //Should modify later
+        spawnGoal();
+        spawnShip();
         spawnAsteroids();
-        Entity goal = spawnGoal();
         createBoundary();
         spawnEnemy();
-
     }
-
     /**
      * Method for the background music of the game
      */
@@ -97,11 +94,11 @@ public class SpaceGameArea extends GameArea {
      * @param pos Start position from where the number of blocks are added
      */
     private void spawnStaticAsteroidsRight(int n, GridPoint2 pos){
-        Entity asteroid_length = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
+        Entity asteroidlength = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
         if (n <= 0) {
             return;
         }
-        spawnEntityAt(asteroid_length, pos, false, false);
+        spawnEntityAt(asteroidlength, pos, false, false);
         // Increment the position for the next asteroid
         pos.x += 1;
         pos.y += 0;
@@ -114,11 +111,12 @@ public class SpaceGameArea extends GameArea {
      * @param pos Start position from where the number of blocks are added on the map
      */
     private void spawnStaticAsteroidsUp(int n, GridPoint2 pos){
-        Entity asteroid_width = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
+        Entity asteroidWidth = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
         if (n <= 0) {
             return;
         }
-        spawnEntityAt(asteroid_width, pos, false, false);
+        spawnEntityAt(asteroidWidth, pos, false, false);
+
         // Increment the position for the next asteroid
         pos.y += 1;
         spawnStaticAsteroidsUp(n - 1, pos); // Recursive call
@@ -143,8 +141,8 @@ public class SpaceGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
         for (int i = 0; i < NUM_ENEMIES; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity rand_enemy = MinigameObjectFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE);
-            spawnEntityAt(rand_enemy, randomPos,true,false);
+            Entity randomenemy = MinigameObjectFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE);
+            spawnEntityAt(randomenemy, randomPos,true,false);
         }
     }
 
@@ -196,7 +194,6 @@ public class SpaceGameArea extends GameArea {
         float tileSize = terrain.getTileSize();
         GridPoint2 tileBounds = terrain.getMapBounds(0);
         Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
-
     }
 
 
@@ -207,7 +204,7 @@ public class SpaceGameArea extends GameArea {
     {
         Entity newShip = MinigameShipFactory.createMinigameShip();
         spawnEntityAt(newShip, SHIP_SPAWN, true, true);
-        targetables.add(newShip);
+        targetTables.add(newShip);
         ship = newShip;
         return newShip;
     }

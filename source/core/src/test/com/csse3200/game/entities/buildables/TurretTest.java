@@ -1,8 +1,7 @@
 package com.csse3200.game.entities.buildables;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.TurretConfig;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.physics.PhysicsEngine;
@@ -37,7 +36,7 @@ public class TurretTest {
     @BeforeEach
     public void setUp() {
         TurretConfig turretConfig = new TurretConfig();
-        turretConfig.maxAmmo = 10;
+        turretConfig.setMaxAmmo(10);
 
         resourceService = mock(ResourceService.class);
         when(resourceService.getAsset(turretConfig.spritePath, TextureAtlas.class)).thenReturn(mock(TextureAtlas.class));
@@ -55,42 +54,42 @@ public class TurretTest {
 
     @Test
     public void testRefillAmmo() {
-        Assertions.assertEquals(10, turret.currentAmmo);
+        Assertions.assertEquals(10, turret.getCurrentAmmo());
 
         // Refill ammo to max
         turret.refillAmmo();
-        Assertions.assertEquals(10, turret.currentAmmo);
+        Assertions.assertEquals(10, turret.getCurrentAmmo());
     }
 
 
 
     @Test
     public void testCanFire() {
-        Assertions.assertTrue(turret.Canfire());
+        Assertions.assertTrue(turret.canFire());
 
 
-        turret.currentAmmo = 0;
-        Assertions.assertFalse(turret.Canfire());
+        turret.setCurrentAmmo(0);
+        Assertions.assertFalse(turret.canFire());
 
 
         turret.refillAmmo();
-        Assertions.assertTrue(turret.Canfire());
+        Assertions.assertTrue(turret.canFire());
     }
 
 
     @Test
     public void testRefillAmmoWithAmount() {
 
-        Assertions.assertEquals(10, turret.currentAmmo);
+        Assertions.assertEquals(10, turret.getCurrentAmmo());
 
 
         turret.refillAmmo(3);
-        Assertions.assertEquals(10, turret.currentAmmo);
+        Assertions.assertEquals(10, turret.getCurrentAmmo());
 
 
-        turret.currentAmmo = 0;
+        turret.setCurrentAmmo(0);
         turret.refillAmmo(5);
-        Assertions.assertEquals(5, turret.currentAmmo);
+        Assertions.assertEquals(5, turret.getCurrentAmmo());
     }
 
 }

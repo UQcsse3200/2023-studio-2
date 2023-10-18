@@ -27,11 +27,13 @@ public class ServiceLocator {
   private static TerrainService terrainService;
   private static EntityPlacementService entityPlacementService;
   private static GameStateObserver gameStateObserverService;
-  private static GameArea GameArea;
-  public static GameArea getGameArea(){return GameArea;}
+  private static GameArea gameArea;
+  public static GameArea getGameArea() {
+    return gameArea;
+  }
 
   public static void registerGameArea(GameArea area){
-    GameArea=area;
+    gameArea =area;
   }
 
   private static StructurePlacementService structurePlacementService;
@@ -119,6 +121,7 @@ public class ServiceLocator {
   }
 
   public static void clear() {
+    dispose();
     entityService = null;
     renderService = null;
     physicsService = null;
@@ -133,4 +136,12 @@ public class ServiceLocator {
     throw new IllegalStateException("Instantiating static util class");
   }
 
+  public static void dispose() {
+    if (entityService != null)
+      entityService.dispose();
+    if (renderService != null)
+      renderService.dispose();
+    if (resourceService != null)
+      resourceService.dispose();
+  }
 }

@@ -2,10 +2,10 @@ package com.csse3200.game.components.structures;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 
-
-    /**
+/**
      * This class listens to events relating to the state of the extractor and plays
      *  the extracting animation when the broken extractor is fixed, otherwise the broken
      *  extractor remains 'un-animated'.
@@ -29,8 +29,10 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
             CombatStatsComponent healthStats = entity.getComponent(CombatStatsComponent.class);
             if (healthStats.isDead()) {
                 animator.startAnimation("animateBroken");
+                entity.getEvents().trigger("stopEffect", "rubble");
             } else {
                 animator.startAnimation("animateExtracting");
+                entity.getEvents().trigger("startEffect", "rubble");
             }
         }
     }

@@ -32,12 +32,8 @@ import org.slf4j.LoggerFactory;
  */
 public class UpgradeShopScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(UpgradeShopScreen.class);
-
     private final GdxGame game;
-    private Entity ship;
-
     private static final Vector2 CAMERA_POSITION = new Vector2(10, 11);
-
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
 
@@ -64,7 +60,6 @@ public class UpgradeShopScreen extends ScreenAdapter {
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
         loadAssets();
-        //createUI();
 
         logger.debug("Initialising space minigame screen entities");
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
@@ -74,6 +69,11 @@ public class UpgradeShopScreen extends ScreenAdapter {
         createUI();
     }
 
+    @Override
+    public void dispose() {
+        unloadAssets();
+        ServiceLocator.clear();
+    }
 
     /**
      * Renders the screen.
@@ -88,7 +88,6 @@ public class UpgradeShopScreen extends ScreenAdapter {
 
     private void loadAssets() {
         logger.debug("Loading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
         ServiceLocator.getResourceService().loadAll();
 
     }

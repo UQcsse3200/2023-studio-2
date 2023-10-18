@@ -1,0 +1,75 @@
+laserSwordSwing.png
+size: 292, 110
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+PRE_ATTACK2
+  rotate: false
+  xy: 0, 0
+  size: 55, 55
+  orig: 55, 55
+  offset: 0, 0
+  index: 0
+PRE_ATTACK2
+  rotate: false
+  xy: 55, 0
+  size: 55, 55
+  orig: 55, 55
+  offset: 0, 0
+  index: 1
+PRE_ATTACK2
+  rotate: false
+  xy: 110, 0
+  size: 55, 55
+  orig: 55, 55
+  offset: 0, 0
+  index: 2
+ATTACK2
+  rotate: false
+  xy: 165, 0
+  size: 72, 55
+  orig: 72, 55
+  offset: 0, 0
+  index: 0
+ATTACK2
+  rotate: false
+  xy: 237, 0
+  size: 55, 55
+  orig: 55, 55
+  offset: 0, 0
+  index: 1
+PRE_ATTACK1
+  rotate: false
+  xy: 237, 55
+  size: 55, 55
+  orig: 55, 55
+  offset: 0, 0
+  index: 0
+PRE_ATTACK1
+  rotate: false
+  xy: 182, 55
+  size: 55, 55
+  orig: 55, 55
+  offset: 0, 0
+  index: 1
+PRE_ATTACK1
+  rotate: false
+  xy: 127, 55
+  size: 55, 55
+  orig: 55, 55
+  offset: 0, 0
+  index: 2
+ATTACK1
+  rotate: false
+  xy: 55, 55
+  size: 72, 55
+  orig: 72, 55
+  offset: 0, 0
+  index: 0
+ATTACK1
+  rotate: false
+  xy: 0, 55
+  size: 55, 55
+  orig: 55, 55
+  offset: 0, 0
+  index: 1

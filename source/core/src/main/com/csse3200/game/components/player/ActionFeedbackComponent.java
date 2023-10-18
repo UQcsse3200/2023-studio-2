@@ -1,15 +1,10 @@
 package com.csse3200.game.components.player;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.resources.PopupComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.rendering.RenderComponent;
 import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.UIComponent;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 /**
  * This component is used to create action feedback alerts based on Entity events.
@@ -18,11 +13,11 @@ public class ActionFeedbackComponent extends Component {
     /**
      * How long the alert will display for.
      */
-    private final static int DURATION = 2000;
+    private static final int DURATION = 2000;
     /**
      * How fast the alert will float upwards.
      */
-    private final static double SPEED = 0.001;
+    private static final double SPEED = 0.001;
 
     /**
      * Adds two listeners to the entities events which, when invoked, can be used
@@ -59,6 +54,6 @@ public class ActionFeedbackComponent extends Component {
         // the predefined duration.
         alertEntity.addComponent(new PopupComponent(DURATION, SPEED));
 
-        ServiceLocator.getEntityPlacementService().PlaceEntityAt(alertEntity, position);
+        ServiceLocator.getEntityPlacementService().placeEntityAt(alertEntity, position);
     }
 }

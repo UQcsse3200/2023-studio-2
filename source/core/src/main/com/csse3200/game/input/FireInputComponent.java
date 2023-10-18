@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.services.ServiceLocator;
-
 import static com.badlogic.gdx.math.MathUtils.floor;
 import static com.csse3200.game.ui.UIComponent.skin;
 
@@ -43,10 +43,22 @@ public class FireInputComponent extends InputComponent {
                         getEntitiesByComponent(FireInputComponent.class).isEmpty() && ServiceLocator.getEntityService().
                         getEntitiesByComponent(HoleInputComponent.class).isEmpty()) {
                     createSuccessLabel();
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            area.dispose();
+                        }
+                    }, 1);
                 }
             } else if (area.mouseState == ExtractorMiniGameArea.MouseState.SPANNER) {
                 area.spawnExtractorBang(floor(entity.getPosition().x), floor(entity.getPosition().y));
-                this.dispose();
+                createFailLabel();
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        area.dispose();
+                    }
+                }, 1);
             }
             return true; // Return true to consume the event
         }
@@ -63,6 +75,14 @@ public class FireInputComponent extends InputComponent {
     private void createSuccessLabel() {
         Label label = new Label("Success!", skin);
         label.setPosition(920, 1000);
+        label.setSize(200, 50);
+        label.setColor(Color.BLACK);
+        ServiceLocator.getRenderService().getStage().addActor(label);
+    }
+
+    private void createFailLabel() {
+        Label label = new Label("Fail!", skin);
+        label.setPosition(940, 990);
         label.setSize(200, 50);
         label.setColor(Color.BLACK);
         ServiceLocator.getRenderService().getStage().addActor(label);

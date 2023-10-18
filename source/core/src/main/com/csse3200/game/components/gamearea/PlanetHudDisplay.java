@@ -7,8 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
-import com.csse3200.game.entities.configs.PlayerConfig;
-import com.csse3200.game.entities.configs.SoundsConfig;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
@@ -46,7 +44,7 @@ public class PlanetHudDisplay extends UIComponent {
         planetLabel.setFontScale(0.22f);
 
         Table overlayTable = new Table();
-        overlayTable.add(planetImage).size(130f).padLeft(5f).padBottom(15f);
+        overlayTable.add(planetImage).size(160f).padTop(-10f);//.padBottom(15f);//.padLeft(5f)
         overlayTable.row();
         overlayTable.add(planetLabel);
 
@@ -55,7 +53,6 @@ public class PlanetHudDisplay extends UIComponent {
         planetStack.add(overlayTable);
         planetTable.add(planetStack).size(180f, 225f);
         planetTable.row();
-        //createUpgradeTreeButton(planetTable);
 
         stage.addActor(planetTable);
     }
@@ -89,7 +86,6 @@ public class PlanetHudDisplay extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch)  {
-
     }
 
     @Override

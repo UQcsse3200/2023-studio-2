@@ -1,7 +1,7 @@
 package com.csse3200.game.entities;
 
 import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.areas.mapConfig.AreaEntityConfig;
+import com.csse3200.game.areas.map_config.AreaEntityConfig;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.files.FileLoader;
@@ -24,17 +24,14 @@ public class EntityService {
 
   private final Array<Entity> entities = new Array<>(false, INITIAL_CAPACITY);
 
-  private Array<Entity> getEntities() {
+  public Array<Entity> getEntities() {
     return entities;
   }
-
-  public AreaEntityConfig saveCurrentArea() {
+  public void saveCurrentArea(String path) {
     AreaEntityConfig areaEntityConfig = new AreaEntityConfig();
     areaEntityConfig.addEntities(getEntitiesByComponent(SaveableComponent.class));
 
-    FileLoader.writeClass(areaEntityConfig, "saves/savefile.json", FileLoader.Location.LOCAL);
-
-    return areaEntityConfig;
+    FileLoader.writeClass(areaEntityConfig, path, FileLoader.Location.LOCAL);
   }
 
   /**
@@ -43,7 +40,8 @@ public class EntityService {
    * @return Entity - the player entity, or null - no player found in EntityService
    */
   public Entity getPlayer() {
-    for (Entity entity : entities) {
+    for (int i = 0; i < entities.size; i++) {
+      Entity entity = entities.get(i);
       if (entity.getEntityType().equals("player")) {
         return entity;
       }
@@ -105,12 +103,13 @@ public class EntityService {
    * Dispose all entities.
    */
   public void dispose() {
-    for (Entity entity : entities) {
-      entity.dispose();
+    for (int i = 0; i < entities.size; i++) {
+      entities.get(i).dispose();
     }
   }
   public Entity getCompanion() {
-    for (Entity entity : entities) {
+    for (int i = 0; i < entities.size; i++) {
+      Entity entity = entities.get(i);
       if (entity.getEntityType().equals("companion")) {
         return entity;
       }

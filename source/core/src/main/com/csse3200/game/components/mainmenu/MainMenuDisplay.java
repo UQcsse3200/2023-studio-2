@@ -8,16 +8,16 @@ package com.csse3200.game.components.mainmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.screens.MainMenuScreen;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
+import com.csse3200.game.utils.LoadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * The UI component responsible for rendering and managing the main menu interface.
@@ -30,11 +30,8 @@ public class MainMenuDisplay extends UIComponent {
     private static final float Z_INDEX = 2f;
     private Table table;
 
-    public static int frame;
+    public int frame;
     private Image transitionFrames;
-    private long lastFrameTime;
-    private final int fps = 17;
-    private final long frameDuration =  (long)(800 / fps);
 
     @Override
     public void create() {
@@ -54,20 +51,20 @@ public class MainMenuDisplay extends UIComponent {
         table.setFillParent(true);
 
         // Display game title image
-//        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/escape-earth2.png", Texture.class));
-        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/Background_Test1.png", Texture.class));
+        Image titleImage = new Image(ServiceLocator.getResourceService().getAsset("images/menu/main-menu.png", Texture.class));
         titleImage.setWidth(Gdx.graphics.getWidth());
         titleImage.setHeight(Gdx.graphics.getHeight());
         titleImage.setPosition(0, 0);
 
+        boolean validLoad = LoadUtils.pathExists(LoadUtils.joinPath(List.of(LoadUtils.getSavePath(), LoadUtils.GAMESTATE_FILE)));
+
         // Create buttons for various menu options
         TextButton startBtn = new TextButton("Start", skin);
-        TextButton loadBtn = new TextButton("Load Story", skin);
+        TextButton loadBtn = new TextButton("Load Save", skin, validLoad ? "default" : "invalid");
         TextButton settingsBtn = new TextButton("Settings", skin);
         TextButton exitBtn = new TextButton("Exit", skin);
         TextButton miniBtn = new TextButton("Space Minigame", skin);
         TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
-        TextButton upgradeShip = new TextButton("Upgrade Ship", skin);
         TextButton tutorialBtn = new TextButton("Tutorial", skin);
         TextButton brickBreakerBtn = new TextButton("brick breaker minigame", skin);
 
@@ -77,7 +74,7 @@ public class MainMenuDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Start button clicked");
-                        entity.getEvents().trigger("start");
+                        entity.getEvents().trigger("start", validLoad);
                     }
                 });
         loadBtn.addListener(
@@ -85,7 +82,7 @@ public class MainMenuDisplay extends UIComponent {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Load button clicked");
-                        entity.getEvents().trigger("load");
+                        entity.getEvents().trigger("load", validLoad);
                     }
                 });
         settingsBtn.addListener(
@@ -121,14 +118,6 @@ public class MainMenuDisplay extends UIComponent {
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Exit button clicked");
                         entity.getEvents().trigger("exit");
-                    }
-                });
-        upgradeShip.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Upgrade Ship button clicked");
-                        entity.getEvents().trigger("upgrade shop");
                     }
                 });
 
@@ -170,37 +159,13 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(exitBtn).padTop(15f).padLeft(1200f);
         table.row();
-        table.add(upgradeShip).padTop(15f).padLeft(1200f);
-        table.row();
         table.add(brickBreakerBtn).padTop(15f).padLeft(1200f);
         table.row();
         stage.addActor(titleImage);
 
-////        AmendAnimation();
         stage.addActor(transitionFrames);
         stage.addActor(table);
     }
-
-//    private void AmendAnimation() {
-//        if (frame < MainMenuScreen.MountedFrames) {
-//            transitionFrames.setDrawable(new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService()
-//                    .getAsset(MainMenuScreen.transitionTextures[frame], Texture.class))));
-//            transitionFrames.setWidth(Gdx.graphics.getWidth());
-//            transitionFrames.setHeight(Gdx.graphics.getHeight());
-//            transitionFrames.setPosition(0, 0);
-//            frame++;
-//            lastFrameTime = System.currentTimeMillis();
-//        } else {
-//            frame = 1;
-//        }
-//    }
-
-//    @Override
-//    public void update() {
-//        if (System.currentTimeMillis() - lastFrameTime > frameDuration) {
-//            AmendAnimation();
-//        }
-//    }
 
     @Override
     public void draw(SpriteBatch batch) {

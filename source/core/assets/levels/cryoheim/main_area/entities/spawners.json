@@ -1,0 +1,32 @@
+{
+  "entityType": "SpawnerConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.SpawnerConfig,
+      "wave1" : {
+        "redGhost" : 10,
+        "roboMan" : 10,
+        "Knight" : 5
+      },
+      "wave2" : {
+        "roboMan" : 10,
+        "redGhost" : 10,
+        "Mage" : 5
+      },
+      "wave3" : {
+        "Knight" : 5,
+        "Mage" : 5,
+        "chain" : 5
+      },
+      "position": {
+        "x": 1,
+        "y": 88
+      },
+      "sounds": {
+        "soundsMap": {
+          "enemySpawn": "sounds/enemySpawner.wav"
+        }
+      }
+    }
+  ]
+}

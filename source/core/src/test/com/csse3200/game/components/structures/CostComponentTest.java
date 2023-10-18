@@ -119,7 +119,7 @@ class CostComponentTest {
 
         var costComponent = new CostComponent(cost);
         var entity = mock(Entity.class);
-        var combatStatsComponent = new CombatStatsComponent(maxHealth, 0, 0, false);
+        var combatStatsComponent = new CombatStatsComponent(maxHealth, maxHealth, 0, 0, false);
         combatStatsComponent.setHealth(health);
 
         when(entity.getComponent(CombatStatsComponent.class)).thenReturn(combatStatsComponent);

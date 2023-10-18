@@ -46,6 +46,7 @@ public class HoleInputComponent extends InputComponent {
                 }
             } else if (area.mouseState == ExtractorMiniGameArea.MouseState.EXTINGUISHER) {
                 area.spawnExtractorBang(floor(entity.getPosition().x), floor(entity.getPosition().y));
+                createFailLabel();
             }
             return true;
         }
@@ -66,5 +67,11 @@ public class HoleInputComponent extends InputComponent {
         label.setColor(Color.BLACK);
         ServiceLocator.getRenderService().getStage().addActor(label);
     }
-
+    private void createFailLabel() {
+        Label label = new Label("Fail!", skin);
+        label.setPosition(940, 990);
+        label.setSize(200, 50);
+        label.setColor(Color.BLACK);
+        ServiceLocator.getRenderService().getStage().addActor(label);
+    }
 }

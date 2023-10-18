@@ -2,8 +2,10 @@ package com.csse3200.game.components.player;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.upgradetree.UpgradeTree;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
 import com.csse3200.game.services.ServiceLocator;
@@ -13,6 +15,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -29,6 +36,8 @@ class InventoryDisplayComponentTest {
     InventoryComponent inventoryComponent;
     @Mock
     EventHandler eventHandler;
+    @Mock
+    UpgradeTree upgradeTree;
 
     @BeforeEach
     void beforeEach() {
@@ -36,15 +45,23 @@ class InventoryDisplayComponentTest {
         when(entityService.getPlayer()).thenReturn(player);
         when(player.getComponent(InventoryComponent.class)).thenReturn(inventoryComponent);
         when(player.getEvents()).thenReturn(eventHandler);
+        lenient().when(player.getComponent(UpgradeTree.class)).thenReturn(upgradeTree);
     }
 
     @Test
     void testMakeTable() {
         var component = new InventoryDisplayComponent();
         component.makeTable();
-
         assertNotNull(component.table);
     }
+
+    @Test
+    void testMakeHotbar() {
+        var component = new InventoryDisplayComponent();
+        when(upgradeTree.getUnlockedWeaponsConfigs()).thenReturn(new ArrayList<>());
+        component.makeHotbar();
+    }
+
 
     @AfterEach
     void afterEach() {
@@ -54,7 +71,7 @@ class InventoryDisplayComponentTest {
     @Test
     void testConstructor() {
         new InventoryDisplayComponent();
-        verify(player).getEvents();
+        verify(player, times(2)).getEvents();
         verify(player).getComponent(InventoryComponent.class);
         assertNotNull(player);
     }
@@ -69,6 +86,34 @@ class InventoryDisplayComponentTest {
     }
 
     @Test
+    void testSelectIndex() {
+        // Given
+        var component = new InventoryDisplayComponent();
+        WeaponConfig weaponConfig = mock(WeaponConfig.class);
+        weaponConfig.type = WeaponType.RANGED_MISSILES;
+        weaponConfig.slotType = "ranged";
+
+        Map<WeaponConfig, Button> buttons = new LinkedHashMap<>();
+        buttons.put(weaponConfig, new Button());
+
+        try {
+            Field buttonsField = InventoryDisplayComponent.class.getDeclaredField("buttons");
+            buttonsField.setAccessible(true);
+            buttonsField.set(component, buttons);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Failed to set buttons field.", e);
+        }
+
+        // When
+        component.selectIndex(0);
+
+        // Then
+        verify(inventoryComponent).replaceSlotWithWeapon(eq(weaponConfig.slotType), eq(weaponConfig.type));
+        verify(player.getEvents()).trigger(eq("changeWeapon"), eq(weaponConfig.type));
+    }
+
+
+    @Test
     void testUpdateButtonTableColor() {
         var component = new InventoryDisplayComponent();
 
@@ -78,14 +123,14 @@ class InventoryDisplayComponentTest {
         when(inventoryComponent.getEquippedType()).thenReturn(equippedWeapon);
 
         // This ensures non-equipped weapons are greyed out (all rgba is 0.5f)
-        component.updateButtonTableColor(button, nonEquipped);
+        component.updateButtonColor(button, nonEquipped);
         assertEquals(0.5f, button.getColor().r);
         assertEquals(0.5f, button.getColor().g);
         assertEquals(0.5f, button.getColor().b);
         assertEquals(0.5f, button.getColor().a);
 
         // This ensures equipped weapons are NOT greyed out
-        component.updateButtonTableColor(button, equippedWeapon);
+        component.updateButtonColor(button, equippedWeapon);
         assertEquals(1f, button.getColor().r);
         assertEquals(1f, button.getColor().g);
         assertEquals(1f, button.getColor().b);

@@ -4,6 +4,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.extensions.GameExtension;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,10 @@ class CombatStatsComponentTest {
 
   @Mock
   EventHandler eventHandler;
+  @Mock
+  RenderService renderService;
+  @Mock
+  ResourceService resourceService;
 
   @Mock
   Entity entity;
@@ -33,11 +39,12 @@ class CombatStatsComponentTest {
 
   @BeforeEach
   void setUp() {
+    ServiceLocator.registerRenderService(renderService);
     ServiceLocator.registerEntityService(entityService);
 
     // Set up a non-immune test entity with 100 health, 100 attack damage and no attack multiplier.
     entity = new Entity();
-    entity.addComponent(new CombatStatsComponent(100, 100, 1, false));
+    entity.addComponent(new CombatStatsComponent(100, 100, 100, 1, false));
     entityStats = entity.getComponent(CombatStatsComponent.class);
 
     MockitoAnnotations.openMocks(this);
@@ -81,7 +88,7 @@ class CombatStatsComponentTest {
 
     // Ensure isDead if hit by another entity (with one hit dealing full health damage)
     Entity enemy = new Entity();
-    enemy.addComponent(new CombatStatsComponent(100, 100, 1, false));
+    enemy.addComponent(new CombatStatsComponent(100, 100, 100, 1, false));
     CombatStatsComponent enemyStats = enemy.getComponent(CombatStatsComponent.class);
 
     enemyStats.hit(entityStats);
@@ -118,6 +125,7 @@ class CombatStatsComponentTest {
     entityStats.setBaseAttack(150);
     assertEquals(150, entityStats.getBaseAttack()); // basic
     entityStats.setBaseAttack(-150);
+
     assertEquals(150, entityStats.getBaseAttack()); // edge case: don't change if base attach < 0
   }
 

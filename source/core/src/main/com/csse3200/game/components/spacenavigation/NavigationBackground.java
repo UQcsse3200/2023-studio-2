@@ -5,13 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.csse3200.game.components.backgrounds.StarBackground;
 
 public class NavigationBackground extends StarBackground {
 
     /**
      * The texture for the space background of the navigation screen.
      */
-    private final Texture spaceBackground;
+    final Texture spaceBackground;
 
     public NavigationBackground() {
         super(200);

@@ -6,6 +6,7 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
+
 /**
  * Used to charge the player resources when a structure is placed and refund
  * the player resources when a structure is picked up.
@@ -61,5 +62,14 @@ public class CostComponent extends Component implements Placeable {
     private void addResource(String resource, int amount) {
         GameStateObserver stateObserver = ServiceLocator.getGameStateObserverService();
         stateObserver.trigger("resourceAdd", resource, amount);
+    }
+
+    /**
+     * Returns a duplicate of the cost map.
+     *
+     * @return a duplicate of the cost map.
+     */
+    public ObjectMap<String, Integer> getCost() {
+        return new ObjectMap<>(cost);
     }
 }

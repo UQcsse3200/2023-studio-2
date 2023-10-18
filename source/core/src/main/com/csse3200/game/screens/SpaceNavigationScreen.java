@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.utils.LoadUtils;
 import com.csse3200.game.components.spacenavigation.NavigationBackground;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
@@ -36,9 +37,9 @@ public class SpaceNavigationScreen implements Screen {
     /** Textures for the arrows on the screen */
     private final Texture[] arrowTextures = new Texture[8];
     /** Names of the planets */
-    private final String[] planetNames = {"Earth", "Verdant Oasis", "Glacial Desolation", "Infernal Challenge"};
+    private final String[] planetNames = {"Earth", "Blazes Refuge", "Cryoheim", "Flora Haven"};
 
-    private final String IMAGE_PATH = "images/navigationmap/";
+    private static final String IMAGE_PATH = "images/navigationmap/";
 
     private final PlanetTravel planetTravel;
 
@@ -62,7 +63,7 @@ public class SpaceNavigationScreen implements Screen {
         // Planet icons from:
         // https://www.freepik.com/premium-vector/pixel-planets-set-pixel-art-solar-system_36179935.htm
         for(var i = 0; i < planetTextures.length; i++){
-            planetTextures[i] = new Texture(Gdx.files.internal(IMAGE_PATH + "planets/" + planetNames[i].replace(" ", "_").toLowerCase() + ".png"));
+            planetTextures[i] = new Texture(Gdx.files.internal(IMAGE_PATH + "planets/" + planetNames[i].replace(" ", "_").replace("'", "").toLowerCase() + ".png"));
         }
 
         // Load in the arrow textures
@@ -86,7 +87,10 @@ public class SpaceNavigationScreen implements Screen {
         skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
 
         TextButton button = new TextButton("Return", skin);
+        TextButton minigame = new TextButton("Space Minigame", skin);
         button.setPosition(Gdx.graphics.getWidth() - (button.getWidth() + 20),
+                Gdx.graphics.getHeight() - (button.getHeight() + 20) );
+        minigame.setPosition(Gdx.graphics.getWidth() - (button.getWidth() + 230),
                 Gdx.graphics.getHeight() - (button.getHeight() + 20) );
 
         button.addListener(new ClickListener() {
@@ -96,7 +100,15 @@ public class SpaceNavigationScreen implements Screen {
             }
         });
 
+        minigame.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                game.setScreen(GdxGame.ScreenType.SPACEMINI_SCREEN);
+            }
+        });
+
         stage.addActor(button);
+        stage.addActor(minigame);
 
         // Add title
         Image navigationTitleImage = new Image(navigationTitle);
@@ -136,22 +148,21 @@ public class SpaceNavigationScreen implements Screen {
         // LibGDX's Scene2D ui framework is imperative, so we have to explicitly define the planet grid:
         // Row 1
 
-        String currentPlanetName = ((PlanetScreen) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet")).name;
-
+        String currentPlanetName = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
+        String nextPlanetName = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
         for (int i = 0; i < planetNames.length; i++) {
 
             // Create planet sprite,
             table.add(createPlanetTable(i, planetSize,
-                    (Objects.equals(planetNames[i], currentPlanetName)) ? 1 :
-                            (i != 0 && Objects.equals(planetNames[i - 1], currentPlanetName)) ? 2 : 0
+                    (Objects.equals(LoadUtils.formatName(planetNames[i]), currentPlanetName)) ? 1 :
+                            (Objects.equals(LoadUtils.formatName(planetNames[i]), nextPlanetName)) ? 2 : 0
             ));
 
             if (i != planetNames.length - 1) {
                 table.add(createArrow(
-                        Objects.equals(planetNames[i], currentPlanetName) ? "right" : "right-grey"
+                        Objects.equals(LoadUtils.formatName(planetNames[i]), currentPlanetName) ? "right" : "right-grey"
                 )).pad(arrowPadding).width(arrowSize).height(arrowSize);
             }
-
         }
 
         stage.addActor(table);
@@ -194,6 +205,7 @@ public class SpaceNavigationScreen implements Screen {
      * Creates a table for a specific planet which includes its image and name.
      * @param planetIndex Index of the planet in the planetTextures array.
      * @param planetSize Size for displaying the planet image.
+     * @param planetType Type of planet to be created. 1 - current planet, 2 - next planet
      * @return A new Table instance containing the planet image and its name.
      */
     private Table createPlanetTable(int planetIndex, int planetSize, int planetType) {
@@ -211,6 +223,7 @@ public class SpaceNavigationScreen implements Screen {
     /**
      * Creates an image of a planet.
      * @param planetIndex Index of the planet in the planetTextures array.
+     * @param planetType Type of planet to be created. 1 - current planet, 2 - next planet
      * @return A new Image instance for the planet.
      */
     private Image createPlanet(int planetIndex, int planetType) {
@@ -220,14 +233,14 @@ public class SpaceNavigationScreen implements Screen {
         planet.setOrigin(64f, 64f);
 
         // Add planet event listeners
-        if (planetType >= 0) {
+        if (planetType > 0) {
             planet.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (planetType == 1) {
                         planetTravel.returnToCurrent();
                     } else {
-                        planetTravel.instantTravelNamed(planetNames[planetIndex]);
+                        planetTravel.beginInstantTravel();
                     }
                 }
 
@@ -307,5 +320,7 @@ public class SpaceNavigationScreen implements Screen {
         for(Texture texture : arrowTextures){
             texture.dispose();
         }
+
+        ServiceLocator.clear();
     }
 }

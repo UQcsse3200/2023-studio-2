@@ -18,7 +18,7 @@
 
     "sound": {
       "soundsMap": {
-        "start": "",
+        "start": "sounds/weapons/slingshot.wav",
         "mid": "",
         "end": ""
       }
@@ -44,7 +44,7 @@
 
     "sound": {
       "soundsMap": {
-        "start": "",
+        "start": "sounds/weapons/slingshot.wav",
         "mid": "",
         "end": ""
       }
@@ -69,8 +69,8 @@
 
     "sound": {
       "soundsMap": {
-        "start": "",
-        "mid": "sounds/weapons/boomerang.wav",
+        "start": "sounds/weapons/boomerang.wav",
+        "mid": "",
         "end": ""
       }
     }
@@ -96,8 +96,8 @@
 
     "sound": {
       "soundsMap": {
-        "start": "",
-        "mid": "sounds/weapons/boomerang.wav",
+        "start": "sounds/weapons/boomerang.wav",
+        "mid": "",
         "end": ""
       }
     }

@@ -1,7 +1,5 @@
 package com.csse3200.game.entities.enemies;
 
-import com.csse3200.game.entities.configs.EnemyConfig;
-
 public enum EnemyName {
     redGhost,
     chain,

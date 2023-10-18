@@ -1,7 +1,6 @@
 package com.csse3200.game.components.upgradetree;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.structures.ToolConfig;
@@ -10,7 +9,6 @@ import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

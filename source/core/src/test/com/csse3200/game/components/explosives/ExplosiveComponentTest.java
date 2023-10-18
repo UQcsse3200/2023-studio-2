@@ -40,7 +40,7 @@ class ExplosiveComponentTest {
         verify(events, times(1)).addListener(eq("chainExplode"), any(EventListener1.class));
     }
 
-    /*@Test
+    @Test
     void testExploded() {
         var resourceService = mock(ResourceService.class);
         var entityPlacementService = mock(EntityPlacementService.class);
@@ -71,9 +71,9 @@ class ExplosiveComponentTest {
         entity.getEvents().trigger("explode");
         verify(entityPlacementService, times(1))
                 .placeEntityAt(any(), eq(new Vector2(0, 2)));
-    }*/
+    }
 
-    /*@Test
+    @Test
     void testDamageNeighbours() {
         var resourceService = mock(ResourceService.class);
         var entityPlacementService = mock(EntityPlacementService.class);
@@ -126,9 +126,9 @@ class ExplosiveComponentTest {
 
         verify(inRangeEntityHealth, times(1)).addHealth(-10);
         verify(outOfRangeEntityHealth, never()).addHealth(anyInt());
-    }*/
+    }
 
-    /*@Test
+    @Test
     void testExplodeNeighbours() {
         var resourceService = mock(ResourceService.class);
         var entityPlacementService = mock(EntityPlacementService.class);
@@ -178,7 +178,7 @@ class ExplosiveComponentTest {
                 .placeEntityAt(any(), eq(new Vector2(0, 2)));
 
         verify(inRangeEntityEvents, times(1)).trigger(eq("chainExplode"), anyFloat());
-    }*/
+    }
 
     @AfterEach
     void after() {

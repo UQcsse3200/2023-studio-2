@@ -1,7 +1,6 @@
 package com.csse3200.game.components.Weapons.SpecWeapon;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.explosives.ExplosiveComponent;
 import com.csse3200.game.components.explosives.ExplosiveConfig;
@@ -76,7 +75,8 @@ public class GrenadeController extends WeaponControllerComponent {
     }
 
     @Override
-    protected void reanimate() {return;}
+    protected void reanimate() {
+    }
 
     @Override
     protected void despawn() {

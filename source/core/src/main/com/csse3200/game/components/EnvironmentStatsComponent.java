@@ -1,15 +1,7 @@
-
-/**
- * Component used to store information related to combat such as health, attack, etc. Any entities
- * which engage in combat should have an instance of this class registered. This class can be
- * extended for more specific combat needs.
- */
 package com.csse3200.game.components;
 
 import com.badlogic.gdx.utils.Timer;
-import com.csse3200.game.areas.mapConfig.GameAreaConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.csse3200.game.areas.map_config.GameAreaConfig;
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
@@ -17,8 +9,6 @@ import org.slf4j.LoggerFactory;
  * extended for more specific combat needs.
  */
 public class EnvironmentStatsComponent extends Component {
-
-    private static final Logger logger = LoggerFactory.getLogger(EnvironmentStatsComponent.class);
     private Boolean isImmune = false;
 
     private boolean isSafeMap = false;
@@ -48,7 +38,7 @@ public class EnvironmentStatsComponent extends Component {
 
 
     public void setSafeMap(GameAreaConfig mapConfig) {
-        System.out.println(mapConfig.mapName);
+       logger.info(mapConfig.mapName);
         this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Verdant Oasis"));
     }
 

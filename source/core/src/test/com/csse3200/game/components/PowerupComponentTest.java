@@ -1,22 +1,16 @@
 package com.csse3200.game.components;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Companion.CompanionActions;
+import com.csse3200.game.components.companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
-import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -100,18 +94,23 @@ public class PowerupComponentTest {
         when(entityService.getPlayer()).thenReturn(playerEntity);
         when(entityService.getCompanion()).thenReturn(companionEntity);
 
+        // Mock the isDead method of companion's CombatStatsComponent to return false
+        CombatStatsComponent companionCombatStats = mock(CombatStatsComponent.class);
+        when(companionCombatStats.isDead()).thenReturn(false);
+
+        // Set the mocked component on the companionEntity directly
+        companionEntity.addComponent(companionCombatStats);
+
         PowerupComponent powerupComponent = new PowerupComponent(PowerupType.SPEED_BOOST);
         powerupComponent.applyEffect();
 
         Vector2 playerSpeed = new Vector2(6f, 6f);
         Vector2 companionSpeed = new Vector2(7f, 7f);
+
         // Assert
         assertEquals(playerSpeed, playerEntity.getComponent(PlayerActions.class).getSpeed());
-        assertEquals(playerSpeed, playerEntity.getComponent(PlayerActions.class).getSpeed());
-        assertEquals(companionSpeed, companionEntity.getComponent(CompanionActions.class).getSpeed());
         assertEquals(companionSpeed, companionEntity.getComponent(CompanionActions.class).getSpeed());
         assertEquals(5, companionEntity.getComponent(FollowComponent.class).getFollowSpeed());
-        // Additional assertions based on your actual implementation
     }
 
     @Test

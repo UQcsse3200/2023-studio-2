@@ -296,35 +296,43 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             switch (dir) {
                 case UP -> {
                     entity.getEvents().trigger("walkUp");
-                    companion.getEvents().trigger("walkUp");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                    companion.getEvents().trigger("walkUp");}
                 }
                 case DOWN -> {
                     entity.getEvents().trigger("walkDown");
-                    companion.getEvents().trigger("walkDown");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkDown");}
                 }
                 case LEFT -> {
                     entity.getEvents().trigger("walkLeft");
-                    companion.getEvents().trigger("walkLeft");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkLeft");}
                 }
                 case RIGHT -> {
                     entity.getEvents().trigger("walkRight");
-                    companion.getEvents().trigger("walkRight");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkRight");}
                 }
                 case UPLEFT -> {
                     entity.getEvents().trigger("walkUpLeft");
-                    companion.getEvents().trigger("walkUpLeft");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkUpLeft");}
                 }
                 case UPRIGHT -> {
                     entity.getEvents().trigger("walkUpRight");
-                    companion.getEvents().trigger("walkUpRight");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkUpRight");}
                 }
                 case DOWNLEFT -> {
                     entity.getEvents().trigger("walkDownLeft");
-                    companion.getEvents().trigger("walkDownLeft");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkDownLeft");}
                 }
                 case DOWNRIGHT -> {
                     entity.getEvents().trigger("walkDownRight");
-                    companion.getEvents().trigger("walkDownRight");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkDownRight");}
                 }
                 default -> entity.getEvents().trigger(WALKSTOP);
             }

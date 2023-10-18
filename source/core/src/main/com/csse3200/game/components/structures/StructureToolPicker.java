@@ -66,7 +66,8 @@ public class StructureToolPicker extends UIComponent {
         super.create();
 
         for (var option : structureTools.toolConfigs) {
-            var tool = getTool(option.key, option.value.cost, option.value.ordering, option.value.texture);
+            var tool = getTool(option.key, option.value.cost, option.value.range,
+                    option.value.texture, option.value.ordering);
 
             if (tool == null) {
                 continue;
@@ -140,12 +141,12 @@ public class StructureToolPicker extends UIComponent {
      * @param texture - the texture of the tool.
      * @return an instance of the specified tool class if it exists, otherwise null
      */
-    private Tool getTool(String key, ObjectMap<String, Integer> cost, int ordering, String texture) {
+    private Tool getTool(String key, ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
         try {
             Class<?> cls = Class.forName(key);
 
-            Object obj = cls.getDeclaredConstructor(ObjectMap.class, int.class, String.class)
-                    .newInstance(cost, ordering, texture);
+            Object obj = cls.getDeclaredConstructor(ObjectMap.class, float.class, String.class, int.class)
+                    .newInstance(cost, range, texture, ordering);
 
             if (obj instanceof Tool tool) {
                 return tool;

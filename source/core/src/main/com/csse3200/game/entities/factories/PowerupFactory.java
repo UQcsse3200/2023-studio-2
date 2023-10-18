@@ -34,10 +34,16 @@ public class PowerupFactory {
                 .addComponent(new PowerupComponent(config.type))
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
-                .addComponent(new ItemPickupComponent(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
                 .addComponent(new PowerUpDisplayHUD(config.type));
 
-        powerup.addComponent(new InteractableComponent(entity -> powerup.getComponent(PowerupComponent.class).applyEffect(), 1f));
+        //NEW INVENTORY WHICH IS JUST POWERUPS
+        powerup.addComponent(new InteractableComponent(entity -> powerup.getComponent(PowerupComponent.class).updatePowerupInventory(), 1f));
+
+        // OLD INVENTORY WHICH INVOLVES WEAPONS
+        //powerup.addComponent(new InteractableComponent(entity -> powerup.getComponent(PowerupComponent.class).updateInventory(), 1f));
+
+
+
         powerup.setScale(0.6f, 0.6f);
 
         return powerup;

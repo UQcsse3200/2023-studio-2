@@ -1,15 +1,11 @@
 package com.csse3200.game.entities.factories;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.ai.tasks.AITaskComponent;
-import com.csse3200.game.components.Companion.CompanionActions;
-import com.csse3200.game.components.Component;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.TouchAttackComponent;
@@ -28,7 +24,6 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;

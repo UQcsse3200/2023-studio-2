@@ -57,9 +57,10 @@ public class ShipActions extends Component {
     @Override
     public void update() {
         if (moving) {
-            if (this.maxHealth <= 0) {
-                kaboom();
-            }
+//            if (this.maxHealth <= 0) {
+
+//                kaboom();
+//            }
             updateSpeed();
         }
     }
@@ -69,9 +70,9 @@ public class ShipActions extends Component {
      */
     private void updateSpeed() {
 
-        if (this.maxFuel > 0) {
+//        if (this.maxFuel > 0) {
             boost();
-        }
+//        }
         this.playAnimation(body.getLinearVelocity());
     }
 

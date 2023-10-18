@@ -17,7 +17,6 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.EnvironmentStatsComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
-import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.InventoryDisplayComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
@@ -34,7 +33,6 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TerrainService;
 import com.csse3200.game.ui.QuestBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -150,7 +148,6 @@ public class MapGameArea extends GameArea{
         Entity ui = new Entity();
         //Ensure non-null
         mapConfig.mapName = mapConfig.mapName == null ? "" : mapConfig.mapName;
-        //ui.addComponent(new GameAreaDisplay(map_config.mapName));
         ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage))
                 .addComponent(new InventoryDisplayComponent());
         QuestBox questBox=new QuestBox("Rescue Astro",skin,stage);

@@ -44,7 +44,7 @@ public class PlanetHudDisplay extends UIComponent {
         planetLabel.setFontScale(0.22f);
 
         Table overlayTable = new Table();
-        overlayTable.add(planetImage).size(130f).padLeft(5f).padBottom(15f);
+        overlayTable.add(planetImage).size(160f).padTop(-10f);//.padBottom(15f);//.padLeft(5f)
         overlayTable.row();
         overlayTable.add(planetLabel);
 

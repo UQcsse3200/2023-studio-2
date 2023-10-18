@@ -70,7 +70,7 @@
     "sound": {
       "soundsMap": {
         "start": "sounds/weapons/boomerang.wav",
-        "mid": "",
+        "mid": "sounds/weapons/boomerang.wav",
         "end": ""
       }
     }
@@ -97,7 +97,7 @@
     "sound": {
       "soundsMap": {
         "start": "sounds/weapons/boomerang.wav",
-        "mid": "",
+        "mid": "sounds/weapons/boomerang.wav",
         "end": ""
       }
     }
@@ -270,7 +270,7 @@
     "projectiles": 8,
     "sound": {
       "soundsMap": {
-        "start": "",
+        "start": "sounds/weapons/beeStringKatana.wav",
         "mid": "",
         "end": ""
       }

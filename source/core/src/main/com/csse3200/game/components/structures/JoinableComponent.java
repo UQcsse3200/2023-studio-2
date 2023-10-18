@@ -108,21 +108,31 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
      * @return the cardinalities' id.
      */
     private String deriveCardinalityId() {
+        return deriveCardinalityId(joinedInDirectionMap);
+    }
+
+    /**
+     * Derives the id for the current cardinality which can be used to fetch
+     * the collision shape and texture.
+     *
+     * @return the cardinalities' id.
+     */
+    private String deriveCardinalityId(Map<JoinDirection, Boolean> joinedDirections) {
         List<String> regions = new ArrayList<>();
 
-        if (Boolean.TRUE.equals(joinedInDirectionMap.get(JoinDirection.LEFT))) {
+        if (Boolean.TRUE.equals(joinedDirections.get(JoinDirection.LEFT))) {
             regions.add("left");
         }
 
-        if (Boolean.TRUE.equals(joinedInDirectionMap.get(JoinDirection.UP))) {
+        if (Boolean.TRUE.equals(joinedDirections.get(JoinDirection.UP))) {
             regions.add("up");
         }
 
-        if (Boolean.TRUE.equals(joinedInDirectionMap.get(JoinDirection.RIGHT))) {
+        if (Boolean.TRUE.equals(joinedDirections.get(JoinDirection.RIGHT))) {
             regions.add("right");
         }
 
-        if (Boolean.TRUE.equals(joinedInDirectionMap.get(JoinDirection.DOWN))) {
+        if (Boolean.TRUE.equals(joinedDirections.get(JoinDirection.DOWN))) {
             regions.add("down");
         }
 
@@ -235,6 +245,80 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
     @Override
     public void willRemove() {
         notifyNeighbours(false);
+    }
+
+
+
+    public boolean canPlaceAt(GridPoint2 position) {
+        var structurePlacementService = ServiceLocator.getStructurePlacementService();
+
+        // calculates tile over in each direction
+        Entity up = structurePlacementService.getStructureAt(position.cpy().add(0,2));
+        Entity down = structurePlacementService.getStructureAt(position.cpy().add(0,-2));
+        Entity left = structurePlacementService.getStructureAt(position.cpy().add(-2,0));
+        Entity right = structurePlacementService.getStructureAt(position.cpy().add(2,0));
+
+        // adds whether there is a wall in each direction to the JoinDirection array.
+        joinedInDirectionMap.put(JoinDirection.UP, isEntityJoinable(up));
+        joinedInDirectionMap.put(JoinDirection.DOWN, isEntityJoinable(down));
+        joinedInDirectionMap.put(JoinDirection.LEFT, isEntityJoinable(left));
+        joinedInDirectionMap.put(JoinDirection.RIGHT, isEntityJoinable(right));
+
+        var cardinalityId = deriveCardinalityId();
+
+        if (atlas.findRegion(cardinalityId) == null) {
+            return false;
+        }
+
+        for (var direction: joinedInDirectionMap.keySet()) {
+            if (!canNeighbourJoin(direction, position)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Notifies the neighbour in the given direction of a change in join status.
+     *
+     * @param direction - the direction of the neighbour to notify.
+     * @param centrePosition - the centre position of the entity.
+     */
+    private boolean canNeighbourJoin(JoinDirection direction, GridPoint2 centrePosition) {
+        StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
+
+        GridPoint2 position = centrePosition.cpy().add(DIRECTION_MATRICES.get(direction));
+
+        Entity neighbour = structurePlacementService.getStructureAt(position);
+
+        // checks if the neighbour exists
+        if (neighbour == null) {
+            return true;
+        }
+
+        JoinableComponent component = neighbour.getComponent(JoinableComponent.class);
+        // checks if the neighbour has a JoinableComponent attached.
+        if (component == null) {
+            return true;
+        }
+
+        // checks if the neighbour has the same join layer
+        if (layer != component.getJoinLayer()) {
+            return true;
+        }
+
+        return component.canJoin(direction);
+    }
+
+    private boolean canJoin(JoinDirection direction) {
+        var joinedDirectionsCopy = new EnumMap<>(joinedInDirectionMap);
+
+        joinedDirectionsCopy.put(direction, true);
+
+        var cardinalityId = deriveCardinalityId(joinedDirectionsCopy);
+
+        return (atlas.findRegion(cardinalityId) != null);
     }
 }
 

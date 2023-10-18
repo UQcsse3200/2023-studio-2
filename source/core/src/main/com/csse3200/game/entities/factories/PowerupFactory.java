@@ -18,7 +18,6 @@ public class PowerupFactory {
         throw new IllegalStateException("Utility class");
     }
 
-    // TODO: REMOVE - LEGACY
     /**
      * Creates a powerup entity based on the specified type. The entity will have a
      * texture render component

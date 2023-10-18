@@ -61,7 +61,7 @@ class BasicWallToolTest {
     void testInteractNoExistingStructureNoCost() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new BasicWallTool(cost);
+        var tool = new BasicWallTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -79,7 +79,7 @@ class BasicWallToolTest {
     void testInteractExistingStructure() {
         ObjectMap<String, Integer> cost = new ObjectMap<>();
 
-        var tool = new BasicWallTool(cost);
+        var tool = new BasicWallTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -101,7 +101,7 @@ class BasicWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(100);
 
-        var tool = new BasicWallTool(cost);
+        var tool = new BasicWallTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 
@@ -123,7 +123,7 @@ class BasicWallToolTest {
 
         when(stateObserver.getStateData(any())).thenReturn(15);
 
-        var tool = new BasicWallTool(cost);
+        var tool = new BasicWallTool(cost, 0, "texture.png");
 
         var position = new GridPoint2(0, 0);
 

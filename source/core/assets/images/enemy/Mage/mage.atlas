@@ -1,4 +1,4 @@
-guardian.png
+mage.png
 size: 896,64
 format: RGBA8888
 filter: Nearest,Nearest
@@ -787,20 +787,7 @@ death
   orig:  64,64
   offset: 0, 0
   index: 0
-invisible
-  rotate: false
-  xy: 896, 0
-  size: 64,64
-  orig:  64,64
-  offset: 0, 0
-  index: 0
-invisible
-  rotate: false
-  xy: 896, 0
-  size: 64,64
-  orig:  64,64
-  offset: 0, 0
-  index: 0
+
 
 
 

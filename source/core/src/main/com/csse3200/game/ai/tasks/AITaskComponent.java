@@ -17,7 +17,7 @@ import java.util.*;
 public class AITaskComponent extends Component implements TaskRunner {
   private static final Logger logger = LoggerFactory.getLogger(AITaskComponent.class);
 
-  private final List<PriorityTask> priorityTasks = new ArrayList<>(2);
+  private final List<PriorityTask> priorityTasks = new ArrayList<>();
   private PriorityTask currentTask;
 
   /**
@@ -57,6 +57,7 @@ public class AITaskComponent extends Component implements TaskRunner {
     if (currentTask != null) {
       currentTask.stop();
     }
+    priorityTasks.clear();
   }
 
   private PriorityTask getHighestPriorityTask() {

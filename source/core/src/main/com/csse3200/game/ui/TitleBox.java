@@ -2,6 +2,8 @@ package com.csse3200.game.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -35,6 +37,8 @@ public class TitleBox extends Dialog {
         this.game = game;
         setMovable(false);
         setResizable(true);
+        setSize(Gdx.graphics.getWidth(), 350);
+        setPosition(0, 0);
 
 
         Label titleLabel = getTitleLabel();
@@ -44,6 +48,7 @@ public class TitleBox extends Dialog {
         titleLabel.setColor(Color.BLACK);
 
         TypingLabel descriptionLabel = new TypingLabel("", skin);
+
 
         // Initialize TypingLabel with your description
         descriptionLabel = new TypingLabel(description, skin);
@@ -71,12 +76,10 @@ public class TitleBox extends Dialog {
         ScrollPane scrollPane = new ScrollPane(descriptionLabel, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
-        getContentTable().add(scrollPane).width(Gdx.graphics.getWidth() * 0.8f).height(90f).left();
-
+        getContentTable().add(scrollPane).width(Gdx.graphics.getWidth() * 0.8f).height(90f).right().padTop(50f).row();
         getContentTable().add(buttonTable).expandX().center();
 
-        setSize(Gdx.graphics.getWidth(), 300);
-        setPosition(0, 0);
+
     }
 
     /**

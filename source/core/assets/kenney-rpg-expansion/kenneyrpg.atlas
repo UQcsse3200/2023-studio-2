@@ -755,16 +755,16 @@ treebox
   offset: 0, 0
   index: -1
 
-dialogue.png
-size: 1600, 1200
+dialogue1.png
+size: 1598, 374
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 dialogue
   rotate: false
   xy: 0, 0
-  size: 1296, 398
-  orig: 1296, 398
+  size: 1598, 374
+  orig: 1598, 374
   offset: 0, 0
   index: -1
 

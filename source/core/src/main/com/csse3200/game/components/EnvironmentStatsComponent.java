@@ -18,6 +18,7 @@ public class EnvironmentStatsComponent extends Component {
     private Boolean isImmune = false;
 
     private boolean isSafeMap = false;
+    private boolean freezeMap = false;
 
     private int frozenLevel;
     private boolean burning;
@@ -33,15 +34,15 @@ public class EnvironmentStatsComponent extends Component {
 
 
     public void setFrozenLevel(int newFrozenLevel) {
-        frozenLevel = newFrozenLevel;
+        this.frozenLevel = newFrozenLevel;
     }
 
     public boolean getBurning() {
-        return burning;
+        return this.burning;
     }
 
     public void setBurning(boolean newBurnState) {
-        burning = newBurnState;
+        this.burning = newBurnState;
     }
 
     public Boolean getIsSafe() {
@@ -52,10 +53,15 @@ public class EnvironmentStatsComponent extends Component {
         return isImmune;
     }
 
+    public Boolean getIsFreeze() {
+        return this.freezeMap;
+    }
+
 
     public void setSafeMap(GameAreaConfig mapConfig) {
-       logger.info(mapConfig.mapName);
+        logger.info(mapConfig.mapName);
         this.isSafeMap = (mapConfig.mapName.equals("Earth") || mapConfig.mapName.equals("Flora Haven"));
+        this.freezeMap = mapConfig.mapName.equals("Cryoheim");
     }
 
     /**
@@ -84,13 +90,27 @@ public class EnvironmentStatsComponent extends Component {
             @Override
             public void run() {
                 MapGameArea.isBurning();
-                if (getImmunity() == true) {
+                if (getImmunity()) {
+                    if (getIsFreeze()) {
+                        if (getFrozenLevel() > 4) {
+                            setFrozenLevel(getFrozenLevel() - 4);
+                        } else {
+                            setFrozenLevel(0);
+                        }
+                    }
                     return;
                 }
                 if (burning) {
                     player.addHealth(-1);
                     if (player.getHealth() <= 0) {
                         timer.stop();
+                    }
+                }
+                if (getIsFreeze()) {
+                    if (getFrozenLevel() < 50) {
+                        setFrozenLevel(getFrozenLevel() + 2);
+                    } else {
+                        setFrozenLevel(50);
                     }
                 }
                 player.addHealth(-1);

@@ -100,8 +100,8 @@ public class MapGameArea extends GameArea{
         spawnAstronaut();
 
         //spawnEnvironmentDamage();
-        spawnFreezingArea();
-        spawnEnvironmentDamage();
+//        spawnFreezingArea();
+//        spawnEnvironmentDamage();
         spawnSafeZone(player);
 
         displayUI();
@@ -170,19 +170,19 @@ public class MapGameArea extends GameArea{
         spawnEntityAt(safeZone, safeZoneConfig.position, false, false);
     }
 
-    private void spawnEnvironmentDamage() {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        Entity envDamage = EnvironmentalDamageFactory.createDamage();
-        spawnEntityAt(envDamage, new GridPoint2(45, 45), false, false);
-    }
-
-    private void spawnFreezingArea() {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        Entity freezeArea = FreezingAreaFactory.createFreezingArea();
-        spawnEntityAt(freezeArea, new GridPoint2(40, 60), false, false);
-    }
+//    private void spawnEnvironmentDamage() {
+//        if (mapConfig.areaEntityConfig == null) return;
+//
+//        Entity envDamage = EnvironmentalDamageFactory.createDamage();
+//        spawnEntityAt(envDamage, new GridPoint2(45, 45), false, false);
+//    }
+//
+//    private void spawnFreezingArea() {
+//        if (mapConfig.areaEntityConfig == null) return;
+//
+//        Entity freezeArea = FreezingAreaFactory.createFreezingArea();
+//        spawnEntityAt(freezeArea, new GridPoint2(40, 60), false, false);
+//    }
 
     public static float getSpeedMult() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
@@ -202,13 +202,13 @@ public class MapGameArea extends GameArea{
         return onIce != null && (boolean) onIce;
     }
 
-    public static boolean isFreezing() {
-        return freezing;
-    }
-
-    public static void toggleFreezing(Entity player) {
-        freezing = !freezing;
-    }
+//    public static boolean isFreezing() {
+//        return freezing;
+//    }
+//
+//    public static void toggleFreezing(Entity player) {
+//        freezing = !freezing;
+//    }
 
     /**
      * Checks if the player should be taking damage from standing on fire or lava

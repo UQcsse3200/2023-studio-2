@@ -309,6 +309,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 }
                 default -> {
                     entity.getEvents().trigger(WALKSTOP);
+                    if (companion != null) {
+                        companion.getEvents().trigger(WALKSTOP);
+                    }
                 }
 
             }

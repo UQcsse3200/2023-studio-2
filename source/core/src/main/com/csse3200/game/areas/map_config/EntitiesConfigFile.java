@@ -1,6 +1,5 @@
 package com.csse3200.game.areas.map_config;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

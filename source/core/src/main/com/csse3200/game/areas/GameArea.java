@@ -8,6 +8,7 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
+import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.EntityPlacementService;
 import com.csse3200.game.services.StructurePlacementService;
@@ -34,8 +35,10 @@ public abstract class GameArea implements Disposable {
   protected EntityPlacementService entityPlacementService;
   protected StructurePlacementService structurePlacementService;
   protected ArrayList<Entity> targetables;
+  protected EventHandler handler;
 
   protected GameArea() {
+    handler = new EventHandler();
     areaEntities = new ArrayList<>();
     pathFinderGrids = new HashMap<>();
     this.targetables = new ArrayList<>();
@@ -64,6 +67,10 @@ public abstract class GameArea implements Disposable {
 
   public Map<GridPoint2, Entity> getAreaEntities() {
     return pathFinderGrids;
+  }
+
+  public EventHandler getEvent(){
+    return handler;
   }
 
   protected void registerStructurePlacementService() {
@@ -147,6 +154,11 @@ public abstract class GameArea implements Disposable {
     }
     ServiceLocator.getEntityService().register(entity);
 
+    if (entity.getComponent(HitboxComponent.class) != null) {
+      if (PhysicsLayer.contains(entity.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.STRUCTURE)) {
+        handler.trigger("reTarget");
+      }
+    }
   }
 
   /**

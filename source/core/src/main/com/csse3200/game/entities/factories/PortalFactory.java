@@ -4,8 +4,6 @@ import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.PowerupComponent;
 import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.entities.configs.CompanionConfig;
 import com.csse3200.game.entities.configs.PortalConfig;
 import com.csse3200.game.entities.configs.PowerupConfig;
 import com.csse3200.game.entities.configs.ShipConfig;

@@ -45,8 +45,6 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.badlogic.gdx.Gdx.app;
-
 public class ControlsScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
     private final GdxGame game;

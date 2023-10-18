@@ -1,10 +1,6 @@
 package com.csse3200.game.entities.configs;
 
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyName;
-import com.csse3200.game.entities.enemies.EnemyType;
-
-import java.util.Objects;
 
 /**
  * Defines all NPC configs to be loaded by Related Factories.
@@ -25,7 +21,9 @@ public class NPCConfigs {
   public EnemyConfig chain = new EnemyConfig();
   public EnemyConfig necromancer = new EnemyConfig();
   public EnemyConfig Knight = new EnemyConfig();
-  public EnemyConfig rangeBossPTE = new EnemyConfig();
+  public EnemyConfig Mage = new EnemyConfig();
+  public EnemyConfig Guardian = new EnemyConfig();
+
 
   public EnemyConfig GetEnemyConfig(EnemyName name) {
       EnemyConfig config = null;
@@ -45,9 +43,11 @@ public class NPCConfigs {
           case Knight:
               config = Knight;
               break;
-          case rangeBossPTE:
-              config = rangeBossPTE;
+          case Mage:
+              config = Mage;
               break;
+          case Guardian:
+              config = Guardian;
       }
       return config;
   }

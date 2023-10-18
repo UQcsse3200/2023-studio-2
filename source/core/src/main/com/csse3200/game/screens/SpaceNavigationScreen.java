@@ -37,7 +37,7 @@ public class SpaceNavigationScreen implements Screen {
     /** Textures for the arrows on the screen */
     private final Texture[] arrowTextures = new Texture[8];
     /** Names of the planets */
-    private final String[] planetNames = {"Earth", "Flora Haven", "Cryoheim", "Blazes Refuge"};
+    private final String[] planetNames = {"Earth", "Blazes Refuge", "Cryoheim", "Flora Haven"};
 
     private final String IMAGE_PATH = "images/navigationmap/";
 

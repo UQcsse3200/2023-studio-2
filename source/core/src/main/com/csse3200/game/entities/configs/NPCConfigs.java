@@ -1,6 +1,10 @@
 package com.csse3200.game.entities.configs;
 
+import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyName;
+import com.csse3200.game.entities.enemies.EnemyType;
+
+import java.util.Objects;
 
 /**
  * Defines all NPC configs to be loaded by Related Factories.

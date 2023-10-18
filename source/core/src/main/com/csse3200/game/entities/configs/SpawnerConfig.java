@@ -1,5 +1,7 @@
 package com.csse3200.game.entities.configs;
 
+import com.csse3200.game.entities.enemies.EnemyName;
+
 import java.util.LinkedHashMap;
 
 public class SpawnerConfig extends BaseEntityConfig {

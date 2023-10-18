@@ -74,6 +74,7 @@ public class PlanetScreen extends ScreenAdapter {
 
     /** file paths of textures for screen to load. */
     private AssetsConfig assets;
+    private TitleBox titleBox;
 
     /**
      * Construct the PlanetScreen instance for the planet of given name.
@@ -117,23 +118,26 @@ public class PlanetScreen extends ScreenAdapter {
 
         this.allGameAreas.get(currentAreaName).create();
         this.player = allGameAreas.get(currentAreaName).getPlayer();
-        if ("earth".equals(name)) {
-            showTitleBox();
-        }
+
+        showTitleBox();
+
         ServiceLocator.registerGameArea(this.allGameAreas.get(currentAreaName));
     }
 
     private void showTitleBox() {
         if (!titleBoxDisplayed) {
-            // Create and display the TitleBox
-            String[] title = {"",""};
-            String[] description = {"NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.",""};
-            String[] window={"dialogue_1","dialogue_2"};
-            TitleBox titleBox = new TitleBox(game, title, description, skin, window);
-            // Adjust title and skin as needed
-            titleBox.showDialog(ServiceLocator.getRenderService().getStage());
-            // Adjust title and skin as needed
-            titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+            if ("earth".equals(name)) {
+                // Create and display the TitleBox
+                String[] title = {"", ""};
+                String[] description = {"NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", ""};
+                String[] window = {"dialogue_1", "dialogue_2"};
+
+                titleBox = new TitleBox(game, title, description, skin, window);
+            }
+                // Adjust title and skin as needed
+                titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+                // Adjust title and skin as needed
+                titleBox.showDialog(ServiceLocator.getRenderService().getStage());
 
             // Pause the game while the TitleBox is displayed
             Gdx.graphics.setContinuousRendering(false);

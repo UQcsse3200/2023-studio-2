@@ -247,9 +247,6 @@ public class TutorialScreen extends ScreenAdapter {
                 ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
         Entity ui = new Entity();
-        boolean Isgame = false;
-       // ui.addComponent(new ControlsScreenDisplay(game, Isgame));
-        System.out.println(game);
         ui.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))

@@ -76,8 +76,6 @@ public class MainGameActions extends Component {
    * Opens pause window.
    */
   private void onPauseButton() {
-    System.out.println();
-    System.out.println(ServiceLocator.getGameArea());
     if (!isWindowOpen() && (ServiceLocator.getGameArea() != null | game.getScreenType().equals(GdxGame.ScreenType.TUTORIAL_SCREEN))) {
       logger.info("Opening Pause Menu");
       PauseWindow pauseWindow = PauseWindow.makeNewPauseWindow(entity);

@@ -86,10 +86,10 @@ public class MapGameArea extends GameArea{
         spawnLaboratory();
         spawnPowerups();
         spawnPortal(player);
-        spawnTurrets(player);
-        spawnWalls(player);
+        spawnTurrets();
+        spawnWalls();
         spawnGates(player);
-        spawnExplosives(player);
+        spawnExplosives();
         spawnTreeTop();
         spawnAstro();
         spawnTutnpc();
@@ -320,31 +320,28 @@ public class MapGameArea extends GameArea{
 
     /**
      * Spawns the saved turrets into the map.
-     * @param player - the player.
      */
-    private void spawnTurrets(Entity player) {
+    private void spawnTurrets() {
         for (TurretConfig config : mapConfig.areaEntityConfig.getEntities(TurretConfig.class)) {
-            var turret = BuildablesFactory.createCustomTurret(config, player);
+            var turret = BuildablesFactory.createCustomTurret(config);
             ServiceLocator.getStructurePlacementService().placeStructureAt(turret, config.position);
         }
     }
 
     /**
      * Spawns the saved walls into the map.
-     * @param player - the player.
      */
-    private void spawnWalls(Entity player) {
+    private void spawnWalls() {
         for (WallConfig config : mapConfig.areaEntityConfig.getEntities(WallConfig.class)) {
-            var turret = BuildablesFactory.createWall(config, player);
+            var turret = BuildablesFactory.createWall(config);
             ServiceLocator.getStructurePlacementService().placeStructureAt(turret, config.position);
         }
     }
 
     /**
      * Spawns the saved explosives into the map.
-     * @param player - the player.
      */
-    private void spawnExplosives(Entity player) {
+    private void spawnExplosives() {
         for (LandmineConfig config : mapConfig.areaEntityConfig.getEntities(LandmineConfig.class)) {
             var landmine = ExplosivesFactory.createLandmine(config);
             ServiceLocator.getStructurePlacementService().placeStructureAt(landmine, config.position);

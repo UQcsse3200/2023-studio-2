@@ -248,7 +248,12 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
     }
 
 
-
+    /**
+     * Checks if gate can be placed at the given location.
+     *
+     * @param position - the location being checked
+     * @return whether the gate can be placed
+     */
     public boolean canPlaceAt(GridPoint2 position) {
         var structurePlacementService = ServiceLocator.getStructurePlacementService();
 
@@ -280,10 +285,10 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
     }
 
     /**
-     * Notifies the neighbour in the given direction of a change in join status.
+     * Checks if the neighbour in the given direction can be joined with the current structure.
      *
-     * @param direction - the direction of the neighbour to notify.
-     * @param centrePosition - the centre position of the entity.
+     * @param direction - the direction of the neighbour to check.
+     * @param centrePosition - the position where the gate will be placed.
      */
     private boolean canNeighbourJoin(JoinDirection direction, GridPoint2 centrePosition) {
         StructurePlacementService structurePlacementService = ServiceLocator.getStructurePlacementService();
@@ -311,6 +316,12 @@ public class JoinableComponent extends AtlasRenderComponent implements Placeable
         return component.canJoin(direction);
     }
 
+    /**
+     * Checks if the structure can join in the given direction.
+     *
+     * @param direction - the direction being checked
+     * @return whether it can be joined
+     */
     private boolean canJoin(JoinDirection direction) {
         var joinedDirectionsCopy = new EnumMap<>(joinedInDirectionMap);
 

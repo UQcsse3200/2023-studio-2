@@ -17,6 +17,7 @@ import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.CompanionConfig;
+import com.csse3200.game.entities.configs.CompanionWeaponConfigs;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -24,7 +25,8 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.rendering.AnimationRenderComponent;import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Factory to create a companion entity.
@@ -32,7 +34,8 @@ import com.csse3200.game.rendering.AnimationRenderComponent;import com.csse3200.
 public class CompanionFactory {
     private static final CompanionConfig config =
             FileLoader.readClass(CompanionConfig.class, "configs/companion.json");
-
+    private static final CompanionWeaponConfigs weaponConfigs =
+            new CompanionWeaponConfigs();
     public static Entity createCompanion(){
        return createCompanion(config);
     }
@@ -76,9 +79,12 @@ public class CompanionFactory {
                         .addComponent(new CompanionWeaponComponent())
                         /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay(config))
+                        .addComponent(new CompanionInventoryComponent(weaponConfigs))
                         .addComponent(new CompanionInGameAlerts())
                         .addComponent(new CompanionAnimationController())
+                        .addComponent(new CompanionPowerupInventoryComponent())
                         .addComponent(new FollowComponent(player,1f))
+                        .addComponent(new CompanionPowerupActivationDisplay())
                         .addComponent(new InteractionControllerComponent(false));
                          companion.addComponent(new SaveableComponent<>(c -> {
                                CompanionConfig companionConfig = config;

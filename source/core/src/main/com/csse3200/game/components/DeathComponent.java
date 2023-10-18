@@ -59,32 +59,26 @@ public class DeathComponent extends Component {
                 @Override
                 public void run() {
                     Gdx.app.postRunnable(entity::dispose);
-
-                    int powerupRandomiser = rand.nextInt(28);
+                    Random rand = new Random();
+                    int powerUpRandomizer = rand.nextInt(9);
                     Entity powerup = null;
 
-                    if (powerupRandomiser < 6) { // 3/14 chance of speed boost
-                        powerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
-                    } else if (powerupRandomiser < 12) { // 3/14 chance of health boost
-                        powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
-                    } else if (powerupRandomiser < 14) { // 2/14 chance of temp immunity
-                        powerup = PowerupFactory.createPowerup(PowerupType.TEMP_IMMUNITY);
-                    } else if (powerupRandomiser < 16) { // 2/14 chance of double damage
-                        powerup = PowerupFactory.createPowerup(PowerupType.DOUBLE_DAMAGE);
-                    } else if (powerupRandomiser == 17) { // 1/28 chance of extra health
-                        powerup = PowerupFactory.createPowerup(PowerupType.EXTRA_LIFE);
-                    } else if (powerupRandomiser == 18) { // 1/28 chance of double cross
-                        powerup = PowerupFactory.createPowerup(PowerupType.DOUBLE_CROSS);
+                    if (powerUpRandomizer < 5) {
+                        if (powerUpRandomizer < 3) { // 1 or 2 out of 8, 1/4 chance of speed boost
+                            powerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
+                        } else { // 3 or 4 out of 8, 1/4 chance of health boost
+                            powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
+                        }
                     }
 
                     if (powerup == null) {
                         return;
                     }
-
-                    ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody);
+                    // Hence 5, 6, 7, 8 out of 8, 1/2 chance of nothing
+                    ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody.cpy());
                 }
             };
-            Timer.schedule(task, delay); // Delay based on the death animation duration
+            Timer.schedule(task, delay);// Delay based on the death animation duration
         }
     }
 

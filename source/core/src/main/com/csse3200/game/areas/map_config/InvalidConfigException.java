@@ -1,10 +1,6 @@
-package com.csse3200.game.areas.mapConfig;
+package com.csse3200.game.areas.map_config;
 
 public class InvalidConfigException extends Exception {
-    public InvalidConfigException() {
-        super();
-    }
-
     public InvalidConfigException(String msg) {
         super(msg);
     }

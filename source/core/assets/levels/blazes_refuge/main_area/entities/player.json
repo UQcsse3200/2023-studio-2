@@ -4,7 +4,7 @@
     {
       "class": "com.csse3200.game.entities.configs.PlayerConfig",
       "position": {
-        "x": 10,
+        "x": 20,
         "y": 40
       },
       "health": 100,

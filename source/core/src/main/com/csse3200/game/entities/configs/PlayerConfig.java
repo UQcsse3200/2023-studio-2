@@ -1,7 +1,6 @@
 package com.csse3200.game.entities.configs;
 
 import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.files.FileLoader;
 
 import java.util.ArrayList;

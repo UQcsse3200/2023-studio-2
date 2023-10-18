@@ -38,8 +38,6 @@ public class PlayerFactory {
     private static final WeaponConfigs weaponConfigs =
             FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
 
-    //TODO: REMOVE - LEGACY
-
     /**
      * Create a player entity.
      *

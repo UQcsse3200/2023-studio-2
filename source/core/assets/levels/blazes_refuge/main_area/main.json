@@ -109,8 +109,8 @@
     "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
   },
 
-  "mapName": "Infernal Challenge",
-  "planetImage": "images/planets/space_navigation_planet_3.png",
+  "mapName": "Hell",
+  "planetImage": "images/navigationmap/planets/blazes_refuge.png",
   "terrainPath": "map/Hellmapp.tmx",
   "winConditions": [
     {

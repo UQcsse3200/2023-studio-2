@@ -52,8 +52,9 @@ class ToolsConfigTest {
             // checks that it can be created with the necessary constructor
             Object object;
             try {
-                object = cls.getDeclaredConstructor(ObjectMap.class, int.class, String.class)
-                        .newInstance(mock(ObjectMap.class), 0, "texture.png");
+                object = cls.getDeclaredConstructor(ObjectMap.class, float.class, String.class, int.class)
+                        .newInstance(mock(ObjectMap.class), structureOption.value.range,
+                                structureOption.value.texture, structureOption.value.ordering);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                      NoSuchMethodException e) {
                 fail(String.format("The class with name %s cannot be instantiated using a " +

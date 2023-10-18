@@ -19,8 +19,8 @@ public class BuildablesFactory {
      * @param type the type of wall to create.
      * @return The created Wall entity.
      */
-    public static PlaceableEntity createWall(WallType type, Entity player) {
-        return new Wall(new WallConfig(wallConfig.getWallConfig(type)), player);
+    public static PlaceableEntity createWall(WallType type) {
+        return new Wall(new WallConfig(wallConfig.getWallConfig(type)));
     }
 
     /**
@@ -28,16 +28,16 @@ public class BuildablesFactory {
      * @param config the config for the wall to create.
      * @return The created Wall entity.
      */
-    public static PlaceableEntity createWall(WallConfig config, Entity player) {
-        return new Wall(config, player);
+    public static PlaceableEntity createWall(WallConfig config) {
+        return new Wall(config);
     }
 
-    public static PlaceableEntity createCustomTurret(TurretType type, Entity player) {
-        return new Turret(new TurretConfig(turretConfigs.getTurretConfig(type)), player);
+    public static PlaceableEntity createCustomTurret(TurretType type) {
+        return new Turret(new TurretConfig(turretConfigs.getTurretConfig(type)));
     }
 
-    public static PlaceableEntity createCustomTurret(TurretConfig config, Entity player) {
-        return new Turret(config, player);
+    public static PlaceableEntity createCustomTurret(TurretConfig config) {
+        return new Turret(config);
     }
 
     /**

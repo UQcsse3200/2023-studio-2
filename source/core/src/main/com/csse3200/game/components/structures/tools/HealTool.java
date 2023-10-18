@@ -19,12 +19,14 @@ public class HealTool extends Tool {
 
     /**
      * Creates a new healing tool with the given cost.
-     * @param cost - the cost of the healing tool.
+     *
+     * @param cost     - the cost of the healing tool.
+     * @param range
+     * @param texture  - the texture of this tool.
      * @param ordering - the ordering of this tool.
-     * @param texture - the texture of this tool.
      */
-    public HealTool(ObjectMap<String, Integer> cost, int ordering, String texture) {
-        super(cost, ordering, texture);
+    public HealTool(ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
+        super(cost, range, texture, ordering);
     }
 
 
@@ -37,6 +39,12 @@ public class HealTool extends Tool {
      */
     @Override
     protected ToolResponse canInteract(Entity player, GridPoint2 position) {
+        var validity = super.canInteract(player, position);
+
+        if (!validity.isValid()) {
+            return validity;
+        }
+
         // For checking whether the player has clicked on an entity
         Entity clickedEntity = determineSelectedEntity(position);
         // If no entity is clicked, return false

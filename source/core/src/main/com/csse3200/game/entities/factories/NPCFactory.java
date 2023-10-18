@@ -103,7 +103,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/npc/Astro_NPC.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/npc/caged_NPC.atlas", TextureAtlas.class));
     animator.addAnimation("Astro_Up", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("Astro_UpLeft", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("Astro_Left", 0.2f, Animation.PlayMode.LOOP);

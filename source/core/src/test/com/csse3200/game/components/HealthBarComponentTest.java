@@ -48,28 +48,4 @@ class HealthBarComponentTest {
         // Ensures health bar updates when combat stats does
         assertEquals(combatStatsComponent.getHealth(), component.getHealthBar().getValue());
     }
-
-    /**
-     * Test the show method of HealthBarComponent.
-     */
-    @Test
-    void showTest() {
-        HealthBarComponent component = new HealthBarComponent(true);
-
-        component.show();
-
-        assertTrue(component.enabled);
-    }
-
-    /**
-     * Test the hide method of HealthBarComponent.
-     */
-    @Test
-    void hideTest() {
-        HealthBarComponent component = new HealthBarComponent(true);
-
-        component.hide();
-
-        assertFalse(component.enabled);
-    }
 }

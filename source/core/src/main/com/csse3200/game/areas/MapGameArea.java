@@ -2,6 +2,8 @@ package com.csse3200.game.areas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -30,11 +32,16 @@ import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TerrainService;
+import com.csse3200.game.ui.QuestBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+
+import static com.csse3200.game.ui.DialogComponent.stage;
+import static com.csse3200.game.ui.UIComponent.skin;
 
 /**
  * A Base Game Area for any level.
@@ -83,12 +90,13 @@ public class MapGameArea extends GameArea{
         spawnExtractors();
         spawnShip();
         player = spawnPlayer();
+        freezing = false;
         companion = spawnCompanion();
         spawnLaboratory();
         spawnPowerups();
         spawnPortal(player);
-        spawnTurrets(player);
-        spawnWalls(player);
+        spawnTurrets();
+        spawnWalls();
         spawnGates(player);
         spawnExplosives();
         spawnTreeTop();
@@ -101,8 +109,8 @@ public class MapGameArea extends GameArea{
         spawnAstronaut();
 
         //spawnEnvironmentDamage();
-        spawnFreezingArea();
-        spawnEnvironmentDamage();
+//        spawnFreezingArea();
+//        spawnEnvironmentDamage();
         spawnSafeZone(player);
 
         displayUI();
@@ -145,6 +153,7 @@ public class MapGameArea extends GameArea{
         //ui.addComponent(new GameAreaDisplay(map_config.mapName));
         ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage))
                 .addComponent(new InventoryDisplayComponent());
+        QuestBox questBox=new QuestBox("Rescue Astro",skin,stage);
         spawnEntity(ui);
     }
 
@@ -167,23 +176,23 @@ public class MapGameArea extends GameArea{
 
         if (safeZoneConfig == null) return;
 
-        Entity safeZone = SafeZoneFactory.createSafeZone(playerEntity);
+        Entity safeZone = SafeZoneFactory.createSafeZone(playerEntity, safeZoneConfig);
         spawnEntityAt(safeZone, safeZoneConfig.position, false, false);
     }
 
-    private void spawnEnvironmentDamage() {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        Entity envDamage = EnvironmentalDamageFactory.createDamage();
-        spawnEntityAt(envDamage, new GridPoint2(45, 45), false, false);
-    }
-
-    private void spawnFreezingArea() {
-        if (mapConfig.areaEntityConfig == null) return;
-
-        Entity freezeArea = FreezingAreaFactory.createFreezingArea();
-        spawnEntityAt(freezeArea, new GridPoint2(40, 60), false, false);
-    }
+//    private void spawnEnvironmentDamage() {
+//        if (mapConfig.areaEntityConfig == null) return;
+//
+//        Entity envDamage = EnvironmentalDamageFactory.createDamage();
+//        spawnEntityAt(envDamage, new GridPoint2(45, 45), false, false);
+//    }
+//
+//    private void spawnFreezingArea() {
+//        if (mapConfig.areaEntityConfig == null) return;
+//
+//        Entity freezeArea = FreezingAreaFactory.createFreezingArea();
+//        spawnEntityAt(freezeArea, new GridPoint2(40, 60), false, false);
+//    }
 
     public static float getSpeedMult() {
         TiledMapTileLayer collisionLayer = (TiledMapTileLayer) terrain.getMap().getLayers().get("Base");
@@ -203,12 +212,33 @@ public class MapGameArea extends GameArea{
         return onIce != null && (boolean) onIce;
     }
 
-    public static boolean isFreezing() {
-        return freezing;
-    }
+//    public static boolean isFreezing() {
+//        return freezing;
+//    }
+//
+//    public static void toggleFreezing(Entity player) {
+//        freezing = !freezing;
+//    }
 
-    public static void toggleFreezing(Entity player) {
-        freezing = !freezing;
+    /**
+     * Checks if the player should be taking damage from standing on fire or lava
+     */
+    public static void isBurning() {
+        if(getPlayer() != null){
+            Vector2 playerPos = getPlayer().getPosition();
+            MapLayers layers = terrain.getMap().getLayers();
+            for (MapLayer layer : layers) {
+                TiledMapTileLayer.Cell cell = ((TiledMapTileLayer) layer).getCell((int) (playerPos.x * 2), (int) (playerPos.y * 2));
+                if (cell != null) {
+                    Object onFire = cell.getTile().getProperties().get("burn");
+                    if (onFire != null && (boolean) onFire) {
+                        player.getComponent(EnvironmentStatsComponent.class).setBurning(true);
+                        return;
+                    }
+                }
+            }
+            player.getComponent(EnvironmentStatsComponent.class).setBurning(false);
+        }
     }
 
     /**
@@ -323,22 +353,20 @@ public class MapGameArea extends GameArea{
 
     /**
      * Spawns the saved turrets into the map.
-     * @param player - the player.
      */
-    private void spawnTurrets(Entity player) {
+    private void spawnTurrets() {
         for (TurretConfig config : mapConfig.areaEntityConfig.getEntities(TurretConfig.class)) {
-            var turret = BuildablesFactory.createCustomTurret(config, player);
+            var turret = BuildablesFactory.createCustomTurret(config);
             ServiceLocator.getStructurePlacementService().placeStructureAt(turret, config.position);
         }
     }
 
     /**
      * Spawns the saved walls into the map.
-     * @param player - the player.
      */
-    private void spawnWalls(Entity player) {
+    private void spawnWalls() {
         for (WallConfig config : mapConfig.areaEntityConfig.getEntities(WallConfig.class)) {
-            var turret = BuildablesFactory.createWall(config, player);
+            var turret = BuildablesFactory.createWall(config);
             ServiceLocator.getStructurePlacementService().placeStructureAt(turret, config.position);
         }
     }
@@ -519,7 +547,7 @@ public class MapGameArea extends GameArea{
 
         HellmanConfig hellmanConfig = mapConfig.areaEntityConfig.getEntity(HellmanConfig.class);
         if (hellmanConfig != null) {
-            Entity hellman = NPCFactory.createHellman();
+            Entity hellman = NPCFactory.createHellman(hellmanConfig);
             spawnEntityAt(hellman, hellmanConfig.position, false, false);
         }
 

@@ -58,6 +58,7 @@ public class ShipActions extends Component {
     public void update() {
         if (moving) {
             if (this.maxHealth <= 0) {
+
                 kaboom();
             }
             updateSpeed();

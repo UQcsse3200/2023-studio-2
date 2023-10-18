@@ -20,7 +20,7 @@ class PauseWindowTest {
     void returnToGame() {
         GdxGame game = mock(GdxGame.class);
         Entity entity = new Entity();
-        game.setScreen(GAME_STORY);
+        game.setScreen(SPACE_MAP);
         GdxGame.ScreenType screenBefore = game.getScreenType();
         entity.getEvents().trigger("returnPressed");
         assertEquals(screenBefore, game.getScreenType());
@@ -30,7 +30,7 @@ class PauseWindowTest {
     void exitToMainMenu() {
         GdxGame game = mock(GdxGame.class);
         Entity entity = new Entity();
-        game.setScreen(GAME_STORY);
+        game.setScreen(SPACE_MAP);
         entity.getEvents().trigger("exitPressed");
         //assertEquals(MAIN_MENU, game.getScreenType());
     }
@@ -39,7 +39,7 @@ class PauseWindowTest {
     void exitToControls() {
         GdxGame game = mock(GdxGame.class);
         Entity entity = new Entity();
-        game.setScreen(GAME_STORY);
+        game.setScreen(SPACE_MAP);
         entity.getEvents().trigger("controlsPressed");
         //assertEquals(CONTROL_SCREEN, game.getScreenType());
     }

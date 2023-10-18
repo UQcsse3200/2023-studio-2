@@ -21,6 +21,9 @@
       "images/sling_shot.png",
       "map/portal.png",
       "map/treetoplush.png",
+      "map/Torch.png",
+      "map/Fire.png",
+      "map/heatzone.png",
       "particle-effects/explosion/particle.png",
       "images/npc/astronaut_npc.png",
       "images/space_navigation_planet_2.png","images/upgradetree/sword.png"
@@ -59,7 +62,8 @@
       "sounds/weapons/slingshot.wav"
     ],
     "particleEffectPaths": [
-      "particle-effects/explosion/explosion.effect"
+      "particle-effects/explosion/explosion.effect",
+      "particle-effects/shield/shield.effect"
     ],
     "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
   },

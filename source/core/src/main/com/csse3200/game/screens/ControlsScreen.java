@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ControlGameArea;
 import com.csse3200.game.areas.GameArea;
-
+import static com.badlogic.gdx.Gdx.app;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.controls.ControlsScreenActions;
@@ -50,9 +50,7 @@ import static com.badlogic.gdx.Gdx.app;
 public class ControlsScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
     private final GdxGame game;
-
     private final String name;
-
     private Stage stage;
     private Entity player;
 
@@ -80,6 +78,7 @@ public class ControlsScreen extends ScreenAdapter {
             "images/structures/stone_wall.png",
             "images/structures/TurretOne.png",
             "images/structures/TurretTwo.png",
+            "images/explosives/landmine.png",
             "images/structures/heal_icon.png"
     };
 
@@ -117,7 +116,7 @@ public class ControlsScreen extends ScreenAdapter {
         String exitTextureHover = "images/controls-images/on_exit_hover.PNG";
         ImageButton exitBtn;
         exitBtn = bothButtons.draw(exitTexture, exitTextureHover);
-        exitBtn.setPosition(stage.getWidth()-300f, stage.getHeight()-1100f);
+        exitBtn.setPosition(stage.getWidth()-300f, stage.getHeight()-1200f);
         exitBtn.setSize(250, 100);
 
         Entity entity = new Entity();
@@ -255,11 +254,8 @@ public class ControlsScreen extends ScreenAdapter {
                 ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
         Entity ui = new Entity();
-        boolean Isgame = false;
-        ui.addComponent(new ControlsScreenDisplay(game, Isgame));
-        System.out.println(game);
+        ui.addComponent(new ControlsScreenDisplay(game, game.getScreenType()));
         ui.addComponent(new InputDecorator(stage, 10))
-                .addComponent(new ControlsScreenActions(game, (int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
                 .addComponent(new MainGamePauseDisplay(this.game.getScreenType()))

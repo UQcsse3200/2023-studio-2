@@ -2,6 +2,7 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
@@ -37,7 +38,11 @@ public class EnvironmentFactory {
             for (int x = 0; x < layer.getWidth(); x++) {
                 TiledMapTileLayer.Cell cell = layer.getCell(x, layer.getHeight() - 1 - y);
                 if (cell != null) {
-                    MapObjects objects = cell.getTile().getObjects();
+                    TiledMapTile tile = cell.getTile();
+                    MapObjects objects = null;
+                    if (tile != null) {
+                        objects = cell.getTile().getObjects();
+                    }
                     GridPoint2 tilePosition = new GridPoint2(x, layer.getHeight() - 1 - y);
                     if (objects.getCount() >= 1) {
                         RectangleMapObject object = (RectangleMapObject) objects.get(0);

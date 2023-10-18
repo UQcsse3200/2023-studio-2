@@ -43,6 +43,18 @@ public class MainGameActions extends Component {
     logger.debug("Attaching {} to {}", this, entity);
     this.entity = entity;
   }
+
+  /**
+   * Initialises class with set entity and game.
+   * @param entity
+   * @param game
+   */
+  public MainGameActions(Entity entity, GdxGame game){
+    this.game=game;
+    this.entity=entity;
+    create();
+  }
+
   @Override
   public void create() {
     entity.getEvents().addListener("pause", this::onPauseButton);
@@ -52,6 +64,7 @@ public class MainGameActions extends Component {
     entity.getEvents().addListener("pauseGame", this::paused);
     entity.getEvents().addListener("resumeGame", this::resumed);
   }
+
   /**
    * Opens pause window.
    */
@@ -78,6 +91,7 @@ public class MainGameActions extends Component {
    */
   private void onControlsButton() {
     logger.debug("Control Screen button clicked");
+    resumed();
     game.setScreen(GdxGame.ScreenType.CONTROL_SCREEN);
   }
 

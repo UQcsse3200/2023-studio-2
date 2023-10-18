@@ -49,7 +49,8 @@
     "particle-effects/extractor/rubble_2.png",
     "particle-effects/extractor/rubble_3.png",
     "particle-effects/extractor/dust.png",
-    " images/powerups/speed_potion.png"
+    " images/powerups/speed_potion.png",
+    "images/powerups/speed_boost.png"
   ],
   "textureAtlasPaths": [
     "images/structures/stone_wall.atlas",

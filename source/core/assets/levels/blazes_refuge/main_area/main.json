@@ -53,6 +53,7 @@
       "images/action-feedback/white_color_texture.png",
       "images/action-feedback/warning.png",
       "map/treetop.png",
+      "map/coolzone.png",
       "particle-effects/explosion/particle.png",
       "images/resources/Cracked_Ground.png",
       "images/enemy/botanist.png"
@@ -102,14 +103,15 @@
       "particle-effects/extractor/durasteel.effect",
       "particle-effects/extractor/nebulite.effect",
       "particle-effects/extractor/solstite.effect",
-      "particle-effects/explosion/bigBallCombustion.effect"
+      "particle-effects/explosion/bigBallCombustion.effect",
+      "particle-effects/shield/shield.effect"
     ],
     "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
   },
 
   "mapName": "Infernal Challenge",
   "planetImage": "images/planets/space_navigation_planet_3.png",
-  "terrainPath": "map/Firemap02.tmx",
+  "terrainPath": "map/Hellmapp.tmx",
   "winConditions": [
     {
       "resource": "Solstite",

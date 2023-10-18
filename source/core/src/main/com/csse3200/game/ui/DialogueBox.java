@@ -11,13 +11,14 @@ import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 import static com.csse3200.game.screens.MainMenuScreen.logger;
+import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
 /**
  * A custom dialog box for displaying in-game dialogues with an OK button.
  */
 public class DialogueBox extends Dialog {
 
-    private Label dialogueLabel;
+    private TypingLabel dialogueLabel;
     private Label titleLabel;
     private String[] titles;
     private String[] messages;
@@ -34,8 +35,8 @@ public class DialogueBox extends Dialog {
     public DialogueBox(String[] title, String[] message, Skin skin) {
         super("", skin);
         this.skin = skin;
-        titleLabel = new Label(title[0], skin);
-        this.dialogueLabel = new Label(message[0], skin);
+        titleLabel = new TypingLabel(title[0], skin);
+        this.dialogueLabel = new TypingLabel(message[0], skin);
         this.titles=title;
         this.messages=message;
         create();
@@ -55,13 +56,13 @@ public class DialogueBox extends Dialog {
         this.getContentTable().add(dialogueLabel).width(500f).height(-15f).pad(20f).center(); // Adjust width and height as needed
 
 
-            Label.LabelStyle labelStyle = new Label.LabelStyle(skin.get("large", Label.LabelStyle.class));
-        labelStyle.font.getData().setScale(1.6f); // Set the font scale to make it larger
+        TypingLabel.LabelStyle labelStyle = new Label.LabelStyle(skin.get("small", Label.LabelStyle.class));
+        labelStyle.font.getData().setScale(0.8f); // Set the font scale to make it larger
 
 
-            TextButton startButton = new TextButton("OK", skin);
-            button(startButton, true);
-            Entity entity = new Entity();
+        TextButton startButton = new TextButton("OK", skin);
+        button(startButton, true);
+        Entity entity = new Entity();
         entity.getEvents().addListener("ok", this::onOK);
         startButton.addListener(
                 new ChangeListener() {
@@ -129,7 +130,6 @@ public class DialogueBox extends Dialog {
     }
 
     public void oninfo() {
-
         String[] nextTitles = titles;
         String[] nextMessages = messages;
 
@@ -139,7 +139,13 @@ public class DialogueBox extends Dialog {
         // Check if there are more dialogues to show
         if (nextIndex < nextTitles.length) {
             titleLabel.setText(nextTitles[nextIndex]);
+
+            // Set the text of the TypingLabel
             dialogueLabel.setText(nextMessages[nextIndex]);
+
+            // Start the TypingLabel animation
+            dialogueLabel.restart();
+
             getContentTable().clear();
             create();
         } else {
@@ -147,4 +153,5 @@ public class DialogueBox extends Dialog {
             onOK();
         }
     }
+
 }

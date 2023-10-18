@@ -42,6 +42,7 @@ public class ExplosivesFactory {
                 .addComponent(new HealthBarComponent(true))
                 .addComponent(new StructureDestroyComponent())
                 .addComponent(new ExplosiveComponent(config))
+                .addComponent(new HealthBarComponent(true))
                 .addComponent(new TextureRenderComponent(texture))
                 .addComponent(new SaveableComponent<>(barrel -> {
                     config.position = barrel.getGridPosition();

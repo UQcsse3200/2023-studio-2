@@ -3,6 +3,7 @@ package com.csse3200.game.components.structures.tools;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.structures.CostComponent;
+import com.csse3200.game.components.structures.JoinableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.services.GameStateObserver;
@@ -69,6 +70,18 @@ public abstract class PlacementTool extends Tool {
         var resourceValidity = hasEnoughResources();
         if (!resourceValidity.isValid()) {
             return resourceValidity;
+        }
+
+        var entity = createStructure(player);
+
+        var component = entity.getComponent(JoinableComponent.class);
+
+        if (component != null) {
+            var canPlace = component.canPlaceAt(position);
+
+            if (!canPlace) {
+                return new ToolResponse(PlacementValidity.INVALID_POSITION, "Invalid structure join");
+            }
         }
 
         return ToolResponse.valid();

@@ -30,6 +30,7 @@ public class ControlsScreenActions extends Component {
      */
     @Override
     public void create() {
+        entity.getEvents().addListener("exitToSettings", this::onExitToSettings);
         entity.getEvents().addListener("exit", this::onExit);
         entity.getEvents().addListener("w", this::onW);
         entity.getEvents().addListener("a", this::onA);
@@ -41,9 +42,12 @@ public class ControlsScreenActions extends Component {
         entity.getEvents().addListener("2", this::on2);
         entity.getEvents().addListener("3", this::on3);
         entity.getEvents().addListener("4", this::on4);
-
     }
 
+    public void onExitToSettings() {
+        System.out.println("settings");
+        game.setScreen(GdxGame.ScreenType.SETTINGS);
+    }
 
     private void onW() {
         logger.info("W clicked");

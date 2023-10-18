@@ -2,7 +2,7 @@
   "redGhost": {
     "name": "redGhost",
     "health": 50,
-    "baseAttack": 10,
+    "baseAttack": 5,
     "speedX": 1,
     "speedY": 1,
     "behaviour": "PTE",
@@ -19,7 +19,7 @@
   "chain": {
     "name": "chain",
     "health": 50,
-    "baseAttack": 10,
+    "baseAttack": 5,
     "speedX": 1,
     "speedY": 1,
     "behaviour": "PTE",
@@ -36,7 +36,7 @@
   "roboMan": {
     "name": "roboMan",
     "health": 50,
-    "baseAttack": 10,
+    "baseAttack": 5,
     "speedX": 1,
     "speedY": 1,
     "behaviour": "DTE",
@@ -53,7 +53,7 @@
   "necromancer": {
     "name": "necromancer",
     "health": 50,
-    "baseAttack": 10,
+    "baseAttack": 5,
     "speedX": 1,
     "speedY": 1,
     "behaviour": "PTE",
@@ -70,7 +70,7 @@
   "Knight": {
     "name": "Knight",
     "health": 100,
-    "baseAttack": 25,
+    "baseAttack": 10,
     "speedX": 1,
     "speedY": 1,
     "behaviour": "PTE",
@@ -88,7 +88,7 @@
   "Guardian": {
     "name": "Guardian",
     "health": 100,
-    "baseAttack": 25,
+    "baseAttack": 10,
     "speedX": 1,
     "speedY": 1,
     "behaviour": "PTE",
@@ -106,7 +106,7 @@
   "Mage": {
     "name": "Mage",
     "health": 100,
-    "baseAttack": 25,
+    "baseAttack": 10,
     "speedX": 1,
     "speedY": 1,
     "behaviour": "PTE",

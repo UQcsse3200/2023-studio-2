@@ -4,23 +4,23 @@
     {
       "class": "com.csse3200.game.entities.configs.SpawnerConfig",
       "wave1" : {
-        "Knight" : 1,
         "necromancer" : 1,
-        "redGhost" : 10
+        "roboMan" : 0,
+        "chain" : 0
       },
       "wave2" : {
-        "redGhost" : 1,
-        "chain" : 1,
-        "necromancer" : 1
+        "redGhost" : 0,
+        "roboMan" : 0,
+        "necromancer" : 0
       },
       "wave3" : {
-        "redGhost" : 1,
-        "chain" : 1,
-        "necromancer" : 1
+        "roboMan" : 0,
+        "necromancer" : 0,
+        "Knight" : 0
       },
       "position": {
-        "x": 10,
-        "y": 45
+        "x": 1,
+        "y": 88
       },
       "sounds": {
         "soundsMap": {

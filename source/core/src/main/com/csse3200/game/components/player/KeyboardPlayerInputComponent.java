@@ -8,15 +8,19 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.structures.StructureToolPicker;
 import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.windows.PauseWindow;
 
 import java.util.HashMap;
 import java.util.Timer;
+
+import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 
 /**
@@ -105,6 +109,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             return false;
         }
         switch (keycode) {
+            case Keys.ESCAPE -> {
+                // Open the pause window when the Escape key is pressed
+                openPauseWindow();
+                return true;
+            }
             case Keys.SPACE -> {
                 if (!dodgeAvailable ||
                         walkDirection.epsilonEquals(Vector2.Zero)) {
@@ -277,13 +286,20 @@ public class KeyboardPlayerInputComponent extends InputComponent {
      * and also trigger the walking sound
      */
     void triggerWalkEvent() {
+
         Entity companion = ServiceLocator.getEntityService().getCompanion();
         Vector2 lastDir = this.walkDirection.cpy();
         this.walkDirection = keysToVector().scl(WALK_SPEED);
         if (this.getTesting() == 0) {
             Directions dir = keysToDirection();
             if (dir == Directions.NONE) {
+
                 entity.getEvents().trigger(WALKSTOP);
+                if (companion != null) {
+                    companion.getEvents().trigger(WALKSTOP);
+                    companion.getEvents().trigger("walkStopAnimation", lastDir);
+                }
+
                 entity.getEvents().trigger("walkStopAnimation", lastDir);
 
                 entity.getEvents().trigger("stopSound", "footstep");
@@ -331,7 +347,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                     if (!companion.getComponent(CombatStatsComponent.class).isDead()){
                         companion.getEvents().trigger("walkDownRight");}
                 }
-                default -> entity.getEvents().trigger(WALKSTOP);
+                default -> {
+                    entity.getEvents().trigger(WALKSTOP);
+                    if (companion != null) {
+                        companion.getEvents().trigger(WALKSTOP);
+                    }
+                }
+
             }
             if (entity != null) {
                 entity.getEvents().trigger("walk", walkDirection);
@@ -399,6 +421,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         entity.getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
         entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(),
                 invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
+    }
+    private void openPauseWindow() {
+        if (!isWindowOpen()) {
+            MainGameActions mainGameActions = new MainGameActions(entity,game);
+            entity.getEvents().trigger("pause");
+        }
     }
 
     /**

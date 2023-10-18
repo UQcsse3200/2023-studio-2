@@ -14,7 +14,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SpawnerComponent extends Component {
-    public static final long WAVE_DELAY = 5000;  // 5 seconds
+    public static final long INITIAL_DELAY = 0;
+    public static final long WAVE_DELAY = 30000;  // 30 seconds in between waves
 public static final long SPAWN_DELAY = 3000;  // 3 seconds
 
     public final GameTime timer;
@@ -41,7 +42,12 @@ public static final long SPAWN_DELAY = 3000;  // 3 seconds
     @Override
     public void update() {
         long currentTime = timer.getTime();
-        if (shouldSpawnNewWave(currentTime)) {
+
+        if (currentWave == 0 && startSpawning(currentTime)) {
+            handleNewWave(currentTime);
+        }
+
+        if (currentWave > 0 && shouldSpawnNewWave(currentTime)) {
             handleNewWave(currentTime);
         }
         if (shouldSpawnEnemy(currentTime)) {
@@ -52,6 +58,9 @@ public static final long SPAWN_DELAY = 3000;  // 3 seconds
         }
     }
 
+    public boolean startSpawning(long currentTime) {
+        return !isSpawning && currentTime - lastTime >= INITIAL_DELAY;
+    }
     public boolean shouldSpawnNewWave(long currentTime) {
         return !isSpawning && currentTime - lastTime >= WAVE_DELAY;
     }
@@ -116,6 +125,9 @@ public static final long SPAWN_DELAY = 3000;  // 3 seconds
 
     public void resetSpawningState() {
         isSpawning = false;
+        enemyType1 = null;
+        enemyType2 = null;
+        enemyType3 = null;
         enemiesToSpawn = 0;
         enemiesSpawned = 0;
     }

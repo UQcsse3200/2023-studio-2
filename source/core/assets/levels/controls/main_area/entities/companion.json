@@ -1,0 +1,17 @@
+{
+  "entityType": "CompanionConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.CompanionConfig,
+       "position": {
+          "x": 10,
+          "y": 50
+       },
+       "health": 50,
+       "baseAttack": 10,
+       "attackMultiplier": 1,
+       "isImmune": false,
+       "spritePath": "images/companion/earth_Companion_spritesheet.atlas"
+    }
+  ]
+}

@@ -147,30 +147,15 @@ public class NPCFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset(tutnpcConfig.spritePath, TextureAtlas.class));
-    animator.addAnimation("row-2-column-1", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-1", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-1", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-2", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-2", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-2", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-3", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-3", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-3", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-4", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-4", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-4", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-5", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-5", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-5", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-6", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-6", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-6", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-7", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-7", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-7", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-8", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-8", 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-8", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_Up", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_UpLeft", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_Left", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_DownLeft", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_Down", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_DownRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_Right", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_UpRight", 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Tut_StandDown", 0.2f);
 
 
     Entity Tutnpc =
@@ -192,7 +177,7 @@ public class NPCFactory {
 
       Tutnpc.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
     }, 3f));
-    animator.startAnimation("row-2-column-1");
+    animator.startAnimation("Tut_StandDown");
     return Tutnpc;
   }
 

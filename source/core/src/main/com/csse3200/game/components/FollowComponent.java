@@ -7,7 +7,7 @@ import com.csse3200.game.entities.Entity;
 public class FollowComponent extends Component{
     private final Entity followEntity;
     private float followSpeed;
-    private float minimumDistance = 1f;
+    private float minimumDistance = 0.9f;
 
     /**
      *

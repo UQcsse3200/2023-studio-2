@@ -315,6 +315,9 @@ public class CompanionActions extends Component {
             if (enemy != null && enemy.getComponent(CombatStatsComponent.class).getHealth() > 0) {
                 return enemy;
             }
+            if (enemy != null &&enemy.getComponent(CombatStatsComponent.class).getHealth()<=0){
+                EnemyFactory.getEnemyList().remove(currentTargetIndex);
+            }
             currentTargetIndex = (currentTargetIndex + 1) % numEnemies;
 
             if (currentTargetIndex == originalTargetIndex) {

@@ -51,7 +51,7 @@ public class EnemyFactory {
   public static DialogueBox dialogueBox;
   // Condition to see if a target is alive or not
   private static boolean isAlive;
-  public static List<Entity> enemiesList = new ArrayList<Entity>();
+  public static List<Entity> enemiesList = new ArrayList<>();
   /**
    * Creates an enemy - using the default config as defined by the type and behaviour
    * @param name - the name of the enemy
@@ -77,10 +77,7 @@ public class EnemyFactory {
     List<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
     for (Entity target : targets) {
       // Adds the specific behaviour to entity
-      enemyBehaviourSelector(target, config.type, config.behaviour, aiComponent, config.isBoss);
-      if (config.name == EnemyName.necromancer && PhysicsLayer.contains(target.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.PLAYER)) {
-        aiComponent.addTask(new SpawnAttackTask(2f, target, 15));
-      }
+      enemyBehaviourSelector(target, config, aiComponent);
     }
 
     TextureAtlas atlas = new TextureAtlas(config.spritePath);
@@ -113,7 +110,7 @@ public class EnemyFactory {
             .addComponent(new SoundComponent(config.sound))
             .addComponent(new EnemyFlag());
 
-    enemy.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.4f,0.4f), PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM);
+    enemy.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.41f,0.41f), PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM);
 
     // TYPE
     enemyTypeSelector(enemy, config.type);
@@ -192,50 +189,45 @@ public class EnemyFactory {
   /**
    * Function to set the behaviour of the desired enemy
    * @param target The player entity
-   * @param type Melee, Ranged, Boss or Mixture of the referred
-   * @param behaviour Player or Destructible Targeting
    * @param aiTaskComponent The enemy's aiComponent
-   * @param isBoss Boolean indicating if enemy is a boss type
    */
-  public static void enemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
+  public static void enemyBehaviourSelector(Entity target, EnemyConfig config, AITaskComponent aiTaskComponent) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
     if (target.getComponent(CombatStatsComponent.class) != null) {
       isAlive = !(target.getComponent(CombatStatsComponent.class).isDead());
     }
     boolean isPlayer = PhysicsLayer.contains(layer, PhysicsLayer.PLAYER);
     boolean isStructure = PhysicsLayer.contains(layer, PhysicsLayer.STRUCTURE);
-    boolean matchingBehaviour = isPlayer && behaviour == EnemyBehaviour.PTE || isStructure && isAlive &&behaviour == EnemyBehaviour.DTE;
+    boolean matchingBehaviour = isPlayer && config.behaviour == EnemyBehaviour.PTE || isStructure && isAlive && config.behaviour == EnemyBehaviour.DTE;
 
     int priority = matchingBehaviour ? 10 : 0; //Matching behaviour and target gives priority 10
     float viewDistance = 100f;
     float maxChaseDistance = 100f;
 
-    if (isPlayer && behaviour == EnemyBehaviour.DTE) {
+    if (isPlayer && config.behaviour == EnemyBehaviour.DTE) {
       //Special case for player targeting meleeDTE will add chaseTask of prio 9
       priority = 9;
     }
     // Select and add the necessary behaviour
-    addBehaviour(type, aiTaskComponent, target, priority, viewDistance, maxChaseDistance, isBoss);
+    addBehaviour(config, aiTaskComponent, target, priority, viewDistance, maxChaseDistance);
   }
 
   /**
    * Helper Method that edits the aicomponent of enemies. Boss enemies and Ranged enemies requires different tasks.
-   * @param type Type of enemy
    * @param aiComponent aiComponent of the enemy
    * @param target the Player's entity
    * @param priority given priority to enemy entity
    * @param viewDistance view distance for ranged enemies
    * @param maxChaseDistance max chase distance for enemies
-   * @param isBoss boolean for boss check
    */
-  private static void addBehaviour(EnemyType type, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance, boolean isBoss) {
+  private static void addBehaviour(EnemyConfig config, AITaskComponent aiComponent, Entity target, int priority, float viewDistance, float maxChaseDistance) {
     // Select behaviour
     if (priority == 0) {
       return;
     }
-    if (type == EnemyType.Melee) {
+    if (config.type == EnemyType.Melee) {
       aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance));
-    } else if (type == EnemyType.Ranged) {
+    } else if (config.type == EnemyType.Ranged) {
       // Ranged Enemy
       float aimDelay = 2f;
       float range = 3f;
@@ -243,12 +235,18 @@ public class EnemyFactory {
       viewDistance = 100f;
       maxChaseDistance = 100f;
 
-      aiComponent.addTask(new AimTask(aimDelay, target, range));
-      aiComponent.addTask(new RunTask(target, 11, 2f));
-      aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
+      if (config.name == EnemyName.necromancer && PhysicsLayer.contains(target.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.PLAYER)) {
+        shootDistance = 8f;
+        aiComponent.addTask(new SpawnAttackTask(target, 1f, 5, 5));
+        aiComponent.addTask(new RunTask(target, 11, 5f));
+        aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
+      } else {
+        aiComponent.addTask(new AimTask(aimDelay, target, range));
+        aiComponent.addTask(new RunTask(target, 11, 2f));
+        aiComponent.addTask(new ChaseTask(target, priority, viewDistance, maxChaseDistance, shootDistance));
+      }
     }
   }
-
 
   /**
    * Add special attack to enemy

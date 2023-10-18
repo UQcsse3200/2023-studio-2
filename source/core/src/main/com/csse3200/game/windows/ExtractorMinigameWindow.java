@@ -2,7 +2,6 @@ package com.csse3200.game.windows;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.maingame.MainGameActions;
@@ -93,25 +91,25 @@ public class ExtractorMinigameWindow extends Window {
         }
 
         // put extinguisher and spanner
-        Image extinguisherImage = new Image(new Texture(Gdx.files.internal("images/minigame/extinguisher.png")));// TODO: change to extinguisher.png
+        Image extinguisherImage = new Image(new Texture(Gdx.files.internal("images/minigame/extinguisher.png")));
         extinguisherImage.setPosition(-300, 400);
         imageTable.addActor(extinguisherImage);
         extinguisherImage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 currentMouseState = MouseState.EXTINGUISHER;
-                Pixmap extinguisherPixmap = new Pixmap(Gdx.files.internal("images/minigame/extinguisherCursor.png"));// TODO: change to extinguisherCursor.png
+                Pixmap extinguisherPixmap = new Pixmap(Gdx.files.internal("images/minigame/extinguisherCursor.png"));
                 Gdx.graphics.setCursor(Gdx.graphics.newCursor(extinguisherPixmap, 0, 0));
             }
         });
-        Image spannerImage = new Image(new Texture(Gdx.files.internal("images/minigame/spanner.png")));// TODO: change to spanner.png
+        Image spannerImage = new Image(new Texture(Gdx.files.internal("images/minigame/spanner.png")));
         spannerImage.setPosition(600, 400);
         imageTable.addActor(spannerImage);
         spannerImage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 currentMouseState = MouseState.SPANNER;
-                Pixmap spannerPixmap = new Pixmap(Gdx.files.internal("images/minigame/spannerCursor.png"));// TODO: change to spannerCursor.png
+                Pixmap spannerPixmap = new Pixmap(Gdx.files.internal("images/minigame/spannerCursor.png"));
                 Gdx.graphics.setCursor(Gdx.graphics.newCursor(spannerPixmap, 0, 0));
             }
         });

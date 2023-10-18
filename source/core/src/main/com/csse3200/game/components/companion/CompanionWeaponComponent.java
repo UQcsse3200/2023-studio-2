@@ -31,7 +31,6 @@ public class CompanionWeaponComponent extends Component {
     }
 
 //    private void tempPrintAmmo(int ammo, int maxAmmo) {
-//        System.out.println("Currently: " + ammo + " / " + maxAmmo);
 //    }
 
 

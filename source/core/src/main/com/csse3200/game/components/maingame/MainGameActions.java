@@ -1,13 +1,9 @@
 package com.csse3200.game.components.maingame;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.areas.ControlGameArea;
-import com.csse3200.game.areas.MapGameArea;
-import com.csse3200.game.areas.TutorialGameArea;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.entities.SafeZone;
 import com.csse3200.game.windows.PauseWindow;
@@ -18,8 +14,6 @@ import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.sql.rowset.serial.SerialBlob;
 
 /**
  * This class listens to events relevant to the Main Game Screen and does something when one of the
@@ -46,6 +40,7 @@ public class MainGameActions extends Component {
    *
    * @param entity The entity to which the component is attached.
    */
+  @Override
   public void setEntity(Entity entity) {
     logger.debug("Attaching {} to {}", this, entity);
     this.entity = entity;
@@ -76,7 +71,7 @@ public class MainGameActions extends Component {
    * Opens pause window.
    */
   private void onPauseButton() {
-    if (!isWindowOpen() && (ServiceLocator.getGameArea() != null | game.getScreenType().equals(GdxGame.ScreenType.TUTORIAL_SCREEN))) {
+    if (!isWindowOpen() && (ServiceLocator.getGameArea() != null || game.getScreenType().equals(GdxGame.ScreenType.TUTORIAL_SCREEN))) {
       logger.info("Opening Pause Menu");
       PauseWindow pauseWindow = PauseWindow.makeNewPauseWindow(entity);
       paused();
@@ -87,7 +82,7 @@ public class MainGameActions extends Component {
   /**
    * Exits to Main Menu screen. Closes pause window.
    */
-  private void onExit() {
+  public void onExit() {
     logger.info("Exiting main game screen");
     ServiceLocator.getGameStateObserverService().getStateData("gameArea");
     ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", config.lives);

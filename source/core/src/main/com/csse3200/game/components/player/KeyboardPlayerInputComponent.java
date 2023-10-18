@@ -15,8 +15,6 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
-
-import java.awt.desktop.SystemSleepEvent;
 import java.util.HashMap;
 import java.util.Timer;
 
@@ -53,7 +51,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     public boolean isWindowOpen() {
         for (Actor actor : ServiceLocator.getRenderService().getStage().getActors()) {
             if (actor instanceof Window && actor.isVisible()) {
-                System.out.println("already open");
                 return true;
             }
         }

@@ -2,9 +2,6 @@ package com.csse3200.game.components.controls;
 
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
-import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -16,7 +13,6 @@ import org.slf4j.LoggerFactory;
 public class ControlsScreenActions extends Component {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreenActions.class);
     private final GdxGame game;
-    private int lives;
 
     /**
      * Creates a new instance of ControlsScreenActions.
@@ -47,7 +43,6 @@ public class ControlsScreenActions extends Component {
     }
 
     public void onExitToSettings() {
-        System.out.println("settings");
         game.setScreen(GdxGame.ScreenType.SETTINGS);
     }
 
@@ -99,8 +94,5 @@ public class ControlsScreenActions extends Component {
          logger.info("Relaunching main game screen");
          ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", (int) ServiceLocator.getGameStateObserverService().getStateData("player/lives"));
          new PlanetTravel(game).returnToCurrent();
-    }
-
-    public void getLogger() {
     }
 }

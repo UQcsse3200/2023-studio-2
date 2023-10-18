@@ -86,7 +86,6 @@ public class PlanetHudDisplay extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch)  {
-
     }
 
     @Override

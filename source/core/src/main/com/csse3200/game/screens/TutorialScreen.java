@@ -162,6 +162,7 @@ public class TutorialScreen extends ScreenAdapter {
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
     }
 
+    @Override
     public void render(float delta) {
         physicsEngine.update();
         ServiceLocator.getEntityService().update();

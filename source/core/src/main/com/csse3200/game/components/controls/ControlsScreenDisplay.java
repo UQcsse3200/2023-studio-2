@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ControlsScreenDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreenDisplay.class);
-    private Table table,table1;
+    private Table table;
     private GdxGame.ScreenType screenType;
     private GdxGame game;
     private PlanetTravel planetTravel;

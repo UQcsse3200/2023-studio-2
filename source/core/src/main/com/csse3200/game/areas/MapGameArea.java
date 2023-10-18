@@ -253,22 +253,22 @@ public class MapGameArea extends GameArea{
 
         // Left
         spawnEntityAt(
-                ObstacleFactory.createWall(ObstacleFactory.WALL_SIZE, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+                ObstacleFactory.createWall(ObstacleFactory.wallSize, worldBounds.y), GridPoint2Utils.ZERO, false, false);
         // Right
         spawnEntityAt(
-                ObstacleFactory.createWall(ObstacleFactory.WALL_SIZE, worldBounds.y),
+                ObstacleFactory.createWall(ObstacleFactory.wallSize, worldBounds.y),
                 new GridPoint2(tileBounds.x, 0),
                 false,
                 false);
         // Top
         spawnEntityAt(
-                ObstacleFactory.createWall(worldBounds.x, ObstacleFactory.WALL_SIZE),
+                ObstacleFactory.createWall(worldBounds.x, ObstacleFactory.wallSize),
                 new GridPoint2(0, tileBounds.y),
                 false,
                 false);
         // Bottom
         spawnEntityAt(
-                ObstacleFactory.createWall(worldBounds.x, ObstacleFactory.WALL_SIZE), GridPoint2Utils.ZERO, false, false);
+                ObstacleFactory.createWall(worldBounds.x, ObstacleFactory.wallSize), GridPoint2Utils.ZERO, false, false);
         ServiceLocator.registerTerrainService(new TerrainService(terrain));
     }
 

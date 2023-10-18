@@ -39,7 +39,7 @@ public class SpaceNavigationScreen implements Screen {
     /** Names of the planets */
     private final String[] planetNames = {"Earth", "Blazes Refuge", "Cryoheim", "Flora Haven"};
 
-    private final String IMAGE_PATH = "images/navigationmap/";
+    private static final String IMAGE_PATH = "images/navigationmap/";
 
     private final PlanetTravel planetTravel;
 

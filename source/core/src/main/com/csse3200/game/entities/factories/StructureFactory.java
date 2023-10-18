@@ -162,7 +162,6 @@ public class StructureFactory {
         return extractorBang;
     }
 
-    //TODO: REMOVE - LEGACY
     /**
      * Creates an extractor entity
      *
@@ -228,7 +227,6 @@ public class StructureFactory {
     }
 
 
-    //TODO: REMOVE - LEGACY
     /**
      * Creates a ship entity that uses the default package
      */

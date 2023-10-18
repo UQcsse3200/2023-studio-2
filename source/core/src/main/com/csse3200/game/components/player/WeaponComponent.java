@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.entities.factories.AttackFactory;
 import com.csse3200.game.entities.factories.PlayerWeaponFactory;
 import com.csse3200.game.services.ServiceLocator;
@@ -66,7 +65,6 @@ public class WeaponComponent extends Component {
      * @param clickPosition - click location of mouse
      */
     private void playerPlacing(WeaponType weaponType, Vector2 clickPosition) {
-        InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
         float attackDirection = calcRotationAngleInDegrees(entity.getCenterPosition(), clickPosition);
         makeNewHolding(weaponType, attackDirection);
     }

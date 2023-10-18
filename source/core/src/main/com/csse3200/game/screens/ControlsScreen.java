@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ControlGameArea;
 import com.csse3200.game.areas.GameArea;
-import static com.badlogic.gdx.Gdx.app;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
 import com.csse3200.game.components.controls.ControlsScreenActions;
@@ -96,7 +95,7 @@ public class ControlsScreen extends ScreenAdapter {
         allGameAreas.get(currentAreaName).create();
 
         logger.debug((String.format("Initialising %s screen entities", this.name)));
-        //showTutorialDialogueBox();
+        // showTutorialDialogueBox();
         this.player = GameArea.getPlayer();
         this.stage=renderer.getStage();
 
@@ -167,6 +166,7 @@ public class ControlsScreen extends ScreenAdapter {
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
     }
 
+    @Override
     public void render(float delta) {
         physicsEngine.update();
         ServiceLocator.getEntityService().update();

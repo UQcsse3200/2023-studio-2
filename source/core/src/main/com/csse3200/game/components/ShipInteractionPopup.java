@@ -17,14 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 public class ShipInteractionPopup extends Window {
-    private final InputOverrideComponent inputOverrideComponent;
-
     public ShipInteractionPopup() {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, getBrownBackgroundStatic()));
         for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
@@ -64,15 +61,10 @@ public class ShipInteractionPopup extends Window {
         okButton.setSize(150, 50);
         okButton.setPosition((getWidth() - okButton.getWidth()) / 2, 20);
         this.addActor(okButton);
-
-        inputOverrideComponent = new InputOverrideComponent();
-
-        //ServiceLocator.getInputService().register(inputOverrideComponent);
     }
 
     @Override
     public boolean remove() {
-        //ServiceLocator.getInputService().unregister(inputOverrideComponent);
         for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
             mainGame.getEvents().trigger("resumeGame");
         }

@@ -230,7 +230,6 @@ public class CompanionInventoryDisplay extends Window {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 int updatedCount = inventoryComponent.getPowerupCount(powerupType);
-                //System.out.println("Power-up Type: " + powerupType + ", Updated Count: " + updatedCount);
                 updateCountButton(updatedCount, countButton);
             }
         });

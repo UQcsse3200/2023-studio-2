@@ -39,6 +39,9 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("remove", this::remove);
         entity.getEvents().addListener("dodged", this::dodged);
         entity.getEvents().addListener("change_structure", this::changeStructure);
+            entity.getEvents().addListener("dpadLeft", this::selectPreviousTool);
+            entity.getEvents().addListener("dpadRight", this::selectNextTool);
+
     }
 
     @Override
@@ -103,6 +106,27 @@ public class PlayerActions extends Component {
         updateSpeed();
         moving = false;
     }
+
+    /**
+     * Selects the previous tool in the StructureToolPicker.
+     */
+    void selectPreviousTool() {
+        var structurePicker = getEntity().getComponent(StructureToolPicker.class);
+        if (structurePicker != null) {
+            structurePicker.selectPreviousTool();
+        }
+    }
+
+    /**
+     * Selects the next tool in the StructureToolPicker.
+     */
+    void selectNextTool() {
+        var structurePicker = getEntity().getComponent(StructureToolPicker.class);
+        if (structurePicker != null) {
+            structurePicker.selectNextTool();
+        }
+    }
+
 
     /**
      * Makes the player attack.

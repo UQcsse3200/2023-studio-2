@@ -15,7 +15,7 @@ public class SprayComponent extends Component {
     private float totalTime;
 
     /**
-     * Creates new Spray Task, will send one instance of projectiles that sprays similar to shotgun bursts
+     * Creates new Spray Attack, will send one instance of projectiles that sprays similar to shotgun bursts
      */
     public SprayComponent(Entity target, Entity enemy) {
         this.target = target;
@@ -77,7 +77,7 @@ public class SprayComponent extends Component {
 
     /**
      * Helper Function to return if enemy is ready to use spray attack
-     * @return Boolean, true if cooldown is over
+     * @return Boolean, true if cool down is over
      */
     public boolean isReadyToShoot() {
         return totalTime > 5.0f;

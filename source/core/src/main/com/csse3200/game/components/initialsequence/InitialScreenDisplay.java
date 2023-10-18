@@ -73,6 +73,8 @@ public class InitialScreenDisplay extends UIComponent {
      */
     private void addUIElements() {
         backgroundImage = new Image(new Texture(Gdx.files.internal(InitialScreenImages.get(0))));
+        backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        backgroundImage.setPosition(0, 0);
         stage.addActor(backgroundImage);;
 
         AssetManager assetManager = new AssetManager();

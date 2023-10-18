@@ -1,5 +1,6 @@
 {
   "health": 100,
+  "maxHealth": 100,
   "openTextureAtlas": "images/structures/open_gate.atlas",
   "closedTextureAtlas": "images/structures/closed_gate.atlas"
 }

@@ -1,7 +1,6 @@
 package com.csse3200.game.components.upgradetree;
 
 import com.csse3200.game.components.Component;
-import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.structures.ToolConfig;

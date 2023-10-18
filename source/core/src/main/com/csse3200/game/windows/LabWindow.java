@@ -203,7 +203,7 @@ public class LabWindow extends Window {
         if (powerupType == PowerupType.EXTRA_LIFE) {
             return Health_powerups >= 2;
         } else if (powerupType == PowerupType.DOUBLE_CROSS) {
-            return Health_powerups >= 1 && Speed_powerups >= 1;
+            return Health_powerups >= 1 && Speed_powerups >= 2;
         } else if (powerupType == PowerupType.DOUBLE_DAMAGE) {
             return Speed_powerups >= 2;
         } else if (powerupType == PowerupType.SNAP) {
@@ -211,7 +211,7 @@ public class LabWindow extends Window {
         } else if (powerupType == PowerupType.TEMP_IMMUNITY) {
             return Health_powerups >= 2 && Speed_powerups >= 1;
         } else if (powerupType == PowerupType.DEATH_POTION) {
-            return Health_powerups >= 1;
+            return Health_powerups >= 1 && Speed_powerups >= 1;
         }
         return false;
     }

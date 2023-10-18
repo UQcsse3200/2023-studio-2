@@ -7,10 +7,6 @@ import com.csse3200.game.entities.configs.PlayerConfig;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Configuration class representing a game area.
- * Holds information related to assets, map properties, and entity configurations for the game area.
- */
 public class GameAreaConfig {
     //Map Assets - all entity specific paths should be defined within the levelConfig file
     public AssetsConfig assets = null;
@@ -24,11 +20,6 @@ public class GameAreaConfig {
     public CompanionConfig companionConfig = null;
     public AreaEntityConfig areaEntityConfig = null;
 
-    /**
-     * Retrieves a list of texture paths associated with the entities defined in the areaEntityConfig.
-     *
-     * @return An array of distinct texture paths for entities.
-     */
     public String[] getEntityTextures() {
         List<String> textures = new ArrayList<>();
 
@@ -42,12 +33,6 @@ public class GameAreaConfig {
         return textures.stream().distinct().toArray(String[]::new);
     }
 
-    /**
-     * Determines if the provided object is equal to this GameAreaConfig instance.
-     *
-     * @param o Object to be compared.
-     * @return true if objects are equal, otherwise false.
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,11 +48,7 @@ public class GameAreaConfig {
             return false;
         return Objects.equals(areaEntityConfig, that.areaEntityConfig);
     }
-    /**
-     * Computes the hash code for this GameAreaConfig instance based on its attributes.
-     *
-     * @return The hash code of the object.
-     */
+
     @Override
     public int hashCode() {
         int result = assets != null ? assets.hashCode() : 0;

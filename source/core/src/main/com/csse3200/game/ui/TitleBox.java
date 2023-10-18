@@ -16,8 +16,8 @@ public class TitleBox extends Dialog {
 
     private GdxGame game;
 
-    public TitleBox(GdxGame game, String title, String description, Skin skin) {
-        super(title, skin);
+    public TitleBox(GdxGame game, String title, String description, Skin skin, String windowStyleName) {
+        super(title, skin, windowStyleName);
         this.game = game;
         setMovable(false);
         setResizable(true);
@@ -61,7 +61,8 @@ public class TitleBox extends Dialog {
 
         getContentTable().add(buttonTable).expandX().center().center();
 
-        setSize(Gdx.graphics.getWidth(), 550f);
+        setSize(Gdx.graphics.getWidth(), 400);
+        setPosition(0, 0);
     }
 
     public void showDialog(Stage stage) {

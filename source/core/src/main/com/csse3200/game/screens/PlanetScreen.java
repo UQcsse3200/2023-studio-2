@@ -126,7 +126,7 @@ public class PlanetScreen extends ScreenAdapter {
     private void showTitleBox() {
         if (!titleBoxDisplayed) {
             // Create and display the TitleBox
-            TitleBox titleBox = new TitleBox(game, "", "{COLOR=BLACK}NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", skin);
+            TitleBox titleBox = new TitleBox(game, "", "NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", skin, "dialogue");
             // Adjust title and skin as needed
             titleBox.showDialog(ServiceLocator.getRenderService().getStage());
 

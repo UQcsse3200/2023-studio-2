@@ -3,6 +3,7 @@ package com.csse3200.game.components.InitialSequence;
  * The package containing the user interface components for the initial story sequence.
  */
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,8 +18,6 @@ import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.mainmenu.InsertButtons;
 import com.csse3200.game.services.PlanetTravel;
-import com.csse3200.game.services.ServiceLocator;
-import com.csse3200.game.ui.AlertBox;
 import com.csse3200.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +32,10 @@ public class InitialScreenDisplay extends UIComponent {
     private final GdxGame game;
     private BitmapFont font;
     private float planetToTextPadding = 150;
-    private Image background;
+
     private Image planet;
-    private Table rootTable;    private Label storyLabel;
+    private Table rootTable;
+    private Label storyLabel;
     private ArrayList<String> InitialScreenImages;
     private Image backgroundImage;
     private ArrayList<String> stories;
@@ -49,9 +49,11 @@ public class InitialScreenDisplay extends UIComponent {
      *
      * @param game The main game instance.
      */
-    public InitialScreenDisplay(GdxGame game) {
+    public InitialScreenDisplay(GdxGame game, ArrayList<String>assetpaths, ArrayList<String>textlist) {
         super();
         this.game = game;
+        this.InitialScreenImages=assetpaths;
+        this.stories=textlist;
     }
 
     @Override
@@ -70,19 +72,17 @@ public class InitialScreenDisplay extends UIComponent {
      * Loads background image, animated planet, and sets up the initial text and buttons.
      */
     private void addUIElements() {
-        // Load the background starfield image.
-        background =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/menu/InitialScreenImage.png", Texture.class));
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        background.setPosition(0, 0);
+        backgroundImage = new Image(new Texture(Gdx.files.internal(InitialScreenImages.get(0))));
+        stage.addActor(backgroundImage);;
+
+        AssetManager assetManager = new AssetManager();
+        assetManager.load("images/menu/InitialScreenBG.png", Texture.class);
+        assetManager.finishLoading();
 
         // Load the animated planet
-        planet =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/menu/InitialScreenBG.png", Texture.class));
+        planet = new Image(assetManager.get("images/menu/InitialScreenBG.png", Texture.class));
+
+
         planet.setSize(2500, 400); // Set to a reasonable fixed size
 
         // The planet moves at a constant speed, so to make it appear at the right time,
@@ -97,13 +97,7 @@ public class InitialScreenDisplay extends UIComponent {
         rootTable.setFillParent(true); // Make the table fill the screen
         rootTable.center(); // Center-align content vertically
 
-        // The initial text you want to display
-        stories = new ArrayList<>();
-        stories.add( "Amidst Earth's ruins, you stand, humanity's last hope in the cosmic expanse." );
-        stories.add("Meet Dr. Emily Carter, a fellow Scientist who remains untouched by the virus.");
-        stories.add("With courage intertwined, you both embrace the unknown, a symbiotic bond on this journey.");
-        stories.add("Behold Astro's spacecraft, a sentinel of possibility, ready to explore the celestial unknown.");
-        stories.add("Step into destiny's vessel, as you and Emily set course for the uncharted cosmic domain.");
+
 
         String story = stories.get(currentStoryIndex);
 
@@ -120,15 +114,9 @@ public class InitialScreenDisplay extends UIComponent {
         rootTable.row().padTop(30f);
 
         // Add actors to the stage
-        stage.addActor(background);
         stage.addActor(planet);
         stage.addActor(rootTable);
-        InitialScreenImages = new ArrayList<>();
-        InitialScreenImages.add("images/menu/InitialScreenImage.png");
-        InitialScreenImages.add("images/menu/InitialScreenImage-2.png");
-        InitialScreenImages.add("images/menu/InitialScreenImage-3.png");
-        InitialScreenImages.add("images/menu/InitialScreenImage-4.png");
-        InitialScreenImages.add("images/menu/InitialScreenImage-5.png");
+
 
         RepeatAction repeatAction = Actions.forever(
                 Actions.sequence(
@@ -136,8 +124,6 @@ public class InitialScreenDisplay extends UIComponent {
                         Actions.moveBy(0, -planetToTextPadding, 4.0f) // Move down
                 )
         );
-        backgroundImage = new Image(new Texture(Gdx.files.internal(InitialScreenImages.get(0))));
-        stage.addActor(backgroundImage);
 
         // Apply the RepeatAction to the planet image
         planet.addAction(repeatAction);
@@ -324,7 +310,6 @@ public class InitialScreenDisplay extends UIComponent {
         font.dispose();
         rootTable.clear();
         planet.clear();
-        background.clear();
         super.dispose();
     }
 }

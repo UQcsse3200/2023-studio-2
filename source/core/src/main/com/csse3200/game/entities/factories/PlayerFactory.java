@@ -100,7 +100,6 @@ public class PlayerFactory {
                         .addComponent(new WeaponComponent())
                         .addComponent(new DialogComponent(dialogueBox))
                         .addComponent(new InteractionControllerComponent(false))
-                        .addComponent(new HealthBarComponent(true))
                         .addComponent(new StructureToolPicker())
                         .addComponent(new ProximityControllerComponent())
                         .addComponent(new ActionFeedbackComponent())

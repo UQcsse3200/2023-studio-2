@@ -16,8 +16,8 @@ public class TitleBox extends Dialog {
 
     private GdxGame game;
 
-    public TitleBox(GdxGame game, String title, String description, Skin skin) {
-        super(title, skin);
+    public TitleBox(GdxGame game, String title, String description, Skin skin, String windowStyleName) {
+        super(title, skin, windowStyleName);
         this.game = game;
         setMovable(false);
         setResizable(true);
@@ -57,11 +57,12 @@ public class TitleBox extends Dialog {
         ScrollPane scrollPane = new ScrollPane(descriptionLabel, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
-        getContentTable().add(scrollPane).width(Gdx.graphics.getWidth() * 0.8f).height(100f).pad(20f).center().row();
+        getContentTable().add(scrollPane).width(Gdx.graphics.getWidth() * 0.8f).height(90f).left();
 
-        getContentTable().add(buttonTable).expandX().center().center();
+        getContentTable().add(buttonTable).expandX().center();
 
-        setSize(Gdx.graphics.getWidth(), 550f);
+        setSize(Gdx.graphics.getWidth(), 300);
+        setPosition(0, 0);
     }
 
     public void showDialog(Stage stage) {

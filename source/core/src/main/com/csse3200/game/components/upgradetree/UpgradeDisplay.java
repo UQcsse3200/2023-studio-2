@@ -183,12 +183,12 @@ public class UpgradeDisplay extends Window {
 
         buildRoot = new UpgradeNode(woodhammerConfig);
         buildRoot.addChild(dirtNode);
-        buildRoot.addChild(landmineNode);
+        buildRoot.addChild(turretNode);
         dirtNode.addChild(gateNode);
         gateNode.addChild(stoneNode);
         turretNode.addChild(advancedTurretNode);
+        turretNode.addChild(landmineNode);
         landmineNode.addChild(barrelNode);
-        landmineNode.addChild(turretNode);
         trees.add(buildRoot);
     }
 

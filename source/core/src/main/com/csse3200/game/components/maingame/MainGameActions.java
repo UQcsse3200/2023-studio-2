@@ -5,13 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.CombatStatsComponent;
-import com.csse3200.game.components.EnvironmentStatsComponent;
 import com.csse3200.game.windows.PauseWindow;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.files.FileLoader;
-import com.csse3200.game.services.PlanetTravel;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +33,19 @@ public class MainGameActions extends Component {
     this.game = game;
   }
 
+  /**
+   * Set the entity to which this component belongs. This is called by the Entity, and should not be
+   * set manually.
+   *
+   * @param entity The entity to which the component is attached.
+   */
+  public void setEntity(Entity entity) {
+    logger.debug("Attaching {} to {}", this, entity);
+    this.entity = entity;
+  }
   @Override
   public void create() {
     entity.getEvents().addListener("pause", this::onPauseButton);
-    entity.getEvents().addListener("returnPlanet", this::onReturnPlanet);
     entity.getEvents().addListener("exitPressed", this::onExit);
     entity.getEvents().addListener("returnPressed", this::onReturnButton);
     entity.getEvents().addListener("controlsPressed", this::onControlsButton);
@@ -72,16 +79,6 @@ public class MainGameActions extends Component {
   private void onControlsButton() {
     logger.debug("Control Screen button clicked");
     game.setScreen(GdxGame.ScreenType.CONTROL_SCREEN);
-  }
-
-  /**
-   * Returns to current planet screen.
-   */
-  protected void onReturnPlanet() {
-    logger.info("Exiting to current planet screen");
-    ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", config.lives);
-    new PlanetTravel(game).returnToCurrent();
-    ServiceLocator.getEntityService().getPlayer().getComponent(CombatStatsComponent.class).setImmunity(false);
   }
 
   /**

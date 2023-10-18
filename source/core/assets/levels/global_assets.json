@@ -49,7 +49,8 @@
     "particle-effects/extractor/rubble_2.png",
     "particle-effects/extractor/rubble_3.png",
     "particle-effects/extractor/dust.png",
-    " images/powerups/speed_potion.png"
+    " images/powerups/speed_potion.png",
+    "images/powerups/speed_boost.png"
   ],
   "textureAtlasPaths": [
     "images/structures/stone_wall.atlas",
@@ -65,6 +66,8 @@
     "sounds/playerLow_health.wav",
     "sounds/dodgingAlertSweep.wav",
     "sounds/footStepsInTheForestGround.wav",
+    "sounds/weapons/boomerang.wav",
+    "sounds/weapons/slingshot.wav",
     "sounds/PlayerHealthRecharge.wav",
     "sounds/playerBoostRecharge.wav",
     "sounds/playerDead.wav",
@@ -76,7 +79,14 @@
     "sounds/explosion/landmine.mp3",
     "sounds/turret_shoot.mp3",
     "sounds/ExitButton.wav",
-    "sounds/structurePlace.wav"
+    "sounds/structurePlace.wav",
+    "sounds/weapons/Katana.wav",
+    "sounds/weapons/boomerang.wav",
+    "sounds/weapons/slingshot.wav",
+    "sounds/weapons/beeStringKatana.wav",
+    "sounds/weapons/nuke.wav",
+    "sounds/weapons/missile.wav",
+    "sounds/weapons/laserSword.wav"
   ],
   "particleEffectPaths": [
     "particle-effects/extractor/extractor_rubble_solstite.effect",

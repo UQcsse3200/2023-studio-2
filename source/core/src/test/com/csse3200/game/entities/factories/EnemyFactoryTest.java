@@ -198,12 +198,12 @@ public class EnemyFactoryTest {
 
     @Test
     void createBossEnemyRangedPTEConfigTest() {
-        EnemyConfig config = configs.GetEnemyConfig(rangeBossPTE);
+        EnemyConfig config = configs.GetEnemyConfig(Mage);
         Entity enemy = createEnemy(config);
 
         // Check Health & BaseAttack was set appropriately based on type and behaviour
         assertEquals(100, enemy.getComponent(CombatStatsComponent.class).getHealth());
-        assertEquals(25, enemy.getComponent(CombatStatsComponent.class).getBaseAttack());
+        assertEquals(10 , enemy.getComponent(CombatStatsComponent.class).getBaseAttack());
     }
 
 

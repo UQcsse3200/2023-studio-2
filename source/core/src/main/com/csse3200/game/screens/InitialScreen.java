@@ -48,7 +48,7 @@ public class InitialScreen extends ScreenAdapter {
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(5f, 5f);
-        Mainscreentext();
+        mainScreenText();
         loadAssets();
         createUI();
     }
@@ -58,7 +58,7 @@ public class InitialScreen extends ScreenAdapter {
         this.textList = textList;
     }
 
-    private void Mainscreentext(){
+    private void mainScreenText(){
         ArrayList<String> stories = new ArrayList<>();
         stories.add( "Amidst Earth's ruins, you stand, humanity's last hope in the cosmic expanse." );
         stories.add("Meet Dr. Emily Carter, a fellow Scientist who remains untouched by the virus.");
@@ -66,14 +66,14 @@ public class InitialScreen extends ScreenAdapter {
         stories.add("Behold Astro's spacecraft, a sentinel of possibility, ready to explore the celestial unknown.");
         stories.add("Step into destiny's vessel, as you and Emily set course for the uncharted cosmic domain.");
 
-        ArrayList<String> InitialScreenImages = new ArrayList<>();
-        InitialScreenImages.add("images/menu/InitialScreenImage.png");
-        InitialScreenImages.add("images/menu/InitialScreenImage-2.png");
-        InitialScreenImages.add("images/menu/InitialScreenImage-3.png");
-        InitialScreenImages.add("images/menu/InitialScreenImage-4.png");
-        InitialScreenImages.add("images/menu/InitialScreenImage-5.png");
+        ArrayList<String> initialScreenImages = new ArrayList<>();
+        initialScreenImages.add("images/menu/InitialScreenImage.png");
+        initialScreenImages.add("images/menu/InitialScreenImage-2.png");
+        initialScreenImages.add("images/menu/InitialScreenImage-3.png");
+        initialScreenImages.add("images/menu/InitialScreenImage-4.png");
+        initialScreenImages.add("images/menu/InitialScreenImage-5.png");
 
-       setinitialscreen(InitialScreenImages,stories);
+       setinitialscreen(initialScreenImages,stories);
     }
 
     @Override

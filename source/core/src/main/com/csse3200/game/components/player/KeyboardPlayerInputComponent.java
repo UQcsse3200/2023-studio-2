@@ -15,16 +15,10 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
-import com.csse3200.game.windows.PauseWindow;
-
 import java.util.HashMap;
 import java.util.Timer;
 
-import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
-
-
 /**
- * d
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
  */
@@ -42,9 +36,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     private Entity player;
     private InventoryComponent playerInventory;
     private int testing = 0;
-
-    static HashMap<Integer, Integer> keyFlags = new HashMap<>();
-    Vector2 lastMousePos = new Vector2(0, 0);
+    private static HashMap<Integer, Integer> keyFlags = new HashMap<>();
+    private Vector2 lastMousePos = new Vector2(0, 0);
 
     public KeyboardPlayerInputComponent() {
         super(5);
@@ -109,11 +102,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             return false;
         }
         switch (keycode) {
-            case Keys.ESCAPE -> {
-                // Open the pause window when the Escape key is pressed
-                openPauseWindow();
-                return true;
-            }
             case Keys.SPACE -> {
                 if (!dodgeAvailable ||
                         walkDirection.epsilonEquals(Vector2.Zero)) {
@@ -121,6 +109,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 }
                 triggerDodgeEvent();
                 dodge();
+                return true;
+            }
+            case Keys.ESCAPE -> {
+                for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+                        mainGame.getEvents().trigger("pause");
+                }
                 return true;
             }
             case Keys.F -> {
@@ -223,13 +217,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         if (playerInventory.getReloading() || cooldown > 0) {
             return false;
         }
+        InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
+        WeaponType weapon = invComp.getEquippedType();
 
         switch (playerInventory.getEquipped()) {
             // melee/ranged
             case "melee", "ranged":
                 if (button == Input.Buttons.LEFT) {
-                    InventoryComponent invComp = entity.getComponent(InventoryComponent.class);
-                    WeaponType weapon = invComp.getEquippedType();
                     entity.getEvents().trigger("weaponAttack", weapon, clickPos);
                 }
                 break;
@@ -240,6 +234,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 } else if (button == Input.Buttons.RIGHT) {
                     entity.getEvents().trigger("remove", screenX, screenY);
                 }
+                entity.getEvents().trigger("weaponPlace", weapon, clickPos);
                 break;
 
             default:
@@ -286,13 +281,20 @@ public class KeyboardPlayerInputComponent extends InputComponent {
      * and also trigger the walking sound
      */
     void triggerWalkEvent() {
+
         Entity companion = ServiceLocator.getEntityService().getCompanion();
         Vector2 lastDir = this.walkDirection.cpy();
         this.walkDirection = keysToVector().scl(WALK_SPEED);
         if (this.getTesting() == 0) {
             Directions dir = keysToDirection();
             if (dir == Directions.NONE) {
+
                 entity.getEvents().trigger(WALKSTOP);
+                if (companion != null) {
+                    companion.getEvents().trigger(WALKSTOP);
+                    companion.getEvents().trigger("walkStopAnimation", lastDir);
+                }
+
                 entity.getEvents().trigger("walkStopAnimation", lastDir);
 
                 entity.getEvents().trigger("stopSound", "footstep");
@@ -340,7 +342,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                     if (!companion.getComponent(CombatStatsComponent.class).isDead()){
                         companion.getEvents().trigger("walkDownRight");}
                 }
-                default -> entity.getEvents().trigger(WALKSTOP);
+                default -> {
+                    entity.getEvents().trigger(WALKSTOP);
+                    if (companion != null) {
+                        companion.getEvents().trigger(WALKSTOP);
+                    }
+                }
+
             }
             if (entity != null) {
                 entity.getEvents().trigger("walk", walkDirection);
@@ -379,10 +387,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             entity.getEvents().trigger("walk", walkDirection);
             entity.getEvents().trigger("dodged");
 
-            //  play the sound when player starts dodging
+            // play the sound when player starts dodging
             entity.getEvents().trigger("playSound", "dodge");
         }
-
 
         java.util.TimerTask stopDodge = new java.util.TimerTask() {
             @Override
@@ -397,7 +404,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return DODGE_DURATION;
     }
 
-
     /**
      * Triggers inventory events
      */
@@ -408,12 +414,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         entity.getEvents().trigger(CHANGEWEAPON, invComp.getEquippedType());
         entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(),
                 invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
-    }
-    private void openPauseWindow() {
-        if (!isWindowOpen()) {
-            MainGameActions mainGameActions = new MainGameActions(entity,game);
-            entity.getEvents().trigger("pause");
-        }
     }
 
     /**
@@ -449,7 +449,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     /**
      * Function to convert a mouse position to a game location
      *
-     * @param screenX x of mouse  location
+     * @param screenX x of mouse location
      * @param screenY y of mouse location
      * @return game position of mouse location
      */
@@ -460,7 +460,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     }
 
     /**
-     * returns a scaled vector the direction should be moving based on current key presses
+     * returns a scaled vector the direction should be moving based on current key
+     * presses
      *
      * @return direction play should move
      */
@@ -508,5 +509,4 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         DOWNLEFT,
         DOWNRIGHT
     }
-
 }

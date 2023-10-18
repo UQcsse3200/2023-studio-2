@@ -21,7 +21,7 @@ class ControlsScreenActionsTest {
     @BeforeEach
     void setUp() {
         game = mock(GdxGame.class);
-        controlsScreenActions = new ControlsScreenActions(game, 3);
+        controlsScreenActions = new ControlsScreenActions(game);
     }
 
     /**

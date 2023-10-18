@@ -206,6 +206,14 @@ public class PlanetScreen extends ScreenAdapter {
     }
 
     /**
+     * Gets the name of the currently displayed game area.
+     * @return  Name of the area.
+     */
+    public String getCurentAreaName(){
+        return this.currentAreaName;
+    }
+
+    /**
      * Populates the game state with important constants or default values if not set yet.
      */
     private void populateGameState(){

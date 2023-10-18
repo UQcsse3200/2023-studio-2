@@ -78,7 +78,7 @@ public class ProjectileFactoryTest {
         Entity bullet = createEnemyBullet(bulletPosition,enemy);
 
         // Checking Attack matches bullet damage
-        Assertions.assertEquals(bullet.getComponent(CombatStatsComponent.class).getAttack(), 10);
+        Assertions.assertEquals(bullet.getComponent(CombatStatsComponent.class).getAttack(), 5);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class ProjectileFactoryTest {
         Entity bullet = createEnemyBullet(bulletPosition, enemy, configs.GetProjectileConfig());
 
         // Check that bullet damage is correct and that the AITaskComponent is added.
-        assertEquals(bullet.getComponent(CombatStatsComponent.class).getAttack(), 10);
+        assertEquals(bullet.getComponent(CombatStatsComponent.class).getAttack(), 5);
         assertNotNull(bullet.getComponent(AITaskComponent.class));
     }
 }

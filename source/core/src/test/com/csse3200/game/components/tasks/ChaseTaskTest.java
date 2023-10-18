@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
@@ -173,7 +174,7 @@ class ChaseTaskTest {
   private Entity makePhysicsEntity() {
     return new Entity()
         .addComponent(new PhysicsComponent())
-        .addComponent(new PhysicsMovementComponent());
+        .addComponent(new PhysicsMovementComponent(new Vector2(1f, 1f)));
   }
 
   private static TerrainComponent makeComponent() {

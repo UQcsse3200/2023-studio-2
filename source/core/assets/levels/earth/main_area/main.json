@@ -82,6 +82,8 @@
       "sounds/playerLow_health.wav",
       "sounds/dodgingAlertSweep.wav",
       "sounds/footStepsInTheForestGround.wav",
+      "sounds/weapons/boomerang.wav",
+      "sounds/weapons/slingshot.wav",
       "sounds/PlayerHealthRecharge.wav",
       "sounds/playerBoostRecharge.wav",
       "sounds/upgradeTreeTap.wav",

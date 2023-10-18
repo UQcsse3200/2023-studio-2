@@ -1,296 +1,367 @@
 {
   "RANGED_SLINGSHOT": {
-    "name" : "Slingshot",
-    "health" : 1,
+    "name": "Slingshot",
+    "health": 1,
     "description": "Reliable range, decent damage. Ideal for distant targets.",
-    "damage" : 20,
+    "damage": 20,
     "weaponSpeed": 10,
     "weaponDuration": 75,
     "rotationSpeed": 0,
     "textureAtlas": "images/weapons/ranged/slingshot.atlas",
-    "imageScale" : 0.4,
-    "imagePath" : "images/weapons/ranged/slingshotStatic.png",
-    "type" : "RANGED_SLINGSHOT",
-    "slotType" : "ranged",
-    "ammoUse" : 0,
-    "staticImageScale" : 0.3,
+    "imageScale": 0.4,
+    "imagePath": "images/weapons/ranged/slingshotStatic.png",
+    "type": "RANGED_SLINGSHOT",
+    "slotType": "ranged",
+    "ammoUse": 0,
+    "staticImageScale": 0.3,
     "attackCooldown": 30,
 
-    "sound": {"soundsMap": {}}
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "",
+        "end": ""
+      }
+    }
   },
 
-  "RANGED_SNIPER" : {
-    "name" : "Sniper",
-    "health" : 1,
+  "RANGED_SNIPER": {
+    "name": "Sniper",
+    "health": 1,
     "description": "Pinpoint Accuracy",
-    "damage" : 100,
+    "damage": 100,
     "weaponSpeed": 35,
     "weaponDuration": 300,
     "rotationSpeed": 0,
     "textureAtlas": "images/weapons/ranged/sniper.atlas",
-    "imageScale" : 0.5,
-    "imagePath" : "images/weapons/ranged/sniperStatic.png",
-    "type" : "RANGED_SNIPER",
-    "slotType" : "ranged",
-    "ammoUse" : 2,
-    "staticImageScale" : 1,
+    "imageScale": 0.5,
+    "imagePath": "images/weapons/ranged/sniperStatic.png",
+    "type": "RANGED_SNIPER",
+    "slotType": "ranged",
+    "ammoUse": 2,
+    "staticImageScale": 1,
     "attackCooldown": 100,
 
-    "sound": {"soundsMap": {}}
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "",
+        "end": ""
+      }
+    }
   },
 
   "RANGED_BOOMERANG": {
-    "name" : "Boomerang",
-    "health" : 1,
+    "name": "Boomerang",
+    "health": 1,
     "description": "Capable of hitting multiple enemies at once, a versatile choice.",
-    "damage" : 25,
+    "damage": 25,
     "weaponSpeed": 4,
     "weaponDuration": 280,
     "rotationSpeed": 2,
     "textureAtlas": "images/weapons/ranged/boomerang.atlas",
-    "imageScale" : 0.5,
-    "staticImageScale" : 0,
-    "imagePath" : "images/weapons/ranged/boomerangStatic.png",
-    "type" : "RANGED_BOOMERANG",
-    "slotType" : "ranged",
+    "imageScale": 0.5,
+    "staticImageScale": 0,
+    "imagePath": "images/weapons/ranged/boomerangStatic.png",
+    "type": "RANGED_BOOMERANG",
+    "slotType": "ranged",
     "attackCooldown": 40,
 
-    "sound": {"soundsMap": {}}
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "sounds/weapons/boomerang.wav",
+        "end": ""
+      }
+    }
   },
 
   "RANGED_BLUEMERANG": {
-    "name" : "Bluemerang",
-    "health" : 1,
+    "name": "Bluemerang",
+    "health": 1,
     "description": "its blue!",
-    "damage" : 25,
+    "damage": 25,
     "weaponSpeed": 6,
     "weaponDuration": 140,
     "rotationSpeed": 2,
     "textureAtlas": "images/weapons/ranged/bluemerang.atlas",
-    "imageScale" : 0.5,
-    "staticImageScale" : 0,
-    "imagePath" : "images/weapons/ranged/bluemerangStatic.png",
-    "type" : "RANGED_BLUEMERANG",
-    "slotType" : "ranged",
-    "projectiles" : 2,
-    "ammoUse" : 2,
+    "imageScale": 0.5,
+    "staticImageScale": 0,
+    "imagePath": "images/weapons/ranged/bluemerangStatic.png",
+    "type": "RANGED_BLUEMERANG",
+    "slotType": "ranged",
+    "projectiles": 2,
+    "ammoUse": 2,
     "attackCooldown": 45,
 
-    "sound": {"soundsMap": {}}
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "",
+        "end": ""
+      }
+    }
   },
 
   "RANGED_MISSILES": {
-    "name" : "Missile Swarm",
-    "health" : 1,
+    "name": "Missile Swarm",
+    "health": 1,
     "description": "Spray a rocket array and watch your enemies pray",
-    "damage" : 0,
+    "damage": 0,
     "weaponSpeed": 5,
     "weaponDuration": 105,
     "rotationSpeed": 0,
     "textureAtlas": "images/weapons/ranged/swarmRocket.atlas",
-    "imageScale" : 0.6,
-    "staticImageScale" : 1,
-    "imagePath" : "images/weapons/ranged/swarmRocketStatic.png",
-    "type" : "RANGED_MISSILES",
-    "slotType" : "ranged",
-    "projectiles" : 6,
-    "ammoUse" : 3,
+    "imageScale": 0.6,
+    "staticImageScale": 1,
+    "imagePath": "images/weapons/ranged/swarmRocketStatic.png",
+    "type": "RANGED_MISSILES",
+    "slotType": "ranged",
+    "projectiles": 6,
+    "ammoUse": 3,
     "attackCooldown": 150,
-
-    "sound": {"soundsMap": {}}
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "",
+        "end": ""
+      }
+    }
   },
 
   "RANGED_GRENADE": {
-    "name" : "Grenade",
-    "health" : 1000,
+    "name": "Grenade",
+    "health": 1000,
     "description": "Boom boom!",
-    "damage" : 0,
+    "damage": 0,
     "weaponSpeed": 4,
     "weaponDuration": 180,
     "rotationSpeed": 1,
     "textureAtlas": "images/weapons/ranged/grenade.atlas",
-    "imageScale" : 0.5,
-    "staticImageScale" : 0,
-    "imagePath" : "images/weapons/ranged/grenadeStatic.png",
-    "type" : "RANGED_GRENADE",
-    "slotType" : "ranged",
+    "imageScale": 0.5,
+    "staticImageScale": 0,
+    "imagePath": "images/weapons/ranged/grenadeStatic.png",
+    "type": "RANGED_GRENADE",
+    "slotType": "ranged",
     "attackCooldown": 45,
-    "sound": {"soundsMap": {}},
-    "ammoUse" : 2
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "",
+        "end": ""
+      }
+    },
+    "ammoUse": 2
   },
 
   "RANGED_NUKE": {
-    "name" : "Nuke",
-    "health" : 1000,
+    "name": "Nuke",
+    "health": 1000,
     "description": "Don't use them all at once",
-    "damage" : 0,
+    "damage": 0,
     "weaponSpeed": 0.1,
     "weaponDuration": 500,
     "rotationSpeed": 0,
     "textureAtlas": "images/weapons/ranged/nuke.atlas",
-    "imageScale" : 6,
-    "staticImageScale" : 0.6,
+    "imageScale": 6,
+    "staticImageScale": 0.6,
     "attackCooldown": 400,
-    "imagePath" : "images/weapons/ranged/nukeStatic.png",
-    "type" : "RANGED_NUKE",
-    "slotType" : "melee",
-    "ammoUse" : 30,
-    "sound": {"soundsMap": {}}
+    "imagePath": "images/weapons/ranged/nukeStatic.png",
+    "type": "RANGED_NUKE",
+    "slotType": "melee",
+    "ammoUse": 30,
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "",
+        "end": ""
+      }
+    }
   },
 
   "RANGED_HOMING": {
-    "name" : "Friendly Missile",
+    "name": "Friendly Missile",
     "description": "No need to aim perfectly! It finds its way by following the cursor. Just launch and watch it make new friends!",
-    "health" : 1,
-    "damage" : 100,
+    "health": 1,
+    "damage": 100,
     "weaponSpeed": 5,
     "weaponDuration": 450,
     "rotationSpeed": 5,
     "textureAtlas": "images/weapons/ranged/homingRocket.atlas",
-    "imageScale" : 0.8,
-    "staticImageScale" : 1,
-    "imagePath" : "images/weapons/ranged/homingRocketStatic.png",
-    "type" : "RANGED_HOMING",
-    "slotType" : "ranged",
+    "imageScale": 0.8,
+    "staticImageScale": 1,
+    "imagePath": "images/weapons/ranged/homingRocketStatic.png",
+    "type": "RANGED_HOMING",
+    "slotType": "ranged",
     "attackCooldown": 80,
-    "ammoUse" : 2,
-
-    "sound": {"soundsMap": {}}
+    "ammoUse": 2,
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "",
+        "end": ""
+      }
+    }
   },
 
   "MELEE_WRENCH": {
-    "name" : "Wrench",
+    "name": "Wrench",
     "description": "Its a wrench, what more to say.",
-    "damage" : 33,
+    "damage": 33,
     "weaponSpeed": 4,
     "weaponDuration": 26,
     "rotationSpeed": 1,
     "attackCooldown": 75,
     "textureAtlas": "images/weapons/melee/wrench.atlas",
-    "imageScale" : 0.8,
-    "staticImageScale" : 0,
-    "imagePath" : "images/weapons/melee/wrenchStatic.png",
-    "type" : "MELEE_WRENCH",
-    "slotType" : "melee",
-    "ammoUse" : 0,
-    "sound": {"soundsMap": {}}
+    "imageScale": 0.8,
+    "staticImageScale": 0,
+    "imagePath": "images/weapons/melee/wrenchStatic.png",
+    "type": "MELEE_WRENCH",
+    "slotType": "melee",
+    "ammoUse": 0,
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "",
+        "end": ""
+      }
+    }
   },
 
   "MELEE_KATANA": {
-    "name" : "Katana",
+    "name": "Katana",
     "description": "Rich history, swift slashes. Its balance between speed and damage makes it deadly in close quarters.",
-    "damage" : 50,
+    "damage": 50,
     "weaponSpeed": 5,
     "weaponDuration": 32,
     "rotationSpeed": 1,
     "attackCooldown": 20,
     "textureAtlas": "images/weapons/melee/katana.atlas",
-    "imageScale" : 0.7,
-    "staticImageScale" : 0,
-    "imagePath" : "images/weapons/melee/katanaStatic.png",
-    "type" : "MELEE_KATANA",
-    "slotType" : "melee",
-    "ammoUse" : 0,
-
-    "sound": {"soundsMap": {}}
+    "imageScale": 0.7,
+    "staticImageScale": 0,
+    "imagePath": "images/weapons/melee/katanaStatic.png",
+    "type": "MELEE_KATANA",
+    "slotType": "melee",
+    "ammoUse": 0,
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "",
+        "end": ""
+      }
+    }
   },
 
   "MELEE_BEE_STING": {
-    "name" : "Bees",
+    "name": "Bees",
     "description": "Unleash the power of Bees!",
-    "damage" : 50,
+    "damage": 50,
     "weaponSpeed": 8,
     "weaponDuration": 45,
     "rotationSpeed": 0,
     "attackCooldown": 30,
     "textureAtlas": "images/weapons/melee/bee.atlas",
-    "imageScale" : 0.4,
-    "staticImageScale" : 0.4,
-    "imagePath" : "images/weapons/melee/beeStatic.png",
-    "type" : "MELEE_BEE_STING",
-    "slotType" : "melee",
-    "ammoUse" : 5,
-    "projectiles" : 8,
-
-    "sound": {"soundsMap": {}}
+    "imageScale": 0.4,
+    "staticImageScale": 0.4,
+    "imagePath": "images/weapons/melee/beeStatic.png",
+    "type": "MELEE_BEE_STING",
+    "slotType": "melee",
+    "ammoUse": 5,
+    "projectiles": 8,
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "",
+        "end": ""
+      }
+    }
   },
 
   "MELEE_LASER_SWORD": {
-    "name" : "Laser and sword",
+    "name": "Laser and sword",
     "description": "glows",
-    "damage" : 100,
+    "damage": 100,
     "weaponSpeed": 12,
     "weaponDuration": 95,
     "rotationSpeed": 1,
     "attackCooldown": 100,
     "textureAtlas": "images/weapons/melee/laserSword.atlas",
-    "imageScale" : 1.2,
-    "staticImageScale" : 0,
-    "imagePath" : "images/weapons/melee/laserSwordStatic.png",
-    "type" : "MELEE_LASER_SWORD",
-    "slotType" : "melee",
-    "ammoUse" : 3,
-
-    "sound": {"soundsMap": {}}
+    "imageScale": 1.2,
+    "staticImageScale": 0,
+    "imagePath": "images/weapons/melee/laserSwordStatic.png",
+    "type": "MELEE_LASER_SWORD",
+    "slotType": "melee",
+    "ammoUse": 3,
+    "sound": {
+      "soundsMap": {
+        "start": "",
+        "mid": "",
+        "end": ""
+      }
+    }
   },
 
   "STICK": {
-    "name" : "Stick",
+    "name": "Stick",
     "description": "The Stick, simple yet effective. While it might not be the strongest, it does its best",
-    "damage" : 1,
+    "damage": 1,
     "weaponSpeed": 0.75,
     "weaponDuration": 75,
     "rotationSpeed": 6,
     "attackCooldown": 10,
     "textureAtlas": "images/weapons/sword.atlas",
-    "imageScale" : 1,
-    "imagePath" : "images/upgradetree/stick.png",
-    "type" : "STICK",
-    "slotType" : "melee",
-
+    "imageScale": 1,
+    "imagePath": "images/upgradetree/stick.png",
+    "type": "STICK",
+    "slotType": "melee",
     "sound": {
       "soundsMap": {
         "start": "sounds/dodgingAlertSweep.wav",
-        "mid" : "sounds/footStepsInTheForestGround.wav",
-        "stop" : "sounds/PlayerHealthRecharge.wav"
+        "mid": "sounds/footStepsInTheForestGround.wav",
+        "stop": "sounds/PlayerHealthRecharge.wav"
       }
     }
   },
 
   "WOODHAMMER": {
-    "name" : "Wooden Hammer",
+    "name": "Wooden Hammer",
     "description": "For all your buildable needs. While not suitable for combat, it's an essential tool for construction.",
-    "damage" : 0,
+    "damage": 0,
     "textureAtlas": "images/weapons/sword.atlas",
-    "imageScale" : 1,
-    "imagePath" : "images/upgradetree/hammer1.png",
-    "type" : "WOODHAMMER",
-    "slotType" : "building",
-    "ammoUse" : 0,
-    "staticImageScale" : 0.5,
-
-    "sound": {"soundsMap": {}}
+    "imageScale": 1,
+    "imagePath": "images/upgradetree/hammer1.png",
+    "type": "WOODHAMMER",
+    "slotType": "building",
+    "ammoUse": 0,
+    "staticImageScale": 0.5,
+    "sound": {
+      "soundsMap": {}
+    }
   },
 
   "STONEHAMMER": {
     "textureAtlas": "images/weapons/sword.atlas",
-    "imageScale" : 1,
-    "imagePath" : "images/upgradetree/hammer2.png",
-    "type" : "STONEHAMMER",
-    "slotType" : "building",
-    "ammoUse" : 0,
-    "staticImageScale" : 0.5,
-    "sound": {"soundsMap": {}}
+    "imageScale": 1,
+    "imagePath": "images/upgradetree/hammer2.png",
+    "type": "STONEHAMMER",
+    "slotType": "building",
+    "ammoUse": 0,
+    "staticImageScale": 0.5,
+    "sound": {
+      "soundsMap": {}
+    }
   },
-
+  
   "STEELHAMMER": {
     "textureAtlas": "images/weapons/sword.atlas",
-    "imageScale" : 1,
-    "imagePath" : "images/upgradetree/hammer2.png",
-    "type" : "STEELHAMMER",
-    "slotType" : "building",
-    "ammoUse" : 0,
-    "staticImageScale" : 0.5,
-    "sound": {"soundsMap": {}}
+    "imageScale": 1,
+    "imagePath": "images/upgradetree/hammer2.png",
+    "type": "STEELHAMMER",
+    "slotType": "building",
+    "ammoUse": 0,
+    "staticImageScale": 0.5,
+    "sound": {
+      "soundsMap": {}
+    }
   }
 }

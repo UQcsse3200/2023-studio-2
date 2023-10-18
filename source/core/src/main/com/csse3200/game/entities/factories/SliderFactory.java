@@ -5,6 +5,7 @@ import com.csse3200.game.entities.configs.SliderConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.physics.PhysicsLayer;
+import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
@@ -26,14 +27,14 @@ public class SliderFactory {
 
         Entity slider =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/brick-game/Slider.png"))
+                        .addComponent(new TextureRenderComponent("images/ship/Ship.png"))
                         .addComponent(new PhysicsComponent())
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SLIDER))
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SHIP))
                         .addComponent(new ColliderComponent())
                         .addComponent(inputComponent);
 
 
-
+        slider.getComponent(ColliderComponent.class).setDensity(1.5f);
         slider.setEntityType("slider");
 
         return slider;

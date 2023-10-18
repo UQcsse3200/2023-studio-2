@@ -30,7 +30,7 @@ public class BrickBreakerGameArea extends GameArea {
             "images/minigame/meteor.png",
 
             "images/brick-game/BrickGameBackground.png",
-            "images/brick-game/Slider.png"
+            "images/ship/Ship.png"
 
     };
 
@@ -38,7 +38,7 @@ public class BrickBreakerGameArea extends GameArea {
 
     /**
      * Constructor for initializing minigame terrain
-     * 
+     *
      * @param terrainFactory Terrain factory being used in the area
      */
     public BrickBreakerGameArea(TerrainFactory terrainFactory) {

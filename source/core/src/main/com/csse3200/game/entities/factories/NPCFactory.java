@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.Companion.CompanionActions;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.components.InteractableComponent;
 import com.csse3200.game.components.TouchAttackComponent;
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.npc.*;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.components.tasks.ChaseTask;
@@ -299,7 +301,12 @@ public class NPCFactory {
       String[] storytext= {"Hello, I've been stuck here for weeks","Can I please come with you?"};
       String[] titletext= {"",""};
       astronaut.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
-    },10f));
+      // Since Dialogue Box does not show up on screen, cannot 'exit' dialogue box therefore
+      // the 'resumeGame' function is never called. This code is to ensure gameplay can continue
+      for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+        mainGame.getEvents().trigger("resumeGame");
+      }
+    },1f));
 
     astronaut.scaleHeight(1f);
     return astronaut;

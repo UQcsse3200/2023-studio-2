@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -25,7 +27,9 @@ public class ShipInteractionPopup extends Window {
 
     public ShipInteractionPopup() {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, getBrownBackgroundStatic()));
-
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("pauseGame");
+        }
         Stage stage = ServiceLocator.getRenderService().getStage();
         float popupWidth = (float) (stage.getWidth() * 0.3);  //setting the width of the popup
         float popupHeight = (float) (stage.getHeight() * 0.5);  //setting the height of the popup
@@ -58,12 +62,15 @@ public class ShipInteractionPopup extends Window {
 
         inputOverrideComponent = new InputOverrideComponent();
 
-        ServiceLocator.getInputService().register(inputOverrideComponent);
+        //ServiceLocator.getInputService().register(inputOverrideComponent);
     }
 
     @Override
     public boolean remove() {
-        ServiceLocator.getInputService().unregister(inputOverrideComponent);
+        //ServiceLocator.getInputService().unregister(inputOverrideComponent);
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("resumeGame");
+        }
         return super.remove();
     }
     private static TextureRegionDrawable getBrownBackgroundStatic() {

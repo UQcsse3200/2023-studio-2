@@ -42,6 +42,8 @@ public class MainGameActions extends Component {
     entity.getEvents().addListener("exitPressed", this::onExit);
     entity.getEvents().addListener("returnPressed", this::onReturnButton);
     entity.getEvents().addListener("controlsPressed", this::onControlsButton);
+    entity.getEvents().addListener("pauseGame", this::paused);
+    entity.getEvents().addListener("resumeGame", this::resumed);
   }
   /**
    * Opens pause window.

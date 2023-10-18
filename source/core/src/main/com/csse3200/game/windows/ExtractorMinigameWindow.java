@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -34,6 +35,9 @@ public class ExtractorMinigameWindow extends Window {
     public static ExtractorMinigameWindow makeNewMinigame(Entity extractor) {
         Texture background = ServiceLocator.getResourceService().getAsset("images/minigame/SpaceMiniGameBackground.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("pauseGame");
+        }
         return new ExtractorMinigameWindow(background, extractor);
     }
 
@@ -194,6 +198,9 @@ public class ExtractorMinigameWindow extends Window {
         //Stop overriding input when exiting minigame
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("resumeGame");
+        }
         return super.remove();
     }
 

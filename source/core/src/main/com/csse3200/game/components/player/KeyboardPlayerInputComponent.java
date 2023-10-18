@@ -112,10 +112,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 return true;
             }
             case Keys.ESCAPE -> {
-                if (!isWindowOpen()) {
-                    for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
-                        mainGame.getEvents().trigger("pause");
-                    }
+                for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+                    mainGame.getEvents().trigger("pause");
                 }
                 return true;
             }

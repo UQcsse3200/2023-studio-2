@@ -121,7 +121,7 @@ public class PauseWindow extends Window {
 
     @Override
     public boolean remove() {
-        // Stop overriding input when exiting the Laboratory
+        // Stop overriding input when exiting the Pause Window
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
         return super.remove();
     }

@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import com.csse3200.game.components.PowerupType;
+import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
 
@@ -26,6 +28,9 @@ public class LabWindow extends Window {
 
     public static LabWindow makeNewLaboratory() {
         Texture background = new Texture("images/companion/lab.png");
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("pauseGame");
+        }
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new LabWindow(background);
     }
@@ -213,6 +218,9 @@ public class LabWindow extends Window {
      * Call this method to exit the Laboratory
      */
     private void failLaboratory() {
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("resumeGame");
+        }
         remove();
     }
 
@@ -224,6 +232,9 @@ public class LabWindow extends Window {
     public boolean remove() {
         // Stop overriding input when exiting the Laboratory
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("resumeGame");
+        }
         return super.remove();
     }
 }

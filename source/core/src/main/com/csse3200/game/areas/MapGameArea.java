@@ -16,6 +16,7 @@ import com.csse3200.game.components.EnvironmentStatsComponent;
 import com.csse3200.game.components.PowerupType;
 import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.player.InventoryDisplayComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.components.resources.ResourceDisplay;
@@ -26,6 +27,7 @@ import com.csse3200.game.entities.TileEntity;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.entities.factories.*;
 import com.csse3200.game.files.UserSettings;
+import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TerrainService;
@@ -49,6 +51,7 @@ public class MapGameArea extends GameArea{
     private final GdxGame game;
     protected boolean validLoad = true;
     private static boolean freezing;
+    private final InputOverrideComponent inputOverrideComponent;
 
     public MapGameArea(String levelName, String gamearea, TerrainFactory terrainFactory, GdxGame game) {
         try {
@@ -58,6 +61,7 @@ public class MapGameArea extends GameArea{
             logger.error("FAILED TO LOAD GAME IN CONSTRUCTOR - {}", exception.getMessage());
             validLoad = false;
         }
+        inputOverrideComponent = new InputOverrideComponent();
         this.game = game;
         this.terrainFactory = terrainFactory;
     }
@@ -592,6 +596,7 @@ public class MapGameArea extends GameArea{
      */
     private boolean initiateDeathScreen() {
         int lives = getPlayer().getComponent(CombatStatsComponent.class).getLives();
+        ServiceLocator.getInputService().unregister(inputOverrideComponent);
         switch (lives) {
             case 0:
                 Gdx.app.postRunnable(() -> game.setScreen(GdxGame.ScreenType.PLAYER_DEATH_0));

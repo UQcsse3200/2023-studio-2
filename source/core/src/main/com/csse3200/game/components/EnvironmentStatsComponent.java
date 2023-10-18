@@ -77,10 +77,9 @@ public class EnvironmentStatsComponent extends Component {
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                if (getImmunity()) {
-                    return;
+                if (!player.getImmunity()) {
+                    player.addHealth(-1);
                 }
-                player.addHealth(-1);
                 if (player.getHealth() <= 0) {
                     timer.stop();
                 }

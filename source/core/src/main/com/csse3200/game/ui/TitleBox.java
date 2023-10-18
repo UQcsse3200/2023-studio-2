@@ -57,11 +57,11 @@ public class TitleBox extends Dialog {
         ScrollPane scrollPane = new ScrollPane(descriptionLabel, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
-        getContentTable().add(scrollPane).width(Gdx.graphics.getWidth() * 0.8f).height(100f).pad(20f).center().row();
+        getContentTable().add(scrollPane).width(Gdx.graphics.getWidth() * 0.8f).height(90f).left();
 
-        getContentTable().add(buttonTable).expandX().center().center();
+        getContentTable().add(buttonTable).expandX().center();
 
-        setSize(Gdx.graphics.getWidth(), 400);
+        setSize(Gdx.graphics.getWidth(), 300);
         setPosition(0, 0);
     }
 

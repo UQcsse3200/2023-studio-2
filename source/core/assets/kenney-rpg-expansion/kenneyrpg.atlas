@@ -763,8 +763,8 @@ repeat: none
 dialogue
   rotate: false
   xy: 0, 0
-  size: 1600, 1200
-  orig: 1600, 1200
+  size: 1296, 398
+  orig: 1296, 398
   offset: 0, 0
   index: -1
 

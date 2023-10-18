@@ -31,7 +31,7 @@ public class PathFinder {
     public static List<GridPoint2> findPath(GridPoint2 start, GridPoint2 target) {
         final GameArea map = ServiceLocator.getGameArea();
         final PriorityQueue<Node> open = new PriorityQueue<Node>();
-        final Node[][] nodeMap = new Node[map.getTerrain().getMapBounds(0).x][map.getTerrain().getMapBounds(0).y];
+        final Node[][] nodeMap = new Node[map.getTerrain().getMapBounds(0).x + 1][map.getTerrain().getMapBounds(0).y + 1];
         Node current;
 
         // Add every node to node map if:

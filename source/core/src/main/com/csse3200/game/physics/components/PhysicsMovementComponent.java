@@ -11,11 +11,15 @@ import org.slf4j.LoggerFactory;
 /** Movement controller for a physics-based entity. */
 public class PhysicsMovementComponent extends Component implements MovementController {
   private static final Logger logger = LoggerFactory.getLogger(PhysicsMovementComponent.class);
-  private Vector2 maxSpeed = Vector2Utils.ONE;
-
+  private Vector2 speed;
   private PhysicsComponent physicsComponent;
   private Vector2 targetPosition;
   private boolean movementEnabled = true;
+
+  public PhysicsMovementComponent(){}
+  public PhysicsMovementComponent(Vector2 speed) {
+    this.speed = speed;
+  }
 
   @Override
   public void create() {
@@ -68,7 +72,7 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   }
 
   private void updateDirection(Body body) {
-    Vector2 desiredVelocity = getDirection().scl(maxSpeed);
+    Vector2 desiredVelocity = getDirection().scl(speed);
     setToVelocity(body, desiredVelocity);
   }
 
@@ -90,6 +94,14 @@ public class PhysicsMovementComponent extends Component implements MovementContr
    * @param speed the desired speed
    */
   public void changeMaxSpeed(Vector2 speed) {
-    this.maxSpeed = speed;
+    this.speed = speed;
+  }
+
+  /**
+   *  Get an entities max speed.
+   *
+   */
+  public Vector2 getMaxSpeed() {
+    return speed;
   }
 }

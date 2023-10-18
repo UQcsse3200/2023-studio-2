@@ -70,6 +70,7 @@ public class PlanetScreen extends ScreenAdapter {
     /** Service Instances */
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
+    public static boolean titleBoxDisplayed = false;
 
     /** file paths of textures for screen to load. */
     private AssetsConfig assets;
@@ -123,13 +124,16 @@ public class PlanetScreen extends ScreenAdapter {
     }
 
     private void showTitleBox() {
-        // Create and display the TitleBox
-        TitleBox titleBox = new TitleBox(game, "", "NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", skin);
-        // Adjust title and skin as needed
-        titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+        if (!titleBoxDisplayed) {
+            // Create and display the TitleBox
+            TitleBox titleBox = new TitleBox(game, "", "NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", skin, "dialogue");
+            // Adjust title and skin as needed
+            titleBox.showDialog(ServiceLocator.getRenderService().getStage());
 
-        // Pause the game while the TitleBox is displayed
-        Gdx.graphics.setContinuousRendering(false);
+            // Pause the game while the TitleBox is displayed
+            Gdx.graphics.setContinuousRendering(false);
+            titleBoxDisplayed = true;
+        }
     }
 
     /**

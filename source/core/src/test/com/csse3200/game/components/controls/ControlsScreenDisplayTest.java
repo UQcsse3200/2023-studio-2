@@ -1,15 +1,14 @@
-package com.csse3200.game.screens;
+package com.csse3200.game.components.controls;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.graphics.Texture;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.services.ResourceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,9 +17,9 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for the {@link ControlsScreen} class.
+ * Unit tests for the {@link ControlsScreenDisplay} class.
  */
-public class ControlsScreenTest {
+public class ControlsScreenDisplayTest {
 
     private Set<String> loadedAssets;
     private GdxGame game;
@@ -40,27 +39,25 @@ public class ControlsScreenTest {
     }
 
     /**
-     * Test asset loading in {@link ControlsScreen}.
+     * Test asset loading in {@link ControlsScreenDisplay}.
      */
     @Test
-    void testControlsScreenAssetLoading() {
+    void testControlsScreenDisplayAssetLoading() {
         Gdx.app.postRunnable(() -> {
-            ControlsScreen controlsScreen = createControlsScreen();
+            ControlsScreenDisplay controlsScreenDisplay = createControlsScreenDisplay();
 
-            // Simulate rendering and resizing
-            controlsScreen.render(0.1f);
-            controlsScreen.resize(800, 600);
+            // Simulate creating and disposing the display
+            controlsScreenDisplay.create();
+            controlsScreenDisplay.dispose();
 
-            // Verify that a specific asset has been loaded
-            verifyAssetLoaded("images/controls-images/Controls.png");
-
-            // Dispose of the screen
-            controlsScreen.dispose();
+            // Verify that specific assets have been loaded and unloaded
+            verifyAssetLoaded("images/controls-images/on_exit.png");
+            verifyAssetUnloaded("images/controls-images/on_exit_hover.PNG");
         });
     }
 
-    private ControlsScreen createControlsScreen() {
-        return new ControlsScreen(game, "ControlsScreenName");
+    private ControlsScreenDisplay createControlsScreenDisplay() {
+        return new ControlsScreenDisplay(game, true);
     }
 
     private void verifyAssetLoaded(String assetPath) {
@@ -68,5 +65,12 @@ public class ControlsScreenTest {
         ResourceService resourceService = ServiceLocator.getResourceService();
         boolean isLoaded = resourceService.containsAsset(assetPath, Texture.class);
         assertTrue(isLoaded, "Asset not loaded: " + assetPath);
+    }
+
+    private void verifyAssetUnloaded(String assetPath) {
+        // Replace with the actual logic to verify asset unloading
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        boolean isUnloaded = !resourceService.containsAsset(assetPath, Texture.class);
+        assertTrue(isUnloaded, "Asset not unloaded: " + assetPath);
     }
 }

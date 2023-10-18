@@ -18,9 +18,9 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for the {@link ControlsScreen} class.
+ * Unit tests for the {@link SettingsScreen} class.
  */
-public class ControlsScreenTest {
+public class SettingsScreenTest {
 
     private Set<String> loadedAssets;
     private GdxGame game;
@@ -40,27 +40,27 @@ public class ControlsScreenTest {
     }
 
     /**
-     * Test asset loading in {@link ControlsScreen}.
+     * Test asset loading in {@link SettingsScreen}.
      */
     @Test
-    void testControlsScreenAssetLoading() {
+    void testSettingsScreenAssetLoading() {
         Gdx.app.postRunnable(() -> {
-            ControlsScreen controlsScreen = createControlsScreen();
+            SettingsScreen settingsScreen = createSettingsScreen();
 
             // Simulate rendering and resizing
-            controlsScreen.render(0.1f);
-            controlsScreen.resize(800, 600);
+            settingsScreen.render(0.1f);
+            settingsScreen.resize(800, 600);
 
             // Verify that a specific asset has been loaded
-            verifyAssetLoaded("images/controls-images/Controls.png");
+            verifyAssetLoaded("images/menu/settings-image1.png");
 
             // Dispose of the screen
-            controlsScreen.dispose();
+            settingsScreen.dispose();
         });
     }
 
-    private ControlsScreen createControlsScreen() {
-        return new ControlsScreen(game, "ControlsScreenName");
+    private SettingsScreen createSettingsScreen() {
+        return new SettingsScreen(game);
     }
 
     private void verifyAssetLoaded(String assetPath) {

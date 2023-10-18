@@ -20,7 +20,7 @@ public class InvisibilityComponent extends Component {
         this.entity = enemy;
         this.movementComponent = entity.getComponent(PhysicsMovementComponent.class);
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(this::toggleInvis, 0, 2, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::toggleInvis, 0, 5, TimeUnit.SECONDS);
     }
 
     /**

@@ -4,19 +4,19 @@
     {
       class: com.csse3200.game.entities.configs.SpawnerConfig,
       "wave1" : {
-        "Knight" : 0,
-        "necromancer" : 1,
-        "redGhost" : 0
+        "redGhost" : 10,
+        "roboMan" : 5,
+        "chain" : 0
       },
       "wave2" : {
-        "redGhost" : 0,
-        "chain" : 0,
-        "necromancer" : 0
+        "redGhost" : 10,
+        "roboMan" : 10,
+        "necromancer" : 5
       },
       "wave3" : {
-        "redGhost" : 0,
-        "chain" : 0,
-        "necromancer" : 0
+        "redGhost" : 10,
+        "roboMan" : 10,
+        "Knight" : 1
       },
       "position": {
         "x": 10,

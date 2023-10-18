@@ -17,7 +17,6 @@ import com.csse3200.game.components.tasks.*;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.EnemyConfig;
 import com.csse3200.game.entities.configs.NPCConfigs;
-import com.csse3200.game.entities.configs.PlayerConfig;
 import com.csse3200.game.entities.enemies.EnemyBehaviour;
 import com.csse3200.game.entities.enemies.EnemyName;
 import com.csse3200.game.entities.enemies.EnemyType;
@@ -79,8 +78,7 @@ public class EnemyFactory {
     List<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
     for (Entity target : targets) {
       // Adds the specific behaviour to entity
-      EnemyBehaviourSelector(target, config.type, config.behaviour, aiComponent, config.isBoss);
-      // temporary code to add necromancer function
+      enemyBehaviourSelector(target, config.type, config.behaviour, aiComponent, config.isBoss);
       if (config.name == EnemyName.necromancer && PhysicsLayer.contains(target.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.PLAYER)) {
         aiComponent.addTask(new SpawnAttackTask(2f, target, 15));
       }
@@ -115,7 +113,8 @@ public class EnemyFactory {
             .addComponent(new TurretTargetableComponent())
             .addComponent(new SoundComponent(config.sound))
             .addComponent(new EnemyFlag());
-    enemy.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.5f,0.5f));
+
+    enemy.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.4f,0.4f), PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM);
 
     // TYPE
     EnemyTypeSelector(enemy, config.type);
@@ -153,7 +152,6 @@ public class EnemyFactory {
     // UI adjustments
     enemy.getComponent(AnimationRenderComponent.class).scaleEntity();
     enemy.scaleWidth(getEnemyscale(config));
-    PhysicsUtils.setScaledCollider(enemy, 0.5f, 0.5f);
     addSpecialAttack(config, enemy, targets);
     return enemy;
   }
@@ -164,12 +162,14 @@ public class EnemyFactory {
    * @return The scaling factor for the provided enemy type.
    */
   static float getEnemyscale(EnemyConfig config) {
-    float scale = 1f;
+    float scale = 0.7f;
     switch (config.name) {
-      case chain -> scale = 2.5f;
-      case necromancer -> scale = 2.5f;
-      case Knight -> scale = 3f;
-      case Guardian -> scale = 3f;
+      case roboMan -> scale = 1.0f;
+      case chain -> scale = 2.0f;
+      case necromancer -> scale = 2.0f;
+      case Mage -> scale = 2.0f;
+      case Knight -> scale = 2.5f;
+      case Guardian -> scale = 2.5f;
     }
     return scale;
   }
@@ -200,7 +200,7 @@ public class EnemyFactory {
    * @param aiTaskComponent The enemy's aiComponent
    * @param isBoss Boolean indicating if enemy is a boss type
    */
-  public static void EnemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
+  public static void enemyBehaviourSelector(Entity target, EnemyType type, EnemyBehaviour behaviour, AITaskComponent aiTaskComponent, boolean isBoss) {
     short layer = target.getComponent(HitboxComponent.class).getLayer();
     if (target.getComponent(CombatStatsComponent.class) != null) {
       isAlive = !(target.getComponent(CombatStatsComponent.class).isDead());

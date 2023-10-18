@@ -27,7 +27,7 @@ public class targetComponent extends Component {
         List<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
         for (Entity target : targets) {
             // Adds the specific behaviour to entity
-            EnemyFactory.EnemyBehaviourSelector(target, config.type, config.behaviour, aiComponent, config.isBoss);
+            EnemyFactory.enemyBehaviourSelector(target, config.type, config.behaviour, aiComponent, config.isBoss);
         }
     }
 }

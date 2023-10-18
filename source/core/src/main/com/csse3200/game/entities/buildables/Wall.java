@@ -49,9 +49,8 @@ public class Wall extends PlaceableEntity {
      * This adding multiple components for interaction
      * and also added Sound Component to trigger sound effects
      * @param config - the config for the wall
-     * @param player - link with player to implement walls
      */
-    public Wall(WallConfig config, Entity player) {
+    public Wall(WallConfig config) {
         super(2, 2);
 
         var textures = ServiceLocator.getResourceService().getAsset(config.spritePath, TextureAtlas.class);
@@ -62,20 +61,11 @@ public class Wall extends PlaceableEntity {
         addComponent(new CombatStatsComponent(config.health, config.maxHealth, 0,0,false));
         addComponent(new HealthBarComponent(true));
         addComponent(new JoinableComponent(textures, JoinLayer.WALLS, shapes));
-        addComponent(new ProximityActivationComponent(1.5f, player, this::onPlayerEnter, this::onPlayerExit));
         addComponent(new StructureDestroyComponent());
         addComponent(new SoundComponent(config.sounds));
         addComponent(new SaveableComponent<>(wall -> save(wall, config), WallConfig.class));
 
         getComponent(JoinableComponent.class).scaleEntity();
-    }
-
-    private void onPlayerEnter(Entity player) {
-        getComponent(HealthBarComponent.class).show();
-    }
-
-    private void onPlayerExit(Entity player) {
-        getComponent(HealthBarComponent.class).hide();
     }
 
     @Override

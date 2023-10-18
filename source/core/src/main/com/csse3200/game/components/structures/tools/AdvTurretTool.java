@@ -31,7 +31,7 @@ public class AdvTurretTool extends PlacementTool {
      */
     @Override
     public PlaceableEntity createStructure(Entity player) {
-        return BuildablesFactory.createCustomTurret(TurretType.LEVEL_TWO, player);
+        return BuildablesFactory.createCustomTurret(TurretType.LEVEL_TWO);
     }
 
 }

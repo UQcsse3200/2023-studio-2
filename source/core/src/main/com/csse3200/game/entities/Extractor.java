@@ -34,6 +34,7 @@ public class Extractor extends PlaceableEntity {
         addComponent(new ProductionComponent(config.resource, config.tickRate, config.tickSize));
         addComponent(new ExtractorAnimationController());
         addComponent(new ParticleComponent(config.effects));
+        addComponent(new HealthBarComponent(false, 0, 1.9f));
 
         InteractLabel interactLabel = new InteractLabel();  //code for interaction prompt
         addComponent(new DistanceCheckComponent(5f, interactLabel));

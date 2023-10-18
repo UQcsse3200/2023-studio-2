@@ -31,7 +31,7 @@ class TutnpcAnimationControllerTest {
     @Test
     void testCreate() {
         controller.create();
-        verify(animator).startAnimation("row-2-column-1");
+        verify(animator).startAnimation("Tut_Down");
     }
 
     /**
@@ -41,7 +41,7 @@ class TutnpcAnimationControllerTest {
     void testUpdate() {
         controller.animationDuration = 10f;
 
-        when(animator.getCurrentAnimation()).thenReturn("row-3-column-1");
+        when(animator.getCurrentAnimation()).thenReturn("Tut_Down");
 
         controller.update();
 

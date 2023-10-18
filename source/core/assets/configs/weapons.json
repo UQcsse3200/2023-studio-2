@@ -70,7 +70,7 @@
     "sound": {
       "soundsMap": {
         "start": "",
-        "mid": "",
+        "mid": "sounds/weapons/boomerang.wav",
         "end": ""
       }
     }
@@ -97,7 +97,7 @@
     "sound": {
       "soundsMap": {
         "start": "",
-        "mid": "",
+        "mid": "sounds/weapons/boomerang.wav",
         "end": ""
       }
     }

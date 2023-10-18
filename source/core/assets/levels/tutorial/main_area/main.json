@@ -98,7 +98,8 @@
       "sounds/explosion/landmine.mp3",
       "sounds/ExitButton.wav",
       "sounds/structurePlace.wav",
-      "sounds/weapons/Katana.wav"
+      "sounds/weapons/Katana.wav",
+      "sounds/weapons/boomerang.wav"
     ],
     "particleEffectPaths": [
       "particle-effects/explosion/explosion.effect",

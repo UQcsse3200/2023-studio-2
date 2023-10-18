@@ -28,11 +28,16 @@ import com.csse3200.game.files.UserSettings;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.TerrainService;
+import com.csse3200.game.ui.QuestBox;
 import com.csse3200.game.utils.math.GridPoint2Utils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+
+import static com.csse3200.game.ui.DialogComponent.stage;
+import static com.csse3200.game.ui.UIComponent.skin;
 
 /**
  * A Base Game Area for any level.
@@ -141,6 +146,7 @@ public class MapGameArea extends GameArea{
         //ui.addComponent(new GameAreaDisplay(map_config.mapName));
         ui.addComponent(new PlanetHudDisplay(mapConfig.mapName, mapConfig.planetImage))
                 .addComponent(new InventoryDisplayComponent());
+        QuestBox questBox=new QuestBox("Rescue Astro",skin,stage);
         spawnEntity(ui);
     }
 

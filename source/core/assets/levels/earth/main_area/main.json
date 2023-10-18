@@ -24,6 +24,7 @@
       "images/upgradetree/hammer2.png",
       "images/upgradetree/stick.png",
       "images/upgradetree/exit.png",
+      "images/companion/earth_Companion_spritesheet.png",
       "images/companion/Companion_spritesheet.png",
       "images/companion/laboratory.png",
       "images/powerups/double_damage.png",
@@ -64,11 +65,11 @@
       "images/Jail/jail.atlas",
       "images/structures/stone_wall.atlas",
       "images/structures/dirt_wall.atlas",
-      "images/player/player.atlas",
+      "images/player/earth_player.atlas",
       "images/weapons/wrench.atlas",
       "images/structures/open_gate.atlas",
       "images/structures/closed_gate.atlas",
-      "images/companion/Companion_spritesheet.atlas",
+      "images/companion/earth_Companion_spritesheet.atlas",
       "images/minigame/fire.atlas",
       "images/structures/ExtractorAnimation.atlas",
       "images/enemy/BlueBullet/BlueBullet.atlas",
@@ -96,7 +97,8 @@
       "sounds/explosion/grenade.mp3",
       "sounds/explosion/landmine.mp3",
       "sounds/Healing/HealingWalls.mp3",
-      "sounds/ExitButton.wav"
+      "sounds/ExitButton.wav",
+      "sounds/structurePlace.wav"
     ],
     "particleEffectPaths": [
       "particle-effects/explosion/explosion.effect",

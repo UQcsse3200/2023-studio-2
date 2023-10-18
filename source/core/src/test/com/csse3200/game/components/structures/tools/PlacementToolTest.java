@@ -18,11 +18,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+import org.mockito.stubbing.LenientStubber;
 
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(GameExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class PlacementToolTest {
     @Mock
     Entity player;
@@ -36,6 +40,8 @@ class PlacementToolTest {
     ResourceService resourceService;
     @Mock
     PhysicsService physicsService;
+    @Mock
+    EventHandler eventHandler;
 
     @BeforeEach
     void beforeEach() {
@@ -46,6 +52,7 @@ class PlacementToolTest {
         ServiceLocator.registerPhysicsService(physicsService);
 
         when(player.getCenterPosition()).thenReturn(new Vector2(0, 0));
+        when(player.getEvents()).thenReturn(eventHandler);
     }
     @Test
     void testInteractNoExistingStructureNoCost() {
@@ -124,6 +131,74 @@ class PlacementToolTest {
         verify(stateObserver, atMost(1)).getStateData("resource/resource1");
         verify(stateObserver, atMost(1)).getStateData("resource/resource2");
         verify(structurePlacementService, never()).placeStructureAt(any(), eq(position));
+    }
+
+    @Test
+    void testInteractOutOfRange() {
+        ObjectMap<String, Integer> cost = new ObjectMap<>();
+
+        var tool = new MockPlacementTool(cost, 5f, "texture.png", 0);
+
+        var position = new GridPoint2(6, 0);
+
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
+
+        tool.interact(player, position);
+
+        verify(stateObserver, never()).getStateData(any());
+
+        verify(structurePlacementService, never()).placeStructureAt(any(), eq(position));
+    }
+
+    @Test
+    void testInteractAtRange() {
+        ObjectMap<String, Integer> cost = new ObjectMap<>();
+
+        var tool = new MockPlacementTool(cost, 5f, "texture.png", 0);
+
+        var position = new GridPoint2(5, 0);
+
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
+
+        tool.interact(player, position);
+
+        verify(stateObserver, never()).getStateData(any());
+
+        verify(structurePlacementService).placeStructureAt(any(), eq(position));
+    }
+
+    @Test
+    void testInteractInRange() {
+        ObjectMap<String, Integer> cost = new ObjectMap<>();
+
+        var tool = new MockPlacementTool(cost, 5f, "texture.png", 0);
+
+        var position = new GridPoint2(4, 0);
+
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
+
+        tool.interact(player, position);
+
+        verify(stateObserver, never()).getStateData(any());
+
+        verify(structurePlacementService).placeStructureAt(any(), eq(position));
+    }
+
+    @Test
+    void testInteract0Range() {
+        ObjectMap<String, Integer> cost = new ObjectMap<>();
+
+        var tool = new MockPlacementTool(cost, 5f, "texture.png", 0);
+
+        var position = new GridPoint2(0, 0);
+
+        when(structurePlacementService.canPlaceStructureAt(any(), eq(position))).thenReturn(true);
+
+        tool.interact(player, position);
+
+        verify(stateObserver, never()).getStateData(any());
+
+        verify(structurePlacementService).placeStructureAt(any(), eq(position));
     }
 }
 

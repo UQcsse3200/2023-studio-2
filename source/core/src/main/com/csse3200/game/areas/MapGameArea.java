@@ -14,7 +14,6 @@ import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.EnvironmentStatsComponent;
 import com.csse3200.game.components.PowerupType;
-import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.components.gamearea.PlanetHudDisplay;
 import com.csse3200.game.components.player.InventoryDisplayComponent;
 import com.csse3200.game.components.resources.Resource;

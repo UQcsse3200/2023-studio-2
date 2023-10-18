@@ -70,7 +70,7 @@
     "sound": {
       "soundsMap": {
         "start": "",
-        "mid": "sounds/weapons/boomerang.wav",
+        "mid": "",
         "end": ""
       }
     }
@@ -221,7 +221,7 @@
     "ammoUse": 0,
     "sound": {
       "soundsMap": {
-        "start": "",
+        "start": "sounds/weapons/Katana.wav",
         "mid": "",
         "end": ""
       }
@@ -245,7 +245,7 @@
     "ammoUse": 0,
     "sound": {
       "soundsMap": {
-        "start": "",
+        "start": "sounds/weapons/Katana.wav",
         "mid": "",
         "end": ""
       }

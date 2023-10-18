@@ -77,7 +77,8 @@
     "sounds/explosion/landmine.mp3",
     "sounds/turret_shoot.mp3",
     "sounds/ExitButton.wav",
-    "sounds/structurePlace.wav"
+    "sounds/structurePlace.wav",
+    "sounds/weapons/Katana.wav"
   ],
   "particleEffectPaths": [
     "particle-effects/extractor/extractor_rubble_solstite.effect",

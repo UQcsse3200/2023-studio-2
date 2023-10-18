@@ -1,7 +1,6 @@
 package com.csse3200.game.events;
 
 import com.badlogic.gdx.utils.Array;
-import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.events.listeners.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

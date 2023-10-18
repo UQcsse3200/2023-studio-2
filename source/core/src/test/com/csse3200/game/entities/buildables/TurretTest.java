@@ -49,7 +49,7 @@ public class TurretTest {
         renderService = mock(RenderService.class);
         ServiceLocator.registerRenderService(renderService);
 
-        turret = new Turret(turretConfig, new Entity());
+        turret = new Turret(turretConfig);
     }
 
     @Test

@@ -31,9 +31,11 @@ public class CompanionAnimationController extends Component {
         entity.getEvents().addListener("walkDownLeft", this::animateDownLeft);
         entity.getEvents().addListener("walkDownRight", this::animateDownRight);
         entity.getEvents().addListener("walkStopAnimation", this::animateStop);
+        entity.getEvents().addListener("standUp", this::standUp);
         entity.getEvents().addListener("CompanionDeath", this::animateDown);
     }
 
+    void standUp(){animator.startAnimation("Companion_StandUp");}
     /**
      * Start the animation for moving the companion to the left.
      */

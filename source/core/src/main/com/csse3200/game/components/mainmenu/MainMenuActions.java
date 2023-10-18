@@ -91,6 +91,7 @@ public class MainMenuActions extends Component {
       Gdx.files.local("save").deleteDirectory();
 
       loadGameConfig();
+      PlanetScreen.titleBoxDisplayed = false;
 
     logger.info("Loading Story");
     game.setScreen(GdxGame.ScreenType.INITIAL_SCREEN);
@@ -102,7 +103,7 @@ public class MainMenuActions extends Component {
 
   private void onTutorial(){
     logger.info("Loading Tutorial");
-    TitleBox titleBox = new TitleBox(game, "Tutorial","Hey! This is the tutorial of the game.",skin);
+    TitleBox titleBox = new TitleBox(game, "Tutorial","Hey! This is the tutorial of the game.",skin,"default");
     titleBox.showDialog(stage);
     game.setScreen(GdxGame.ScreenType.TUTORIAL_SCREEN);
   }
@@ -117,6 +118,7 @@ public class MainMenuActions extends Component {
           popup.getEvents().addListener(popup.getChoice1(), this::newGame);
       } else {
       newGame();
+      PlanetScreen.titleBoxDisplayed = false;
       }
   }
 

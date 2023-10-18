@@ -3,6 +3,7 @@ package com.csse3200.game.entities.factories;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.areas.terrain.TerrainComponent;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.buildables.Turret;
@@ -21,6 +22,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
  *
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
+
 public class ObstacleFactory {
 
   public static float WALL_SIZE = 0.1f;
@@ -46,6 +48,7 @@ public class ObstacleFactory {
    * Creates a tree entity.
    * @return entity
    */
+  
   public static Entity createTree(BaseEntityConfig config) {
     Entity tree =
             new Entity()
@@ -65,6 +68,7 @@ public class ObstacleFactory {
    * Creates a tree entity.
    * @return entity
    */
+  
   public static Entity createTree() {
     return createTree(treeConfig);
   }
@@ -73,6 +77,7 @@ public class ObstacleFactory {
    * Creates a visible obstacle
    * @return Environment entity
    */
+  
   public static Entity createEnvironment() {
     Entity environment =
             new Entity().addComponent(new PhysicsComponent())
@@ -90,6 +95,7 @@ public class ObstacleFactory {
    * @param posY the relative y coordinate of the top left corner of the collision box
    * @return Environment entity with the set collision box
    */
+  
   public static Entity createEnvironment(float sizeX, float sizeY, float posX, float posY) {
     Entity environment =
             new Entity().addComponent(new PhysicsComponent())
@@ -105,12 +111,17 @@ public class ObstacleFactory {
    * Creates a tree top entity.
    * @return entity
    */
+  
   public static Entity createTreeTop(TreeTopConfig treeTopConfig) {
     Entity treeTop =
             new Entity()
                     .addComponent(new TextureRenderComponent(treeTopConfig.spritePath)) // Replace with the path to your tree top texture
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE));
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NONE))
+                    .addComponent(new SaveableComponent<>(s -> {
+                      treeTopConfig.position = s.getGridPosition();
+                      return treeTopConfig;
+                    }, TreeTopConfig.class));
 
     treeTop.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     treeTop.getComponent(TextureRenderComponent.class).scaleEntity();
@@ -125,6 +136,7 @@ public class ObstacleFactory {
    * @param height Wall height in world units
    * @return Wall entity of given width and height
    */
+  
   public static Entity createWall(float width, float height) {
     Entity wall = new Entity()
         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
@@ -139,6 +151,7 @@ public class ObstacleFactory {
    * @param config Configuration file to match asteroid to
    * @return Asteroid entity
    */
+  
   public static Entity createAsteroid(AsteroidConfig config) {
     ColliderComponent asteroidCollider = new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE);
     Entity asteroid = new Entity()
@@ -156,6 +169,7 @@ public class ObstacleFactory {
    * @param height Asteroid height in world units
    * @return Asteroid entity of given width and height
    */
+  
   public static Entity createAsteroid(float width, float height) {
     ColliderComponent asteroidCollider = new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE);
     //asteroidCollider.setRestitution(restitution); bounce removed
@@ -172,6 +186,7 @@ public class ObstacleFactory {
    * @param config Configuration file to match asteroid to
    * @return Asteroid Entity
    */
+  
   public static Entity createStaticAsteroid(AsteroidConfig config) {
     Entity asteroid = new Entity()
             .addComponent(new TextureRenderComponent(config.spritePath))
@@ -198,10 +213,12 @@ public class ObstacleFactory {
     asteroid.setScale(width, height);
     return asteroid;
   }
+  
   public static Entity createStaticAsteroid(float width, float height) {
     asteroidConfig.scale = new Vector2(width, height);
     return createStaticAsteroid(asteroidConfig);
   }
+  
   public static Entity createStaticBrick(float width, float height) {
     asteroidConfig.scale = new Vector2(width, height);
     return createStaticBrick(brickConfig);
@@ -212,7 +229,8 @@ public class ObstacleFactory {
    * @param config Configuration file to match enemy to
    * @return ObstacleEnemy
    */
-  public static Entity createObstacleEnemy(BaseEntityConfig config){
+  
+  public static Entity createObstacleEnemy(BaseEntityConfig config) {
 
     Entity enemy = new Entity()
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
@@ -222,12 +240,27 @@ public class ObstacleFactory {
     return enemy;
   }
 
-  public static Entity createObstacleEnemy(float width, float height){
+   /**
+     * Creates an obstacle enemy entity with the specified width and height.
+     *
+     * @param width  The width of the obstacle enemy.
+     * @param height The height of the obstacle enemy.
+     * @return The created obstacle enemy entity.
+     */
+
+  public static Entity createObstacleEnemy(float width, float height) {
     minigameConfigs.obstacleEnemy.scale = new Vector2(width, height);
     return createObstacleEnemy(minigameConfigs.obstacleEnemy);
   }
 
-  public static Entity createObstacleGameGoal(BaseEntityConfig config){ //TODO: Could create custom config type if necessary
+  /**
+     * Creates an obstacle game goal entity with the specified configuration.
+     *
+     * @param config The configuration for the obstacle game goal.
+     * @return The created obstacle game goal entity.
+     */
+  
+  public static Entity createObstacleGameGoal(BaseEntityConfig config) { 
     Entity goal = new Entity()
             .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
@@ -242,13 +275,19 @@ public class ObstacleFactory {
     return goal;
   }
 
-  //TODO: REMOVE - LEGACY
+  
   public static Entity createObstacleGameGoal(float width, float height){
     minigameConfigs.obstacleGameGoal.scale = new Vector2(width, height);
     return createObstacleGameGoal(minigameConfigs.obstacleGameGoal);
   }
 
+  /**
+     * Private constructor to prevent instantiation of the utility class.
+     * Throws an exception if someone tries to create an instance of this class.
+     */
+
   private ObstacleFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
+  
 }

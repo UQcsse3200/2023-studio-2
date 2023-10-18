@@ -30,23 +30,12 @@ public class CompanionInventoryDisplay extends Window {
     private InputOverrideComponent inputOverrideComponent;
     public PowerupConfigs powerupConfigs;
     private  Skin skin;
-    private int healthPotionCount = 0;
-    private TextButton deathPotionCountButton;
-    private Label deathPotionCountLabel;
-
     Group powerupGroup = new Group();
     List<PowerupConfig> firstRowPotions = new ArrayList<>();
     List<PowerupConfig> secondRowPotions = new ArrayList<>();
 
     private CompanionInventoryComponent inventoryComponent;
 
-    public static CompanionInventoryDisplay createUpgradeDisplay(CompanionInventoryComponent inventoryComponent) {
-        Texture background =
-                ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
-        background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
-         return new CompanionInventoryDisplay(background, inventoryComponent);
-        //return new CompanionInventoryComponent();
-    }
 
     public CompanionInventoryDisplay(Texture background, CompanionInventoryComponent inventoryComponent) {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
@@ -62,21 +51,8 @@ public class CompanionInventoryDisplay extends Window {
         Table titleTable = createTitleTable();
         Table exitTable = createExitButton();
         addPowerups();
-
-        // Add the count buttons and update their values
-        //updateCountButtons();
-
-
-
         addActor(exitTable);
         addActor(titleTable);
-//
-//        // Initialize count buttons and labels
-//        deathPotionCountButton = createCountButton(deathPotionConfig, startXFirstRow, countButtonY);
-//        deathPotionCountLabel = createCountLabel(deathPotionCountButton, startXFirstRow, countButtonY);
-//
-//        // Add other count buttons and labels if needed
-
         // Override all normal user input
         inputOverrideComponent = new InputOverrideComponent();
         ServiceLocator.getInputService().register(inputOverrideComponent);
@@ -263,8 +239,6 @@ public class CompanionInventoryDisplay extends Window {
         setWidth((float) (stage.getWidth() * WINDOW_WIDTH_SCALE / 2.5 - 40f));
         setHeight(stage.getHeight() * WINDOW_HEIGHT_SCALE / 2 + 10f);
         setPosition(
-                //stage.getWidth() / 2 - getWidth() / 2 * getScaleX(),
-                //stage.getWidth() * (1 - WINDOW_WIDTH_SCALE / 2),
                 0,
                 stage.getHeight() / 2 - getHeight() / 2 * getScaleY());
     }

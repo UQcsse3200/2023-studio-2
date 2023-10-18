@@ -33,6 +33,12 @@ public class MainGameActions extends Component {
     this.game = game;
   }
 
+  public MainGameActions(Entity entity, GdxGame game){
+    this.game=game;
+    this.entity=entity;
+    create();
+  }
+
   @Override
   public void create() {
     entity.getEvents().addListener("pause", this::onPauseButton);
@@ -44,7 +50,7 @@ public class MainGameActions extends Component {
   /**
    * Opens pause window.
    */
-  private void onPauseButton() {
+  public void onPauseButton() {
     logger.info("Opening Pause Menu");
     PauseWindow pauseWindow = PauseWindow.makeNewPauseWindow(entity);
     entityList = ServiceLocator.getEntityService().getEntities();

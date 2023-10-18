@@ -5,6 +5,7 @@
  */
 package com.csse3200.game.components;
 
+import com.csse3200.game.components.companion.CompanionActions;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,17 +121,19 @@ public class CombatStatsComponent extends Component {
         };
         timer.schedule(killPlayer, 1); // Animation lasts for 1 second before death screen is triggered
       } else if (isDead() && entity.getEntityType().equals("companion")) {
-        entity.getComponent(FollowComponent.class).setFollowSpeed(0f);
-        entity.getEvents().trigger("companionDeath");
-        final Timer timer1 = new Timer();
+        // all companion death stuff
+        entity.getComponent(CompanionActions.class).handleCompanionDownMode();
+
+
+        /*final Timer timer1 = new Timer();
         Timer.Task killCompanion = new Timer.Task() {
           @Override
           public void run() {
             entity.getEvents().trigger("death");
             timer1.clear();
           }
-        };
-        timer1.schedule(killCompanion,1);
+        };*/
+        //timer1.schedule(killCompanion,1);
 
       } else if (isDead() && entity.getEntityType().equals("playerWeapon")) {
         entity.getEvents().trigger("death", 0);

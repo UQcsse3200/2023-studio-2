@@ -37,7 +37,6 @@ public class CompanionWeaponTargetComponent extends Component {
     }
 
     public Vector2 get_pos_of_target() {
-        Vector2 pos;
 
         switch (this.weaponType) {
             case SHIELD:

@@ -31,6 +31,10 @@ public class SpaceGameArea extends GameArea {
     private Entity ship;
     private Entity goal;
     private static final int NUM_ASTEROIDS = 100;
+
+    /*
+    Legacy - To be Deleted, asset loading transferred to SpaceMapScreen, unless there is a need to do asset load in
+    SpaceGameArea
     private static final String[] spaceMiniGameTextures = {
             "images/minigame/SpaceMiniGameBackground.png",
             "images/minigame/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
@@ -41,11 +45,16 @@ public class SpaceGameArea extends GameArea {
     };
     private static final String BackgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
     private static final String[] spaceMusic = {BackgroundMusic};
+    private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
+
+     */
+
+
     private final TerrainFactory terrainFactory;
 
     private final ArrayList<Entity> TargeTables;
 
-    private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
+
 
     /**
      * Constructor for initializing terrain area
@@ -63,9 +72,9 @@ public class SpaceGameArea extends GameArea {
      */
     @Override
     public void create() {
-        loadAssets();
+        //loadAssets();
         displayUI();
-        playMusic();
+
         spawnTerrain();
         //Who removed spawn ship and spawn goal on creation?!@!!!!!
         //spawn Goal has to be called first before spawn ship, to not crash calc distance
@@ -75,13 +84,18 @@ public class SpaceGameArea extends GameArea {
         spawnAsteroids();
         createBoundary();
         spawnEnemy();
+        playMusic();
     }
     /**
      * Method for the background music of the game
      */
     private void playMusic() {
         UserSettings.Settings settings = UserSettings.get();
-        Music music = ServiceLocator.getResourceService().getAsset(BackgroundMusic, Music.class);
+        //Legacy
+        //Music music = ServiceLocator.getResourceService().getAsset(BackgroundMusic, Music.class);
+
+        //This music asset is loaded in SpaceMapScreen
+        Music music = ServiceLocator.getResourceService().getAsset("sounds/BGM_03_mp3.wav", Music.class);
         music.setLooping(true);
         music.setVolume(settings.musicVolume);
         music.play();
@@ -247,9 +261,8 @@ public class SpaceGameArea extends GameArea {
 
 
 
-    /**
-     * Method for loading the texture and the music of the map
-     */
+    /*
+    LEGACY
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -262,10 +275,6 @@ public class SpaceGameArea extends GameArea {
         }
     }
 
-
-    /**
-     * Method for unloading the texture and the music of the map
-     */
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -275,12 +284,14 @@ public class SpaceGameArea extends GameArea {
 
     }
 
+     */
+
     /**
      * Override method for disposing and unloading assets
      */
     @Override
     public void dispose() {
         super.dispose();
-        this.unloadAssets();
+        //this.unloadAssets();
     }
 }

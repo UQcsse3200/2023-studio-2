@@ -89,6 +89,7 @@ public class EnemyFactory {
     TextureAtlas atlas = new TextureAtlas(config.spritePath);
     animator = new AnimationRenderComponent(atlas);
 
+
     // BASE SETUP
     Entity enemy =
         new Entity()
@@ -114,6 +115,7 @@ public class EnemyFactory {
             .addComponent(new TurretTargetableComponent())
             .addComponent(new SoundComponent(config.sound))
             .addComponent(new EnemyFlag());
+    enemy.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.5f,0.5f));
 
     // TYPE
     EnemyTypeSelector(enemy, config.type);
@@ -178,13 +180,16 @@ public class EnemyFactory {
    * @param type The type the enemy needs to be
    */
   private static void EnemyTypeSelector(Entity enemy, EnemyType type) {
-    enemy.addComponent(new HitboxComponent());
+    HitboxComponent hitboxComponent = new HitboxComponent();
+    enemy.addComponent(hitboxComponent);
     if (type == EnemyType.Ranged) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_RANGE);
     }
+
     if (type == EnemyType.Melee) {
       enemy.getComponent(HitboxComponent.class).setLayer(PhysicsLayer.ENEMY_MELEE);
     }
+
   }
 
   /**

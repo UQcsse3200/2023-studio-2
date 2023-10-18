@@ -27,7 +27,6 @@ public class ControlsScreenDisplay extends UIComponent {
     private Table table,table1;
     private GdxGame.ScreenType screenType;
     private GdxGame game;
-
     private PlanetTravel planetTravel;
 
     public ControlsScreenDisplay(GdxGame game, GdxGame.ScreenType screenType){
@@ -62,11 +61,9 @@ public class ControlsScreenDisplay extends UIComponent {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Exit button clicked");
                 if (screenType.equals(GdxGame.ScreenType.SETTINGS)) {
-                    System.out.println("previously settings");
-                    entity.getEvents().trigger("exitToSettings");
+                    game.setScreen(GdxGame.ScreenType.SETTINGS);
                 } else {
-                    System.out.println("exit");
-                    entity.getEvents().trigger("exit");
+                    entity.getEvents().trigger("exitToGame");
                 }
             }
         });

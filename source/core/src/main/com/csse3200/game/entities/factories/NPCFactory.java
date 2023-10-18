@@ -306,11 +306,6 @@ public class NPCFactory {
                 ,"{COLOR=BLACK}\n{SLOW}NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected."
                 ,"{COLOR=BLACK}{SLOW}Emily: We can handle it. \nLead the way!"};
         String[] titletext= {"","",""};
-      // Since Dialogue Box does not show up on screen, cannot 'exit' dialogue box therefore
-      // the 'resumeGame' function is never called. This code is to ensure gameplay can continue
-      for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
-        mainGame.getEvents().trigger("resumeGame");
-      }
         Jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
 
       },1f));

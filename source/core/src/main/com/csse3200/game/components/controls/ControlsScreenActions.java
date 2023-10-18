@@ -31,7 +31,7 @@ public class ControlsScreenActions extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("exitToSettings", this::onExitToSettings);
-        entity.getEvents().addListener("exit", this::onExit);
+        entity.getEvents().addListener("exitToGame", this::onExit);
         entity.getEvents().addListener("w", this::onW);
         entity.getEvents().addListener("a", this::onA);
         entity.getEvents().addListener("s", this::onS);

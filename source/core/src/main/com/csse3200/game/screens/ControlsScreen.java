@@ -22,6 +22,7 @@ import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.components.maingame.MainGamePauseDisplay;
 import com.csse3200.game.components.mainmenu.InsertButtons;
+import com.csse3200.game.components.player.DeathScreenActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -124,7 +125,7 @@ public class ControlsScreen extends ScreenAdapter {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 logger.debug("Exit button clicked");
-                entity.getEvents().trigger("exit");
+                entity.getEvents().trigger("exitToGame");
             }
         });
         stage.addActor(exitBtn);
@@ -261,6 +262,7 @@ public class ControlsScreen extends ScreenAdapter {
                 .addComponent(new MainGamePauseDisplay(this.game.getScreenType()))
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
+                .addComponent(new ControlsScreenActions(game, (int) ServiceLocator.getGameStateObserverService().getStateData("player/lives")))
                 .addComponent(new TerminalDisplay());
 
         ServiceLocator.getEntityService().register(ui);

@@ -1,0 +1,13 @@
+{
+  "entityType": "SafeZoneConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.SafeZoneConfig,
+      "spritePath":  "map/coolzone.png",
+      "position": {
+        "x": 25,
+        "y": 67
+      }
+    }
+  ]
+}

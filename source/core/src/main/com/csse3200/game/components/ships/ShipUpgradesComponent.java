@@ -14,7 +14,7 @@ public class ShipUpgradesComponent extends Component {
     /**
      * Assigns a type and targetLayer value to a given ShipUpgrade
      */
-    public ShipUpgradesComponent(ShipUpgradesType type, short targetLayer) {
+    public ShipUpgradesComponent(ShipUpgradesType type) {
         this.type = type;
     }
 

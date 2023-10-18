@@ -1,21 +1,15 @@
 package com.csse3200.game.components;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Companion.CompanionActions;
+import com.csse3200.game.components.companion.CompanionActions;
 import com.csse3200.game.components.player.PlayerActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
-import com.csse3200.game.entities.enemies.EnemyBehaviour;
-import com.csse3200.game.entities.enemies.EnemyType;
-import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +30,7 @@ public class PowerupComponentTest {
 
     @Test
     void shouldApplyExtraLife() {
-        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 10, 1, false, 1))
+        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 100, 10, 1, false, 1))
                 .addComponent(new PlayerActions());
 
         when(entityService.getPlayer()).thenReturn(playerEntity);
@@ -55,7 +49,7 @@ public class PowerupComponentTest {
      */
     @Test
     public void testExtraLifeMaxReached() {
-        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 10, 1, false, 4))
+        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 100, 10, 1, false, 4))
                 .addComponent(new PlayerActions());
 
         when(entityService.getPlayer()).thenReturn(playerEntity);
@@ -68,10 +62,10 @@ public class PowerupComponentTest {
     }
     @Test
     void shouldApplyHealthBoost() {
-        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 10, 2, false, 3))
+        Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 100, 10, 2, false, 3))
                 .addComponent(new PlayerActions());
 
-        Entity companionEntity = new Entity().addComponent(new CombatStatsComponent(50, 5, 1, false))
+        Entity companionEntity = new Entity().addComponent(new CombatStatsComponent(50, 50, 5, 1, false))
                 .addComponent(new CompanionActions());
 
         when(entityService.getPlayer()).thenReturn(playerEntity);
@@ -95,26 +89,31 @@ public class PowerupComponentTest {
         when(entityService.getPlayer()).thenReturn(playerEntity);
         when(entityService.getCompanion()).thenReturn(companionEntity);
 
+        // Mock the isDead method of companion's CombatStatsComponent to return false
+        CombatStatsComponent companionCombatStats = mock(CombatStatsComponent.class);
+        when(companionCombatStats.isDead()).thenReturn(false);
+
+        // Set the mocked component on the companionEntity directly
+        companionEntity.addComponent(companionCombatStats);
+
         PowerupComponent powerupComponent = new PowerupComponent(PowerupType.SPEED_BOOST);
         powerupComponent.applyEffect();
 
         Vector2 playerSpeed = new Vector2(6f, 6f);
         Vector2 companionSpeed = new Vector2(7f, 7f);
+
         // Assert
         assertEquals(playerSpeed, playerEntity.getComponent(PlayerActions.class).getSpeed());
-        assertEquals(playerSpeed, playerEntity.getComponent(PlayerActions.class).getSpeed());
-        assertEquals(companionSpeed, companionEntity.getComponent(CompanionActions.class).getSpeed());
         assertEquals(companionSpeed, companionEntity.getComponent(CompanionActions.class).getSpeed());
         assertEquals(5, companionEntity.getComponent(FollowComponent.class).getFollowSpeed());
-        // Additional assertions based on your actual implementation
     }
 
     @Test
     void shouldApplyTempImmunity() throws InterruptedException {
         Entity playerEntity = new Entity().addComponent(new PlayerActions())
-                .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
+                .addComponent(new CombatStatsComponent(100, 100, 10, 1, false, 1));
         Entity companionEntity = new Entity().addComponent(new CompanionActions())
-                .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
+                .addComponent(new CombatStatsComponent(100, 100, 10, 1, false, 1));
         when(entityService.getPlayer()).thenReturn(playerEntity);
         when(entityService.getCompanion()).thenReturn(companionEntity);
 
@@ -136,7 +135,7 @@ public class PowerupComponentTest {
     @Test
     void shouldApplyDoubleDamage() throws InterruptedException {
         Entity playerEntity = new Entity().addComponent(new PlayerActions())
-                .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
+                .addComponent(new CombatStatsComponent(100, 100, 10, 1, false, 1));
         when(entityService.getPlayer()).thenReturn(playerEntity);
 
         PowerupComponent powerupComponent = new PowerupComponent(PowerupType.DOUBLE_DAMAGE);
@@ -223,24 +222,4 @@ public class PowerupComponentTest {
         assertEquals(newDuration, healthpowerup.getDuration());
     }
 
-    // @Test
-    // void shouldApplySnap() throws InterruptedException {
-
-    //     Entity playerEntity = new Entity().addComponent(new PlayerActions())
-    //             .addComponent(new CombatStatsComponent(100, 10, 1, false, 1));
-    //     when(entityService.getPlayer()).thenReturn(playerEntity);
-
-    //     EnemyFactory.getEnemyList().add(new Entity());
-    //     EnemyFactory.getEnemyList().add(new Entity());
-    //     EnemyFactory.getEnemyList().add(new Entity());
-    //     EnemyFactory.getEnemyList().add(new Entity());
-
-    //     // int enemies = EnemyFactory.getEnemyList().size();
-
-    //     PowerupComponent powerupComponent = new PowerupComponent(PowerupType.SNAP);
-    //     powerupComponent.applyEffect();
-
-    //     assertEquals(2, EnemyFactory.getEnemyList().size());
-    // }
-// }
 }

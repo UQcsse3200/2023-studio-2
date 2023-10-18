@@ -22,6 +22,7 @@ public class WeaponConfig extends BaseEntityConfig {
     public int projectiles = 1;
 
     public float imageScale = 1;
+    public float staticImageScale = 1;
     public String textureAtlas;
     public String imagePath;
     public SoundsConfig sound;

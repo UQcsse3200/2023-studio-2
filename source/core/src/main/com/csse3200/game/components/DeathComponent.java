@@ -11,7 +11,6 @@ import com.csse3200.game.services.ServiceLocator;
 
 import java.util.Random;
 
-
 /**
  * When this entity (usually killable entities) has health = 0, it disposes the
  * enemy form the field of play.
@@ -21,10 +20,10 @@ public class DeathComponent extends Component {
     private Boolean notkilled;
     private Random rand = new Random();
     private boolean isDying = false; // True when the entity is currently in the process of dying and playing death
-                                     // animation.
+    // animation.
 
     /**
-     * Creates a new listener on an entity to wait for kill condition
+     * Creates a new listener on an entity to wait for the kill condition.
      */
     @Override
     public void create() {
@@ -34,13 +33,14 @@ public class DeathComponent extends Component {
     }
 
     /**
-     * When kill condition met, target entity will be disposed.
+     * When the kill condition is met, the target entity will be disposed.
+     *
      * @param health - the new health of the entity
      */
     public void kill(int health) {
-        //check if health is 0, and the kill property has been fulfilled
+        // Check if health is 0, and the kill property has been fulfilled
         if (combatStats.isDead() && this.notkilled) {
-            // stop animating the entity once it's death has been confirmed
+            // Stop animating the entity once its death has been confirmed
             this.notkilled = false;
             AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
             animator.stopAnimation();
@@ -59,35 +59,26 @@ public class DeathComponent extends Component {
                 @Override
                 public void run() {
                     Gdx.app.postRunnable(entity::dispose);
-
-                    int powerupRandomiser = rand.nextInt(28);
-
+                    Random rand = new Random();
+                    int powerUpRandomizer = rand.nextInt(9);
                     Entity powerup = null;
 
-                    if (powerupRandomiser < 6) { // 3/14 chance of speed boost
-                        powerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
-                    } else if (powerupRandomiser < 12) { // 3/14 chance of health boost
-                        powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
-                    } else if (powerupRandomiser < 14) { // 2/14 chance of temp immunity
-                        powerup = PowerupFactory.createPowerup(PowerupType.TEMP_IMMUNITY);
-                    } else if (powerupRandomiser < 16) { // 2/14 chance of double damage
-                        powerup = PowerupFactory.createPowerup(PowerupType.DOUBLE_DAMAGE);
-                    } else if (powerupRandomiser == 17) { // 1/28 chance of extra health
-                        powerup = PowerupFactory.createPowerup(PowerupType.EXTRA_LIFE);
-                    } else if (powerupRandomiser == 18) { // 1/28 chance of double cross
-                        powerup = PowerupFactory.createPowerup(PowerupType.DOUBLE_CROSS);
+                    if (powerUpRandomizer < 5) {
+                        if (powerUpRandomizer < 3) { // 1 or 2 out of 8, 1/4 chance of speed boost
+                            powerup = PowerupFactory.createPowerup(PowerupType.SPEED_BOOST);
+                        } else { // 3 or 4 out of 8, 1/4 chance of health boost
+                            powerup = PowerupFactory.createPowerup(PowerupType.HEALTH_BOOST);
+                        }
                     }
+
                     if (powerup == null) {
                         return;
                     }
-                    // 5/14 chance of no powerup dropped
-                    if (powerup != null) {
-                        ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody);
-                    }
+                    // Hence 5, 6, 7, 8 out of 8, 1/2 chance of nothing
+                    ServiceLocator.getStructurePlacementService().spawnEntityAtVector(powerup, enemyBody.cpy());
                 }
             };
             Timer.schedule(task, delay);// Delay based on the death animation duration
-
         }
     }
 

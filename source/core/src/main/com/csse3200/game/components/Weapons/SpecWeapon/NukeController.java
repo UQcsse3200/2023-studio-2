@@ -1,11 +1,7 @@
 package com.csse3200.game.components.Weapons.SpecWeapon;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
-import com.csse3200.game.components.Component;
-import com.csse3200.game.components.SoundComponent;
-import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.ProjectileController;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.explosives.ExplosiveComponent;
 import com.csse3200.game.components.explosives.ExplosiveConfig;
@@ -28,7 +24,7 @@ public class NukeController extends WeaponControllerComponent {
         super.create();
         var explosiveConfig = new ExplosiveConfig();
         explosiveConfig.chainable = false;
-        explosiveConfig.damage = 50;
+        explosiveConfig.baseAttack = 50;
         explosiveConfig.damageRadius = 50f;
         explosiveConfig.chainRadius = 80.0f;
         explosiveConfig.effectPath = "particle-effects/explosion/bigBallCombustion.effect";
@@ -39,6 +35,7 @@ public class NukeController extends WeaponControllerComponent {
         explode.create();
     }
 
+    @Override
     public int get_spawn_delay() {
         return 800;
     }
@@ -57,7 +54,6 @@ public class NukeController extends WeaponControllerComponent {
      */
     @Override
     protected void initial_rotation() {
-        return;
     }
 
     /**
@@ -75,7 +71,6 @@ public class NukeController extends WeaponControllerComponent {
 
     @Override
     protected void rotate() {
-        return;
     }
 
     @Override
@@ -83,7 +78,6 @@ public class NukeController extends WeaponControllerComponent {
      var pos = entity.getCenterPosition();
      entity.setScale(entity.getScale().sub(0.000f, 0.000f).scl(0.996f));
      entity.setPosition(pos.mulAdd(entity.getScale(), -0.5f));
-        return;
     }
 
     @Override

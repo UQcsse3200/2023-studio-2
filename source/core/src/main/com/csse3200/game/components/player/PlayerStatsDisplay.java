@@ -339,9 +339,13 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param maxAmmo the max ammo of the weapon equipped
    */
   public void updateAmmo(int currentAmmo, int maxAmmo, int ammoUse) {
-    // Updates the numerical ammunition values
     CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-    if (ammoUse == 0) {
+
+    if (currentAmmo == 0) {
+      ammoText = "PRESS Q";
+    } else if (inventory.getReloading()) {
+      ammoText = " RLD ";
+    } else if (ammoUse == 0) {
       ammoText = "    -";
     }
     ammoLabel.setText(ammoText);

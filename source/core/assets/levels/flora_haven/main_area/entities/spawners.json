@@ -27,6 +27,33 @@
           "enemySpawn": "sounds/enemySpawner.wav"
         }
       }
+    },
+    {
+      class: com.csse3200.game.entities.configs.SpawnerConfig,
+      "wave1" : {
+        "Knight" : 1,
+        "necromancer" : 1,
+        "redGhost" : 0
+      },
+      "wave2" : {
+        "redGhost" : 0,
+        "chain" : 0,
+        "necromancer" : 0
+      },
+      "wave3" : {
+        "redGhost" : 0,
+        "chain" : 0,
+        "necromancer" : 0
+      },
+      "position": {
+        "x": 47,
+        "y": 11
+      },
+      "sounds": {
+        "soundsMap": {
+          "enemySpawn": "sounds/enemySpawner.wav"
+        }
+      }
     }
   ]
 }

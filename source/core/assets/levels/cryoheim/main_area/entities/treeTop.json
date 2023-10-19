@@ -2,7 +2,7 @@
   "entityType": "TreeTopConfig",
   "entities": [
     {
-      class: com.csse3200.game.entities.configs.TreeTopConfig,
+      "class": "com.csse3200.game.entities.configs.TreeTopConfig",
       "position": {
         "x": 0,
         "y": 0

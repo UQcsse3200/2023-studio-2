@@ -2,7 +2,7 @@
   "entityType": "TutnpcConfig",
   "entities": [
     {
-      class: com.csse3200.game.entities.configs.TutnpcConfig,
+      "class": "com.csse3200.game.entities.configs.TutnpcConfig",
       "spritePath": "images/npc/Tutnpc.atlas",
       "position" : {
         "x": 10,

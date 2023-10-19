@@ -72,7 +72,8 @@ public class CompanionFactory {
                         .addComponent(new CompanionActions())
                         .addComponent(new CombatStatsComponent(config.health, config.maxHealth,
                                 config.baseAttack, config.attackMultiplier, config.isImmune))
-                        .addComponent(new CompanionInventoryComponent())
+                        //.addComponent(new CompanionInventoryComponent()) remove later if confirmed useless
+                        //cannot add multiple copies of the same component, since already added as seen below
                         .addComponent(inputComponent)
                         .addComponent(animator)
                         .addComponent(new CompanionWeaponComponent())

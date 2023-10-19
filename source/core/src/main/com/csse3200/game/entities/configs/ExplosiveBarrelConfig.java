@@ -14,4 +14,9 @@ public class ExplosiveBarrelConfig extends ExplosiveConfig {
     public ExplosiveBarrelConfig(ExplosiveBarrelConfig config) {
         super(config);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }

@@ -1,14 +1,14 @@
 package com.csse3200.game.entities;
 
-import com.badlogic.gdx.math.GridPoint2;
 import com.csse3200.game.components.structures.Placeable;
+
+import java.util.Objects;
 
 public class PlaceableEntity extends Entity {
 
     boolean irremovable = false;
     private final int width;
     private final int height;
-    private GridPoint2 position;
 
     public PlaceableEntity(int width, int height) {
         super();
@@ -41,8 +41,8 @@ public class PlaceableEntity extends Entity {
      */
     public void placed() {
         for (var component : components.values()) {
-            if (component instanceof Placeable) {
-                ((Placeable) component).placed();
+            if (component instanceof Placeable placeable) {
+                placeable.placed();
             }
         }
     }
@@ -57,8 +57,8 @@ public class PlaceableEntity extends Entity {
             return;
         }
         for (var component : components.values()) {
-            if (component instanceof Placeable) {
-                ((Placeable) component).removed();
+            if (component instanceof Placeable placeable) {
+                placeable.removed();
             }
         }
     }
@@ -70,8 +70,8 @@ public class PlaceableEntity extends Entity {
      */
     public void willPlace() {
         for (var component : components.values()) {
-            if (component instanceof Placeable) {
-                ((Placeable) component).willPlace();
+            if (component instanceof Placeable placeable) {
+                placeable.willPlace();
             }
         }
     }
@@ -86,13 +86,27 @@ public class PlaceableEntity extends Entity {
             return;
         }
         for (var component : components.values()) {
-            if (component instanceof Placeable) {
-                ((Placeable) component).willRemove();
+            if (component instanceof Placeable placeable) {
+                placeable.willRemove();
             }
         }
     }
 
-    public boolean is_irremovable() {
+    public boolean isIrremovable() {
         return this.irremovable;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        PlaceableEntity that = (PlaceableEntity) o;
+        return irremovable == that.irremovable && width == that.width && height == that.height && Objects.equals(position, that.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), irremovable, width, height, position);
     }
 }

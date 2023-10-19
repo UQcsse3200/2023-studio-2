@@ -2,12 +2,12 @@ package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.csse3200.game.components.*;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.ProximityTriggerComponent;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.explosives.ExplosiveComponent;
-import com.csse3200.game.components.explosives.ExplosiveConfig;
 import com.csse3200.game.components.flags.EnemyFlag;
-import com.csse3200.game.components.structures.JoinLayer;
-import com.csse3200.game.components.structures.JoinableComponent;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.ExplosiveBarrelConfig;

@@ -12,7 +12,7 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 public class BotanistAnimationController extends Component {
     private AnimationRenderComponent animator;
 
-    private float animationTimer = 0f;
+    float animationTimer = 0f;
 
     /**
      * Creates a new BotanistAnimationController with an AssetManager for managing assets.

@@ -50,7 +50,7 @@ class AstronautAnimationControllerTest {
     void testCreate() {
         controller.create();
 
-        verify(animator).startAnimation("row-1-column-1");
+        verify(animator).startAnimation("Astro_Stand");
 
     }
 

@@ -1,27 +1,21 @@
 package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.components.*;
-import com.csse3200.game.components.player.InventoryComponent;
+import com.csse3200.game.components.CombatStatsComponent;
+import com.csse3200.game.components.FOVComponent;
+import com.csse3200.game.components.HealthBarComponent;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.components.structures.TurretAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.TurretConfig;
 import com.csse3200.game.entities.configs.TurretConfigs;
-import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -32,9 +26,6 @@ import com.csse3200.game.services.ServiceLocator;
 
 import java.util.Objects;
 
-import static com.csse3200.game.ui.DialogComponent.stage;
-import static com.csse3200.game.ui.UIComponent.skin;
-
 /** Turret
  *  This class is used to create a turret entity.
  */
@@ -43,8 +34,6 @@ public class Turret extends PlaceableEntity{
 
     TurretType type; // turret type
     private int currentAmmo; // current ammo
-    private Label ammoLabel; // ammo label
-    TextureRegionDrawable fButtonDrawable = new TextureRegionDrawable(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/brick-game/BrickBall.png", Texture.class)));
 
     int maxAmmo; // max ammo
     int damage; // damage
@@ -56,7 +45,6 @@ public class Turret extends PlaceableEntity{
     public Turret(TurretConfig turretConfig) {
         super(2, 2);
         setScale(1.8f,1.8f);
-        final Vector2 pos = this.getCenterPosition();
 
         AnimationRenderComponent animator = new AnimationRenderComponent(
                 ServiceLocator.getResourceService().getAsset(turretConfig.spritePath, TextureAtlas.class)
@@ -78,58 +66,6 @@ public class Turret extends PlaceableEntity{
         addComponent(animator); // add animation render component
         addComponent(new TurretAnimationController());
         addComponent(new SaveableComponent<>(gate -> save(gate, turretConfig), TurretConfig.class));
-        /*InteractLabel interactLabel = new InteractLabel("Current Ammo" + currentAmmo, getCenterPosition().add(0,2));
-        ServiceLocator.getRenderService().getStage().addActor(interactLabel);
-        interactLabel.setVisible(true);*/
-
-        Table container = new Table();
-        container.top().right().pad(30 + getPosition().y);
-        container.setFillParent(true);
-        Table innerTable = new Table();
-        createAmmoBar(innerTable);
-        container.add(innerTable);
-        stage.addActor(container);
-
-    }
-    public void createAmmoBar(Table parentTable) {
-        Image ammoBarFrame;
-        ammoBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/player/widestatbar.png", Texture.class));
-        Image weaponImage = new Image(ServiceLocator.getResourceService().getAsset("images/brick-game/BrickBall.png", Texture.class));
-        // Retrieves current weapon and ammo
-        int currentAmmo = getCurrentAmmo();
-        int maxAmmo = getMaxAmmo();
-        CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-        ammoLabel = new Label(ammoText, skin, "small");
-        ammoLabel.setFontScale(0.15f);
-
-        Table ammoFrameTable = new Table();
-        ammoFrameTable.add(ammoBarFrame).size(100f, 50f);
-
-        Table weaponImageTable = new Table();
-        weaponImageTable.add(weaponImage).size(25f);
-
-        Table ammoInfo = new Table();
-        ammoInfo.add(weaponImageTable).left().pad(5).padTop(10);
-        ammoInfo.add(ammoLabel).size(80f).right().pad(5).padTop(10);
-
-        // Stacks ammo information on the ammo bar frame
-        Stack ammoStack = new Stack();
-        ammoStack.add(ammoFrameTable);
-        ammoStack.add(ammoInfo);
-        parentTable.add(ammoStack).left().padLeft(5).padRight(5);
-    }
-
-    public void updateAmmo(int currentAmmo, int maxAmmo, int ammoUse) {
-        CharSequence ammoText = String.format("%d / %d", currentAmmo, maxAmmo);
-
-        if (currentAmmo == 0) {
-            ammoText = " RLD ";
-        } else if (ammoUse == 0) {
-            ammoText = "    -";
-        } else if (currentAmmo - ammoUse < 0) {
-            ammoText = "PRESS Q";
-        }
-        ammoLabel.setText(ammoText);
     }
 
     /**
@@ -154,14 +90,8 @@ public class Turret extends PlaceableEntity{
             Sound shootingSound = ServiceLocator.getResourceService().getAsset("sounds/turret_shoot.mp3", Sound.class);
             shootingSound.play(1);
             rotateTurret(focus);
-            currentAmmo -= 5;
-            updateAmmo(currentAmmo, maxAmmo, 5);
             this.start = System.currentTimeMillis();
         }
-    }
-
-    public void updateAmmoLabel() {
-        ammoLabel.setText("Ammo: " + currentAmmo + " / " + maxAmmo);
     }
 
     /**
@@ -274,9 +204,6 @@ public class Turret extends PlaceableEntity{
 
     public int getCurrentAmmo() {
         return this.currentAmmo;
-    }
-    public int getMaxAmmo() {
-        return this.maxAmmo;
     }
 
     public void setCurrentAmmo(int currentAmmo) {

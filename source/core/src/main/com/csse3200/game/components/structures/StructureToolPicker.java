@@ -55,11 +55,6 @@ public class StructureToolPicker extends UIComponent {
 
         // Default buildables
         unlockedTools.add("Extractor");
-        unlockedTools.add("Dirt Wall");
-        unlockedTools.add("Gate");
-        unlockedTools.add("Extractor");
-        unlockedTools.add("Landmine");
-        unlockedTools.add("Basic Turret");
         unlockedTools.add("Heal");
     }
 
@@ -134,8 +129,37 @@ public class StructureToolPicker extends UIComponent {
             });
             buttons.put(tool, button);
             table.add(button).width(30 + button.getPadLeft() + button.getPadRight());
+            selectIndex(0);
         }
     }
+
+    public void selectPreviousTool() {
+        if (selectableTools.isEmpty()) {
+            return;
+        }
+        int index = getCurrentToolIndex() -1;
+        if (index < 0) {
+            index = selectableTools.size() - 1;
+        }
+        setSelectedTool(selectableTools.get(index));
+    }
+
+    public void selectNextTool() {
+        if (selectableTools.isEmpty()) {
+            return;
+        }
+        int index = getCurrentToolIndex()+1;
+        if (index >= selectableTools.size()) {
+            index = 0;
+        }
+        setSelectedTool(selectableTools.get(index));
+    }
+
+    public int getCurrentToolIndex() {
+        return getSelectedTool() == null ? -1 : selectableTools.indexOf(getSelectedTool());
+    }
+
+
 
     /**
      * Gets the tool class referred to in the config file.

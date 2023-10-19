@@ -36,15 +36,7 @@ public class ShipInteractionPopup extends Window {
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
 
-        Label titleLabel = new Label("Welcome!!", labelStyle);
-        titleLabel.setColor(Color.RED);
-        add(titleLabel).padTop(20).center().top().expandX();
         row();
-
-        Label descriptionLabel = new Label("I am Nova Pilot ,the Space Nav artificial intelligence, created by Astro, now entrusted to guide you through the cosmos. My purpose is to assist you with any inquiries, provide navigational assistance, and meet your mission-related needs.", labelStyle);
-        descriptionLabel.setWidth(popupWidth * 0.9f);  // Using 90% of the popup width
-        descriptionLabel.setWrap(true); //helps the text to stay within the bounds of the popup
-        add(descriptionLabel).width(popupWidth * 0.9f).padTop(20).padLeft(popupWidth * 0.05f).expand().fill();
 
         TextButton okButton = new TextButton("Start Journey", skin);
         okButton.addListener(new ChangeListener() {
@@ -59,7 +51,7 @@ public class ShipInteractionPopup extends Window {
             }
         });
         okButton.setSize(150, 50);
-        okButton.setPosition((getWidth() - okButton.getWidth()) / 2, 20);
+        okButton.setPosition((getWidth() - okButton.getWidth()) / 2, 10);
         this.addActor(okButton);
     }
 
@@ -71,13 +63,12 @@ public class ShipInteractionPopup extends Window {
         return super.remove();
     }
     private static TextureRegionDrawable getBrownBackgroundStatic() {
-        Texture texture = createColoredTextureStatic(1, 1, Color.BROWN);
+        Texture texture = createColoredTextureStatic(1, 1);
         return new TextureRegionDrawable(new TextureRegion(texture));
     }
 
-    private static Texture createColoredTextureStatic(int width, int height, Color color) {
-        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-        pixmap.setColor(color);
+    private static Texture createColoredTextureStatic(int width, int heightr) {
+        Pixmap pixmap = new Pixmap(width, heightr, Pixmap.Format.RGBA8888);
         pixmap.fill();
         Texture texture = new Texture(pixmap);
         pixmap.dispose();
@@ -85,4 +76,3 @@ public class ShipInteractionPopup extends Window {
     }
 
 }
-

@@ -6,6 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 
+/**
+ * A custom dialog box for displaying quest information.
+ * It includes a label with quest details.
+ */
 public class QuestBox extends Dialog {
 
     private Label questLabel;
@@ -13,6 +17,13 @@ public class QuestBox extends Dialog {
 
     private Stage stage;
 
+    /**
+     * Creates a new QuestBox with the specified quest description, skin, and stage.
+     *
+     * @param quest The quest description to display.
+     * @param skin  The skin to use for styling the UI elements.
+     * @param stage The stage to which the QuestBox will be added.
+     */
     public QuestBox(String quest, Skin skin, Stage stage) {
         super("", skin);
         this.stage=stage;
@@ -36,7 +47,11 @@ public class QuestBox extends Dialog {
         setPosition(Gdx.graphics.getWidth() - getWidth() - 20 + xOffset, Gdx.graphics.getHeight() - getHeight() - 20 + yOffset);
     }
 
-
+    /**
+     * Sets the text for the quest label.
+     *
+     * @param quest The quest description to display.
+     */
     public void setQuestText(String quest) {
         questLabel.setText(quest);
     }

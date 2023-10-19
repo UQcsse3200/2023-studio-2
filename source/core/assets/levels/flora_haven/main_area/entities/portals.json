@@ -2,7 +2,7 @@
   "entityType": "PortalConfig",
   "entities": [
     {
-      class: com.csse3200.game.entities.configs.PortalConfig,
+      "class": "com.csse3200.game.entities.configs.PortalConfig",
       "teleportX" : 23,
       "teleportY" : 4,
       "position": {
@@ -11,7 +11,7 @@
       }
     },
     {
-      class: com.csse3200.game.entities.configs.PortalConfig,
+      "class": "com.csse3200.game.entities.configs.PortalConfig",
       "teleportX" : 32,
       "teleportY" : 22,
       "position": {

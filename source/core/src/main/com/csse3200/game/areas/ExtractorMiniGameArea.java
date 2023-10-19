@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the mini game area specifically for the Extractor minigame.
+ */
 public class ExtractorMiniGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ExtractorMiniGameArea.class);
 
@@ -27,6 +30,11 @@ public class ExtractorMiniGameArea extends GameArea {
     public final ArrayList<int[]> holePositions;
     public MouseState mouseState;
 
+    /**
+     * Constructs a new ExtractorMiniGameArea with the specified terrain factory.
+     *
+     * @param terrainFactory The factory used to create terrain entities.
+     */
     public ExtractorMiniGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
@@ -44,6 +52,9 @@ public class ExtractorMiniGameArea extends GameArea {
         this.mouseState = MouseState.DEFAULT;
     }
 
+    /**
+     * Initiates the creation of the game area and its entities.
+     */
     @Override
     public void create() {
         loadAssets();
@@ -60,6 +71,9 @@ public class ExtractorMiniGameArea extends GameArea {
         spawnExtractorsHolePart();
     }
 
+    /**
+     * Spawns extractor repair entities in the game area.
+     */
     public void spawnExtractorsRepairs() {
         for (int i = 3; i < 10; i += 3) {
             for (int j = 3; j < 10; j += 3) {
@@ -70,18 +84,28 @@ public class ExtractorMiniGameArea extends GameArea {
         }
     }
 
+    /**
+     * Spawns an extinguisher entity in the game area.
+     */
+
     public void spawnExtinguisher() {
         Entity extinguisher = StructureFactory.createExtinguisher(terrain, this);
         extinguisher.setPosition(0, 4);
         spawnEntity(extinguisher);
     }
 
+    /**
+     * Spawns a spanner entity in the game area.
+     */
     public void spawnSpanner() {
         Entity spanner = StructureFactory.createSpanner(terrain, this);
         spanner.setPosition(12, 4);
         spawnEntity(spanner);
     }
 
+    /**
+     * Spawns a fire part for the extractor in the game area.
+     */
     public void spawnExtractorsFirePart() {
         Entity extractorFirePart = StructureFactory.createExtractorFirePart(terrain, this);
         int randomIndex = MathUtils.random(0, firePositions.size() - 1);
@@ -90,6 +114,10 @@ public class ExtractorMiniGameArea extends GameArea {
         spawnEntity(extractorFirePart);
         this.firePositions.remove(randomIndex);
     }
+
+    /**
+     * Spawns a hole part for the extractor in the game area.
+     */
     public void spawnExtractorsHolePart() {
 
         Entity extractorHolePart = StructureFactory.createExtractorHolePart(terrain, this);
@@ -99,11 +127,22 @@ public class ExtractorMiniGameArea extends GameArea {
         spawnEntity(extractorHolePart);
         this.holePositions.remove(randomIndex);
     }
+
+    /**
+     * Spawns a bang effect for the extractor at the specified position.
+     *
+     * @param x The x-coordinate of the position.
+     * @param y The y-coordinate of the position.
+     */
     public void spawnExtractorBang(int x, int y) {
         Entity extractorBang = StructureFactory.createExtractorBang();
         extractorBang.setPosition(x, y);
         spawnEntity(extractorBang);
     }
+
+    /**
+     * Spawns the terrain for the game area.
+     */
     private void spawnTerrain() {
         // Background terrain
 
@@ -111,6 +150,10 @@ public class ExtractorMiniGameArea extends GameArea {
         spawnEntity(new Entity().addComponent(terrain));
     }
 
+
+    /**
+     * Loads necessary assets for the mini game area.
+     */
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -122,23 +165,37 @@ public class ExtractorMiniGameArea extends GameArea {
         }
     }
 
+    /**
+     * Unloads assets used by the mini game area.
+     */
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(extractorMiniGameTextures);
     }
 
+
+    /**
+     * Performs cleanup and asset unloading when disposing the mini game area.
+     */
     @Override
     public void dispose() {
         super.dispose();
         this.unloadAssets();
     }
+
+    /**
+     * Displays the user interface for the mini game area.
+     */
     private void displayUI() {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Extractor Repair minigame"));
         spawnEntity(ui);
     }
 
+    /**
+     * Enumeration representing the possible mouse states in the ExtractorMiniGameArea.
+     */
     public enum MouseState {
         DEFAULT,
         EXTINGUISHER,

@@ -37,9 +37,9 @@ public class SpaceNavigationScreen implements Screen {
     /** Textures for the arrows on the screen */
     private final Texture[] arrowTextures = new Texture[8];
     /** Names of the planets */
-    private final String[] planetNames = {"Earth", "Flora Haven", "Cryoheim", "Blazes Refuge"};
+    private final String[] planetNames = {"Earth", "Blazes Refuge", "Cryoheim", "Flora Haven"};
 
-    private final String IMAGE_PATH = "images/navigationmap/";
+    private static final String IMAGE_PATH = "images/navigationmap/";
 
     private final PlanetTravel planetTravel;
 
@@ -87,7 +87,10 @@ public class SpaceNavigationScreen implements Screen {
         skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
 
         TextButton button = new TextButton("Return", skin);
+        TextButton minigame = new TextButton("Space Minigame", skin);
         button.setPosition(Gdx.graphics.getWidth() - (button.getWidth() + 20),
+                Gdx.graphics.getHeight() - (button.getHeight() + 20) );
+        minigame.setPosition(Gdx.graphics.getWidth() - (button.getWidth() + 230),
                 Gdx.graphics.getHeight() - (button.getHeight() + 20) );
 
         button.addListener(new ClickListener() {
@@ -97,7 +100,15 @@ public class SpaceNavigationScreen implements Screen {
             }
         });
 
+        minigame.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                game.setScreen(GdxGame.ScreenType.SPACEMINI_SCREEN);
+            }
+        });
+
         stage.addActor(button);
+        stage.addActor(minigame);
 
         // Add title
         Image navigationTitleImage = new Image(navigationTitle);
@@ -229,7 +240,7 @@ public class SpaceNavigationScreen implements Screen {
                     if (planetType == 1) {
                         planetTravel.returnToCurrent();
                     } else {
-                        game.setScreen(GdxGame.ScreenType.SPACEMINI_SCREEN);
+                        planetTravel.beginInstantTravel();
                     }
                 }
 

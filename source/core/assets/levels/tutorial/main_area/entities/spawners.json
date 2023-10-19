@@ -2,7 +2,7 @@
   "entityType": "SpawnerConfig",
   "entities": [
     {
-      class: com.csse3200.game.entities.configs.SpawnerConfig,
+      "class": "com.csse3200.game.entities.configs.SpawnerConfig",
       "wave1" : [
         1,
         1,

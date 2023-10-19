@@ -35,8 +35,6 @@ public class AttackFactory {
     private static final WeaponConfigs configs =
             FileLoader.readClass(WeaponConfigs.class, "configs/weapons.json");
 
-    //TODO: REMOVE - LEGACY
-
     /**
      * function to generate multiple attacks in a sequence attack
      * @param weaponType

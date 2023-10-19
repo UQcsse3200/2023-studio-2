@@ -39,11 +39,11 @@ public class SpaceGameArea extends GameArea {
             "images/minigame/obstacle-enemy.png",
             "images/minigame/mainship.png"
     };
-    private static final String BackgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
-    private static final String[] spaceMusic = {BackgroundMusic};
+    private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
+    private static final String[] spaceMusic = {backgroundMusic};
     private final TerrainFactory terrainFactory;
 
-    private final ArrayList<Entity> TargeTables;
+    private final ArrayList<Entity> targetTables;
 
     private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
 
@@ -54,7 +54,7 @@ public class SpaceGameArea extends GameArea {
     public SpaceGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
-        this.TargeTables = new ArrayList<>();
+        this.targetTables = new ArrayList<>();
     }
 
     /**
@@ -81,7 +81,7 @@ public class SpaceGameArea extends GameArea {
      */
     private void playMusic() {
         UserSettings.Settings settings = UserSettings.get();
-        Music music = ServiceLocator.getResourceService().getAsset(BackgroundMusic, Music.class);
+        Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
         music.setLooping(true);
         music.setVolume(settings.musicVolume);
         music.play();
@@ -204,7 +204,7 @@ public class SpaceGameArea extends GameArea {
     {
         Entity newShip = MinigameShipFactory.createMinigameShip();
         spawnEntityAt(newShip, SHIP_SPAWN, true, true);
-        TargeTables.add(newShip);
+        targetTables.add(newShip);
         ship = newShip;
         return newShip;
     }

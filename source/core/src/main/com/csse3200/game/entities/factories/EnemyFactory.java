@@ -19,7 +19,6 @@ import com.csse3200.game.entities.enemies.EnemyName;
 import com.csse3200.game.entities.enemies.EnemyType;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
-import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
@@ -48,7 +47,7 @@ public class EnemyFactory {
   public static DialogueBox dialogueBox;
   // Condition to see if a target is alive or not
   private static boolean isAlive;
-  public static List<Entity> enemiesList = new ArrayList<>();
+  protected static List<Entity> enemiesList = new ArrayList<>();
   /**
    * Creates an enemy - using the default config as defined by the type and behaviour
    * @param name - the name of the enemy

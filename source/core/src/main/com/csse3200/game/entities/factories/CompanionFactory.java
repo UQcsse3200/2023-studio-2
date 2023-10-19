@@ -12,7 +12,6 @@ import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.companion.CompanionWeaponComponent;
 import com.csse3200.game.components.companion.*;
 import com.csse3200.game.components.FollowComponent;
-import com.csse3200.game.components.HealthBarComponent;
 import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.player.InteractionControllerComponent;
 import com.csse3200.game.entities.Entity;

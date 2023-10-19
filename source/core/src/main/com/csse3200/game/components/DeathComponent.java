@@ -18,7 +18,6 @@ import java.util.Random;
 public class DeathComponent extends Component {
     private CombatStatsComponent combatStats;
     private Boolean notkilled;
-    private Random rand = new Random();
     private boolean isDying = false; // True when the entity is currently in the process of dying and playing death
     // animation.
 

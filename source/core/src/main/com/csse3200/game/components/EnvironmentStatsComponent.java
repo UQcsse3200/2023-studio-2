@@ -90,6 +90,12 @@ public class EnvironmentStatsComponent extends Component {
             @Override
             public void run() {
                 MapGameArea.isBurning();
+                if (burning) {
+                    player.addHealth(-2);
+                    if (player.getHealth() <= 0) {
+                        timer.stop();
+                    }
+                }
                 if (getImmunity()) {
                     if (getIsFreeze()) {
                         if (getFrozenLevel() > 4) {
@@ -99,12 +105,6 @@ public class EnvironmentStatsComponent extends Component {
                         }
                     }
                     return;
-                }
-                if (burning) {
-                    player.addHealth(-1);
-                    if (player.getHealth() <= 0) {
-                        timer.stop();
-                    }
                 }
                 if (getIsFreeze()) {
                     if (getFrozenLevel() < 50) {

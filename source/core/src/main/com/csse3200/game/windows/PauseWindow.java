@@ -20,7 +20,6 @@ import com.csse3200.game.services.ServiceLocator;
 public class PauseWindow extends Window {
     private final InputOverrideComponent inputOverrideComponent;
     private Entity entity;
-
     public static PauseWindow makeNewPauseWindow(Entity entity) {
         Texture background = new Texture("images/structures/panel.png");
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
@@ -121,7 +120,7 @@ public class PauseWindow extends Window {
 
     @Override
     public boolean remove() {
-        // Stop overriding input when exiting the Laboratory
+        // Stop overriding input when exiting the Pause Window
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
         return super.remove();
     }

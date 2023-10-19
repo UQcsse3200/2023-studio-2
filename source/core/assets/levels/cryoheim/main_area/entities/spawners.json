@@ -3,24 +3,24 @@
   "entities": [
     {
       class: com.csse3200.game.entities.configs.SpawnerConfig,
-      "wave1" : [
-        10,
-        0,
-        0
-      ],
-      "wave2" : [
-        10,
-        5,
-        0
-      ],
-      "wave3" : [
-        10,
-        10,
-        0
-      ],
+      "wave1" : {
+        "redGhost" : 10,
+        "roboMan" : 10,
+        "Knight" : 5
+      },
+      "wave2" : {
+        "roboMan" : 10,
+        "redGhost" : 10,
+        "Mage" : 5
+      },
+      "wave3" : {
+        "Knight" : 5,
+        "Mage" : 5,
+        "chain" : 5
+      },
       "position": {
-        "x": 40,
-        "y": 40
+        "x": 1,
+        "y": 88
       },
       "sounds": {
         "soundsMap": {

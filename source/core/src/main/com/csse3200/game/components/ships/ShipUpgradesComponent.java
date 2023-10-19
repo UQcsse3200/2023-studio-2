@@ -1,7 +1,6 @@
 package com.csse3200.game.components.ships;
 
 import com.badlogic.gdx.Gdx;
-import com.csse3200.game.areas.ShopArea;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
 
@@ -15,7 +14,7 @@ public class ShipUpgradesComponent extends Component {
     /**
      * Assigns a type and targetLayer value to a given ShipUpgrade
      */
-    public ShipUpgradesComponent(ShipUpgradesType type, short targetLayer) {
+    public ShipUpgradesComponent(ShipUpgradesType type) {
         this.type = type;
     }
 

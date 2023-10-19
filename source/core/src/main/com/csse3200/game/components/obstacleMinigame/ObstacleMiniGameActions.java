@@ -15,8 +15,6 @@ import com.csse3200.game.screens.SpaceMapScreen;
 public class ObstacleMiniGameActions extends MainGameActions {
     private static final Logger logger = LoggerFactory.getLogger(ObstacleMiniGameActions.class);
     private final GdxGame game;
-    private final Stage stage;
-    private final SpaceMapScreen screen;
 
     /**
      * Creates a ObstacleMiniGameActions that handles events that exit SpaceGameScreen
@@ -27,8 +25,6 @@ public class ObstacleMiniGameActions extends MainGameActions {
     public ObstacleMiniGameActions(GdxGame game, Stage stage, SpaceMapScreen screen) {
         super(game);
         this.game = game;
-        this.stage = stage;
-        this.screen = screen;
     }
 
 
@@ -37,17 +33,23 @@ public class ObstacleMiniGameActions extends MainGameActions {
      */
     @Override
     public void create() {
-        entity.getEvents().addListener("exit", this::onExit);
-
-        //Temporary.
-        //entity.getEvents().addListener("returnPlanet", this::onReturnPlanet);
+        entity.getEvents().addListener("exit", this::exit);
+        entity.getEvents().addListener("restart", this::restartGame);
     }
 
     /**
      * Swaps to the Main Menu screen.
      */
-    private void onExit() {
+    public void exit() {
         logger.info("Exiting main game screen");
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+    }
+
+    /**
+     * Restarts the space obstacle minigame. Currently capable of only generating a new space minigame
+     */
+    private void restartGame() {
+        logger.info("Restart space minigame");
+        game.setScreen(GdxGame.ScreenType.SPACE_MAP);
     }
 }

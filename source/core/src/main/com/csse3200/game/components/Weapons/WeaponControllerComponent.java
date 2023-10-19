@@ -8,6 +8,7 @@ import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ServiceLocator;
 
 /**
@@ -16,13 +17,20 @@ import com.csse3200.game.services.ServiceLocator;
 public abstract class WeaponControllerComponent extends Component {
     protected WeaponConfig config;
     /* Variable to hold the remaining life (in game ticks) of a weapon */
-    protected int remainingDuration;
+    protected float remainingDuration;
     /* The rotation of the weapon indicating its "forward" direction*/
     protected float currentRotation;
     /* Reference to player entity */
     protected final Entity player;
     /* attack Number in sequence */
     protected int attackNum = 0;
+    /* game time */
+    private final GameTime timeSource;
+
+    /* animator used to control visual*/
+    protected AnimationRenderComponent animator = null;
+    /* SOund component*/
+    protected SoundComponent soundComp = null;
 
     /**
      * Class to store variables of a spawned weapon
@@ -33,6 +41,7 @@ public abstract class WeaponControllerComponent extends Component {
         this.remainingDuration = config.weaponDuration;
         this.currentRotation = attackDirection;
         this.attackNum = attackNum;
+        timeSource = ServiceLocator.getTimeSource();
     }
 
 
@@ -44,6 +53,7 @@ public abstract class WeaponControllerComponent extends Component {
         this.config = config;
         this.remainingDuration = config.weaponDuration;
         this.currentRotation = attackDirection;
+        timeSource = ServiceLocator.getTimeSource();
     }
 
     /**
@@ -56,16 +66,10 @@ public abstract class WeaponControllerComponent extends Component {
         initial_rotation();
         initial_position();
 
-        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-        if (animator != null) {
-            add_animations(animator);
-            initial_animation(animator);
-        }
+        set_animations();
+        initial_animation();
 
-        SoundComponent sComp = entity.getComponent(SoundComponent.class);
-        if (sComp != null) {
-            //sComp.playSound("start");
-        }
+        set_sound();
     }
 
     /**
@@ -76,34 +80,34 @@ public abstract class WeaponControllerComponent extends Component {
         rotate();
         move();
         reanimate();
-        if (--this.remainingDuration <= 0) {
+
+        remainingDuration -= timeSource.getDeltaTime() * 100;
+        if (this.remainingDuration <= 0) {
             despawn();
         }
     }
 
-    public Integer get_spawn_delay() {
+    public int get_spawn_delay() {
         return 0;
     }
 
     /**
      * Function to add animations based on standard animation configurations (Overidable)
      */
-    protected void add_animations(AnimationRenderComponent animator) {
-        switch (config.animationType) {
-            case 8:
-                animator.addAnimation("LEFT3", 0.07f, Animation.PlayMode.NORMAL);
-                animator.addAnimation("RIGHT3", 0.07f, Animation.PlayMode.NORMAL);
-            case 6:
-                animator.addAnimation("LEFT2", 0.07f, Animation.PlayMode.NORMAL);
-                animator.addAnimation("RIGHT2", 0.07f, Animation.PlayMode.NORMAL);
-            case 4:
-                animator.addAnimation("LEFT1", 0.07f, Animation.PlayMode.NORMAL);
-                animator.addAnimation("RIGHT1", 0.07f, Animation.PlayMode.NORMAL);
-                animator.addAnimation("DOWN", 0.07f, Animation.PlayMode.NORMAL);
-            default:
-                animator.addAnimation("UP", 0.07f, Animation.PlayMode.NORMAL);
-                animator.addAnimation("STATIC", 0.07f, Animation.PlayMode.NORMAL);
+    protected void set_animations() {
+        animator = entity.getComponent(AnimationRenderComponent.class);
+        animator.addAnimation("ATTACK", 0.07f, Animation.PlayMode.NORMAL);
+    }
+
+    /**
+     * Function to initlise sound component
+     */
+    protected void set_sound() {
+        SoundComponent sComp = entity.getComponent(SoundComponent.class);
+        if (sComp.checkExists("start")) {
+            sComp.playSound("start");
         }
+
     }
 
     /**
@@ -118,10 +122,8 @@ public abstract class WeaponControllerComponent extends Component {
 
     /**
      * Set intial animation
-     *
-     * @param animator - animation component for the entity
      */
-    protected abstract void initial_animation(AnimationRenderComponent animator);
+    protected abstract void initial_animation();
 
     /**
      * Update entity rotation every tick
@@ -142,13 +144,8 @@ public abstract class WeaponControllerComponent extends Component {
      * respawn a weapon when it runs out of duration or health
      */
     protected void despawn() {
-        AnimationRenderComponent animator = entity.getComponent(AnimationRenderComponent.class);
-
-        if (animator != null) {
-            //entity.getEvents().trigger("playSound", "stop");
-            animator.stopAnimation();
-        }
-
+        //entity.getEvents().trigger("playSound", "stop");
+        animator.stopAnimation();
         Gdx.app.postRunnable(entity::dispose);
     }
 

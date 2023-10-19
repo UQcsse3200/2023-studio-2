@@ -1,7 +1,6 @@
 package com.csse3200.game.entities.buildables;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
@@ -10,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.FOVComponent;
 import com.csse3200.game.components.HealthBarComponent;
-import com.csse3200.game.components.SoundComponent;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.structures.StructureDestroyComponent;
 import com.csse3200.game.components.structures.TurretAnimationController;
 import com.csse3200.game.entities.Entity;
@@ -23,8 +22,6 @@ import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
-import com.csse3200.game.rendering.AtlasRenderComponent;
-import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.Objects;
@@ -33,25 +30,13 @@ import java.util.Objects;
  *  This class is used to create a turret entity.
  */
 public class Turret extends PlaceableEntity{
-
     private long start = System.currentTimeMillis(); // start time
 
     TurretType type; // turret type
-    public int currentAmmo; // current ammo
+    private int currentAmmo; // current ammo
 
     int maxAmmo; // max ammo
     int damage; // damage
-
-    /**
-     * Create a new turret placeable entity to match the provided type
-     * @param type Type of turret to create
-     *             (used to get config file)
-     * @param player Player entity to create turret for
-     *               (used to get position and rotation)
-     */
-    public Turret(TurretType type, Entity player) {
-        this(FileLoader.readClass(TurretConfigs.class, "configs/turrets.json").GetTurretConfig(type)); // create turret with config file
-    }
 
     /**
      * Create a new turret placeable entity to match the provided config file
@@ -73,21 +58,14 @@ public class Turret extends PlaceableEntity{
         addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody)); // add physics component
         addComponent(new ColliderComponent().setLayer(PhysicsLayer.TURRET)); // add collider component
         addComponent(new HitboxComponent().setLayer(PhysicsLayer.STRUCTURE)); // add hitbox component
-        addComponent(new CombatStatsComponent(turretConfig.health, turretConfig.damage, // add combat stats component
+        addComponent(new CombatStatsComponent(turretConfig.health, turretConfig.maxHealth, turretConfig.damage, // add combat stats component
                 turretConfig.attackMultiplier, turretConfig.isImmune));
         addComponent(new HealthBarComponent(true)); // add health bar component
         addComponent(new FOVComponent(4f, this::startDamage, this::stopDamage)); // add fov component
         addComponent(new StructureDestroyComponent());// add structure destroy component
         addComponent(animator); // add animation render component
         addComponent(new TurretAnimationController());
-    }
-
-    /**
-     * This method is used to update the turret.
-     */
-    @Override
-    public void update() {
-        super.update();
+        addComponent(new SaveableComponent<>(gate -> save(gate, turretConfig), TurretConfig.class));
     }
 
     /**
@@ -99,27 +77,14 @@ public class Turret extends PlaceableEntity{
 
         var focusCombatStatsComponent = focus.getComponent(CombatStatsComponent.class);
 
-        var healthBarComponent = getComponent(HealthBarComponent.class);
-
-        if (combatStatsComponent == null || healthBarComponent == null || focusCombatStatsComponent == null) {
+        if (combatStatsComponent == null|| focusCombatStatsComponent == null) {
             return;
         }
 
-        if(combatStatsComponent.getHealth() < combatStatsComponent.getMaxHealth()) {
-            healthBarComponent.setEnabled(true);
-        }
-        else if (combatStatsComponent.getHealth() == combatStatsComponent.getMaxHealth()) {
-            healthBarComponent.setEnabled(false);
-        }
-        else {
-            healthBarComponent.setEnabled(false);
-        }
-
-        if (focusCombatStatsComponent.getHealth() <= 0 || !Canfire()) {
+        if (focusCombatStatsComponent.getHealth() <= 0 || !canFire()) {
             return;
         }
         // give damage until health is 0
-        focus.getComponent(HealthBarComponent.class).setEnabled(true);
         if (System.currentTimeMillis() - this.start > 1000) {
             giveDamage(focus);
             Sound shootingSound = ServiceLocator.getResourceService().getAsset("sounds/turret_shoot.mp3", Sound.class);
@@ -136,9 +101,6 @@ public class Turret extends PlaceableEntity{
     public void stopDamage(Entity focus) {
 
         this.getComponent(AnimationRenderComponent.class).startAnimation("normal"); // set animation
-        if (focus.getComponent(CombatStatsComponent.class) != null && focus.getComponent(CombatStatsComponent.class).getHealth() > 0) {
-            focus.getComponent(HealthBarComponent.class).setEnabled(false);
-        }
     }
 
     /**
@@ -203,7 +165,7 @@ public class Turret extends PlaceableEntity{
      * @return True if the turret can fire, else false.
      */
 
-    public boolean Canfire() {
+    public boolean canFire() {
         return  (currentAmmo > 0) ; // return true if current ammo is greater than 0
     }
 
@@ -246,5 +208,22 @@ public class Turret extends PlaceableEntity{
 
     public void setCurrentAmmo(int currentAmmo) {
         this.currentAmmo = currentAmmo;
+    }
+
+    /**
+     * A function to save the Turret's properties into its config.
+     * @param entity - the turret to save.
+     * @param config - the existing config for the turret.
+     * @return the updated config for the turret.
+     */
+    private static TurretConfig save(Entity entity, TurretConfig config) {
+        if (!(entity instanceof Turret)) {
+            return new TurretConfig();
+        }
+
+        config.position = entity.getGridPosition();
+        config.health = entity.getComponent(CombatStatsComponent.class).getHealth();
+
+        return config;
     }
 }

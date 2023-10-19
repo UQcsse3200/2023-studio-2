@@ -12,7 +12,7 @@ public class NavigationBackground extends StarBackground {
     /**
      * The texture for the space background of the navigation screen.
      */
-    private final Texture spaceBackground;
+    final Texture spaceBackground;
 
     public NavigationBackground() {
         super(200);

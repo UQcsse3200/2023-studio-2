@@ -25,21 +25,32 @@
     "images/upgradetree/exit.png",
     "images/action-feedback/white_color_texture.png",
     "images/action-feedback/warning.png",
+    "images/player/longandwidestatbar.png",
     "images/player/bar-fill.png",
+    "images/player/bar-fill2.png",
+    "images/player/bar-fill3.png",
+    "images/player/bar-fill4.png",
+    "images/player/bar-fill5.png",
     "images/player/planet-frame.png",
     "images/player/statbar.png",
     "images/player/widestatbar.png",
+    "images/player/longandwidestatbar.png",
     "images/player/heart.png",
     "images/resources/durasteel.png",
     "images/resources/nebulite.png",
     "images/resources/solstite.png",
     "images/resources/Cracked_Ground.png",
-    "images/player/bar-fill2.png",
     "images/player/hearts.png",
     "images/explosives/explosive-barrel.png",
     "images/explosives/grenade.png",
     "images/explosives/landmine.png",
-    "images/structure-icons/adv_turret.png"
+    "images/structure-icons/adv_turret.png",
+    "particle-effects/extractor/rubble.png",
+    "particle-effects/extractor/rubble_2.png",
+    "particle-effects/extractor/rubble_3.png",
+    "particle-effects/extractor/dust.png",
+    " images/powerups/speed_potion.png",
+    "images/powerups/speed_boost.png"
   ],
   "textureAtlasPaths": [
     "images/structures/stone_wall.atlas",
@@ -64,8 +75,16 @@
     "sounds/alert.wav",
     "sounds/explosion/grenade.mp3",
     "sounds/explosion/landmine.mp3",
-    "sounds/turret_shoot.mp3"
+    "sounds/turret_shoot.mp3",
+    "sounds/ExitButton.wav",
+    "sounds/structurePlace.wav"
   ],
-  "particleEffectPaths": null,
+  "particleEffectPaths": [
+    "particle-effects/extractor/extractor_rubble_solstite.effect",
+    "particle-effects/extractor/extractor_rubble_nebulite.effect",
+    "particle-effects/extractor/extractor_rubble_durasteel.effect",
+    "particle-effects/deathpotion/Death.effect",
+    "particle-effects/shield/shield.effect"
+  ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
 }

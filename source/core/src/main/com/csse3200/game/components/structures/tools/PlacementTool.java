@@ -3,6 +3,7 @@ package com.csse3200.game.components.structures.tools;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.structures.CostComponent;
+import com.csse3200.game.components.structures.JoinableComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.services.GameStateObserver;
@@ -20,10 +21,14 @@ public abstract class PlacementTool extends Tool {
 
     /**
      * Creates a new tool which allows the placing of structures with the given cost.
-     * @param cost - the cost of the entity being placed.
+     *
+     * @param cost     - the cost of the entity being placed.
+     * @param range
+     * @param texture  - the texture of this tool.
+     * @param ordering - the ordering of this tool.
      */
-    protected PlacementTool(ObjectMap<String, Integer> cost) {
-        super(cost);
+    protected PlacementTool(ObjectMap<String, Integer> cost, float range, String texture, int ordering) {
+        super(cost, range, texture, ordering);
         structurePlacementService = ServiceLocator.getStructurePlacementService();
     }
 
@@ -38,7 +43,7 @@ public abstract class PlacementTool extends Tool {
         PlaceableEntity newStructure = createStructure(player);
         newStructure.addComponent(new CostComponent(cost));
 
-        ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position, false, false);
+        ServiceLocator.getStructurePlacementService().placeStructureAt(newStructure, position);
     }
 
     /**
@@ -51,6 +56,12 @@ public abstract class PlacementTool extends Tool {
      */
     @Override
     protected ToolResponse canInteract(Entity player, GridPoint2 position) {
+        var validity = super.canInteract(player, position);
+
+        if (!validity.isValid()) {
+            return validity;
+        }
+
         var positionValidity = isPositionValid(position);
         if (!positionValidity.isValid()) {
             return positionValidity;
@@ -59,6 +70,18 @@ public abstract class PlacementTool extends Tool {
         var resourceValidity = hasEnoughResources();
         if (!resourceValidity.isValid()) {
             return resourceValidity;
+        }
+
+        var entity = createStructure(player);
+
+        var component = entity.getComponent(JoinableComponent.class);
+
+        if (component != null) {
+            var canPlace = component.canPlaceAt(position);
+
+            if (!canPlace) {
+                return new ToolResponse(PlacementValidity.INVALID_POSITION, "Invalid structure join");
+            }
         }
 
         return ToolResponse.valid();

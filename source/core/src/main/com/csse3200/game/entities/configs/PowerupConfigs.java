@@ -23,6 +23,8 @@ public class PowerupConfigs {
             case DOUBLE_CROSS -> doubleCrossPowerup;
             case DOUBLE_DAMAGE -> doubleDamagePowerup;
             case SNAP -> snapPowerup;
+            case HEALTH -> null;
+            case MANA -> null;
         };
     }
 

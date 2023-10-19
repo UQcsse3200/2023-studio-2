@@ -3,7 +3,7 @@ package com.csse3200.game.screens;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.csse3200.game.GdxGame;
-import com.csse3200.game.components.InitialSequence.InitialScreenDisplay;
+import com.csse3200.game.components.initialsequence.InitialScreenDisplay;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.factories.RenderFactory;
@@ -17,28 +17,29 @@ import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 /**
- * The initial screen of the game, responsible for loading assets and creating UI elements.
+ * A customizable screen for displaying images and text.
  */
 public class InitialScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
+    private static final Logger logger = LoggerFactory.getLogger(InitialScreen.class);
 
-    /**
-     * An array of paths to image textures needed for this screen.
-     */
-    private static final String[] introScreenAssets = {"images/menu/InitialScreenBG.png", "images/menu/InitialScreenImage.png"};
     private final GdxGame game;
     private final Renderer renderer;
+    private ArrayList<String> assetPaths;
+    private ArrayList<String> textList;
+
 
     /**
-     * Creates a new instance of the InitialScreen.
+     * Creates a new instance of the CustomizableScreen.
      *
-     * @param game The main game instance.
+     * @param game        The main game instance.
      */
     public InitialScreen(GdxGame game) {
-        this.game = game;
 
-        logger.debug("Initialising controls screen services");
+        this.game = game;
+        logger.debug("Initializing screen services");
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
         ServiceLocator.registerEntityService(new EntityService());
@@ -47,9 +48,32 @@ public class InitialScreen extends ScreenAdapter {
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(5f, 5f);
-
+        Mainscreentext();
         loadAssets();
         createUI();
+    }
+
+    public void setinitialscreen(ArrayList<String> assetPaths, ArrayList<String> textList){
+        this.assetPaths = assetPaths;
+        this.textList = textList;
+    }
+
+    private void Mainscreentext(){
+        ArrayList<String> stories = new ArrayList<>();
+        stories.add( "Amidst Earth's ruins, you stand, humanity's last hope in the cosmic expanse." );
+        stories.add("Meet Dr. Emily Carter, a fellow Scientist who remains untouched by the virus.");
+        stories.add("With courage intertwined, you both embrace the unknown, a symbiotic bond on this journey.");
+        stories.add("Behold Astro's spacecraft, a sentinel of possibility, ready to explore the celestial unknown.");
+        stories.add("Step into destiny's vessel, as you and Emily set course for the uncharted cosmic domain.");
+
+        ArrayList<String> InitialScreenImages = new ArrayList<>();
+        InitialScreenImages.add("images/menu/InitialScreenImage.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-2.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-3.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-4.png");
+        InitialScreenImages.add("images/menu/InitialScreenImage-5.png");
+
+       setinitialscreen(InitialScreenImages,stories);
     }
 
     @Override
@@ -66,40 +90,40 @@ public class InitialScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         unloadAssets();
-
         renderer.dispose();
         ServiceLocator.clear();
     }
 
     /**
-     * Load all the image textures required for this screen into memory.
+     * Load the image textures required for this screen into memory.
      */
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(introScreenAssets);
+        resourceService.loadTextures(assetPaths.toArray(new String[0]));
         ServiceLocator.getResourceService().loadAll();
     }
 
     /**
-     * Remove all the loaded image textures from the ResourceService, and thus game memory.
+     * Remove the loaded image textures from the ResourceService, and thus game memory.
      */
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(introScreenAssets);
+        resourceService.unloadAssets(assetPaths.toArray(new String[0]));
     }
 
     /**
-     * Creates the intro screen's UI, including components for rendering UI elements to the screen
+     * Creates the screen's UI, including components for rendering UI elements to the screen
      * and capturing and handling UI input.
      */
     private void createUI() {
         logger.debug("Creating UI");
         Stage stage = ServiceLocator.getRenderService().getStage();
         Entity ui = new Entity();
-        ui.addComponent(new InitialScreenDisplay(game))
+        ui.addComponent(new InitialScreenDisplay(game,assetPaths,textList))
                 .addComponent(new InputDecorator(stage, 10));
         ServiceLocator.getEntityService().register(ui);
     }
+
 }

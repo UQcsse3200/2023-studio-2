@@ -39,7 +39,7 @@ public class SprayComponentTest {
         target.create();
         Entity entity = new Entity().addComponent(new PhysicsMovementComponent())
                 .addComponent(new PhysicsComponent())
-                .addComponent(new CombatStatsComponent(100, 10, 1,false));
+                .addComponent(new CombatStatsComponent(100,100, 10, 1,false));
         Component attackComponent = new SprayComponent(target, entity);
         entity.addComponent(attackComponent);
         entity.create();

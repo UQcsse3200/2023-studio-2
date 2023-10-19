@@ -25,7 +25,7 @@ class PlayerDeathScreenTest {
         GdxGame game = mock(GdxGame.class);
         Entity player = new Entity();
         player.setEntityType("player");
-        player.addComponent(new CombatStatsComponent(0, 10, 10, false, 3));
+        player.addComponent(new CombatStatsComponent(0, 0, 10, 10, false, 3));
         final Timer timer = new Timer();
         java.util.TimerTask testScreen = new java.util.TimerTask() {
             @Override
@@ -47,7 +47,7 @@ class PlayerDeathScreenTest {
         GdxGame game = mock(GdxGame.class);
         Entity player = new Entity();
         player.setEntityType("player");
-        player.addComponent(new CombatStatsComponent(0, 10, 10, false, 2));
+        player.addComponent(new CombatStatsComponent(0, 0, 10, 10, false, 2));
         final Timer timer = new Timer();
         java.util.TimerTask testScreen = new java.util.TimerTask() {
             @Override
@@ -69,7 +69,7 @@ class PlayerDeathScreenTest {
         GdxGame game = mock(GdxGame.class);
         Entity player = new Entity();
         player.setEntityType("player");
-        player.addComponent(new CombatStatsComponent(0, 10, 10, false, 1));
+        player.addComponent(new CombatStatsComponent(0, 0, 10, 10, false, 1));
         final Timer timer = new Timer();
         java.util.TimerTask testScreen = new java.util.TimerTask() {
             @Override
@@ -91,7 +91,7 @@ class PlayerDeathScreenTest {
         GdxGame game = mock(GdxGame.class);
         Entity player = new Entity();
         player.setEntityType("player");
-        player.addComponent(new CombatStatsComponent(0, 10, 10, false, 0));
+        player.addComponent(new CombatStatsComponent(0, 0, 10, 10, false, 0));
         final Timer timer = new Timer();
         java.util.TimerTask testScreen = new java.util.TimerTask() {
             @Override

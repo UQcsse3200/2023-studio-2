@@ -1,6 +1,6 @@
 package com.csse3200.game.components;
 
-import com.csse3200.game.areas.mapConfig.GameAreaConfig;
+import com.csse3200.game.areas.map_config.GameAreaConfig;
 import com.csse3200.game.extensions.GameExtension;
 
 
@@ -29,7 +29,7 @@ class EnvironmentStatsComponentTest {
   @Test
   void damage() throws InterruptedException {
 
-    CombatStatsComponent player = new CombatStatsComponent(10, 10, 1, false);
+    CombatStatsComponent player = new CombatStatsComponent(10, 10, 10, 1, false);
     EnvironmentStatsComponent environmentStatsComponent = new EnvironmentStatsComponent();
 
 

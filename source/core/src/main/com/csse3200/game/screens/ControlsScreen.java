@@ -13,13 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ControlGameArea;
 import com.csse3200.game.areas.GameArea;
-
+import static com.badlogic.gdx.Gdx.app;
 import com.csse3200.game.areas.terrain.TerrainFactory;
 import com.csse3200.game.components.ProximityControllerComponent;
+import com.csse3200.game.components.controls.ControlsScreenActions;
 import com.csse3200.game.components.controls.ControlsScreenDisplay;
 import com.csse3200.game.components.gamearea.PerformanceDisplay;
 import com.csse3200.game.components.maingame.MainGameActions;
-import com.csse3200.game.components.maingame.MainGameExitDisplay;
+import com.csse3200.game.components.maingame.MainGamePauseDisplay;
 import com.csse3200.game.components.mainmenu.InsertButtons;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
@@ -47,7 +48,7 @@ import java.util.Map;
 import static com.badlogic.gdx.Gdx.app;
 
 public class ControlsScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(PlanetScreen.class);
+    private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
     private final GdxGame game;
 
     private final String name;
@@ -79,13 +80,13 @@ public class ControlsScreen extends ScreenAdapter {
             "images/structures/stone_wall.png",
             "images/structures/TurretOne.png",
             "images/structures/TurretTwo.png",
+            "images/explosives/landmine.png",
             "images/structures/heal_icon.png"
     };
 
     public ControlsScreen(GdxGame game, String name) {
         this.game = game;
         this.name = name;
-
     }
 
     @Override
@@ -106,7 +107,7 @@ public class ControlsScreen extends ScreenAdapter {
         Texture storyLine = new Texture(Gdx.files.internal("images/controls-images/Controls.png"));
         TextureRegionDrawable storyBackground = new TextureRegionDrawable(storyLine);
         Image image = new Image(storyBackground);
-        image.setHeight(Gdx.graphics.getHeight()/2-150);
+        image.setHeight((float) Gdx.graphics.getHeight() / 2 - 150);
         image.setWidth(Gdx.graphics.getWidth());
         image.setPosition(0,stage.getHeight()-image.getHeight());
         stage.addActor(image);
@@ -129,10 +130,10 @@ public class ControlsScreen extends ScreenAdapter {
             }
         });
         entity.getEvents().addListener("exit", this::onExit);
-
         stage.addActor(exitBtn);
 
     }
+
     public void onExit() {
         game.setScreen(GdxGame.ScreenType.SETTINGS);
     }
@@ -261,12 +262,12 @@ public class ControlsScreen extends ScreenAdapter {
 
         Entity ui = new Entity();
         boolean Isgame = false;
-        //ui.addComponent(new ControlsScreenDisplay(game, Isgame));
+        ui.addComponent(new ControlsScreenDisplay(game, Isgame));
+        System.out.println(game);
         ui.addComponent(new InputDecorator(stage, 10))
-                //  .addComponent(new ControlsScreenActions(game))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
-                .addComponent(new MainGameExitDisplay())
+                .addComponent(new MainGamePauseDisplay(this.game.getScreenType()))
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay());

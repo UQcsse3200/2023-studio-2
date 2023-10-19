@@ -24,17 +24,26 @@ public class PlayerWeaponFactory {
      * @param player     - player entity to track
      * @return A reference to the created weapon entity
      */
-    public static Entity createPlayerWeapon(WeaponType weaponType, Entity player) {
+    public static Entity createPlayerWeapon(WeaponType weaponType, float attackDirection, Entity player) {
         WeaponConfig config = configs.GetWeaponConfig(weaponType);
-        WeaponControllerComponent wepCon = new StaticController(config, player);
+        WeaponControllerComponent wepCon = new StaticController(config, attackDirection, player);
 
-        Texture texture = new Texture(config.imagePath);
+
+        TextureRenderComponent txrRenComp= new TextureRenderComponent(new Texture(config.imagePath));
+        txrRenComp.setRotation(attackDirection);
+        if (attackDirection > 90 && attackDirection < 270) {
+            txrRenComp.setYFlip(true);
+        }
+
         Entity attack = new Entity()
-                .addComponent(new TextureRenderComponent(texture))
+                .addComponent(txrRenComp)
                 .addComponent(wepCon);
 
         attack.setEntityType("playerStaticWeapon");
-        attack.scaleWidth(config.imageScale / 2);
+        attack.scaleWidth(config.staticImageScale);
+        if (weaponType == WeaponType.RANGED_NUKE) {
+            attack.scaleWidth(0.5f);
+        }
         return attack;
     }
 

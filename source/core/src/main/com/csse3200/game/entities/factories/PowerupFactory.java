@@ -18,7 +18,6 @@ public class PowerupFactory {
         throw new IllegalStateException("Utility class");
     }
 
-    // TODO: REMOVE - LEGACY
     /**
      * Creates a powerup entity based on the specified type. The entity will have a
      * texture render component
@@ -35,10 +34,17 @@ public class PowerupFactory {
                 .addComponent(new PowerupComponent(config.type))
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
-                .addComponent(new ItemPickupComponent(PhysicsLayer.ITEMS_ABOVE_PLATFORM))
-                .addComponent(new PowerUpDisplayHUD(config.type));
+                .addComponent(new PowerUpDisplayHUD(config.type))
+                .addComponent(new SaveableComponent<>(s -> {
+            config.position = s.getGridPosition();
+            return config;
+        }, PowerupConfig.class));
+        //NEW INVENTORY WHICH IS JUST POWERUPS
+        powerup.addComponent(new InteractableComponent(entity -> powerup.getComponent(PowerupComponent.class).updatePowerupInventory(), 1f));
 
-        powerup.addComponent(new InteractableComponent(entity -> powerup.getComponent(PowerupComponent.class).applyEffect(), 1f));
+        // OLD INVENTORY WHICH INVOLVES WEAPONS
+        //powerup.addComponent(new InteractableComponent(entity -> powerup.getComponent(PowerupComponent.class).updateInventory(), 1f));
+
         powerup.setScale(0.6f, 0.6f);
 
         return powerup;

@@ -42,6 +42,7 @@ public class SpaceGameArea extends GameArea {
     private static final String BackgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
     private static final String[] spaceMusic = {BackgroundMusic};
     private final TerrainFactory terrainFactory;
+
     private final ArrayList<Entity> TargeTables;
 
     private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
@@ -66,10 +67,14 @@ public class SpaceGameArea extends GameArea {
         displayUI();
         playMusic();
         spawnTerrain();
+        //Who removed spawn ship and spawn goal on creation?!@!!!!!
+        //spawn Goal has to be called first before spawn ship, to not crash calc distance
+        //Should modify later
+        spawnGoal();
+        spawnShip();
         spawnAsteroids();
         createBoundary();
         spawnEnemy();
-
     }
     /**
      * Method for the background music of the game
@@ -89,11 +94,11 @@ public class SpaceGameArea extends GameArea {
      * @param pos Start position from where the number of blocks are added
      */
     private void spawnStaticAsteroidsRight(int n, GridPoint2 pos){
-        Entity asteroidLength = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
+        Entity asteroidlength = MinigameObjectFactory.createStaticAsteroid(STATIC_ASTEROID_SIZE, STATIC_ASTEROID_SIZE);
         if (n <= 0) {
             return;
         }
-        spawnEntityAt(asteroidLength, pos, false, false);
+        spawnEntityAt(asteroidlength, pos, false, false);
         // Increment the position for the next asteroid
         pos.x += 1;
         pos.y += 0;
@@ -111,6 +116,7 @@ public class SpaceGameArea extends GameArea {
             return;
         }
         spawnEntityAt(asteroidWidth, pos, false, false);
+
         // Increment the position for the next asteroid
         pos.y += 1;
         spawnStaticAsteroidsUp(n - 1, pos); // Recursive call
@@ -135,8 +141,8 @@ public class SpaceGameArea extends GameArea {
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
         for (int i = 0; i < NUM_ENEMIES; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity rand_enemy = MinigameObjectFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE);
-            spawnEntityAt(rand_enemy, randomPos,true,false);
+            Entity randomenemy = MinigameObjectFactory.createObstacleEnemy(WORMHOLE_SIZE,WORMHOLE_SIZE);
+            spawnEntityAt(randomenemy, randomPos,true,false);
         }
     }
 

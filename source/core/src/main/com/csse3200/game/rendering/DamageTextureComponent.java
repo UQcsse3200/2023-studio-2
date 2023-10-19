@@ -20,7 +20,7 @@ public class DamageTextureComponent extends RenderComponent {
      * @param texturePath path to texture to be displayed
      */
     public DamageTextureComponent(String texturePath) {
-        this(GetTexture(texturePath));
+        this(getTexture(texturePath));
     }
 
     /**
@@ -40,7 +40,7 @@ public class DamageTextureComponent extends RenderComponent {
      * @return current DamageTextureComponent to allow for chaining
      */
     public DamageTextureComponent addTexture(int threshold, String texturePath) {
-        return addTexture(threshold, GetTexture(texturePath));
+        return addTexture(threshold, getTexture(texturePath));
     }
 
     /**
@@ -56,7 +56,7 @@ public class DamageTextureComponent extends RenderComponent {
     }
 
     //Helper method to get Texture resource from file path
-    private static Texture GetTexture(String texturePath) {
+    private static Texture getTexture(String texturePath) {
         return ServiceLocator.getResourceService().getAsset(texturePath, Texture.class);
     }
 

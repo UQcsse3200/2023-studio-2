@@ -1,16 +1,20 @@
 package com.csse3200.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.Weapons.SpecWeapon.*;
+import com.csse3200.game.components.Weapons.SpecWeapon.GrenadeController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.HomingMissileSprayProjectileController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.HomingProjectileController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.KillerBeeController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Projectile.ProjectileController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Swing.LaserSwordSwingController;
+import com.csse3200.game.components.Weapons.SpecWeapon.Swing.MeleeSwingController;
 import com.csse3200.game.components.Weapons.WeaponControllerComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
-import com.csse3200.game.components.explosives.ExplosiveComponent;
-import com.csse3200.game.components.explosives.ExplosiveConfig;
-import com.csse3200.game.components.player.WeaponComponent;
 import com.csse3200.game.components.player.InventoryComponent;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.WeaponConfig;
@@ -36,11 +40,11 @@ public class AttackFactory {
     /**
      * function to generate multiple attacks in a sequence attack
      * @param weaponType
-     * @param attackDirection
+     * @param clickPos
      * @param player
      * @return
      */
-    public static ArrayList<Pair<Entity, Integer>> createAttacks(WeaponType weaponType, float attackDirection, Entity player) {
+    public static ArrayList<Pair<Entity, Integer>> createAttacks(WeaponType weaponType, Vector2 clickPos, Entity player) {
         WeaponConfig config = configs.GetWeaponConfig(weaponType);
         int numberOfAttacks = config.projectiles;
 
@@ -54,7 +58,7 @@ public class AttackFactory {
 
         ArrayList<Pair<Entity, Integer>> attacks = new ArrayList<>();
         for (int i = 0; i < numberOfAttacks; i++) {
-            Pair<Entity, Integer> attack = createAttack(config, attackDirection, player, i);
+            Pair<Entity, Integer> attack = createAttack(config, clickPos, player, i);
             attacks.add(attack);
         }
 
@@ -64,21 +68,25 @@ public class AttackFactory {
     /**
      * Static function to create a new weapon entity
      * @param config config to weapon to create
-     * @param attackDirection - the initial rotation of the player
+     * @param clickPos - the click pos of the player
      * @param player          - the player using this attack
      * @param attackNum - the number of the attack in the sequence
      * @return A reference to the created weapon entity
      */
-    public static Pair<Entity, Integer> createAttack(WeaponConfig config, float attackDirection, Entity player, int attackNum) {
+    public static Pair<Entity, Integer> createAttack(WeaponConfig config, Vector2 clickPos, Entity player, int attackNum) {
+        float attackDirection = calcRotationAngleInDegrees(player.getCenterPosition(), clickPos);
+
         WeaponControllerComponent wepCon = switch (config.type) {
             case MELEE_WRENCH, MELEE_KATANA ->
                     new MeleeSwingController(config, attackDirection, player);
+            case MELEE_LASER_SWORD -> new LaserSwordSwingController(config, attackDirection, player);
             case MELEE_BEE_STING -> new KillerBeeController(config, attackDirection, player, attackNum);
             case RANGED_BOOMERANG, RANGED_BLUEMERANG -> new BoomerangController(config, attackDirection, player, attackNum);
             case RANGED_GRENADE ->  new GrenadeController(config, attackDirection, player, attackNum);
-            case RANGED_SLINGSHOT -> new ProjectileController(config, attackDirection, player, attackNum);
+            case RANGED_SLINGSHOT, RANGED_SNIPER -> new ProjectileController(config, attackDirection, player, attackNum);
             case RANGED_HOMING -> new HomingProjectileController(config, attackDirection, player, attackNum);
             case RANGED_MISSILES -> new HomingMissileSprayProjectileController(config, attackDirection, player, attackNum);
+            case RANGED_NUKE -> new NukeController(config, clickPos, player, attackNum);
             default -> throw new IllegalArgumentException("No controller defined for weapon type: " + config.type);
         };
 
@@ -89,7 +97,7 @@ public class AttackFactory {
                 .addComponent(new TouchAttackComponent((short)
                         (PhysicsLayer.ENEMY_RANGE | PhysicsLayer.ENEMY_MELEE)))
                 .addComponent(new AnimationRenderComponent(new TextureAtlas(config.textureAtlas)))
-                .addComponent(new CombatStatsComponent(config.health, (int) config.damage, 1, false))
+                .addComponent(new CombatStatsComponent(config.health, config.health, (int) config.damage, 1, false))
                 .addComponent(new SoundComponent(config.sound))
                 .addComponent(wepCon);
 
@@ -100,5 +108,25 @@ public class AttackFactory {
     }
     private AttackFactory() {
         throw new IllegalStateException("Instantiating static util class");
+    }
+
+
+    /**
+     * Calcuate angle between 2 points from the center point to the target point,
+     * angle is
+     * in degrees with 0degrees being in the direction of the positive x-axis going
+     * counter clockwise
+     * up to 359.9... until wrapping back around
+     *
+     * @param centerPt - point from where angle is calculated from
+     * @param targetPt - Tart point to where angle is calculated to
+     * @return return angle between points in degrees from the positive x-axis
+     */
+    private static float calcRotationAngleInDegrees(Vector2 centerPt, Vector2 targetPt) {
+        double angle = Math.toDegrees(Math.atan2(targetPt.y - centerPt.y, targetPt.x - centerPt.x));
+        if (angle < 0) {
+            angle += 360;
+        }
+        return (float) angle;
     }
 }

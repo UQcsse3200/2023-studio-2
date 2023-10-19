@@ -37,7 +37,7 @@ public class SpaceNavigationScreen implements Screen {
     /** Textures for the arrows on the screen */
     private final Texture[] arrowTextures = new Texture[8];
     /** Names of the planets */
-    private final String[] planetNames = {"Earth", "Flora Haven", "Cryoheim", "Blaze's Refuge"};
+    private final String[] planetNames = {"Earth", "Flora Haven", "Cryoheim", "Blazes Refuge"};
 
     private final String IMAGE_PATH = "images/navigationmap/";
 
@@ -229,7 +229,7 @@ public class SpaceNavigationScreen implements Screen {
                     if (planetType == 1) {
                         planetTravel.returnToCurrent();
                     } else {
-                        planetTravel.beginInstantTravel();
+                        game.setScreen(GdxGame.ScreenType.SPACEMINI_SCREEN);
                     }
                 }
 

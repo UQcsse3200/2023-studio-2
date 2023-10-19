@@ -24,7 +24,7 @@
       "images/upgradetree/hammer2.png",
       "images/upgradetree/stick.png",
       "images/upgradetree/exit.png",
-      "images/companion/Companion_spritesheet.png",
+      "images/companion/earth_Companion_spritesheet.png",
       "images/companion/laboratory.png",
       "images/powerups/double_damage.png",
       "images/powerups/double_cross.png",
@@ -39,8 +39,12 @@
       "images/powerups/temp_immunity.png",
       "map/portal.png",
       "images/minigame/fireAnim.png",
+      "images/player/longandwidestatbar.png",
       "images/player/bar-fill.png",
       "images/player/bar-fill2.png",
+      "images/player/bar-fill3.png",
+      "images/player/bar-fill4.png",
+      "images/player/bar-fill5.png",
       "images/player/planet-frame.png",
       "images/player/statbar.png",
       "images/player/widestatbar.png",
@@ -54,7 +58,6 @@
       "map/treetop.png",
       "particle-effects/explosion/particle.png",
       "images/resources/Cracked_Ground.png",
-      "images/enemy/botanist.png",
       "images/npc/Tutnpc.png"
     ],
     "textureAtlasPaths": [
@@ -70,7 +73,7 @@
       "images/weapons/wrench.atlas",
       "images/structures/open_gate.atlas",
       "images/structures/closed_gate.atlas",
-      "images/companion/Companion_spritesheet.atlas",
+      "images/companion/earth_Companion_spritesheet.atlas",
       "images/minigame/fire.atlas",
       "images/structures/ExtractorAnimation.atlas",
       "images/npc/Tutnpc.atlas"
@@ -85,12 +88,13 @@
       "sounds/upgradeTreeTap.wav",
       "sounds/upgradeWeapon.wav",
       "sounds/enemyDeath.wav",
-      "sounds/companionwalksound.wav",
       "sounds/enemySpawner.wav",
       "sounds/turret_shoot.mp3",
       "sounds/alert.wav",
       "sounds/explosion/grenade.mp3",
-      "sounds/explosion/landmine.mp3"
+      "sounds/explosion/landmine.mp3",
+      "sounds/ExitButton.wav",
+      "sounds/structurePlace.wav"
     ],
     "particleEffectPaths": [
       "particle-effects/explosion/explosion.effect",

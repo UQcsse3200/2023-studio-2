@@ -20,6 +20,7 @@ import com.csse3200.game.utils.StringDecorator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * Settings menu display and logic. If you bork the settings, they can be changed manually in
  * CSSE3200Game/settings.json under your home directory (This is C:/users/[username] on Windows).
@@ -152,18 +153,18 @@ public class SettingsMenuDisplay extends UIComponent {
     table.add(settingsTable).expandX().fillX().padBottom(20f).row();
 
 
-    TextButton okButton = new TextButton("CONTROLS", skin);
+    TextButton onControlsButton = new TextButton("CONTROLS", skin);
     Entity entity = new Entity();
-    entity.getEvents().addListener("ok", this::onOK);
-    okButton.addListener(
+    entity.getEvents().addListener("controlsPressed", this::onControlsButton);
+    onControlsButton.addListener(
             new ChangeListener() {
               @Override
               public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("OK button clicked");
-                entity.getEvents().trigger("ok");
+                logger.debug("Control Screen button clicked");
+                game.setScreen(GdxGame.ScreenType.CONTROL_SCREEN);
               }
             });
-    table.add(okButton).expandX().center();
+     table.add(onControlsButton).expandX().center();
 
     // Events on inputs
     uiScaleSlider.addListener(
@@ -269,9 +270,10 @@ public class SettingsMenuDisplay extends UIComponent {
     game.setScreen(ScreenType.MAIN_MENU);
   }
 
-  private void onOK() {
-    logger.info("Start game");
-    game.setScreen(ScreenType.CONTROL_SCREEN);
+  private void onControlsButton() {
+
+    logger.debug("Control Screen button clicked");
+    game.setScreen(GdxGame.ScreenType.CONTROL_SCREEN);
   }
 
   private Integer parseOrNull(String num) {
@@ -283,8 +285,8 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   @Override
-  protected void draw(SpriteBatch batch)
-  {
+  protected void draw(SpriteBatch batch) {
+    // function is set to draw display.
   }
 
   @Override

@@ -2,6 +2,7 @@ package com.csse3200.game.entities;
 
 import com.badlogic.gdx.utils.ObjectMap;
 import com.csse3200.game.components.ParticleComponent;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.components.resources.FissureComponent;
 import com.csse3200.game.entities.configs.FissureConfig;
 import com.csse3200.game.entities.configs.ParticleEffectsConfig;
@@ -9,11 +10,11 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class Fissure extends PlaceableEntity {
     public Fissure(FissureConfig config) {
-        super(2, 2);
+        super(3, 3);
         TextureRenderComponent textureRenderComponent = new TextureRenderComponent("images/resources/Cracked_Ground.png");
         textureRenderComponent.overrideZIndex(-100);
         addComponent(textureRenderComponent);
-        setScale(0.4f, 0.4f);
+        setScale(1.5f, 0.4f);
 
         // Assigns particle texture based on the specific resource
         var particleEffectsConfig = new ParticleEffectsConfig();
@@ -30,6 +31,8 @@ public class Fissure extends PlaceableEntity {
         addComponent(new FissureComponent(config.resource));
 
         this.irremovable = true;
+
+        addComponent(new SaveableComponent<>(fissure -> config, FissureConfig.class));
     }
 
     @Override

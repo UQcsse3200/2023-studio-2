@@ -1,0 +1,33 @@
+boomerang.png
+size: 64, 16
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+ATTACK
+  rotate: false
+  xy: 0, 0
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+ATTACK
+  rotate: false
+  xy: 16, 0
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+ATTACK
+  rotate: false
+  xy: 32, 0
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+ATTACK
+  rotate: false
+  xy: 48, 0
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1

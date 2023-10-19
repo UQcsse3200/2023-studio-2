@@ -7,11 +7,18 @@ import com.csse3200.game.components.SoundComponent;
 import com.csse3200.game.components.player.DeathScreenActions;
 import com.csse3200.game.components.player.DeathScreenDisplay;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.entities.configs.SoundsConfig;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.input.InputDecorator;
+import com.csse3200.game.input.InputFactory;
+import com.csse3200.game.input.InputService;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.rendering.Renderer;
+import com.csse3200.game.services.GameStateObserver;
+import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -24,7 +31,7 @@ public class PlayerDeathScreen extends ScreenAdapter {
     SoundsConfig soundsConfig = FileLoader.readClass(SoundsConfig.class, "configs/deathScreen.json", FileLoader.Location.LOCAL);
     public static final Logger logger = LoggerFactory.getLogger(PlayerDeathScreen.class);
     private final GdxGame game;
-    private final Renderer renderer;
+    private Renderer renderer;
     private static final String[] deathScreenTextures = {"images/deathscreens/deathscreen_0.jpg", "images/deathscreens/deathscreen_1.jpg", "images/deathscreens/deathscreen_2.jpg", "images/deathscreens/deathscreen_3.jpg"};
     private static final String[] deathScreenSounds = {
             "sounds/playerDeathRespawn.wav",
@@ -35,11 +42,28 @@ public class PlayerDeathScreen extends ScreenAdapter {
 
     public PlayerDeathScreen(GdxGame game, int lives) {
         this.game = game;
+        registerServices();
         ServiceLocator.getGameStateObserverService().trigger("updatePlayer", "lives", "set", lives);
         deathScreenDisplay = new DeathScreenDisplay(lives);
-        renderer = RenderFactory.createRenderer();
         loadAssets();
         createUI();
+    }
+
+    /**
+     * Register all the required screen services.
+     */
+    private void registerServices() {
+        ServiceLocator.registerInputService(new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
+        ServiceLocator.registerResourceService(new ResourceService());
+
+        ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+
+        ServiceLocator.registerGameStateObserverService(new GameStateObserver());
+
+        renderer = RenderFactory.createRenderer();
     }
 
     @Override

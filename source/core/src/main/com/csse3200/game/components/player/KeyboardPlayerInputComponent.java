@@ -5,19 +5,22 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.Weapons.WeaponType;
+import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.components.structures.StructureToolPicker;
+import com.csse3200.game.components.upgradetree.UpgradeDisplay;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.WeaponConfig;
-import com.csse3200.game.entities.configs.WeaponConfigs;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.windows.PauseWindow;
 
 import java.util.HashMap;
 import java.util.Timer;
+
+import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 
 
 /**
@@ -33,6 +36,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     private static final int DODGE_DURATION = 300;
     private static final String CHANGEWEAPON = "changeWeapon";
     private static final String WALKSTOP = "walkStop";
+    private static final String BUILDING = "building";
     private Vector2 walkDirection = Vector2.Zero.cpy();
     private boolean dodgeAvailable = true;
     private Entity player;
@@ -105,6 +109,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             return false;
         }
         switch (keycode) {
+            case Keys.ESCAPE -> {
+                // Open the pause window when the Escape key is pressed
+                openPauseWindow();
+                return true;
+            }
             case Keys.SPACE -> {
                 if (!dodgeAvailable ||
                         walkDirection.epsilonEquals(Vector2.Zero)) {
@@ -129,25 +138,46 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 return true;
             }
             case Keys.T -> {
-                if (playerInventory.getEquipped().equals("building")) {
+                if (playerInventory.getEquipped().equals(BUILDING)) {
                     entity.getEvents().trigger("change_structure");
                 }
                 return true;
             }
-            case Keys.NUM_1 -> {
+            case Keys.M -> {
                 triggerInventoryEvent("melee");
+                entity.getComponent(StructureToolPicker.class).hide();
                 return true;
             }
-            case Keys.NUM_2 -> {
+            case Keys.R -> {
                 triggerInventoryEvent("ranged");
+                entity.getComponent(StructureToolPicker.class).hide();
                 return true;
             }
-            case Keys.NUM_3 -> {
+            case Keys.H -> {
                 triggerInventoryEvent("building");
+                entity.getComponent(StructureToolPicker.class).show();
+                return true;
+            }
+            case Keys.U -> {
+                UpgradeDisplay display = UpgradeDisplay.createUpgradeDisplay();
+                ServiceLocator.getRenderService().getStage().addActor(display);
+                return true;
+            }
+            case Keys.NUM_0, Keys.NUM_1, Keys.NUM_2, Keys.NUM_3, Keys.NUM_4,
+                    Keys.NUM_5, Keys.NUM_6, Keys.NUM_7, Keys.NUM_8, Keys.NUM_9 -> {
+                int index = keycode - (Keys.NUM_0 + 1) % 10;
+                entity.getEvents().trigger("selectToolIndex", index);
+                entity.getEvents().trigger("selectWeaponIndex", index);
                 return true;
             }
             case Keys.W, Keys.S, Keys.A, Keys.D -> {
                 triggerWalkEvent();
+                return true;
+            }
+            case Keys.Q -> {
+                if (!playerInventory.getReloading()) {
+                    playerInventory.reloadWeapon();
+                }
                 return true;
             }
             default -> {
@@ -190,7 +220,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         player = ServiceLocator.getEntityService().getPlayer();
         playerInventory = player.getComponent(InventoryComponent.class);
         int cooldown = playerInventory.getEquippedCooldown();
-        if (cooldown > 0) {
+        if (playerInventory.getReloading() || cooldown > 0) {
             return false;
         }
 
@@ -204,7 +234,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 }
                 break;
             // building
-            case "building":
+            case BUILDING:
                 if (button == Input.Buttons.LEFT) {
                     entity.getEvents().trigger("place", screenX, screenY);
                 } else if (button == Input.Buttons.RIGHT) {
@@ -256,13 +286,20 @@ public class KeyboardPlayerInputComponent extends InputComponent {
      * and also trigger the walking sound
      */
     void triggerWalkEvent() {
+
         Entity companion = ServiceLocator.getEntityService().getCompanion();
         Vector2 lastDir = this.walkDirection.cpy();
         this.walkDirection = keysToVector().scl(WALK_SPEED);
         if (this.getTesting() == 0) {
             Directions dir = keysToDirection();
             if (dir == Directions.NONE) {
+
                 entity.getEvents().trigger(WALKSTOP);
+                if (companion != null) {
+                    companion.getEvents().trigger(WALKSTOP);
+                    companion.getEvents().trigger("walkStopAnimation", lastDir);
+                }
+
                 entity.getEvents().trigger("walkStopAnimation", lastDir);
 
                 entity.getEvents().trigger("stopSound", "footstep");
@@ -272,37 +309,51 @@ public class KeyboardPlayerInputComponent extends InputComponent {
             switch (dir) {
                 case UP -> {
                     entity.getEvents().trigger("walkUp");
-                    companion.getEvents().trigger("walkUp");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                    companion.getEvents().trigger("walkUp");}
                 }
                 case DOWN -> {
                     entity.getEvents().trigger("walkDown");
-                    companion.getEvents().trigger("walkDown");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkDown");}
                 }
                 case LEFT -> {
                     entity.getEvents().trigger("walkLeft");
-                    companion.getEvents().trigger("walkLeft");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkLeft");}
                 }
                 case RIGHT -> {
                     entity.getEvents().trigger("walkRight");
-                    companion.getEvents().trigger("walkRight");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkRight");}
                 }
                 case UPLEFT -> {
                     entity.getEvents().trigger("walkUpLeft");
-                    companion.getEvents().trigger("walkUpLeft");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkUpLeft");}
                 }
                 case UPRIGHT -> {
                     entity.getEvents().trigger("walkUpRight");
-                    companion.getEvents().trigger("walkUpRight");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkUpRight");}
                 }
                 case DOWNLEFT -> {
                     entity.getEvents().trigger("walkDownLeft");
-                    companion.getEvents().trigger("walkDownLeft");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkDownLeft");}
                 }
                 case DOWNRIGHT -> {
                     entity.getEvents().trigger("walkDownRight");
-                    companion.getEvents().trigger("walkDownLeft");
+                    if (!companion.getComponent(CombatStatsComponent.class).isDead()){
+                        companion.getEvents().trigger("walkDownRight");}
                 }
-                default -> entity.getEvents().trigger(WALKSTOP);
+                default -> {
+                    entity.getEvents().trigger(WALKSTOP);
+                    if (companion != null) {
+                        companion.getEvents().trigger(WALKSTOP);
+                    }
+                }
+
             }
             if (entity != null) {
                 entity.getEvents().trigger("walk", walkDirection);
@@ -371,6 +422,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         entity.getEvents().trigger("updateAmmo", invComp.getCurrentAmmo(),
                 invComp.getCurrentMaxAmmo(), invComp.getCurrentAmmoUse());
     }
+    private void openPauseWindow() {
+        if (!isWindowOpen()) {
+            MainGameActions mainGameActions = new MainGameActions(entity,game);
+            entity.getEvents().trigger("pause");
+        }
+    }
 
     /**
      * Responsible for dodge action
@@ -411,7 +468,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
      */
     private Vector2 mouseToGamePos(int screenX, int screenY) {
         this.lastMousePos = ServiceLocator.getTerrainService()
-                .ScreenCoordsToGameCoords(screenX, screenY).scl(0.5f);
+                .screenCoordsToGameCoords(screenX, screenY).scl(0.5f);
         return this.lastMousePos.cpy();
     }
 

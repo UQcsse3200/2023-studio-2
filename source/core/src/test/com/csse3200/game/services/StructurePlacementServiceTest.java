@@ -39,7 +39,7 @@ public class StructurePlacementServiceTest {
         GridPoint2 expectedPosition = new GridPoint2(1, 2);
 
         // Simulate placing the entity at the expected position
-        structurePlacementService.placeStructureAt(entity, expectedPosition, true, true);
+        structurePlacementService.placeStructureAt(entity, expectedPosition);
 
         // Check if getStructurePosition returns the expected position
         GridPoint2 actualPosition = structurePlacementService.getStructurePosition(entity);
@@ -62,9 +62,10 @@ public class StructurePlacementServiceTest {
 
         // Simulate placing another entity at the same position
         PlaceableEntity anotherEntity = new PlaceableEntity(2, 2);
-        structurePlacementService.placeStructureAt(anotherEntity, position, true, true);
+        structurePlacementService.placeStructureAt(anotherEntity, position);
 
         // Verify that you cannot place the first entity at the same position now
         assertFalse(structurePlacementService.canPlaceStructureAt(entity, position));
     }
+
 }

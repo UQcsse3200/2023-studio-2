@@ -97,6 +97,7 @@ public class CompanionActions extends Component {
             COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
             entity.getComponent(CombatStatsComponent.class).setImmunity(true);
             entity.getEvents().trigger("companionModeChange","Attack");
+
         }
     }
 
@@ -207,7 +208,7 @@ public class CompanionActions extends Component {
                 Vector2 direction = targetPosition.cpy().sub(entity.getPosition());
                 // Check the distance to the target
                 float distanceToTarget = direction.len();
-                if (distanceToTarget <= 1f) {
+                if (distanceToTarget <= 2f) {
                     // When the companion is within the desired distance, trigger the melee attack
                     triggerInventoryEvent("melee");
                 } else {
@@ -278,20 +279,18 @@ public class CompanionActions extends Component {
         if (!inCombat) {
             Entity enemy = getNextLiveEnemy(enemies);
             if (enemy != null) {
-                Vector2 playerPosition = player.getComponent(PhysicsComponent.class).getBody().getPosition();
-                Vector2 enemyPosition = enemy.getComponent(PhysicsComponent.class).getBody().getPosition();
+                Vector2 playerPosition = player.getPosition();
+                Vector2 enemyPosition = enemy.getPosition();
                 float distanceToPlayer = playerPosition.dst(enemyPosition);
 
                 if (distanceToPlayer <= 5.0f) {
                     inCombat = true;
                     trackPrev = enemyPosition;
-
                     float distanceToEnemy = entity.getPosition().dst(enemyPosition);
 
                     if (distanceToEnemy <= 3.0f) {
                         triggerInventoryEvent("melee");
                     }
-
                     return enemyPosition;
                 }
             }

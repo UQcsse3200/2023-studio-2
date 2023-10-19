@@ -72,8 +72,19 @@ public class NPCFactory {
     animator.addAnimation("row-1-column-5", 0.01f, Animation.PlayMode.LOOP);
     animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.NORMAL);
     animator.addAnimation("row-1-column-6", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-7", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-8", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-1", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-3", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-4", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-5", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-2-column-6", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-1", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-3", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-3-column-4", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-1", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-2", 0.01f, Animation.PlayMode.LOOP);
+    animator.addAnimation("row-4-column-3", 0.01f, Animation.PlayMode.LOOP);
 
     Entity botanist =
             new Entity()
@@ -82,17 +93,12 @@ public class NPCFactory {
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new PhysicsMovementComponent())
                     .addComponent(new InteractionControllerComponent(true))
-                    .addComponent(aiComponent);
-    botanist.addComponent(new InteractableComponent(entity -> {
-      String[] storytext= {"{COLOR=BLACK}Hello I am the Botanist","I am here to accompany you on your journey!"};
-      String[] titletext= {"",""};
+                    .addComponent(new PhysicsMovementComponent());
 
-      botanist.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
-    },10f));
-
-    botanist.scaleHeight(6.1f);
+    botanist.getComponent(ColliderComponent.class).setDensity(1.5f);
+    botanist.scaleHeight(1f);
+    animator.startAnimation("row-1-column-1");
     return botanist;
   }
 

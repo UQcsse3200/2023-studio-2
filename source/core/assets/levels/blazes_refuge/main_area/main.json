@@ -56,7 +56,7 @@
       "map/coolzone.png",
       "particle-effects/explosion/particle.png",
       "images/resources/Cracked_Ground.png",
-      "images/enemy/botanist.png"
+      "images/npc/botanist.png"
     ],
     "textureAtlasPaths": [
       "images/enemy/troll_enemy.atlas",
@@ -65,7 +65,7 @@
       "images/Jail/jail.atlas",
       "images/structures/stone_wall.atlas",
       "images/structures/dirt_wall.atlas",
-      "images/enemy/botanist.atlas",
+      "images/npc/botanist.atlas",
       "images/enemy/boss_enemy.atlas",
       "images/player/player.atlas",
       "images/weapons/wrench.atlas",

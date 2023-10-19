@@ -99,6 +99,7 @@ public class MapGameArea extends GameArea{
         spawnExplosives();
         spawnTreeTop();
         spawnAstro();
+        spawnBotanist();
         spawnTutnpc();
         spawnHellman();
         spawnSpawners();

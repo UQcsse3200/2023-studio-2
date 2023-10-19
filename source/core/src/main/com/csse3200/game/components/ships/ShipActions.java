@@ -41,7 +41,7 @@ public class ShipActions extends Component {
      */
     public ShipActions(int acceleration) {
         //temporary value of health to 1 for testing
-        this.maxHealth =  1;
+        this.maxHealth =  100;
         //temporary value of fuel to 1000 for testing
         this.maxFuel = 1000;
         this.currentAcceleration = acceleration;

@@ -233,10 +233,8 @@ public class SpaceGameArea extends GameArea {
         // Get the center positions of both entities
         Vector2 position1 = entity1.getCenterPosition();
         Vector2 position2 = entity2.getCenterPosition();
-
         // Calculate the distance between the two positions
         float distance = position1.dst(position2);
-
         return distance;
     }
 

@@ -145,16 +145,16 @@ public class PlanetScreen extends ScreenAdapter {
             else if ("flora_haven".equals(name)) {
                 // Create and display the TitleBox
                 String[] title = {"", ""};
-                String[] description = {"NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", ""};
+                String[] description = {"NPC(Dying): I'm grateful you're here.\n I've fallen victim to the toxic plants of Flora Haven.", ""};
                 String[] window = {"dialogue_1", "dialogue_2"};
 
                 titleBox = new TitleBox(game, title, description, skin, window);
             }
             else if ("cryoheim".equals(name)) {
                 // Create and display the TitleBox
-                String[] title = {"", ""};
-                String[] description = {"NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", ""};
-                String[] window = {"dialogue_1", "dialogue_2"};
+                String[] title = {"", "", "", "", ""};
+                String[] description = {"Stranded Astronaut (Greeting): Welcome to Cryoheim, the land of ice and danger.\n I've been stuck on this freezing world for ages.", "Player: How do we survive and navigate through this planet?", "Astronaut: The key to survival here is to stick close to the heat sources.\n Don't venture too far away.", "Hellman (challenger): You seem tough, but can you face\n the mightiest boss of this ice world?", "Hellman (challenger): If you can defeat it, I'll share critical information\n that can upgrade your ship's AI, helping it find a better habitable planet."};
+                String[] window = {"dialogue_4", "dialogue_3", "dialogue_4", "dialogue_6", "dialogue_6"};
 
                 titleBox = new TitleBox(game, title, description, skin, window);
             }

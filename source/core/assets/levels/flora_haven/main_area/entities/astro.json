@@ -3,7 +3,7 @@
   "entities": [
     {
       "class": "com.csse3200.game.entities.configs.AstronautConfig",
-      "spritePath": "images/npc/astronaut_npc.atlas",
+      "spritePath": "images/npc/Astronaut.atlas",
       "position" : {
         "x": 13,
         "y": 40

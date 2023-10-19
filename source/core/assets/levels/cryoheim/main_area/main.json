@@ -26,8 +26,11 @@
       "map/heatzone.png",
       "particle-effects/explosion/particle.png",
       "images/npc/astronaut_npc.png",
+      "images/npc/Astronaut.png",
+      "images/space_navigation_planet_2.png","images/upgradetree/sword.png",
       "images/space_navigation_planet_2.png","images/upgradetree/sword.png",
       "images/companion/Laboratorycryoheim.png"
+
     ],
     "textureAtlasPaths": [
       "images/troll_enemy.atlas",
@@ -36,6 +39,7 @@
       "images/boss_enemy.atlas",
       "images/botanist.atlas",
       "images/weapons/wrench.atlas",
+      "images/npc/Astronaut.atlas",
       "images/npc/astronaut_npc.atlas",
       "images/botanist.atlas"
     ],

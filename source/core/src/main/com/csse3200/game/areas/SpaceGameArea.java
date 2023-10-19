@@ -49,8 +49,8 @@ public class SpaceGameArea extends GameArea {
     private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
 
      */
-    private final TerrainFactory terrainFactory;
-    //private final ArrayList<Entity> targetTables;
+    private TerrainFactory terrainFactory;
+    private ArrayList<Entity> targetTables;
 
     /**
      * Constructor for initializing terrain area
@@ -59,7 +59,7 @@ public class SpaceGameArea extends GameArea {
     public SpaceGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
-        //this.targetTables = new ArrayList<>();
+        this.targetTables = new ArrayList<>();
     }
 
     /**
@@ -305,6 +305,5 @@ public class SpaceGameArea extends GameArea {
     @Override
     public void dispose() {
         super.dispose();
-        this.unloadAssets();
     }
 }

@@ -7,6 +7,8 @@ import com.csse3200.game.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 /**
  * A tool which can be selected via the StructureToolPicker and can be interacted with by the player.
  * This class must be inherited and interact implemented to function.
@@ -110,6 +112,11 @@ public abstract class Tool implements Comparable<Tool> {
         }
 
         return this.getCost() == ((Tool) obj).getCost();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cost, ordering, range, texture);
     }
 
     /**

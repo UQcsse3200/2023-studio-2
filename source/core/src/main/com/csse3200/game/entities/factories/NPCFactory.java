@@ -24,6 +24,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
@@ -227,6 +228,28 @@ public class NPCFactory {
     }, 3f));
     return Hellman;
   }
+
+  public static Entity createCircle(CircleConfig circleConfig) {
+    Entity Circle =
+            new Entity()
+                    .addComponent(new TextureRenderComponent(circleConfig.spritePath))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new InteractionControllerComponent(true));
+
+    Circle.scaleHeight(1.0f);
+    Circle.addComponent(new InteractableComponent(entity -> {
+
+          String[] nextMessages = {"SpaceBar is used to Sprint","You can swap around weapons by 1,2 and 3 \n 1 is Sword \n 2 is Fire Boomerang\n 3 is hammer which builds/repair things",
+                  "After using 3 click on T to open the action picker and click on the action you want to do \n you can also directly switch by using the mouse and clicking on the action you want to do on the right "};
+          String[] nextTitles = {"","",""};
+          String[] window = {"dialogue_5","dialogue_5","dialogue_5"};
+          TitleBox titleBox = new TitleBox(game, nextTitles, nextMessages, skin, window);
+          titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+      }, 3f));
+    return Circle;
+  }
+
   public static Entity createAstronaut(AstronautConfig astronautConfig) {
 
     AITaskComponent aiComponent = new AITaskComponent();

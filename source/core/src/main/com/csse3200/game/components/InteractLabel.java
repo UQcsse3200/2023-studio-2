@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
@@ -42,6 +43,23 @@ public class InteractLabel extends Table {
 
         this.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.fadeOut(0.5f), Actions.fadeIn(0.5f)))); //this makes the interaction prompt blink for better ui
 
+    }
+
+    public InteractLabel(String label, Vector2 position) {
+        super();
+
+        Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
+
+        Label messageLabelBeforeF = new Label(label, skin);
+        messageLabelBeforeF.setColor(Color.WHITE);
+
+        this.add(messageLabelBeforeF);
+
+        this.pack();
+
+        Stage stage = ServiceLocator.getRenderService().getStage();
+        this.setPosition(position.x, position.y);
+        this.setVisible(false);
     }
 }
 

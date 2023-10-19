@@ -54,7 +54,9 @@
     "images/companion/laboratory.png",
     "images/companion/Laboratoryhaven.png",
     "images/companion/laboratoryinferno.png",
-    "images/companion/Laboratorycryoheim.png"
+    "images/companion/Laboratorycryoheim.png",
+    "images/npc/circle.png",
+    "images/powerups/speed_boost.png"
   ],
   "textureAtlasPaths": [
     "images/structures/stone_wall.atlas",

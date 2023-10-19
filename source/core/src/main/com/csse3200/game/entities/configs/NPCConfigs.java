@@ -16,6 +16,7 @@ public class NPCConfigs {
   public AstroConfig Astro = new AstroConfig();
   public TutnpcConfig Tutnpc = new TutnpcConfig();
   public HellmanConfig Hellman = new HellmanConfig();
+  public CircleConfig Circle = new CircleConfig();
   public AstronautConfig astronautConfig = new AstronautConfig();
 
   public JailConfig Jail = new JailConfig();

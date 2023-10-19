@@ -64,7 +64,6 @@ public class StructureFactory {
         return new Extractor(config);
     }
 
-    //HEAD
     public static Entity createExtractorRepair() {
         Entity extractorRepair = new Entity()
                 //.addComponent(new TextureRenderComponent("images/elixir_collector.png")); //This image removed
@@ -162,7 +161,6 @@ public class StructureFactory {
         return extractorBang;
     }
 
-    //TODO: REMOVE - LEGACY
     /**
      * Creates an extractor entity
      *
@@ -228,7 +226,6 @@ public class StructureFactory {
     }
 
 
-    //TODO: REMOVE - LEGACY
     /**
      * Creates a ship entity that uses the default package
      */

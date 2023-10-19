@@ -9,7 +9,9 @@ import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,10 +43,13 @@ public class PowerupComponentTest {
         // Assert
         assertEquals(2, playerEntity.getComponent(CombatStatsComponent.class).getLives());
     }
+
     /**
-     * Tests the effect of applying an extra life power-up to an entity's combat stats
+     * Tests the effect of applying an extra life power-up to an entity's combat
+     * stats
      * when its number of lives is already at a maximum (4).
-     * Ensures that after applying the extra life power-up, the number of entity's lives
+     * Ensures that after applying the extra life power-up, the number of entity's
+     * lives
      * does not change.
      */
     @Test
@@ -60,6 +65,7 @@ public class PowerupComponentTest {
         // Assert
         assertEquals(4, playerEntity.getComponent(CombatStatsComponent.class).getLives());
     }
+
     @Test
     void shouldApplyHealthBoost() {
         Entity playerEntity = new Entity().addComponent(new CombatStatsComponent(100, 100, 10, 2, false, 3))
@@ -150,9 +156,33 @@ public class PowerupComponentTest {
         // Assert after the duration
         assertEquals(1, playerEntity.getComponent(CombatStatsComponent.class).getAttackMultiplier());
     }
+
+    @Test
+    void shouldApplySnap() throws InterruptedException {
+
+        Entity playerEntity = new Entity().addComponent(new PlayerActions())
+                .addComponent(new CombatStatsComponent(100, 100, 10, 1, false, 1));
+        when(entityService.getPlayer()).thenReturn(playerEntity);
+
+        List<Entity> enemies = Mockito.mock(List.class);
+
+        Entity enemy1 = Mockito.mock(Entity.class);
+        Entity enemy2 = Mockito.mock(Entity.class);
+
+        Mockito.when(enemies.size()).thenReturn(2);
+        Mockito.when(enemies.get(0)).thenReturn(enemy1);
+        Mockito.when(enemies.get(1)).thenReturn(enemy2);
+
+        PowerupComponent powerupComponent = new PowerupComponent(PowerupType.SNAP);
+        powerupComponent.applyEffect();
+
+        Mockito.verify(enemies, Mockito.times(0)).remove(Mockito.any(Entity.class));
+    }
+
     /**
      * Tests the retrieval of the type of power-up component.
-     * Ensures that the returned power-up type matches the type with which the component was initialized.
+     * Ensures that the returned power-up type matches the type with which the
+     * component was initialized.
      */
     @Test
     public void testGetType() {
@@ -173,7 +203,8 @@ public class PowerupComponentTest {
 
     /**
      * Tests the ability to change the type of a power-up component.
-     * Ensures that after setting a new type, the returned type matches the newly set type.
+     * Ensures that after setting a new type, the returned type matches the newly
+     * set type.
      */
     @Test
     public void testSetType() {
@@ -191,9 +222,11 @@ public class PowerupComponentTest {
         assertEquals(speedpowerup.getType(), PowerupType.SPEED_BOOST);
         assertEquals(healthpowerup.getType(), PowerupType.HEALTH_BOOST);
     }
+
     /**
      * Tests the ability to set the duration for which the power-up effect lasts.
-     * Ensures that after setting a duration, the returned duration matches the set value.
+     * Ensures that after setting a duration, the returned duration matches the set
+     * value.
      */
     @Test
     public void testSetDuration() {
@@ -207,6 +240,7 @@ public class PowerupComponentTest {
         powerup.setDuration(testDuration2);
         assertEquals(testDuration2, powerup.getDuration());
     }
+
     /**
      * Tests the retrieval of the duration for which the power-up effect lasts.
      * Ensures that the returned duration matches the set value.

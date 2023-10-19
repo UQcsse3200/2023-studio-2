@@ -1,5 +1,3 @@
-
-
 package com.csse3200.game.entities.factories;
 
 import com.csse3200.game.entities.Entity;

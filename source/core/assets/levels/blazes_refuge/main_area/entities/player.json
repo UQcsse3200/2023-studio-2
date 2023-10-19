@@ -2,12 +2,13 @@
   "entityType": "PlayerConfig",
   "entities": [
     {
-      class: com.csse3200.game.entities.configs.PlayerConfig,
+      "class": "com.csse3200.game.entities.configs.PlayerConfig",
       "position": {
-        "x": 10,
+        "x": 20,
         "y": 40
       },
       "health": 100,
+      "maxHealth": 100,
       "baseAttack": 10,
       "attackMultiplier": 1,
       "isImmune": false,

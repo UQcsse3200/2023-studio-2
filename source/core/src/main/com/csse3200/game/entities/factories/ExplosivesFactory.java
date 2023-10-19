@@ -72,7 +72,7 @@ public class ExplosivesFactory {
                 .addComponent(new SaveableComponent<>(landmine -> {
                     config.position = landmine.getGridPosition();
                     return config;
-                }, LandmineConfig.class));;
+                }, LandmineConfig.class));
 
         newLandmine.setScale(0.5f,(float) texture.getHeight() / texture.getWidth() * 0.5f);
 

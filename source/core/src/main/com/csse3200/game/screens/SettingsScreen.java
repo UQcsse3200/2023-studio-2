@@ -2,11 +2,9 @@ package com.csse3200.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.settingsmenu.SettingsMenuDisplay;
 import com.csse3200.game.components.settingsmenu.SettingsStarBackground;
@@ -28,8 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SettingsScreen extends ScreenAdapter {
 
-    private Table table;
-    public AssetManager assetManager = new AssetManager();
     private static final Logger logger = LoggerFactory.getLogger(SettingsScreen.class);
 
     private final GdxGame game;

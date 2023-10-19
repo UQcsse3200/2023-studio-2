@@ -47,7 +47,6 @@ public class SpaceMapScreen extends ScreenAdapter {
     private final GdxGame game;
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
-    private Label distanceLabel;
     private DistanceDisplay distanceDisplay;
     private MiniGameAssetsConfig assets;
     private float distance;
@@ -68,7 +67,6 @@ public class SpaceMapScreen extends ScreenAdapter {
         this.game = game;
         this.assets = FileLoader.readClass(MiniGameAssetsConfig.class, "levels/obstacleGameAssets.json");
         this.loadServices();
-        //Vector2 shipPos = ServiceLocator.getEntityService().getEntitiesByComponent(ShipActions.class).get(0).getPosition();
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
@@ -128,8 +126,6 @@ public class SpaceMapScreen extends ScreenAdapter {
     {
         if(d < 1.0) {
             this.dispose();
-            //this.unloadAssets();
-            //Until main map lag bug is solved, this will simply exit Game
             new PlanetTravel(game).beginInstantTravel();
         }
     }

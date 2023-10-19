@@ -6,6 +6,7 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.ToLongBiFunction;
 
 /**
  * Represents a node within the upgrade tree.

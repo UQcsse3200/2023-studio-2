@@ -3,6 +3,7 @@ package com.csse3200.game.components.enemy;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.enemies.EnemyName;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 
 import java.util.concurrent.Executors;
@@ -40,4 +41,10 @@ public class JumpComponent extends Component {
         }
     }
 
+    /**
+     * return the entity this component attached to
+     */
+    public Entity getEntity(){
+        return entity;
+    }
 }

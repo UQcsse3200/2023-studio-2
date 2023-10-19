@@ -19,6 +19,12 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
+import com.csse3200.game.input.InputService;
+import com.csse3200.game.input.InputFactory;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.physics.PhysicsService;
+import com.csse3200.game.entities.EntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class BrickBreakerScreen extends ScreenAdapter {
     private final GdxGame game;
-    private final PhysicsEngine physicsEngine;
+    private PhysicsEngine physicsEngine;
     private static final String[] background = {"images/deathscreens/deathscreen_0.jpg"};
     public static final Logger logger = LoggerFactory.getLogger(BrickBreakerScreen.class);
     private final Renderer renderer;
@@ -40,10 +46,7 @@ public class BrickBreakerScreen extends ScreenAdapter {
      */
     public BrickBreakerScreen(GdxGame game){
         this.game = game;
-        physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
-
-
-        //Vector2 shipPos = ServiceLocator.getEntityService().getEntitiesByComponent(ShipActions.class).get(0).getPosition();
+        loadServices();
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
@@ -53,6 +56,21 @@ public class BrickBreakerScreen extends ScreenAdapter {
         BrickBreakerGameArea bricKBreakerGameArea= new BrickBreakerGameArea(terrainFactory);
         bricKBreakerGameArea.create();
     }
+
+    /**
+     * Register and load all required services
+     */
+    public void loadServices() {
+        ServiceLocator.registerTimeSource(new GameTime());
+        ServiceLocator.registerInputService(new InputService());
+        ServiceLocator.registerInputService(new InputService(InputFactory.createFromInputType(InputFactory.InputType.KEYBOARD)));
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        physicsEngine = ServiceLocator.getPhysicsService().getPhysics();
+    }
+
     /**
      * Method for rendering the entities in the brick breaker minigame
      * @param delta The time in seconds since the last render.

@@ -49,7 +49,7 @@ public class SpaceGameArea extends GameArea {
 
      */
     private final TerrainFactory terrainFactory;
-    private final ArrayList<Entity> TargeTables;
+    //private final ArrayList<Entity> targetTables;
 
     /**
      * Constructor for initializing terrain area
@@ -58,7 +58,7 @@ public class SpaceGameArea extends GameArea {
     public SpaceGameArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
-        this.targetTables = new ArrayList<>();
+        //this.targetTables = new ArrayList<>();
     }
 
     /**
@@ -210,7 +210,7 @@ public class SpaceGameArea extends GameArea {
     {
         Entity newShip = MinigameShipFactory.createMinigameShip();
         spawnEntityAt(newShip, SHIP_SPAWN, true, true);
-        targetTables.add(newShip);
+        //targetTables.add(newShip);
         ship = newShip;
         return newShip;
     }

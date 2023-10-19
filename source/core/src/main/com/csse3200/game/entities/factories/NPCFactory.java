@@ -98,6 +98,10 @@ public class NPCFactory {
 
     botanist.getComponent(ColliderComponent.class).setDensity(1.5f);
     botanist.scaleHeight(1f);
+    botanist.addComponent(new SaveableComponent<>(p -> {
+      config.position = p.getGridPosition();
+      return config;
+    }, BotanistConfig.class));
     animator.startAnimation("row-1-column-1");
     return botanist;
   }

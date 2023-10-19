@@ -29,6 +29,8 @@ import com.csse3200.game.input.InputFactory;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
+import com.csse3200.game.areas.map_config.MiniGameAssetsConfig;
+import com.csse3200.game.files.FileLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +48,7 @@ public class SpaceMapScreen extends ScreenAdapter {
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
     private DistanceDisplay distanceDisplay;
+    private MiniGameAssetsConfig assets;
 
     /**
      * Method for creating the space map screen for the obstacle minigame
@@ -53,6 +56,7 @@ public class SpaceMapScreen extends ScreenAdapter {
      */
     public SpaceMapScreen(GdxGame game) {
         this.game = game;
+        this.assets = FileLoader.readClass(MiniGameAssetsConfig.class, "levels/obstacleGameAssets.json");
         this.loadServices();
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -113,6 +117,10 @@ public class SpaceMapScreen extends ScreenAdapter {
     {
         if(d < 1.0) {
             this.dispose();
+
+            //this.unloadAssets();
+            //Until main map lag bug is solved, this will simply exit Game
+
             new PlanetTravel(game).beginInstantTravel();
         }
     }
@@ -146,6 +154,12 @@ public class SpaceMapScreen extends ScreenAdapter {
      */
     private void loadAssets() {
         logger.debug("Loading assets");
+
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        if (assets != null) {
+            assets.load(resourceService);
+        }
+
         ServiceLocator.getResourceService().loadAll();
     }
 
@@ -155,7 +169,10 @@ public class SpaceMapScreen extends ScreenAdapter {
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.clearAllAssets();
+        if (assets != null) {
+            assets.unload(resourceService);
+        }
+        //resourceService.clearAllAssets();
     }
 
     /**

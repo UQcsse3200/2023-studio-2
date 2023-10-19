@@ -77,22 +77,22 @@ public class InitialScreenDisplay extends UIComponent {
         backgroundImage.setPosition(0, 0);
         stage.addActor(backgroundImage);;
 
-        AssetManager assetManager = new AssetManager();
-        assetManager.load("images/menu/InitialScreenBG.png", Texture.class);
-        assetManager.finishLoading();
+//        AssetManager assetManager = new AssetManager();
+//        assetManager.load("images/menu/InitialScreenBG.png", Texture.class);
+//        assetManager.finishLoading();
 
         // Load the animated planet
-        planet = new Image(assetManager.get("images/menu/InitialScreenBG.png", Texture.class));
+//        planet = new Image(assetManager.get("images/menu/InitialScreenBG.png", Texture.class));
 
 
-        planet.setSize(2500, 400); // Set to a reasonable fixed size
+//        planet.setSize(2500, 400); // Set to a reasonable fixed size
 
         // The planet moves at a constant speed, so to make it appear at the right time,
         // it is to be placed at the right y coordinate above the screen.
         // The height is informed by the length of the text animation and the game's target FPS.
         // Set the initial position to the top of the screen
-        float planetInitialY = Gdx.graphics.getHeight() - planet.getHeight() + 370;
-        planet.setPosition((float) Gdx.graphics.getWidth() / 2, planetInitialY, Align.center);
+//        float planetInitialY = Gdx.graphics.getHeight() - planet.getHeight() + 370;
+//        planet.setPosition((float) Gdx.graphics.getWidth() / 2, planetInitialY, Align.center);
 
         // Create a Table for layout
         rootTable = new Table();
@@ -116,19 +116,19 @@ public class InitialScreenDisplay extends UIComponent {
         rootTable.row().padTop(30f);
 
         // Add actors to the stage
-        stage.addActor(planet);
+//        stage.addActor(planet);
         stage.addActor(rootTable);
-
-
-        RepeatAction repeatAction = Actions.forever(
-                Actions.sequence(
-                        Actions.moveBy(0, planetToTextPadding, 4.0f), // Move up
-                        Actions.moveBy(0, -planetToTextPadding, 4.0f) // Move down
-                )
-        );
-
-        // Apply the RepeatAction to the planet image
-        planet.addAction(repeatAction);
+//
+//
+//        RepeatAction repeatAction = Actions.forever(
+//                Actions.sequence(
+//                        Actions.moveBy(0, planetToTextPadding, 4.0f), // Move up
+//                        Actions.moveBy(0, -planetToTextPadding, 4.0f) // Move down
+//                )
+//        );
+//
+//        // Apply the RepeatAction to the planet image
+//        planet.addAction(repeatAction);
 
         // Start printing text letter by letter
         printTextLetterByLetter(story, storyLabel, 0.035f, 0.5f);
@@ -311,7 +311,7 @@ public class InitialScreenDisplay extends UIComponent {
     public void dispose() {
         font.dispose();
         rootTable.clear();
-        planet.clear();
+//        planet.clear();
         super.dispose();
     }
 }

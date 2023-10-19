@@ -60,7 +60,8 @@
     "images/structures/closed_gate.atlas",
     "images/player/player.atlas",
     "images/structures/turret_one.atlas",
-    "images/structures/turret_two.atlas"
+    "images/structures/turret_two.atlas",
+    "images/structures/ExtractorAnimation.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav",

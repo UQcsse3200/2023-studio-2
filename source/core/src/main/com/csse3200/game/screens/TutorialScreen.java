@@ -131,15 +131,15 @@ public class TutorialScreen extends ScreenAdapter {
         entity.getEvents().addListener("exit", this::onExit);
         stage.addActor(exitBtn);
         String[] nextMessages = {
-                "W- Move Up\n A- Move Right \n D- Move Left \n S-Move Down ",
+                "W- Move Up  A- Move Right  \n D- Move Left  S-Move Down ",
                 "SpaceBar is used to Sprint",
                 "You can swap around powers by 1,2 and 3 \n 1 is Sword \n 2 is Fire Boomerang\n 3 is hammer which builds/repair things",
                 "After using 3 click on T to open the action picker and click on the action you want to do \n you can also directly switch by using the mouse and clicking on the action you want to do on the right "
         };
         String[] nextTitles = {"", "", "", ""};
-        String[] window = {"default", "default", "default", "default"};
-        TutorialDialogue tutorialDialogue= new TutorialDialogue(game,nextTitles,nextMessages,skin,window);
-        tutorialDialogue.showDialog(ServiceLocator.getRenderService().getStage());
+        String[] window = {"dialogue_5", "dialogue_5", "dialogue_5", "dialogue_5"};
+       TitleBox titleBox =new TitleBox(game,nextTitles,nextMessages,skin,window);
+       titleBox.showDialog(ServiceLocator.getRenderService().getStage());
 
 
     }

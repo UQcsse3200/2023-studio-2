@@ -53,8 +53,8 @@ public class CompanionWeaponFactory {
                     config.weaponSpeed,
                     config.rotationSpeed,
                     config.animationType,
-                    config.initialRotationOffset
-,config.textureAtlas
+                    config.initialRotationOffset,
+                    config.textureAtlas
             );
         }
         if (weaponType == CompanionWeaponType.SWORD) {
@@ -65,8 +65,8 @@ public class CompanionWeaponFactory {
                     config.weaponSpeed,
                     config.rotationSpeed,
                     config.animationType,
-                    config.initialRotationOffset
-                    ,config.textureAtlas
+                    config.initialRotationOffset,
+                    config.textureAtlas
             );
         }
 

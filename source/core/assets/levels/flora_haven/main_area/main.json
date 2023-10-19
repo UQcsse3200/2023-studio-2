@@ -32,7 +32,8 @@
       "images/powerups/temp_immunity.png",
       "images/space_navigation_planet_1.png",
       "map/treetoplush.png",
-      "particle-effects/explosion/particle.png"
+      "particle-effects/explosion/particle.png",
+      "images/companion/Laboratoryhaven.png"
     ],
     "textureAtlasPaths": [
       "images/enemy/troll_enemy.atlas",
@@ -81,7 +82,7 @@
   "winConditions": [
     {
       "resource": "Solstite",
-      "threshold": 100
+      "threshold": 1000
     }
   ]
 }

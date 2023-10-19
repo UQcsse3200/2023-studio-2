@@ -1,4 +1,5 @@
 package com.csse3200.game.entities.factories;
+import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.windows.LabWindow;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.csse3200.game.components.CombatStatsComponent;
@@ -29,13 +30,17 @@ public class LaboratoryFactory {
      * @return The created laboratory entity.
      */
     public static Entity createLaboratory() {
-        // Create a new entity for the laboratory
         Entity laboratory = new Entity()
                 .addComponent(new TextureRenderComponent(config.spritePath))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.LABORATORY))
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.LABORATORY))
-                .addComponent(new CombatStatsComponent(4, 4, 0, 0, false));
+                .addComponent(new CombatStatsComponent(4, 4, 0, 0, false))
+                .addComponent(new SaveableComponent<>(l ->{
+                    LaboratoryConfig laboratoryConfig = config;
+                    laboratoryConfig.position = l.getGridPosition();
+                    return laboratoryConfig;
+                }, LaboratoryConfig.class));
 
         logger.debug("creating laboratory");
         // Set the laboratory's body type and scale

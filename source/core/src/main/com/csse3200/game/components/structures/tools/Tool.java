@@ -49,6 +49,8 @@ public abstract class Tool implements Comparable<Tool> {
      * and also triggers the structure placing sound on valid position
      */
     public void interact(Entity player, GridPoint2 position) {
+        logger.info("Interacting at {}", position);
+
         var validity = canInteract(player, position);
 
         if (!validity.isValid()) {

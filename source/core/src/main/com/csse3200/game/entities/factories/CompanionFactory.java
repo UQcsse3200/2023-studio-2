@@ -76,13 +76,12 @@ public class CompanionFactory {
                         .addComponent(inputComponent)
                         .addComponent(animator)
                         .addComponent(new CompanionWeaponComponent())
-                        /*.addComponent(infanimator)*/
                         .addComponent(new CompanionStatsDisplay(config))
                         .addComponent(new CompanionInventoryComponent(weaponConfigs))
                         .addComponent(new CompanionInGameAlerts())
                         .addComponent(new CompanionAnimationController())
                         .addComponent(new CompanionPowerupInventoryComponent())
-                        .addComponent(new FollowComponent(player,1f))
+                        .addComponent(new FollowComponent(player,3f))
                         .addComponent(new CompanionPowerupActivationDisplay())
                         .addComponent(new InteractionControllerComponent(false));
                          companion.addComponent(new SaveableComponent<>(c -> {

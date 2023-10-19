@@ -66,19 +66,23 @@ public class MainMenuActions extends Component {
       String firstPlanet;
       String secondPlanet = null;
 
-      if (gameConfig.gameState != null && !gameConfig.gameState.isEmpty()) {
+      if (gameConfig.gameState != null) {
           ServiceLocator.getGameStateObserverService().loadGameStateMap(gameConfig.gameState);
+
           firstPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
           secondPlanet = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
-      } else {
-          firstPlanet = gameConfig.levelNames.get(0);
-          if (gameConfig.levelNames.size() > 1) {
-              PlanetScreen tempFirstPlanet = new PlanetScreen(game, gameConfig.levelNames.get(0));
-              secondPlanet = tempFirstPlanet.getNextPlanetName();
+
+          if (firstPlanet == null) {
+              firstPlanet = gameConfig.levelNames.get(0);
+              if (gameConfig.levelNames.size() > 1) {
+                  PlanetScreen tempFirstPlanet = new PlanetScreen(game, gameConfig.levelNames.get(0));
+                  secondPlanet = tempFirstPlanet.getNextPlanetName();
+              }
           }
+
+          ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", firstPlanet);
+          ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", secondPlanet);
       }
-      ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "currentPlanet", firstPlanet);
-      ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "nextPlanet", secondPlanet);
   }
 
   private void loadGame() {

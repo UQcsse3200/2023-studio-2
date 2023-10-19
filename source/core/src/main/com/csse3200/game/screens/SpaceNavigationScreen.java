@@ -9,8 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.utils.LoadUtils;
@@ -150,6 +152,27 @@ public class SpaceNavigationScreen implements Screen {
 
         String currentPlanetName = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
         String nextPlanetName = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
+        System.out.println(nextPlanetName);
+        if (nextPlanetName.equals("END")) {
+            System.out.println("switch");
+            Texture endScreen = new Texture(Gdx.files.internal("images/Deathscreens/endscreen.jpg"));
+            TextureRegionDrawable endBackground = new TextureRegionDrawable(endScreen);
+            Image image = new Image(endBackground);
+            image.setHeight((float) Gdx.graphics.getHeight());
+            image.setWidth(Gdx.graphics.getWidth());
+            image.setPosition(0,stage.getHeight()-image.getHeight());
+            stage.clear();
+            stage.addActor(image);
+            final Timer timer = new Timer();
+            Timer.Task switchToMainMenu = new Timer.Task() {
+                @Override
+                public void run() {
+                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                timer.clear();
+            }
+            };
+            timer.schedule(switchToMainMenu, 5);
+        }
         for (int i = 0; i < planetNames.length; i++) {
 
             // Create planet sprite,

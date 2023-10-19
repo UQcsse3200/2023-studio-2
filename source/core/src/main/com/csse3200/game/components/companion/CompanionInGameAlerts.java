@@ -29,9 +29,6 @@ public class CompanionInGameAlerts extends UIComponent {
     public int previousPlayerHealth;
     public int previousCompanionHealth;
 
-
-    private static final Logger logger = LoggerFactory.getLogger(CompanionInGameAlerts.class);
-
     /**
      * Default constructor for the companions in game alerts
      */

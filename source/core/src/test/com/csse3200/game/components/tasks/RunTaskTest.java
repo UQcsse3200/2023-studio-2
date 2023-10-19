@@ -33,26 +33,26 @@ class RunTaskTest {
     ServiceLocator.registerPhysicsService(new PhysicsService());
   }
 
-//  @Test
-//  void shouldMoveAwayFromTarget() {
-//    Entity target = new Entity();
-//    target.setPosition(2f, 2f);
-//
-//    AITaskComponent ai = new AITaskComponent().addTask(new RunTask(target, 10, 5));
-//    Entity entity = makePhysicsEntity().addComponent(ai);
-//    entity.create();
-//    entity.setPosition(0f, 0f);
-//
-//    float initialDistance = entity.getPosition().dst(target.getPosition());
-//    // Run the game for a few cycles
-//    for (int i = 0; i < 3; i++) {
-//      entity.earlyUpdate();
-//      entity.update();
-//      ServiceLocator.getPhysicsService().getPhysics().update();
-//    }
-//    float newDistance = entity.getPosition().dst(target.getPosition());
-//    assertTrue(newDistance > initialDistance);
-//  }
+  @Test
+  void shouldMoveAwayFromTarget() {
+    Entity target = new Entity();
+    target.setPosition(2f, 2f);
+
+    AITaskComponent ai = new AITaskComponent().addTask(new RunTask(target, 10, 5));
+    Entity entity = makePhysicsEntity().addComponent(ai);
+    entity.create();
+    entity.setPosition(0f, 0f);
+
+    float initialDistance = entity.getPosition().dst(target.getPosition());
+    // Run the game for a few cycles
+    for (int i = 0; i < 3; i++) {
+      entity.earlyUpdate();
+      entity.update();
+      ServiceLocator.getPhysicsService().getPhysics().update();
+    }
+    float newDistance = entity.getPosition().dst(target.getPosition());
+    assertTrue(newDistance > initialDistance);
+  }
 
   @Test
   void shouldRunOnlyWhenInDistanceOne() {
@@ -81,27 +81,6 @@ class RunTaskTest {
     target.setPosition(0f, 12f);
     assertTrue(runTask.getPriority() < 0);
   }
-
-//  @Test
-//  void shouldMoveAwayFromTarget2() {
-//    Entity target = new Entity();
-//    target.setPosition(2f, 2f);
-//
-//    AITaskComponent ai = new AITaskComponent().addTask(new RunTask(target, 10, 5));
-//    Entity entity = makePhysicsEntity().addComponent(ai);
-//    entity.create();
-//    entity.setPosition(0f, 0f);
-//
-//    float initialDistance = entity.getPosition().dst(target.getPosition());
-//    // Run the game for a few cycles
-//    for (int i = 0; i < 3; i++) {
-//      entity.earlyUpdate();
-//      entity.update();
-//      ServiceLocator.getPhysicsService().getPhysics().update();
-//    }
-//    float newDistance = entity.getPosition().dst(target.getPosition());
-//    assertTrue(newDistance > initialDistance);
-//  }
 
   private Entity makePhysicsEntity() {
     return new Entity()

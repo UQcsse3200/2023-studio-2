@@ -2,7 +2,7 @@
   "entityType": "HellmanConfig",
   "entities": [
     {
-      class: com.csse3200.game.entities.configs.HellmanConfig,
+      "class": "com.csse3200.game.entities.configs.HellmanConfig",
       "spritePath": "images/npc/Hellman.atlas",
       "position" : {
         "x": 25,

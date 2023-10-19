@@ -8,7 +8,6 @@ import com.csse3200.game.physics.BodyUserData;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
-import com.csse3200.game.ui.DialogComponent;
 import com.badlogic.gdx.utils.Timer;
 
 /**
@@ -85,7 +84,6 @@ public class TouchAttackComponent extends Component {
 
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     Entity source = ((BodyUserData) me.getBody().getUserData()).entity;
-    DialogComponent dialogue = target.getComponent(DialogComponent.class);
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
     CombatStatsComponent sourceStats = source.getComponent(CombatStatsComponent.class);
     leftContact = false;

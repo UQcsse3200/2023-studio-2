@@ -154,4 +154,112 @@ public static final long SPAWN_DELAY = 3000;  // 3 seconds
         Entity enemy = EnemyFactory.createEnemy(name);
         ServiceLocator.getStructurePlacementService().spawnEntityAtVector(enemy, worldPos);
     }
+
+    public LinkedHashMap<String, Integer> getWave1() {
+        LinkedHashMap<String, Integer> currentWaveContents = new LinkedHashMap<>();
+
+        EnemyName name;
+        int count;
+
+        for (Map.Entry<String, Integer> entry : config.wave1.entrySet()) {
+            name = EnemyName.getEnemyName(entry.getKey());
+            count = entry.getValue();
+            if (currentWave == 0) {
+                if (enemyType1.equals(name)) {
+                    currentWaveContents.put(name.toString(), enemyType1ToSpawn);
+                }
+                if (enemyType2.equals(name)) {
+                    currentWaveContents.put(name.toString(), enemyType2ToSpawn);
+                }
+                if (enemyType3.equals(name)) {
+                    currentWaveContents.put(name.toString(), enemyType3ToSpawn);
+                }
+            }
+            if (currentWave > 0) {
+                currentWaveContents.put(name.toString(), 0);
+            }
+        }
+        return currentWaveContents;
+    }
+
+    public LinkedHashMap<String, Integer> getWave2() {
+        LinkedHashMap<String, Integer> currentWaveContents = new LinkedHashMap<>();
+
+        EnemyName name;
+        int count;
+
+        for (Map.Entry<String, Integer> entry : config.wave2.entrySet()) {
+            name = EnemyName.getEnemyName(entry.getKey());
+            count = entry.getValue();
+            if (currentWave == 1) {
+                if (enemyType1 == null) {
+                    currentWaveContents.put(name.toString(), count);
+                } else if (enemyType1.equals(name)) {
+                    currentWaveContents.put(name.toString(), enemyType1ToSpawn);
+                } else {
+                    currentWaveContents.put(name.toString(), count);
+                }
+                if (enemyType2 == null) {
+                    currentWaveContents.put(name.toString(), count);
+                } else if (enemyType2.equals(name)) {
+                    currentWaveContents.put(name.toString(), enemyType2ToSpawn);
+                } else {
+                    currentWaveContents.put(name.toString(), count);
+                }
+                if (enemyType3 == null) {
+                    currentWaveContents.put(name.toString(), count);
+                } else if (enemyType3.equals(name)) {
+                    currentWaveContents.put(name.toString(), enemyType3ToSpawn);
+                } else {
+                    currentWaveContents.put(name.toString(), count);
+                }
+            }
+            if (currentWave < 1) {
+                currentWaveContents.put(name.toString(), count);
+            }
+            if (currentWave > 1) {
+                currentWaveContents.put(name.toString(), 0);
+            }
+        }
+        return currentWaveContents;
+    }
+
+    public LinkedHashMap<String, Integer> getWave3() {
+        LinkedHashMap<String, Integer> currentWaveContents = new LinkedHashMap<>();
+
+        EnemyName name;
+        int count;
+
+        for (Map.Entry<String, Integer> entry : config.wave3.entrySet()) {
+            name = EnemyName.getEnemyName(entry.getKey());
+            count = entry.getValue();
+            if (currentWave == 2) {
+                if (enemyType1 == null) {
+                    currentWaveContents.put(name.toString(), count);
+                } else if (enemyType1.equals(name)) {
+                    currentWaveContents.put(name.toString(), enemyType1ToSpawn);
+                } else {
+                    currentWaveContents.put(name.toString(), count);
+                }
+                if (enemyType2 == null) {
+                    currentWaveContents.put(name.toString(), count);
+                } else if (enemyType2.equals(name)) {
+                    currentWaveContents.put(name.toString(), enemyType2ToSpawn);
+                } else {
+                    currentWaveContents.put(name.toString(), count);
+                }
+                if (enemyType3 == null) {
+                    currentWaveContents.put(name.toString(), count);
+                } else if (enemyType3.equals(name)) {
+                    currentWaveContents.put(name.toString(), enemyType3ToSpawn);
+                } else {
+                    currentWaveContents.put(name.toString(), count);
+                }
+            }
+            if (currentWave < 2) {
+                currentWaveContents.put(name.toString(), count);
+            }
+        }
+        return currentWaveContents;
+    }
 }

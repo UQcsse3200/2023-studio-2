@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * It initializes game services, loads assets, and creates the user interface for the mini-screen.
  */
 public class MiniScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(SpaceMapScreen.class);
+    private static final Logger logger = LoggerFactory.getLogger(MiniScreen.class);
 
     /**
      * An array of paths to image textures needed for this screen.

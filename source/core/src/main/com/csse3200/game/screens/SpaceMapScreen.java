@@ -45,7 +45,6 @@ public class SpaceMapScreen extends ScreenAdapter {
     private final GdxGame game;
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
-    private Label distanceLabel;
     private DistanceDisplay distanceDisplay;
 
     /**
@@ -55,7 +54,6 @@ public class SpaceMapScreen extends ScreenAdapter {
     public SpaceMapScreen(GdxGame game) {
         this.game = game;
         this.loadServices();
-        //Vector2 shipPos = ServiceLocator.getEntityService().getEntitiesByComponent(ShipActions.class).get(0).getPosition();
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
@@ -115,7 +113,6 @@ public class SpaceMapScreen extends ScreenAdapter {
     {
         if(d < 1.0) {
             this.dispose();
-            //this.unloadAssets();
             new PlanetTravel(game).beginInstantTravel();
         }
     }
@@ -149,7 +146,6 @@ public class SpaceMapScreen extends ScreenAdapter {
      */
     private void loadAssets() {
         logger.debug("Loading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
         ServiceLocator.getResourceService().loadAll();
     }
 

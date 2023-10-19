@@ -1,0 +1,12 @@
+coolzone.png
+size: 392, 392
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Flicker
+  rotate: false
+  xy: 0, 0
+  size: 392, 392
+  orig: 392, 392
+  offset: 0, 0
+  index: -1

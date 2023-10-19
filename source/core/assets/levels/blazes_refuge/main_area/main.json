@@ -31,11 +31,8 @@
       "images/powerups/extra_life.png",
       "images/powerups/snap.png",
       "images/powerups/death_potion.png",
-      "images/powerups/health_potion.png",
-      "images/powerups/invincibility_potion.png",
       "images/powerups/speed_boost.png",
       "images/powerups/health_boost.png",
-      "images/powerups/health_potion.png",
       "images/powerups/temp_immunity.png",
       "map/portal.png",
       "images/minigame/fireAnim.png",
@@ -83,6 +80,8 @@
       "sounds/playerLow_health.wav",
       "sounds/dodgingAlertSweep.wav",
       "sounds/footStepsInTheForestGround.wav",
+      "sounds/weapons/boomerang.wav",
+      "sounds/weapons/slingshot.wav",
       "sounds/PlayerHealthRecharge.wav",
       "sounds/playerBoostRecharge.wav",
       "sounds/upgradeTreeTap.wav",
@@ -94,20 +93,28 @@
       "sounds/explosion/grenade.mp3",
       "sounds/explosion/landmine.mp3",
       "sounds/ExitButton.wav",
-      "sounds/structurePlace.wav"
+      "sounds/structurePlace.wav",
+      "sounds/weapons/Katana.wav",
+      "sounds/weapons/boomerang.wav",
+      "sounds/weapons/slingshot.wav",
+      "sounds/weapons/beeStringKatana.wav",
+      "sounds/weapons/nuke.wav",
+      "sounds/weapons/missile.wav",
+      "sounds/weapons/laserSword.wav"
     ],
     "particleEffectPaths": [
       "particle-effects/explosion/explosion.effect",
       "particle-effects/extractor/durasteel.effect",
       "particle-effects/extractor/nebulite.effect",
       "particle-effects/extractor/solstite.effect",
-      "particle-effects/explosion/bigBallCombustion.effect"
+      "particle-effects/explosion/bigBallCombustion.effect",
+      "particle-effects/shield/shield.effect"
     ],
     "backgroundMusicPath": "sounds/BGM_03_mp3.wav"
   },
 
-  "mapName": "Infernal Challenge",
-  "planetImage": "images/planets/space_navigation_planet_3.png",
+  "mapName": "Blaze's Refuge",
+  "planetImage": "images/navigationmap/planets/blazes_refuge.png",
   "terrainPath": "map/Hellmapp.tmx",
   "winConditions": [
     {

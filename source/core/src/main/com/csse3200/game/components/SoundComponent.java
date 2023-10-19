@@ -56,6 +56,11 @@ public class SoundComponent extends Component {
         for (var entry : soundsConfig.soundsMap.entries()) {
             logger.debug("Entity {} loading in sound {} with id {}", entity, entry.value, entry.key);
 
+            if (entry.value.isEmpty()) {
+                logger.warn("Blank file specifed, Entity {}", entity);
+                continue;
+            }
+
             Sound sound = ServiceLocator.getResourceService().getAsset(entry.value, Sound.class);
 
             if (sound == null) {

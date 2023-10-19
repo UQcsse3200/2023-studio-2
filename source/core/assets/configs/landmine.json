@@ -5,5 +5,5 @@
   "baseAttack": 100,
   "damageRadius": 2.5,
   "chainRadius": 3,
-  "chainable": false,
+  "chainable": false
 }

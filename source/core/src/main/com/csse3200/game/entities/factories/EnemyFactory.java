@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.csse3200.game.ai.tasks.AITaskComponent;
 import com.csse3200.game.components.*;
-import com.csse3200.game.components.enemy.GodComponent;
-import com.csse3200.game.components.enemy.InvisibilityComponent;
-import com.csse3200.game.components.enemy.RingBurstComponent;
-import com.csse3200.game.components.enemy.SprayComponent;
+import com.csse3200.game.components.enemy.*;
 import com.csse3200.game.components.flags.EnemyFlag;
 import com.csse3200.game.components.npc.EnemyAnimationController;
 import com.csse3200.game.components.npc.targetComponent;
@@ -261,6 +258,7 @@ public class EnemyFactory {
       enemy.addComponent(new SprayComponent(findPlayer(targets), enemy));
     } else if (config.name == EnemyName.Knight) {
       enemy.addComponent(new RingBurstComponent(enemy));
+      enemy.addComponent(new JumpComponent(enemy));
     }
   }
 

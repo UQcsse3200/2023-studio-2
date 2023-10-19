@@ -20,7 +20,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(GameExtension.class)
-class RunTaskTest {
+class SpawnAttackTaskTest {
   @BeforeEach
   void beforeEach() {
     // Mock rendering, physics, game time
@@ -34,28 +34,7 @@ class RunTaskTest {
   }
 
   @Test
-  void shouldMoveAwayFromTarget() {
-    Entity target = new Entity();
-    target.setPosition(2f, 2f);
-
-    AITaskComponent ai = new AITaskComponent().addTask(new RunTask(target, 10, 5));
-    Entity entity = makePhysicsEntity().addComponent(ai);
-    entity.create();
-    entity.setPosition(0f, 0f);
-
-    float initialDistance = entity.getPosition().dst(target.getPosition());
-    // Run the game for a few cycles
-    for (int i = 0; i < 3; i++) {
-      entity.earlyUpdate();
-      entity.update();
-      ServiceLocator.getPhysicsService().getPhysics().update();
-    }
-    float newDistance = entity.getPosition().dst(target.getPosition());
-    assertTrue(newDistance > initialDistance);
-  }
-
-  @Test
-  void shouldRunOnlyWhenInDistanceOne() {
+  void shouldNotBeActive() {
     Entity target = new Entity();
     target.setPosition(0f, 6f);
 
@@ -63,24 +42,30 @@ class RunTaskTest {
     entity.create();
     entity.setPosition(0f, 0f);
 
-    RunTask runTask = new RunTask(target, 10, 5);
-    runTask.create(() -> entity);
+    SpawnAttackTask spawnTask = new SpawnAttackTask(target, 1f, 10, 0);
+    spawnTask.create(() -> entity);
 
-    // Not currently active, target is too far, should have negative priority
-    assertTrue(runTask.getPriority() < 0);
-
-    // When in view distance, should give higher priority
-    target.setPosition(0f, 4f);
-    assertEquals(10, runTask.getPriority());
-
-    target.setPosition(0f, 8f);
-    runTask.start();
-    assertEquals(-1, runTask.getPriority());
-
-    // When active, should not chase outside chase distance
-    target.setPosition(0f, 12f);
-    assertTrue(runTask.getPriority() < 0);
+    // Not currently active, does not need to spawn entities
+    assertTrue(spawnTask.getPriority() < 0);
   }
+
+  @Test
+  void shouldBeActive() {
+    Entity target = new Entity();
+    target.setPosition(0f, 6f);
+
+    Entity entity = makePhysicsEntity();
+    entity.create();
+    entity.setPosition(0f, 0f);
+
+    SpawnAttackTask spawnTask = new SpawnAttackTask(target, 1f, 10, 10);
+    spawnTask.create(() -> entity);
+
+    // Currently active as entities need to be spawned
+      assertEquals(10, spawnTask.getPriority());
+  }
+
+
 
   private Entity makePhysicsEntity() {
     return new Entity()

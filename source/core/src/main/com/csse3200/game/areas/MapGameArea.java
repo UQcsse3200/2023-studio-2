@@ -406,7 +406,6 @@ public class MapGameArea extends GameArea{
 
         // environmental damage
         newPlayer.getComponent(EnvironmentStatsComponent.class).setSafeMap(mapConfig);
-        newPlayer.getComponent(EnvironmentStatsComponent.class).damage(newPlayer.getComponent(CombatStatsComponent.class));
 
         newPlayer.getEvents().addListener("deathScreen", this::initiateDeathScreen);
         newPlayer.getEvents().addListener("death", () ->

@@ -86,9 +86,11 @@ public class StructurePlacementService {
 
         tilePos = position.get(entity);
 
-        for (int x = tilePos.x; x < (tilePos.x + entity.getWidth()); x++) {
-            for (int y = tilePos.y; y < (tilePos.y + entity.getHeight()); y++) {
-                placedStructures.remove(new GridPoint2(x, y));
+        if (tilePos != null) {
+            for (int x = tilePos.x; x < (tilePos.x + entity.getWidth()); x++) {
+                for (int y = tilePos.y; y < (tilePos.y + entity.getHeight()); y++) {
+                    placedStructures.remove(new GridPoint2(x, y));
+                }
             }
         }
 

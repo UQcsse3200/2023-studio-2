@@ -168,14 +168,19 @@ public class SpaceNavigationScreen implements Screen {
             stage.addActor(image);
             inputOverrideComponent = new InputOverrideComponent();
             ServiceLocator.getInputService().register(inputOverrideComponent);
-            entity.getEvents().trigger("pauseGame");
+
+            if (entity != null) {
+                entity.getEvents().trigger("pauseGame");
+            }
             final Timer timer = new Timer();
             Timer.Task switchToMainMenu = new Timer.Task() {
                 @Override
                 public void run() {
                 game.setScreen(GdxGame.ScreenType.MAIN_MENU);
                 ServiceLocator.getInputService().unregister(inputOverrideComponent);
-                entity.getEvents().trigger("resumeGame");
+                if (entity != null) {
+                    entity.getEvents().trigger("resumeGame");
+                }
                 timer.clear();
             }
             };

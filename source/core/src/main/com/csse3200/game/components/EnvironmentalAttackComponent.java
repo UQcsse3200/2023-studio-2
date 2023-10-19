@@ -60,7 +60,6 @@ public class EnvironmentalAttackComponent extends Component {
     }
 
     private void damage(EnvironmentStatsComponent targetState, CombatStatsComponent targetStats) {
-        targetState.damage(targetStats);
         if (targetState.getFrozenLevel() < 100) {
             targetState.setFrozenLevel(targetState.getFrozenLevel() + 1);
         }

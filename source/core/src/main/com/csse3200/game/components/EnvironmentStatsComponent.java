@@ -3,6 +3,8 @@ package com.csse3200.game.components;
 import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.map_config.GameAreaConfig;
+import com.csse3200.game.components.companion.CompanionActions;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ public class EnvironmentStatsComponent extends Component {
 
     private int frozenLevel;
     private boolean burning;
+    private long lastDamage;
 
     public EnvironmentStatsComponent() {
         this.frozenLevel = 0;
@@ -78,46 +81,43 @@ public class EnvironmentStatsComponent extends Component {
         this.isImmune = false;
     }
 
-    /** Damages over time effect, has a five-second delay. Repeats every second.
-     *  Effect checks whether you are in an applicable area
-     */
-    public void damage(CombatStatsComponent player) {
-        if (this.isSafeMap) {
+    @Override
+    public void update() {
+        super.update();
+
+        if (isSafeMap) {
             return;
         }
-        Timer timer = new Timer();
-        timer.scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                MapGameArea.isBurning();
-                if (burning) {
-                    player.addHealth(-2);
-                    if (player.getHealth() <= 0) {
-                        timer.stop();
-                    }
-                }
-                if (getImmunity()) {
-                    if (getIsFreeze()) {
-                        if (getFrozenLevel() > 4) {
-                            setFrozenLevel(getFrozenLevel() - 4);
-                        } else {
-                            setFrozenLevel(0);
-                        }
-                    }
-                    return;
-                }
-                if (getIsFreeze()) {
-                    if (getFrozenLevel() < 50) {
-                        setFrozenLevel(getFrozenLevel() + 2);
-                    } else {
-                        setFrozenLevel(50);
-                    }
-                }
-                player.addHealth(-1);
-                if (player.getHealth() <= 0) {
-                    timer.stop();
-                }
+
+        if (ServiceLocator.getTimeSource().getTimeSince(lastDamage) < 1000) {
+            return;
+        }
+
+        lastDamage = ServiceLocator.getTimeSource().getTime();
+
+        var combatStats = entity.getComponent(CombatStatsComponent.class);
+
+        if (combatStats.isDead()) {
+            return;
+        }
+
+        MapGameArea.isBurning();
+        if (burning) {
+            combatStats.addHealth(-2);
+            if (combatStats.getHealth() <= 0) {
+                setIsImmune();
             }
-        },1,1);
+        }
+        if (getImmunity()) {
+            return;
+        }
+        if (getIsFreeze()) {
+            if (getFrozenLevel() < 50) {
+                setFrozenLevel(getFrozenLevel() + 2);
+            } else {
+                setFrozenLevel(50);
+            }
+        }
+        combatStats.addHealth(-1);
     }
 }

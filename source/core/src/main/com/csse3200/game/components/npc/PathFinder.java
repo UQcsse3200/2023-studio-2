@@ -51,6 +51,16 @@ public class PathFinder {
             }
         }
 
+        if (start.x < 0 || start.x >= nodeMap.length
+            || target.x < 0 || target.x >= nodeMap.length) {
+            return new ArrayList<>();
+        }
+
+        if (start.y < 0 || start.y >= nodeMap[start.x].length
+            || target.y < 0 || target.y >= nodeMap[start.x].length) {
+            return new ArrayList<>();
+        }
+
         Node startNode = nodeMap[start.x][start.y];
         Node targetNode = nodeMap[target.x][target.y];
 

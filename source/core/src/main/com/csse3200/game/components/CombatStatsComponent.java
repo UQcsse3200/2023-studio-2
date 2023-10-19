@@ -25,7 +25,7 @@ public class CombatStatsComponent extends Component {
   private int baseAttack;
   private final int maxHealth;
   private int attackMultiplier;
-  public Boolean isImmune;
+  public Boolean isImmune = false;
   private int lives;
   private boolean dead = false;
 

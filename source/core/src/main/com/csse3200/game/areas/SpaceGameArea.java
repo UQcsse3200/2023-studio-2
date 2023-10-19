@@ -32,23 +32,6 @@ public class SpaceGameArea extends GameArea {
     private Entity ship;
     private Entity goal;
     private static final int NUM_ASTEROIDS = 100;
-
-    /*
-    Legacy - To be Deleted, asset loading transferred to SpaceMapScreen, unless there is a need to do asset load in
-    SpaceGameArea
-    private static final String[] spaceMiniGameTextures = {
-            "images/minigame/SpaceMiniGameBackground.png",
-            "images/minigame/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-            "images/ship/Ship.png",
-            "images/minigame/wormhole.png",
-            "images/minigame/obstacle-enemy.png",
-            "images/minigame/mainship.png"
-    };
-    private static final String BackgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
-    private static final String[] spaceMusic = {BackgroundMusic};
-    private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
-
-     */
     private TerrainFactory terrainFactory;
     private ArrayList<Entity> targetTables;
 
@@ -68,12 +51,8 @@ public class SpaceGameArea extends GameArea {
      */
     @Override
     public void create() {
-        //loadAssets();
         displayUI();
         spawnTerrain();
-        //Who removed spawn ship and spawn goal on creation?!@!!!!!
-        //spawn Goal has to be called first before spawn ship, to not crash calc distance
-        //Should modify later
         spawnGoal();
         spawnShip();
         spawnAsteroids();
@@ -86,9 +65,6 @@ public class SpaceGameArea extends GameArea {
      */
     private void playMusic() {
         UserSettings.Settings settings = UserSettings.get();
-        //Legacy
-        //Music music = ServiceLocator.getResourceService().getAsset(BackgroundMusic, Music.class);
-        //This music asset is loaded in SpaceMapScreen
         Music music = ServiceLocator.getResourceService().getAsset("sounds/BGM_03_mp3.wav", Music.class);
         music.setLooping(true);
         music.setVolume(settings.musicVolume);
@@ -123,7 +99,6 @@ public class SpaceGameArea extends GameArea {
             return;
         }
         spawnEntityAt(asteroidWidth, pos, false, false);
-
         // Increment the position for the next asteroid
         pos.y += 1;
         spawnStaticAsteroidsUp(n - 1, pos); // Recursive call
@@ -138,7 +113,6 @@ public class SpaceGameArea extends GameArea {
         spawnStaticAsteroidsUp(30,new GridPoint2(-1,0));
         spawnStaticAsteroidsUp(30,new GridPoint2(59,0));
     }
-
 
     /**
      * Method for spawning enemies randomly across the map in the minigame
@@ -173,18 +147,15 @@ public class SpaceGameArea extends GameArea {
         Random random = new Random();
         int randomX, randomY;
         GridPoint2 position;
-
         // Continue generating random positions until an unoccupied position is found.
         do {
             randomX = random.nextInt(terrain.getMapBounds(0).x);
             randomY = random.nextInt(terrain.getMapBounds(0).y);
             position = new GridPoint2(randomX, randomY);
         } while (isPositionOccupied(position));
-
         Entity newGoal = MinigameObjectFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
         spawnEntityAt(newGoal, position, false, false);
         goal = newGoal;
-
         return goal;
     }
 
@@ -201,7 +172,6 @@ public class SpaceGameArea extends GameArea {
         return false; // Position is not occupied.
     }
 
-
     /**
      * DisplayUI method for displaying Space game in the main menu
      */
@@ -210,8 +180,6 @@ public class SpaceGameArea extends GameArea {
         ui.addComponent(new GameAreaDisplay("Space Game"));
         spawnEntity(ui);
     }
-
-
 
     /**
      * Method for spawning terrain for background of obstacle minigame
@@ -227,7 +195,6 @@ public class SpaceGameArea extends GameArea {
         Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
     }
 
-
     /**
      * Method for spawning ship on the obstacle minigame map
      */
@@ -235,11 +202,10 @@ public class SpaceGameArea extends GameArea {
     {
         Entity newShip = MinigameShipFactory.createMinigameShip();
         spawnEntityAt(newShip, SHIP_SPAWN, true, true);
-        //targetTables.add(newShip);
+        targetTables.add(newShip);
         ship = newShip;
         return newShip;
     }
-
 
     /**
      * Getter method for ship
@@ -248,7 +214,6 @@ public class SpaceGameArea extends GameArea {
     public Entity getShip(){
         return ship;
     }
-
 
     /**
      * Getter method for goal
@@ -274,30 +239,6 @@ public class SpaceGameArea extends GameArea {
 
         return distance;
     }
-
-    /*
-    LEGACY
-    private void loadAssets() {
-        logger.debug("Loading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(spaceMiniGameTextures);
-        resourceService.loadMusic(spaceMusic);
-        resourceService.loadTextureAtlases(spaceTextureAtlases);
-        while (!resourceService.loadForMillis(10)) {
-            // This could be upgraded to a loading screen
-            logger.info("Loading... {}%", resourceService.getProgress());
-        }
-    }
-
-    private void unloadAssets() {
-        logger.debug("Unloading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(spaceMiniGameTextures);
-        resourceService.unloadAssets(spaceMusic);
-        resourceService.unloadAssets(spaceTextureAtlases);
-
-    }
-     */
 
     /**
      * Override method for disposing and unloading assets

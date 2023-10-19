@@ -20,7 +20,6 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.UIComponent;
 
 import java.util.*;
-import java.util.List;
 
 /**
  * Represents the display component for the player's inventory in the game.

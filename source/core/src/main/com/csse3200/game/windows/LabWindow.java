@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.companion.CompanionPowerupInventoryComponent;
 import com.csse3200.game.components.PowerupType;
+import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.services.ServiceLocator;
@@ -25,14 +26,17 @@ public class LabWindow extends Window {
     private Image healthPowerupsImage;
     private Image speedPowerupsImage;
     private Entity companion = ServiceLocator.getEntityService().getCompanion();
-    private int Health_powerups = companion.getComponent(CompanionPowerupInventoryComponent.class).getPowerupInventoryCount(PowerupType.HEALTH_BOOST);
-    private int Speed_powerups = companion.getComponent(CompanionPowerupInventoryComponent.class).getPowerupInventoryCount(PowerupType.SPEED_BOOST);
+    private int healthpowerups = companion.getComponent(CompanionPowerupInventoryComponent.class).getPowerupInventoryCount(PowerupType.HEALTH_BOOST);
+    private int speedpowerups = companion.getComponent(CompanionPowerupInventoryComponent.class).getPowerupInventoryCount(PowerupType.SPEED_BOOST);
     private TextButton[] potionButton=new TextButton[6];
     private Texture potionImage;
     private String potionName;
 
-    public static LabWindow MakeNewLaboratory() {
+    public static LabWindow makeNewLaboratory() {
         Texture background = new Texture("images/companion/lab.png");
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("pauseGame");
+        }
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new LabWindow(background);
     }
@@ -63,8 +67,8 @@ public class LabWindow extends Window {
         healthPowerupsImage.setPosition(30, getHeight() - 70);
         speedPowerupsImage.setPosition(healthPowerupsImage.getX() + healthPowerupsImage.getWidth() + 25, getHeight()- 70);
 
-        healthPowerupsLabel = new Label(": " + Health_powerups, skin);
-        speedPowerupsLabel = new Label(": " + Speed_powerups, skin);
+        healthPowerupsLabel = new Label(": " + healthpowerups, skin);
+        speedPowerupsLabel = new Label(": " + speedpowerups, skin);
 
         float labelScale = 0.25f; // Adjust this value to the desired scale
 
@@ -176,6 +180,9 @@ public class LabWindow extends Window {
      * Call this method to exit the Laboratory
      */
     private void failLaboratory() {
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("resumeGame");
+        }
         remove();
     }
 
@@ -186,6 +193,9 @@ public class LabWindow extends Window {
     @Override
     public boolean remove() {
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("resumeGame");
+        }
         return super.remove();
     }
 
@@ -201,17 +211,17 @@ public class LabWindow extends Window {
     private boolean canUnlockPowerup(PowerupType powerupType) {
         // Implement your logic to check if the powerup can be unlocked
         if (powerupType == PowerupType.EXTRA_LIFE) {
-            return Health_powerups >= 2;
+            return healthpowerups >= 2;
         } else if (powerupType == PowerupType.DOUBLE_CROSS) {
-            return Health_powerups >= 1 && Speed_powerups >= 2;
+            return healthpowerups >= 1 && speedpowerups >= 2;
         } else if (powerupType == PowerupType.DOUBLE_DAMAGE) {
-            return Speed_powerups >= 2;
+            return speedpowerups >= 2;
         } else if (powerupType == PowerupType.SNAP) {
-            return Health_powerups >= 2 && Speed_powerups >= 2;
+            return healthpowerups >= 2 && speedpowerups >= 2;
         } else if (powerupType == PowerupType.TEMP_IMMUNITY) {
-            return Health_powerups >= 2 && Speed_powerups >= 1;
+            return healthpowerups >= 2 && speedpowerups >= 1;
         } else if (powerupType == PowerupType.DEATH_POTION) {
-            return Health_powerups >= 1 && Speed_powerups >= 1;
+            return healthpowerups >= 1 && speedpowerups >= 1;
         }
         return false;
     }

@@ -200,7 +200,7 @@ public class CompanionWeaponTargetComponent extends Component {
 
                         public void run() {
                             if (enemies.contains(enemy)) {var distance = companion.getCenterPosition().dst(enemy.getCenterPosition());
-                                if (distance <= 2.5f) {  enemy.getComponent(CombatStatsComponent.class).addHealth((int)-40.0f);
+                                if (distance <= 1.5f) {  enemy.getComponent(CombatStatsComponent.class).addHealth((int)-40.0f);
 
                                 if(enemy.getComponent(CombatStatsComponent.class).getHealth() == 0)
                                 {  enemies.remove(enemy);}

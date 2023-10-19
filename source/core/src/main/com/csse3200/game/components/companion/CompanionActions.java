@@ -88,6 +88,7 @@ public class CompanionActions extends Component {
             entity.getEvents().trigger("companionModeChange","Normal");
             entity.getComponent(CombatStatsComponent.class).setImmunity(false);
             entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
+            entity.getEvents().trigger(CHANGEWEAPON,CompanionWeaponType.BOW);
         } else if (Objects.equals(mode, COMPANION_MODE_DEFENCE)) {
             COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
             entity.getEvents().trigger("companionModeChange","Defence");
@@ -96,6 +97,7 @@ public class CompanionActions extends Component {
         } else if (Objects.equals(mode, COMPANION_MODE_ATTACK)) {
             COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
             entity.getComponent(CombatStatsComponent.class).setImmunity(true);
+            entity.getEvents().trigger(CHANGEWEAPON,CompanionWeaponType.SWORD);
             entity.getEvents().trigger("companionModeChange","Attack");
 
         }
@@ -255,6 +257,7 @@ public class CompanionActions extends Component {
     public void triggerMakeCompanionShield() {
         ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, CompanionWeaponType.SHIELD);
     }
+
 
     /**
      * trigger the creation of any

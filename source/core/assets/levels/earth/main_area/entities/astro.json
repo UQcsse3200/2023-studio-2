@@ -2,7 +2,7 @@
   "entityType": "AstroConfig",
   "entities": [
     {
-      class: com.csse3200.game.entities.configs.AstroConfig,
+      "class": "com.csse3200.game.entities.configs.AstroConfig",
       "spritePath": "images/npc/Astro_NPC.atlas",
       "position" : {
         "x": 24,

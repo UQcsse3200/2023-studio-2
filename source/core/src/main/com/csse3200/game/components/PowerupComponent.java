@@ -76,11 +76,24 @@ public class PowerupComponent extends Component {
                 applyDoubleCross();
                 break;
             case SNAP:
-                applySnap();
-                break;
+                if (player.getComponent(PlayerActions.class) == null) {
+                    return;
+                } else {
+                    List<Entity> enemies = EnemyFactory.getEnemyList();
+                    int enemyCount = enemies.size() / 2;
+                    for (int i = 1; i <= enemyCount; i++) {
+                        int nextInt = random.nextInt(enemies.size()) - 1;
+                        Entity enemy = enemies.get(nextInt);
+                        while (enemy == null) {
+                            nextInt = random.nextInt(enemies.size()) - 1;
+                            enemy = enemies.get(nextInt);
+                        }
+                        enemy.dispose();
+                    }
+                    break;
+                }
             case DEATH_POTION:
                 applyDeath();
-
             default:
                 throw new IllegalArgumentException("You must specify a valid PowerupType");
         }

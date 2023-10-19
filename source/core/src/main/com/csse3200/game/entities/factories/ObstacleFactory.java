@@ -5,9 +5,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.components.SaveableComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.PlaceableEntity;
-import com.csse3200.game.entities.buildables.Turret;
-import com.csse3200.game.entities.buildables.TurretType;
 import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
@@ -25,7 +22,7 @@ import com.csse3200.game.rendering.TextureRenderComponent;
 
 public class ObstacleFactory {
 
-  public static float WALL_SIZE = 0.1f;
+  public static float wallSize = 0.1f;
 
   private static final WallConfigs configs =
           FileLoader.readClass(WallConfigs.class, "configs/walls.json");
@@ -63,7 +60,6 @@ public class ObstacleFactory {
     return tree;
   }
 
-  //TODO: REMOVE - LEGACY
   /**
    * Creates a tree entity.
    * @return entity
@@ -162,7 +158,6 @@ public class ObstacleFactory {
     return asteroid;
   }
 
-  //TODO: REMOVE - LEGACY
   /**
    * Creates an Asteroid that has bounce
    * @param width Asteroid width in world units

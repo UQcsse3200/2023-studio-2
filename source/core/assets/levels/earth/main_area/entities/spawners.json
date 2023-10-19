@@ -2,7 +2,7 @@
   "entityType": "SpawnerConfig",
   "entities": [
     {
-      class: com.csse3200.game.entities.configs.SpawnerConfig,
+      "class": "com.csse3200.game.entities.configs.SpawnerConfig",
       "wave1" : {
         "necromancer" : 1,
         "roboMan" : 0,
@@ -29,7 +29,7 @@
       }
     },
     {
-      class: com.csse3200.game.entities.configs.SpawnerConfig,
+      "class": "com.csse3200.game.entities.configs.SpawnerConfig",
       "wave1" : {
         "Knight" : 1,
         "necromancer" : 0,

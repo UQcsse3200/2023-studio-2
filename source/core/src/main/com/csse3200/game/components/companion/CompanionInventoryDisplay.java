@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.components.PowerupType;
+import com.csse3200.game.components.maingame.MainGameActions;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.configs.PowerupConfig;
 import com.csse3200.game.entities.configs.PowerupConfigs;
 import com.csse3200.game.files.FileLoader;
@@ -35,7 +37,6 @@ public class CompanionInventoryDisplay extends Window {
     List<PowerupConfig> secondRowPotions = new ArrayList<>();
 
     private CompanionInventoryComponent inventoryComponent;
-
 
     public CompanionInventoryDisplay(Texture background, CompanionInventoryComponent inventoryComponent) {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
@@ -201,7 +202,6 @@ public class CompanionInventoryDisplay extends Window {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 int updatedCount = inventoryComponent.getPowerupCount(powerupType);
-                //System.out.println("Power-up Type: " + powerupType + ", Updated Count: " + updatedCount);
                 updateCountButton(updatedCount, countButton);
             }
         });
@@ -288,6 +288,9 @@ public class CompanionInventoryDisplay extends Window {
     public boolean remove() {
         //Stop overriding input when exiting
         ServiceLocator.getInputService().unregister(inputOverrideComponent);
+        for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
+            mainGame.getEvents().trigger("resumeGame");
+        }
         return super.remove();
     }
 

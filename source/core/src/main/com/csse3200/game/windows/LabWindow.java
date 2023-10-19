@@ -91,12 +91,12 @@ public class LabWindow extends Window {
         // Fill the entire LabWindow
 
         Texture[] potionImages = {
-                new Texture("images/companion/DeathPotionbutton.png"),
-                new Texture("images/companion/TEMPIMMUNbutton.png"),
-                new Texture("images/companion/Doubledamagebutton.png"),
-                new Texture("images/compaion/Extralifebutton.png"),
-                new Texture("images/companion/SNAPbutton.png"),
-                new Texture("images/companion/doublecrossbutton.png")
+                new Texture("images/powerups/death_potion.png"),
+                new Texture("images/powerups/temp_immunity.png"),
+                new Texture("images/powerups/double_damage.png"),
+                new Texture("images/powerups/extra_life.png"),
+                new Texture("images/powerups/snap.png"),
+                new Texture("images/powerups/double_cross.png")
         };
 
         String[] potionNames = {

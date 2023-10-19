@@ -61,14 +61,14 @@ public class ControlsScreenDisplayTest {
     }
 
     private void verifyAssetLoaded(String assetPath) {
-        // Replace with the actual logic to verify asset loading
+        // Verify asset loading
         ResourceService resourceService = ServiceLocator.getResourceService();
         boolean isLoaded = resourceService.containsAsset(assetPath, Texture.class);
         assertTrue(isLoaded, "Asset not loaded: " + assetPath);
     }
 
     private void verifyAssetUnloaded(String assetPath) {
-        // Replace with the actual logic to verify asset unloading
+        // Verify asset unloading
         ResourceService resourceService = ServiceLocator.getResourceService();
         boolean isUnloaded = !resourceService.containsAsset(assetPath, Texture.class);
         assertTrue(isUnloaded, "Asset not unloaded: " + assetPath);

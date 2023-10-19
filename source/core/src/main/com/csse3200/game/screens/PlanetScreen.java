@@ -70,10 +70,11 @@ public class PlanetScreen extends ScreenAdapter {
     /** Service Instances */
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
-    public static boolean titleBoxDisplayed = false;
+    public static boolean titleBoxDisplayed;
 
     /** file paths of textures for screen to load. */
     private AssetsConfig assets;
+    private TitleBox titleBox;
 
     /**
      * Construct the PlanetScreen instance for the planet of given name.
@@ -86,7 +87,6 @@ public class PlanetScreen extends ScreenAdapter {
         this.game = game;
         this.name = name;
         this.assets = FileLoader.readClass(AssetsConfig.class, "levels/global_assets.json");
-
         String levelName = LoadUtils.formatName(name);
         try {
             this.levelConfig = ConfigLoader.loadLevel(levelName);
@@ -117,16 +117,48 @@ public class PlanetScreen extends ScreenAdapter {
 
         this.allGameAreas.get(currentAreaName).create();
         this.player = allGameAreas.get(currentAreaName).getPlayer();
-        if ("earth".equals(name)) {
-            showTitleBox();
-        }
+
+        showTitleBox();
+
         ServiceLocator.registerGameArea(this.allGameAreas.get(currentAreaName));
     }
 
     private void showTitleBox() {
         if (!titleBoxDisplayed) {
-            // Create and display the TitleBox
-            TitleBox titleBox = new TitleBox(game, "", "NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", skin, "dialogue");
+            if ("earth".equals(name)) {
+                // Create and display the TitleBox
+                String[] title = {"", "",""};
+                String[] description = {"NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.","Emily: Do you also hear something ?\n I do think there is someone calling for help","Player: Yes I also hear something out \n Don't worry, I will help him get  out of here !"};
+                String[] window = {"dialogue_1", "dialogue_2","dialogue_3"};
+
+                titleBox = new TitleBox(game, title, description, skin, window);
+            }
+            if ("blazes_refuge".equals(name)) {
+                // Create and display the TitleBox
+                String[] title = {"", ""};
+                String[] description = {"Emily : Blaze's Refuge, a fiery world filled with danger.\n Let's explore and gather data for the ship's AI. ", "Player: We should be careful.\n I can sense some danger here."};
+                String[] window = {"dialogue_2", "dialogue_3"};
+
+                titleBox = new TitleBox(game, title, description, skin, window);
+            }
+            if ("flora_haven".equals(name)) {
+                // Create and display the TitleBox
+                String[] title = {"", ""};
+                String[] description = {"NPC(Dying): I'm grateful you're here.\n I've fallen victim to the toxic plants of Flora Haven.", ""};
+                String[] window = {"dialogue_1", "dialogue_2"};
+
+                titleBox = new TitleBox(game, title, description, skin, window);
+            }
+            if ("cryoheim".equals(name)) {
+                // Create and display the TitleBox
+                String[] title = {"", "", "", "", ""};
+                String[] description = {"Stranded Astronaut (Greeting): Welcome to Cryoheim, the land of ice and danger.\n I've been stuck on this freezing world for ages.", "Player: How do we survive and navigate through this planet?", "Astronaut: The key to survival here is to stick close to the heat sources.\n Don't venture too far away.", "Hellman (challenger): You seem tough, but can you face\n the mightiest boss of this ice world?", "Hellman (challenger): If you can defeat it, I'll share critical information\n that can upgrade your ship's AI, helping it find a better habitable planet."};
+                String[] window = {"dialogue_4", "dialogue_3", "dialogue_4", "dialogue_6", "dialogue_6"};
+
+                titleBox = new TitleBox(game, title, description, skin, window);
+            }
+            // Adjust title and skin as needed
+            titleBox.showDialog(ServiceLocator.getRenderService().getStage());
             // Adjust title and skin as needed
             titleBox.showDialog(ServiceLocator.getRenderService().getStage());
 

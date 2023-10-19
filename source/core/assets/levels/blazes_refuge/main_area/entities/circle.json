@@ -1,0 +1,13 @@
+{
+  "entityType": "CircleConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.CircleConfig,
+      "spritePath": "images/npc/circle.png",
+      "position" : {
+        "x": 28,
+        "y": 57
+      }
+    }
+  ]
+}

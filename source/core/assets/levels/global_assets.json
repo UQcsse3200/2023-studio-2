@@ -50,6 +50,7 @@
     "particle-effects/extractor/rubble_3.png",
     "particle-effects/extractor/dust.png",
     " images/powerups/speed_potion.png",
+    "images/npc/circle.png",
     "images/powerups/speed_boost.png"
   ],
   "textureAtlasPaths": [

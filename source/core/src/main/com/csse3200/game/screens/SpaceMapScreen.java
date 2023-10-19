@@ -64,6 +64,7 @@ public class SpaceMapScreen extends ScreenAdapter {
      * @param game Obstacle minigame
      */
     public SpaceMapScreen(GdxGame game) {
+        logger.debug("Initialising SpaceMapScreen");
         this.game = game;
         this.assets = FileLoader.readClass(MiniGameAssetsConfig.class, "levels/obstacleGameAssets.json");
         this.loadServices();
@@ -161,7 +162,7 @@ public class SpaceMapScreen extends ScreenAdapter {
      * Loads all assets
      */
     private void loadAssets() {
-        logger.debug("Loading assets");
+        logger.debug("Loading assets, SpaceMapScreen");
         ResourceService resourceService = ServiceLocator.getResourceService();
         if (assets != null) {
             assets.load(resourceService);
@@ -173,12 +174,13 @@ public class SpaceMapScreen extends ScreenAdapter {
      * Unloads all assets
      */
     private void unloadAssets() {
-        logger.debug("Unloading assets");
+        logger.debug("Unloading assets, SpaceMapScreen");
         ResourceService resourceService = ServiceLocator.getResourceService();
         if (assets != null) {
             assets.unload(resourceService);
         }
         //resourceService.clearAllAssets();
+        logger.debug("Unloading assets, SpaceMapScreen, Complete");
     }
 
     /**
@@ -187,7 +189,7 @@ public class SpaceMapScreen extends ScreenAdapter {
      * capturing and handling ui input.
      */
     private void createUI() {
-        logger.debug("Creating ui");
+        logger.debug("Creating ui, SpaceMapScreen");
         Stage stage = ServiceLocator.getRenderService().getStage();
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForTerminal();

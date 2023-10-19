@@ -6,6 +6,8 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Action component for interacting with the player. Ship events should be initialised in create()
@@ -15,6 +17,8 @@ public class ShipActions extends Component {
     private int maxHealth;
     private int maxFuel;
     private final int currentAcceleration;
+    private GameTime gameTime;
+    private int tempAccel;
 
 
     private Body body;
@@ -54,9 +58,10 @@ public class ShipActions extends Component {
         entity.getEvents().addListener("flystop", this::flystop);
         entity.getEvents().addListener("brakeOn", this::brakeOn);
         entity.getEvents().addListener("brakeOff", this::brakeOff);
-
+        gameTime = ServiceLocator.getTimeSource();
         body = physicsComponent.getBody();
         body.setLinearDamping(0); //prevents the ship from stopping for no physical reason
+        this.tempAccel = 10;
     }
 
     /**
@@ -88,7 +93,9 @@ public class ShipActions extends Component {
      */
     void boost() {
         currentVelocity = this.flyDirection.cpy();
-        body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration), true);
+        //body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration * gameTime.getDeltaTime()), true);
+        body.applyForceToCenter(currentVelocity.scl(this.tempAccel * gameTime.getDeltaTime()), true);
+        // * Gdx.graphics.getDeltaTime()
     }
 
     /**

@@ -260,7 +260,6 @@ public class StructureFactory {
                                     ServiceLocator.getGameStateObserverService().trigger("resourceAdd",
                                             requirement.getResource(), -requirement.getThreshold());
                                 }
-
                                 String[] storytext= {"{SLOW}Astro: This is my ship having an in built AI.\n The AI will guide you throughout. "
                                         ,"{SLOW}Player: It is of great help to us \n Why dont you join us ?"
                                         ,"{SLOW}Astro: I was attacked and I know I cant make it. \n The AI will guide you.",

@@ -11,9 +11,9 @@ import com.csse3200.game.components.companionweapons.CompanionWeaponType;
 import com.csse3200.game.components.Component;
 import com.csse3200.game.components.FollowComponent;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.factories.CompanionFactory;
 import com.csse3200.game.entities.factories.EnemyFactory;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.List;
@@ -27,8 +27,6 @@ public class CompanionActions extends Component {
 
     private static Vector2 COMPANION_SPEED = new Vector2(4f, 4f); // Metres per second
     Entity player = ServiceLocator.getEntityService().getPlayer();
-
-    private static final float ROTATION_SPEED = 10.0f;
     private static final String CHANGEWEAPON = "changeWeapon";
     private float currentRotation = 5.0f;
     private PhysicsComponent physicsComponent;
@@ -47,7 +45,6 @@ public class CompanionActions extends Component {
     Vector2 trackPrev;
     int currentTargetIndex = 0;
     boolean inCombat = false;
-    private CompanionWeaponController companionWeaponController;
 
 
     /**
@@ -93,14 +90,15 @@ public class CompanionActions extends Component {
             entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
         } else if (Objects.equals(mode, COMPANION_MODE_DEFENCE)) {
             COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
-            //entity.getComponent(CombatStatsComponent.class).addHealth(40);
             entity.getEvents().trigger("companionModeChange","Defence");
             entity.getComponent(CombatStatsComponent.class).setImmunity(false);
             triggerMakeCompanionShield();
         } else if (Objects.equals(mode, COMPANION_MODE_ATTACK)) {
             COMPANION_SPEED.set(COMPANION_ATTACK_MODE_SPEED);
             entity.getComponent(CombatStatsComponent.class).setImmunity(true);
+            entity.getEvents().trigger(CHANGEWEAPON,CompanionWeaponType.SWORD);
             entity.getEvents().trigger("companionModeChange","Attack");
+
         }
     }
 
@@ -121,11 +119,7 @@ public class CompanionActions extends Component {
 
         //OPTIONAL _ MUST IMPLEMENT: trigger death animation
         entity.getEvents().trigger("companionDeath");
-
-        // ** SIDE NOTE ** Add cannot use certain power-up types given the mode we are in
-
-
-        // ** SIDE NOTE ** Configure the revival of the companion
+        entity.getEvents().trigger("standUp");
     }
 
     /**
@@ -178,12 +172,6 @@ public class CompanionActions extends Component {
         handleAttackMode();
     }
 
-    private boolean isMovementKeyPressed() {
-        // Check if any of the movement keys are pressed (I, J, K, L)
-        return Gdx.input.isKeyPressed(Input.Keys.I) || Gdx.input.isKeyPressed(Input.Keys.J) ||
-                Gdx.input.isKeyPressed(Input.Keys.K) || Gdx.input.isKeyPressed(Input.Keys.L);
-    }
-
     public String getCompanionMode() {
         return companionMode;
     }
@@ -192,7 +180,6 @@ public class CompanionActions extends Component {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
         Vector2 desiredVelocity = walkDirection.cpy().scl(COMPANION_SPEED);
-        // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
     }
@@ -270,6 +257,7 @@ public class CompanionActions extends Component {
         ServiceLocator.getEntityService().getCompanion().getEvents().trigger(CHANGEWEAPON, CompanionWeaponType.SHIELD);
     }
 
+
     /**
      * trigger the creation of any
      * @param slot
@@ -293,27 +281,24 @@ public class CompanionActions extends Component {
         if (!inCombat) {
             Entity enemy = getNextLiveEnemy(enemies);
             if (enemy != null) {
-                Vector2 playerPosition = player.getComponent(PhysicsComponent.class).getBody().getPosition();
-                Vector2 enemyPosition = enemy.getComponent(PhysicsComponent.class).getBody().getPosition();
+                Vector2 playerPosition = player.getPosition();
+                Vector2 enemyPosition = enemy.getPosition();
                 float distanceToPlayer = playerPosition.dst(enemyPosition);
 
-                if (distanceToPlayer <= 5.0f) {
+                if (distanceToPlayer <= 10.0f) {
                     inCombat = true;
                     trackPrev = enemyPosition;
-
                     float distanceToEnemy = entity.getPosition().dst(enemyPosition);
 
-                    if (distanceToEnemy <= 3.0f) {
+                    if (distanceToEnemy <= 10.0f) {
                         triggerInventoryEvent("melee");
                     }
-
                     return enemyPosition;
                 }
             }
         }
         return inCombat ? enemies.get(currentTargetIndex).getPosition() : trackPrev;
     }
-
 
     /**
      * Get the first live enemy available. Then, once that one is dead, it finds a new target.
@@ -329,6 +314,9 @@ public class CompanionActions extends Component {
             Entity enemy = enemies.get(currentTargetIndex);
             if (enemy != null && enemy.getComponent(CombatStatsComponent.class).getHealth() > 0) {
                 return enemy;
+            }
+            if (enemy != null &&enemy.getComponent(CombatStatsComponent.class).getHealth()<=0){
+                EnemyFactory.getEnemyList().remove(currentTargetIndex);
             }
             currentTargetIndex = (currentTargetIndex + 1) % numEnemies;
 

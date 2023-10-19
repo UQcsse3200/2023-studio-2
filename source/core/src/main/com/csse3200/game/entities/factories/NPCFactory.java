@@ -24,6 +24,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
@@ -94,7 +95,6 @@ public class NPCFactory {
               "{SLOW}I will give you all the Knowledge I have, \nto find a suitable planet for your Journey "};
       String[] titletext= {"",""};
       String[] window = {"dialogue_7", "dialogue_7"};
-
       TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
       titleBox.showDialog(ServiceLocator.getRenderService().getStage());
     },10f));
@@ -174,10 +174,12 @@ public class NPCFactory {
 
     tutnpc.getComponent(ColliderComponent.class).setDensity(1.5f);
     tutnpc.scaleHeight(0.7f);
-    String[] storytext = {"I am your Tutorial Guide", "I am here to teach you how to play!"};
-    String[] titletext = {"", ""};
     tutnpc.addComponent(new InteractableComponent(entity -> {
-      tutnpc.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+      String[] storytext = {"I am your Tutorial Guide", "I am here to teach you how to play!"};
+      String[] titletext = {"", ""};
+      String[] window = {"dialogue_5", "dialogue_5"};
+      TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
+      titleBox.showDialog(ServiceLocator.getRenderService().getStage());
     }, 3f));
     animator.startAnimation("Tut_StandDown");
     return tutnpc;
@@ -220,13 +222,37 @@ public class NPCFactory {
 
     Hellman.getComponent(ColliderComponent.class).setDensity(1.5f);
     Hellman.scaleHeight(2.0f);
-    String[] storytext = {"If you defeat this boss,\n I will help you find a suitable planet", "You will find the boss on the \nother side of the portal."};
-    String[] titletext = {"", ""};
     Hellman.addComponent(new InteractableComponent(entity -> {
-      Hellman.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+      String[] storytext = {"If you defeat this boss,\n I will help you find a suitable planet", "You will find the boss on the \nother side of the portal."};
+      String[] titletext = {"", ""};
+      String[] window = {"dialogue_6", "dialogue_6"};
+      TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
+      titleBox.showDialog(ServiceLocator.getRenderService().getStage());
     }, 3f));
     return Hellman;
   }
+
+  public static Entity createCircle(CircleConfig circleConfig) {
+    Entity Circle =
+            new Entity()
+                    .addComponent(new TextureRenderComponent(circleConfig.spritePath))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new InteractionControllerComponent(true));
+
+    Circle.scaleHeight(1.0f);
+    Circle.addComponent(new InteractableComponent(entity -> {
+
+          String[] nextMessages = {"SpaceBar is used to Sprint","You can swap around weapons by 1,2 and 3 \n 1 is Sword \n 2 is Fire Boomerang\n 3 is hammer which builds/repair things",
+                  "After using 3 click on T to open the action picker and click on the action you want to do \n you can also directly switch by using the mouse and clicking on the action you want to do on the right "};
+          String[] nextTitles = {"","",""};
+          String[] window = {"dialogue_5","dialogue_5","dialogue_5"};
+          TitleBox titleBox = new TitleBox(game, nextTitles, nextMessages, skin, window);
+          titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+      }, 3f));
+    return Circle;
+  }
+
   public static Entity createAstronaut(AstronautConfig astronautConfig) {
 
     AITaskComponent aiComponent = new AITaskComponent();
@@ -257,12 +283,10 @@ public class NPCFactory {
     astronaut.addComponent(new InteractableComponent(entity -> {
       String[] storytext= {"Hello, I've been stuck here for weeks","Can I please come with you?"};
       String[] titletext= {"",""};
-      astronaut.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
-      // Since Dialogue Box does not show up on screen, cannot 'exit' dialogue box therefore
-      // the 'resumeGame' function is never called. This code is to ensure gameplay can continue
-      for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
-        mainGame.getEvents().trigger("resumeGame");
-      }
+      String[] window = {"dialogue_4", "dialogue_4"};
+      TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
+      titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+
     },1f));
 
     astronaut.scaleHeight(1f);
@@ -293,7 +317,6 @@ public class NPCFactory {
               ,"{SLOW}Player: We can handle it. \n Let me Lead the way!"};
       String[] titletext= {"","",""};
       String[] window = {"dialogue_1", "dialogue_1","dialogue_3"};
-
       TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
       titleBox.showDialog(ServiceLocator.getRenderService().getStage());
 

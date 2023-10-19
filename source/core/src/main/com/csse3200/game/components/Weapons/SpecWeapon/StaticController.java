@@ -10,14 +10,14 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class StaticController extends WeaponControllerComponent {
-    private Vector2 player_last_pos;
+    private Vector2 playerlastpos;
 
     public StaticController(WeaponConfig config,
                             float attackDirection,
                             Entity player) {
         super(config, attackDirection, player);
         this.remainingDuration = 25;
-        this.player_last_pos = player.getPosition();
+        this.playerlastpos = player.getPosition();
     }
 
     @Override
@@ -50,8 +50,8 @@ public class StaticController extends WeaponControllerComponent {
 
     @Override
     protected void move() {
-        Vector2 player_delta = player.getPosition().sub(player_last_pos);
-        this.player_last_pos = player.getPosition();
+        Vector2 player_delta = player.getPosition().sub(playerlastpos);
+        this.playerlastpos = player.getPosition();
         entity.setPosition(entity.getPosition().add(player_delta.cpy()));
     }
 

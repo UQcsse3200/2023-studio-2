@@ -3,112 +3,112 @@ size: 512, 32
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-Astro_Up
+row-1-column-1
   rotate: false
   xy: 0, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Up
+row-1-column-2
   rotate: false
   xy: 32, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Up
+row-1-column-3
   rotate: false
   xy: 64, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Up
+row-1-column-4
   rotate: false
   xy: 96, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Left
+row-2-column-1
   rotate: false
   xy: 128, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Left
+row-2-column-2
   rotate: false
   xy: 160, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Left
+row-2-column-3
   rotate: false
   xy: 192, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Left
+row-2-column-4
   rotate: false
   xy: 224, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Down
+row-3-column-1
   rotate: false
   xy: 256, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Down
+row-3-column-2
   rotate: false
   xy: 288, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Down
+row-3-column-3
   rotate: false
   xy: 320, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Down
+row-3-column-4
   rotate: false
   xy: 352, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Right
+row-4-column-1
   rotate: false
   xy: 384, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Right
+row-4-column-2
   rotate: false
   xy: 416, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Right
+row-4-column-3
   rotate: false
   xy: 448, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Astro_Right
+row-4-column-4
   rotate: false
   xy: 480, 0
   size: 32, 32

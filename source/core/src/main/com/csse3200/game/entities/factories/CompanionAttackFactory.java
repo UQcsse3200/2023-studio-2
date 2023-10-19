@@ -1,7 +1,6 @@
 package com.csse3200.game.entities.factories;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.companion.CompanionInventoryComponent;
-import com.csse3200.game.components.companionweapons.PowerUpController;
 import com.csse3200.game.components.ParticleComponent;
 import com.csse3200.game.components.TouchAttackComponent;
 import com.csse3200.game.components.companionweapons.CompanionWeaponController;
@@ -57,11 +56,6 @@ public class CompanionAttackFactory {
 
 
         attack.scaleWidth(config.imageScale);
-            // Create the PowerUpController for the Death Potion
-            PowerUpController powerUpController = new PowerUpController(config);
-
-            // Set up the PowerUpController
-            attack.addComponent(powerUpController);
             attack.addComponent(new CompanionWeaponTargetComponent(weaponType, companion));
             return attack;
         }

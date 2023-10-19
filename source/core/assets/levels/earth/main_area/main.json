@@ -58,7 +58,8 @@
       "particle-effects/explosion/particle.png",
       "particle-effects/deathpotion/particle.png",
       "images/resources/Cracked_Ground.png",
-      "images/enemy/botanist.png"
+      "images/enemy/botanist.png",
+      "images/brick-game/BrickBall.png"
     ],
     "textureAtlasPaths": [
       "images/npc/caged_NPC.atlas",
@@ -124,6 +125,9 @@
   "planetImage": "images/navigationmap/planets/earth.png",
   "terrainPath": "map/base.tmx",
   "winConditions": [
-
+    {
+      "resource": "Solstite",
+      "threshold": 250
+    }
   ]
 }

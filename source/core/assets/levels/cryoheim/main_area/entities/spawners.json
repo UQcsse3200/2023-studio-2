@@ -14,9 +14,9 @@
         "Mage" : 5
       },
       "wave3" : {
-        "Knight" : 5,
-        "Mage" : 5,
-        "chain" : 5
+        "roboMan" : 10,
+        "necromancer" : 3,
+        "Mage" : 1
       },
       "position": {
         "x": 1,

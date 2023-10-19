@@ -10,6 +10,7 @@ import com.csse3200.game.components.resources.Resource;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This tool allows the user to heal structures.
@@ -102,9 +103,6 @@ public class HealTool extends Tool {
 
         Entity clickedEntity = determineSelectedEntity(position);
 
-        // TODO fix heal sound
-        //entity.getEvents().trigger("playSound","wallHeal");
-
         CombatStatsComponent combatStats = clickedEntity.getComponent(CombatStatsComponent.class);
         // For setting the health of the clicked entity to 100
         combatStats.setHealth(combatStats.getMaxHealth());
@@ -150,6 +148,20 @@ public class HealTool extends Tool {
             ServiceLocator.getGameStateObserverService().trigger("resourceAdd",
                     costEntry.getKey().toString(), -costEntry.getValue());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        HealTool healTool = (HealTool) o;
+        return Objects.equals(requiredResources, healTool.requiredResources);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), requiredResources);
     }
 }
 

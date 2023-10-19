@@ -115,12 +115,12 @@ public class PlanetScreen extends ScreenAdapter {
             ServiceLocator.getGameStateObserverService().trigger("updatePlanet", "gameArea", currentAreaName);
         }
 
+        ServiceLocator.registerGameArea(this.allGameAreas.get(currentAreaName));
+
         this.allGameAreas.get(currentAreaName).create();
         this.player = allGameAreas.get(currentAreaName).getPlayer();
 
         showTitleBox();
-
-        ServiceLocator.registerGameArea(this.allGameAreas.get(currentAreaName));
     }
 
     private void showTitleBox() {

@@ -1,9 +1,12 @@
 package com.csse3200.game.components;
 
 import com.csse3200.game.areas.map_config.GameAreaConfig;
+import com.csse3200.game.entities.Entity;
 import com.csse3200.game.extensions.GameExtension;
 
 
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,11 +35,18 @@ class EnvironmentStatsComponentTest {
     CombatStatsComponent player = new CombatStatsComponent(10, 10, 10, 1, false);
     EnvironmentStatsComponent environmentStatsComponent = new EnvironmentStatsComponent();
 
+    ServiceLocator.registerTimeSource(new GameTime());
 
-    environmentStatsComponent.damage(player);
+    var entity = new Entity();
+
+    entity.addComponent(player);
+
+    environmentStatsComponent.update();
+    environmentStatsComponent.setEntity(entity);
 
     // Wait for 2 seconds
     Thread.sleep(2000);
+    environmentStatsComponent.update();
     assertTrue(player.getHealth() < 10, "Health should be reduced after the timer delay");
   }
 

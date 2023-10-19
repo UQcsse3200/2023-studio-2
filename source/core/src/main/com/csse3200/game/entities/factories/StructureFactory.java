@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.csse3200.game.entities.Extractor;
-import com.csse3200.game.entities.configs.ParticleEffectsConfig;
+import com.csse3200.game.entities.configs.*;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.ExtractorMiniGameArea;
 import com.csse3200.game.areas.terrain.TerrainComponent;
@@ -15,14 +15,12 @@ import com.csse3200.game.components.*;
 import com.csse3200.game.components.npc.SpawnerComponent;
 import com.csse3200.game.components.resources.Resource;
 import com.csse3200.game.entities.Entity;
-import com.csse3200.game.entities.configs.SpawnerConfig;
+import com.csse3200.game.entities.enemies.EnemyName;
 import com.csse3200.game.input.ExtinguisherInputComponent;
 import com.csse3200.game.input.FireInputComponent;
 import com.csse3200.game.input.HoleInputComponent;
 import com.csse3200.game.input.SpannerInputComponent;
 
-import com.csse3200.game.entities.configs.ExtractorConfig;
-import com.csse3200.game.entities.configs.ShipConfig;
 import com.csse3200.game.entities.PlaceableEntity;
 
 import com.csse3200.game.files.FileLoader;
@@ -31,12 +29,15 @@ import com.csse3200.game.physics.PhysicsUtils;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
+import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.TitleBox;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
 import static com.csse3200.game.ui.DialogComponent.stage;
@@ -302,6 +303,15 @@ public class StructureFactory {
         Entity spawner =
                 new Entity()
                         .addComponent(new SpawnerComponent(config));
+
+        spawner.addComponent(new SaveableComponent<>(p -> {
+            SpawnerConfig spawnerConfig = config;
+            spawnerConfig.wave1 = p.getComponent(SpawnerComponent.class).getWave1();
+            spawnerConfig.wave2 = p.getComponent(SpawnerComponent.class).getWave2();
+            spawnerConfig.wave3 = p.getComponent(SpawnerComponent.class).getWave3();
+            spawnerConfig.position = p.getGridPosition();
+            return spawnerConfig;
+        }, SpawnerConfig.class));
 
         spawner.scaleHeight(1.5f);
         return spawner;

@@ -103,6 +103,7 @@ public class MapGameArea extends GameArea{
         spawnTutnpc();
         spawnHellman();
         spawnSpawners();
+        spawnEnemies();
         spawnJail();
 
         spawnAstronaut();
@@ -477,6 +478,18 @@ public class MapGameArea extends GameArea{
         for (SpawnerConfig spawnerConfig : mapConfig.areaEntityConfig.getEntities(SpawnerConfig.class)) {
             Entity spawner = StructureFactory.createSpawner(spawnerConfig);
             spawnEntityAt(spawner, spawnerConfig.position, true, true);
+        }
+    }
+
+    /**
+     * Spawns all the spawners detailed in the Game Area.
+     */
+    private void spawnEnemies() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        for (EnemyConfig enemyConfig : mapConfig.areaEntityConfig.getEntities(EnemyConfig.class)) {
+            Entity enemy = EnemyFactory.createEnemy(enemyConfig);
+            spawnEntityAt(enemy, enemyConfig.position, true, true);
         }
     }
 

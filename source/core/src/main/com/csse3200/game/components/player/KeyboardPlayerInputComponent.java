@@ -164,6 +164,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
                 entity.getEvents().trigger("selectWeaponIndex", index);
                 return true;
             }
+            case Keys.DPAD_LEFT -> {
+                entity.getEvents().trigger("dpadLeft");
+                return true;
+            }
+            case Keys.DPAD_RIGHT -> {
+                entity.getEvents().trigger("dpadRight");
+                return true;
+            }
+
             case Keys.W, Keys.S, Keys.A, Keys.D -> {
                 triggerWalkEvent();
                 return true;

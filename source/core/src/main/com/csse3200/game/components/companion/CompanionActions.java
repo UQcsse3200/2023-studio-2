@@ -88,7 +88,6 @@ public class CompanionActions extends Component {
             entity.getEvents().trigger("companionModeChange","Normal");
             entity.getComponent(CombatStatsComponent.class).setImmunity(false);
             entity.getComponent(FollowComponent.class).setFollowSpeed(2.5f);
-            entity.getEvents().trigger(CHANGEWEAPON,CompanionWeaponType.BOW);
         } else if (Objects.equals(mode, COMPANION_MODE_DEFENCE)) {
             COMPANION_SPEED.set(COMPANION_NORMAL_MODE_SPEED);
             entity.getEvents().trigger("companionModeChange","Defence");
@@ -210,7 +209,7 @@ public class CompanionActions extends Component {
                 Vector2 direction = targetPosition.cpy().sub(entity.getPosition());
                 // Check the distance to the target
                 float distanceToTarget = direction.len();
-                if (distanceToTarget <= 2f) {
+                if (distanceToTarget <= 1f) {
                     // When the companion is within the desired distance, trigger the melee attack
                     triggerInventoryEvent("melee");
                 } else {
@@ -286,12 +285,12 @@ public class CompanionActions extends Component {
                 Vector2 enemyPosition = enemy.getPosition();
                 float distanceToPlayer = playerPosition.dst(enemyPosition);
 
-                if (distanceToPlayer <= 5.0f) {
+                if (distanceToPlayer <= 10.0f) {
                     inCombat = true;
                     trackPrev = enemyPosition;
                     float distanceToEnemy = entity.getPosition().dst(enemyPosition);
 
-                    if (distanceToEnemy <= 3.0f) {
+                    if (distanceToEnemy <= 10.0f) {
                         triggerInventoryEvent("melee");
                     }
                     return enemyPosition;
@@ -300,7 +299,6 @@ public class CompanionActions extends Component {
         }
         return inCombat ? enemies.get(currentTargetIndex).getPosition() : trackPrev;
     }
-
 
     /**
      * Get the first live enemy available. Then, once that one is dead, it finds a new target.

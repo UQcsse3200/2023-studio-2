@@ -8,12 +8,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Timer;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
@@ -43,9 +41,23 @@ public class ShipInteractionPopup extends Window {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (ServiceLocator.getGameStateObserverService().getStateData("nextPlanet").equals("END")) {
-                    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                    Texture endScreen = new Texture(Gdx.files.internal("images/Deathscreens/endscreen.jpg"));
+                    TextureRegionDrawable endBackground = new TextureRegionDrawable(endScreen);
+                    Image image = new Image(endBackground);
+                    image.setHeight((float) Gdx.graphics.getHeight());
+                    image.setWidth(Gdx.graphics.getWidth());
+                    image.setPosition(0,stage.getHeight()-image.getHeight());
+                    stage.addActor(image);
+                    final Timer timer = new Timer();
+                    Timer.Task switchToMainMenu = new Timer.Task() {
+                        @Override
+                        public void run() {
+                            game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                            timer.clear();
+                        }
+                    };
+                    timer.schedule(switchToMainMenu, 5);
                 } else {
-
                     game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
                 }
             }

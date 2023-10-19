@@ -15,6 +15,8 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.entities.Entity;
+import com.csse3200.game.input.InputOverrideComponent;
 import com.csse3200.game.utils.LoadUtils;
 import com.csse3200.game.components.spacenavigation.NavigationBackground;
 import com.csse3200.game.services.PlanetTravel;
@@ -44,6 +46,9 @@ public class SpaceNavigationScreen implements Screen {
     private static final String IMAGE_PATH = "images/navigationmap/";
 
     private final PlanetTravel planetTravel;
+    Entity entity;
+    private InputOverrideComponent inputOverrideComponent;
+
 
     /**
      * Constructs a new SpaceNavigationScreen with a reference to the main game.
@@ -152,9 +157,7 @@ public class SpaceNavigationScreen implements Screen {
 
         String currentPlanetName = (String) ServiceLocator.getGameStateObserverService().getStateData("currentPlanet");
         String nextPlanetName = (String) ServiceLocator.getGameStateObserverService().getStateData("nextPlanet");
-        System.out.println(nextPlanetName);
         if (nextPlanetName.equals("END")) {
-            System.out.println("switch");
             Texture endScreen = new Texture(Gdx.files.internal("images/Deathscreens/endscreen.jpg"));
             TextureRegionDrawable endBackground = new TextureRegionDrawable(endScreen);
             Image image = new Image(endBackground);
@@ -163,28 +166,34 @@ public class SpaceNavigationScreen implements Screen {
             image.setPosition(0,stage.getHeight()-image.getHeight());
             stage.clear();
             stage.addActor(image);
+            inputOverrideComponent = new InputOverrideComponent();
+            ServiceLocator.getInputService().register(inputOverrideComponent);
+            entity.getEvents().trigger("pauseGame");
             final Timer timer = new Timer();
             Timer.Task switchToMainMenu = new Timer.Task() {
                 @Override
                 public void run() {
                 game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                ServiceLocator.getInputService().unregister(inputOverrideComponent);
+                entity.getEvents().trigger("resumeGame");
                 timer.clear();
             }
             };
             timer.schedule(switchToMainMenu, 5);
-        }
-        for (int i = 0; i < planetNames.length; i++) {
+        } else {
+            for (int i = 0; i < planetNames.length; i++) {
 
-            // Create planet sprite,
-            table.add(createPlanetTable(i, planetSize,
-                    (Objects.equals(LoadUtils.formatName(planetNames[i]), currentPlanetName)) ? 1 :
-                            (Objects.equals(LoadUtils.formatName(planetNames[i]), nextPlanetName)) ? 2 : 0
-            ));
+                // Create planet sprite,
+                table.add(createPlanetTable(i, planetSize,
+                        (Objects.equals(LoadUtils.formatName(planetNames[i]), currentPlanetName)) ? 1 :
+                                (Objects.equals(LoadUtils.formatName(planetNames[i]), nextPlanetName)) ? 2 : 0
+                ));
 
-            if (i != planetNames.length - 1) {
-                table.add(createArrow(
-                        Objects.equals(LoadUtils.formatName(planetNames[i]), currentPlanetName) ? "right" : "right-grey"
-                )).pad(arrowPadding).width(arrowSize).height(arrowSize);
+                if (i != planetNames.length - 1) {
+                    table.add(createArrow(
+                            Objects.equals(LoadUtils.formatName(planetNames[i]), currentPlanetName) ? "right" : "right-grey"
+                    )).pad(arrowPadding).width(arrowSize).height(arrowSize);
+                }
             }
         }
 

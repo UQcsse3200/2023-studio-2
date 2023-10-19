@@ -10,44 +10,36 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for the {@link FireAnimationController} class.
+ * Unit tests for the {@link BotanistAnimationController} class.
  */
-class FireAnimationControllerTest {
+class BotanistAnimationControllerTest {
 
     @Mock
     AnimationRenderComponent animator;
 
-    FireAnimationController controller;
+    BotanistAnimationController controller;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        controller = new FireAnimationController();
+        controller = new BotanistAnimationController();
 
         controller.entity = mock(Entity.class);
 
         when(controller.entity.getComponent(AnimationRenderComponent.class)).thenReturn(animator);
+
     }
 
     /**
-     * Test the {@link FireAnimationController#create()} method.
+     * Test the {@link BotanistAnimationController#create()} method.
      */
     @Test
     void testCreate() {
         controller.create();
 
-        verify(animator).startAnimation("image_part1");
-    }
-
-    /**
-     * Test the {@link FireAnimationController#update()} method.
-     */
-    @Test
-    void testUpdate() {
-        controller.animationDuration = 10f;
-
-        when(animator.getCurrentAnimation()).thenReturn("image_part1");
+        // Modify this part to test the behavior without using the animationDuration field.
+        when(animator.getCurrentAnimation()).thenReturn("row-1-column-1");
 
         controller.update();
     }

@@ -3,10 +3,10 @@
   "entities": [
     {
       "class": "com.csse3200.game.entities.configs.BotanistConfig",
-      "spritePath": "images/botanist.atlas",
+      "spritePath": "images/npc/botanist.atlas",
       "position" : {
-        "x": 20,
-        "y": 15
+        "x": 24,
+        "y": 40
       }
     }
   ]

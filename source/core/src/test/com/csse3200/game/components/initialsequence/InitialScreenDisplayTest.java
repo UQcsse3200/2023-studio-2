@@ -1,4 +1,4 @@
-package com.csse3200.game.components.controls;
+package com.csse3200.game.components.initialsequence;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -9,6 +9,8 @@ import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.ResourceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,9 +19,9 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for the {@link ControlsScreenDisplay} class.
+ * Unit tests for the {@link InitialScreenDisplay} class.
  */
-public class ControlsScreenDisplayTest {
+public class InitialScreenDisplayTest {
 
     private Set<String> loadedAssets;
     private GdxGame game;
@@ -39,36 +41,51 @@ public class ControlsScreenDisplayTest {
     }
 
     /**
-     * Test asset loading in {@link ControlsScreenDisplay}.
+     * Test asset loading in {@link InitialScreenDisplay}.
      */
     @Test
-    void testControlsScreenDisplayAssetLoading() {
+    void testInitialScreenDisplayAssetLoading() {
         Gdx.app.postRunnable(() -> {
-            ControlsScreenDisplay controlsScreenDisplay = createControlsScreenDisplay();
+            InitialScreenDisplay initialScreenDisplay = createInitialScreenDisplay();
 
             // Simulate creating and disposing the display
-            controlsScreenDisplay.create();
-            controlsScreenDisplay.dispose();
+            initialScreenDisplay.create();
+            initialScreenDisplay.dispose();
 
             // Verify that specific assets have been loaded and unloaded
-            verifyAssetLoaded("images/controls-images/on_exit.png");
-            verifyAssetUnloaded("images/controls-images/on_exit_hover.PNG");
+            verifyAssetLoaded("InitialScreenBG.png");
+            verifyAssetUnloaded("InitialScreenBG.png");
         });
     }
 
-    private ControlsScreenDisplay createControlsScreenDisplay() {
-        return new ControlsScreenDisplay(game, game.getScreenType());
+    /**
+     * Creates an instance of the {@link InitialScreenDisplay} for testing.
+     *
+     * @return An instance of the {@link InitialScreenDisplay}.
+     */
+    private InitialScreenDisplay createInitialScreenDisplay() {
+        ArrayList<String> assetPaths = new ArrayList<>();
+        ArrayList<String> textList = new ArrayList<>();
+        return new InitialScreenDisplay(game, assetPaths, textList);
     }
 
+    /**
+     * Verify that a specific asset has been loaded.
+     *
+     * @param assetPath The path to the asset to be verified.
+     */
     private void verifyAssetLoaded(String assetPath) {
-        // Verify asset loading
         ResourceService resourceService = ServiceLocator.getResourceService();
         boolean isLoaded = resourceService.containsAsset(assetPath, Texture.class);
         assertTrue(isLoaded, "Asset not loaded: " + assetPath);
     }
 
+    /**
+     * Verify that a specific asset has been unloaded.
+     *
+     * @param assetPath The path to the asset to be verified.
+     */
     private void verifyAssetUnloaded(String assetPath) {
-        // Verify asset unloading
         ResourceService resourceService = ServiceLocator.getResourceService();
         boolean isUnloaded = !resourceService.containsAsset(assetPath, Texture.class);
         assertTrue(isUnloaded, "Asset not unloaded: " + assetPath);

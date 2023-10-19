@@ -27,6 +27,11 @@ import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
+import com.csse3200.game.ui.TitleBox;
+
+import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
+import static com.csse3200.game.ui.DialogComponent.stage;
+import static com.csse3200.game.ui.UIComponent.skin;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -80,19 +85,21 @@ public class NPCFactory {
                     .addComponent(animator)
                     .addComponent(new BotanistAnimationController())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
-                    .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
     botanist.addComponent(new InteractableComponent(entity -> {
-      String[] storytext= {"{COLOR=BLACK}Hello I am the Botanist","I am here to accompany you on your journey!"};
+      String[] storytext= {"{SLOW}Mysterious Entity: Thank you for saving me .",
+              "{SLOW}I will give you all the Knowledge I have, \nto find a suitable planet for your Journey "};
       String[] titletext= {"",""};
+      String[] window = {"dialogue_7", "dialogue_7"};
 
-      botanist.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
+      TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
+      titleBox.showDialog(ServiceLocator.getRenderService().getStage());
     },10f));
 
-    botanist.scaleHeight(6.1f);
+    botanist.scaleHeight(1f);
     return botanist;
   }
 
@@ -104,7 +111,7 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/npc/Astro_NPC.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/npc/caged_NPC.atlas", TextureAtlas.class));
     animator.addAnimation("Astro_Up", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("Astro_UpLeft", 0.2f, Animation.PlayMode.LOOP);
     animator.addAnimation("Astro_Left", 0.2f, Animation.PlayMode.LOOP);
@@ -286,7 +293,6 @@ public class NPCFactory {
             new Entity()
                     .addComponent(animator)
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsMovementComponent());
     jail.addComponent(new SaveableComponent<>(p -> {
       jailConfig.position = p.getGridPosition();
@@ -295,13 +301,16 @@ public class NPCFactory {
 
     jail.addComponent(new InteractableComponent(entity -> {
       animator.startAnimation("jail_open");
-        String[] storytext= {"{COLOR=BLACK}NPC: (Desperate) Hey, you there!\n Please, help me! I've been stuck in\nhere for days!"
-                ,"{COLOR=BLACK}\n{SLOW}NPC: (Relieved) Thank you so much!\nThere's a spaceship not far from here\nthat can get us off this planet. But\nbe warned, it's guarded by infected."
-                ,"{COLOR=BLACK}{SLOW}Emily: We can handle it. \nLead the way!"};
-        String[] titletext= {"","",""};
-        jail.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+      String[] storytext= {"{SLOW}Astro: Thank you for saving me .\n I have a ship that can help you ESCAPE EARTH!! "
+              ,"{SLOW}Emily:Is that your ship there ?\n It is guarded by the deadly."
+              ,"{SLOW}Player: We can handle it. \n Let me Lead the way!"};
+      String[] titletext= {"","",""};
+      String[] window = {"dialogue_1", "dialogue_1","dialogue_3"};
 
-      },1f));
+      TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
+      titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+
+    },1f));
 
     jail.scaleHeight(1.7f);
     animator.startAnimation("jail_close");

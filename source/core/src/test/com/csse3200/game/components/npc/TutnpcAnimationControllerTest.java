@@ -9,46 +9,42 @@ import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
-/**
- * Unit tests for the {@link FireAnimationController} class.
- */
-class FireAnimationControllerTest {
+class TutnpcAnimationControllerTest {
 
     @Mock
     AnimationRenderComponent animator;
 
-    FireAnimationController controller;
+    TutnpcAnimationController controller;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        controller = new FireAnimationController();
-
+        controller = new TutnpcAnimationController();
         controller.entity = mock(Entity.class);
-
         when(controller.entity.getComponent(AnimationRenderComponent.class)).thenReturn(animator);
     }
 
     /**
-     * Test the {@link FireAnimationController#create()} method.
+     * Test the {@link TutnpcAnimationController#create()} method.
      */
     @Test
     void testCreate() {
         controller.create();
-
-        verify(animator).startAnimation("image_part1");
+        verify(animator).startAnimation("Tut_Down");
     }
 
     /**
-     * Test the {@link FireAnimationController#update()} method.
+     * Test the {@link TutnpcAnimationController#update()} method.
      */
     @Test
     void testUpdate() {
         controller.animationDuration = 10f;
 
-        when(animator.getCurrentAnimation()).thenReturn("image_part1");
+        when(animator.getCurrentAnimation()).thenReturn("Tut_Down");
 
         controller.update();
+
+
     }
 }

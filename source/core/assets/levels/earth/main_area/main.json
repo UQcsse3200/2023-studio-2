@@ -9,7 +9,7 @@
       "images/Jail/jail.png",
       "images/structure-icons/gate.png",
       "images/resources/durasteel.png",
-      "images/npc/Astro_NPC.png",
+      "images/npc/caged_NPC.png",
       "images/resources/nebulite.png",
       "images/resources/solstite.png",
       "images/resources/resourcebar_background.png",
@@ -61,7 +61,7 @@
       "images/enemy/botanist.png"
     ],
     "textureAtlasPaths": [
-      "images/npc/Astro_NPC.atlas",
+      "images/npc/caged_NPC.atlas",
       "images/Jail/jail.atlas",
       "images/structures/stone_wall.atlas",
       "images/structures/dirt_wall.atlas",

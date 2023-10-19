@@ -240,6 +240,7 @@ public class SpaceNavigationScreen implements Screen {
                     if (planetType == 1) {
                         planetTravel.returnToCurrent();
                     } else {
+                        PlanetScreen.titleBoxDisplayed = false;
                         planetTravel.beginInstantTravel();
                     }
                 }

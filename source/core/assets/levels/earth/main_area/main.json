@@ -58,7 +58,8 @@
       "particle-effects/explosion/particle.png",
       "particle-effects/deathpotion/particle.png",
       "images/resources/Cracked_Ground.png",
-      "images/enemy/botanist.png"
+      "images/enemy/botanist.png",
+      "images/brick-game/BrickBall.png"
     ],
     "textureAtlasPaths": [
       "images/npc/Astro_NPC.atlas",

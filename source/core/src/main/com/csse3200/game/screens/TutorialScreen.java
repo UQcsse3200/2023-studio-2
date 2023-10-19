@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.TutorialGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -21,6 +22,8 @@ import com.csse3200.game.components.maingame.MainGamePauseDisplay;
 import com.csse3200.game.components.mainmenu.InsertButtons;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.configs.CircleConfig;
+import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
@@ -34,6 +37,8 @@ import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.TitleBox;
+import com.csse3200.game.ui.TutorialDialogue;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
@@ -41,6 +46,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.csse3200.game.ui.UIComponent.skin;
 
 public class TutorialScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
@@ -126,6 +133,12 @@ public class TutorialScreen extends ScreenAdapter {
         });
         entity.getEvents().addListener("exit", this::onExit);
         stage.addActor(exitBtn);
+        String[] nextMessages = {
+                "W- Move Up  A- Move Right  \n D- Move Left  S-Move Down \n Move to Circle Area to Progress"};
+        String[] nextTitles = {""};
+        String[] window = {"dialogue_5"};
+       TitleBox titleBox =new TitleBox(game,nextTitles,nextMessages,skin,window);
+       titleBox.showDialog(ServiceLocator.getRenderService().getStage());
 
     }
 

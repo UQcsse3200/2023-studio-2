@@ -94,6 +94,7 @@ public class MapGameArea extends GameArea{
         spawnPowerups();
         spawnPortal(player);
         spawnTurrets();
+        spawnCircle();
         spawnWalls();
         spawnGates(player);
         spawnExplosives();
@@ -526,6 +527,17 @@ public class MapGameArea extends GameArea{
         if (astroConfig != null) {
             Entity astro = NPCFactory.createAstro(astroConfig);
             spawnEntityAt(astro, astroConfig.position, false, false);
+        }
+
+    }
+
+    private void spawnCircle() {
+        if (mapConfig.areaEntityConfig == null) return;
+
+        CircleConfig circleConfig = mapConfig.areaEntityConfig.getEntity(CircleConfig.class);
+        if (circleConfig != null) {
+            Entity circle = NPCFactory.createCircle(circleConfig);
+            spawnEntityAt(circle, circleConfig.position, false, false);
         }
 
     }

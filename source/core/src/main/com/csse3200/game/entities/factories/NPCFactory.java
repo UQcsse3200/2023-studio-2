@@ -24,6 +24,7 @@ import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.physics.components.PhysicsMovementComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
+import com.csse3200.game.rendering.TextureRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.DialogComponent;
 import com.csse3200.game.ui.DialogueBox;
@@ -220,6 +221,26 @@ public class NPCFactory {
     }, 3f));
     return Hellman;
   }
+
+  public static Entity createCircle(CircleConfig circleConfig) {
+    Entity Circle =
+            new Entity()
+                    .addComponent(new TextureRenderComponent(circleConfig.spritePath))
+                    .addComponent(new DialogComponent(dialogueBox))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new InteractionControllerComponent(true))
+                    .addComponent(new PhysicsMovementComponent());
+
+    Circle.getComponent(ColliderComponent.class).setDensity(1.5f);
+    Circle.scaleHeight(1.0f);
+    String[] storytext = {"Dev will do the dialogues haha"};
+    String[] titletext = {"", ""};
+    Circle.addComponent(new InteractableComponent(entity -> {
+      Circle.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+    }, 3f));
+    return Circle;
+  }
+
   public static Entity createAstronaut(AstronautConfig astronautConfig) {
 
     AITaskComponent aiComponent = new AITaskComponent();

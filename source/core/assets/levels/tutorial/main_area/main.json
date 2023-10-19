@@ -25,7 +25,6 @@
       "images/upgradetree/stick.png",
       "images/upgradetree/exit.png",
       "images/companion/earth_Companion_spritesheet.png",
-      "images/companion/Companion_spritesheet.png",
       "images/companion/laboratory.png",
       "images/powerups/double_damage.png",
       "images/powerups/double_cross.png",
@@ -59,7 +58,6 @@
       "map/treetop.png",
       "particle-effects/explosion/particle.png",
       "images/resources/Cracked_Ground.png",
-      "images/enemy/botanist.png",
       "images/npc/Tutnpc.png"
     ],
     "textureAtlasPaths": [

@@ -53,6 +53,7 @@ public class ProjectileAttackComponent extends Component {
     entity.getEvents().addListener("collisionStart", this::onCollisionStart);
     entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
     combatStats = entity.getComponent(CombatStatsComponent.class);
+    combatStats.setBaseAttack(3);
     hitboxComponent = entity.getComponent(HitboxComponent.class);
     leftContact = true;
   }

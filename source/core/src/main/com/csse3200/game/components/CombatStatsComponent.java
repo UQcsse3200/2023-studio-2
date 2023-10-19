@@ -7,6 +7,7 @@ package com.csse3200.game.components;
 
 import com.csse3200.game.components.companion.CompanionActions;
 import com.csse3200.game.components.player.KeyboardPlayerInputComponent;
+import com.csse3200.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,8 +105,10 @@ public class CombatStatsComponent extends Component {
       entity.getEvents().trigger("updateHealth", this.health);
     }
     if (entity != null) {
+      if (isDead() && entity.getEntityType().equals("extractor") && !dead) {
+        ServiceLocator.getGameArea().getEvent().trigger("reTarget");
+      }
       if (isDead() && entity.getEntityType().equals("player") && dead == false) {
-
         dead = true;
         entity.getComponent(KeyboardPlayerInputComponent.class).clearWalking(); // Stop player from walking
         entity.getComponent(CombatStatsComponent.class).setImmunity(true); // Prevent dying before respawn

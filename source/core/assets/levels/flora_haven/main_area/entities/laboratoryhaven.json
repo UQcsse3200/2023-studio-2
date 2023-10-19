@@ -4,7 +4,7 @@
     {
       class: com.csse3200.game.entities.configs.LaboratoryConfig,
       "spritePath": "images/companion/Laboratoryhaven.png",
-      "position": {"x":34,
+      "position": {"x":60,
         "y": 49
       }
     }

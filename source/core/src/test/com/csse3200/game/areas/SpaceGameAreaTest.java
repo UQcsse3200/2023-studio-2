@@ -46,19 +46,13 @@ public class SpaceGameAreaTest {
     }
     @Test
     public void testIsPositionOccupied() {
-
         SpaceGameArea spaceGameArea = mock(SpaceGameArea.class);
-
         // Define an unoccupied position
-        GridPoint2 unoccupiedPosition = new Vector2(1f, 1f);
-
-
+        Vector2 unoccupiedPosition = new Vector2(1f, 1f);
         when(spaceGameArea.isPositionOccupied(unoccupiedPosition)).thenReturn(false);
         assertFalse(spaceGameArea.isPositionOccupied(unoccupiedPosition));
-
         // Define an occupied position
-        GridPoint2 occupiedPosition = new Vector2(2f, 2f);
-
+        Vector2 occupiedPosition = new Vector2(2f, 2f);
         when(spaceGameArea.isPositionOccupied(occupiedPosition)).thenReturn(true);
         assertTrue(spaceGameArea.isPositionOccupied(occupiedPosition));
     }

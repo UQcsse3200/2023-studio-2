@@ -18,9 +18,7 @@
 
     "sound": {
       "soundsMap": {
-        "start": "sounds/weapons/slingshot.wav",
-        "mid": "",
-        "end": ""
+        "start": "sounds/weapons/slingshot.wav"
       }
     }
   },
@@ -44,9 +42,7 @@
 
     "sound": {
       "soundsMap": {
-        "start": "sounds/weapons/slingshot.wav",
-        "mid": "",
-        "end": ""
+        "start": "sounds/weapons/slingshot.wav"
       }
     }
   },
@@ -69,9 +65,7 @@
 
     "sound": {
       "soundsMap": {
-        "start": "",
-        "mid": "sounds/weapons/boomerang.wav",
-        "end": ""
+        "start": "sounds/weapons/boomerang.wav"
       }
     }
   },
@@ -96,9 +90,7 @@
 
     "sound": {
       "soundsMap": {
-        "start": "",
-        "mid": "sounds/weapons/boomerang.wav",
-        "end": ""
+        "start": "sounds/weapons/boomerang.wav"
       }
     }
   },
@@ -122,9 +114,7 @@
     "attackCooldown": 150,
     "sound": {
       "soundsMap": {
-        "start": "",
-        "mid": "sounds/weapons/missile.wav",
-        "end": ""
+        "start": "sounds/weapons/missile.wav"
       }
     }
   },
@@ -146,9 +136,7 @@
     "attackCooldown": 45,
     "sound": {
       "soundsMap": {
-        "start": "sounds/weapons/nuke.wav",
-        "mid": "",
-        "end": ""
+        "start": "sounds/weapons/nuke.wav"
       }
     },
     "ammoUse": 2
@@ -172,9 +160,7 @@
     "ammoUse": 30,
     "sound": {
       "soundsMap": {
-        "start": "sounds/weapons/nuke.wav",
-        "mid": "",
-        "end": ""
+        "start": "sounds/weapons/nuke.wav"
       }
     }
   },
@@ -197,9 +183,7 @@
     "ammoUse": 2,
     "sound": {
       "soundsMap": {
-        "start": "sounds/weapons/missile.wav",
-        "mid": "",
-        "end": ""
+        "start": "sounds/weapons/missile.wav"
       }
     }
   },
@@ -208,7 +192,7 @@
     "name": "Wrench",
     "description": "Its a wrench, what more to say.",
     "damage": 33,
-    "weaponSpeed": 4,
+    "weaponSpeed": 5,
     "weaponDuration": 26,
     "rotationSpeed": 1,
     "attackCooldown": 75,
@@ -221,9 +205,7 @@
     "ammoUse": 0,
     "sound": {
       "soundsMap": {
-        "start": "sounds/weapons/Katana.wav",
-        "mid": "",
-        "end": ""
+        "start": "sounds/weapons/Katana.wav"
       }
     }
   },
@@ -245,9 +227,7 @@
     "ammoUse": 0,
     "sound": {
       "soundsMap": {
-        "start": "sounds/weapons/Katana.wav",
-        "mid": "",
-        "end": ""
+        "start": "sounds/weapons/Katana.wav"
       }
     }
   },
@@ -270,9 +250,7 @@
     "projectiles": 8,
     "sound": {
       "soundsMap": {
-        "start": "sounds/weapons/beeStringKatana.wav",
-        "mid": "",
-        "end": ""
+        "start": "sounds/weapons/beeStringKatana.wav"
       }
     }
   },
@@ -294,9 +272,7 @@
     "ammoUse": 3,
     "sound": {
       "soundsMap": {
-        "start": "sounds/weapons/laserSword.wav",
-        "mid": "",
-        "end": ""
+        "start": "sounds/weapons/laserSword.wav"
       }
     }
   },

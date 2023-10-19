@@ -80,7 +80,7 @@ public class GrenadeController extends WeaponControllerComponent {
 
     @Override
     protected void despawn() {
-        //entity.getEvents().trigger("playSound", "stop");
+        despawn_sound();
         animator.stopAnimation();
         entity.getEvents().trigger("explode");
     }

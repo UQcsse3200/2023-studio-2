@@ -8,11 +8,8 @@ import com.csse3200.game.entities.configs.WeaponConfig;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 
 public class MeleeSwingController extends WeaponControllerComponent {
-
-    private Vector2 playerlastpos;
-    private int attackSide;
-
-    protected Vector2 player_last_pos;
+    protected Vector2 playerlastpos;
+    protected int attackSide;
 
     public MeleeSwingController(WeaponConfig config,
                                 float attackDirection,

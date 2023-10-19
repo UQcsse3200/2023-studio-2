@@ -95,7 +95,6 @@ public class NPCFactory {
               "{SLOW}I will give you all the Knowledge I have, \nto find a suitable planet for your Journey "};
       String[] titletext= {"",""};
       String[] window = {"dialogue_7", "dialogue_7"};
-
       TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
       titleBox.showDialog(ServiceLocator.getRenderService().getStage());
     },10f));
@@ -175,10 +174,12 @@ public class NPCFactory {
 
     tutnpc.getComponent(ColliderComponent.class).setDensity(1.5f);
     tutnpc.scaleHeight(0.7f);
-    String[] storytext = {"I am your Tutorial Guide", "I am here to teach you how to play!"};
-    String[] titletext = {"", ""};
     tutnpc.addComponent(new InteractableComponent(entity -> {
-      tutnpc.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+      String[] storytext = {"I am your Tutorial Guide", "I am here to teach you how to play!"};
+      String[] titletext = {"", ""};
+      String[] window = {"dialogue_5", "dialogue_5"};
+      TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
+      titleBox.showDialog(ServiceLocator.getRenderService().getStage());
     }, 3f));
     animator.startAnimation("Tut_StandDown");
     return tutnpc;
@@ -221,10 +222,12 @@ public class NPCFactory {
 
     Hellman.getComponent(ColliderComponent.class).setDensity(1.5f);
     Hellman.scaleHeight(2.0f);
-    String[] storytext = {"If you defeat this boss,\n I will help you find a suitable planet", "You will find the boss on the \nother side of the portal."};
-    String[] titletext = {"", ""};
     Hellman.addComponent(new InteractableComponent(entity -> {
-      Hellman.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
+      String[] storytext = {"If you defeat this boss,\n I will help you find a suitable planet", "You will find the boss on the \nother side of the portal."};
+      String[] titletext = {"", ""};
+      String[] window = {"dialogue_6", "dialogue_6"};
+      TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
+      titleBox.showDialog(ServiceLocator.getRenderService().getStage());
     }, 3f));
     return Hellman;
   }
@@ -258,23 +261,10 @@ public class NPCFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset(astronautConfig.spritePath, TextureAtlas.class));
-    animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-4", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-1", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-2", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-3", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-4", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-1", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-2", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-3", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-4", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-1", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-2", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-3", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-4", 0.01f, Animation.PlayMode.LOOP);
-
+    animator.addAnimation("Astro_Stand", 1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Astro_Down", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_Left", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_Right", 1f, Animation.PlayMode.LOOP);
 
     Entity astronaut =
             new Entity()
@@ -293,12 +283,10 @@ public class NPCFactory {
     astronaut.addComponent(new InteractableComponent(entity -> {
       String[] storytext= {"Hello, I've been stuck here for weeks","Can I please come with you?"};
       String[] titletext= {"",""};
-      astronaut.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
-      // Since Dialogue Box does not show up on screen, cannot 'exit' dialogue box therefore
-      // the 'resumeGame' function is never called. This code is to ensure gameplay can continue
-      for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
-        mainGame.getEvents().trigger("resumeGame");
-      }
+      String[] window = {"dialogue_4", "dialogue_4"};
+      TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
+      titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+
     },1f));
 
     astronaut.scaleHeight(1f);
@@ -329,7 +317,6 @@ public class NPCFactory {
               ,"{SLOW}Player: We can handle it. \n Let me Lead the way!"};
       String[] titletext= {"","",""};
       String[] window = {"dialogue_1", "dialogue_1","dialogue_3"};
-
       TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
       titleBox.showDialog(ServiceLocator.getRenderService().getStage());
 

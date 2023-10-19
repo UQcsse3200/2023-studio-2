@@ -28,7 +28,7 @@ public class AstronautAnimationController extends Component {
         animator = entity.getComponent(AnimationRenderComponent.class);
 
         // Start with the default animation.
-        animator.startAnimation("row-1-column-1");
+        animator.startAnimation("Astro_Stand");
     }
 
     @Override
@@ -48,25 +48,11 @@ public class AstronautAnimationController extends Component {
 
             // Switch between animations.
             switch (animator.getCurrentAnimation()) {
-                case "row-1-column-1" -> animator.startAnimation("row-1-column-2");
-                case "row-1-column-2" -> animator.startAnimation("row-1-column-3");
-                case "row-1-column-3" -> animator.startAnimation("row-1-column-4");
-                case "row-1-column-4" -> animator.startAnimation("row-2-column-1");
-                case "row-2-column-1" -> animator.startAnimation("row-2-column-2");
-                case "row-2-column-2" -> animator.startAnimation("row-2-column-3");
-                case "row-2-column-3" -> animator.startAnimation("row-2-column-4");
-                case "row-2-column-4" -> animator.startAnimation("row-3-column-1");
-                case "row-3-column-1" -> animator.startAnimation("row-3-column-2");
-                case "row-3-column-2" -> animator.startAnimation("row-3-column-3");
-                case "row-3-column-3" -> animator.startAnimation("row-3-column-4");
-                case "row-3-column-4" -> animator.startAnimation("row-4-column-1");
-                case "row-4-column-1" -> animator.startAnimation("row-4-column-2");
-                case "row-4-column-2" -> animator.startAnimation("row-4-column-3");
-                case "row-4-column-3" -> animator.startAnimation("row-4-column-4");
-                case "row-4-column-4" -> animator.startAnimation("row-1-column-1");
+                case "Astro_Left" -> animator.startAnimation("Astro_Left");
+                case "Astro_Right" -> animator.startAnimation("Astro_Right");
                 default ->
                     // Default to the bottom animation if not in any specific state.
-                        animator.startAnimation("row-1-column-1");
+                        animator.startAnimation("Astro_Stand");
             }
         }
     }

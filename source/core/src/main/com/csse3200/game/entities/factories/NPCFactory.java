@@ -235,23 +235,10 @@ public class NPCFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset(astronautConfig.spritePath, TextureAtlas.class));
-    animator.addAnimation("row-1-column-1", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-2", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-3", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-1-column-4", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-1", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-2", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-3", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-2-column-4", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-1", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-2", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-3", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-3-column-4", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-1", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-2", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-3", 0.01f, Animation.PlayMode.LOOP);
-    animator.addAnimation("row-4-column-4", 0.01f, Animation.PlayMode.LOOP);
-
+    animator.addAnimation("Astro_Stand", 1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("Astro_Down", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_Left", 1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("Astro_Right", 1f, Animation.PlayMode.LOOP);
 
     Entity astronaut =
             new Entity()

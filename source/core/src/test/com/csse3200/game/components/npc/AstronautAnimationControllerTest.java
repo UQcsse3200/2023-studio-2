@@ -32,7 +32,8 @@ class AstronautAnimationControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        when(assetManager.get("images/npc/astronaut_npc.atlas")).thenReturn(atlas);
+//        when(assetManager.get("images/npc/astronaut_npc.atlas")).thenReturn(atlas);
+        when(assetManager.get("images/npc/Astronaut.atlas")).thenReturn(atlas);
 
         controller = new AstronautAnimationController();
 

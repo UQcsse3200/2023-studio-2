@@ -1,0 +1,16 @@
+{
+  "texturePaths": [
+    "images/minigame/SpaceMiniGameBackground.png",
+    "images/minigame/meteor.png",
+    "images/ship/Ship.png",
+    "images/minigame/wormhole.png",
+    "images/minigame/obstacle-enemy.png",
+    "images/minigame/mainship.png"
+  ],
+  "textureAtlasPaths": [
+    "images/minigame/ship.atlas"
+  ],
+  "backgroundMusicPath": [
+    "sounds/BGM_03_mp3.wav"
+  ]
+}

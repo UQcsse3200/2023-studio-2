@@ -50,6 +50,11 @@ public class ExtractorMinigameWindow extends Window {
         return new ExtractorMinigameWindow(background, extractor);
     }
 
+    /**
+     * Set the interior of the window，Set initial Positions for flames and holes,
+     * Place parts of the machine that may need to be repaired on these Positions
+     */
+
     public ExtractorMinigameWindow(Texture background, Entity extractor) {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, new TextureRegionDrawable(background)));
 
@@ -66,7 +71,10 @@ public class ExtractorMinigameWindow extends Window {
         holePositions.add(new float[]{40, 230});
         holePositions.add(new float[]{440, 230});
 
-        //Here setup window to be centered on the stage with 80% width and 65% height.
+        /**
+         * Here setup window to be centered on the stage with 80% width and 65% height.
+        */
+
         Stage stage = ServiceLocator.getRenderService().getStage();
         setWidth((float) (stage.getWidth()*0.8));
         setHeight((float) (stage.getHeight()*0.65));
@@ -79,7 +87,10 @@ public class ExtractorMinigameWindow extends Window {
 
         float cellSize = 200; // Size of each cell in the grid
 
-        // put extractors grid
+        /**
+         * put extractors grid, this is parts need to be repaired
+         */
+
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 Image extractorImage = new Image(new Texture(Gdx.files.internal("images/minigame/extractor.png")));
@@ -90,8 +101,17 @@ public class ExtractorMinigameWindow extends Window {
             }
         }
 
+
         // put extinguisher and spanner
         Image extinguisherImage = new Image(new Texture(Gdx.files.internal("images/minigame/extinguisher.png")));
+
+        /**
+         *   put extinguisher and spanner choosing icon, add click listener for realizing tool change on click,
+         *   user will have a Cursor change in image
+         */
+
+        //Image extinguisherImage = new Image(new Texture(Gdx.files.internal("images/minigame/extinguisher.png")));// TODO: change to extinguisher.png
+
         extinguisherImage.setPosition(-300, 400);
         imageTable.addActor(extinguisherImage);
         extinguisherImage.addListener(new ClickListener() {
@@ -114,7 +134,10 @@ public class ExtractorMinigameWindow extends Window {
             }
         });
 
-        // put fire and holes
+        /**
+         * put fire and holes on setted position,the number for each of them is 2,the postion will be random
+         */
+
         for (int i = 0; i < fireLeave; i++) {
             int fireIndex = MathUtils.random(0, firePositions.size() - 1);
             float[] randomPosition = firePositions.get(fireIndex);
@@ -129,6 +152,9 @@ public class ExtractorMinigameWindow extends Window {
             holePositions.remove(holeIndex);
         }
         add(imageTable).fill();
+        /**
+         * Set skin and buttons
+         */
 
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         TextButton button2 = new TextButton("Exit", skin);
@@ -144,7 +170,10 @@ public class ExtractorMinigameWindow extends Window {
         // Add the buttonTable to the window
         add(buttonTable).padTop(20).expandY().top().row();
     }
-
+    /**
+     * @param x,y,imageTable Attach a click listener to make the fire disappear when clicked with extinguisher
+     *              bang if clicked with spanner
+     */
     private void createFire(float x, float y, Table imageTable) {
         Image fireImage = new Image(new Texture(Gdx.files.internal("images/minigame/fire.png")));
         fireImage.setScale(0.5f);
@@ -179,6 +208,11 @@ public class ExtractorMinigameWindow extends Window {
             }
         });
     }
+
+    /**
+     * @param x,y,imageTable  Attach a click listener to make the hole disappear when clicked with spanner
+     *              bang if clicked with extinguisher
+     */
 
     private void createHole(float x, float y, Table imageTable) {
         Image holeImage = new Image(new Texture(Gdx.files.internal("images/minigame/Hole.png")));

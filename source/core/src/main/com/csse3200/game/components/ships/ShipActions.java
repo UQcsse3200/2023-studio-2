@@ -6,6 +6,8 @@ import com.csse3200.game.components.Component;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.utils.math.Vector2Utils;
+import com.csse3200.game.services.GameTime;
+import com.csse3200.game.services.ServiceLocator;
 
 /**
  * Action component for interacting with the player. Ship events should be initialised in create()
@@ -15,6 +17,8 @@ public class ShipActions extends Component {
     private int maxHealth;
     private int maxFuel;
     private final int currentAcceleration;
+    private GameTime gameTime;
+    private int tempAccel;
 
 
     private Body body;
@@ -22,15 +26,24 @@ public class ShipActions extends Component {
     private boolean moving = false;
     private AnimationRenderComponent animator;
 
+    //update() are called in render() of respective screens
+    private Vector2 currentVelocity;
+    private double currentOrientation;
+    private double up = 90;
+    private double left = 180;
+    private double down = -90;
+    private double right = 0;
+    private double left2 = -180;
+
     /**
      * Initialize the health, fuel and acceleration of the ship
      * @param acceleration Magnitude of force applied to the ship
      */
     public ShipActions(int acceleration) {
         //temporary value of health to 1 for testing
-        this.maxHealth =  1;
-        //temporary value of fuel to 20 for testing
-        this.maxFuel = 20;
+        this.maxHealth =  100;
+        //temporary value of fuel to 1000 for testing
+        this.maxFuel = 1000;
         this.currentAcceleration = acceleration;
     }
 
@@ -45,10 +58,10 @@ public class ShipActions extends Component {
         entity.getEvents().addListener("flystop", this::flystop);
         entity.getEvents().addListener("brakeOn", this::brakeOn);
         entity.getEvents().addListener("brakeOff", this::brakeOff);
-
-
+        gameTime = ServiceLocator.getTimeSource();
         body = physicsComponent.getBody();
         body.setLinearDamping(0); //prevents the ship from stopping for no physical reason
+        this.tempAccel = 10;
     }
 
     /**
@@ -58,7 +71,6 @@ public class ShipActions extends Component {
     public void update() {
         if (moving) {
             if (this.maxHealth <= 0) {
-
                 kaboom();
             }
             updateSpeed();
@@ -80,8 +92,10 @@ public class ShipActions extends Component {
      * Push the ship towards a given direction
      */
     void boost() {
-        Vector2 currentVelocity = this.flyDirection.cpy();
-        body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration), true);
+        currentVelocity = this.flyDirection.cpy();
+        //body.applyForceToCenter(currentVelocity.scl(this.currentAcceleration * gameTime.getDeltaTime()), true);
+        body.applyForceToCenter(currentVelocity.scl(this.tempAccel * gameTime.getDeltaTime()), true);
+        // * Gdx.graphics.getDeltaTime()
     }
 
     /**
@@ -118,7 +132,6 @@ public class ShipActions extends Component {
      * Activates when B key on keyboard is pressed
      */
     void brakeOn() {
-
         this.body.setLinearDamping(2);
     }
 
@@ -127,7 +140,6 @@ public class ShipActions extends Component {
      * Activates when V key on keyboard is pressed
      */
     void brakeOff() {
-
         this.body.setLinearDamping(0);
     }
 
@@ -137,15 +149,13 @@ public class ShipActions extends Component {
      * @param direction
      */
     void playAnimation(Vector2 direction) {
-
-        double currentOrientation = Vector2Utils.angleTo(direction);
-
+        currentOrientation = Vector2Utils.angleTo(direction);
         //These are used for determining ship orientation by ship velocity direction
-        double up = 90;
-        double left = 180;
-        double down = -90;
-        double right = 0;
-        double left2 = -180;
+        //double up = 90;
+        //double left = 180;
+        //double down = -90;
+        //double right = 0;
+        //double left2 = -180;
         if (currentOrientation == up) {
             //
             animator.startAnimation("Ship_UpStill");
@@ -171,8 +181,6 @@ public class ShipActions extends Component {
             //
             animator.startAnimation("Ship_RightDown");
         }
-
-
     }
 
     /**

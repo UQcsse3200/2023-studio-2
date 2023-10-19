@@ -1,7 +1,9 @@
 package com.csse3200.game.areas;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.csse3200.game.GdxGame;
 import com.csse3200.game.areas.map_config.AssetsConfig;
@@ -16,26 +18,34 @@ import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
+@ExtendWith(MockitoExtension.class)
 class MapGameAreaTest {
     GameAreaConfig gameAreaConfig;
     @Spy
     AssetManager assetManager;
     MockedStatic<FileLoader> mockFileLoader;
     MockedStatic<ConfigLoader> loaderMockedStatic;
+    @Mock
+    EntityService entityService;
+    @Mock
+    ResourceService resourceService;
 
     @BeforeEach
-    void setup() {
+     void setup() {
         gameAreaConfig = new GameAreaConfig();
         gameAreaConfig.assets = new AssetsConfig();
         assetManager = spy(AssetManager.class);
@@ -96,6 +106,4 @@ class MapGameAreaTest {
         verify(assetManager).unload("Texture1.png");
         verify(assetManager).unload("Texture2.atlas");
     }
-
-    //TODO: Add tests for entities?
 }

@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 /**
@@ -186,7 +187,10 @@ public class SpaceGameArea extends GameArea {
      * Method for placing the exit point from the obstacle minigame
      */
     private Entity spawnGoal() {
-        GridPoint2 position = new GridPoint2(56, 10);
+        Random random = new Random();
+        int randomX = random.nextInt(terrain.getMapBounds(0).x);
+        int randomY = random.nextInt(terrain.getMapBounds(0).y);
+        GridPoint2 position = new GridPoint2(randomX, randomY);
         Entity newGoal = MinigameObjectFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
         //goal = ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
         spawnEntityAt(newGoal, position, false, false);

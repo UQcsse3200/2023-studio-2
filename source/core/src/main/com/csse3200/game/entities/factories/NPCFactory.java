@@ -85,19 +85,21 @@ public class NPCFactory {
                     .addComponent(animator)
                     .addComponent(new BotanistAnimationController())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.NPC_OBSTACLE))
-                    .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new InteractionControllerComponent(true))
                     .addComponent(aiComponent);
     botanist.addComponent(new InteractableComponent(entity -> {
-      String[] storytext= {"{COLOR=BLACK}Hello I am the Botanist","I am here to accompany you on your journey!"};
+      String[] storytext= {"{SLOW}Mysterious Entity: Thank you for saving me .",
+              "{SLOW}I will give you all the Knowledge I have, \nto find a suitable planet for your Journey "};
       String[] titletext= {"",""};
+      String[] window = {"dialogue_7", "dialogue_7"};
 
-      botanist.getComponent(DialogComponent.class).showdialogue(storytext,titletext);
+      TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
+      titleBox.showDialog(ServiceLocator.getRenderService().getStage());
     },10f));
 
-    botanist.scaleHeight(6.1f);
+    botanist.scaleHeight(1f);
     return botanist;
   }
 

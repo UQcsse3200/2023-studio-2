@@ -251,6 +251,10 @@
     "dialogue_6": {
       "background": "dialogue_6",
       "titleFont": "thick_white"
+    },
+    "dialogue_7": {
+      "background": "dialogue_6",
+      "titleFont": "thick_white"
     }
   }
 }

@@ -128,9 +128,9 @@ public class PlanetScreen extends ScreenAdapter {
         if (!titleBoxDisplayed) {
             if ("earth".equals(name)) {
                 // Create and display the TitleBox
-                String[] title = {"", ""};
-                String[] description = {"NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.", "Player: Don't worry, we'll get you out!"};
-                String[] window = {"dialogue_1", "dialogue_3",};
+                String[] title = {"", "",""};
+                String[] description = {"NPC: (Desperately pleading) Please, you have to get me out of here!\n They captured me when I landed on this planet.","Emily: Do you also hear something ?\n I do think there is someone calling for help","Player: Yes I also hear something out \n Don't worry, I will help him get  out of here !"};
+                String[] window = {"dialogue_1", "dialogue_2","dialogue_3"};
 
                 titleBox = new TitleBox(game, title, description, skin, window);
             }

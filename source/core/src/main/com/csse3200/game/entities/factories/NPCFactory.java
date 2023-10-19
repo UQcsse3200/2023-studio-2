@@ -229,7 +229,8 @@ public class NPCFactory {
                     .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new InteractionControllerComponent(true))
-                    .addComponent(new PhysicsMovementComponent());
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new ColliderComponent());
 
     Circle.getComponent(ColliderComponent.class).setDensity(1.5f);
     Circle.scaleHeight(1.0f);

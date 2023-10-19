@@ -34,6 +34,8 @@ import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.GameTime;
 import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
+import com.csse3200.game.ui.TitleBox;
+import com.csse3200.game.ui.TutorialDialogue;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
 import org.slf4j.Logger;
@@ -41,6 +43,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.csse3200.game.ui.UIComponent.skin;
 
 public class TutorialScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ControlsScreen.class);
@@ -126,6 +130,17 @@ public class TutorialScreen extends ScreenAdapter {
         });
         entity.getEvents().addListener("exit", this::onExit);
         stage.addActor(exitBtn);
+        String[] nextMessages = {
+                "W- Move Up\n A- Move Right \n D- Move Left \n S-Move Down ",
+                "SpaceBar is used to Sprint",
+                "You can swap around powers by 1,2 and 3 \n 1 is Sword \n 2 is Fire Boomerang\n 3 is hammer which builds/repair things",
+                "After using 3 click on T to open the action picker and click on the action you want to do \n you can also directly switch by using the mouse and clicking on the action you want to do on the right "
+        };
+        String[] nextTitles = {"", "", "", ""};
+        String[] window = {"default", "default", "default", "default"};
+        TutorialDialogue tutorialDialogue= new TutorialDialogue(game,nextTitles,nextMessages,skin,window);
+        tutorialDialogue.showDialog(ServiceLocator.getRenderService().getStage());
+
 
     }
 

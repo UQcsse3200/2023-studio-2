@@ -176,11 +176,11 @@
   "SliderStyle": {
     "default-horizontal": {
       "background": "grey_sliderHorizontal",
-      "knob": "rightShipButton"
+      "knob": "RightShip"
     },
     "default-vertical": {
       "background": "grey_sliderVertical",
-      "knob": "rightShipButton"
+      "knob": "RightShip"
     }
   },
   "TextButtonStyle": {

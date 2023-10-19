@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 /**
@@ -169,13 +170,37 @@ public class SpaceGameArea extends GameArea {
      * Method for placing the exit point from the obstacle minigame
      */
     private Entity spawnGoal() {
-        GridPoint2 position = new GridPoint2(56, 10);
+        Random random = new Random();
+        int randomX, randomY;
+        GridPoint2 position;
+
+        // Continue generating random positions until an unoccupied position is found.
+        do {
+            randomX = random.nextInt(terrain.getMapBounds(0).x);
+            randomY = random.nextInt(terrain.getMapBounds(0).y);
+            position = new GridPoint2(randomX, randomY);
+        } while (isPositionOccupied(position));
+
         Entity newGoal = MinigameObjectFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
-        //goal = ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
         spawnEntityAt(newGoal, position, false, false);
         goal = newGoal;
-        return goal; // Return the instance variable
+
+        return goal;
     }
+
+    /**
+     * Check if a position is occupied by an entity.
+     */
+    private boolean isPositionOccupied(GridPoint2 position) {
+        // Loop through the list of existing entities and check if any entity occupies the given position.
+        for (Entity entity : targetTables) {
+            if (entity != null && entity.getPosition().equals(position)) {
+                return true; // Position is occupied.
+            }
+        }
+        return false; // Position is not occupied.
+    }
+
 
     /**
      * DisplayUI method for displaying Space game in the main menu
@@ -250,9 +275,6 @@ public class SpaceGameArea extends GameArea {
         return distance;
     }
 
-
-
-
     /*
     LEGACY
     private void loadAssets() {
@@ -275,7 +297,6 @@ public class SpaceGameArea extends GameArea {
         resourceService.unloadAssets(spaceTextureAtlases);
 
     }
-
      */
 
     /**
@@ -284,6 +305,6 @@ public class SpaceGameArea extends GameArea {
     @Override
     public void dispose() {
         super.dispose();
-        //this.unloadAssets();
+        this.unloadAssets();
     }
 }

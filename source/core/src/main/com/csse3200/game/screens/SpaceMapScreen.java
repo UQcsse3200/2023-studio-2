@@ -148,10 +148,9 @@ public class SpaceMapScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         logger.debug("Disposing main game screen");
-
         renderer.dispose();
         unloadAssets();
-        //ServiceLocator.clear();
+        ServiceLocator.clear();
     }
 
     /**
@@ -189,7 +188,6 @@ public class SpaceMapScreen extends ScreenAdapter {
         Stage stage = ServiceLocator.getRenderService().getStage();
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForTerminal();
-
         Entity ui = new Entity();
         ui.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
@@ -198,9 +196,7 @@ public class SpaceMapScreen extends ScreenAdapter {
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay());
-
         ServiceLocator.getEntityService().register(ui);
-
     }
 
     /**

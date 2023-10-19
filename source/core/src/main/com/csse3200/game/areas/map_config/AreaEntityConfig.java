@@ -94,6 +94,12 @@ public class AreaEntityConfig {
         entities.put(entry.getKey(), entry.getValue());
     }
 
+    /**
+     * Determines if the given object is equal to this instance of AreaEntityConfig.
+     *
+     * @param o Object to compare.
+     * @return True if objects are equal, otherwise false.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,6 +109,11 @@ public class AreaEntityConfig {
         return Objects.deepEquals(entities, that.entities);
     }
 
+    /**
+     * Calculates and returns the hash code for this instance of AreaEntityConfig.
+     *
+     * @return Hash code.
+     */
     @Override
     public int hashCode() {
         return entities.hashCode();

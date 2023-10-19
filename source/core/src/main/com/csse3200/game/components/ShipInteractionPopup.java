@@ -14,15 +14,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.csse3200.game.GdxGame;
+import com.badlogic.gdx.utils.Align;
+import com.csse3200.game.areas.map_config.ResourceCondition;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.services.ServiceLocator;
 
-import static com.csse3200.game.components.mainmenu.MainMenuActions.game;
+import java.util.List;
 
 public class ShipInteractionPopup extends Window {
-    public ShipInteractionPopup() {
+    public ShipInteractionPopup(List<ResourceCondition> requirements) {
         super("", new Window.WindowStyle(new BitmapFont(), Color.BLACK, getBrownBackgroundStatic()));
         for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
             mainGame.getEvents().trigger("pauseGame");
@@ -36,31 +37,34 @@ public class ShipInteractionPopup extends Window {
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
 
-        Label titleLabel = new Label("Welcome!!", labelStyle);
+        Label titleLabel = new Label("Warning", labelStyle);
         titleLabel.setColor(Color.RED);
         add(titleLabel).padTop(20).center().top().expandX();
         row();
 
-        Label descriptionLabel = new Label("I am Nova Pilot ,the Space Nav artificial intelligence, created by Astro, now entrusted to guide you through the cosmos. My purpose is to assist you with any inquiries, provide navigational assistance, and meet your mission-related needs.", labelStyle);
-        descriptionLabel.setWidth(popupWidth * 0.9f);  // Using 90% of the popup width
-        descriptionLabel.setWrap(true); //helps the text to stay within the bounds of the popup
+        Label descriptionLabel = getLabel(requirements, labelStyle, popupWidth);
+        descriptionLabel.setAlignment(Align.center);
         add(descriptionLabel).width(popupWidth * 0.9f).padTop(20).padLeft(popupWidth * 0.05f).expand().fill();
 
-        TextButton okButton = new TextButton("Start Journey", skin);
-        okButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if (ServiceLocator.getGameStateObserverService().getStateData("nextPlanet").equals("END")) {
-                    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-                } else {
-
-                    game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
-                }
-            }
-        });
+        TextButton okButton = new TextButton("Okay", skin);
+        okButton.addListener(new CloseListener(this));
         okButton.setSize(150, 50);
         okButton.setPosition((getWidth() - okButton.getWidth()) / 2, 20);
         this.addActor(okButton);
+    }
+
+    private static Label getLabel(List<ResourceCondition> requirements, Label.LabelStyle labelStyle, float popupWidth) {
+        StringBuilder requirementsString = new StringBuilder("You do not have enough resources to go to the next planet!");
+
+        for (var requirement : requirements) {
+            requirementsString.append(String.format("\n%d %s required.", requirement.threshold, requirement.resource));
+        }
+
+        Label descriptionLabel = new Label(requirementsString.toString(), labelStyle);
+
+        descriptionLabel.setWidth(popupWidth * 0.9f);  // Using 90% of the popup width
+        descriptionLabel.setWrap(true); //helps the text to stay within the bounds of the popup
+        return descriptionLabel;
     }
 
     @Override
@@ -84,5 +88,18 @@ public class ShipInteractionPopup extends Window {
         return texture;
     }
 
+    class CloseListener extends ChangeListener {
+
+        private final ShipInteractionPopup popup;
+
+        public CloseListener(ShipInteractionPopup popup) {
+            this.popup = popup;
+        }
+
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            popup.remove();
+        }
+    }
 }
 

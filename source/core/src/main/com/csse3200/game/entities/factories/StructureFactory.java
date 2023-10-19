@@ -33,6 +33,7 @@ import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Factory to create structure entities - such as extractors or ships.
@@ -246,9 +247,14 @@ public class StructureFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
                         .addComponent(new InteractableComponent(entity -> {
                             if (checkWinCondition(requirements)) {
+                                for (var requirement : requirements) {
+                                    ServiceLocator.getGameStateObserverService().trigger("resourceAdd",
+                                            requirement.getResource(), -requirement.getThreshold());
+                                }
+
                                 game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
                             } else {
-                                ShipInteractionPopup shipPopup = new ShipInteractionPopup();
+                                ShipInteractionPopup shipPopup = new ShipInteractionPopup(requirements);
                                 ServiceLocator.getRenderService().getStage().addActor(shipPopup);
                             }
                         }, 5));

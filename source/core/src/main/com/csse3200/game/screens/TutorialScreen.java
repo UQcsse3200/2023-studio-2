@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.csse3200.game.GdxGame;
+import com.csse3200.game.areas.MapGameArea;
 import com.csse3200.game.areas.TutorialGameArea;
 import com.csse3200.game.areas.GameArea;
 import com.csse3200.game.areas.terrain.TerrainFactory;
@@ -21,6 +22,8 @@ import com.csse3200.game.components.maingame.MainGamePauseDisplay;
 import com.csse3200.game.components.mainmenu.InsertButtons;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.EntityService;
+import com.csse3200.game.entities.configs.CircleConfig;
+import com.csse3200.game.entities.factories.NPCFactory;
 import com.csse3200.game.entities.factories.RenderFactory;
 import com.csse3200.game.input.InputComponent;
 import com.csse3200.game.input.InputDecorator;
@@ -131,16 +134,11 @@ public class TutorialScreen extends ScreenAdapter {
         entity.getEvents().addListener("exit", this::onExit);
         stage.addActor(exitBtn);
         String[] nextMessages = {
-                "W- Move Up  A- Move Right  \n D- Move Left  S-Move Down ",
-                "SpaceBar is used to Sprint",
-                "You can swap around powers by 1,2 and 3 \n 1 is Sword \n 2 is Fire Boomerang\n 3 is hammer which builds/repair things",
-                "After using 3 click on T to open the action picker and click on the action you want to do \n you can also directly switch by using the mouse and clicking on the action you want to do on the right "
-        };
-        String[] nextTitles = {"", "", "", ""};
-        String[] window = {"dialogue_5", "dialogue_5", "dialogue_5", "dialogue_5"};
+                "W- Move Up  A- Move Right  \n D- Move Left  S-Move Down \n Move to Circle Area to Progress"};
+        String[] nextTitles = {""};
+        String[] window = {"dialogue_5"};
        TitleBox titleBox =new TitleBox(game,nextTitles,nextMessages,skin,window);
        titleBox.showDialog(ServiceLocator.getRenderService().getStage());
-
 
     }
 

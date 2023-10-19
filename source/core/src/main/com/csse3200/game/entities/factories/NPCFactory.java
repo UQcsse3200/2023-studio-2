@@ -233,19 +233,20 @@ public class NPCFactory {
     Entity Circle =
             new Entity()
                     .addComponent(new TextureRenderComponent(circleConfig.spritePath))
-                    .addComponent(new DialogComponent(dialogueBox))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new InteractionControllerComponent(true))
                     .addComponent(new PhysicsMovementComponent())
-                    .addComponent(new ColliderComponent());
+                    .addComponent(new InteractionControllerComponent(true));
 
-    Circle.getComponent(ColliderComponent.class).setDensity(1.5f);
     Circle.scaleHeight(1.0f);
-    String[] storytext = {"Dev will do the dialogues haha"};
-    String[] titletext = {"", ""};
     Circle.addComponent(new InteractableComponent(entity -> {
-      Circle.getComponent(DialogComponent.class).showdialogue(storytext, titletext);
-    }, 3f));
+
+          String[] nextMessages = {"SpaceBar is used to Sprint","You can swap around weapons by 1,2 and 3 \n 1 is Sword \n 2 is Fire Boomerang\n 3 is hammer which builds/repair things",
+                  "After using 3 click on T to open the action picker and click on the action you want to do \n you can also directly switch by using the mouse and clicking on the action you want to do on the right "};
+          String[] nextTitles = {"","",""};
+          String[] window = {"dialogue_5","dialogue_5","dialogue_5"};
+          TitleBox titleBox = new TitleBox(game, nextTitles, nextMessages, skin, window);
+          titleBox.showDialog(ServiceLocator.getRenderService().getStage());
+      }, 3f));
     return Circle;
   }
 

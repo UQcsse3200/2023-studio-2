@@ -5,8 +5,8 @@
       class: com.csse3200.game.entities.configs.CircleConfig,
       "spritePath": "images/npc/circle.png",
       "position" : {
-        "x": 18,
-        "y": 47
+        "x": 28,
+        "y": 57
       }
     }
   ]

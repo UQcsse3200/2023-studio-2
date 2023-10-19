@@ -21,7 +21,7 @@ public class PauseWindow extends Window {
     private final InputOverrideComponent inputOverrideComponent;
     private Entity entity;
     public static PauseWindow makeNewPauseWindow(Entity entity) {
-        Texture background = new Texture("images/structures/panel.png");
+        Texture background = new Texture("images/npc/panel.png");
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new PauseWindow(background, entity);
     }

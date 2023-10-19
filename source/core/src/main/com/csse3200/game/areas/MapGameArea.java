@@ -520,7 +520,7 @@ public class MapGameArea extends GameArea{
 
     }
 
-    private void spawnCircle() {
+    public  void spawnCircle() {
         if (mapConfig.areaEntityConfig == null) return;
 
         CircleConfig circleConfig = mapConfig.areaEntityConfig.getEntity(CircleConfig.class);

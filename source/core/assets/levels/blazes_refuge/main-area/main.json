@@ -47,16 +47,15 @@
     "images/player/widestatbar.png",
     "images/player/heart.png",
     "images/player/hearts.png",
-    "images/space_navigation_planet_0.png",
-    "images/planets/space_navigation_planet_0.png",
+    "images/space_navigation_planet_3.png",
+    "images/planets/space_navigation_planet_3.png",
     "images/navigationmap/planets/earth.png",
     "images/action-feedback/white_color_texture.png",
     "images/action-feedback/warning.png",
     "map/treetop.png",
     "particle-effects/explosion/particle.png",
     "images/resources/Cracked_Ground.png",
-    "images/enemy/botanist.png",
-    "images/npc/Tutnpc.png"
+    "images/enemy/botanist.png"
   ],
   "textureAtlasPaths": [
     "images/enemy/troll_enemy.atlas",
@@ -71,11 +70,9 @@
     "images/weapons/wrench.atlas",
     "images/structures/open_gate.atlas",
     "images/structures/closed_gate.atlas",
-    "images/companion/earth_Companion_spritesheet.atlas",
     "images/companion/Companion_spritesheet.atlas",
     "images/minigame/fire.atlas",
-    "images/structures/ExtractorAnimation.atlas",
-    "images/npc/Tutnpc.atlas"
+    "images/structures/ExtractorAnimation.atlas"
   ],
   "soundPaths": [
     "sounds/Impact4.wav",
@@ -114,9 +111,9 @@
   ],
   "backgroundMusicPath": "sounds/BGM_03_mp3.wav",
 
-  "mapName": "Earth",
-  "planetImage": "images/planets/space_navigation_planet_0.png",
-  "terrainPath": "map/tutorialmap.tmx",
+  "mapName": "Blaze's Refuge",
+  "planetImage": "images/planets/space_navigation_planet_3.png",
+  "terrainPath": "map/Firemap02.tmx",
   "winConditions": [
     {
       "resource": "Solstite",

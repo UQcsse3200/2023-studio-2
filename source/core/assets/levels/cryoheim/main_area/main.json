@@ -60,7 +60,10 @@
       "sounds/weapons/Katana.wav",
       "sounds/weapons/boomerang.wav",
       "sounds/weapons/slingshot.wav",
-      "sounds/weapons/beeStringKatana.wav"
+      "sounds/weapons/beeStringKatana.wav",
+      "sounds/weapons/nuke.wav",
+      "sounds/weapons/missile.wav",
+      "sounds/weapons/laserSword.wav"
     ],
     "particleEffectPaths": [
       "particle-effects/explosion/explosion.effect",

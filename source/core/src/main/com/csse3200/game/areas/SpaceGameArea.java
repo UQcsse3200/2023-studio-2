@@ -34,6 +34,8 @@ public class SpaceGameArea extends GameArea {
     private static final int NUM_ASTEROIDS = 100;
     private TerrainFactory terrainFactory;
     private ArrayList<Entity> targetTables;
+    private Random random;
+    int randomX, randomY;
 
     /**
      * Constructor for initializing terrain area
@@ -144,8 +146,8 @@ public class SpaceGameArea extends GameArea {
      * Method for placing the exit point from the obstacle minigame
      */
     public Entity spawnGoal() {
-        Random random = new Random();
-        int randomX, randomY;
+        random = new Random();
+        //int randomX, randomY;
         GridPoint2 position;
         // Continue generating random positions until an unoccupied position is found.
         do {

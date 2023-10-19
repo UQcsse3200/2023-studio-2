@@ -17,6 +17,12 @@ public class ShipStatDisplay extends UIComponent {
     private int fuel;
     private ShipActions shipActions;
 
+    //update() related variables
+    private CharSequence healthText;
+    private CharSequence fuelText;
+    private CharSequence noFuelText;
+    private CharSequence noHealthText;
+
     /**
      * Creates reusable ui styles and adds actors to the stage.
      */
@@ -45,15 +51,11 @@ public class ShipStatDisplay extends UIComponent {
         //currently leave them here for the UI, may adjust after further implementation
         CharSequence fuelText = "Fuel: " + Integer.toString(this.fuel);
         CharSequence healthText = "Health: " + Integer.toString(this.health);
-
         float labelWidth = 200f;  // Adjust as necessary
-
         fuelLabel = new Label(fuelText, skin, "thick");
         healthLabel = new Label(healthText, skin, "thick");
-
         table.add(fuelLabel).width(labelWidth).pad(5f).left().row();
         table.add(healthLabel).width(labelWidth).pad(5f).left().row();
-
 
         stage.addActor(table);
 
@@ -68,31 +70,25 @@ public class ShipStatDisplay extends UIComponent {
      * Updates the ship's health on the ui.
      */
     public void updateShipHealthUI() {
-
         this.health = shipActions.getMaxHealth();
-        CharSequence healthText = String.format("Health: %d", this.health);
+        healthText = String.format("Health: %d", this.health);
         healthLabel.setText(healthText);
-
-
     }
 
     /**
      * Updates ship's fuel on the ui.
      */
     public void updateShipFuelUI() {
-
         this.fuel = shipActions.getMaxFuel();
-        CharSequence fuelText = String.format("Fuel: %d", this.fuel);
+        fuelText = String.format("Fuel: %d", this.fuel);
         fuelLabel.setText(fuelText);
-
-
     }
 
     /**
      * Show text on fuelLabel that there is no fuel left
      */
     public void noFuelReminder() {
-        CharSequence noFuelText = String.format("Fuel: %d, Need Refueling", this.fuel);
+        noFuelText = String.format("Fuel: %d, Need Refueling", this.fuel);
         fuelLabel.setText(noFuelText);
     }
 
@@ -100,7 +96,7 @@ public class ShipStatDisplay extends UIComponent {
      * Show text on healthLabel that ship has gone Kaboom!
      */
     public void noHealth() {
-        CharSequence noHealthText = String.format("Health: %d, Kaboom!", this.health);
+        noHealthText = String.format("Health: %d, Kaboom!", this.health);
         healthLabel.setText(noHealthText);
     }
 

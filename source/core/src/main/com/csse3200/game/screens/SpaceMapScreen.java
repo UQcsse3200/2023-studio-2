@@ -29,6 +29,8 @@ import com.csse3200.game.input.InputFactory;
 import com.csse3200.game.rendering.RenderService;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
+import com.csse3200.game.areas.map_config.MiniGameAssetsConfig;
+import com.csse3200.game.files.FileLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,13 +48,24 @@ public class SpaceMapScreen extends ScreenAdapter {
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
     private DistanceDisplay distanceDisplay;
+    private MiniGameAssetsConfig assets;
+    private float distance;
+
+    //Camera variables
+    private float maxX;
+    private float maxY;
+    private float cameraX;
+    private float cameraY;
+
 
     /**
      * Method for creating the space map screen for the obstacle minigame
      * @param game Obstacle minigame
      */
     public SpaceMapScreen(GdxGame game) {
+        logger.debug("Initialising SpaceMapScreen");
         this.game = game;
+        this.assets = FileLoader.readClass(MiniGameAssetsConfig.class, "levels/obstacleGameAssets.json");
         this.loadServices();
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -81,7 +94,7 @@ public class SpaceMapScreen extends ScreenAdapter {
         ServiceLocator.getEntityService().update();
         followShip();
         // Calculate the distance between the ship and the goal
-        float distance = SpaceGameArea.calculateDistance(ship, goal);
+        distance = SpaceGameArea.calculateDistance(ship, goal);
         distanceDisplay.updateDistanceUI(distance);
         exitonc(distance);
         renderer.render();
@@ -135,7 +148,6 @@ public class SpaceMapScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         logger.debug("Disposing main game screen");
-
         renderer.dispose();
         unloadAssets();
         ServiceLocator.clear();
@@ -145,7 +157,11 @@ public class SpaceMapScreen extends ScreenAdapter {
      * Loads all assets
      */
     private void loadAssets() {
-        logger.debug("Loading assets");
+        logger.debug("Loading assets, SpaceMapScreen");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        if (assets != null) {
+            assets.load(resourceService);
+        }
         ServiceLocator.getResourceService().loadAll();
     }
 
@@ -153,9 +169,13 @@ public class SpaceMapScreen extends ScreenAdapter {
      * Unloads all assets
      */
     private void unloadAssets() {
-        logger.debug("Unloading assets");
+        logger.debug("Unloading assets, SpaceMapScreen");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.clearAllAssets();
+        if (assets != null) {
+            assets.unload(resourceService);
+        }
+        //resourceService.clearAllAssets();
+        logger.debug("Unloading assets, SpaceMapScreen, Complete");
     }
 
     /**
@@ -164,11 +184,10 @@ public class SpaceMapScreen extends ScreenAdapter {
      * capturing and handling ui input.
      */
     private void createUI() {
-        logger.debug("Creating ui");
+        logger.debug("Creating ui, SpaceMapScreen");
         Stage stage = ServiceLocator.getRenderService().getStage();
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForTerminal();
-
         Entity ui = new Entity();
         ui.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
@@ -177,9 +196,7 @@ public class SpaceMapScreen extends ScreenAdapter {
                 .addComponent(new Terminal())
                 .addComponent(inputComponent)
                 .addComponent(new TerminalDisplay());
-
         ServiceLocator.getEntityService().register(ui);
-
     }
 
     /**
@@ -187,10 +204,10 @@ public class SpaceMapScreen extends ScreenAdapter {
      * sure that the camera doesn't go beyond the boundaries of the map
      */
     private void followShip() {
-        float maxX = 59 * 1f - renderer.getCamera().getCamera().viewportWidth * 0.5f;
-        float maxY = 29 * 1f - renderer.getCamera().getCamera().viewportHeight * 0.5f;
-        float cameraX = Math.min(maxX, Math.max(renderer.getCamera().getCamera().viewportWidth * 0.5f, ship.getPosition().x));
-        float cameraY = Math.min(maxY, Math.max(renderer.getCamera().getCamera().viewportHeight * 0.5f, ship.getPosition().y));
+        maxX = 59 * 1f - renderer.getCamera().getCamera().viewportWidth * 0.5f;
+        maxY = 29 * 1f - renderer.getCamera().getCamera().viewportHeight * 0.5f;
+        cameraX = Math.min(maxX, Math.max(renderer.getCamera().getCamera().viewportWidth * 0.5f, ship.getPosition().x));
+        cameraY = Math.min(maxY, Math.max(renderer.getCamera().getCamera().viewportHeight * 0.5f, ship.getPosition().y));
         renderer.getCamera().getEntity().setPosition(cameraX, cameraY);
     }
 }

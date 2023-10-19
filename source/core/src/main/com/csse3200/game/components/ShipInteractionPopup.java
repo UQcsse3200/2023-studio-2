@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Align;
 import com.csse3200.game.areas.map_config.ResourceCondition;
 import com.csse3200.game.components.maingame.MainGameActions;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.rendering.ColorDrawable;
 import com.csse3200.game.services.ServiceLocator;
 
 import java.util.List;
@@ -28,11 +29,14 @@ public class ShipInteractionPopup extends Window {
         for (Entity mainGame : ServiceLocator.getEntityService().getEntitiesByComponent(MainGameActions.class)) {
             mainGame.getEvents().trigger("pauseGame");
         }
+
+        setBackground(new ColorDrawable(0,0,0,1));
+
         Stage stage = ServiceLocator.getRenderService().getStage();
         float popupWidth = (float) (stage.getWidth() * 0.3);  //setting the width of the popup
         float popupHeight = (float) (stage.getHeight() * 0.5);  //setting the height of the popup
         setPosition(stage.getWidth() / 2 - popupWidth / 2, stage.getHeight() / 2 - popupHeight / 2);
-        setSize(popupWidth, popupHeight); //setting the popup size at once using width and height variables
+        setSize(popupWidth, popupHeight); //setting the popup size aft once using width and height variables
 
         Skin skin = new Skin(Gdx.files.internal("kenney-rpg-expansion/kenneyrpg.json"));
         Label.LabelStyle labelStyle = skin.get(Label.LabelStyle.class);
@@ -49,7 +53,7 @@ public class ShipInteractionPopup extends Window {
         TextButton okButton = new TextButton("Okay", skin);
         okButton.addListener(new CloseListener(this));
         okButton.setSize(150, 50);
-        okButton.setPosition((getWidth() - okButton.getWidth()) / 2, 20);
+        okButton.setPosition((getWidth() - okButton.getWidth()) / 2, 10);
         this.addActor(okButton);
     }
 
@@ -75,13 +79,12 @@ public class ShipInteractionPopup extends Window {
         return super.remove();
     }
     private static TextureRegionDrawable getBrownBackgroundStatic() {
-        Texture texture = createColoredTextureStatic(1, 1, Color.BROWN);
+        Texture texture = createColoredTextureStatic(1, 1);
         return new TextureRegionDrawable(new TextureRegion(texture));
     }
 
-    private static Texture createColoredTextureStatic(int width, int height, Color color) {
-        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-        pixmap.setColor(color);
+    private static Texture createColoredTextureStatic(int width, int heightr) {
+        Pixmap pixmap = new Pixmap(width, heightr, Pixmap.Format.RGBA8888);
         pixmap.fill();
         Texture texture = new Texture(pixmap);
         pixmap.dispose();
@@ -102,4 +105,3 @@ public class ShipInteractionPopup extends Window {
         }
     }
 }
-

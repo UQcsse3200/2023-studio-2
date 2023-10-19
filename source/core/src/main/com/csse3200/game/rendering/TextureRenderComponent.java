@@ -14,6 +14,11 @@ public class TextureRenderComponent extends RenderComponent implements IAlpha {
     private boolean yFlip = false;
     private float alpha = 1.0f;
 
+    //each render call calls update which calls draw, initialize variable here instead of in draw
+    private Vector2 position;
+    private Vector2 scale;
+    private Color colour;
+
     /**
      * @param texturePath Internal path of static texture to render.
      *                    Will be scaled to the entity's scale.
@@ -57,10 +62,10 @@ public class TextureRenderComponent extends RenderComponent implements IAlpha {
 
     @Override
     protected void draw(SpriteBatch batch) {
-        Vector2 position = entity.getPosition();
-        Vector2 scale = entity.getScale();
+        position = entity.getPosition();
+        scale = entity.getScale();
 
-        Color colour = batch.getColor() == null ? Color.valueOf("FFFFFF") : batch.getColor();
+        colour = batch.getColor() == null ? Color.valueOf("FFFFFF") : batch.getColor();
         batch.setColor(colour.r, colour.g, colour.b, this.alpha);
 
         batch.draw(texture, position.x, position.y, scale.x / 2, scale.y / 2, scale.x, scale.y, 1, 1, rotation, 0, 0, texture.getWidth(), texture.getHeight(), false, yFlip);

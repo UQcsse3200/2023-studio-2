@@ -10,6 +10,8 @@ import com.csse3200.game.services.GameStateObserver;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.services.StructurePlacementService;
 
+import java.util.Objects;
+
 /**
  * An abstract tool which allows the player to place a structure.
  * This class must be inherited and the createEntity method implemented to function.
@@ -157,5 +159,19 @@ public abstract class PlacementTool extends Tool {
         }
 
         return ToolResponse.valid();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        PlacementTool that = (PlacementTool) o;
+        return snapX == that.snapX && snapY == that.snapY && Objects.equals(structurePlacementService, that.structurePlacementService);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), snapX, snapY, structurePlacementService);
     }
 }

@@ -755,29 +755,108 @@ treebox
   offset: 0, 0
   index: -1
 
-dialogue.png
-size: 1600, 1200
+dialogue1.png
+size: 1598, 374
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-dialogue
+dialogue_1
   rotate: false
   xy: 0, 0
-  size: 1296, 398
-  orig: 1296, 398
+  size: 1598, 374
+  orig: 1598, 374
   offset: 0, 0
   index: -1
 
-rightShipButton.png
-size: 47, 32
+dialogue2.png
+size: 1598, 376
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-rightShipButton
+dialogue_2
   rotate: false
   xy: 0, 0
-  size: 47, 32
-  orig: 50, 32
-  offset: 1, 0
+  size: 1598, 376
+  orig: 1598, 376
+  offset: 0, 0
   index: -1
+
+dialogue3.png
+size: 1588, 370
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dialogue_3
+  rotate: false
+  xy: 0, 0
+  size: 1588, 370
+  orig: 1588, 370
+  offset: 0, 0
+  index: -1
+
+dialogue4.png
+size: 1718,398
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dialogue_4
+  rotate: false
+  xy: 0, 0
+  size: 1718,398
+  orig: 1718,398
+  offset: 0, 0
+  index: -1
+
+dialogue5.png
+size: 1712,396
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dialogue_5
+  rotate: false
+  xy: 0, 0
+  size: 1712,396
+  orig: 1712,396
+  offset: 0, 0
+  index: -1
+
+dialogue6.png
+size: 1722,398
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dialogue_6
+  rotate: false
+  xy: 0, 0
+  size: 1722,398
+  orig: 1722,398
+  offset: 0, 0
+  index: -1
+
+dialogue7.png
+size: 1702,398
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dialogue_7
+  rotate: false
+  xy: 0, 0
+  size: 1702,398
+  orig: 1702,398
+  offset: 0, 0
+  index: -1
+
+RightShip.png
+size: 70, 45
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+RightShip
+  rotate: false
+  xy: 0, 0
+  size: 70, 45
+  orig: 70, 45
+  offset: 0, 0
+  index: -1
+
 

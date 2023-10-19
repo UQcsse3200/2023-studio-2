@@ -20,6 +20,10 @@ import com.csse3200.game.services.ResourceService;
 import com.csse3200.game.services.ServiceLocator;
 import com.csse3200.game.ui.terminal.Terminal;
 import com.csse3200.game.ui.terminal.TerminalDisplay;
+import com.csse3200.game.input.InputService;
+import com.csse3200.game.input.InputFactory;
+import com.csse3200.game.rendering.RenderService;
+import com.csse3200.game.entities.EntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +43,7 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
 
     public ExtractorMiniGameScreen(GdxGame game) {
         this.game = game;
-
+        loadServices();
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
 
@@ -50,6 +54,19 @@ public class ExtractorMiniGameScreen extends ScreenAdapter {
         TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
         ExtractorMiniGameArea extractorMiniGameArea= new ExtractorMiniGameArea(terrainFactory);
         extractorMiniGameArea.create();
+    }
+
+    /**
+     * Register and load all required services
+     */
+    public void loadServices() {
+        //someone forgot to add the services
+        ServiceLocator.registerInputService(new InputService());
+        ServiceLocator.registerInputService(
+                new InputService(InputFactory.createFromInputType(InputFactory.InputType.TOUCH)));
+        ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
     }
 
     @Override

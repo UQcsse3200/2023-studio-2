@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.csse3200.game.areas.BrickBreakerGameArea;
 import com.csse3200.game.components.CombatStatsComponent;
 import com.csse3200.game.components.FOVComponent;
 import com.csse3200.game.components.HealthBarComponent;
@@ -15,14 +16,14 @@ import com.csse3200.game.components.structures.TurretAnimationController;
 import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.configs.TurretConfig;
-import com.csse3200.game.entities.configs.TurretConfigs;
-import com.csse3200.game.files.FileLoader;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
 import com.csse3200.game.physics.components.HitboxComponent;
 import com.csse3200.game.physics.components.PhysicsComponent;
 import com.csse3200.game.rendering.AnimationRenderComponent;
 import com.csse3200.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
@@ -30,6 +31,7 @@ import java.util.Objects;
  *  This class is used to create a turret entity.
  */
 public class Turret extends PlaceableEntity{
+    private static final Logger logger = LoggerFactory.getLogger(Turret.class);
     private long start = System.currentTimeMillis(); // start time
 
     TurretType type; // turret type
@@ -110,8 +112,6 @@ public class Turret extends PlaceableEntity{
     public void giveDamage(Entity focus) {
         if (focus.getComponent(CombatStatsComponent.class) != null) {
             focus.getComponent(CombatStatsComponent.class).setHealth(focus.getComponent(CombatStatsComponent.class).getHealth() - damage);
-            /*rotateTurret(focus);*/
-            currentAmmo --;
         }
     }
 
@@ -130,26 +130,6 @@ public class Turret extends PlaceableEntity{
             textureComponent.setRotation(degrees - 90);
         }
         this.getComponent(AnimationRenderComponent.class).startAnimation("shoot"); // set animation
-    }
-
-    /**
-     * Interact with the turret. This method can be called by a player entity to perform an interaction.
-     *
-     * @param player The player entity interacting with the turret.
-     */
-    public void interact(Entity player) {
-        int requiredAmmo = maxAmmo - currentAmmo; // calculate required ammo
-        var gameStateObserver = ServiceLocator.getGameStateObserverService(); // get game state observer
-        int availableResources = (int) gameStateObserver.getStateData("resource/nebulite"); // get available resources
-
-        if (availableResources >= requiredAmmo) {
-            gameStateObserver.trigger("resourceAdd", "nebulite", -requiredAmmo); // remove resources
-            refillAmmo(requiredAmmo);
-            System.out.println("Turret ammo refilled!"); // print message
-        } else {
-            System.out.println("Insufficient resources to refill turret ammo."); // print message
-
-        }
     }
 
     /**

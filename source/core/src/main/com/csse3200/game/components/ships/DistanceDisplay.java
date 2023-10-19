@@ -12,6 +12,7 @@ import com.csse3200.game.ui.UIComponent;
  */
 public class DistanceDisplay extends UIComponent {
     private Label distanceLabel;
+    private CharSequence distanceText;
 
     /**
      * Method for creating
@@ -55,8 +56,8 @@ public class DistanceDisplay extends UIComponent {
      * @param distance Distance to be displayed
      */
     public void updateDistanceUI(float distance) {
-        CharSequence text = String.format("Distance: %.2f", distance);
-        distanceLabel.setText(text);
+        distanceText = String.format("Distance: %.2f", distance);
+        distanceLabel.setText(distanceText);
     }
 
     /**

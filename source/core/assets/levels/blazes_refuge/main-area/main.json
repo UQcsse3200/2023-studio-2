@@ -55,7 +55,8 @@
     "map/treetop.png",
     "particle-effects/explosion/particle.png",
     "images/resources/Cracked_Ground.png",
-    "images/enemy/botanist.png"
+    "images/enemy/botanist.png",
+    "images/companion/laboratoryinferno.png"
   ],
   "textureAtlasPaths": [
     "images/enemy/troll_enemy.atlas",

@@ -1,0 +1,29 @@
+{
+  "entityType": "FissureConfig",
+  "entities": [
+    {
+      class: com.csse3200.game.entities.configs.FissureConfig,
+      "resource": "Solstite",
+      "position": {
+        "x": 76,
+        "y": 18
+      }
+    },
+    {
+      class: com.csse3200.game.entities.configs.FissureConfig,
+      "resource": "Nebulite",
+      "position": {
+        "x": 66,
+        "y": 80
+      }
+    },
+    {
+      class: com.csse3200.game.entities.configs.FissureConfig,
+      "resource": "Durasteel",
+      "position": {
+        "x": 12,
+        "y": 12
+      }
+    }
+  ]
+}

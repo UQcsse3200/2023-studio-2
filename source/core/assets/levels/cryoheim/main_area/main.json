@@ -77,7 +77,7 @@
   "winConditions": [
     {
       "resource": "Solstite",
-      "threshold": 100
+      "threshold": 750
     }
   ]
 }

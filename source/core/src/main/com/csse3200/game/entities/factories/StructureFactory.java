@@ -255,9 +255,12 @@ public class StructureFactory {
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
                         .addComponent(new InteractableComponent(entity -> {
-                            if (checkWinCondition(requirements) ) {
-                                ShipInteractionPopup shipPopup = new ShipInteractionPopup();
-                                ServiceLocator.getRenderService().getStage().addActor(shipPopup);
+                            if (checkWinCondition(requirements)) {
+                                for (var requirement : requirements) {
+                                    ServiceLocator.getGameStateObserverService().trigger("resourceAdd",
+                                            requirement.getResource(), -requirement.getThreshold());
+                                }
+
                                 String[] storytext= {"{SLOW}Astro: This is my ship having an in built AI.\n The AI will guide you throughout. "
                                         ,"{SLOW}Player: It is of great help to us \n Why dont you join us ?"
                                         ,"{SLOW}Astro: I was attacked and I know I cant make it. \n The AI will guide you.",
@@ -268,11 +271,9 @@ public class StructureFactory {
                                 TitleBox titleBox = new TitleBox(game, titletext, storytext, skin, window);
                                 titleBox.showDialog(stage);
 
-                                TextButton okButton = new TextButton("Start Journey", skin);
-
-                            }
-                            else {
-                                ShipInteractionPopup shipPopup = new ShipInteractionPopup();
+                                game.setScreen(GdxGame.ScreenType.NAVIGATION_SCREEN);
+                            } else {
+                                ShipInteractionPopup shipPopup = new ShipInteractionPopup(requirements);
                                 ServiceLocator.getRenderService().getStage().addActor(shipPopup);
                             }
                         }, 5));

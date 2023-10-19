@@ -72,6 +72,9 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   }
 
   private void updateDirection(Body body) {
+    if (speed == null) {
+      return;
+    }
     Vector2 desiredVelocity = getDirection().scl(speed);
     setToVelocity(body, desiredVelocity);
   }

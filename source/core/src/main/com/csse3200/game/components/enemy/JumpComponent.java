@@ -13,7 +13,7 @@ public class JumpComponent extends Component {
     private boolean Mode = true;
     private PhysicsMovementComponent movementComponent;
     private Entity entity;
-    public void JumpComponent(Entity enemy){
+    public  JumpComponent(Entity enemy){
         this.entity = enemy;
         this.movementComponent = entity.getComponent(PhysicsMovementComponent.class);
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -34,7 +34,7 @@ public class JumpComponent extends Component {
     @Override
     public void update() {
         if(Mode){
-            movementComponent.changeMaxSpeed(new Vector2(2f,2f));
+            movementComponent.changeMaxSpeed(new Vector2(4f,4f));
         }else{
             movementComponent.changeMaxSpeed(new Vector2(0f,0f));
         }

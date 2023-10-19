@@ -7,6 +7,8 @@ import com.csse3200.game.entities.Entity;
 import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.Objects;
+
 /**
  * An abstract tool which allows the player to place a structure.
  * This class must be inherited and the createEntity method implemented to function.
@@ -91,5 +93,19 @@ public abstract class ReplacementTool extends PlacementTool {
 
         return existingStructure != null ? ToolResponse.valid()
                 : new ToolResponse(PlacementValidity.INVALID_POSITION, "No structure to replace");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ReplacementTool that = (ReplacementTool) o;
+        return mustReplace == that.mustReplace;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), mustReplace);
     }
 }

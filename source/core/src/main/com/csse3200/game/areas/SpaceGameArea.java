@@ -143,7 +143,7 @@ public class SpaceGameArea extends GameArea {
     /**
      * Method for placing the exit point from the obstacle minigame
      */
-    private Entity spawnGoal() {
+    public Entity spawnGoal() {
         Random random = new Random();
         int randomX, randomY;
         GridPoint2 position;
@@ -162,7 +162,7 @@ public class SpaceGameArea extends GameArea {
     /**
      * Check if a position is occupied by an entity.
      */
-    private boolean isPositionOccupied(GridPoint2 position) {
+    public boolean isPositionOccupied(GridPoint2 position) {
         // Loop through the list of existing entities and check if any entity occupies the given position.
         for (Entity entity : targetTables) {
             if (entity != null && entity.getPosition().equals(position)) {

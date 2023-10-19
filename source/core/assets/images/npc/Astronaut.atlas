@@ -115,3 +115,10 @@ row-4-column-4
   orig: 32, 32
   offset: 0, 0
   index: -1
+Astro_Stand
+  rotate: false
+  xy: 256, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

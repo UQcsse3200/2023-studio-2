@@ -106,7 +106,9 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       if (isDead() && entity.getEntityType().equals("extractor") && !dead) {
+        dead = true;
         ServiceLocator.getGameArea().getEvent().trigger("reTarget");
+        ServiceLocator.getGameArea().addBlockedPath(entity);
       }
       if (isDead() && entity.getEntityType().equals("player") && !dead) {
         dead = true;

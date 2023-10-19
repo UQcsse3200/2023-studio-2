@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.csse3200.game.areas.terrain.TerrainComponent;
 import com.csse3200.game.entities.Entity;
+import com.csse3200.game.entities.EntityService;
 import com.csse3200.game.events.EventHandler;
 import com.csse3200.game.physics.PhysicsLayer;
 import com.csse3200.game.physics.components.ColliderComponent;
@@ -157,6 +158,27 @@ public abstract class GameArea implements Disposable {
     if (entity.getComponent(HitboxComponent.class) != null) {
       if (PhysicsLayer.contains(entity.getComponent(HitboxComponent.class).getLayer(), PhysicsLayer.STRUCTURE)) {
         handler.trigger("reTarget");
+      }
+    }
+  }
+
+  public void addBlockedPath(Entity entity) {
+    Vector2 position = entity.getPosition();
+    Vector2 scale = entity.getScale();
+
+    // Calculate the four corners of the entity
+    Vector2 topRight = new Vector2(position.x + scale.x, position.y + scale.y);
+    Vector2 bottomLeft = new Vector2(position.x, position.y);
+
+    // Convert these to grid coordinates
+    GridPoint2 gridTopRight = terrain.worldPositionToTile(topRight);
+    GridPoint2 gridBottomLeft = terrain.worldPositionToTile(bottomLeft);
+
+    // Iterate through the grid coordinates and add them to the HashMap
+    for (int x = gridBottomLeft.x; x < gridTopRight.x; x++) {
+      for (int y = gridBottomLeft.y; y < gridTopRight.y; y++) {
+        GridPoint2 gridPoint = new GridPoint2(x, y);
+        pathFinderGrids.putIfAbsent(gridPoint, entity);
       }
     }
   }

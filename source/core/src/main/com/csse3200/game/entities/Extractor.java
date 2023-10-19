@@ -51,6 +51,8 @@ public class Extractor extends PlaceableEntity {
         setScale(1.8f, 2f);
         PhysicsUtils.setScaledCollider(this, 1f, 0.6f);
 
+        setEntityType("extractor");
+
         addComponent(new SaveableComponent<>(entity -> save(this, config), ExtractorConfig.class));
     }
 

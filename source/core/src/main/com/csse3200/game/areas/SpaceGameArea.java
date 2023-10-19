@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 /**
@@ -31,21 +32,8 @@ public class SpaceGameArea extends GameArea {
     private Entity ship;
     private Entity goal;
     private static final int NUM_ASTEROIDS = 100;
-    private static final String[] spaceMiniGameTextures = {
-            "images/minigame/SpaceMiniGameBackground.png",
-            "images/minigame/meteor.png", // https://axassets.itch.io/spaceship-simple-assets
-            "images/ship/Ship.png",
-            "images/minigame/wormhole.png",
-            "images/minigame/obstacle-enemy.png",
-            "images/minigame/mainship.png"
-    };
-    private static final String backgroundMusic = "sounds/WereWasI.ogg"; //public domain https://opengameart.org/content/where-was-i
-    private static final String[] spaceMusic = {backgroundMusic};
-    private final TerrainFactory terrainFactory;
-
-    private final ArrayList<Entity> targetTables;
-
-    private static final String[] spaceTextureAtlases = {"images/minigame/ship.atlas"};
+    private TerrainFactory terrainFactory;
+    private ArrayList<Entity> targetTables;
 
     /**
      * Constructor for initializing terrain area
@@ -63,30 +51,25 @@ public class SpaceGameArea extends GameArea {
      */
     @Override
     public void create() {
-        loadAssets();
         displayUI();
-        playMusic();
         spawnTerrain();
-        //Who removed spawn ship and spawn goal on creation?!@!!!!!
-        //spawn Goal has to be called first before spawn ship, to not crash calc distance
-        //Should modify later
         spawnGoal();
         spawnShip();
         spawnAsteroids();
         createBoundary();
         spawnEnemy();
+        playMusic();
     }
     /**
      * Method for the background music of the game
      */
     private void playMusic() {
         UserSettings.Settings settings = UserSettings.get();
-        Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+        Music music = ServiceLocator.getResourceService().getAsset("sounds/BGM_03_mp3.wav", Music.class);
         music.setLooping(true);
         music.setVolume(settings.musicVolume);
         music.play();
     }
-
 
     /**
      * Method for creating boundaries along the x-axis
@@ -116,7 +99,6 @@ public class SpaceGameArea extends GameArea {
             return;
         }
         spawnEntityAt(asteroidWidth, pos, false, false);
-
         // Increment the position for the next asteroid
         pos.y += 1;
         spawnStaticAsteroidsUp(n - 1, pos); // Recursive call
@@ -131,7 +113,6 @@ public class SpaceGameArea extends GameArea {
         spawnStaticAsteroidsUp(30,new GridPoint2(-1,0));
         spawnStaticAsteroidsUp(30,new GridPoint2(59,0));
     }
-
 
     /**
      * Method for spawning enemies randomly across the map in the minigame
@@ -162,13 +143,33 @@ public class SpaceGameArea extends GameArea {
     /**
      * Method for placing the exit point from the obstacle minigame
      */
-    private Entity spawnGoal() {
-        GridPoint2 position = new GridPoint2(56, 10);
+    public Entity spawnGoal() {
+        Random random = new Random();
+        int randomX, randomY;
+        GridPoint2 position;
+        // Continue generating random positions until an unoccupied position is found.
+        do {
+            randomX = random.nextInt(terrain.getMapBounds(0).x);
+            randomY = random.nextInt(terrain.getMapBounds(0).y);
+            position = new GridPoint2(randomX, randomY);
+        } while (isPositionOccupied(position));
         Entity newGoal = MinigameObjectFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
-        //goal = ObstacleFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
         spawnEntityAt(newGoal, position, false, false);
         goal = newGoal;
-        return goal; // Return the instance variable
+        return goal;
+    }
+
+    /**
+     * Check if a position is occupied by an entity.
+     */
+    public boolean isPositionOccupied(GridPoint2 position) {
+        // Loop through the list of existing entities and check if any entity occupies the given position.
+        for (Entity entity : targetTables) {
+            if (entity != null && entity.getPosition().equals(position)) {
+                return true; // Position is occupied.
+            }
+        }
+        return false; // Position is not occupied.
     }
 
     /**
@@ -179,8 +180,6 @@ public class SpaceGameArea extends GameArea {
         ui.addComponent(new GameAreaDisplay("Space Game"));
         spawnEntity(ui);
     }
-
-
 
     /**
      * Method for spawning terrain for background of obstacle minigame
@@ -196,7 +195,6 @@ public class SpaceGameArea extends GameArea {
         Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
     }
 
-
     /**
      * Method for spawning ship on the obstacle minigame map
      */
@@ -209,7 +207,6 @@ public class SpaceGameArea extends GameArea {
         return newShip;
     }
 
-
     /**
      * Getter method for ship
      * @return Ship Entity
@@ -217,7 +214,6 @@ public class SpaceGameArea extends GameArea {
     public Entity getShip(){
         return ship;
     }
-
 
     /**
      * Getter method for goal
@@ -237,42 +233,9 @@ public class SpaceGameArea extends GameArea {
         // Get the center positions of both entities
         Vector2 position1 = entity1.getCenterPosition();
         Vector2 position2 = entity2.getCenterPosition();
-
         // Calculate the distance between the two positions
         float distance = position1.dst(position2);
-
         return distance;
-    }
-
-
-
-
-    /**
-     * Method for loading the texture and the music of the map
-     */
-    private void loadAssets() {
-        logger.debug("Loading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(spaceMiniGameTextures);
-        resourceService.loadMusic(spaceMusic);
-        resourceService.loadTextureAtlases(spaceTextureAtlases);
-        while (!resourceService.loadForMillis(10)) {
-            // This could be upgraded to a loading screen
-            logger.info("Loading... {}%", resourceService.getProgress());
-        }
-    }
-
-
-    /**
-     * Method for unloading the texture and the music of the map
-     */
-    private void unloadAssets() {
-        logger.debug("Unloading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(spaceMiniGameTextures);
-        resourceService.unloadAssets(spaceMusic);
-        resourceService.unloadAssets(spaceTextureAtlases);
-
     }
 
     /**
@@ -281,6 +244,5 @@ public class SpaceGameArea extends GameArea {
     @Override
     public void dispose() {
         super.dispose();
-        this.unloadAssets();
     }
 }

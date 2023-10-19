@@ -207,27 +207,13 @@ public class LabWindow extends Window {
         potionButton.setColor(0.5f, 0.5f, 0.5f, 0.5f);
         return lock;
     }
-/*    private void handleUnlocking(TextButton potionButton, Image lockImage) {
 
-        // Set the node to unlocked
-        potionButton.setColor(1f, 1f, 1f, 1f); // un-grey the image
-        lockImage.remove();
-    }
-
-    private ChangeListener unlockButton(TextButton potionButton, Image lockImage) {
-        return new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                handleUnlocking(potionButton, lockImage);
-            }
-        };
-    }*/
     private boolean canUnlockPowerup(PowerupType powerupType) {
         // Implement your logic to check if the powerup can be unlocked
         if (powerupType == PowerupType.EXTRA_LIFE) {
             return healthpowerups >= 2;
         } else if (powerupType == PowerupType.DOUBLE_CROSS) {
-            return healthpowerups >= 1 && speedpowerups >= 1;
+            return healthpowerups >= 1 && speedpowerups >= 2;
         } else if (powerupType == PowerupType.DOUBLE_DAMAGE) {
             return speedpowerups >= 2;
         } else if (powerupType == PowerupType.SNAP) {
@@ -235,7 +221,7 @@ public class LabWindow extends Window {
         } else if (powerupType == PowerupType.TEMP_IMMUNITY) {
             return healthpowerups >= 2 && speedpowerups >= 1;
         } else if (powerupType == PowerupType.DEATH_POTION) {
-            return healthpowerups >= 1;
+            return healthpowerups >= 1 && speedpowerups >= 1;
         }
         return false;
     }
@@ -244,7 +230,7 @@ public class LabWindow extends Window {
             companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.HEALTH_BOOST,2);
         } else if (powerupType == PowerupType.DOUBLE_CROSS) {
             companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.HEALTH_BOOST,1);
-            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.SPEED_BOOST,1);
+            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.SPEED_BOOST,2);
         } else if (powerupType == PowerupType.DOUBLE_DAMAGE) {
             companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.SPEED_BOOST,2);
         } else if (powerupType == PowerupType.SNAP) {
@@ -255,6 +241,7 @@ public class LabWindow extends Window {
             companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.SPEED_BOOST,1);
         } else if (powerupType == PowerupType.DEATH_POTION) {
             companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.HEALTH_BOOST,1);
+            companion.getComponent(CompanionPowerupInventoryComponent.class).removePowerupsInventoryAmount(PowerupType.SPEED_BOOST,1);
         }
     }
 }

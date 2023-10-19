@@ -1,3 +1,28 @@
 {
-
+  resource/Nebulite: {
+    class: java.lang.Integer
+    value: 0
+  }
+  resourceMax/Nebulite: {
+    class: java.lang.Integer
+    value: 1000
+  }
+  resource/Durasteel: {
+    class: java.lang.Integer
+    value: 0
+  }
+  resourceMax/Durasteel: {
+    class: java.lang.Integer
+    value: 1000
+  }
+  resource/Solstite: {
+    class: java.lang.Integer
+    value: 0
+  }
+  resourceMax/Solstite: {
+    class: java.lang.Integer
+    value: 1000
+  },
+  "currentPlanet": "earth",
+  "nextPlanet": "blazes_refuge"
 }

@@ -2,10 +2,10 @@
   "entityType": "CompanionConfig",
   "entities": [
     {
-      "class": com.csse3200.game.entities.configs.CompanionConfig,
+      "class": "com.csse3200.game.entities.configs.CompanionConfig",
       "position": {
         "x": 10,
-        "y": 50
+        "y": 45
       },
       "health": 50,
       "baseAttack": 10,

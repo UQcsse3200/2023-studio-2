@@ -64,6 +64,7 @@ public class HomingProjectileController extends ProjectileController {
 
     @Override
     protected void despawn() {
+        despawn_sound();
         entity.getEvents().trigger("explode");
     }
 }

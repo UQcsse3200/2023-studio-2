@@ -48,8 +48,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
         this.testing = testing;
     }
 
-    private final boolean leftCtrlFlag = false;
-
     /**
      * Returns the sum of movement flags (W, A, S, D).
      *
@@ -98,8 +96,6 @@ public class KeyboardCompanionInputComponent extends InputComponent implements I
      * @param keycode The keycode of the pressed key.
      * @return True if the input was processed, false otherwise.
      */
-    private long lastNKeyPressTime = 0;
-    private static final long COOLDOWN_TIME = 7000; // 7 seconds in milliseconds
 
     @Override
     public boolean keyDown(int keycode) {

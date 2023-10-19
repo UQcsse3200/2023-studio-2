@@ -104,11 +104,12 @@ public abstract class WeaponControllerComponent extends Component {
      */
     protected void set_sound() {
         SoundComponent sComp = entity.getComponent(SoundComponent.class);
+        sComp.create();
         if (sComp.checkExists("start")) {
-            sComp.playSound("start");
+            entity.getEvents().trigger("playSound", "start");
         }
         if (sComp.checkExists("mid")) {
-            sComp.loopSound("mid");
+            entity.getEvents().trigger("loopSound", "mid");
         }
     }
 
@@ -146,15 +147,19 @@ public abstract class WeaponControllerComponent extends Component {
      * respawn a weapon when it runs out of duration or health
      */
     protected void despawn() {
-        SoundComponent sComp = entity.getComponent(SoundComponent.class);
-        if (sComp.checkExists("mid")) {
-            sComp.stopSound("mid");
-        }
-        if (sComp.checkExists("stop")) {
-            sComp.playSound("stop");
-        }
+        despawn_sound();
         animator.stopAnimation();
         Gdx.app.postRunnable(entity::dispose);
+    }
+
+    protected void despawn_sound() {
+        SoundComponent sComp = entity.getComponent(SoundComponent.class);
+        if (sComp.checkExists("mid")) {
+            entity.getEvents().trigger("stopSound", "mid");
+        }
+        if (sComp.checkExists("end")) {
+            entity.getEvents().trigger("playSound", "end");
+        }
     }
 
     /**

@@ -69,13 +69,6 @@ public class EnemyFactory {
     AITaskComponent aiComponent = new AITaskComponent();
     aiComponent.addTask(new WanderTask(new Vector2(2f, 2f), 2f));
 
-    // AI tasks
-    List<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
-    for (Entity target : targets) {
-      // Adds the specific behaviour to entity
-      enemyBehaviourSelector(target, config, aiComponent);
-    }
-
     TextureAtlas atlas = new TextureAtlas(config.spritePath);
     animator = new AnimationRenderComponent(atlas);
 
@@ -86,7 +79,7 @@ public class EnemyFactory {
             .addComponent(new PhysicsMovementComponent(new Vector2(config.speedX, config.speedY)))
             .addComponent(new ColliderComponent())
             .addComponent(new DeathComponent())
-            .addComponent(new targetComponent(config, aiComponent))
+            .addComponent(new targetComponent(config, aiComponent, new EnemyFactoryAdapter()))
             .addComponent(new HealthBarComponent(false))
             .addComponent(new TouchAttackComponent((short) (
                     PhysicsLayer.PLAYER |
@@ -107,6 +100,13 @@ public class EnemyFactory {
             .addComponent(new EnemyFlag());
 
     enemy.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.41f,0.41f), PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM);
+
+    // AI tasks
+    List<Entity> targets = ServiceLocator.getEntityService().getEntitiesByComponent(HitboxComponent.class);
+    for (Entity target : targets) {
+      // Adds the specific behaviour to entity
+      enemyBehaviourSelector(target, config, aiComponent);
+    }
 
     // TYPE
     enemyTypeSelector(enemy, config.type);
@@ -325,3 +325,4 @@ public class EnemyFactory {
     throw new IllegalStateException("Instantiating static util class");
   }
 }
+

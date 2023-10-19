@@ -9,6 +9,8 @@ import com.csse3200.game.entities.PlaceableEntity;
 import com.csse3200.game.entities.factories.StructureFactory;
 import com.csse3200.game.services.ServiceLocator;
 
+import java.util.Objects;
+
 /**
  * Tool used to place extractors.
  */
@@ -43,7 +45,7 @@ public class ExtractorTool extends ReplacementTool {
 
     /**
      * Checks if the position of the extractor is valid:
-     * - There is no collision with other structures (TODO or the map)
+     * - There is no collision with other structures
      * - The resource type of the extractor doesnt exceed the cap
      * @param position The position of the extractor
      * @return whether the extractor can be placed
@@ -76,6 +78,20 @@ public class ExtractorTool extends ReplacementTool {
 
         return (int) max > (int) count ? ToolResponse.valid() :
                 new ToolResponse(PlacementValidity.INVALID_POSITION, "Extractor limit exceeded");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ExtractorTool that = (ExtractorTool) o;
+        return produces == that.produces;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), produces);
     }
 }
 

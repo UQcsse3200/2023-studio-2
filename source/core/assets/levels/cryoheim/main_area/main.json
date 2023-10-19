@@ -27,7 +27,10 @@
       "particle-effects/explosion/particle.png",
       "images/npc/astronaut_npc.png",
       "images/npc/Astronaut.png",
-      "images/space_navigation_planet_2.png","images/upgradetree/sword.png"
+      "images/space_navigation_planet_2.png","images/upgradetree/sword.png",
+      "images/space_navigation_planet_2.png","images/upgradetree/sword.png",
+      "images/companion/Laboratorycryoheim.png"
+
     ],
     "textureAtlasPaths": [
       "images/troll_enemy.atlas",
@@ -79,7 +82,7 @@
   "winConditions": [
     {
       "resource": "Solstite",
-      "threshold": 100
+      "threshold": 750
     }
   ]
 }

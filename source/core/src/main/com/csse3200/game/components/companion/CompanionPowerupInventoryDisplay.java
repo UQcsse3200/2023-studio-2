@@ -32,7 +32,6 @@ public class CompanionPowerupInventoryDisplay extends Window {
     private static final float WINDOW_WIDTH_SCALE = 0.65f;
     private static final float WINDOW_HEIGHT_SCALE = 0.65f;
     private static final float SIZE = 64f;
-    private InputOverrideComponent inputOverrideComponent;
 
     //powerup configs used to pull sprites of the powerups
     public PowerupConfigs powerupConfigs;
@@ -85,7 +84,6 @@ public class CompanionPowerupInventoryDisplay extends Window {
                 ServiceLocator.getResourceService().getAsset("images/upgradetree/background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
         return new CompanionPowerupInventoryDisplay(companion, background, powerupInventoryComponent);
-        //return new CompanionInventoryComponent();
     }
 
     /**

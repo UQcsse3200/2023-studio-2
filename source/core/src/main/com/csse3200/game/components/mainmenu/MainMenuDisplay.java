@@ -66,7 +66,7 @@ public class MainMenuDisplay extends UIComponent {
         TextButton miniBtn = new TextButton("Space Minigame", skin);
         TextButton extractorBtn = new TextButton("Extractor Minigame", skin);
         TextButton tutorialBtn = new TextButton("Tutorial", skin);
-        TextButton brickBreakerBtn = new TextButton("brick breaker minigame", skin);
+//        TextButton brickBreakerBtn = new TextButton("brick breaker minigame", skin);
 
         // Attach listeners to buttons
         startBtn.addListener(
@@ -131,14 +131,14 @@ public class MainMenuDisplay extends UIComponent {
                 }
         );
 
-        brickBreakerBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("brick breaker button clikced");
-                        entity.getEvents().trigger("brick breaker minigame");
-                    }
-                });
+//        brickBreakerBtn.addListener(
+//                new ChangeListener() {
+//                    @Override
+//                    public void changed(ChangeEvent changeEvent, Actor actor) {
+//                        logger.debug("brick breaker button clikced");
+//                        entity.getEvents().trigger("brick breaker minigame");
+//                    }
+//                });
 
 
 
@@ -159,8 +159,8 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(exitBtn).padTop(15f).padLeft(1200f);
         table.row();
-        table.add(brickBreakerBtn).padTop(15f).padLeft(1200f);
-        table.row();
+//        table.add(brickBreakerBtn).padTop(15f).padLeft(1200f);
+//        table.row();
         stage.addActor(titleImage);
 
         stage.addActor(transitionFrames);

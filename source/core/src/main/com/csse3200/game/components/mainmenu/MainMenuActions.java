@@ -47,7 +47,7 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("extractor minigame",this::onExtractor);
     entity.getEvents().addListener("upgrade shop", this::onShop);
     entity.getEvents().addListener("tutorial", this::onTutorial);
-    entity.getEvents().addListener("brick breaker minigame", this::onBrickBreaker);
+//    entity.getEvents().addListener("brick breaker minigame", this::onBrickBreaker);
 
   }
 
@@ -174,8 +174,8 @@ public class MainMenuActions extends Component {
     logger.info("Launching Upgrade Shop screen");
     game.setScreen(GdxGame.ScreenType.UPGRADE_SHOP);
   }
-  private void onBrickBreaker(){
-    logger.info("Starting brick breaker minigame screen");
-    game.setScreen(GdxGame.ScreenType.BRICK_BREAKER_SCREEN);
-  }
+//  private void onBrickBreaker(){
+//    logger.info("Starting brick breaker minigame screen");
+//    game.setScreen(GdxGame.ScreenType.BRICK_BREAKER_SCREEN);
+//  }
 }

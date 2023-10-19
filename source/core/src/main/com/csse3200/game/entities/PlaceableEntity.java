@@ -102,11 +102,11 @@ public class PlaceableEntity extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         PlaceableEntity that = (PlaceableEntity) o;
-        return irremovable == that.irremovable && width == that.width && height == that.height && Objects.equals(position, that.position);
+        return irremovable == that.irremovable && width == that.width && height == that.height;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), irremovable, width, height, position);
+        return Objects.hash(super.hashCode(), irremovable, width, height);
     }
 }

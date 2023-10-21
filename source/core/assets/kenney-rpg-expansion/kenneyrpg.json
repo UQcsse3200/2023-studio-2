@@ -35,7 +35,7 @@
       "scaledSize": 18,
       "markupEnabled": false,
       "flip": false
-    }
+    },
     "pixel_art": {
       "file": "mago3.fnt",
       "scaledSize": 18,
@@ -131,7 +131,7 @@
     },
     "thin_black": {
       "font": "thin_black"
-    }
+    },
     "pixel_art" : {
       "font" : "pixel_art"
     }

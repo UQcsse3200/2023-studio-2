@@ -13,6 +13,7 @@ public class MiniGameAssetsConfig {
     public String[] textureAtlasPaths = null;
     public String[] backgroundMusicPath = null;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -28,6 +29,8 @@ public class MiniGameAssetsConfig {
         return Objects.equals(backgroundMusicPath, that.backgroundMusicPath);
     }
 
+    /*
+    Arrays problem, will fix later, currently assume there is no need for hashcode.
     @Override
     public int hashCode() {
         int result = Arrays.hashCode(texturePaths);
@@ -35,6 +38,7 @@ public class MiniGameAssetsConfig {
         result = 31 * result + (backgroundMusicPath != null ? backgroundMusicPath.hashCode() : 0);
         return result;
     }
+     */
 
     /**
      * Loads all assets contained within this config class

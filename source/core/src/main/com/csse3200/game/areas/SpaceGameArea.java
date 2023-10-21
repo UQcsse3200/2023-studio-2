@@ -34,6 +34,9 @@ public class SpaceGameArea extends GameArea {
     private static final int NUM_ASTEROIDS = 100;
     private TerrainFactory terrainFactory;
     private ArrayList<Entity> targetTables;
+    private Random random;
+    int randomX, randomY;
+    private Vector2 goalPosition;
 
     /**
      * Constructor for initializing terrain area
@@ -144,17 +147,15 @@ public class SpaceGameArea extends GameArea {
      * Method for placing the exit point from the obstacle minigame
      */
     public Entity spawnGoal() {
-        Random random = new Random();
-        int randomX, randomY;
-        GridPoint2 position;
+        random = new Random();
         // Continue generating random positions until an unoccupied position is found.
         do {
             randomX = random.nextInt(terrain.getMapBounds(0).x);
             randomY = random.nextInt(terrain.getMapBounds(0).y);
-            position = new GridPoint2(randomX, randomY);
-        } while (isPositionOccupied(position));
+            goalPosition = new Vector2((float) randomX, (float) randomY);
+        } while (isPositionOccupied(goalPosition));
         Entity newGoal = MinigameObjectFactory.createObstacleGameGoal(WORMHOLE_SIZE, WORMHOLE_SIZE);
-        spawnEntityAt(newGoal, position, false, false);
+        spawnEntityAtVector(newGoal, goalPosition);
         goal = newGoal;
         return goal;
     }
@@ -162,9 +163,10 @@ public class SpaceGameArea extends GameArea {
     /**
      * Check if a position is occupied by an entity.
      */
-    public boolean isPositionOccupied(GridPoint2 position) {
+    public boolean isPositionOccupied(Vector2 position) {
         // Loop through the list of existing entities and check if any entity occupies the given position.
         for (Entity entity : targetTables) {
+            //GridPoint2 and Vector2 is unrelated
             if (entity != null && entity.getPosition().equals(position)) {
                 return true; // Position is occupied.
             }
